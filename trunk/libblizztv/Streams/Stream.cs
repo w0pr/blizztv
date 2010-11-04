@@ -34,15 +34,12 @@ namespace LibBlizzTV.Streams
         public string Provider { get { return this._provider; } set { this._provider = value; } }
         public Game Game { get { return this._game; } set { this._game = value; } }
 
-        public bool IsLive { get { return this._is_live; } protected set { this._is_live = value; } }
-        public string Description { get { return this._description; } protected set { this._description = value; } }
-        public Int32 ViewerCount { get { return this._viewer_count; } protected set { this._viewer_count = value; } }
+        public bool IsLive { get { return this._is_live; } internal set { this._is_live = value; } }
+        public string Description { get { return this._description; } internal set { this._description = value; } }
+        public Int32 ViewerCount { get { return this._viewer_count; } internal set { this._viewer_count = value; } }
 
-        public Stream(string ID, string Name,string Provider)
+        public Stream()
         {
-            this._slug = ID;
-            this._name = Name;
-            this._provider = Provider;
         }
 
         public virtual string VideoEmbedCode()

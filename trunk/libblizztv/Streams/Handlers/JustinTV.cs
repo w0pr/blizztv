@@ -21,7 +21,7 @@ namespace LibBlizzTV.Streams.Handlers
 {
     public class JustinTV:Stream
     {
-        public JustinTV(string ID, string Name, string Provider) : base(ID, Name, Provider) { }
+        public JustinTV() { }
 
         public override void Update()
         {

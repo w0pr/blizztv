@@ -14,31 +14,23 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace LibBlizzTV.Streams
+namespace LibBlizzTV.VideoChannels
 {
-    public static class StreamFactory
+    public class Video
     {
-        public static Stream CreateStream(string Provider)
-        {
-            Stream _stream=null;
-            switch (Provider)
-            {
-                case "LiveStream":
-                    _stream = new Handlers.LiveStream();
-                    break;
-                case "JustinTV":
-                    _stream = new Handlers.JustinTV();
-                    break;
-                case "UStream":
-                    _stream = new Handlers.UStream();
-                    break;
-                default:
-                    break;
-            }
+        private string _title;
+        private string _guid;
+        private string _video_id;
 
-            if(_stream!=null) return _stream;
-            else throw new NotImplementedException();
+        public string Title { get { return this._title; } internal set { this._title = value; } }
+        public string GUID { get { return this._guid; } internal set { this._guid = value; } }
+        public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
+
+        public Video()
+        {
         }
     }
 }

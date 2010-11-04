@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Providers>
+  <Provider>
+    <Name>Youtube</Name>
+    <VideoTemplate><![CDATA[<object width="%width%" height="%height%"><param name="movie" value="http://www.youtube.com/v/%video_id%?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/%video_id%?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="%width%" height="%height%"></embed></object>]]></VideoTemplate>
+  </Provider>  
+</Providers>
+

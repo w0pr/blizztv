@@ -67,6 +67,15 @@
     <Compile Include="StreamPlayer.Designer.cs">
       <DependentUpon>StreamPlayer.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChannelStage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChannelStage.Designer.cs">
+      <DependentUpon>ChannelStage.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ChannelStage.resx">
+      <DependentUpon>ChannelStage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
@@ -106,6 +115,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Streams.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VideoChannels.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VideoProviders.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
