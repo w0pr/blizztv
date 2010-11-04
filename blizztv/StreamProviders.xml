@@ -3,15 +3,15 @@
 <Providers>
   <Provider>
     <Name>LiveStream</Name>
-    <VideoTemplate><![CDATA[<object width='%width%' height='%height%' id='lsplayer' classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000'><param name='movie' value='http://cdn.livestream.com/grid/LSPlayer.swf?channel=%stream_id%&amp;autoPlay=true'></param><param name='allowScriptAccess' value='always'></param><param name='allowFullScreen' value='true'></param><embed name='lsplayer' wmode='transparent' src='http://cdn.livestream.com/grid/LSPlayer.swf?channel=%stream_id%&amp;autoPlay=true' width='%width%' height='%height%' allowScriptAccess='always' allowFullScreen='true' type='application/x-shockwave-flash'></embed></object>]]></VideoTemplate>
+    <VideoTemplate><![CDATA[<object width='%width%' height='%height%' id='lsplayer' classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000'><param name='movie' value='http://cdn.livestream.com/grid/LSPlayer.swf?channel=%slug%&amp;autoPlay=true'></param><param name='allowScriptAccess' value='always'></param><param name='allowFullScreen' value='true'></param><embed name='lsplayer' wmode='transparent' src='http://cdn.livestream.com/grid/LSPlayer.swf?channel=%slug%&amp;autoPlay=true' width='%width%' height='%height%' allowScriptAccess='always' allowFullScreen='true' type='application/x-shockwave-flash'></embed></object>]]></VideoTemplate>
   </Provider>
   <Provider>
     <Name>UStream</Name>
-    <VideoTemplate><![CDATA[NOT_YET_IMPLEMENTED]]></VideoTemplate>
+    <VideoTemplate><![CDATA[<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="%width%" height="%height%" id="utv273670"><param name="flashvars" value="autoplay=true&amp;brand=embed&amp;cid=%stream_id%&amp;locale=en_US"/><param name="allowfullscreen" value="true"/><param name="allowscriptaccess" value="always"/><param name="movie" value="http://www.ustream.tv/flash/live/1/%stream_id%?v3=1"/><embed flashvars="autoplay=true&amp;brand=embed&amp;cid=%stream_id%&amp;locale=en_US" width="%width%" height="%height%" allowfullscreen="true" allowscriptaccess="always" id="utv273670" name="utv_n_928116" src="http://www.ustream.tv/flash/live/1/%stream_id%?v3=1" type="application/x-shockwave-flash" /></object>]]></VideoTemplate>       
   </Provider>
   <Provider>
     <Name>JustinTV</Name>
-    <VideoTemplate><![CDATA[<object type="application/x-shockwave-flash" height="%height%" width="%width%" id="live_embed_player_flash" data="http://www.justin.tv/widgets/live_embed_player.swf?channel=%stream_id%" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.justin.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="channel=%stream_id%&auto_play=true&start_volume=25" /></object>]]></VideoTemplate>
+    <VideoTemplate><![CDATA[<object type="application/x-shockwave-flash" height="%height%" width="%width%" id="live_embed_player_flash" data="http://www.justin.tv/widgets/live_embed_player.swf?channel=%slug%" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.justin.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="channel=%slug%&auto_play=true&start_volume=25" /></object>]]></VideoTemplate>
   </Provider>
   <Provider>
     <Name>Own3DTV</Name>

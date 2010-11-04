@@ -16,9 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -29,7 +27,7 @@ namespace BlizzTV
 {
     public partial class frmMain : Form
     {
-        Dictionary<string, Stream> Streams;
+        LibBlizzTV.Streams.Streams Streams = new Streams();
 
         public frmMain()
         {
@@ -38,16 +36,50 @@ namespace BlizzTV
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            LoadStreams();
+            Streams.OnStreamsLoadCompleted += StreamsLoaded;
+            Streams.Load();
         }
 
-        private void LoadStreams()
+        private void StreamsLoaded(object sender, LoadStreamsCompletedEventArgs e)
         {
-            foreach (KeyValuePair<string, Stream> pair in LibBlizzTV.Streams.Streams.Instance.List)
+            if (this.InvokeRequired)
             {
-                ListItem item = new ListItem(pair.Value);
+                Streams.OnStreamsUpdateCompleted += StreamsUpdated;
+                Streams.OnStreamUpdateStep += StreamUpdateStep;
+                Streams.Update();
+                BeginInvoke(new MethodInvoker(delegate() { StreamsLoaded(sender, e); }));
+            }
+            else
+            {
+                LabelStatus.Text = "Updating streams..";
+                ProgressStatus.Maximum = e.Count;
+                ProgressStatus.Value = 0;
+                ProgressStatus.Step = 1;
+                ProgressStatus.Visible = true;
+                List.Items.Clear();
+            }
+        }
+
+        private void StreamUpdateStep(object sender,NotifyStreamUpdateEventArgs e)
+        {
+            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { StreamUpdateStep(sender,e); }));
+            else
+            {
+                ProgressStatus.PerformStep();
+                ListItem item = new ListItem(e.Stream);
                 item.ImageIndex = 0;
                 List.Items.Add(item);
+            }
+        }
+
+        private void StreamsUpdated(object sender, UpdateStreamsCompletedEventsArgs e)
+        {
+            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { StreamsUpdated(sender, e); }));
+            else
+            {
+                LabelStatus.Text = "";
+                ProgressStatus.Visible = false;
+                ProgressStatus.Value = 0;
             }
         }
 

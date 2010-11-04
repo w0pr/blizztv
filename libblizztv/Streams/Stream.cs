@@ -15,14 +15,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LibBlizzTV.Streams
 {
     public class Stream
     {
-        private string _id;
+        private string _slug;
         private string _name;
         private string _provider;
         private Game _game;
@@ -31,7 +29,7 @@ namespace LibBlizzTV.Streams
         private string _description;
         private Int32 _viewer_count;
 
-        public string ID { get { return this._id; } set { this._id = value; } }
+        public string Slug { get { return this._slug; } set { this._slug = value; } }
         public string Name { get { return this._name; } set { this._name = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
         public Game Game { get { return this._game; } set { this._game = value; } }
@@ -42,19 +40,18 @@ namespace LibBlizzTV.Streams
 
         public Stream(string ID, string Name,string Provider)
         {
-            this._id = ID;
+            this._slug = ID;
             this._name = Name;
             this._provider = Provider;
-            this.Process();
         }
 
-        public string VideoEmbedCode()
+        public virtual string VideoEmbedCode()
         {
             string embed_template = Providers.Instance.List[this.Provider].VideoTemplate;
-            embed_template = embed_template.Replace("%stream_id%", this.ID);
+            embed_template = embed_template.Replace("%slug%", this.Slug);
             return embed_template;
         }
 
-        protected virtual void Process() { throw new NotImplementedException(); }
+        public virtual void Update() { throw new NotImplementedException(); }
     }
 }
