@@ -42,7 +42,7 @@ namespace LibBlizzTV.Streams
 
             foreach (var entry in entries)
             {                
-                this.List.Add(entry.Name, StreamFactory.Instance.CreateStream(entry.ID, entry.Name, entry.Provider));
+                this.List.Add(entry.Name, StreamFactory.CreateStream(entry.ID, entry.Name, entry.Provider));
             }
         }
     }
