@@ -21,7 +21,7 @@ namespace LibBlizzTV.Streams.Handlers
 {
     public class LiveStream:Stream
     {
-        public LiveStream(string ID, string Name, string Provider) : base(ID, Name, Provider) { }
+        public LiveStream() { }
 
         public override void Update()
         {

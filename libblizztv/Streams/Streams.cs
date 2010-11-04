@@ -104,23 +104,25 @@ namespace LibBlizzTV.Streams
                               select new
                               {
                                   Name = stream.Element("Name").Value,
-                                  ID = stream.Element("ID").Value,
+                                  Slug = stream.Element("Slug").Value,
                                   Provider = stream.Element("Provider").Value,
                                   Game = stream.Element("Game").Value
                               };
 
                 foreach (var entry in entries)
                 {
-                    Stream stream = StreamFactory.CreateStream(entry.ID, entry.Name, entry.Provider);
+                    Stream stream = StreamFactory.CreateStream(entry.Provider);
+                    stream.Slug = entry.Slug;
+                    stream.Name = entry.Name;
+                    stream.Provider = entry.Provider;
+
                     switch (entry.Game)
                     {
-                        case "Starcraft":
-                            stream.Game = Game.Starcraft;
-                            break;
-                        default:
-                            break;
+                        case "Starcraft": stream.Game = Game.Starcraft; break;
+                        default: break;
                     }
-                    this.List.Add(entry.Name, stream);
+
+                    this.List.Add(entry.Slug, stream);
                 }
             }
 

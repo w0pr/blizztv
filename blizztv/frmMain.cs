@@ -22,12 +22,14 @@ using System.Windows.Forms;
 
 using LibBlizzTV;
 using LibBlizzTV.Streams;
+using LibBlizzTV.VideoChannels;
 
 namespace BlizzTV
 {
     public partial class frmMain : Form
     {
         LibBlizzTV.Streams.Streams Streams = new Streams();
+        LibBlizzTV.VideoChannels.Channels VideoChannels = new Channels();
 
         public frmMain()
         {
@@ -38,6 +40,19 @@ namespace BlizzTV
         {
             Streams.OnStreamsLoadCompleted += StreamsLoaded;
             Streams.Load();
+            VideoChannels.Load();
+            ChannelsLoaded();
+        }
+
+        private void ChannelsLoaded()
+        {
+            VideoChannels.Update();
+            foreach (KeyValuePair<string, Channel> pair in VideoChannels.List)
+            {
+                ListItem item = new ListItem(pair.Value);
+                item.ImageIndex = 0;
+                List.Items.Add(item);
+            }
         }
 
         private void StreamsLoaded(object sender, LoadStreamsCompletedEventArgs e)
@@ -56,7 +71,6 @@ namespace BlizzTV
                 ProgressStatus.Value = 0;
                 ProgressStatus.Step = 1;
                 ProgressStatus.Visible = true;
-                List.Items.Clear();
             }
         }
 

@@ -16,6 +16,7 @@
 using System;
 using System.Windows.Forms;
 using LibBlizzTV.Streams;
+using LibBlizzTV.VideoChannels;
 
 namespace BlizzTV
 {
@@ -23,7 +24,8 @@ namespace BlizzTV
     {
         public enum ListItemType
         {
-            Stream
+            Stream,
+            VideoChannel
         }
 
         private object _storage = null;
@@ -40,6 +42,15 @@ namespace BlizzTV
             this.SubItems.Add(stream.ViewerCount.ToString());            
         }
 
+        public ListItem(Channel channel)
+        {
+            this._item_type = ListItemType.VideoChannel;
+            this._storage = channel;
+            this.SubItems.Add(new ListViewSubItem());
+            this.SubItems.Add(channel.Name);
+            this.SubItems.Add(channel.Videos.Count.ToString());
+        }
+
         public object GetObject()
         {
             return this._storage;
@@ -53,6 +64,12 @@ namespace BlizzTV
                     {
                         StreamPlayer p = new StreamPlayer((Stream)this._storage);
                         p.Show();
+                        break;
+                    }
+                case ListItemType.VideoChannel:
+                    {
+                        ChannelStage s = new ChannelStage((Channel)this._storage);
+                        s.Show();
                         break;
                     }
                 default:

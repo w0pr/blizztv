@@ -3,25 +3,25 @@
 <Streams>
   <Stream>    
     <Name>Tuski</Name>
-    <ID>tuski</ID>
+    <Slug>tuski</Slug>
     <Provider>LiveStream</Provider>
     <Game>Starcraft</Game>
   </Stream>
   <Stream>
     <Name>Oystein123</Name>
-    <ID>Oystein123</ID>
+    <Slug>Oystein123</Slug>
     <Provider>LiveStream</Provider>
     <Game>Starcraft</Game>
   </Stream>
   <Stream>
     <Name>giantbomb</Name>
-    <ID>giantbomb</ID>
+    <Slug>giantbomb</Slug>
     <Provider>JustinTV</Provider>
     <Game>Starcraft</Game>
   </Stream>
   <Stream>
     <Name>elazul700</Name>
-    <ID>elazul700</ID>
+    <Slug>elazul700</Slug>
     <Provider>UStream</Provider>
     <Game>Starcraft</Game>
   </Stream>

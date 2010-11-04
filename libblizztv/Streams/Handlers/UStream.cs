@@ -23,7 +23,7 @@ namespace LibBlizzTV.Streams.Handlers
     {
         private UInt32 _stream_id;
 
-        public UStream(string ID, string Name, string Provider) : base(ID, Name, Provider) { }
+        public UStream() { }
 
         public override void Update()
         {

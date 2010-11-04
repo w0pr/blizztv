@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VideoChannels>
+  <VideoChannel>      
+    <Name>HD Starcraft</Name>
+    <Slug>hdstarcraft</Slug>
+    <Provider>Youtube</Provider>
+    <Game>Starcraft</Game>
+  </VideoChannel>
+</VideoChannels>

@@ -54,6 +54,11 @@
     <Compile Include="Streams\Streams.cs" />
     <Compile Include="Utils\JSON.cs" />
     <Compile Include="Utils\WebReader.cs" />
+    <Compile Include="VideoChannels\Channel.cs" />
+    <Compile Include="VideoChannels\Channels.cs" />
+    <Compile Include="VideoChannels\Provider.cs" />
+    <Compile Include="VideoChannels\Providers.cs" />
+    <Compile Include="VideoChannels\Video.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
