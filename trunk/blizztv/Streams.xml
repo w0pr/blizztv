@@ -6,4 +6,15 @@
     <ID>tuski</ID>
     <Provider>LiveStream</Provider>
   </Stream>
+  <Stream>
+    <Name>Oystein123</Name>
+    <ID>Oystein123</ID>
+    <Provider>LiveStream</Provider>
+  </Stream>
+  <Stream>
+    <Name>Carefoot</Name>
+    <ID>carefoot</ID>
+    <Provider>JustinTV</Provider>
+  </Stream>
 </Streams>
+

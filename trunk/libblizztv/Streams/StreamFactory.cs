@@ -20,18 +20,24 @@ using System.Text;
 
 namespace LibBlizzTV.Streams
 {
-    public class Provider
+    public sealed class StreamFactory
     {
-        private string _name;
-        private string _video_template;
+        private static readonly StreamFactory _instance = new StreamFactory();
+        public static StreamFactory Instance { get { return _instance; } }
 
-        public string Name { get { return this._name; } internal set { this._name = value; } }
-        public string VideoTemplate { get { return this._video_template; } internal set { this._video_template = value; } }
-
-        public Provider(string Name, string VideoTemplate)
+        public Stream CreateStream(string ID, string Name,string Provider)
         {
-            this._name = Name;
-            this._video_template = VideoTemplate;            
+            Stream _stream=null;
+            switch (Provider)
+            {
+                case "LiveStream":
+                    _stream = new Handlers.LiveStream(ID, Name, Provider);
+                    break;
+                default:
+                    break;
+            }
+
+            return _stream;
         }
     }
 }
