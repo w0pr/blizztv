@@ -18,20 +18,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LibBlizzTV.Streams
+namespace LibBlizzTV.Streams.Handlers
 {
-    public class Provider
+    public class LiveStream:Stream
     {
-        private string _name;
-        private string _video_template;
+        public LiveStream(string ID, string Name, string Provider) : base(ID, Name, Provider) { }
 
-        public string Name { get { return this._name; } internal set { this._name = value; } }
-        public string VideoTemplate { get { return this._video_template; } internal set { this._video_template = value; } }
-
-        public Provider(string Name, string VideoTemplate)
+        protected override void Process()
         {
-            this._name = Name;
-            this._video_template = VideoTemplate;            
+            string api_url=string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json",this.ID);
+            
         }
     }
 }

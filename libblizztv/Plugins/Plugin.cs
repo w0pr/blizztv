@@ -17,21 +17,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
-namespace LibBlizzTV.Streams
+namespace LibBlizzTV.Plugins
 {
-    public class Provider
+    public class Plugin
     {
-        private string _name;
-        private string _video_template;
+        private Assembly _assembly;
+        private PluginInfo _plugin_info;
 
-        public string Name { get { return this._name; } internal set { this._name = value; } }
-        public string VideoTemplate { get { return this._video_template; } internal set { this._video_template = value; } }
-
-        public Provider(string Name, string VideoTemplate)
+        public Plugin()
         {
-            this._name = Name;
-            this._video_template = VideoTemplate;            
+            this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
         }
     }
 }

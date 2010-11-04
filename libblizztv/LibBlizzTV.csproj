@@ -40,10 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Plugins\Manager.cs" />
+    <Compile Include="Plugins\Plugin.cs" />
+    <Compile Include="Plugins\PluginInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streams\Stream.cs" />
     <Compile Include="Streams\Provider.cs" />
+    <Compile Include="Streams\Handlers\LiveStream.cs" />
+    <Compile Include="Streams\Stream.cs" />
     <Compile Include="Streams\Providers.cs" />
+    <Compile Include="Streams\StreamFactory.cs" />
     <Compile Include="Streams\Streams.cs" />
   </ItemGroup>
   <ItemGroup />
