@@ -41,19 +41,51 @@ namespace BlizzTV
             LoadStreams();
         }
 
-        private void StageList_DoubleClick(object sender, EventArgs e)
-        {
-            ListViewItem selection = StageList.SelectedItems[0];
-            StreamPlayer p = new StreamPlayer(LibBlizzTV.Streams.Streams.Instance.List[selection.Text]);
-            p.Show();
-        }
-
         private void LoadStreams()
         {
             foreach (KeyValuePair<string, Stream> pair in LibBlizzTV.Streams.Streams.Instance.List)
             {
-                StageList.Items.Add(pair.Key);
+                ListItem item = new ListItem(pair.Value);
+                item.ImageIndex = 0;
+                List.Items.Add(item);
             }
+        }
+
+        private void List_DoubleClick(object sender, EventArgs e)
+        {
+            ListItem selection = (ListItem)List.SelectedItems[0];
+            selection.DoubleClick();
+        }
+
+        private void List_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {            
+            switch(e.ColumnIndex)
+            {
+                case 0:
+                    {
+                        Rectangle Bounds = e.Bounds;
+                        Bounds.Width = Bounds.Height = 16;
+                        e.Graphics.DrawImage(this.GameIcons.Images[0], Bounds);
+                        break;
+                    }
+                case 1:
+                    {
+                        Rectangle Bounds = e.Bounds;
+                        Bounds.Width = Bounds.Height = 16;
+                        e.Graphics.DrawImage(this.ListIcons.Images[0], Bounds);
+                        break;
+                    }
+                case 2:
+                case 3:
+                    e.DrawDefault = true;
+                    break;
+            }
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmAbout f = new frmAbout();
+            f.ShowDialog();
         }
     }
 }

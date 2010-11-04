@@ -38,11 +38,21 @@ namespace LibBlizzTV.Streams
                               Name = stream.Element("Name").Value,
                               ID=stream.Element("ID").Value,
                               Provider = stream.Element("Provider").Value,
+                              Game=stream.Element("Game").Value
                           };
 
             foreach (var entry in entries)
-            {                
-                this.List.Add(entry.Name, StreamFactory.CreateStream(entry.ID, entry.Name, entry.Provider));
+            {
+                Stream stream = StreamFactory.CreateStream(entry.ID, entry.Name, entry.Provider);
+                switch (entry.Game)
+                {
+                    case "Starcraft":
+                        stream.Game = Game.Starcraft;
+                        break;
+                    default:
+                        break;
+                }
+                this.List.Add(entry.Name, stream);
             }
         }
     }

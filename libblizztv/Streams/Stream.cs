@@ -25,6 +25,7 @@ namespace LibBlizzTV.Streams
         private string _id;
         private string _name;
         private string _provider;
+        private Game _game;
 
         private bool _is_live = false;
         private string _description;
@@ -33,6 +34,7 @@ namespace LibBlizzTV.Streams
         public string ID { get { return this._id; } set { this._id = value; } }
         public string Name { get { return this._name; } set { this._name = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
+        public Game Game { get { return this._game; } set { this._game = value; } }
 
         public bool IsLive { get { return this._is_live; } protected set { this._is_live = value; } }
         public string Description { get { return this._description; } protected set { this._description = value; } }
