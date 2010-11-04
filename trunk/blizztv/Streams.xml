@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Streams>
+  <Stream>
+    <Name>Tuski</Name>
+    <ID>tuski</ID>
+    <Provider>LiveStream</Provider>
+  </Stream>
+</Streams>
