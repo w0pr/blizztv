@@ -41,12 +41,18 @@ namespace BlizzTV
 
         private void StreamPlayer_Load(object sender, EventArgs e)
         {
+            this.Text = string.Format("Stream: {0}@{1}", this._stream.Name, this._stream.Provider);
+            this.LoadStream();
+        }
+
+        private void LoadStream()
+        {
             string html = template;
             html = html.Replace("%video%", this._stream.VideoEmbedCode());
             html = html.Replace("%width%", "640");
             html = html.Replace("%height%", "385");
 
-            string file = Path.GetTempFileName() + ".html";           
+            string file = Path.GetTempFileName() + ".html";
             FileStream fs = new FileStream(file, FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
             sw.Write(html);
@@ -54,6 +60,11 @@ namespace BlizzTV
             sw.Close();
             fs.Close();
             browser.Navigate(file);
+        }
+
+        private void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            this.browser.Visible = true;
         }
     }
 }

@@ -1,20 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Streams>
-  <Stream>
+  <Stream>    
     <Name>Tuski</Name>
     <ID>tuski</ID>
     <Provider>LiveStream</Provider>
+    <Game>Starcraft</Game>
   </Stream>
   <Stream>
     <Name>Oystein123</Name>
     <ID>Oystein123</ID>
     <Provider>LiveStream</Provider>
-  </Stream>
-  <Stream>
-    <Name>Carefoot</Name>
-    <ID>carefoot</ID>
-    <Provider>JustinTV</Provider>
+    <Game>Starcraft</Game>
   </Stream>
 </Streams>
 
