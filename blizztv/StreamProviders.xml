@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Providers>
+  <Provider>
+    <Name>LiveStream</Name>
+    <VideoTemplate><![CDATA[<object width='%width%' height='%height%' id='lsplayer' classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000'><param name='movie' value='http://cdn.livestream.com/grid/LSPlayer.swf?channel=%stream_id%&amp;autoPlay=true'></param><param name='allowScriptAccess' value='always'></param><param name='allowFullScreen' value='true'></param><embed name='lsplayer' wmode='transparent' src='http://cdn.livestream.com/grid/LSPlayer.swf?channel=%stream_id%&amp;autoPlay=true' width='%width%' height='%height%' allowScriptAccess='always' allowFullScreen='true' type='application/x-shockwave-flash'></embed></object>]]></VideoTemplate>
+  </Provider>
+</Providers>
