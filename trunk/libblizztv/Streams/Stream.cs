@@ -26,9 +26,17 @@ namespace LibBlizzTV.Streams
         private string _name;
         private string _provider;
 
+        private bool _is_live = false;
+        private string _description;
+        private Int32 _viewer_count;
+
         public string ID { get { return this._id; } set { this._id = value; } }
         public string Name { get { return this._name; } set { this._name = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
+
+        public bool IsLive { get { return this._is_live; } protected set { this._is_live = value; } }
+        public string Description { get { return this._description; } protected set { this._description = value; } }
+        public Int32 ViewerCount { get { return this._viewer_count; } protected set { this._viewer_count = value; } }
 
         public Stream(string ID, string Name,string Provider)
         {

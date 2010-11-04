@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 
@@ -27,7 +28,14 @@ namespace LibBlizzTV.Streams.Handlers
         protected override void Process()
         {
             string api_url=string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json",this.ID);
-            
+            string response = Utils.WebReader.Read(api_url);
+
+            Hashtable data = (Hashtable)Utils.JSON.JsonDecode(response);
+            data = (Hashtable)data["rss"];
+            data = (Hashtable)data["channel"];
+            this.IsLive = (bool)data["isLive"];
+            this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString());
+            this.Description = (string)data["description"].ToString();
         }
     }
 }

@@ -20,12 +20,9 @@ using System.Text;
 
 namespace LibBlizzTV.Streams
 {
-    public sealed class StreamFactory
+    public static class StreamFactory
     {
-        private static readonly StreamFactory _instance = new StreamFactory();
-        public static StreamFactory Instance { get { return _instance; } }
-
-        public Stream CreateStream(string ID, string Name,string Provider)
+        public static Stream CreateStream(string ID, string Name,string Provider)
         {
             Stream _stream=null;
             switch (Provider)
