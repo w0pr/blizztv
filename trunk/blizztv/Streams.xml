@@ -13,5 +13,19 @@
     <Provider>LiveStream</Provider>
     <Game>Starcraft</Game>
   </Stream>
+  <Stream>
+    <Name>giantbomb</Name>
+    <ID>giantbomb</ID>
+    <Provider>JustinTV</Provider>
+    <Game>Starcraft</Game>
+  </Stream>
+  <Stream>
+    <Name>elazul700</Name>
+    <ID>elazul700</ID>
+    <Provider>UStream</Provider>
+    <Game>Starcraft</Game>
+  </Stream>
 </Streams>
+
+
 

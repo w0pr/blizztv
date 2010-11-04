@@ -16,44 +16,136 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
+using System.Threading;
 
 namespace LibBlizzTV.Streams
 {
+    public class LoadStreamsCompletedEventArgs : EventArgs
+    {
+        private bool _success=false;
+        private int _count=0;
+
+        public bool Success { get { return this._success; } }
+        public int Count { get { return this._count; } }
+
+        public LoadStreamsCompletedEventArgs(bool Success, int Count)
+        {
+            this._success = Success;
+            this._count = Count;
+        }
+    }
+
+    public class UpdateStreamsCompletedEventsArgs : EventArgs
+    {
+        private bool _success=false;
+        private int _count=0;
+
+        public bool Success { get { return this._success; } }
+        public int Count { get { return this._count; } }
+
+        public UpdateStreamsCompletedEventsArgs(bool Success, int Count)
+        {
+            this._success = Success;
+            this._count = Count;
+        }
+    }
+
+    public class NotifyStreamUpdateEventArgs : EventArgs
+    {
+        private Stream _stream;
+        public Stream Stream { get { return this._stream; } }
+
+        public NotifyStreamUpdateEventArgs(Stream Stream)
+        {
+            this._stream = Stream;
+        }
+    }
+
     public sealed class Streams
     {
-        private static readonly Streams _instance = new Streams();
-        public static Streams Instance { get { return _instance; } }
-
         public Dictionary<string, Stream> List = new Dictionary<string, Stream>();
 
-        private Streams()
+        private object _lock;
+        private Thread _worker;
+
+        public delegate void LoadStreamsCompletedEventHandler(object sender, LoadStreamsCompletedEventArgs e);
+        public event LoadStreamsCompletedEventHandler OnStreamsLoadCompleted;
+
+        public delegate void UpdateStreamsCompletedEventHandler(object sender, UpdateStreamsCompletedEventsArgs e);
+        public event UpdateStreamsCompletedEventHandler OnStreamsUpdateCompleted;
+
+        public delegate void NotifyStreamUpdateEventHandler(object sender,NotifyStreamUpdateEventArgs e);
+        public event NotifyStreamUpdateEventHandler OnStreamUpdateStep;
+        
+        public Streams() { }
+
+        public void Load()
         {
-            XDocument xdoc = XDocument.Load("Streams.xml");
+            _worker = new Thread(_load_streams) { IsBackground = true };
+            _worker.Start();
+        }
 
-            var entries = from stream in xdoc.Descendants("Stream")
-                          select new
-                          {
-                              Name = stream.Element("Name").Value,
-                              ID=stream.Element("ID").Value,
-                              Provider = stream.Element("Provider").Value,
-                              Game=stream.Element("Game").Value
-                          };
+        public void Update()
+        {
+            _worker = new Thread(_update_streams) { IsBackground = true };
+            _worker.Start();
+        }
 
-            foreach (var entry in entries)
+        private void _load_streams()
+        {
+            _lock = new object();
+            lock (_lock)
             {
-                Stream stream = StreamFactory.CreateStream(entry.ID, entry.Name, entry.Provider);
-                switch (entry.Game)
+
+                XDocument xdoc = XDocument.Load("Streams.xml");
+
+                var entries = from stream in xdoc.Descendants("Stream")
+                              select new
+                              {
+                                  Name = stream.Element("Name").Value,
+                                  ID = stream.Element("ID").Value,
+                                  Provider = stream.Element("Provider").Value,
+                                  Game = stream.Element("Game").Value
+                              };
+
+                foreach (var entry in entries)
                 {
-                    case "Starcraft":
-                        stream.Game = Game.Starcraft;
-                        break;
-                    default:
-                        break;
+                    Stream stream = StreamFactory.CreateStream(entry.ID, entry.Name, entry.Provider);
+                    switch (entry.Game)
+                    {
+                        case "Starcraft":
+                            stream.Game = Game.Starcraft;
+                            break;
+                        default:
+                            break;
+                    }
+                    this.List.Add(entry.Name, stream);
                 }
-                this.List.Add(entry.Name, stream);
             }
+
+            if (OnStreamsLoadCompleted != null) OnStreamsLoadCompleted(this, new LoadStreamsCompletedEventArgs(true, this.List.Count));
+
+            Thread.CurrentThread.Abort();
+            _worker = null;
+        }
+
+        private void _update_streams()
+        {
+            _lock = new object();
+            lock (_lock)
+            {
+                foreach (KeyValuePair<string, Stream> pair in this.List)
+                {
+                    pair.Value.Update();
+                    if (OnStreamUpdateStep != null) OnStreamUpdateStep(this, new NotifyStreamUpdateEventArgs(pair.Value));
+                }
+            }
+
+            if (OnStreamsUpdateCompleted != null) OnStreamsUpdateCompleted(this, new UpdateStreamsCompletedEventsArgs(true, this.List.Count));
+
+            Thread.CurrentThread.Abort();
+            _worker = null;
         }
     }
 }

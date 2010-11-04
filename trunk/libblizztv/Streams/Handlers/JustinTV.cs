@@ -19,21 +19,23 @@ using System.Collections;
 
 namespace LibBlizzTV.Streams.Handlers
 {
-    public class LiveStream:Stream
+    public class JustinTV:Stream
     {
-        public LiveStream(string ID, string Name, string Provider) : base(ID, Name, Provider) { }
+        public JustinTV(string ID, string Name, string Provider) : base(ID, Name, Provider) { }
 
         public override void Update()
         {
-            string api_url=string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json",this.Slug);
+            string api_url = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug);
             string response = Utils.WebReader.Read(api_url);
 
-            Hashtable data = (Hashtable)Utils.JSON.JsonDecode(response);
-            data = (Hashtable)data["rss"];
-            data = (Hashtable)data["channel"];
-            this.IsLive = (bool)data["isLive"];
-            this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString());
-            this.Description = (string)data["description"].ToString();
+            ArrayList data = (ArrayList)Utils.JSON.JsonDecode(response);
+            if (data.Count > 0)
+            {
+                this.IsLive = true;
+                Hashtable table = (Hashtable)data[0];
+                this.ViewerCount = Int32.Parse(table["stream_count"].ToString());
+                this.Description = (string)table["title"].ToString();
+            }
         }
     }
 }

@@ -14,9 +14,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LibBlizzTV.Streams
 {
@@ -30,11 +27,18 @@ namespace LibBlizzTV.Streams
                 case "LiveStream":
                     _stream = new Handlers.LiveStream(ID, Name, Provider);
                     break;
+                case "JustinTV":
+                    _stream = new Handlers.JustinTV(ID, Name, Provider);
+                    break;
+                case "UStream":
+                    _stream = new Handlers.UStream(ID, Name, Provider);
+                    break;
                 default:
                     break;
             }
 
-            return _stream;
+            if(_stream!=null) return _stream;
+            else throw new NotImplementedException();
         }
     }
 }

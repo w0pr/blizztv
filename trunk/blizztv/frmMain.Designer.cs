@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.List = new System.Windows.Forms.ListView();
             this.game = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.icon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.text = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.GameIcons = new System.Windows.Forms.ImageList(this.components);
@@ -40,8 +41,11 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ListIcons = new System.Windows.Forms.ImageList(this.components);
-            this.icon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.LabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ProgressStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // List
@@ -57,7 +61,7 @@
             this.List.Location = new System.Drawing.Point(0, 24);
             this.List.Name = "List";
             this.List.OwnerDraw = true;
-            this.List.Size = new System.Drawing.Size(206, 266);
+            this.List.Size = new System.Drawing.Size(254, 266);
             this.List.TabIndex = 0;
             this.List.UseCompatibleStateImageBehavior = false;
             this.List.View = System.Windows.Forms.View.Details;
@@ -68,6 +72,11 @@
             // 
             this.game.Text = "Game";
             this.game.Width = 16;
+            // 
+            // icon
+            // 
+            this.icon.Text = "Icon";
+            this.icon.Width = 17;
             // 
             // name
             // 
@@ -93,14 +102,15 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(206, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(254, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // blizzTVToolStripMenuItem
             // 
+            this.blizzTVToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("blizzTVToolStripMenuItem.Image")));
             this.blizzTVToolStripMenuItem.Name = "blizzTVToolStripMenuItem";
-            this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.blizzTVToolStripMenuItem.Text = "BlizzTV";
             // 
             // aboutToolStripMenuItem
@@ -124,16 +134,35 @@
             this.ListIcons.TransparentColor = System.Drawing.Color.Transparent;
             this.ListIcons.Images.SetKeyName(0, "satellite_16.png");
             // 
-            // icon
+            // statusStrip1
             // 
-            this.icon.Text = "Icon";
-            this.icon.Width = 17;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LabelStatus,
+            this.ProgressStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 268);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(254, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // LabelStatus
+            // 
+            this.LabelStatus.Name = "LabelStatus";
+            this.LabelStatus.Size = new System.Drawing.Size(10, 17);
+            this.LabelStatus.Text = " ";
+            // 
+            // ProgressStatus
+            // 
+            this.ProgressStatus.Name = "ProgressStatus";
+            this.ProgressStatus.Size = new System.Drawing.Size(100, 16);
+            this.ProgressStatus.Visible = false;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(206, 290);
+            this.ClientSize = new System.Drawing.Size(254, 290);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.List);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -144,6 +173,8 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,6 +193,9 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.ImageList ListIcons;
         private System.Windows.Forms.ColumnHeader icon;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel LabelStatus;
+        private System.Windows.Forms.ToolStripProgressBar ProgressStatus;
     }
 }
 
