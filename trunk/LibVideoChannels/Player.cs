@@ -21,13 +21,12 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using LibBlizzTV.VideoChannels;
 
 namespace BlizzTV
 {
     public partial class ChannelStage : Form
     {
-        private Channel _channel;
+        /*
         private string template = "<html><head><style type='text/css'>BODY {margin:  0px;padding: 0px;background-color: #000000;}</style></head><body>%video%<body></html>";
 
         public ChannelStage(Channel Channel)
@@ -64,5 +63,6 @@ namespace BlizzTV
         {
             this.browser.Visible = true;
         }
+         */
     }
 }

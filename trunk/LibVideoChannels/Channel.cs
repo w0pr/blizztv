@@ -18,20 +18,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using LibBlizzTV;
+using LibBlizzTV.Utils;
 
-namespace LibBlizzTV.VideoChannels
+namespace LibVideoChannels
 {
-    public class Channel
+    public class Channel:ListItem
     {
         private string _slug;
-        private string _name;
         private string _provider;
-        private Game _game;
 
         public string Slug { get { return this._slug; } set { this._slug = value; } }
-        public string Name { get { return this._name; } set { this._name = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
-        public Game Game { get { return this._game; } set { this._game = value; } }
         
         private Regex YoutubeVideoID=new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled);
 
@@ -42,7 +40,7 @@ namespace LibBlizzTV.VideoChannels
         public void Update() 
         {
             string api_url = string.Format(@"http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results=5", this.Slug);
-            string response = Utils.WebReader.Read(api_url);
+            string response = WebReader.Read(api_url);
 
             XDocument xdoc = XDocument.Parse(response);
             var entries = from item in xdoc.Descendants("item")

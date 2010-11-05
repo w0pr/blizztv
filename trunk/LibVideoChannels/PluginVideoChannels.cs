@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using System.Text;
 using LibBlizzTV;
 
@@ -24,10 +25,41 @@ namespace LibVideoChannels
     [Plugin("LibVideoChannels", "Video channel aggregator plugin for BlizzTV")]
     public class PluginVideoChannels:Plugin
     {
+        private List<Channel> _channels = new List<Channel>();
+        ListGroup _group = new ListGroup("Video Channels", "video_channels");
+
         public PluginVideoChannels() { }
 
         public override void Load()
         {
+            this.RegisterListGroup(this._group);
+
+            XDocument xdoc = XDocument.Load("VideoChannels.xml");
+            var entries = from videochannel in xdoc.Descendants("VideoChannel")
+                          select new
+                          {
+                              Name = videochannel.Element("Name").Value,
+                              Slug = videochannel.Element("Slug").Value,
+                              Provider = videochannel.Element("Provider").Value,
+                              Game = videochannel.Element("Game").Value
+                          };
+
+            foreach (var entry in entries)
+            {
+                Channel c = new Channel();
+                c.Title = entry.Name;
+                c.Slug = entry.Slug;
+                c.Provider = entry.Provider;
+                this._channels.Add(c);
+            }
+
+            foreach (Channel channel in this._channels)
+            {
+                channel.Update();
+                RegisterListItem(channel, this._group);
+            }
+
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
         }
     }
 }

@@ -22,12 +22,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-using LibBlizzTV.Streams;
-
 namespace BlizzTV
 {
     public partial class StreamPlayer : Form
     {
+        /*
         private LibBlizzTV.Streams.Stream _stream;
         
         private string template="<html><head><style type='text/css'>BODY {margin:  0px;padding: 0px;background-color: #000000;}</style></head><body>%video%<body></html>";
@@ -65,5 +64,6 @@ namespace BlizzTV
         {
             this.browser.Visible = true;
         }
+         * */
     }
 }

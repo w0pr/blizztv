@@ -15,21 +15,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace LibBlizzTV.VideoChannels
+namespace LibVideoChannels
 {
-    public class Provider
+    public class Video
     {
-        private string _name;
-        private string _video_template;
+        private string _title;
+        private string _guid;
+        private string _video_id;
 
-        public string Name { get { return this._name; } internal set { this._name = value; } }
-        public string VideoTemplate { get { return this._video_template; } internal set { this._video_template = value; } }
+        public string Title { get { return this._title; } internal set { this._title = value; } }
+        public string GUID { get { return this._guid; } internal set { this._guid = value; } }
+        public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
 
-        public Provider(string Name, string VideoTemplate)
+        public Video()
         {
-            this._name = Name;
-            this._video_template = VideoTemplate;
         }
     }
 }
