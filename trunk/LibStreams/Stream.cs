@@ -24,6 +24,8 @@ namespace LibStreams
         private string _slug;
         private string _provider;
         private string _link;
+        protected string _movie;
+        protected string _flash_vars;
 
         private bool _is_live = false;
         private string _description;
@@ -32,6 +34,8 @@ namespace LibStreams
         public string Slug { get { return this._slug; } set { this._slug = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
         public string Link { get { return this._link; } set { this._link = value; } }
+        public string Movie { get { return this._movie; } set { this._movie = value; } }
+        public string FlashVars { get { return this._flash_vars; } set { this._flash_vars = value; } }
 
         public bool IsLive { get { return this._is_live; } internal set { this._is_live = value; } }
         public string Description { get { return this._description; } internal set { this._description = value; } }
@@ -39,18 +43,23 @@ namespace LibStreams
 
         public Stream()
         {
+
         }
 
-        public virtual string VideoEmbedCode()
+        public virtual void Process()
         {
-            string embed_template = Providers.Instance.List[this.Provider].VideoTemplate;
-            embed_template = embed_template.Replace("%slug%", this.Slug);
-            return embed_template;
+            this._movie = Providers.Instance.List[this.Provider].Movie;
+            this._flash_vars = Providers.Instance.List[this.Provider].FlashVars;
+
+            this._movie = this._movie.Replace("%slug%", this.Slug);
+            this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug);
         }
 
         public override void DoubleClick(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(this.Link, null);
+            //System.Diagnostics.Process.Start(this.Link, null);
+            Player p = new Player(this);
+            p.Show();
         }
 
         public virtual void Update() { throw new NotImplementedException(); }

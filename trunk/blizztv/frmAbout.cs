@@ -37,7 +37,7 @@ namespace BlizzTV
         }
 
         private void frmAbout_Load(object sender, EventArgs e)
-        {
+        {            
             ListviewModules.Items.Add(new ListviewModulesItem(Assembly.GetExecutingAssembly().GetName().Name, Assembly.GetExecutingAssembly().GetName().Version.ToString(), "The user-interface."));
             ListviewModules.Items.Add(new ListviewModulesItem(PluginManager.Instance.AssemblyName, PluginManager.Instance.AssemblyVersion, "The core."));
 

@@ -8,6 +8,12 @@
     <Game>Starcraft</Game>
   </Stream>
   <Stream>
+    <Name>CellaWeRRa</Name>
+    <Slug>CellaWeRRa</Slug>
+    <Provider>LiveStream</Provider>
+    <Game>Starcraft</Game>
+  </Stream>
+  <Stream>
     <Name>Oystein123</Name>
     <Slug>Oystein123</Slug>
     <Provider>LiveStream</Provider>
