@@ -23,15 +23,14 @@ using System.Windows.Forms;
 using LibBlizzTV;
 using LibBlizzTV.Streams;
 using LibBlizzTV.VideoChannels;
-using LibBlizzTV.Feeds;
+
 
 namespace BlizzTV
 {
     public partial class frmMain : Form
     {
         LibBlizzTV.Streams.Streams Streams = new Streams();
-        LibBlizzTV.VideoChannels.Channels VideoChannels = new Channels();
-        LibBlizzTV.Feeds.Feeds Feeds = new Feeds();
+        LibBlizzTV.VideoChannels.Channels VideoChannels = new Channels();        
 
         public frmMain()
         {
@@ -40,7 +39,15 @@ namespace BlizzTV
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            List.Groups.Add("streams", "Streams");
+            PluginManager pm = PluginManager.Instance;
+            foreach (KeyValuePair<string,PluginInfo> pair in pm.Plugins)
+            {
+                Plugin Plugin = pair.Value.CreateInstance();
+                Plugin.Update();
+            }
+
+
+            /*List.Groups.Add("streams", "Streams");
             List.Groups.Add("channels", "Video Channels");
             List.Groups.Add("feeds","Feeds");
 
@@ -68,7 +75,7 @@ namespace BlizzTV
                     item.Group = List.Groups["feeds"];
                     List.Items.Add(item);
                 }
-            }                       
+            }*/                  
         }
 
         private void StreamsLoaded(object sender, LoadStreamsCompletedEventArgs e)

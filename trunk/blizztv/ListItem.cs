@@ -17,7 +17,6 @@ using System;
 using System.Windows.Forms;
 using LibBlizzTV.Streams;
 using LibBlizzTV.VideoChannels;
-using LibBlizzTV.Feeds;
 
 namespace BlizzTV
 {
@@ -51,13 +50,13 @@ namespace BlizzTV
             this.SubItems.Add(new ListViewSubItem());
         }
 
-        public ListItem(Story story)
+        /*public ListItem(Story story)
         {
             this._item_type = ListItemType.Story;
             this._storage = story;
             this.SubItems.Add(string.Format("{0}", story.Title));
             this.SubItems.Add(new ListViewSubItem());
-        }
+        }*/
 
         public object GetObject()
         {
