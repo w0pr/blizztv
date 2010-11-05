@@ -1,6 +1,6 @@
-﻿namespace BlizzTV
+﻿namespace LibStreams
 {
-    partial class StreamPlayer
+    partial class Player
     {
         /// <summary>
         /// Required designer variable.
@@ -28,40 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StreamPlayer));
-            this.browser = new System.Windows.Forms.WebBrowser();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Player));
+            this.Stage = new AxShockwaveFlashObjects.AxShockwaveFlash();
+            ((System.ComponentModel.ISupportInitialize)(this.Stage)).BeginInit();
             this.SuspendLayout();
             // 
-            // browser
+            // Stage
             // 
-            this.browser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.browser.Location = new System.Drawing.Point(0, 0);
-            this.browser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.browser.Name = "browser";
-            this.browser.ScrollBarsEnabled = false;
-            this.browser.Size = new System.Drawing.Size(639, 384);
-            this.browser.TabIndex = 0;
-            this.browser.Visible = false;
-            this.browser.WebBrowserShortcutsEnabled = false;
+            this.Stage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Stage.Enabled = true;
+            this.Stage.Location = new System.Drawing.Point(0, 0);
+            this.Stage.Name = "Stage";
+            this.Stage.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Stage.OcxState")));
+            this.Stage.Size = new System.Drawing.Size(495, 288);
+            this.Stage.TabIndex = 0;
             // 
-            // StreamPlayer
+            // Player
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(639, 384);
-            this.Controls.Add(this.browser);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "StreamPlayer";
-            this.Text = "StreamPlayer";
+            this.ClientSize = new System.Drawing.Size(495, 288);
+            this.Controls.Add(this.Stage);
+            this.Name = "Player";
+            this.Text = "Player";
+            this.Load += new System.EventHandler(this.Player_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.Stage)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.WebBrowser browser;
+        private AxShockwaveFlashObjects.AxShockwaveFlash Stage;
     }
 }

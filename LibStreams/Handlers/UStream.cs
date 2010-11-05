@@ -48,11 +48,11 @@ namespace LibStreams.Handlers
             }
         }
 
-        public override string VideoEmbedCode()
+        public override void Process()
         {
-            string embed_template = base.VideoEmbedCode();
-            embed_template = embed_template.Replace("%stream_id%", this._stream_id.ToString());
-            return embed_template;
+            base.Process();
+            this._movie = this._movie.Replace("%stream_id%", this._stream_id.ToString());
+            this._flash_vars = this._flash_vars.Replace("%stream_id%", this._stream_id.ToString());
         }
     }
 }
