@@ -14,6 +14,7 @@
  */
 
 using System;
+using System.Drawing;
 using System.Reflection;
 
 namespace LibBlizzTV
@@ -94,14 +95,28 @@ namespace LibBlizzTV
     {
         private string _name;
         private string _description;
+        private string _icon_name;
+        private Bitmap _icon = null;
 
         public string Name { get { return this._name; } }
         public string Description { get { return this._description; } }
+        public Bitmap Icon { get { return this._icon; } }
 
-        public PluginAttribute(string Name, string Description)
+        public PluginAttribute(string Name, string Description, string IconName = null)
         {
             this._name = Name;
             this._description = Description;
+            this._icon_name = IconName;
+        }
+
+        internal void ResolveResources(Assembly _assembly)
+        {
+            if (_assembly != null && this._icon_name != null)
+            {
+                var stream = _assembly.GetManifestResourceStream(string.Format("{0}.Resources.{1}", _assembly.GetName().Name, this._icon_name));
+                if (stream != null) this._icon = new Bitmap(stream);
+                else this._icon = Resources.blizztv_16; // if an icon is not specified use the default one.
+            }
         }
 
         public override string ToString()

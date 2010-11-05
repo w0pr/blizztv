@@ -55,7 +55,8 @@ namespace LibBlizzTV
 
                         if (_attr.Length > 0)
                         {
-                            this._attributes = (PluginAttribute)_attr[0];
+                            (_attr[0] as PluginAttribute).ResolveResources(this._assembly);
+                            this._attributes = (PluginAttribute)_attr[0];                            
                             this._valid = true; // yes we're valid ;)
                         }
                         else throw new LoadPluginInfoException(this._assembly_file, "Plugin does not define the required attributes."); // all plugins should define the required atributes

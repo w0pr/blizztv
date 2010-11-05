@@ -23,7 +23,7 @@ using LibBlizzTV;
 
 namespace LibFeeds
 {
-    [Plugin("LibFeeds","Feed aggregator plugin for BlizzTV")]
+    [Plugin("LibFeeds","Feed aggregator plugin for BlizzTV","feed_16.png")]
     public class FeedsPlugin:Plugin
     {
         private List<Feed> _feeds = new List<Feed>();

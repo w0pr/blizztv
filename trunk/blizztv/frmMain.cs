@@ -29,6 +29,17 @@ namespace BlizzTV
         public frmMain()
         {
             InitializeComponent();
+            DoubleBufferControl(this.List);
+        }
+
+        public static void DoubleBufferControl(System.Windows.Forms.Control c)
+        {
+            // http://stackoverflow.com/questions/76993/how-to-double-buffer-net-controls-on-a-form/77233#77233
+            // Taxes: Remote Desktop Connection and painting: http://blogs.msdn.com/oldnewthing/archive/2006/01/03/508694.aspx
+            
+            if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
+            System.Reflection.PropertyInfo db_prop = typeof(System.Windows.Forms.Control).GetProperty("DoubleBuffered",System.Reflection.BindingFlags.NonPublic |System.Reflection.BindingFlags.Instance);
+            db_prop.SetValue(c, true, null);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -62,7 +73,7 @@ namespace BlizzTV
             if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItem(sender, item, group); }));
             else
             {
-                ListItemContainer c = new ListItemContainer(item);
+                ListItemContainer c = new ListItemContainer((Plugin)sender,item);
                 c.Group = List.Groups[group.Key];
                 this.List.Items.Add(c);
             }
@@ -70,16 +81,8 @@ namespace BlizzTV
 
         private void List_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-            switch (e.ColumnIndex)
-            {
-                case 0:
-                case 1:
-                case 2:
-                    e.DrawDefault = true;
-                    break;
-                default:
-                    break;
-            }
+            ListItemContainer item = (ListItemContainer)List.Items[e.ItemIndex];
+            item.DrawSubItem(sender, e);
         }
 
         private void List_DoubleClick(object sender, EventArgs e)
@@ -96,11 +99,5 @@ namespace BlizzTV
             frmAbout f = new frmAbout();
             f.ShowDialog();
         }
-
-        /*
-            Rectangle Bounds = e.Bounds;
-            Bounds.Width = Bounds.Height = 16;
-            e.Graphics.DrawImage(item_image, Bounds);
-        */
     }
 }
