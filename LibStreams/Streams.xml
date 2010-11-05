@@ -20,14 +20,14 @@
     <Game>Starcraft</Game>
   </Stream>
   <Stream>
-    <Name>giantbomb</Name>
-    <Slug>giantbomb</Slug>
+    <Name>twit</Name>
+    <Slug>twit</Slug>
     <Provider>JustinTV</Provider>
     <Game>Starcraft</Game>
   </Stream>
   <Stream>
-    <Name>elazul700</Name>
-    <Slug>elazul700</Slug>
+    <Name>bane1998</Name>
+    <Slug>bane1998</Slug>
     <Provider>UStream</Provider>
     <Game>Starcraft</Game>
   </Stream>

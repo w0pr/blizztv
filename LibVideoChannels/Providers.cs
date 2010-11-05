@@ -35,12 +35,13 @@ namespace LibVideoChannels
                           select new
                           {
                               Name = provider.Element("Name").Value,
-                              VideoTemplate = provider.Element("VideoTemplate").Value,
+                              Movie = provider.Element("Movie").Value,
+                              FlashVars = provider.Element("FlashVars").Value,
                           };
 
             foreach (var entry in entries)
             {
-                this.List.Add(entry.Name, new Provider(entry.Name, entry.VideoTemplate));
+                this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie,entry.FlashVars));
             }
         }
     }
@@ -48,15 +49,18 @@ namespace LibVideoChannels
     public class Provider
     {
         private string _name;
-        private string _video_template;
+        private string _movie;
+        private string _flash_vars;
 
         public string Name { get { return this._name; } internal set { this._name = value; } }
-        public string VideoTemplate { get { return this._video_template; } internal set { this._video_template = value; } }
+        public string Movie { get { return this._movie; } internal set { this._movie = value; } }
+        public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
 
-        public Provider(string Name, string VideoTemplate)
+        public Provider(string Name, string Movie,string FlashVars)
         {
             this._name = Name;
-            this._video_template = VideoTemplate;
+            this._movie = Movie;
+            this._flash_vars = FlashVars;
         }
     }
 }

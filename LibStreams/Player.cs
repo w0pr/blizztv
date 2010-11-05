@@ -23,8 +23,8 @@ namespace LibStreams
         private void Player_Load(object sender, EventArgs e)
         {
             this.Text=string.Format("Stream: {0}@{1}",this._stream.Title,this._stream.Provider);
-            this.Stage.EmbedMovie = true;
             this.Stage.FlashVars = this._stream.FlashVars;
+            this.Stage.MovieData = string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars);
             this.Stage.LoadMovie(0, string.Format("{0}?{1}",this._stream.Movie,this._stream.FlashVars));            
         }
     }

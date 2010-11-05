@@ -1,6 +1,6 @@
-﻿namespace BlizzTV
+﻿namespace LibVideoChannels
 {
-    partial class ChannelStage
+    partial class Player
     {
         /// <summary>
         /// Required designer variable.
@@ -28,36 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.browser = new System.Windows.Forms.WebBrowser();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Player));
+            this.Stage = new AxShockwaveFlashObjects.AxShockwaveFlash();
+            ((System.ComponentModel.ISupportInitialize)(this.Stage)).BeginInit();
             this.SuspendLayout();
             // 
-            // browser
+            // Stage
             // 
-            this.browser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.browser.Location = new System.Drawing.Point(0, 0);
-            this.browser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.browser.Name = "browser";
-            this.browser.ScrollBarsEnabled = false;
-            this.browser.Size = new System.Drawing.Size(613, 392);
-            this.browser.TabIndex = 1;
-            this.browser.Visible = false;
-            this.browser.WebBrowserShortcutsEnabled = false;
+            this.Stage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Stage.Enabled = true;
+            this.Stage.Location = new System.Drawing.Point(0, 0);
+            this.Stage.Name = "Stage";
+            this.Stage.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Stage.OcxState")));
+            this.Stage.Size = new System.Drawing.Size(482, 278);
+            this.Stage.TabIndex = 0;
             // 
-            // ChannelStage
+            // Player
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(613, 392);
-            this.Controls.Add(this.browser);
-            this.MaximizeBox = false;
-            this.Name = "ChannelStage";
-            this.Text = "VideoPlayer";
+            this.ClientSize = new System.Drawing.Size(482, 278);
+            this.Controls.Add(this.Stage);
+            this.Name = "Player";
+            this.Text = "Player";
+            this.Load += new System.EventHandler(this.Player_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.Stage)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.WebBrowser browser;
+        private AxShockwaveFlashObjects.AxShockwaveFlash Stage;
     }
 }
