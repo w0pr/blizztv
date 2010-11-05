@@ -99,5 +99,26 @@ namespace BlizzTV
             frmAbout f = new frmAbout();
             f.ShowDialog();
         }
+
+        private void blizzTVcomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.blizztv.com", null);
+        }
+
+        private void bugReportsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/issues/list", null);
+        }
+
+        private void userGuideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/UserGuide", null);            
+        }
+
+        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPreferences p = new frmPreferences();
+            p.ShowDialog();
+        }
     }
 }
