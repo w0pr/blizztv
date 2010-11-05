@@ -75,6 +75,11 @@ namespace LibBlizzTV
             p.PluginInfo = this; // attach the plugin-info to plugin itself.
             return p;
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0} - v{1}", this.AssemblyName, this.AssemblyVersion);
+        }
     }
 
     public class LoadPluginInfoException : Exception
