@@ -37,14 +37,22 @@
             this.GameIcons = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.blizzTVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bugReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blizzTVcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ListIcons = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.LabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressStatus = new System.Windows.Forms.ToolStripProgressBar();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ContextAboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // List
@@ -104,20 +112,58 @@
             // 
             // blizzTVToolStripMenuItem
             // 
+            this.blizzTVToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.preferencesToolStripMenuItem});
             this.blizzTVToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("blizzTVToolStripMenuItem.Image")));
             this.blizzTVToolStripMenuItem.Name = "blizzTVToolStripMenuItem";
             this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(28, 20);
             // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("preferencesToolStripMenuItem.Image")));
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.preferencesToolStripMenuItem.Text = "Preferences";
+            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
+            // 
             // HelpToolStripMenuItem
             // 
             this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.userGuideToolStripMenuItem,
+            this.bugReportsToolStripMenuItem,
+            this.blizzTVcomToolStripMenuItem,
             this.AboutToolStripMenuItem});
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
             this.HelpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.HelpToolStripMenuItem.Text = "Help";
             // 
+            // userGuideToolStripMenuItem
+            // 
+            this.userGuideToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("userGuideToolStripMenuItem.Image")));
+            this.userGuideToolStripMenuItem.Name = "userGuideToolStripMenuItem";
+            this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.userGuideToolStripMenuItem.Text = "User Guide";
+            this.userGuideToolStripMenuItem.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
+            // 
+            // bugReportsToolStripMenuItem
+            // 
+            this.bugReportsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("bugReportsToolStripMenuItem.Image")));
+            this.bugReportsToolStripMenuItem.Name = "bugReportsToolStripMenuItem";
+            this.bugReportsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bugReportsToolStripMenuItem.Text = "Bug Reports";
+            this.bugReportsToolStripMenuItem.Click += new System.EventHandler(this.bugReportsToolStripMenuItem_Click);
+            // 
+            // blizzTVcomToolStripMenuItem
+            // 
+            this.blizzTVcomToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("blizzTVcomToolStripMenuItem.Image")));
+            this.blizzTVcomToolStripMenuItem.Name = "blizzTVcomToolStripMenuItem";
+            this.blizzTVcomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.blizzTVcomToolStripMenuItem.Text = "BlizzTV.com";
+            this.blizzTVcomToolStripMenuItem.Click += new System.EventHandler(this.blizzTVcomToolStripMenuItem_Click);
+            // 
             // AboutToolStripMenuItem
             // 
+            this.AboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AboutToolStripMenuItem.Image")));
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
             this.AboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.AboutToolStripMenuItem.Text = "About";
@@ -154,6 +200,27 @@
             this.ProgressStatus.Size = new System.Drawing.Size(100, 16);
             this.ProgressStatus.Visible = false;
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.ContextMenuStrip = this.TrayContextMenu;
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "BlizzTV";
+            this.notifyIcon.Visible = true;
+            // 
+            // TrayContextMenu
+            // 
+            this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ContextAboutToolStripMenuItem});
+            this.TrayContextMenu.Name = "TrayContextMenu";
+            this.TrayContextMenu.Size = new System.Drawing.Size(108, 26);
+            // 
+            // ContextAboutToolStripMenuItem
+            // 
+            this.ContextAboutToolStripMenuItem.Name = "ContextAboutToolStripMenuItem";
+            this.ContextAboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ContextAboutToolStripMenuItem.Text = "About";
+            this.ContextAboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -173,6 +240,7 @@
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,6 +261,13 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel LabelStatus;
         private System.Windows.Forms.ToolStripProgressBar ProgressStatus;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.ContextMenuStrip TrayContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem ContextAboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bugReportsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blizzTVcomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
     }
 }
 

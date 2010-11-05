@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
             this.label1 = new System.Windows.Forms.Label();
-            this.LinkLabelProjectPage = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -57,17 +56,6 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "BlizzTV";
             // 
-            // LinkLabelProjectPage
-            // 
-            this.LinkLabelProjectPage.AutoSize = true;
-            this.LinkLabelProjectPage.Location = new System.Drawing.Point(248, 113);
-            this.LinkLabelProjectPage.Name = "LinkLabelProjectPage";
-            this.LinkLabelProjectPage.Size = new System.Drawing.Size(170, 13);
-            this.LinkLabelProjectPage.TabIndex = 6;
-            this.LinkLabelProjectPage.TabStop = true;
-            this.LinkLabelProjectPage.Text = "http://code.google.com/p/blizztv/";
-            this.LinkLabelProjectPage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelProjectPage_LinkClicked);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -81,10 +69,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.LinkLabelProjectPage);
-            this.groupBox1.Location = new System.Drawing.Point(12, 63);
+            this.groupBox1.Location = new System.Drawing.Point(6, 213);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(421, 131);
+            this.groupBox1.Size = new System.Drawing.Size(421, 100);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Copyleft 2010, BlizzTV project";
@@ -96,14 +83,14 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(409, 94);
+            this.textBox1.Size = new System.Drawing.Size(409, 76);
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.ListviewModules);
-            this.groupBox2.Location = new System.Drawing.Point(12, 200);
+            this.groupBox2.Location = new System.Drawing.Point(6, 67);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(421, 140);
             this.groupBox2.TabIndex = 9;
@@ -148,7 +135,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(358, 346);
+            this.buttonOK.Location = new System.Drawing.Point(352, 319);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -172,7 +159,7 @@
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 376);
+            this.ClientSize = new System.Drawing.Size(435, 352);
             this.Controls.Add(this.LinkLabelBlizzTV);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupBox2);
@@ -198,7 +185,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.LinkLabel LinkLabelProjectPage;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox1;

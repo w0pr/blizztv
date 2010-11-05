@@ -40,15 +40,16 @@
             this.Stage.Location = new System.Drawing.Point(0, 0);
             this.Stage.Name = "Stage";
             this.Stage.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Stage.OcxState")));
-            this.Stage.Size = new System.Drawing.Size(482, 278);
+            this.Stage.Size = new System.Drawing.Size(624, 347);
             this.Stage.TabIndex = 0;
             // 
             // Player
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 278);
+            this.ClientSize = new System.Drawing.Size(624, 347);
             this.Controls.Add(this.Stage);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Player";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.Player_Load);

@@ -51,11 +51,6 @@ namespace BlizzTV
         {
             System.Diagnostics.Process.Start("http://www.blizztv.com", null);
         }
-
-        private void LinkLabelProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://code.google.com/p/blizztv", null);
-        }
     }
 
     class ListviewModulesItem : ListViewItem
