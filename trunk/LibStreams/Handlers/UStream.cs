@@ -28,6 +28,8 @@ namespace LibStreams.Handlers
 
         public override void Update()
         {
+            this.Link = string.Format("http://www.ustream.com/channel/{0}", this.Slug);
+
             string api_url = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug,"F7DE9C9A56F4ABB48D170A9881E5AF66");
             string response = WebReader.Read(api_url);
 
@@ -35,11 +37,14 @@ namespace LibStreams.Handlers
             ArrayList results=(ArrayList)data["results"];
             if (results.Count > 0)
             {
-                this.IsLive = true;
                 Hashtable table = (Hashtable)results[0];
-                this._stream_id = UInt32.Parse(table["id"].ToString());
-                this.ViewerCount = Int32.Parse(table["viewersNow"].ToString());
-                this.Description = (string)table["title"].ToString();
+                if ((string)table["status"].ToString() == "live")
+                {
+                    this.IsLive = true;
+                    this._stream_id = UInt32.Parse(table["id"].ToString());
+                    this.ViewerCount = Int32.Parse(table["viewersNow"].ToString());
+                    this.Description = (string)table["title"].ToString();
+                }
             }
         }
 

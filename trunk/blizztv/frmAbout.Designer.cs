@@ -36,9 +36,10 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ListviewModules = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonOK = new System.Windows.Forms.Button();
             this.LinkLabelBlizzTV = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -112,9 +113,10 @@
             // ListviewModules
             // 
             this.ListviewModules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
+            this.ColIcon,
+            this.ColName,
+            this.ColVersion,
+            this.ColDescription});
             this.ListviewModules.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ListviewModules.FullRowSelect = true;
             this.ListviewModules.Location = new System.Drawing.Point(3, 16);
@@ -124,20 +126,25 @@
             this.ListviewModules.UseCompatibleStateImageBehavior = false;
             this.ListviewModules.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader1
+            // ColIcon
             // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 100;
+            this.ColIcon.Text = "";
+            this.ColIcon.Width = 16;
             // 
-            // columnHeader2
+            // ColName
             // 
-            this.columnHeader2.Text = "Version";
-            this.columnHeader2.Width = 74;
+            this.ColName.Text = "Name";
+            this.ColName.Width = 100;
             // 
-            // columnHeader3
+            // ColVersion
             // 
-            this.columnHeader3.Text = "Description";
-            this.columnHeader3.Width = 237;
+            this.ColVersion.Text = "Version";
+            this.ColVersion.Width = 74;
+            // 
+            // ColDescription
+            // 
+            this.ColDescription.Text = "Description";
+            this.ColDescription.Width = 215;
             // 
             // buttonOK
             // 
@@ -197,10 +204,11 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListView ListviewModules;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader ColName;
+        private System.Windows.Forms.ColumnHeader ColVersion;
+        private System.Windows.Forms.ColumnHeader ColDescription;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.LinkLabel LinkLabelBlizzTV;
+        private System.Windows.Forms.ColumnHeader ColIcon;
     }
 }

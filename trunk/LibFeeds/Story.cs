@@ -26,5 +26,10 @@ namespace LibFeeds
         public string GUID;
         public string Link;
         public string Description;
+
+        public override void DoubleClick(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(this.Link, null);
+        }
     }
 }

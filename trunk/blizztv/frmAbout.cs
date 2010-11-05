@@ -62,7 +62,7 @@ namespace BlizzTV
     {
         public ListviewModulesItem(string Name, string Version, string Description)
         {
-            this.Text = Name;
+            this.SubItems.Add(new ListViewSubItem(this, Name));
             this.SubItems.Add(new ListViewSubItem(this, Version));
             this.SubItems.Add(new ListViewSubItem(this, Description));
         }

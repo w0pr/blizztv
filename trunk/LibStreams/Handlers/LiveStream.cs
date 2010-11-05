@@ -26,6 +26,8 @@ namespace LibStreams.Handlers
 
         public override void Update()
         {
+            this.Link = string.Format("http://www.livestream.com/{0}", this.Slug);
+
             string api_url=string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json",this.Slug);
             string response = WebReader.Read(api_url);
 

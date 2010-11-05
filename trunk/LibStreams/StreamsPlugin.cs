@@ -56,6 +56,7 @@ namespace LibStreams
             foreach (Stream stream in this._streams)
             {
                 stream.Update();
+                if (stream.IsLive) stream.Title += string.Format(" ({0})", stream.ViewerCount);
                 RegisterListItem(stream, this._group);
             }
 

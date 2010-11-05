@@ -24,10 +24,12 @@ namespace LibVideoChannels
         private string _title;
         private string _guid;
         private string _video_id;
+        private string _link;
 
         public string Title { get { return this._title; } internal set { this._title = value; } }
         public string GUID { get { return this._guid; } internal set { this._guid = value; } }
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
+        public string Link { get { return this._link; } internal set { this._link = value; } }
 
         public Video()
         {
