@@ -4,7 +4,9 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Text;
 
-namespace LibBlizzTV.Feeds
+using LibBlizzTV.Utils;
+
+namespace LibFeeds
 {
     public class Feed
     {
@@ -15,7 +17,7 @@ namespace LibBlizzTV.Feeds
 
         public virtual void Update()
         {
-            string response = Utils.WebReader.Read(this.Url);
+            string response = WebReader.Read(this.Url);
             XDocument xdoc = XDocument.Parse(response);
 
             var entries = from item in xdoc.Descendants("item")

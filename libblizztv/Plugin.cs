@@ -16,16 +16,43 @@
 using System;
 using System.Reflection;
 
-namespace LibBlizzTV.Plugins
+namespace LibBlizzTV
 {
     public class Plugin
     {
         private Assembly _assembly;
         private PluginInfo _plugin_info;
 
+        public string AssemblyVersion { get { return this.GetType().Assembly.GetName().Version.ToString(); } }
+        public string FileName { get { return this.GetType().Module.Name; } }
+        public PluginInfo PluginInfo { get { return this._plugin_info; } internal set { this._plugin_info = value; } }
+
         public Plugin()
         {
             this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
+        }
+
+        public virtual void Update(){throw new NotImplementedException();}
+    }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class PluginAttribute : Attribute
+    {
+        private string _name;
+        private string _description;
+
+        public string Name { get { return this._name; } }
+        public string Description { get { return this._description; } }
+
+        public PluginAttribute(string Name, string Description)
+        {
+            this._name = Name;
+            this._description = Description;
+        }
+
+        public override string ToString()
+        {
+            return this._name;
         }
     }
 }

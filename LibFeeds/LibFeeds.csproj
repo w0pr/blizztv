@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9}</ProjectGuid>
+    <ProjectGuid>{E620774D-563F-477A-BA68-7F31A2D8AFBE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LibBlizzTV</RootNamespace>
-    <AssemblyName>LibBlizzTV</AssemblyName>
+    <RootNamespace>LibFeeds</RootNamespace>
+    <AssemblyName>LibFeeds</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\blizztv\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,34 +33,30 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common.cs" />
-    <Compile Include="PluginManager.cs" />
-    <Compile Include="Plugin.cs" />
-    <Compile Include="PluginInfo.cs" />
+    <Compile Include="Feed.cs" />
+    <Compile Include="FeedsPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streams\Handlers\JustinTV.cs" />
-    <Compile Include="Streams\Handlers\UStream.cs" />
-    <Compile Include="Streams\Provider.cs" />
-    <Compile Include="Streams\Handlers\LiveStream.cs" />
-    <Compile Include="Streams\Stream.cs" />
-    <Compile Include="Streams\Providers.cs" />
-    <Compile Include="Streams\StreamFactory.cs" />
-    <Compile Include="Streams\Streams.cs" />
-    <Compile Include="Utils\JSON.cs" />
-    <Compile Include="Utils\WebReader.cs" />
-    <Compile Include="VideoChannels\Channel.cs" />
-    <Compile Include="VideoChannels\Channels.cs" />
-    <Compile Include="VideoChannels\Provider.cs" />
-    <Compile Include="VideoChannels\Providers.cs" />
-    <Compile Include="VideoChannels\Video.cs" />
+    <Compile Include="Story.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LibBlizzTV\LibBlizzTV.csproj">
+      <Project>{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9}</Project>
+      <Name>LibBlizzTV</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Feeds.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlizzTV", "blizztv\BlizzTV.csproj", "{695B8F18-1DD6-4D10-AECF-F673309C217C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE} = {E620774D-563F-477A-BA68-7F31A2D8AFBE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibBlizzTV", "LibBlizzTV\LibBlizzTV.csproj", "{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9}"
 EndProject
@@ -10,6 +13,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{21E55359-B08D-4BF9-BA46-46FE07449E5F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{527F3620-A24B-4D7C-A7A8-75BDE27D002E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibFeeds", "LibFeeds\LibFeeds.csproj", "{E620774D-563F-477A-BA68-7F31A2D8AFBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +46,16 @@ Global
 		{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9}.Release|x86.ActiveCfg = Release|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +63,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{695B8F18-1DD6-4D10-AECF-F673309C217C} = {21E55359-B08D-4BF9-BA46-46FE07449E5F}
 		{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9} = {527F3620-A24B-4D7C-A7A8-75BDE27D002E}
+		{E620774D-563F-477A-BA68-7F31A2D8AFBE} = {02364A03-BECA-4362-8C75-B9E133B9450D}
 	EndGlobalSection
 EndGlobal
