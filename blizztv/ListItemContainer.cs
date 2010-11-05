@@ -17,14 +17,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using LibBlizzTV;
 
-namespace LibFeeds
+namespace BlizzTV
 {
-    public class Story : ListItem
+    public class ListItemContainer:ListViewItem
     {
-        public string GUID;
-        public string Link;
-        public string Description;
+        private ListItem _item;
+
+        public ListItemContainer(ListItem Item)
+        {
+            this._item = Item;
+            this.SubItems.Add(this._item.Title);
+        }
+
+        public void DoubleClick(object sender, EventArgs e)
+        {
+            this._item.DoubleClick(sender,e);
+        }
     }
 }
