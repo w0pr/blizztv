@@ -26,7 +26,7 @@ namespace LibVideoChannels
     public class Channel:ListItem
     {
         private string _slug;
-        private string _provider;
+        private string _provider;               
 
         public string Slug { get { return this._slug; } set { this._slug = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
@@ -61,6 +61,7 @@ namespace LibVideoChannels
                     v.GUID = entry.GUID;
                     v.Link = entry.Link;
                     v.VideoID = m.Groups[1].Value;
+                    v.Provider = this.Provider;
                     this.Videos.Add(v);
                 }
             }
@@ -68,12 +69,12 @@ namespace LibVideoChannels
 
         public override void DoubleClick(object sender, EventArgs e)
         {
-            if (this.Videos.Count > 0) System.Diagnostics.Process.Start(this.Videos[0].Link, null);
-        }
-
-        public virtual string VideoEmbedCode()
-        {
-            return Providers.Instance.List[this.Provider].VideoTemplate;
+            if (this.Videos.Count > 0)
+            {
+                //System.Diagnostics.Process.Start(this.Videos[0].Link, null);
+                Player p = new Player(this);
+                p.Show();
+            }
         }
     }
 }

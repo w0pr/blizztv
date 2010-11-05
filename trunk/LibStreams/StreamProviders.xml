@@ -4,17 +4,17 @@
   <Provider>
     <Name>LiveStream</Name>
     <Movie><![CDATA[http://cdn.livestream.com/grid/LSPlayer.swf]]></Movie>
-    <FlashVars><![CDATA[channel=%slug%&amp;autoPlay=true]]></FlashVars>
+    <FlashVars><![CDATA[channel=%slug%&autoPlay=true]]></FlashVars>
   </Provider>
   <Provider>
     <Name>UStream</Name>
-    <Movie><![CDATA[http://www.ustream.tv/flash/live/1/%stream_id%]]></Movie>
-    <FlashVars><![CDATA[v3=1]]></FlashVars>
+    <Movie><![CDATA[http://www.ustream.tv/flash/live/1/%stream_id%?v3=1]]></Movie>
+    <FlashVars><![CDATA[autoplay=true&brand=embed&cid=%stream_id%&locale=en_US]]></FlashVars>
   </Provider>
   <Provider>
     <Name>JustinTV</Name>
     <Movie><![CDATA[http://www.justin.tv/widgets/live_embed_player.swf]]></Movie>
-    <FlashVars><![CDATA[channel=%slug%&auto_play=false&start_volume=25&allowFullScreen=true&allowScriptAccess=true&allowNetworking=true]]></FlashVars>
+    <FlashVars><![CDATA[channel=%slug%&auto_play=false&start_volume=25]]></FlashVars>
   </Provider>
   <Provider>
     <Name>Own3DTV</Name>

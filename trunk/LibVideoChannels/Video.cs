@@ -25,14 +25,30 @@ namespace LibVideoChannels
         private string _guid;
         private string _video_id;
         private string _link;
+        private string _provider;
+
+        private string _movie;
+        private string _flash_vars;
 
         public string Title { get { return this._title; } internal set { this._title = value; } }
         public string GUID { get { return this._guid; } internal set { this._guid = value; } }
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
+        public string Provider { get { return this._provider; } set { this._provider = value; } }
+        public string Movie { get { return this._movie; } set { this._movie = value; } }
+        public string FlashVars { get { return this._flash_vars; } set { this._flash_vars = value; } }
 
         public Video()
         {
+        }
+
+        public virtual void Process()
+        {
+            this._movie = Providers.Instance.List[this.Provider].Movie;
+            this._flash_vars = Providers.Instance.List[this.Provider].FlashVars;
+
+            this._movie = this._movie.Replace("%video_id%", this._video_id);
+            this._flash_vars = this._flash_vars.Replace("%slug%", this._video_id);
         }
     }
 }
