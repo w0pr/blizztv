@@ -1,6 +1,6 @@
 #summary user guide place holder
+#labels Featured,Documentation
 
 = User Guide =
 
 placeholder..
-
