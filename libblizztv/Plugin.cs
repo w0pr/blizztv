@@ -40,7 +40,7 @@ namespace LibBlizzTV
         /* plugin load  complete */
         protected void PluginLoadComplete(PluginLoadCompleteEventArgs e)
         {
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.DEBUG, string.Format("Plugin Loaded: {0}", this.PluginInfo.ToString()));
+            DebugConsole.WriteLine(DebugConsole.MessageTypes.DEBUG, string.Format("Plugin Load Completed: {0}", this.PluginInfo.ToString()));
             if (OnPluginLoadComplete != null) OnPluginLoadComplete(this,e);
         }
 

@@ -25,6 +25,7 @@ namespace LibStreams
     [Plugin("LibStreams", "Stream aggregator plugin for BlizzTV")]
     public class StreamsPlugin:Plugin
     {
+        private List<Stream> _streams = new List<Stream>();
         ListGroup _group = new ListGroup("Streams", "streams");
 
         public StreamsPlugin() { }
@@ -33,9 +34,7 @@ namespace LibStreams
         {
             this.RegisterListGroup(this._group);
 
-
             XDocument xdoc = XDocument.Load("Streams.xml");
-
             var entries = from stream in xdoc.Descendants("Stream")
                           select new
                           {
@@ -45,6 +44,22 @@ namespace LibStreams
                               Game = stream.Element("Game").Value
                           };
 
+            foreach (var entry in entries)
+            {
+                Stream s = StreamFactory.CreateStream(entry.Provider);
+                s.Title = entry.Name;
+                s.Slug = entry.Slug;
+                s.Provider = entry.Provider;
+                this._streams.Add(s);
+            }
+
+            foreach (Stream stream in this._streams)
+            {
+                stream.Update();
+                RegisterListItem(stream, this._group);
+            }
+
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
         }
     }
 }

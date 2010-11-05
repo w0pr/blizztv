@@ -27,9 +27,6 @@ namespace LibBlizzTV
 
         public ListItem() { }
 
-        public void DoubleClick(object sender, EventArgs e)
-        {
-
-        }
+        public virtual void DoubleClick(object sender, EventArgs e) {}
     }
 }

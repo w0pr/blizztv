@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace LibBlizzTV.VideoChannels
+namespace LibVideoChannels
 {
     public sealed class Providers
     {
@@ -42,6 +42,21 @@ namespace LibBlizzTV.VideoChannels
             {
                 this.List.Add(entry.Name, new Provider(entry.Name, entry.VideoTemplate));
             }
+        }
+    }
+
+    public class Provider
+    {
+        private string _name;
+        private string _video_template;
+
+        public string Name { get { return this._name; } internal set { this._name = value; } }
+        public string VideoTemplate { get { return this._video_template; } internal set { this._video_template = value; } }
+
+        public Provider(string Name, string VideoTemplate)
+        {
+            this._name = Name;
+            this._video_template = VideoTemplate;
         }
     }
 }

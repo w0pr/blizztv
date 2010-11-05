@@ -15,24 +15,21 @@
 
 using System;
 using System.Collections.Generic;
+using LibBlizzTV;
 
-namespace LibBlizzTV.Streams
+namespace LibStreams
 {
-    public class Stream
+    public class Stream:ListItem
     {
         private string _slug;
-        private string _name;
         private string _provider;
-        private Game _game;
 
         private bool _is_live = false;
         private string _description;
         private Int32 _viewer_count;
 
         public string Slug { get { return this._slug; } set { this._slug = value; } }
-        public string Name { get { return this._name; } set { this._name = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
-        public Game Game { get { return this._game; } set { this._game = value; } }
 
         public bool IsLive { get { return this._is_live; } internal set { this._is_live = value; } }
         public string Description { get { return this._description; } internal set { this._description = value; } }
