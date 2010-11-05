@@ -39,7 +39,7 @@
             this.browser.MinimumSize = new System.Drawing.Size(20, 20);
             this.browser.Name = "browser";
             this.browser.ScrollBarsEnabled = false;
-            this.browser.Size = new System.Drawing.Size(639, 388);
+            this.browser.Size = new System.Drawing.Size(639, 384);
             this.browser.TabIndex = 0;
             this.browser.Visible = false;
             this.browser.WebBrowserShortcutsEnabled = false;
@@ -50,7 +50,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(639, 388);
+            this.ClientSize = new System.Drawing.Size(639, 384);
             this.Controls.Add(this.browser);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

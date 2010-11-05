@@ -17,6 +17,7 @@ using System;
 using System.Windows.Forms;
 using LibBlizzTV.Streams;
 using LibBlizzTV.VideoChannels;
+using LibBlizzTV.Feeds;
 
 namespace BlizzTV
 {
@@ -25,7 +26,8 @@ namespace BlizzTV
         public enum ListItemType
         {
             Stream,
-            VideoChannel
+            VideoChannel,
+            Story
         }
 
         private object _storage = null;
@@ -37,18 +39,24 @@ namespace BlizzTV
         {
             this._item_type = ListItemType.Stream;
             this._storage = stream;
+            this.SubItems.Add(string.Format("{0} ({1})", stream.Name, stream.ViewerCount.ToString()));
             this.SubItems.Add(new ListViewSubItem());
-            this.SubItems.Add(stream.Name);
-            this.SubItems.Add(stream.ViewerCount.ToString());            
         }
 
         public ListItem(Channel channel)
         {
             this._item_type = ListItemType.VideoChannel;
-            this._storage = channel;
+            this._storage = channel;            
+            this.SubItems.Add(string.Format("{0} ({1})",channel.Name,channel.Videos.Count.ToString()));
             this.SubItems.Add(new ListViewSubItem());
-            this.SubItems.Add(channel.Name);
-            this.SubItems.Add(channel.Videos.Count.ToString());
+        }
+
+        public ListItem(Story story)
+        {
+            this._item_type = ListItemType.Story;
+            this._storage = story;
+            this.SubItems.Add(string.Format("{0}", story.Title));
+            this.SubItems.Add(new ListViewSubItem());
         }
 
         public object GetObject()

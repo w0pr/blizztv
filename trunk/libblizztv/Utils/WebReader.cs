@@ -26,7 +26,7 @@ namespace LibBlizzTV.Utils
             string buffer;
             using (WebClient client = new WebClient())
             {
-                client.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+                client.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)");
                 using (StreamReader reader = new StreamReader(client.OpenRead(url)))
                 {
                     buffer = reader.ReadToEnd();                    

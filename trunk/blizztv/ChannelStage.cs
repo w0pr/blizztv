@@ -39,7 +39,7 @@ namespace BlizzTV
         private void ChannelStage_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("Channel: {0}@{1}", this._channel.Name, this._channel.Provider);
-            this.LoadVideo(this._channel.Videos[0]);
+            if(this._channel.Videos.Count>0) this.LoadVideo(this._channel.Videos[0]);
         }
 
         private void LoadVideo(Video v)

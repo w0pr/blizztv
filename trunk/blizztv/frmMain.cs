@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using LibBlizzTV;
 using LibBlizzTV.Streams;
 using LibBlizzTV.VideoChannels;
+using LibBlizzTV.Feeds;
 
 namespace BlizzTV
 {
@@ -30,6 +31,7 @@ namespace BlizzTV
     {
         LibBlizzTV.Streams.Streams Streams = new Streams();
         LibBlizzTV.VideoChannels.Channels VideoChannels = new Channels();
+        LibBlizzTV.Feeds.Feeds Feeds = new Feeds();
 
         public frmMain()
         {
@@ -38,21 +40,35 @@ namespace BlizzTV
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            List.Groups.Add("streams", "Streams");
+            List.Groups.Add("channels", "Video Channels");
+            List.Groups.Add("feeds","Feeds");
+
             Streams.OnStreamsLoadCompleted += StreamsLoaded;
             Streams.Load();
-            VideoChannels.Load();
-            ChannelsLoaded();
-        }
 
-        private void ChannelsLoaded()
-        {
+            VideoChannels.Load();
             VideoChannels.Update();
             foreach (KeyValuePair<string, Channel> pair in VideoChannels.List)
             {
                 ListItem item = new ListItem(pair.Value);
                 item.ImageIndex = 0;
+                item.Group = List.Groups["channels"];
                 List.Items.Add(item);
-            }
+            }  
+
+            Feeds.Load();
+            Feeds.Update();
+            foreach (KeyValuePair<string, Feed> pair in Feeds.List)
+            {
+                foreach (Story story in pair.Value.Stories)
+                {
+                    ListItem item = new ListItem(story);
+                    item.ImageIndex = 0;
+                    item.Group = List.Groups["feeds"];
+                    List.Items.Add(item);
+                }
+            }                       
         }
 
         private void StreamsLoaded(object sender, LoadStreamsCompletedEventArgs e)
@@ -82,6 +98,7 @@ namespace BlizzTV
                 ProgressStatus.PerformStep();
                 ListItem item = new ListItem(e.Stream);
                 item.ImageIndex = 0;
+                item.Group = List.Groups["streams"];
                 List.Items.Add(item);
             }
         }
@@ -109,22 +126,40 @@ namespace BlizzTV
             {
                 case 0:
                     {
+                        ListItem item = (ListItem)this.List.Items[e.ItemIndex];
+                        Image item_image = null;
+                        switch (item.ItemType)
+                        {
+                            case ListItem.ListItemType.Stream:
+                                item_image = this.ListIcons.Images[0];
+                                break;
+                            case ListItem.ListItemType.VideoChannel:
+                                item_image = this.ListIcons.Images[1];
+                                break;
+                            case ListItem.ListItemType.Story:
+                                item_image = this.ListIcons.Images[2];
+                                break;
+                            default:
+                                break;
+                        }
+                        if (item_image != null)
+                        {
+                            Rectangle Bounds = e.Bounds;
+                            Bounds.Width = Bounds.Height = 16;
+                            e.Graphics.DrawImage(item_image, Bounds);
+                        }
+                        break;                        
+                    }
+                case 1:
+                    e.DrawDefault = true;
+                    break;
+                case 2:
+                    {
                         Rectangle Bounds = e.Bounds;
                         Bounds.Width = Bounds.Height = 16;
                         e.Graphics.DrawImage(this.GameIcons.Images[0], Bounds);
                         break;
                     }
-                case 1:
-                    {
-                        Rectangle Bounds = e.Bounds;
-                        Bounds.Width = Bounds.Height = 16;
-                        e.Graphics.DrawImage(this.ListIcons.Images[0], Bounds);
-                        break;
-                    }
-                case 2:
-                case 3:
-                    e.DrawDefault = true;
-                    break;
             }
         }
 
