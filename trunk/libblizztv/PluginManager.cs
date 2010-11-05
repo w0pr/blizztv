@@ -17,6 +17,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace LibBlizzTV
 {
@@ -24,6 +25,8 @@ namespace LibBlizzTV
     {
         private static readonly PluginManager _instance = new PluginManager();
         public static PluginManager Instance { get { return _instance; } }
+        public string AssemblyName { get { return Assembly.GetExecutingAssembly().GetName().Name; } }
+        public string AssemblyVersion { get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
 
         public Dictionary<string, PluginInfo> Plugins = new Dictionary<string, PluginInfo>(); 
 

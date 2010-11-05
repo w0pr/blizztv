@@ -16,19 +16,34 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using System.Text;
+using LibBlizzTV;
 
-namespace LibBlizzTV
+namespace LibStreams
 {
-    public class ListItem
+    [Plugin("LibStreams", "Stream aggregator plugin for BlizzTV")]
+    public class StreamsPlugin:Plugin
     {
-        public string _title;
-        public string Title { get { return this._title; } set { this._title = value; } }
+        ListGroup _group = new ListGroup("Streams", "streams");
 
-        public ListItem() { }
+        public StreamsPlugin() { }
 
-        public void DoubleClick(object sender, EventArgs e)
+        public override void Load()
         {
+            this.RegisterListGroup(this._group);
+
+
+            XDocument xdoc = XDocument.Load("Streams.xml");
+
+            var entries = from stream in xdoc.Descendants("Stream")
+                          select new
+                          {
+                              Name = stream.Element("Name").Value,
+                              Slug = stream.Element("Slug").Value,
+                              Provider = stream.Element("Provider").Value,
+                              Game = stream.Element("Game").Value
+                          };
 
         }
     }

@@ -17,19 +17,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LibBlizzTV;
 
-namespace LibBlizzTV
+namespace LibVideoChannels
 {
-    public class ListItem
+    [Plugin("LibVideoChannels", "Video channel aggregator plugin for BlizzTV")]
+    public class PluginVideoChannels:Plugin
     {
-        public string _title;
-        public string Title { get { return this._title; } set { this._title = value; } }
+        public PluginVideoChannels() { }
 
-        public ListItem() { }
-
-        public void DoubleClick(object sender, EventArgs e)
+        public override void Load()
         {
-
         }
     }
 }

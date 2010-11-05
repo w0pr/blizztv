@@ -19,6 +19,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
+using LibBlizzTV;
 
 namespace BlizzTV
 {
@@ -32,6 +34,37 @@ namespace BlizzTV
         private void buttonOK_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void frmAbout_Load(object sender, EventArgs e)
+        {
+            ListviewModules.Items.Add(new ListviewModulesItem(Assembly.GetExecutingAssembly().GetName().Name, Assembly.GetExecutingAssembly().GetName().Version.ToString(), "The user-interface."));
+            ListviewModules.Items.Add(new ListviewModulesItem(PluginManager.Instance.AssemblyName, PluginManager.Instance.AssemblyVersion, "The core."));
+
+            foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.Plugins)
+            {
+                ListviewModules.Items.Add(new ListviewModulesItem(pair.Value.AssemblyName, pair.Value.AssemblyVersion, pair.Value.Attributes.Description));
+            }
+        }
+
+        private void LinkLabelBlizzTV_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.blizztv.com", null);
+        }
+
+        private void LinkLabelProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://code.google.com/p/blizztv", null);
+        }
+    }
+
+    class ListviewModulesItem : ListViewItem
+    {
+        public ListviewModulesItem(string Name, string Version, string Description)
+        {
+            this.Text = Name;
+            this.SubItems.Add(new ListViewSubItem(this, Version));
+            this.SubItems.Add(new ListViewSubItem(this, Description));
         }
     }
 }
