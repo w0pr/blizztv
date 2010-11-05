@@ -39,9 +39,9 @@ namespace LibBlizzTV.VideoChannels
 
         public Channel() {}
 
-        public virtual void Update() 
+        public void Update() 
         {
-            string api_url = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results=10", this.Slug);
+            string api_url = string.Format(@"http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results=5", this.Slug);
             string response = Utils.WebReader.Read(api_url);
 
             XDocument xdoc = XDocument.Parse(response);

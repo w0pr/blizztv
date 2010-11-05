@@ -111,6 +111,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Feeds.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="StreamProviders.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

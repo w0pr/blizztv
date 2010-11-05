@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
+    <Compile Include="Feeds\Feed.cs" />
+    <Compile Include="Feeds\Feeds.cs" />
+    <Compile Include="Feeds\Story.cs" />
     <Compile Include="Plugins\Manager.cs" />
     <Compile Include="Plugins\Plugin.cs" />
     <Compile Include="Plugins\PluginInfo.cs" />
