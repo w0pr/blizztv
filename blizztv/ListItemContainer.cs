@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 using LibBlizzTV;
 
 namespace BlizzTV
@@ -25,9 +26,11 @@ namespace BlizzTV
     public class ListItemContainer:ListViewItem
     {
         private ListItem _item;
+        private Plugin _plugin;
 
-        public ListItemContainer(ListItem Item)
+        public ListItemContainer(Plugin Plugin,ListItem Item)
         {
+            this._plugin = Plugin;
             this._item = Item;
             this.SubItems.Add(this._item.Title);
         }
@@ -35,6 +38,24 @@ namespace BlizzTV
         public void DoubleClick(object sender, EventArgs e)
         {
             this._item.DoubleClick(sender,e);
+        }
+
+        public void DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    Rectangle Bounds = e.Bounds;
+                    Bounds.Width = Bounds.Height = 16;
+                    e.Graphics.DrawImage(this._plugin.PluginInfo.Attributes.Icon, Bounds);
+                    break;
+                case 1:
+                case 2:
+                    e.DrawDefault = true;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

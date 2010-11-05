@@ -22,7 +22,7 @@ using LibBlizzTV;
 
 namespace LibStreams
 {
-    [Plugin("LibStreams", "Stream aggregator plugin for BlizzTV")]
+    [Plugin("LibStreams", "Stream aggregator plugin for BlizzTV","stream_16.png")]
     public class StreamsPlugin:Plugin
     {
         private List<Stream> _streams = new List<Stream>();

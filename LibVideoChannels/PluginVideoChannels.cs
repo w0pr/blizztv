@@ -22,7 +22,7 @@ using LibBlizzTV;
 
 namespace LibVideoChannels
 {
-    [Plugin("LibVideoChannels", "Video channel aggregator plugin for BlizzTV")]
+    [Plugin("LibVideoChannels", "Video channel aggregator plugin for BlizzTV","video_16.png")]
     public class PluginVideoChannels:Plugin
     {
         private List<Channel> _channels = new List<Channel>();
