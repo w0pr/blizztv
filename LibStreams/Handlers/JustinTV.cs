@@ -26,6 +26,8 @@ namespace LibStreams.Handlers
 
         public override void Update()
         {
+            this.Link = string.Format("http://www.justin.tv/{0}", this.Slug);
+
             string api_url = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug);
             string response = WebReader.Read(api_url);
 
@@ -36,7 +38,7 @@ namespace LibStreams.Handlers
                 Hashtable table = (Hashtable)data[0];
                 this.ViewerCount = Int32.Parse(table["stream_count"].ToString());
                 this.Description = (string)table["title"].ToString();
-            }
+            }            
         }
     }
 }

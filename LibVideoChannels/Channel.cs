@@ -59,10 +59,16 @@ namespace LibVideoChannels
                     Video v = new Video();
                     v.Title = entry.Title;
                     v.GUID = entry.GUID;
+                    v.Link = entry.Link;
                     v.VideoID = m.Groups[1].Value;
                     this.Videos.Add(v);
                 }
             }
+        }
+
+        public override void DoubleClick(object sender, EventArgs e)
+        {
+            if (this.Videos.Count > 0) System.Diagnostics.Process.Start(this.Videos[0].Link, null);
         }
 
         public virtual string VideoEmbedCode()
