@@ -33,17 +33,7 @@ namespace LibBlizzTV
 
         private PluginManager()
         {
-            DebugConsole.init();
-
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.BANNER, @"__________.__   .__                 _______________   ____");
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.BANNER, @"\______   \  |  |__|________________\__    ___/\   \ /   /");
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.BANNER, @" |    |  _/  |  |  |\___   /\___   /  |    |    \   Y   /  ");
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.BANNER, @" |    |   \  |__|  | /    /  /    /   |    |     \     /   ");
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.BANNER, @" |______  /____/|__|/_____ \/_____ \  |____|      \___/    ");
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.BANNER, @"        \/                \/      \/                       ");
-
             DebugConsole.WriteLine(DebugConsole.MessageTypes.INFO, string.Format("{0} - v{1} initialized..", this.GetType().Module.Name, this.GetType().Assembly.GetName().Version.ToString()));
-
             this.ScanPlugins();
             
             foreach (KeyValuePair<string,PluginInfo> pi in this.Plugins)

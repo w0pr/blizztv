@@ -30,6 +30,8 @@ namespace BlizzTV
         {
             InitializeComponent();
             DoubleBufferControl(this.List);
+            bool exists = Storage.Instance.StorageExists(); // temp. here to force storage read the settings.
+            DebugConsole.init();
         }
 
         public static void DoubleBufferControl(System.Windows.Forms.Control c)
@@ -44,14 +46,22 @@ namespace BlizzTV
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            PluginManager pm = PluginManager.Instance;
-            foreach (KeyValuePair<string,PluginInfo> pair in pm.Plugins)
-            {
-                Plugin Plugin = pair.Value.CreateInstance();
+            this.LoadPlugins();
+        }
 
-                ThreadStart plugin_thread = delegate { RunPlugin(Plugin); };
-                Thread t = new Thread(plugin_thread) { IsBackground = true };
-                t.Start();
+        private void LoadPlugins()
+        {
+            PluginManager pm = PluginManager.Instance;
+            foreach (KeyValuePair<string, PluginSettings> pair in Settings.Instance.PluginSettings)
+            {
+                if (pair.Value.Enabled && pm.Plugins.ContainsKey(pair.Key)) // if the plugin is enabled
+                {
+                    PluginInfo pi = pm.Plugins[pair.Key];
+                    Plugin Plugin = pi.CreateInstance();
+                    ThreadStart plugin_thread = delegate { RunPlugin(Plugin); };
+                    Thread t = new Thread(plugin_thread) { IsBackground = true };
+                    t.Start();
+                }
             }
         }
 
