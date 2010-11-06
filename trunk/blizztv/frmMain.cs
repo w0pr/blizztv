@@ -78,22 +78,13 @@ namespace BlizzTV
             if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItem(sender, item, parent); }));
             else
             {
-                TreeItem t = new TreeItem((Plugin)sender,item);
-                if (parent != null) TreeView.Nodes[parent.Key].Nodes.Add(t);
+                TreeItem t = new TreeItem((Plugin)sender, item);
+                if (parent != null) (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.Add(t);                       
                 else TreeView.Nodes.Add(t);
+                t.Render();
             }
         }
 
-        private void TreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
-        {
-            /*if (e.Node.GetType() == typeof(TreeItem))
-            {
-                TreeItem selection = (TreeItem)e.Node;
-                selection.DrawNode(sender, e);
-            }*/
-            //else 
-            e.DrawDefault = true;
-        }
 
         private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {

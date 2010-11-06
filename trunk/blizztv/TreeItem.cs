@@ -27,7 +27,7 @@ namespace BlizzTV
     {
         private ListItem _item;
         private Plugin _plugin;
-        private Font font = new Font("Helvetica", 8, FontStyle.Bold);
+        private Font font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
 
         public ListItem Item { get { return this._item; } }
         
@@ -36,33 +36,18 @@ namespace BlizzTV
             this._plugin = Plugin;
             this._item = Item;
             this.Name = _item.Key;
-            this.Text = this._item.Title;
+        }
+
+        public void Render()
+        {
+            this.Text = this._item.Title; // render the text
+            if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.PluginInfo.AssemblyName)) this.TreeView.ImageList.Images.Add(this._plugin.PluginInfo.AssemblyName, this._plugin.PluginInfo.Attributes.Icon); // add the plugin icon to image list in it doesn't exists
+            this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.PluginInfo.AssemblyName); // render the icon
         }
 
         public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             this._item.DoubleClick(sender,e);
-        }
-
-        public void DrawNode(object sender, DrawTreeNodeEventArgs e)
-        {
-            Rectangle IconBounds = e.Bounds;
-            Rectangle TextBounds = new Rectangle(e.Bounds.X+16, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
-            IconBounds.Width = IconBounds.Height = 16;
-
-            e.Graphics.DrawImage(this._plugin.PluginInfo.Attributes.Icon, IconBounds);
-            e.Graphics.DrawString(this._item.Title, new Font("Verdana",8.25f), new SolidBrush(Color.Black), TextBounds);
-
-            if ((e.State & TreeNodeStates.Focused) != 0)
-            {
-                using (Pen focusPen = new Pen(Color.Black))
-                {
-                    focusPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-                    Rectangle focusBounds = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width + 16, e.Bounds.Height);
-                    focusBounds.Size = new Size(focusBounds.Width - 1,focusBounds.Height - 1);
-                    e.Graphics.DrawRectangle(focusPen, focusBounds);
-                }
-            }
         }
     }
 }

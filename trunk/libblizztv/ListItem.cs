@@ -27,6 +27,7 @@ namespace LibBlizzTV
         public string Key { get { return this._title; } }
 
         public ListItem() { }
+        public ListItem(string Title) { this._title = Title;}
 
         public virtual void DoubleClick(object sender, EventArgs e) {}
     }

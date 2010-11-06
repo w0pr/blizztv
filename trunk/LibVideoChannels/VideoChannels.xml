@@ -4,18 +4,15 @@
     <Name>HD Starcraft</Name>
     <Slug>hdstarcraft</Slug>
     <Provider>Youtube</Provider>
-    <Game>Starcraft</Game>
   </VideoChannel>
   <VideoChannel>
     <Name>HuskyStarcraft</Name>
     <Slug>huskystarcraft</Slug>
     <Provider>Youtube</Provider>
-    <Game>Starcraft</Game>
   </VideoChannel>
   <VideoChannel>
     <Name>xhydrax</Name>
     <Slug>xhydrax</Slug>
-    <Provider>Youtube</Provider>
-    <Game>Starcraft</Game>
+    <Provider>Youtube</Provider>    
   </VideoChannel>
 </VideoChannels>

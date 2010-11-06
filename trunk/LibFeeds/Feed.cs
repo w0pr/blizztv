@@ -25,12 +25,12 @@ namespace LibFeeds
 {
     public class Feed : ListItem
     {
-        public string Url;
+        public string URL;
         public List<Story> Stories = new List<Story>();
 
         public virtual void Update()
         {
-            string response = WebReader.Read(this.Url);
+            string response = WebReader.Read(this.URL);
             XDocument xdoc = XDocument.Parse(response);
 
             var entries = from item in xdoc.Descendants("item")
