@@ -24,22 +24,48 @@ namespace BlizzTV
 
         private void LoadSettings()
         {
+            // load global settings
+            if (Settings.Instance.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) radioButtonUseInternalViewers.Checked = true;
+            else radioButtonUseDefaultWebBrowser.Checked = true;
+
+            txtVideoPlayerWidth.Text = Settings.Instance.GlobalSettings.VideoPlayerWidth.ToString();
+            txtVideoPlayerHeight.Text = Settings.Instance.GlobalSettings.VideoPlayerHeight.ToString();
+            checkBoxVideoAutoPlay.Checked = Settings.Instance.GlobalSettings.VideoAutoPlay;
+
+            // load plugin settings
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.Plugins)
             {
                 ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
                 this.ListviewPlugins.Items.Add(item);
                 if (Settings.Instance.PluginSettings.ContainsKey(pair.Value.AssemblyName) && Settings.Instance.PluginSettings[pair.Value.AssemblyName].Enabled) item.Checked = true;
             }
+            
+            // load ui-specific settings
+            checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
+            checkBoxEnableDebugConsole.Checked = Settings.Instance.EnableDebugConsole;
         }
 
         private void SaveSettings()
         {
+            // save global settings
+            if (radioButtonUseInternalViewers.Checked) Settings.Instance.GlobalSettings.ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
+            else Settings.Instance.GlobalSettings.ContentViewer = ContentViewMethods.DEFAULT_WEB_BROWSER;
+
+            Settings.Instance.GlobalSettings.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
+            Settings.Instance.GlobalSettings.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
+            Settings.Instance.GlobalSettings.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
+
+            // save plugin settings
             foreach (ListviewPluginsItem item in ListviewPlugins.Items)
             {
                 string plugin_name = item.PluginInfo.AssemblyName;
                 if (!Settings.Instance.PluginSettings.ContainsKey(plugin_name)) Settings.Instance.PluginSettings.Add(plugin_name, new PluginSettings());
                 Settings.Instance.PluginSettings[plugin_name].Enabled = item.Checked;                
             }
+
+            Settings.Instance.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
+            Settings.Instance.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
+
             Storage.Instance.SaveSettings();
         }
 

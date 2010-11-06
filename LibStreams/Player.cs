@@ -17,6 +17,8 @@ namespace LibStreams
         {
             InitializeComponent();
             this._stream = Stream;
+            this.Width = StreamsPlugin.GlobalSettings.VideoPlayerWidth;
+            this.Height = StreamsPlugin.GlobalSettings.VideoPlayerHeight;
             this._stream.Process();
         }
 

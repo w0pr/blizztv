@@ -23,6 +23,9 @@ namespace LibBlizzTV
     {
         private Assembly _assembly;
         private PluginInfo _plugin_info;
+        public static PluginSettings PluginSettings;
+        public static GlobalSettings GlobalSettings;
+
 
         public string AssemblyVersion { get { return this.GetType().Assembly.GetName().Version.ToString(); } }
         public string FileName { get { return this.GetType().Module.Name; } }
@@ -33,7 +36,12 @@ namespace LibBlizzTV
             this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
         }
 
-        public virtual void Load() { throw new NotImplementedException(); }
+        public virtual void Load(PluginSettings ps) { throw new NotImplementedException(); }
+
+        public void ApplyGlobalSettings(GlobalSettings gs)
+        {
+            GlobalSettings = gs;
+        }
 
         public delegate void PluginLoadCompleteEventHandler(object sender,PluginLoadCompleteEventArgs e);
         public event PluginLoadCompleteEventHandler OnPluginLoadComplete;

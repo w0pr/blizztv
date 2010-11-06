@@ -57,9 +57,12 @@ namespace LibStreams
 
         public override void DoubleClick(object sender, EventArgs e)
         {
-            //System.Diagnostics.Process.Start(this.Link, null);
-            Player p = new Player(this);
-            p.Show();
+            if (StreamsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS)
+            {
+                Player p = new Player(this);
+                p.Show();
+            }
+            else System.Diagnostics.Process.Start(this.Link, null);
         }
 
         public virtual void Update() { throw new NotImplementedException(); }

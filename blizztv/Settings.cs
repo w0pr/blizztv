@@ -12,15 +12,13 @@ namespace BlizzTV
         private static Settings _instance = new Settings();
         public static Settings Instance { get { return _instance; } internal set { _instance = value; } }
 
-        public GlobalSettings GlobalSettings;
+        public GlobalSettings GlobalSettings = new GlobalSettings();
         public Dictionary<String, PluginSettings> PluginSettings = new Dictionary<String,PluginSettings>();
 
+        // UI-specific settings
+        public bool EnableDebugLogging = false;
+        public bool EnableDebugConsole = false;
+
         private Settings() { }
-    }
-
-    [Serializable]
-    public class GlobalSettings
-    {
-
     }
 }

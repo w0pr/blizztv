@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Common.cs" />
     <Compile Include="DebugConsole.cs" />
+    <Compile Include="GlobalSettings.cs" />
     <Compile Include="ListItem.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="Plugin.cs" />
