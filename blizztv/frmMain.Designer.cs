@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.GameIcons = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.blizzTVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,7 +38,6 @@
             this.bugReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blizzTVcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ListIcons = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.LabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressStatus = new System.Windows.Forms.ToolStripProgressBar();
@@ -47,17 +45,11 @@
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextAboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeView = new System.Windows.Forms.TreeView();
+            this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // GameIcons
-            // 
-            this.GameIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("GameIcons.ImageStream")));
-            this.GameIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.GameIcons.Images.SetKeyName(0, "sc2_16.png");
-            this.GameIcons.Images.SetKeyName(1, "wow_16.png");
             // 
             // menuStrip
             // 
@@ -129,14 +121,6 @@
             this.AboutToolStripMenuItem.Text = "About";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
-            // ListIcons
-            // 
-            this.ListIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ListIcons.ImageStream")));
-            this.ListIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.ListIcons.Images.SetKeyName(0, "satellite_16.png");
-            this.ListIcons.Images.SetKeyName(1, "video_16.png");
-            this.ListIcons.Images.SetKeyName(2, "feed_16.png");
-            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -184,16 +168,23 @@
             // TreeView
             // 
             this.TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TreeView.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
             this.TreeView.FullRowSelect = true;
+            this.TreeView.ImageIndex = 0;
+            this.TreeView.ImageList = this.NodeIcons;
             this.TreeView.Location = new System.Drawing.Point(0, 24);
             this.TreeView.Name = "TreeView";
+            this.TreeView.SelectedImageIndex = 0;
             this.TreeView.ShowNodeToolTips = true;
             this.TreeView.ShowRootLines = false;
             this.TreeView.Size = new System.Drawing.Size(256, 269);
             this.TreeView.TabIndex = 3;
-            this.TreeView.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.TreeView_DrawNode);
             this.TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseDoubleClick);
+            // 
+            // NodeIcons
+            // 
+            this.NodeIcons.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.NodeIcons.ImageSize = new System.Drawing.Size(16, 16);
+            this.NodeIcons.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // frmMain
             // 
@@ -222,12 +213,10 @@
 
         #endregion
 
-        private System.Windows.Forms.ImageList GameIcons;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem blizzTVToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem HelpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
-        private System.Windows.Forms.ImageList ListIcons;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel LabelStatus;
         private System.Windows.Forms.ToolStripProgressBar ProgressStatus;
@@ -239,6 +228,7 @@
         private System.Windows.Forms.ToolStripMenuItem blizzTVcomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.TreeView TreeView;
+        private System.Windows.Forms.ImageList NodeIcons;
     }
 }
 

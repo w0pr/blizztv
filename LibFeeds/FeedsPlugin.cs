@@ -34,12 +34,15 @@ namespace LibFeeds
         {
             FeedsPlugin.PluginSettings = ps;
 
+            ListItem root = new ListItem("Feeds");
+            RegisterListItem(root);            
+
             XDocument xdoc = XDocument.Load("Feeds.xml");
             var entries = from feed in xdoc.Descendants("Feed")
                           select new
                           {
                               Title = feed.Element("Name").Value,
-                              Url = feed.Element("Url").Value,
+                              URL = feed.Element("URL").Value,
                           };
 
 
@@ -47,13 +50,13 @@ namespace LibFeeds
             {
                 Feed f = new Feed();
                 f.Title = entry.Title;
-                f.Url = entry.Url;
+                f.URL = entry.URL;
                 this._feeds.Add(f);
             }
 
             foreach (Feed feed in this._feeds)
             {
-                RegisterListItem(feed);
+                RegisterListItem(feed,root);
                 feed.Update();                
                 foreach (Story story in feed.Stories)
                 {

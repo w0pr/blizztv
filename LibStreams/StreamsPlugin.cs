@@ -33,6 +33,9 @@ namespace LibStreams
         {
             StreamsPlugin.PluginSettings = ps;
 
+            ListItem root = new ListItem("Streams");
+            RegisterListItem(root);            
+
             XDocument xdoc = XDocument.Load("Streams.xml");
             var entries = from stream in xdoc.Descendants("Stream")
                           select new
@@ -40,7 +43,6 @@ namespace LibStreams
                               Name = stream.Element("Name").Value,
                               Slug = stream.Element("Slug").Value,
                               Provider = stream.Element("Provider").Value,
-                              Game = stream.Element("Game").Value
                           };
 
             foreach (var entry in entries)
@@ -50,13 +52,13 @@ namespace LibStreams
                 s.Slug = entry.Slug;
                 s.Provider = entry.Provider;
                 this._streams.Add(s);
-            }
+            }            
 
             foreach (Stream stream in this._streams)
-            {
+            {                
                 stream.Update();
                 if (stream.IsLive) stream.Title += string.Format(" ({0})", stream.ViewerCount);
-                //RegisterListItem(stream, this._group);
+                RegisterListItem(stream, root);
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));

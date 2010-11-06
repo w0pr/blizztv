@@ -33,6 +33,9 @@ namespace LibVideoChannels
         {
             VideoChannelsPlugin.PluginSettings = ps;
 
+            ListItem root = new ListItem("Videos");
+            RegisterListItem(root);            
+
             XDocument xdoc = XDocument.Load("VideoChannels.xml");
             var entries = from videochannel in xdoc.Descendants("VideoChannel")
                           select new
@@ -40,7 +43,6 @@ namespace LibVideoChannels
                               Name = videochannel.Element("Name").Value,
                               Slug = videochannel.Element("Slug").Value,
                               Provider = videochannel.Element("Provider").Value,
-                              Game = videochannel.Element("Game").Value
                           };
 
             foreach (var entry in entries)
@@ -54,7 +56,7 @@ namespace LibVideoChannels
 
             foreach (Channel channel in this._channels)
             {
-                RegisterListItem(channel);
+                RegisterListItem(channel,root);
                 channel.Update();
                 foreach (Video v in channel.Videos)
                 {
