@@ -53,38 +53,13 @@ namespace LibBlizzTV
             if (OnPluginLoadComplete != null) OnPluginLoadComplete(this,e);
         }
 
-        /* register list group */
-        public delegate void RegisterListGroupEventHandler(object sender, ListGroup g);
-        public event RegisterListGroupEventHandler OnRegisterListGroup;
-
-        protected void RegisterListGroup(ListGroup g)
-        {
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.DEBUG,string.Format("Plugin {0} registered list group: {1}",this._plugin_info.AssemblyName.ToString(),g.Name));
-            if(OnRegisterListGroup!=null) OnRegisterListGroup(this,g);
-        }
-
         /* add list item */
-        public delegate void RegisterListItemEventHandler(object sender, ListItem i,ListGroup g);
+        public delegate void RegisterListItemEventHandler(object sender, ListItem i, ListItem g);
         public event RegisterListItemEventHandler OnRegisterListItem;
 
-        protected void RegisterListItem(ListItem Item,ListGroup Group)
+        protected void RegisterListItem(ListItem Item, ListItem Parent=null)
         {
-            if (OnRegisterListItem != null) OnRegisterListItem(this, Item, Group);
-        }
-    }
-
-    public class ListGroup
-    {
-        private string _name;
-        private string _key;
-
-        public string Name { get { return this._name; } }
-        public string Key { get { return this._key; } }
-
-        public ListGroup(string Name, string Key)
-        {
-            this._name = Name;
-            this._key = Key;
+            if (OnRegisterListItem != null) OnRegisterListItem(this, Item, Parent);
         }
     }
 

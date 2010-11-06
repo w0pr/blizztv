@@ -26,14 +26,12 @@ namespace LibStreams
     public class StreamsPlugin:Plugin
     {
         private List<Stream> _streams = new List<Stream>();
-        ListGroup _group = new ListGroup("Streams", "streams");
 
         public StreamsPlugin() { }
 
         public override void Load(PluginSettings ps)
         {
             StreamsPlugin.PluginSettings = ps;
-            this.RegisterListGroup(this._group);
 
             XDocument xdoc = XDocument.Load("Streams.xml");
             var entries = from stream in xdoc.Descendants("Stream")
@@ -58,7 +56,7 @@ namespace LibStreams
             {
                 stream.Update();
                 if (stream.IsLive) stream.Title += string.Format(" ({0})", stream.ViewerCount);
-                RegisterListItem(stream, this._group);
+                //RegisterListItem(stream, this._group);
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));

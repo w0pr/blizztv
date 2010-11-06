@@ -11,28 +11,22 @@ namespace LibVideoChannels
 {
     public partial class Player : Form
     {
-        private Channel _channel;
+        private Video _video;
 
-        public Player(Channel Channel)
+        public Player(Video Video)
         {
             InitializeComponent();
-            this._channel = Channel;
+            this._video = Video;
             this.Width = VideoChannelsPlugin.GlobalSettings.VideoPlayerWidth;
             this.Height = VideoChannelsPlugin.GlobalSettings.VideoPlayerHeight;
-            foreach (Video v in this._channel.Videos)
-            {
-                v.Process();
-            }
+            this._video.Process();
         }
 
         private void Player_Load(object sender, EventArgs e)
         {
-            this.Text = string.Format("Video Channel: {0}@{1}", this._channel.Title, this._channel.Provider);
-            if (this._channel.Videos.Count > 0)
-            {                
-                this.Stage.FlashVars = this._channel.Videos[0].FlashVars;
-                this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._channel.Videos[0].Movie, this._channel.Videos[0].FlashVars));
-            }
+            this.Text = string.Format("Video Channel: {0}@{1}", this._video.Title, this._video.Provider);
+            this.Stage.FlashVars = this._video.FlashVars;
+            this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars));
         }
     }
 }

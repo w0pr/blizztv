@@ -23,9 +23,8 @@ using LibBlizzTV.Utils;
 
 namespace LibFeeds
 {
-    public class Feed
+    public class Feed : ListItem
     {
-        public string Name;
         public string Url;
         public List<Story> Stories = new List<Story>();
 

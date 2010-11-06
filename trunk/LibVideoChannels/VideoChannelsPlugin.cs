@@ -26,14 +26,12 @@ namespace LibVideoChannels
     public class VideoChannelsPlugin:Plugin
     {
         private List<Channel> _channels = new List<Channel>();
-        ListGroup _group = new ListGroup("Video Channels", "video_channels");
 
         public VideoChannelsPlugin() { }
 
         public override void Load(PluginSettings ps)
         {
             VideoChannelsPlugin.PluginSettings = ps;
-            this.RegisterListGroup(this._group);
 
             XDocument xdoc = XDocument.Load("VideoChannels.xml");
             var entries = from videochannel in xdoc.Descendants("VideoChannel")
@@ -56,8 +54,12 @@ namespace LibVideoChannels
 
             foreach (Channel channel in this._channels)
             {
+                RegisterListItem(channel);
                 channel.Update();
-                RegisterListItem(channel, this._group);
+                foreach (Video v in channel.Videos)
+                {
+                    RegisterListItem(v, channel);
+                }
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));

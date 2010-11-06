@@ -65,19 +65,6 @@ namespace LibVideoChannels
                     this.Videos.Add(v);
                 }
             }
-        }
-
-        public override void DoubleClick(object sender, EventArgs e)
-        {
-            if (this.Videos.Count > 0)
-            {
-                if (VideoChannelsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS)
-                {
-                    Player p = new Player(this);
-                    p.Show();
-                }
-                else System.Diagnostics.Process.Start(this.Videos[0].Link, null);                
-            }
-        }
+        }        
     }
 }
