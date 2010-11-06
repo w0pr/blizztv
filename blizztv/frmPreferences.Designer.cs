@@ -31,33 +31,33 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPreferences));
             this.tabPreferences = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.tabPlugins = new System.Windows.Forms.TabPage();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtPlayerWidth = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtPlayerHeight = new System.Windows.Forms.TextBox();
-            this.checkBoxAutoPlay = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButtonUseInternalViewers = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonUseInternalViewers = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxAutoPlay = new System.Windows.Forms.CheckBox();
+            this.txtPlayerHeight = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtPlayerWidth = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabPlugins = new System.Windows.Forms.TabPage();
             this.ListviewPlugins = new System.Windows.Forms.ListView();
             this.ColEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabDebug = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.tabPreferences.SuspendLayout();
             this.tabGeneral.SuspendLayout();
-            this.tabPlugins.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tabPlugins.SuspendLayout();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -85,37 +85,38 @@
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
-            // tabPlugins
+            // groupBox2
             // 
-            this.tabPlugins.Controls.Add(this.ListviewPlugins);
-            this.tabPlugins.Location = new System.Drawing.Point(4, 22);
-            this.tabPlugins.Name = "tabPlugins";
-            this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPlugins.Size = new System.Drawing.Size(461, 277);
-            this.tabPlugins.TabIndex = 1;
-            this.tabPlugins.Text = "Plugins";
-            this.tabPlugins.UseVisualStyleBackColor = true;
+            this.groupBox2.Controls.Add(this.radioButton2);
+            this.groupBox2.Controls.Add(this.radioButtonUseInternalViewers);
+            this.groupBox2.Location = new System.Drawing.Point(9, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(446, 67);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "For viewing content:";
             // 
-            // buttonOK
+            // radioButton2
             // 
-            this.buttonOK.Location = new System.Drawing.Point(397, 312);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 1;
-            this.buttonOK.Text = "OK";
-            this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(9, 42);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(142, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Use default web-browser";
+            this.radioButton2.UseVisualStyleBackColor = true;
             // 
-            // buttonCancel
+            // radioButtonUseInternalViewers
             // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(316, 312);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.radioButtonUseInternalViewers.AutoSize = true;
+            this.radioButtonUseInternalViewers.Location = new System.Drawing.Point(9, 19);
+            this.radioButtonUseInternalViewers.Name = "radioButtonUseInternalViewers";
+            this.radioButtonUseInternalViewers.Size = new System.Drawing.Size(120, 17);
+            this.radioButtonUseInternalViewers.TabIndex = 0;
+            this.radioButtonUseInternalViewers.TabStop = true;
+            this.radioButtonUseInternalViewers.Text = "Use internal viewers";
+            this.radioButtonUseInternalViewers.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -132,47 +133,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Video Player";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Player Size:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Width:";
-            // 
-            // txtPlayerWidth
-            // 
-            this.txtPlayerWidth.Location = new System.Drawing.Point(118, 18);
-            this.txtPlayerWidth.Name = "txtPlayerWidth";
-            this.txtPlayerWidth.Size = new System.Drawing.Size(49, 20);
-            this.txtPlayerWidth.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(173, 21);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Height:";
-            // 
-            // txtPlayerHeight
-            // 
-            this.txtPlayerHeight.Location = new System.Drawing.Point(220, 18);
-            this.txtPlayerHeight.Name = "txtPlayerHeight";
-            this.txtPlayerHeight.Size = new System.Drawing.Size(49, 20);
-            this.txtPlayerHeight.TabIndex = 3;
-            // 
             // checkBoxAutoPlay
             // 
             this.checkBoxAutoPlay.AutoSize = true;
@@ -183,38 +143,57 @@
             this.checkBoxAutoPlay.Text = "Auto-play (only valid for internal-players)";
             this.checkBoxAutoPlay.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // txtPlayerHeight
             // 
-            this.groupBox2.Controls.Add(this.radioButton2);
-            this.groupBox2.Controls.Add(this.radioButtonUseInternalViewers);
-            this.groupBox2.Location = new System.Drawing.Point(9, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(446, 67);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "For viewing content:";
+            this.txtPlayerHeight.Location = new System.Drawing.Point(220, 18);
+            this.txtPlayerHeight.Name = "txtPlayerHeight";
+            this.txtPlayerHeight.Size = new System.Drawing.Size(49, 20);
+            this.txtPlayerHeight.TabIndex = 3;
             // 
-            // radioButtonUseInternalViewers
+            // label3
             // 
-            this.radioButtonUseInternalViewers.AutoSize = true;
-            this.radioButtonUseInternalViewers.Location = new System.Drawing.Point(9, 19);
-            this.radioButtonUseInternalViewers.Name = "radioButtonUseInternalViewers";
-            this.radioButtonUseInternalViewers.Size = new System.Drawing.Size(120, 17);
-            this.radioButtonUseInternalViewers.TabIndex = 0;
-            this.radioButtonUseInternalViewers.TabStop = true;
-            this.radioButtonUseInternalViewers.Text = "Use internal viewers";
-            this.radioButtonUseInternalViewers.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(173, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Height:";
             // 
-            // radioButton2
+            // txtPlayerWidth
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(9, 42);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(142, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Use default web-browser";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.txtPlayerWidth.Location = new System.Drawing.Point(118, 18);
+            this.txtPlayerWidth.Name = "txtPlayerWidth";
+            this.txtPlayerWidth.Size = new System.Drawing.Size(49, 20);
+            this.txtPlayerWidth.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(74, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Width:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Player Size:";
+            // 
+            // tabPlugins
+            // 
+            this.tabPlugins.Controls.Add(this.ListviewPlugins);
+            this.tabPlugins.Location = new System.Drawing.Point(4, 22);
+            this.tabPlugins.Name = "tabPlugins";
+            this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPlugins.Size = new System.Drawing.Size(461, 277);
+            this.tabPlugins.TabIndex = 1;
+            this.tabPlugins.Text = "Plugins";
+            this.tabPlugins.UseVisualStyleBackColor = true;
             // 
             // ListviewPlugins
             // 
@@ -238,6 +217,11 @@
             this.ColEnabled.Text = "Enabled";
             this.ColEnabled.Width = 56;
             // 
+            // colIcon
+            // 
+            this.colIcon.Text = "Icon";
+            this.colIcon.Width = 33;
+            // 
             // ColName
             // 
             this.ColName.Text = "Name";
@@ -247,11 +231,6 @@
             // 
             this.ColDescription.Text = "Description";
             this.ColDescription.Width = 262;
-            // 
-            // colIcon
-            // 
-            this.colIcon.Text = "Icon";
-            this.colIcon.Width = 33;
             // 
             // tabDebug
             // 
@@ -275,6 +254,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Debug Support";
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(9, 42);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(132, 17);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Enable debug-console";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -285,15 +274,26 @@
             this.checkBox1.Text = "Enable debug-logging";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // buttonOK
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(9, 42);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(132, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Enable debug-console";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.buttonOK.Location = new System.Drawing.Point(397, 312);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 1;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(316, 312);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.TabIndex = 2;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // frmPreferences
             // 
@@ -311,13 +311,14 @@
             this.MinimizeBox = false;
             this.Name = "frmPreferences";
             this.Text = "Preferences";
+            this.Load += new System.EventHandler(this.frmPreferences_Load);
             this.tabPreferences.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
-            this.tabPlugins.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.tabPlugins.ResumeLayout(false);
             this.tabDebug.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();

@@ -46,6 +46,7 @@
     <Compile Include="PluginManager.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="PluginInfo.cs" />
+    <Compile Include="PluginSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

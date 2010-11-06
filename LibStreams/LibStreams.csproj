@@ -75,6 +75,7 @@
     <EmbeddedResource Include="Resources\stream_16.png" />
     <Content Include="StreamProviders.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Streams.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
