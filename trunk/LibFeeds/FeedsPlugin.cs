@@ -31,8 +31,9 @@ namespace LibFeeds
 
         public FeedsPlugin() {}
 
-        public override void Load()
+        public override void Load(PluginSettings ps)
         {
+            FeedsPlugin.PluginSettings = ps;
             this.RegisterListGroup(this._group);
 
             XDocument xdoc = XDocument.Load("Feeds.xml");

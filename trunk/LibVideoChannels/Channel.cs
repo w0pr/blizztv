@@ -71,9 +71,12 @@ namespace LibVideoChannels
         {
             if (this.Videos.Count > 0)
             {
-                //System.Diagnostics.Process.Start(this.Videos[0].Link, null);
-                Player p = new Player(this);
-                p.Show();
+                if (VideoChannelsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS)
+                {
+                    Player p = new Player(this);
+                    p.Show();
+                }
+                else System.Diagnostics.Process.Start(this.Videos[0].Link, null);                
             }
         }
     }

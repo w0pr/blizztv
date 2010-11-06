@@ -17,6 +17,8 @@ namespace LibVideoChannels
         {
             InitializeComponent();
             this._channel = Channel;
+            this.Width = VideoChannelsPlugin.GlobalSettings.VideoPlayerWidth;
+            this.Height = VideoChannelsPlugin.GlobalSettings.VideoPlayerHeight;
             foreach (Video v in this._channel.Videos)
             {
                 v.Process();

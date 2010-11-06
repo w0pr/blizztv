@@ -30,8 +30,9 @@ namespace LibStreams
 
         public StreamsPlugin() { }
 
-        public override void Load()
+        public override void Load(PluginSettings ps)
         {
+            StreamsPlugin.PluginSettings = ps;
             this.RegisterListGroup(this._group);
 
             XDocument xdoc = XDocument.Load("Streams.xml");

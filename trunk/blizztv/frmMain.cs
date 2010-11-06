@@ -31,7 +31,8 @@ namespace BlizzTV
             InitializeComponent();
             DoubleBufferControl(this.List);
             bool exists = Storage.Instance.StorageExists(); // temp. here to force storage read the settings.
-            DebugConsole.init();
+
+            if(Settings.Instance.EnableDebugConsole) DebugConsole.init();
         }
 
         public static void DoubleBufferControl(System.Windows.Forms.Control c)
@@ -66,10 +67,11 @@ namespace BlizzTV
         }
 
         private void RunPlugin(Plugin p)
-        {
+        {            
             p.OnRegisterListGroup += RegisterListGroup;
             p.OnRegisterListItem += RegisterListItem;
-            p.Load();
+            p.ApplyGlobalSettings(Settings.Instance.GlobalSettings);
+            p.Load(Settings.Instance.PluginSettings[p.PluginInfo.AssemblyName]);
         }
 
         private void RegisterListGroup(object sender, ListGroup g)

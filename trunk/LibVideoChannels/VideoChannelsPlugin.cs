@@ -23,15 +23,16 @@ using LibBlizzTV;
 namespace LibVideoChannels
 {
     [Plugin("LibVideoChannels", "Video channel aggregator plugin for BlizzTV","video_16.png")]
-    public class PluginVideoChannels:Plugin
+    public class VideoChannelsPlugin:Plugin
     {
         private List<Channel> _channels = new List<Channel>();
         ListGroup _group = new ListGroup("Video Channels", "video_channels");
 
-        public PluginVideoChannels() { }
+        public VideoChannelsPlugin() { }
 
-        public override void Load()
+        public override void Load(PluginSettings ps)
         {
+            VideoChannelsPlugin.PluginSettings = ps;
             this.RegisterListGroup(this._group);
 
             XDocument xdoc = XDocument.Load("VideoChannels.xml");

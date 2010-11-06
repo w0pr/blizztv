@@ -32,13 +32,13 @@
             this.tabPreferences = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonUseDefaultWebBrowser = new System.Windows.Forms.RadioButton();
             this.radioButtonUseInternalViewers = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBoxAutoPlay = new System.Windows.Forms.CheckBox();
-            this.txtPlayerHeight = new System.Windows.Forms.TextBox();
+            this.checkBoxVideoAutoPlay = new System.Windows.Forms.CheckBox();
+            this.txtVideoPlayerHeight = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtPlayerWidth = new System.Windows.Forms.TextBox();
+            this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPlugins = new System.Windows.Forms.TabPage();
@@ -49,8 +49,8 @@
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabDebug = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnableDebugConsole = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnableDebugLogging = new System.Windows.Forms.CheckBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.tabPreferences.SuspendLayout();
@@ -87,7 +87,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.radioButton2);
+            this.groupBox2.Controls.Add(this.radioButtonUseDefaultWebBrowser);
             this.groupBox2.Controls.Add(this.radioButtonUseInternalViewers);
             this.groupBox2.Location = new System.Drawing.Point(9, 6);
             this.groupBox2.Name = "groupBox2";
@@ -96,16 +96,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "For viewing content:";
             // 
-            // radioButton2
+            // radioButtonUseDefaultWebBrowser
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(9, 42);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(142, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Use default web-browser";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButtonUseDefaultWebBrowser.AutoSize = true;
+            this.radioButtonUseDefaultWebBrowser.Location = new System.Drawing.Point(9, 42);
+            this.radioButtonUseDefaultWebBrowser.Name = "radioButtonUseDefaultWebBrowser";
+            this.radioButtonUseDefaultWebBrowser.Size = new System.Drawing.Size(142, 17);
+            this.radioButtonUseDefaultWebBrowser.TabIndex = 1;
+            this.radioButtonUseDefaultWebBrowser.Text = "Use default web-browser";
+            this.radioButtonUseDefaultWebBrowser.UseVisualStyleBackColor = true;
             // 
             // radioButtonUseInternalViewers
             // 
@@ -114,16 +113,15 @@
             this.radioButtonUseInternalViewers.Name = "radioButtonUseInternalViewers";
             this.radioButtonUseInternalViewers.Size = new System.Drawing.Size(120, 17);
             this.radioButtonUseInternalViewers.TabIndex = 0;
-            this.radioButtonUseInternalViewers.TabStop = true;
             this.radioButtonUseInternalViewers.Text = "Use internal viewers";
             this.radioButtonUseInternalViewers.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBoxAutoPlay);
-            this.groupBox1.Controls.Add(this.txtPlayerHeight);
+            this.groupBox1.Controls.Add(this.checkBoxVideoAutoPlay);
+            this.groupBox1.Controls.Add(this.txtVideoPlayerHeight);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtPlayerWidth);
+            this.groupBox1.Controls.Add(this.txtVideoPlayerWidth);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(9, 79);
@@ -133,22 +131,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Video Player";
             // 
-            // checkBoxAutoPlay
+            // checkBoxVideoAutoPlay
             // 
-            this.checkBoxAutoPlay.AutoSize = true;
-            this.checkBoxAutoPlay.Location = new System.Drawing.Point(9, 44);
-            this.checkBoxAutoPlay.Name = "checkBoxAutoPlay";
-            this.checkBoxAutoPlay.Size = new System.Drawing.Size(211, 17);
-            this.checkBoxAutoPlay.TabIndex = 4;
-            this.checkBoxAutoPlay.Text = "Auto-play (only valid for internal-players)";
-            this.checkBoxAutoPlay.UseVisualStyleBackColor = true;
+            this.checkBoxVideoAutoPlay.AutoSize = true;
+            this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 44);
+            this.checkBoxVideoAutoPlay.Name = "checkBoxVideoAutoPlay";
+            this.checkBoxVideoAutoPlay.Size = new System.Drawing.Size(211, 17);
+            this.checkBoxVideoAutoPlay.TabIndex = 4;
+            this.checkBoxVideoAutoPlay.Text = "Auto-play (only valid for internal-players)";
+            this.checkBoxVideoAutoPlay.UseVisualStyleBackColor = true;
             // 
-            // txtPlayerHeight
+            // txtVideoPlayerHeight
             // 
-            this.txtPlayerHeight.Location = new System.Drawing.Point(220, 18);
-            this.txtPlayerHeight.Name = "txtPlayerHeight";
-            this.txtPlayerHeight.Size = new System.Drawing.Size(49, 20);
-            this.txtPlayerHeight.TabIndex = 3;
+            this.txtVideoPlayerHeight.Location = new System.Drawing.Point(220, 18);
+            this.txtVideoPlayerHeight.Name = "txtVideoPlayerHeight";
+            this.txtVideoPlayerHeight.Size = new System.Drawing.Size(49, 20);
+            this.txtVideoPlayerHeight.TabIndex = 3;
             // 
             // label3
             // 
@@ -159,12 +157,12 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Height:";
             // 
-            // txtPlayerWidth
+            // txtVideoPlayerWidth
             // 
-            this.txtPlayerWidth.Location = new System.Drawing.Point(118, 18);
-            this.txtPlayerWidth.Name = "txtPlayerWidth";
-            this.txtPlayerWidth.Size = new System.Drawing.Size(49, 20);
-            this.txtPlayerWidth.TabIndex = 2;
+            this.txtVideoPlayerWidth.Location = new System.Drawing.Point(118, 18);
+            this.txtVideoPlayerWidth.Name = "txtVideoPlayerWidth";
+            this.txtVideoPlayerWidth.Size = new System.Drawing.Size(49, 20);
+            this.txtVideoPlayerWidth.TabIndex = 2;
             // 
             // label2
             // 
@@ -245,8 +243,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.checkBox2);
-            this.groupBox3.Controls.Add(this.checkBox1);
+            this.groupBox3.Controls.Add(this.checkBoxEnableDebugConsole);
+            this.groupBox3.Controls.Add(this.checkBoxEnableDebugLogging);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(449, 69);
@@ -254,25 +252,25 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Debug Support";
             // 
-            // checkBox2
+            // checkBoxEnableDebugConsole
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(9, 42);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(132, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Enable debug-console";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBoxEnableDebugConsole.AutoSize = true;
+            this.checkBoxEnableDebugConsole.Location = new System.Drawing.Point(9, 42);
+            this.checkBoxEnableDebugConsole.Name = "checkBoxEnableDebugConsole";
+            this.checkBoxEnableDebugConsole.Size = new System.Drawing.Size(132, 17);
+            this.checkBoxEnableDebugConsole.TabIndex = 1;
+            this.checkBoxEnableDebugConsole.Text = "Enable debug-console";
+            this.checkBoxEnableDebugConsole.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // checkBoxEnableDebugLogging
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(9, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(129, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Enable debug-logging";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBoxEnableDebugLogging.AutoSize = true;
+            this.checkBoxEnableDebugLogging.Location = new System.Drawing.Point(9, 19);
+            this.checkBoxEnableDebugLogging.Name = "checkBoxEnableDebugLogging";
+            this.checkBoxEnableDebugLogging.Size = new System.Drawing.Size(129, 17);
+            this.checkBoxEnableDebugLogging.TabIndex = 0;
+            this.checkBoxEnableDebugLogging.Text = "Enable debug-logging";
+            this.checkBoxEnableDebugLogging.UseVisualStyleBackColor = true;
             // 
             // buttonOK
             // 
@@ -334,14 +332,14 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtPlayerHeight;
+        private System.Windows.Forms.TextBox txtVideoPlayerHeight;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtPlayerWidth;
+        private System.Windows.Forms.TextBox txtVideoPlayerWidth;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox checkBoxAutoPlay;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.CheckBox checkBoxVideoAutoPlay;
+        private System.Windows.Forms.RadioButton radioButtonUseDefaultWebBrowser;
         private System.Windows.Forms.RadioButton radioButtonUseInternalViewers;
         private System.Windows.Forms.ListView ListviewPlugins;
         private System.Windows.Forms.ColumnHeader ColEnabled;
@@ -350,7 +348,7 @@
         private System.Windows.Forms.ColumnHeader colIcon;
         private System.Windows.Forms.TabPage tabDebug;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBoxEnableDebugConsole;
+        private System.Windows.Forms.CheckBox checkBoxEnableDebugLogging;
     }
 }
