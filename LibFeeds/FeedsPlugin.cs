@@ -27,20 +27,18 @@ namespace LibFeeds
     public class FeedsPlugin:Plugin
     {
         private List<Feed> _feeds = new List<Feed>();
-        ListGroup _group = new ListGroup("Feeds", "feeds");
 
         public FeedsPlugin() {}
 
         public override void Load(PluginSettings ps)
         {
             FeedsPlugin.PluginSettings = ps;
-            this.RegisterListGroup(this._group);
 
             XDocument xdoc = XDocument.Load("Feeds.xml");
             var entries = from feed in xdoc.Descendants("Feed")
                           select new
                           {
-                              Name = feed.Element("Name").Value,
+                              Title = feed.Element("Name").Value,
                               Url = feed.Element("Url").Value,
                           };
 
@@ -48,17 +46,18 @@ namespace LibFeeds
             foreach (var entry in entries)
             {
                 Feed f = new Feed();
-                f.Name = entry.Name;
+                f.Title = entry.Title;
                 f.Url = entry.Url;
                 this._feeds.Add(f);
             }
 
             foreach (Feed feed in this._feeds)
             {
-                feed.Update();
+                RegisterListItem(feed);
+                feed.Update();                
                 foreach (Story story in feed.Stories)
                 {
-                    RegisterListItem(story, this._group);
+                    RegisterListItem(story, feed);
                 }                
             }
 

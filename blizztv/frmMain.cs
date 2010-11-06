@@ -29,7 +29,7 @@ namespace BlizzTV
         public frmMain()
         {
             InitializeComponent();
-            DoubleBufferControl(this.List);
+            DoubleBufferControl(this.TreeView);
             bool exists = Storage.Instance.StorageExists(); // temp. here to force storage read the settings.
 
             if(Settings.Instance.EnableDebugConsole) DebugConsole.init();
@@ -68,42 +68,38 @@ namespace BlizzTV
 
         private void RunPlugin(Plugin p)
         {            
-            p.OnRegisterListGroup += RegisterListGroup;
             p.OnRegisterListItem += RegisterListItem;
             p.ApplyGlobalSettings(Settings.Instance.GlobalSettings);
             p.Load(Settings.Instance.PluginSettings[p.PluginInfo.AssemblyName]);
         }
 
-        private void RegisterListGroup(object sender, ListGroup g)
+        private void RegisterListItem(object sender, ListItem item, ListItem parent)
         {
-            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListGroup(sender, g); }));
-            else List.Groups.Add(new ListViewGroup(g.Key,g.Name));
-        }
-
-        private void RegisterListItem(object sender, ListItem item,ListGroup group)
-        {
-            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItem(sender, item, group); }));
+            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItem(sender, item, parent); }));
             else
             {
-                ListItemContainer c = new ListItemContainer((Plugin)sender,item);
-                c.Group = List.Groups[group.Key];
-                this.List.Items.Add(c);
+                TreeItem t = new TreeItem((Plugin)sender,item);
+                if (parent != null) TreeView.Nodes[parent.Key].Nodes.Add(t);
+                else TreeView.Nodes.Add(t);
             }
         }
 
-        private void List_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        private void TreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
-            ListItemContainer item = (ListItemContainer)List.Items[e.ItemIndex];
-            item.DrawSubItem(sender, e);
-        }
-
-        private void List_DoubleClick(object sender, EventArgs e)
-        {
-            if (List.SelectedItems.Count > 0)
+            /*if (e.Node.GetType() == typeof(TreeItem))
             {
-                ListItemContainer selection = (ListItemContainer)List.SelectedItems[0];
-                selection.DoubleClick(sender, e);
-            }
+                TreeItem selection = (TreeItem)e.Node;
+                selection.DrawNode(sender, e);
+            }*/
+            //else 
+            e.DrawDefault = true;
+        }
+
+        private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            TreeItem selection = (TreeItem)e.Node;
+            if (selection.Nodes.Count > 0) if (selection.IsExpanded) selection.Expand();  else selection.Collapse();
+            else selection.DoubleClick(sender, e);        
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)

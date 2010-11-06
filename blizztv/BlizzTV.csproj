@@ -71,7 +71,7 @@
     <Compile Include="frmPreferences.Designer.cs">
       <DependentUpon>frmPreferences.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListItemContainer.cs" />
+    <Compile Include="TreeItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />

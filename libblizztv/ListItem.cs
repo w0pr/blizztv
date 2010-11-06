@@ -24,6 +24,7 @@ namespace LibBlizzTV
     {
         public string _title;
         public string Title { get { return this._title; } set { this._title = value; } }
+        public string Key { get { return this._title; } }
 
         public ListItem() { }
 

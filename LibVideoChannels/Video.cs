@@ -16,12 +16,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using LibBlizzTV;
 
 namespace LibVideoChannels
 {
-    public class Video
+    public class Video:ListItem
     {
-        private string _title;
         private string _guid;
         private string _video_id;
         private string _link;
@@ -30,7 +30,6 @@ namespace LibVideoChannels
         private string _movie;
         private string _flash_vars;
 
-        public string Title { get { return this._title; } internal set { this._title = value; } }
         public string GUID { get { return this._guid; } internal set { this._guid = value; } }
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
@@ -49,6 +48,16 @@ namespace LibVideoChannels
 
             this._movie = this._movie.Replace("%video_id%", this._video_id);
             this._flash_vars = this._flash_vars.Replace("%slug%", this._video_id);
+        }
+
+        public override void DoubleClick(object sender, EventArgs e)
+        {
+            if (VideoChannelsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS)
+            {
+                Player p = new Player(this);
+                p.Show();
+            }
+            else System.Diagnostics.Process.Start(this.Link, null);    
         }
     }
 }
