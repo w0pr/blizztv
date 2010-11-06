@@ -129,16 +129,16 @@
             this.groupBox1.Size = new System.Drawing.Size(446, 67);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Video Player";
+            this.groupBox1.Text = "Internal Video Player Settings";
             // 
             // checkBoxVideoAutoPlay
             // 
             this.checkBoxVideoAutoPlay.AutoSize = true;
             this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 44);
             this.checkBoxVideoAutoPlay.Name = "checkBoxVideoAutoPlay";
-            this.checkBoxVideoAutoPlay.Size = new System.Drawing.Size(211, 17);
+            this.checkBoxVideoAutoPlay.Size = new System.Drawing.Size(70, 17);
             this.checkBoxVideoAutoPlay.TabIndex = 4;
-            this.checkBoxVideoAutoPlay.Text = "Auto-play (only valid for internal-players)";
+            this.checkBoxVideoAutoPlay.Text = "Auto-play";
             this.checkBoxVideoAutoPlay.UseVisualStyleBackColor = true;
             // 
             // txtVideoPlayerHeight
