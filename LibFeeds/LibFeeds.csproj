@@ -61,6 +61,7 @@
   <ItemGroup>
     <Content Include="Feeds.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Resources\feed_16.png" />
   </ItemGroup>
