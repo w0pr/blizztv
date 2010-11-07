@@ -30,9 +30,8 @@ namespace BlizzTV
         {
             InitializeComponent();
             DoubleBufferControl(this.TreeView);
-            bool exists = Storage.Instance.StorageExists(); // temp. here to force storage read the settings.
 
-            if(Settings.Instance.EnableDebugConsole) DebugConsole.init();
+            if(SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.init();
         }
 
         public static void DoubleBufferControl(System.Windows.Forms.Control c)
@@ -53,7 +52,7 @@ namespace BlizzTV
         private void LoadPlugins()
         {
             PluginManager pm = PluginManager.Instance;
-            foreach (KeyValuePair<string, PluginSettings> pair in Settings.Instance.PluginSettings)
+            foreach (KeyValuePair<string, PluginSettings> pair in SettingsStorage.Instance.Settings.PluginSettings)
             {
                 if (pair.Value.Enabled && pm.Plugins.ContainsKey(pair.Key)) // if the plugin is enabled
                 {
@@ -69,8 +68,8 @@ namespace BlizzTV
         private void RunPlugin(Plugin p)
         {            
             p.OnRegisterListItem += RegisterListItem;
-            p.ApplyGlobalSettings(Settings.Instance.GlobalSettings);
-            p.Load(Settings.Instance.PluginSettings[p.PluginInfo.AssemblyName]);
+            p.ApplyGlobalSettings(SettingsStorage.Instance.Settings.GlobalSettings);
+            p.Load(SettingsStorage.Instance.Settings.PluginSettings[p.PluginInfo.AssemblyName]);
         }
 
         private void RegisterListItem(object sender, ListItem item, ListItem parent)
