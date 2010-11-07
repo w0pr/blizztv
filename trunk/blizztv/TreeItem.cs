@@ -27,7 +27,6 @@ namespace BlizzTV
     {
         private ListItem _item;
         private Plugin _plugin;
-        private Font font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
 
         public ListItem Item { get { return this._item; } }
         
@@ -35,7 +34,7 @@ namespace BlizzTV
         {
             this._plugin = Plugin;
             this._item = Item;
-            this.Name = _item.Key;
+            this.Name = _item.Key;          
         }
 
         public void Render()
@@ -43,6 +42,19 @@ namespace BlizzTV
             this.Text = this._item.Title; // render the text
             if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.PluginInfo.AssemblyName)) this.TreeView.ImageList.Images.Add(this._plugin.PluginInfo.AssemblyName, this._plugin.PluginInfo.Attributes.Icon); // add the plugin icon to image list in it doesn't exists
             this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.PluginInfo.AssemblyName); // render the icon
+
+            switch (this._item.State)
+            {
+                case ItemState.UNREAD:
+                    this.NodeFont = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold);
+                    break;
+                case ItemState.READ:
+                    break;
+                case ItemState.MARKED:
+                    break;
+                default:
+                    break;
+            }  
         }
 
         public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e)
