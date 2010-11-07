@@ -6,31 +6,6 @@
     <Slug>gosugamers</Slug>
     <Provider>UStream</Provider>
   </Stream>
-  <Stream>    
-    <Name>Tuski</Name>
-    <Slug>tuski</Slug>
-    <Provider>LiveStream</Provider>
-  </Stream>
-  <Stream>
-    <Name>CellaWeRRa</Name>
-    <Slug>CellaWeRRa</Slug>
-    <Provider>LiveStream</Provider>
-  </Stream>
-  <Stream>
-    <Name>Oystein123</Name>
-    <Slug>Oystein123</Slug>
-    <Provider>LiveStream</Provider>
-  </Stream>
-  <Stream>
-    <Name>twit</Name>
-    <Slug>twit</Slug>
-    <Provider>JustinTV</Provider>
-  </Stream>
-  <Stream>
-    <Name>bane1998</Name>
-    <Slug>bane1998</Slug>
-    <Provider>UStream</Provider>
-  </Stream>
 </Streams>
 
 
