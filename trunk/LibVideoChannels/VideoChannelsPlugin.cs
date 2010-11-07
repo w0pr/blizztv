@@ -47,10 +47,7 @@ namespace LibVideoChannels
 
             foreach (var entry in entries)
             {
-                Channel c = new Channel();
-                c.Title = entry.Name;
-                c.Slug = entry.Slug;
-                c.Provider = entry.Provider;
+                Channel c = new Channel(entry.Name,entry.Slug,entry.Provider);
                 this._channels.Add(c);
             }
 

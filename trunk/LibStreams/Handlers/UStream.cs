@@ -24,7 +24,7 @@ namespace LibStreams.Handlers
     {
         private UInt32 _stream_id;
 
-        public UStream() { }
+        public UStream(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
 
         public override void Update()
         {

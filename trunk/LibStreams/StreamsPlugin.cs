@@ -47,17 +47,14 @@ namespace LibStreams
 
             foreach (var entry in entries)
             {
-                Stream s = StreamFactory.CreateStream(entry.Provider);
-                s.Title = entry.Name;
-                s.Slug = entry.Slug;
-                s.Provider = entry.Provider;
+                Stream s = StreamFactory.CreateStream(entry.Name,entry.Slug,entry.Provider);
                 this._streams.Add(s);
             }            
 
             foreach (Stream stream in this._streams)
             {                
                 stream.Update();
-                if (stream.IsLive) stream.Title += string.Format(" ({0})", stream.ViewerCount);
+                if (stream.IsLive) stream.SetTitle(string.Format("{0} ({1})",stream.Title, stream.ViewerCount));                    
                 RegisterListItem(stream, root);
             }
 

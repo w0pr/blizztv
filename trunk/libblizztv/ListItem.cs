@@ -22,13 +22,13 @@ namespace LibBlizzTV
 {
     public class ListItem
     {
-        public string _title;
-        public string _key;
-        protected ItemState _state = ItemState.READ;
+        private string _title; 
+        private string _key;
+        private ItemState _state = ItemState.READ;
 
-        public string Title { get { return this._title; } set { this._title = value; } }
+        public string Title { get { return this._title; } }
         public string Key { get { return this._key; } }
-        public ItemState State { get { return this._state; } protected set { this._state = value; } }
+        public ItemState State { get { return this._state; } }
 
         public ListItem() { this.generate_random_key(); }
         public ListItem(string Title) { this._title = Title; this.generate_random_key(); }
@@ -37,6 +37,24 @@ namespace LibBlizzTV
         public virtual void UpdateState() { }
 
         private void generate_random_key() { this._key = System.Convert.ToBase64String(Guid.NewGuid().ToByteArray()); }
+
+        public delegate void TitleChangedEventHandler(object sender);
+        public event TitleChangedEventHandler OnTitleChange;
+
+        public void SetTitle(string Title)
+        {
+            this._title = Title;
+            if (OnTitleChange != null) OnTitleChange(this);
+        }
+
+        public delegate void StateChangedEventHandler(object sender);
+        public event StateChangedEventHandler OnStateChange;
+
+        protected void SetState(ItemState State)
+        {
+            this._state = State;
+            if (OnStateChange != null) OnStateChange(this);
+        }
     }
 
     public enum ItemState

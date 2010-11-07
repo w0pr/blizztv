@@ -20,20 +20,20 @@ namespace LibStreams
 {
     public static class StreamFactory
     {
-        public static Stream CreateStream(string Provider)
+        public static Stream CreateStream(string Title,string Slug,string Provider)
         {
             Stream _stream=null;
             switch (Provider)
             {
                 case "LiveStream":
                     
-                    _stream = new LiveStream();
+                    _stream = new LiveStream(Title,Slug,Provider);
                     break;
                 case "JustinTV":
-                    _stream = new JustinTV();
+                    _stream = new JustinTV(Title, Slug, Provider);
                     break;
                 case "UStream":
-                    _stream = new UStream();
+                    _stream = new UStream(Title, Slug, Provider);
                     break;
                 default:
                     break;

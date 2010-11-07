@@ -27,11 +27,23 @@ namespace LibFeeds
         public string Link;
         public string Description;
 
-        public Story() { this.State = ItemState.UNREAD; }
+        public Story(string Title, string GUID, string Link, string Description)
+            : base(Title)
+        {
+            this.GUID = GUID;
+            this.Link = Link;
+            this.Description = Description;
+
+            //   if (Plugin.Storage.Exists(this.Title)) this.SetState((ItemState)Plugin.Storage.Get(this.Title)); // get the item state if available
+            //    else this.SetState(ItemState.UNREAD);
+        }
 
         public override void DoubleClick(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(this.Link, null);
+            this.SetState(ItemState.READ);
+
+            //Plugin.Storage.Put(this._title, (byte)this._state);
         }
     }
 }

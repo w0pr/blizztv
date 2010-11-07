@@ -22,7 +22,7 @@ namespace LibStreams.Handlers
 {
     public class JustinTV:Stream
     {
-        public JustinTV() { }
+        public JustinTV(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
 
         public override void Update()
         {

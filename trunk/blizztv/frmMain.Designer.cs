@@ -161,7 +161,7 @@
             // ContextAboutToolStripMenuItem
             // 
             this.ContextAboutToolStripMenuItem.Name = "ContextAboutToolStripMenuItem";
-            this.ContextAboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ContextAboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.ContextAboutToolStripMenuItem.Text = "About";
             this.ContextAboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 

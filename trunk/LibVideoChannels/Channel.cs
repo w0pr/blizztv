@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using System.Text.RegularExpressions;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
@@ -30,12 +29,15 @@ namespace LibVideoChannels
 
         public string Slug { get { return this._slug; } set { this._slug = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
-        
-        private Regex YoutubeVideoID=new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled);
-
+                
         public List<Video> Videos = new List<Video>();
 
-        public Channel() {}
+        public Channel(string Title, string Slug, String Provider)
+            : base(Title)
+        {
+            this.Slug = Slug;
+            this.Provider = Provider;
+        }
 
         public void Update() 
         {
@@ -52,18 +54,9 @@ namespace LibVideoChannels
                           };
 
             foreach (var entry in entries)
-            {
-                Match m=YoutubeVideoID.Match(entry.Link);
-                if (m.Success)
-                {
-                    Video v = new Video();
-                    v.Title = entry.Title;
-                    v.GUID = entry.GUID;
-                    v.Link = entry.Link;
-                    v.VideoID = m.Groups[1].Value;
-                    v.Provider = this.Provider;
-                    this.Videos.Add(v);
-                }
+            {                
+                Video v = new Video(entry.Title,entry.GUID,entry.Link,this.Provider);
+                this.Videos.Add(v);
             }
         }        
     }

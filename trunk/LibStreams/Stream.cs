@@ -41,9 +41,11 @@ namespace LibStreams
         public string Description { get { return this._description; } internal set { this._description = value; } }
         public Int32 ViewerCount { get { return this._viewer_count; } internal set { this._viewer_count = value; } }
 
-        public Stream()
+        public Stream(string Title, string Slug, string Provider)
+            : base(Title)
         {
-
+            this.Slug = Slug;
+            this.Provider = Provider;
         }
 
         public virtual void Process()
