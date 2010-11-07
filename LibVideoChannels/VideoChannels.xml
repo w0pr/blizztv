@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VideoChannels>
+  <VideoChannel>
+    <Name>Day[9]</Name>
+    <Slug>day9tv</Slug>
+    <Provider>Youtube</Provider>
+  </VideoChannel>
   <VideoChannel>      
     <Name>HD Starcraft</Name>
     <Slug>hdstarcraft</Slug>
@@ -11,8 +16,18 @@
     <Provider>Youtube</Provider>
   </VideoChannel>
   <VideoChannel>
+    <Name>iCCupTV</Name>
+    <Slug>iCCupTV</Slug>
+    <Provider>Youtube</Provider>
+  </VideoChannel>
+  <VideoChannel>
+    <Name>ForceSC2Strategy</Name>
+    <Slug>ForceSC2Strategy</Slug>
+    <Provider>Youtube</Provider>
+  </VideoChannel>
+  <VideoChannel>
     <Name>xhydrax</Name>
     <Slug>xhydrax</Slug>
-    <Provider>Youtube</Provider>    
+    <Provider>Youtube</Provider>
   </VideoChannel>
 </VideoChannels>

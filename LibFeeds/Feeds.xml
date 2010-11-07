@@ -2,11 +2,14 @@
 <Feeds>
   <Feed>
     <Name>TeamLiquid</Name>
-    <URL>http://www.teamliquid.net/rss/news.xml</URL>
+    <URL><![CDATA[http://www.teamliquid.net/rss/news.xml]]></URL>
   </Feed>
   <Feed>
     <Name>BlizzTV</Name>
-    <URL>http://www.blizztv.com/rss/ccs/1-blizztvcom/</URL>
-  
-</Feed>
+    <URL><![CDATA[http://www.blizztv.com/rss/ccs/1-blizztvcom/]]></URL>
+   </Feed>
+  <Feed>
+    <Name>GosuGamers</Name>
+    <URL><![CDATA[http://www.gosugamers.net/starcraft2/sc2.rss]]></URL>
+  </Feed>
 </Feeds>

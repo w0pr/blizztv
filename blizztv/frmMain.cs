@@ -118,5 +118,10 @@ namespace BlizzTV
             frmPreferences p = new frmPreferences();
             p.ShowDialog();
         }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.notifyIcon.Visible = false;
+        }
     }
 }
