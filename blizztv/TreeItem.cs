@@ -34,27 +34,47 @@ namespace BlizzTV
         {
             this._plugin = Plugin;
             this._item = Item;
-            this.Name = _item.Key;          
+            this.Name = _item.Key;
+
+            this._item.OnTitleChange += TitleChange;
+            this._item.OnStateChange += StateChange;
+
         }
 
         public void Render()
         {
-            this.Text = this._item.Title; // render the text
+            this.Text = this._item.Title; // set the inital title
+            this.StateChange(this); // set the initial state
+
             if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.PluginInfo.AssemblyName)) this.TreeView.ImageList.Images.Add(this._plugin.PluginInfo.AssemblyName, this._plugin.PluginInfo.Attributes.Icon); // add the plugin icon to image list in it doesn't exists
             this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.PluginInfo.AssemblyName); // render the icon
+        }
 
-            switch (this._item.State)
+        public void TitleChange(object sender)
+        {
+            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { TitleChange(sender); }));
+            else this.Text = this._item.Title;
+        }
+
+        public void StateChange(object sender)
+        {
+            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { StateChange(sender); }));
+            else
             {
-                case ItemState.UNREAD:
-                    this.NodeFont = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold);
-                    break;
-                case ItemState.READ:
-                    break;
-                case ItemState.MARKED:
-                    break;
-                default:
-                    break;
-            }  
+                switch (this._item.State)
+                {
+                    case ItemState.UNREAD:
+                        this.NodeFont = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold);
+                        break;
+                    case ItemState.READ:
+                        this.NodeFont = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Regular);
+                        break;
+                    case ItemState.MARKED:
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e)

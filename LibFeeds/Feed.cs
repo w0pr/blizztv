@@ -28,6 +28,12 @@ namespace LibFeeds
         public string URL;
         public List<Story> Stories = new List<Story>();
 
+        public Feed(string Title, string URL)
+            : base(Title)
+        {
+            this.URL = URL;
+        }
+
         public virtual void Update()
         {
             string response = WebReader.Read(this.URL);
@@ -44,11 +50,7 @@ namespace LibFeeds
 
             foreach (var entry in entries)
             {
-                Story s = new Story();
-                s.GUID = entry.GUID;
-                s.Link = entry.Link;
-                s.Title = entry.Title;
-                s.Description = entry.Description;
+                Story s = new Story(entry.Title,entry.GUID,entry.Link,entry.Description);
                 this.Stories.Add(s);
             }
 
@@ -56,8 +58,8 @@ namespace LibFeeds
             foreach (Story s in this.Stories) { if (s.State == ItemState.UNREAD) unread_story_count++;}
             if (unread_story_count > 0)
             {
-                this.Title += string.Format(" ({0})", unread_story_count.ToString());
-                this.State = ItemState.UNREAD;
+                this.SetTitle(string.Format(" {0} ({1})",this.Title, unread_story_count.ToString()));
+                this.SetState(ItemState.UNREAD);
             }
         }
     }

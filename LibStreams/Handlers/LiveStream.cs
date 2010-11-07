@@ -22,7 +22,7 @@ namespace LibStreams.Handlers
 {
     public class LiveStream:Stream
     {
-        public LiveStream() { }
+        public LiveStream(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
 
         public override void Update()
         {
@@ -30,13 +30,15 @@ namespace LibStreams.Handlers
 
             string api_url=string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json",this.Slug);
             string response = WebReader.Read(api_url);
-
-            Hashtable data = (Hashtable)JSON.JsonDecode(response);
-            data = (Hashtable)data["rss"];
-            data = (Hashtable)data["channel"];
-            this.IsLive = (bool)data["isLive"];
-            this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString());
-            this.Description = (string)data["description"].ToString();
+            if (response != null)
+            {
+                Hashtable data = (Hashtable)JSON.JsonDecode(response);
+                data = (Hashtable)data["rss"];
+                data = (Hashtable)data["channel"];
+                this.IsLive = (bool)data["isLive"];
+                this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString());
+                this.Description = (string)data["description"].ToString();
+            }
         }
     }
 }

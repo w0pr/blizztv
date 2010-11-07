@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using LibBlizzTV;
 
 namespace LibVideoChannels
@@ -30,6 +31,8 @@ namespace LibVideoChannels
         private string _movie;
         private string _flash_vars;
 
+        private Regex YoutubeVideoID = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled);
+
         public string GUID { get { return this._guid; } internal set { this._guid = value; } }
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
@@ -37,8 +40,14 @@ namespace LibVideoChannels
         public string Movie { get { return this._movie; } set { this._movie = value; } }
         public string FlashVars { get { return this._flash_vars; } set { this._flash_vars = value; } }
 
-        public Video()
+        public Video(string Title, string Guid, string Link, string Provider)
+            : base(Title)
         {
+            this.GUID = Guid;
+            this.Link = Link;
+            this.Provider = Provider;
+            Match m = YoutubeVideoID.Match(this.Link);  
+            if (m.Success) this.VideoID = m.Groups[1].Value;
         }
 
         public virtual void Process()

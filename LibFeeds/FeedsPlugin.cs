@@ -48,9 +48,7 @@ namespace LibFeeds
 
             foreach (var entry in entries)
             {
-                Feed f = new Feed();
-                f.Title = entry.Title;
-                f.URL = entry.URL;
+                Feed f = new Feed(entry.Title,entry.URL);
                 this._feeds.Add(f);
             }
 
