@@ -27,6 +27,7 @@ namespace LibFeeds
     {
         public string URL;
         public List<Story> Stories = new List<Story>();
+        private bool disposed = false;
 
         public Feed(string Title, string URL)
             : base(Title)
@@ -61,6 +62,22 @@ namespace LibFeeds
             {
                 this.SetTitle(string.Format(" {0} ({1})",this.Title, unread.ToString()));
                 this.SetState(ItemState.UNREAD);
+            }
+        }
+
+        ~Feed() { Dispose(false); }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    foreach (Story s in this.Stories) { s.Dispose(); }
+                    this.Stories.Clear();
+                    this.Stories = null;
+                }
+                disposed = true;
             }
         }
     }

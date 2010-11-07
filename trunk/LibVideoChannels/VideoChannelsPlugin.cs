@@ -26,6 +26,7 @@ namespace LibVideoChannels
     public class VideoChannelsPlugin:Plugin
     {
         private List<Channel> _channels = new List<Channel>();
+        private bool disposed = false;
 
         public VideoChannelsPlugin() { }
 
@@ -70,6 +71,22 @@ namespace LibVideoChannels
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
+        }
+
+        ~VideoChannelsPlugin() { Dispose(false); }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    foreach (Channel c in this._channels) { c.Dispose(); }
+                    this._channels.Clear();
+                    this._channels = null;
+                }
+                disposed = true;
+            }
         }
     }
 }

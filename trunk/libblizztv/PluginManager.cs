@@ -21,15 +21,16 @@ using System.Reflection;
 
 namespace LibBlizzTV
 {
-    public sealed class PluginManager
-    {
-        private static readonly PluginManager _instance = new PluginManager();
-        public static PluginManager Instance { get { return _instance; } }
+    public sealed class PluginManager : IDisposable
+    {        
         public string AssemblyName { get { return Assembly.GetExecutingAssembly().GetName().Name; } }
         public string AssemblyVersion { get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
+        private bool disposed = false;
+
+        private static readonly PluginManager _instance = new PluginManager();
+        public static PluginManager Instance { get { return _instance; } }
 
         public Dictionary<string, PluginInfo> Plugins = new Dictionary<string, PluginInfo>(); 
-
 
         private PluginManager()
         {
@@ -50,6 +51,28 @@ namespace LibBlizzTV
             {
                 PluginInfo pi = new PluginInfo(_dll.Name);
                 if (pi.Valid) Plugins.Add(pi.AssemblyName, pi);
+            }
+        }
+
+        ~PluginManager() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    foreach (KeyValuePair<string, PluginInfo> pair in this.Plugins) { pair.Value.Dispose(); }
+                    this.Plugins.Clear();
+                    this.Plugins = null;
+                }
+                disposed = true;
             }
         }
     }

@@ -19,19 +19,19 @@ using System.Reflection;
 
 namespace LibBlizzTV
 {
-    public class PluginInfo
-    {
+    public class PluginInfo : IDisposable
+    {        
         private bool _valid = false; // is the module a valid LibBlizzTV module?
         private string _assembly_file; // the assemblie's file name on the disk.        
         private Assembly _assembly; // the module assembly itself.
         private Type _plugin_entrance; // the module's entrance point (actual module's ctor).
         private PluginAttribute _attributes;
+        private bool disposed = false;
 
         public string AssemblyName { get { return this._assembly_file; } }
         public string AssemblyVersion { get { return this._assembly.GetName().Version.ToString(); } }
         public bool Valid { get { return this._valid; } }
         public PluginAttribute Attributes { get { return _attributes; } }
-
 
         public PluginInfo(string AssemblyFile)
         {
@@ -56,17 +56,14 @@ namespace LibBlizzTV
                         if (_attr.Length > 0)
                         {
                             (_attr[0] as PluginAttribute).ResolveResources(this._assembly);
-                            this._attributes = (PluginAttribute)_attr[0];                            
+                            this._attributes = (PluginAttribute)_attr[0];
                             this._valid = true; // yes we're valid ;)
                         }
                         else throw new LoadPluginInfoException(this._assembly_file, "Plugin does not define the required attributes."); // all plugins should define the required atributes
                     }
                 }
             }
-            catch (Exception e)
-            {
-
-            }
+            catch (Exception e) { }
         }
 
         public Plugin CreateInstance()
@@ -80,6 +77,28 @@ namespace LibBlizzTV
         public override string ToString()
         {
             return string.Format("{0} - v{1}", this.AssemblyName, this.AssemblyVersion);
+        }
+
+        ~PluginInfo() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this._assembly = null;
+                    this._plugin_entrance = null;
+                    this._attributes = null;
+                }
+                disposed = true;
+            }
         }
     }
 

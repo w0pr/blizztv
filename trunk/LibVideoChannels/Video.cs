@@ -31,8 +31,6 @@ namespace LibVideoChannels
         private string _movie;
         private string _flash_vars;
 
-        private Regex YoutubeVideoID = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled);
-
         public string GUID { get { return this._guid; } internal set { this._guid = value; } }
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
@@ -42,11 +40,13 @@ namespace LibVideoChannels
 
         public Video(string Title, string Guid, string Link, string Provider)
             : base(Title)
-        {
+        {            
             this.GUID = Guid;
             this.Link = Link;
             this.Provider = Provider;
-            Match m = YoutubeVideoID.Match(this.Link);  
+
+            Regex regex = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled);
+            Match m = regex.Match(this.Link);  
             if (m.Success) this.VideoID = m.Groups[1].Value;
 
             if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));

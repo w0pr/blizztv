@@ -27,6 +27,10 @@ namespace BlizzTV
     {
         private ListItem _item;
         private Plugin _plugin;
+        private Font _bold = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold);
+        private Font _regular = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Regular);
+
+        private bool disposed = false;
 
         public ListItem Item { get { return this._item; } }
         
@@ -64,10 +68,10 @@ namespace BlizzTV
                 switch (this._item.State)
                 {
                     case ItemState.UNREAD:
-                        this.NodeFont = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold);
+                        this.NodeFont = _bold;
                         break;
                     case ItemState.READ:
-                        this.NodeFont = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Regular);
+                        this.NodeFont = _regular;
                         break;
                     case ItemState.MARKED:
                         break;
@@ -80,6 +84,33 @@ namespace BlizzTV
         public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             this._item.DoubleClick(sender,e);
+        }
+
+        ~TreeItem() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this._item.OnTitleChange -= TitleChange;
+                    this._item.OnStateChange -= StateChange;
+                    this._item = null;
+                    this._plugin = null;
+                    this._bold.Dispose();
+                    this._bold = null;
+                    this._regular.Dispose();
+                    this._regular = null;
+                }
+                disposed = true;
+            }
         }
     }
 }

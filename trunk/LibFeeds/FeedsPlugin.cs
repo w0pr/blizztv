@@ -27,6 +27,7 @@ namespace LibFeeds
     public class FeedsPlugin:Plugin
     {
         private List<Feed> _feeds = new List<Feed>();
+        private bool disposed = false;
 
         public FeedsPlugin() {}
 
@@ -72,6 +73,23 @@ namespace LibFeeds
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));            
+        }
+
+        ~FeedsPlugin() { Dispose(false); }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    PluginSettings = null;
+                    foreach (Feed f in this._feeds) { f.Dispose(); }
+                    this._feeds.Clear();
+                    this._feeds = null;
+                }
+                disposed = true;
+            }
         }
     }
 }

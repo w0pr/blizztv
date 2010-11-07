@@ -21,39 +21,15 @@ using Microsoft.Win32.SafeHandles;
 
 namespace LibBlizzTV
 {
-    /// <summary>
-    /// Implements support for a debug-console.
-    /// </summary>
     public static class DebugConsole
     {
-        /// <summary>
-        /// The message type.
-        /// </summary>
         public enum MessageTypes
         {
-            /// <summary>
-            /// Info Banner.
-            /// </summary>
             BANNER,
-            /// <summary>
-            /// Debug Message.
-            /// </summary>
             DEBUG,
-            /// <summary>
-            /// Info message.
-            /// </summary>
             INFO,
-            /// <summary>
-            /// Error Message.
-            /// </summary>
             ERROR,
-            /// <summary>
-            /// Fatal Error Message.
-            /// </summary>
             FATAL,
-            /// <summary>
-            /// Connection Message.
-            /// </summary>
             CONNECTION
         }
 
@@ -65,9 +41,6 @@ namespace LibBlizzTV
         private const int STD_OUTPUT_HANDLE = -11;
         private const int MY_CODE_PAGE = 437;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static void init()
         {
             AllocConsole();
@@ -99,11 +72,6 @@ namespace LibBlizzTV
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_type"></param>
-        /// <param name="_str"></param>
         public static void WriteLine(MessageTypes _type, string _str)
         {
             Console.ForegroundColor = GetMessageColor(_type);

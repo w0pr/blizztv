@@ -26,6 +26,7 @@ namespace LibStreams
     public class StreamsPlugin:Plugin
     {
         private List<Stream> _streams = new List<Stream>();
+        private bool disposed = false;
 
         public StreamsPlugin() { }
 
@@ -70,6 +71,22 @@ namespace LibStreams
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
+        }
+
+        ~StreamsPlugin() { Dispose(false); }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    foreach (Stream s in this._streams) { s.Dispose(); }
+                    this._streams.Clear();
+                    this._streams = null;
+                }
+                disposed = true;
+            }
         }
     }
 }
