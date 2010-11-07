@@ -34,18 +34,22 @@ namespace LibStreams.Handlers
             string response = WebReader.Read(api_url);
 
             Hashtable data = (Hashtable)JSON.JsonDecode(response);
-            ArrayList results=(ArrayList)data["results"];
-            if (results.Count > 0)
+            try
             {
-                Hashtable table = (Hashtable)results[0];
-                if ((string)table["status"].ToString() == "live")
+                ArrayList results = (ArrayList)data["results"];
+                if (results.Count > 0)
                 {
-                    this.IsLive = true;
-                    this._stream_id = UInt32.Parse(table["id"].ToString());
-                    this.ViewerCount = Int32.Parse(table["viewersNow"].ToString());
-                    this.Description = (string)table["title"].ToString();
+                    Hashtable table = (Hashtable)results[0];
+                    if ((string)table["status"].ToString() == "live")
+                    {
+                        this.IsLive = true;
+                        this._stream_id = UInt32.Parse(table["id"].ToString());
+                        this.ViewerCount = Int32.Parse(table["viewersNow"].ToString());
+                        this.Description = (string)table["title"].ToString();
+                    }
                 }
             }
+            catch (Exception e) { }
         }
 
         public override void Process()
