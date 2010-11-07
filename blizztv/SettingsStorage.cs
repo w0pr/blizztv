@@ -24,16 +24,17 @@ using LibBlizzTV;
 
 namespace BlizzTV
 {
-    public sealed class SettingsStorage
+    public sealed class SettingsStorage : IDisposable
     {
         private static SettingsStorage _instance = new SettingsStorage();
         public static SettingsStorage Instance { get { return _instance; } }
 
         private Settings _settings = new Settings();
         public Settings Settings { get { return this._settings; } }
-
+        
         private string _storage_file = "settings.storage";
         private byte[] _entropy = { 123, 217, 19, 11, 24, 26, 85, 45, 114, 184, 27, 162, 37, 112, 222, 209, 241, 24, 175, 144, 173, 53, 196, 29, 24, 26, 17, 218, 131, 236, 53, 209 };
+        private bool disposed = false;
 
         private SettingsStorage()
         {
@@ -77,6 +78,26 @@ namespace BlizzTV
         {
             return File.Exists(this._storage_file);
         }
+
+        ~SettingsStorage() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this._settings = null;
+                }
+                disposed = true;
+            }
+        }
     }
 
     [Serializable]
@@ -88,5 +109,29 @@ namespace BlizzTV
         // UI-specific settings
         public bool EnableDebugLogging = false;
         public bool EnableDebugConsole = false;
+
+        private bool disposed = false;
+
+        ~Settings() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this.GlobalSettings = null;
+                    this.PluginSettings.Clear();
+                    this.PluginSettings = null;
+                }
+                disposed = true;
+            }
+        }
     }
 }

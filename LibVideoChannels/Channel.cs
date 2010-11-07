@@ -25,7 +25,8 @@ namespace LibVideoChannels
     public class Channel:ListItem
     {
         private string _slug;
-        private string _provider;               
+        private string _provider;         
+        private bool disposed = false;
 
         public string Slug { get { return this._slug; } set { this._slug = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
@@ -67,6 +68,22 @@ namespace LibVideoChannels
                 this.SetTitle(string.Format("{0} ({1})",this.Title,unread.ToString()));
                 this.SetState(ItemState.UNREAD);
             }
-        }        
+        }
+
+        ~Channel() { Dispose(false); }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    foreach (Video v in this.Videos) { v.Dispose(); }
+                    this.Videos.Clear();
+                    this.Videos = null;
+                }
+                disposed = true;
+            }
+        }
     }
 }

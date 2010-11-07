@@ -22,13 +22,14 @@ using Microsoft.Isam.Esent.Collections.Generic;
 
 namespace LibBlizzTV
 {
-    public sealed class Database
+    public sealed class Database : IDisposable
     {
-        private static Database _instance = new Database();
-        public static Database Instance { get { return _instance; } }
-
         private string _storage_folder = "state-storage";
-        private PersistentDictionary<string,byte> _dictionary;
+        private PersistentDictionary<string, byte> _dictionary;
+        private bool disposed = false;
+
+        private static Database _instance = new Database();
+        public static Database Instance { get { return _instance; } }        
 
         private Database() 
         {
@@ -57,6 +58,27 @@ namespace LibBlizzTV
         {
             if (this._dictionary.ContainsKey(key)) return true;
             else return false;
+        }
+
+        ~Database() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this._dictionary.Dispose();
+                    this._dictionary = null;
+                }
+                disposed = true;
+            }
         }
     }
 }

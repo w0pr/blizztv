@@ -20,11 +20,12 @@ using System.Text;
 
 namespace LibBlizzTV
 {
-    public class ListItem
+    public class ListItem : IDisposable
     {
         private string _title; 
         private string _key;
         private ItemState _state = ItemState.READ;
+        private bool disposed = false;
 
         public string Title { get { return this._title; } }
         public string Key { get { return this._key; } }
@@ -54,6 +55,27 @@ namespace LibBlizzTV
         {
             this._state = State;
             if (OnStateChange != null) OnStateChange(this);
+        }
+
+        ~ListItem() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this.OnTitleChange = null;
+                    this.OnStateChange = null;
+                }
+                disposed = true;
+            }
         }
     }
 

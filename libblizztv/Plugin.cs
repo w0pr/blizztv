@@ -19,11 +19,13 @@ using System.Reflection;
 
 namespace LibBlizzTV
 {
-    public class Plugin
-    {
+    public class Plugin : IDisposable
+    {        
         private Assembly _assembly;
         private PluginInfo _plugin_info;
         private static Storage _storage;
+        private bool disposed = false;
+
         public static PluginSettings PluginSettings;
         public static GlobalSettings GlobalSettings;        
 
@@ -43,10 +45,9 @@ namespace LibBlizzTV
             GlobalSettings = gs;
         }
 
+        /* plugin load complete */
         public delegate void PluginLoadCompleteEventHandler(object sender,PluginLoadCompleteEventArgs e);
         public event PluginLoadCompleteEventHandler OnPluginLoadComplete;
-
-        /* plugin load complete */
         protected void PluginLoadComplete(PluginLoadCompleteEventArgs e)
         {
             DebugConsole.WriteLine(DebugConsole.MessageTypes.DEBUG, string.Format("Plugin Load Completed: {0}", this.PluginInfo.ToString()));
@@ -60,6 +61,30 @@ namespace LibBlizzTV
         protected void RegisterListItem(ListItem Item, ListItem Parent=null)
         {
             if (OnRegisterListItem != null) OnRegisterListItem(this, Item, Parent);
+        }
+
+        ~Plugin() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this._assembly = null;
+                    this._plugin_info = null;
+                    PluginSettings = null;
+                    GlobalSettings = null;
+                    _storage = null;
+                }
+                disposed = true;
+            }
         }
     }
 
@@ -80,6 +105,7 @@ namespace LibBlizzTV
         private string _description;
         private string _icon_name;
         private Bitmap _icon = null;
+        private bool disposed = false;
 
         public string Name { get { return this._name; } }
         public string Description { get { return this._description; } }
@@ -96,15 +122,38 @@ namespace LibBlizzTV
         {
             if (_assembly != null && this._icon_name != null)
             {
-                var stream = _assembly.GetManifestResourceStream(string.Format("{0}.Resources.{1}", _assembly.GetName().Name, this._icon_name));
-                if (stream != null) this._icon = new Bitmap(stream);
-                else this._icon = Resources.blizztv_16; // if an icon is not specified use the default one.
+                using (var stream = _assembly.GetManifestResourceStream(string.Format("{0}.Resources.{1}", _assembly.GetName().Name, this._icon_name)))
+                {
+                    if (stream != null) this._icon = new Bitmap(stream);
+                    else this._icon = Resources.blizztv_16; // if an icon is not specified use the default one.
+                }
             }
         }
 
         public override string ToString()
         {
             return this._name;
+        }
+
+        ~PluginAttribute() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this._icon.Dispose();
+                    this._icon = null;
+                }
+                disposed = true;
+            }
         }
     }
 }

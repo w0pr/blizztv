@@ -20,12 +20,13 @@ using System.Xml.Linq;
 
 namespace LibStreams
 {
-    public sealed class Providers
+    public sealed class Providers : IDisposable
     {
         private static readonly Providers _instance = new Providers();
         public static Providers Instance { get { return _instance; } }
 
         public Dictionary<string, Provider> List = new Dictionary<string, Provider>();
+        private bool disposed = false;
 
         private Providers()
         {
@@ -44,22 +45,43 @@ namespace LibStreams
             }
         }
 
-        public class Provider
+        ~Providers() { Dispose(false); }
+
+        public void Dispose()
         {
-            private string _name;
-            private string _movie;
-            private string _flash_vars;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            public string Name { get { return this._name; } internal set { this._name = value; } }
-            public string Movie { get { return this._movie; } internal set { this._movie = value; } }
-            public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
-
-            public Provider(string Name, string Movie,string FlashVars)
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
             {
-                this._name = Name;
-                this._movie = Movie;
-                this._flash_vars = FlashVars;
+                if (disposing) // managed resources
+                {
+                    this.List.Clear();
+                    this.List = null;
+                }
+                disposed = true;
             }
+        }
+    }
+
+    public class Provider
+    {
+        private string _name;
+        private string _movie;
+        private string _flash_vars;
+
+        public string Name { get { return this._name; } internal set { this._name = value; } }
+        public string Movie { get { return this._movie; } internal set { this._movie = value; } }
+        public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
+
+        public Provider(string Name, string Movie, string FlashVars)
+        {
+            this._name = Name;
+            this._movie = Movie;
+            this._flash_vars = FlashVars;
         }
     }
 }

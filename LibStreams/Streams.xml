@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Streams>
+  <Stream>
+    <Name>GosuGamers</Name>
+    <Slug>gosugamers</Slug>
+    <Provider>UStream</Provider>
+  </Stream>
   <Stream>    
     <Name>Tuski</Name>
     <Slug>tuski</Slug>

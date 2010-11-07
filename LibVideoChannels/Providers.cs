@@ -20,12 +20,13 @@ using System.Xml.Linq;
 
 namespace LibVideoChannels
 {
-    public sealed class Providers
+    public sealed class Providers : IDisposable
     {
         private static readonly Providers _instance = new Providers();
         public static Providers Instance { get { return _instance; } }
 
         public Dictionary<string, Provider> List = new Dictionary<string, Provider>();
+        private bool disposed = false;
 
         private Providers()
         {
@@ -44,6 +45,28 @@ namespace LibVideoChannels
                 this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie,entry.FlashVars));
             }
         }
+
+        ~Providers() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing) // managed resources
+                {
+                    this.List.Clear();
+                    this.List = null;
+                }
+                disposed = true;
+            }
+        }
+
     }
 
     public class Provider
