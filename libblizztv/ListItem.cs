@@ -23,12 +23,26 @@ namespace LibBlizzTV
     public class ListItem
     {
         public string _title;
-        public string Title { get { return this._title; } set { this._title = value; } }
-        public string Key { get { return this._title; } }
+        public string _key;
+        protected ItemState _state = ItemState.READ;
 
-        public ListItem() { }
-        public ListItem(string Title) { this._title = Title;}
+        public string Title { get { return this._title; } set { this._title = value; } }
+        public string Key { get { return this._key; } }
+        public ItemState State { get { return this._state; } protected set { this._state = value; } }
+
+        public ListItem() { this.generate_random_key(); }
+        public ListItem(string Title) { this._title = Title; this.generate_random_key(); }
 
         public virtual void DoubleClick(object sender, EventArgs e) {}
+        public virtual void UpdateState() { }
+
+        private void generate_random_key() { this._key = System.Convert.ToBase64String(Guid.NewGuid().ToByteArray()); }
+    }
+
+    public enum ItemState
+    {
+        UNREAD,
+        READ,
+        MARKED
     }
 }

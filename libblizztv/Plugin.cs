@@ -23,17 +23,19 @@ namespace LibBlizzTV
     {
         private Assembly _assembly;
         private PluginInfo _plugin_info;
+        private Storage _storage;
         public static PluginSettings PluginSettings;
-        public static GlobalSettings GlobalSettings;
+        public static GlobalSettings GlobalSettings;        
 
-
-        public string AssemblyVersion { get { return this.GetType().Assembly.GetName().Version.ToString(); } }
-        public string FileName { get { return this.GetType().Module.Name; } }
+        //public string AssemblyVersion { get { return this.GetType().Assembly.GetName().Version.ToString(); } }
+        //public string FileName { get { return this.GetType().Module.Name; } }
         public PluginInfo PluginInfo { get { return this._plugin_info; } internal set { this._plugin_info = value; } }
+        protected Storage Storage { get { return this._storage; } }
 
         public Plugin()
-        {
+        {            
             this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
+            this._storage = new Storage(this._assembly.GetName().Name);
         }
 
         public virtual void Load(PluginSettings ps) { throw new NotImplementedException(); }
@@ -46,7 +48,7 @@ namespace LibBlizzTV
         public delegate void PluginLoadCompleteEventHandler(object sender,PluginLoadCompleteEventArgs e);
         public event PluginLoadCompleteEventHandler OnPluginLoadComplete;
 
-        /* plugin load  complete */
+        /* plugin load complete */
         protected void PluginLoadComplete(PluginLoadCompleteEventArgs e)
         {
             DebugConsole.WriteLine(DebugConsole.MessageTypes.DEBUG, string.Format("Plugin Load Completed: {0}", this.PluginInfo.ToString()));

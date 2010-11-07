@@ -17,8 +17,8 @@ namespace BlizzTV
         private Settings _settings = new Settings();
         public Settings Settings { get { return this._settings; } }
 
-        private string storage_file = "settings.storage";
-        private byte[] Entropy = { 123, 217, 19, 11, 24, 26, 85, 45, 114, 184, 27, 162, 37, 112, 222, 209, 241, 24, 175, 144, 173, 53, 196, 29, 24, 26, 17, 218, 131, 236, 53, 209 };
+        private string _storage_file = "settings.storage";
+        private byte[] _entropy = { 123, 217, 19, 11, 24, 26, 85, 45, 114, 184, 27, 162, 37, 112, 222, 209, 241, 24, 175, 144, 173, 53, 196, 29, 24, 26, 17, 218, 131, 236, 53, 209 };
 
         private SettingsStorage()
         {
@@ -28,12 +28,12 @@ namespace BlizzTV
 
         private void Load()
         {
-            using (FileStream stream = new FileStream(this.storage_file, FileMode.Open))
+            using (FileStream stream = new FileStream(this._storage_file, FileMode.Open))
             {
                 byte[] p_data = new byte[stream.Length];
                 stream.Read(p_data, 0, (int)stream.Length);
                 stream.Close();
-                using (MemoryStream unserialized = new MemoryStream(ProtectedData.Unprotect(p_data, this.Entropy, DataProtectionScope.CurrentUser))) // decrypt the data using DPAPI.
+                using (MemoryStream unserialized = new MemoryStream(ProtectedData.Unprotect(p_data, this._entropy, DataProtectionScope.CurrentUser))) // decrypt the data using DPAPI.
                 {
                     BinaryFormatter b = new BinaryFormatter();
                     this._settings = (Settings)b.Deserialize(unserialized);
@@ -44,13 +44,13 @@ namespace BlizzTV
 
         public void Save()
         {
-            using (FileStream stream = new FileStream(this.storage_file, FileMode.Create))
+            using (FileStream stream = new FileStream(this._storage_file, FileMode.Create))
             {
                 using (MemoryStream serialized = new MemoryStream())
                 {
                     BinaryFormatter b = new BinaryFormatter();
                     b.Serialize(serialized, this._settings);
-                    byte[] p_data = ProtectedData.Protect(serialized.ToArray(), this.Entropy, DataProtectionScope.CurrentUser); // okay this is not the world's *most* secure storage but we still add a protection level using DPAPI (http://msdn.microsoft.com/en-us/library/system.security.cryptography.protecteddata.aspx).
+                    byte[] p_data = ProtectedData.Protect(serialized.ToArray(), this._entropy, DataProtectionScope.CurrentUser); // okay this is not the world's *most* secure storage but we still add a protection level using DPAPI (http://msdn.microsoft.com/en-us/library/system.security.cryptography.protecteddata.aspx).
                     stream.Write(p_data, 0, p_data.Length);
                     serialized.Close();
                     stream.Close();
@@ -60,7 +60,7 @@ namespace BlizzTV
 
         public bool StorageExists()
         {
-            return File.Exists(this.storage_file);
+            return File.Exists(this._storage_file);
         }
     }
 

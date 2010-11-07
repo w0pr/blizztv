@@ -27,6 +27,8 @@ namespace LibFeeds
         public string Link;
         public string Description;
 
+        public Story() { this.State = ItemState.UNREAD; }
+
         public override void DoubleClick(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(this.Link, null);
