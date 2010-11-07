@@ -25,48 +25,48 @@ namespace BlizzTV
         private void LoadSettings()
         {
             // load global settings
-            if (Settings.Instance.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) radioButtonUseInternalViewers.Checked = true;
+            if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) radioButtonUseInternalViewers.Checked = true;
             else radioButtonUseDefaultWebBrowser.Checked = true;
 
-            txtVideoPlayerWidth.Text = Settings.Instance.GlobalSettings.VideoPlayerWidth.ToString();
-            txtVideoPlayerHeight.Text = Settings.Instance.GlobalSettings.VideoPlayerHeight.ToString();
-            checkBoxVideoAutoPlay.Checked = Settings.Instance.GlobalSettings.VideoAutoPlay;
+            txtVideoPlayerWidth.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth.ToString();
+            txtVideoPlayerHeight.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight.ToString();
+            checkBoxVideoAutoPlay.Checked = SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay;
 
             // load plugin settings
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.Plugins)
             {
                 ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
                 this.ListviewPlugins.Items.Add(item);
-                if (Settings.Instance.PluginSettings.ContainsKey(pair.Value.AssemblyName) && Settings.Instance.PluginSettings[pair.Value.AssemblyName].Enabled) item.Checked = true;
+                if (SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(pair.Value.AssemblyName) && SettingsStorage.Instance.Settings.PluginSettings[pair.Value.AssemblyName].Enabled) item.Checked = true;
             }
             
             // load ui-specific settings
-            checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
-            checkBoxEnableDebugConsole.Checked = Settings.Instance.EnableDebugConsole;
+            checkBoxEnableDebugLogging.Checked = SettingsStorage.Instance.Settings.EnableDebugLogging;
+            checkBoxEnableDebugConsole.Checked = SettingsStorage.Instance.Settings.EnableDebugConsole;
         }
 
         private void SaveSettings()
         {
             // save global settings
-            if (radioButtonUseInternalViewers.Checked) Settings.Instance.GlobalSettings.ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
-            else Settings.Instance.GlobalSettings.ContentViewer = ContentViewMethods.DEFAULT_WEB_BROWSER;
+            if (radioButtonUseInternalViewers.Checked) SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
+            else SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer = ContentViewMethods.DEFAULT_WEB_BROWSER;
 
-            Settings.Instance.GlobalSettings.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
-            Settings.Instance.GlobalSettings.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
-            Settings.Instance.GlobalSettings.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
+            SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
+            SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
+            SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
 
             // save plugin settings
             foreach (ListviewPluginsItem item in ListviewPlugins.Items)
             {
                 string plugin_name = item.PluginInfo.AssemblyName;
-                if (!Settings.Instance.PluginSettings.ContainsKey(plugin_name)) Settings.Instance.PluginSettings.Add(plugin_name, new PluginSettings());
-                Settings.Instance.PluginSettings[plugin_name].Enabled = item.Checked;                
+                if (!SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(plugin_name)) SettingsStorage.Instance.Settings.PluginSettings.Add(plugin_name, new PluginSettings());
+                SettingsStorage.Instance.Settings.PluginSettings[plugin_name].Enabled = item.Checked;                
             }
 
-            Settings.Instance.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
-            Settings.Instance.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
+            SettingsStorage.Instance.Settings.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
+            SettingsStorage.Instance.Settings.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
 
-            Storage.Instance.SaveSettings();
+            SettingsStorage.Instance.Save();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
