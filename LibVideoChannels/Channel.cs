@@ -58,6 +58,15 @@ namespace LibVideoChannels
                 Video v = new Video(entry.Title,entry.GUID,entry.Link,this.Provider);
                 this.Videos.Add(v);
             }
+
+            int unread = 0;
+            foreach (Video v in this.Videos) { if (v.State == ItemState.UNREAD) unread++; }
+
+            if (unread > 0)
+            {
+                this.SetTitle(string.Format("{0} ({1})",this.Title,unread.ToString()));
+                this.SetState(ItemState.UNREAD);
+            }
         }        
     }
 }

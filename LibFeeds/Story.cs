@@ -34,16 +34,16 @@ namespace LibFeeds
             this.Link = Link;
             this.Description = Description;
 
-            //   if (Plugin.Storage.Exists(this.Title)) this.SetState((ItemState)Plugin.Storage.Get(this.Title)); // get the item state if available
-            //    else this.SetState(ItemState.UNREAD);
+            if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));
+            else this.SetState(ItemState.UNREAD);
         }
 
         public override void DoubleClick(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(this.Link, null);
-            this.SetState(ItemState.READ);
 
-            //Plugin.Storage.Put(this._title, (byte)this._state);
+            this.SetState(ItemState.READ);
+            Plugin.Storage.Put(this.GUID, (byte)this.State);
         }
     }
 }

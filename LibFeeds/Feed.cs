@@ -54,11 +54,12 @@ namespace LibFeeds
                 this.Stories.Add(s);
             }
 
-            int unread_story_count = 0;
-            foreach (Story s in this.Stories) { if (s.State == ItemState.UNREAD) unread_story_count++;}
-            if (unread_story_count > 0)
+            int unread = 0;
+            foreach (Story s in this.Stories) { if (s.State == ItemState.UNREAD) unread++;}
+
+            if (unread > 0)
             {
-                this.SetTitle(string.Format(" {0} ({1})",this.Title, unread_story_count.ToString()));
+                this.SetTitle(string.Format(" {0} ({1})",this.Title, unread.ToString()));
                 this.SetState(ItemState.UNREAD);
             }
         }

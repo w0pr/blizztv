@@ -49,13 +49,24 @@ namespace LibStreams
             {
                 Stream s = StreamFactory.CreateStream(entry.Name,entry.Slug,entry.Provider);
                 this._streams.Add(s);
-            }            
+            }
+
+            int available_count = 0;
 
             foreach (Stream stream in this._streams)
             {                
                 stream.Update();
-                if (stream.IsLive) stream.SetTitle(string.Format("{0} ({1})",stream.Title, stream.ViewerCount));                    
-                RegisterListItem(stream, root);
+                if (stream.IsLive)
+                {
+                    stream.SetTitle(string.Format("{0} ({1})", stream.Title, stream.ViewerCount));
+                    RegisterListItem(stream, root);
+                    available_count++;
+                }
+            }
+
+            if (available_count > 0)
+            {
+                root.SetTitle(string.Format("{0} ({1})", root.Title, available_count));
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
