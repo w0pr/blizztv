@@ -51,6 +51,8 @@ namespace LibVideoChannels
                 this._channels.Add(c);
             }
 
+            int unread = 0;
+
             foreach (Channel channel in this._channels)
             {
                 RegisterListItem(channel,root);
@@ -59,6 +61,12 @@ namespace LibVideoChannels
                 {
                     RegisterListItem(v, channel);
                 }
+                if (channel.State == ItemState.UNREAD) unread++;
+            }
+
+            if (unread > 0)
+            {
+                root.SetTitle(string.Format("{0} ({1})", root.Title, unread.ToString()));
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));

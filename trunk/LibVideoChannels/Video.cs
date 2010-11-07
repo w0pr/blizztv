@@ -48,6 +48,9 @@ namespace LibVideoChannels
             this.Provider = Provider;
             Match m = YoutubeVideoID.Match(this.Link);  
             if (m.Success) this.VideoID = m.Groups[1].Value;
+
+            if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));
+            else this.SetState(ItemState.UNREAD);
         }
 
         public virtual void Process()
@@ -66,7 +69,10 @@ namespace LibVideoChannels
                 Player p = new Player(this);
                 p.Show();
             }
-            else System.Diagnostics.Process.Start(this.Link, null);    
+            else System.Diagnostics.Process.Start(this.Link, null);
+
+            this.SetState(ItemState.READ);
+            Plugin.Storage.Put(this.GUID, (byte)this.State);
         }
     }
 }

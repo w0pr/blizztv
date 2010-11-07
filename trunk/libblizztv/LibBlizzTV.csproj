@@ -31,8 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HamsterDb-dotnet">
-      <HintPath>..\upstream\hamsterdb\HamsterDb-dotnet.dll</HintPath>
+    <Reference Include="Esent.Collections">
+      <HintPath>..\upstream\Esent.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\upstream\Esent.Interop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,7 +59,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="DB.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="Utils\JSON.cs" />
     <Compile Include="Utils\WebReader.cs" />
@@ -72,7 +75,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)upstream\hamsterdb\hamsterdb-1.1.4.dll" "$(SolutionDir)\blizztv\$(OutDir)"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -52,6 +52,8 @@ namespace LibFeeds
                 this._feeds.Add(f);
             }
 
+            int unread = 0;
+
             foreach (Feed feed in this._feeds)
             {
                 RegisterListItem(feed,root);
@@ -59,7 +61,14 @@ namespace LibFeeds
                 foreach (Story story in feed.Stories)
                 {
                     RegisterListItem(story, feed);
-                }                
+                }
+
+                if (feed.State == ItemState.UNREAD) unread++;
+            }
+
+            if (unread > 0)
+            {
+                root.SetTitle(string.Format("{0} ({1})",root.Title,unread.ToString()));
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));            

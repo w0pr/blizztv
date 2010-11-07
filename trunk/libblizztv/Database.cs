@@ -17,34 +17,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using Microsoft.Isam.Esent.Collections.Generic;
 
 namespace LibBlizzTV
 {
-    public sealed class Storage
+    public sealed class Database
     {
-        private string _plugin_identifier;
+        private static Database _instance = new Database();
+        public static Database Instance { get { return _instance; } }
 
-        public Storage(string Idetifier)
+        private string _storage_folder = "state-storage";
+        private PersistentDictionary<string,byte> _dictionary;
+
+        private Database() 
         {
-            this._plugin_identifier = Idetifier;
+            if (!this.StorageExists()) Directory.CreateDirectory(this._storage_folder);
+            this._dictionary=new PersistentDictionary<string,byte>(this._storage_folder);
+        }
+
+        private bool StorageExists()
+        {
+            if (!Directory.Exists(this._storage_folder)) return false;
+            else return true;
         }
 
         public void Put(string key, byte value)
         {
-            key = string.Format("{0}.{1}", this._plugin_identifier, key);
-            Database.Instance.Put(key, value);
+            this._dictionary[key] = value;
         }
 
         public byte Get(string key)
         {
-            key = string.Format("{0}.{1}", this._plugin_identifier, key);
-            return Database.Instance.Get(key);
+            if (this._dictionary.ContainsKey(key)) return this._dictionary[key];
+            else return 0;
         }
 
         public bool KeyExists(string key)
         {
-            key = string.Format("{0}.{1}", this._plugin_identifier, key);
-            return Database.Instance.KeyExists(key);
+            if (this._dictionary.ContainsKey(key)) return true;
+            else return false;
         }
     }
 }
