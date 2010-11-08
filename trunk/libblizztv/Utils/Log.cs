@@ -83,8 +83,11 @@ namespace LibBlizzTV.Utils
         {
             if (!this.disposed)
             {
-                this._file_stream.Close();
-                this._file_stream.Dispose();
+                if (this._logger_enabled)
+                {
+                    this._file_stream.Close();
+                    this._file_stream.Dispose();
+                }
                 this._file_stream = null;
                 disposed = true;
             }

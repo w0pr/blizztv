@@ -35,7 +35,9 @@ namespace LibStreams
             StreamsPlugin.PluginSettings = ps;
 
             ListItem root = new ListItem("Streams");
-            RegisterListItem(root);            
+            RegisterListItem(root);
+
+            this.RegisterPluginMenuItem(this, new MenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
 
             XDocument xdoc = XDocument.Load("Streams.xml");
             var entries = from stream in xdoc.Descendants("Stream")
@@ -71,6 +73,12 @@ namespace LibStreams
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
+        }
+
+        public void MenuSubscriptionsClicked(object sender, EventArgs e)
+        {
+            frmDataEditor f = new frmDataEditor("Streams.xml", "Stream");
+            f.Show();
         }
 
         ~StreamsPlugin() { Dispose(false); }

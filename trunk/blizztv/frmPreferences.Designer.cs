@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPreferences));
             this.tabPreferences = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
@@ -53,6 +54,7 @@
             this.checkBoxEnableDebugLogging = new System.Windows.Forms.CheckBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.tabPreferences.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -67,6 +69,7 @@
             this.tabPreferences.Controls.Add(this.tabGeneral);
             this.tabPreferences.Controls.Add(this.tabPlugins);
             this.tabPreferences.Controls.Add(this.tabDebug);
+            this.tabPreferences.ImageList = this.ImageList;
             this.tabPreferences.Location = new System.Drawing.Point(3, 3);
             this.tabPreferences.Name = "tabPreferences";
             this.tabPreferences.SelectedIndex = 0;
@@ -77,10 +80,11 @@
             // 
             this.tabGeneral.Controls.Add(this.groupBox2);
             this.tabGeneral.Controls.Add(this.groupBox1);
-            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabGeneral.ImageIndex = 0;
+            this.tabGeneral.Location = new System.Drawing.Point(4, 23);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(461, 277);
+            this.tabGeneral.Size = new System.Drawing.Size(461, 276);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -185,10 +189,11 @@
             // tabPlugins
             // 
             this.tabPlugins.Controls.Add(this.ListviewPlugins);
-            this.tabPlugins.Location = new System.Drawing.Point(4, 22);
+            this.tabPlugins.ImageIndex = 1;
+            this.tabPlugins.Location = new System.Drawing.Point(4, 23);
             this.tabPlugins.Name = "tabPlugins";
             this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPlugins.Size = new System.Drawing.Size(461, 277);
+            this.tabPlugins.Size = new System.Drawing.Size(461, 276);
             this.tabPlugins.TabIndex = 1;
             this.tabPlugins.Text = "Plugins";
             this.tabPlugins.UseVisualStyleBackColor = true;
@@ -205,7 +210,7 @@
             this.ListviewPlugins.FullRowSelect = true;
             this.ListviewPlugins.Location = new System.Drawing.Point(3, 3);
             this.ListviewPlugins.Name = "ListviewPlugins";
-            this.ListviewPlugins.Size = new System.Drawing.Size(455, 271);
+            this.ListviewPlugins.Size = new System.Drawing.Size(455, 270);
             this.ListviewPlugins.TabIndex = 1;
             this.ListviewPlugins.UseCompatibleStateImageBehavior = false;
             this.ListviewPlugins.View = System.Windows.Forms.View.Details;
@@ -233,10 +238,11 @@
             // tabDebug
             // 
             this.tabDebug.Controls.Add(this.groupBox3);
-            this.tabDebug.Location = new System.Drawing.Point(4, 22);
+            this.tabDebug.ImageIndex = 2;
+            this.tabDebug.Location = new System.Drawing.Point(4, 23);
             this.tabDebug.Name = "tabDebug";
             this.tabDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebug.Size = new System.Drawing.Size(461, 277);
+            this.tabDebug.Size = new System.Drawing.Size(461, 276);
             this.tabDebug.TabIndex = 2;
             this.tabDebug.Text = "Debug";
             this.tabDebug.UseVisualStyleBackColor = true;
@@ -292,6 +298,14 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // ImageList
+            // 
+            this.ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList.ImageStream")));
+            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.ImageList.Images.SetKeyName(0, "preferences.png");
+            this.ImageList.Images.SetKeyName(1, "plugin.png");
+            this.ImageList.Images.SetKeyName(2, "bug_16.png");
             // 
             // frmPreferences
             // 
@@ -350,5 +364,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox checkBoxEnableDebugConsole;
         private System.Windows.Forms.CheckBox checkBoxEnableDebugLogging;
+        private System.Windows.Forms.ImageList ImageList;
     }
 }

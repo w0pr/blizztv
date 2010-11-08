@@ -42,7 +42,6 @@ namespace BlizzTV
 
             this._item.OnTitleChange += TitleChange;
             this._item.OnStateChange += StateChange;
-
         }
 
         public void Render()
