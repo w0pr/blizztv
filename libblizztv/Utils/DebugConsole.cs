@@ -19,19 +19,15 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
-namespace LibBlizzTV
+namespace LibBlizzTV.Utils
 {
-    public static class DebugConsole
+    public class DebugConsole : IDisposable
     {
-        public enum MessageTypes
-        {
-            BANNER,
-            DEBUG,
-            INFO,
-            ERROR,
-            FATAL,
-            CONNECTION
-        }
+        private static DebugConsole _instance = new DebugConsole();
+        public static DebugConsole Instance { get { return _instance; } }
+
+        private bool _debug_console_enabled = false;
+        private bool disposed = false;
 
         [DllImport("kernel32.dll", EntryPoint = "GetStdHandle", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         private static extern IntPtr GetStdHandle(int nStdHandle);
@@ -41,7 +37,26 @@ namespace LibBlizzTV
         private const int STD_OUTPUT_HANDLE = -11;
         private const int MY_CODE_PAGE = 437;
 
-        public static void init()
+        private DebugConsole() { }
+
+        public void EnableDebugConsole()
+        {
+            if (!this._debug_console_enabled)
+            {
+                this.init();
+                this._debug_console_enabled = true;
+            }
+        }
+
+        public void DisableDebugConsole()
+        {
+            if (this._debug_console_enabled)
+            {
+                this._debug_console_enabled = false;
+            }
+        }
+
+        private  void init()
         {
             AllocConsole();
             IntPtr stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -53,31 +68,41 @@ namespace LibBlizzTV
             Console.SetOut(standardOutput);
         }
 
-        private static ConsoleColor GetMessageColor(MessageTypes _type)
+        private ConsoleColor GetMessageColor(LogMessageTypes _type)
         {
             switch (_type)
             {
-                case MessageTypes.DEBUG:
-                    return ConsoleColor.Green;
-                case MessageTypes.INFO:
-                    return ConsoleColor.Yellow;
-                case MessageTypes.ERROR:
-                    return ConsoleColor.Red;
-                case MessageTypes.FATAL:
-                    return ConsoleColor.DarkRed;
-                case MessageTypes.CONNECTION:
-                    return ConsoleColor.Cyan;
-                default:
-                    return ConsoleColor.White;
+                case LogMessageTypes.DEBUG: return ConsoleColor.Green;
+                case LogMessageTypes.INFO: return ConsoleColor.Yellow;
+                case LogMessageTypes.ERROR: return ConsoleColor.Red;
+                case LogMessageTypes.FATAL: return ConsoleColor.DarkRed;
+                default: return ConsoleColor.White;
             }
         }
 
-        public static void WriteLine(MessageTypes _type, string _str)
+        public void Write(LogMessageTypes _type, string _str)
         {
-            Console.ForegroundColor = GetMessageColor(_type);
-            if (_type != MessageTypes.BANNER) Console.Write(string.Format("[{0}]: ", _type.ToString()));
-            Console.WriteLine(_str);
-            Console.ResetColor();
+            if (this._debug_console_enabled)
+            {
+                Console.ForegroundColor = GetMessageColor(_type);
+                Console.WriteLine(string.Format("[{0} {1}] {2}", _type.ToString(), DateTime.Now.ToString("HH:mm:ss"), _str));
+                Console.ResetColor();
+            }
+        }
+
+        ~DebugConsole() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+            }
         }
     }
 }

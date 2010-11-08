@@ -18,6 +18,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using LibBlizzTV.Utils;
 
 namespace LibBlizzTV
 {
@@ -34,12 +35,12 @@ namespace LibBlizzTV
 
         private PluginManager()
         {
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.INFO, string.Format("{0} - v{1} initialized..", this.GetType().Module.Name, this.GetType().Assembly.GetName().Version.ToString()));
+            Log.Instance.Write(LogMessageTypes.INFO, string.Format("Plugin manager - ({0}) initialized..", this.GetType().Module.Name));
             this.ScanPlugins();
             
             foreach (KeyValuePair<string,PluginInfo> pi in this.Plugins)
             {
-                DebugConsole.WriteLine(DebugConsole.MessageTypes.INFO, string.Format("Available Plugin: {0}",pi.ToString()));
+                Log.Instance.Write(LogMessageTypes.INFO, string.Format("Available Plugin: {0}", pi.Value.AssemblyName.ToString()));
             }                
         }
 

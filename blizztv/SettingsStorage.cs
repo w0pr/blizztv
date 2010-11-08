@@ -21,6 +21,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using LibBlizzTV;
+using LibBlizzTV.Utils;
 
 namespace BlizzTV
 {
@@ -39,7 +40,7 @@ namespace BlizzTV
         private SettingsStorage()
         {
             try { if (this.StorageExists()) this.Load(); } // load the settings
-            catch (Exception e) { DebugConsole.WriteLine(DebugConsole.MessageTypes.ERROR, string.Format("Loading settings failed: {0}", e.Message)); }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Loading settings failed: {0}", e.Message)); }
         }
 
         private void Load()
