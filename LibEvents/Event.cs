@@ -24,18 +24,20 @@ namespace LibEvents
 {
     public class Event:ListItem
     {
-        public string _short_title;
+        public string _full_title;
         public string _description;
         public string _event_id;
+        public bool _is_over = false;
         public ZonedDateTime _time;
 
-        public Event(string Title, string ShortTitle, string Description, string EventID, ZonedDateTime Time)
+        public Event(string Title, string FullTitle, string Description, string EventID,bool isOver, ZonedDateTime Time)
             : base(Title)
         {
-            this._short_title = ShortTitle;
+            this._full_title = FullTitle;
             this._description = Description;
             this._event_id = EventID;
-            this._time = Time;            
+            this._is_over = isOver;
+            this._time = Time;
         }
     }
 }
