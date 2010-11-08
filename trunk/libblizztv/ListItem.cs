@@ -32,7 +32,6 @@ namespace LibBlizzTV
         public string Key { get { return this._key; } }
         public ItemState State { get { return this._state; } }
 
-        public ListItem() { this.generate_random_key(); }
         public ListItem(string Title) { this._title = Title; this.generate_random_key(); }
 
         public virtual void DoubleClick(object sender, EventArgs e) {}

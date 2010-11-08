@@ -91,7 +91,7 @@ namespace LibFeeds
             {
                 if (disposing) // managed resources
                 {
-                    PluginSettings = null;
+                    FeedsPlugin.PluginSettings = null;
                     foreach (Feed f in this._feeds) { f.Dispose(); }
                     this._feeds.Clear();
                     this._feeds = null;
