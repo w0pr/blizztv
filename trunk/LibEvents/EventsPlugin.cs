@@ -36,8 +36,18 @@ namespace LibEvents
         {
             EventsPlugin.PluginSettings = ps;
 
-            ListItem root = new ListItem("Events");  // register root item feeds
+            ListItem root = new ListItem("Events");  
             this.RegisterListItem(root);
+
+            ListItem events_today = new ListItem("Today");
+            this.RegisterListItem(events_today, root);
+
+            ListItem events_upcoming = new ListItem("Upcoming");
+            this.RegisterListItem(events_upcoming, root);
+
+            ListItem events_past = new ListItem("Past");
+            this.RegisterListItem(events_past, root);
+
 
             string xml = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml");
             XDocument xdoc = XDocument.Parse(xml);
@@ -69,9 +79,20 @@ namespace LibEvents
                 foreach (var day_entry in month_entry.days)
                     foreach (var event_entry in day_entry.events)
                     {
-                        Event e = new Event((string)event_entry.title, (string)event_entry.short_title, (string)event_entry.description, (string)event_entry.event_id, new ZonedDateTime(new DateTime((int)month_entry.year, (int)month_entry.month, (int)day_entry.day, (int)event_entry.hour, (int)event_entry.minute, 0),KOREAN_TIME_ZONE));
+                        Event e = new Event((string)event_entry.short_title, (string)event_entry.title, (string)event_entry.description, (string)event_entry.event_id,(bool)event_entry.is_over, new ZonedDateTime(new DateTime((int)month_entry.year, (int)month_entry.month, (int)day_entry.day, (int)event_entry.hour, (int)event_entry.minute, 0),KOREAN_TIME_ZONE));
                         this._events.Add(e);
                     }
+
+
+            foreach (Event e in this._events)
+            {
+                if (e._is_over) RegisterListItem(e, events_past);
+                else
+                {
+                    if (e._time.LocalTime.Date == DateTime.Now.Date) RegisterListItem(e, events_today);
+                    else RegisterListItem(e, events_upcoming);
+                }
+            }
         }
 
         ~EventsPlugin() { Dispose(false); }

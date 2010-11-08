@@ -1,0 +1,4 @@
+[08.11.2010] - 0.1.alpha
+------------------------
+
+ * The very basic functional but "non-stable" alpha for testers.
