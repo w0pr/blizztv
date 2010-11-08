@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace LibBlizzTV
 {
@@ -56,6 +57,16 @@ namespace LibBlizzTV
             this._state = State;
             if (OnStateChange != null) OnStateChange(this);
         }
+
+        /* context menu */
+        public delegate void RegisterContextMenuItemEventHandler(object sender, MenuItemEventArgs e);
+        public event RegisterContextMenuItemEventHandler OnRegisterContextMenuItem;
+
+        protected void RegisterContextMenuItem(object sender, MenuItemEventArgs e)
+        {
+            if (OnRegisterContextMenuItem != null) OnRegisterContextMenuItem(this, e);
+        }
+
 
         ~ListItem() { Dispose(false); }
 

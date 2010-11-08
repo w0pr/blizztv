@@ -35,8 +35,10 @@ namespace LibFeeds
         {
             FeedsPlugin.PluginSettings = ps;
 
-            ListItem root = new ListItem("Feeds");
-            RegisterListItem(root);            
+            ListItem root = new ListItem("Feeds");  // register root item feeds
+            this.RegisterListItem(root);
+
+            this.RegisterPluginMenuItem(this, new MenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
 
             XDocument xdoc = XDocument.Load("Feeds.xml");
             var entries = from feed in xdoc.Descendants("Feed")
@@ -73,6 +75,12 @@ namespace LibFeeds
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));            
+        }
+
+        public void MenuSubscriptionsClicked(object sender, EventArgs e)
+        {
+            frmDataEditor f = new frmDataEditor("Feeds.xml", "Feed");
+            f.Show();
         }
 
         ~FeedsPlugin() { Dispose(false); }

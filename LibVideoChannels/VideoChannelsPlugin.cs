@@ -35,7 +35,9 @@ namespace LibVideoChannels
             VideoChannelsPlugin.PluginSettings = ps;
 
             ListItem root = new ListItem("Videos");
-            RegisterListItem(root);            
+            RegisterListItem(root);
+
+            this.RegisterPluginMenuItem(this, new MenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
 
             XDocument xdoc = XDocument.Load("VideoChannels.xml");
             var entries = from videochannel in xdoc.Descendants("VideoChannel")
@@ -71,6 +73,12 @@ namespace LibVideoChannels
             }
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
+        }
+
+        public void MenuSubscriptionsClicked(object sender, EventArgs e)
+        {
+            frmDataEditor f = new frmDataEditor("VideoChannels.xml", "VideoChannel");
+            f.Show();
         }
 
         ~VideoChannelsPlugin() { Dispose(false); }

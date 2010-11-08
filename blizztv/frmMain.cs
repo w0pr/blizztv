@@ -44,6 +44,7 @@ namespace BlizzTV
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            Application.DoEvents(); // process the ui-events before loading plugins
             this.LoadPlugins();
         }
 
@@ -66,8 +67,25 @@ namespace BlizzTV
         private void RunPlugin(Plugin p)
         {            
             p.OnRegisterListItem += RegisterListItem;
+            p.OnRegisterPluginMenuItem += RegisterPluginMenuItem;
             p.ApplyGlobalSettings(SettingsStorage.Instance.Settings.GlobalSettings);
-            p.Load(SettingsStorage.Instance.Settings.PluginSettings[p.PluginInfo.AssemblyName]);
+            p.Load(SettingsStorage.Instance.Settings.PluginSettings[p.PluginInfo.AssemblyName]);                      
+        }
+
+        private void RegisterPluginMenuItem(object sender, MenuItemEventArgs e)
+        {
+            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterPluginMenuItem(sender,e); }));
+            else
+            {
+                if (!MenuPlugins.DropDownItems.ContainsKey((sender as Plugin).PluginInfo.Attributes.Name)) // add the parent menu if not-exists
+                {
+                    ToolStripMenuItem m = new ToolStripMenuItem((sender as Plugin).PluginInfo.Attributes.Name,(sender as Plugin).PluginInfo.Attributes.Icon);
+                    m.Name = m.Text;
+                    MenuPlugins.DropDownItems.Add(m);
+                }
+                ToolStripMenuItem plugin_parent = (ToolStripMenuItem)MenuPlugins.DropDownItems[(sender as Plugin).PluginInfo.Attributes.Name];
+                plugin_parent.DropDownItems.Add(e.Name, e.Icon, e.Handler);
+            }
         }
 
         private void RegisterListItem(object sender, ListItem item, ListItem parent)

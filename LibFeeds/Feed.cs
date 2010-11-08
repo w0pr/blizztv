@@ -33,7 +33,7 @@ namespace LibFeeds
             : base(Title)
         {
             this.URL = URL;
-        }
+        }       
 
         public virtual void Update()
         {

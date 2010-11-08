@@ -14,8 +14,10 @@
  */
 
 using System;
-using System.Drawing;
+using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Drawing;
 using LibBlizzTV.Utils;
 
 namespace LibBlizzTV
@@ -28,8 +30,8 @@ namespace LibBlizzTV
         private bool disposed = false;
 
         public static PluginSettings PluginSettings;
-        public static GlobalSettings GlobalSettings;        
-
+        public static GlobalSettings GlobalSettings;
+        
         public PluginInfo PluginInfo { get { return this._plugin_info; } internal set { this._plugin_info = value; } }
         public static Storage Storage { get { return Plugin._storage; } }
 
@@ -62,6 +64,15 @@ namespace LibBlizzTV
         protected void RegisterListItem(ListItem Item, ListItem Parent=null)
         {
             if (OnRegisterListItem != null) OnRegisterListItem(this, Item, Parent);
+        }
+
+        /* plugin menu */
+        public delegate void RegisterPluginMenuItemEventHandler(object sender,MenuItemEventArgs e);
+        public event RegisterPluginMenuItemEventHandler OnRegisterPluginMenuItem;
+
+        protected void RegisterPluginMenuItem(object sender,MenuItemEventArgs e)
+        {
+            if (OnRegisterPluginMenuItem != null) OnRegisterPluginMenuItem(this, e);
         }
 
         ~Plugin() { Dispose(false); }
