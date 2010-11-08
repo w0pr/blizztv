@@ -30,8 +30,6 @@ namespace BlizzTV
         {
             InitializeComponent();
             DoubleBufferControl(this.TreeView);
-
-            if(SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.init();
         }
 
         public static void DoubleBufferControl(System.Windows.Forms.Control c)
@@ -122,6 +120,8 @@ namespace BlizzTV
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.notifyIcon.Visible = false;
+            this.notifyIcon.Dispose();
+            this.notifyIcon = null;
         }
     }
 }

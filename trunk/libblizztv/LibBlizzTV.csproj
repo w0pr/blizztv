@@ -47,9 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebugConsole.cs" />
+    <Compile Include="Utils\DebugConsole.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="ListItem.cs" />
+    <Compile Include="Utils\Log.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="PluginInfo.cs" />

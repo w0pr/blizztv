@@ -15,6 +15,7 @@
 
 using System;
 using System.Windows.Forms;
+using LibBlizzTV.Utils;
 
 namespace BlizzTV
 {
@@ -26,6 +27,10 @@ namespace BlizzTV
         [STAThread]
         static void Main()
         {
+            // Check global settings
+            if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
+            if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());

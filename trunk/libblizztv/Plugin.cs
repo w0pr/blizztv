@@ -16,6 +16,7 @@
 using System;
 using System.Drawing;
 using System.Reflection;
+using LibBlizzTV.Utils;
 
 namespace LibBlizzTV
 {
@@ -50,7 +51,7 @@ namespace LibBlizzTV
         public event PluginLoadCompleteEventHandler OnPluginLoadComplete;
         protected void PluginLoadComplete(PluginLoadCompleteEventArgs e)
         {
-            DebugConsole.WriteLine(DebugConsole.MessageTypes.DEBUG, string.Format("Plugin Load Completed: {0}", this.PluginInfo.ToString()));
+            Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin Load Completed: {0}", this.PluginInfo.AssemblyName.ToString()));
             if (OnPluginLoadComplete != null) OnPluginLoadComplete(this,e);
         }
 
