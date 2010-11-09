@@ -26,32 +26,47 @@ namespace LibFeeds
     [Plugin("LibFeeds","Feed aggregator plugin for BlizzTV","feed_16.png")]
     public class FeedsPlugin:Plugin
     {
-        private List<Feed> _feeds = new List<Feed>();
+        #region members
+
+        ListItem root = new ListItem("Feeds");  // root item on treeview.
+        private List<Feed> _feeds = new List<Feed>(); // the feeds list 
         private bool disposed = false;
+
+        #endregion
+
+        #region ctor
 
         public FeedsPlugin() {}
 
+        #endregion
+
+        #region internal logic
+
         public override void Load(PluginSettings ps)
+        {            
+            FeedsPlugin.PluginSettings = ps; 
+           
+            this.RegisterListItem(this.root); // register root item.
+            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu            
+
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(this.ParseFeeds()));  // parse feeds.    
+        }
+
+        private bool ParseFeeds()
         {
-            bool success = true;
-            FeedsPlugin.PluginSettings = ps;
-
-            ListItem root = new ListItem("Feeds");  // register root item feeds
-            this.RegisterListItem(root);
-
-            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
+            bool success = true; 
 
             try
             {
-                XDocument xdoc = XDocument.Load("Feeds.xml");
-                var entries = from feed in xdoc.Descendants("Feed")
+                XDocument xdoc = XDocument.Load("Feeds.xml"); // load the xml
+                var entries = from feed in xdoc.Descendants("Feed") // get the feeds
                               select new
                               {
                                   Title = feed.Element("Name").Value,
                                   URL = feed.Element("URL").Value,
                               };
 
-                foreach (var entry in entries)
+                foreach (var entry in entries) // create up the feed items
                 {
                     Feed f = new Feed(entry.Title, entry.URL);
                     this._feeds.Add(f);
@@ -60,37 +75,35 @@ namespace LibFeeds
             catch (Exception e)
             {
                 success = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Xml-parser error: \n {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your feeds.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]",e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);                
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin ParseFeeds() Error: \n {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your feeds.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
 
-            int unread = 0;
+            int unread = 0; // feeds with unread storyies count
 
-            foreach (Feed feed in this._feeds)
+            foreach (Feed feed in this._feeds) // loop through feeds
             {
-                RegisterListItem(feed,root);
-                feed.Update();                
-                foreach (Story story in feed.Stories)
-                {
-                    RegisterListItem(story, feed);
-                }
+                RegisterListItem(feed, root); // register the feed item.
+                feed.Update(); // update the feed
 
-                if (feed.State == ItemState.UNREAD) unread++;
+                foreach (Story story in feed.Stories) { RegisterListItem(story, feed); } // register the story item.
+                if (feed.State == ItemState.UNREAD) unread++; 
             }
 
-            if (unread > 0)
-            {
-                root.SetTitle(string.Format("{0} ({1})",root.Title,unread.ToString()));
-            }
+            if (unread > 0) { root.SetTitle(string.Format("{0} ({1})", root.Title, unread.ToString())); } 
 
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(success));            
+            return success;
         }
 
-        public void MenuSubscriptionsClicked(object sender, EventArgs e)
+        public void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler
         {
             frmDataEditor f = new frmDataEditor("Feeds.xml", "Feed");
             f.Show();
         }
+
+        #endregion
+
+        #region de-ctor
 
         ~FeedsPlugin() { Dispose(false); }
 
@@ -101,6 +114,8 @@ namespace LibFeeds
                 if (disposing) // managed resources
                 {
                     FeedsPlugin.PluginSettings = null;
+                    this.root.Dispose();
+                    this.root = null;
                     foreach (Feed f in this._feeds) { f.Dispose(); }
                     this._feeds.Clear();
                     this._feeds = null;
@@ -108,5 +123,7 @@ namespace LibFeeds
                 disposed = true;
             }
         }
+
+        #endregion
     }
 }
