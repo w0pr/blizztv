@@ -20,31 +20,61 @@ using System.Text;
 
 namespace LibBlizzTV
 {
+    /// <summary>
+    /// Key-value storage for plugins
+    /// </summary>
     public sealed class Storage
     {
-        private string _plugin_identifier;
+        #region members
 
+        private string _plugin_identifier; // the plugin identifier used in storage key's to distinguish the plugin's.
+
+        #endregion
+
+        #region storage API
+
+        /// <summary>
+        /// Creates a new storage for the plugin with the given plugin identifier.
+        /// </summary>
+        /// <param name="Idetifier">// the plugin identifier used in storage key's to distinguish the plugin's.</param>
         public Storage(string Idetifier)
         {
             this._plugin_identifier = Idetifier;
         }
 
+        /// <summary>
+        /// Puts a new key-value pair in plugin storage.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The byte-value</param>
         public void Put(string key, byte value)
         {
-            key = string.Format("{0}.{1}", this._plugin_identifier, key);
+            key = string.Format("{0}.{1}", this._plugin_identifier, key); // append the plugin identifier to the key.
             Database.Instance.Put(key, value);
         }
 
+        /// <summary>
+        /// Get's the byte-value for supplied key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>Returns the byte-value for the supplied key.</returns>
         public byte Get(string key)
         {
-            key = string.Format("{0}.{1}", this._plugin_identifier, key);
+            key = string.Format("{0}.{1}", this._plugin_identifier, key); // append the plugin identifier to the key.
             return Database.Instance.Get(key);
         }
 
+        /// <summary>
+        /// Returns true if the given key-value pair exists in storage.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>Returns true if the given key-value pair exists in storage.</returns>
         public bool KeyExists(string key)
         {
-            key = string.Format("{0}.{1}", this._plugin_identifier, key);
+            key = string.Format("{0}.{1}", this._plugin_identifier, key); // append the plugin identifier to the key.
             return Database.Instance.KeyExists(key);
         }
+
+        #endregion
     }
 }

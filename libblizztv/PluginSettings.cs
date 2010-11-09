@@ -20,9 +20,15 @@ using System.Text;
 
 namespace LibBlizzTV
 {
+    /// <summary>
+    /// Plugin-spefic settings.
+    /// </summary>
     [Serializable]
     public class PluginSettings
     {
+        /// <summary>
+        /// Is the plugin enabled?
+        /// </summary>
         public bool Enabled;
     }
 }

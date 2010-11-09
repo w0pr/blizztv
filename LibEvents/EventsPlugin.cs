@@ -48,7 +48,7 @@ namespace LibEvents
             ListItem events_past = new ListItem("Past");
             this.RegisterListItem(events_past, root);
 
-            this.RegisterPluginMenuItem(this, new MenuItemEventArgs("Calendar", new EventHandler(MenuCalendarClicked),this.PluginInfo.Attributes.Icon));
+            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Calendar", new EventHandler(MenuCalendarClicked),this.PluginInfo.Attributes.Icon));
 
 
             string xml = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml");

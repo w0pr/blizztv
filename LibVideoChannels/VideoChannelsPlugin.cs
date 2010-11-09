@@ -37,7 +37,7 @@ namespace LibVideoChannels
             ListItem root = new ListItem("Videos");
             RegisterListItem(root);
 
-            this.RegisterPluginMenuItem(this, new MenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
+            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
 
             XDocument xdoc = XDocument.Load("VideoChannels.xml");
             var entries = from videochannel in xdoc.Descendants("VideoChannel")

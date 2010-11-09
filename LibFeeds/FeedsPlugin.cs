@@ -18,8 +18,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
-
 using LibBlizzTV;
+using LibBlizzTV.Utils;
 
 namespace LibFeeds
 {
@@ -33,26 +33,35 @@ namespace LibFeeds
 
         public override void Load(PluginSettings ps)
         {
+            bool success = true;
             FeedsPlugin.PluginSettings = ps;
 
             ListItem root = new ListItem("Feeds");  // register root item feeds
             this.RegisterListItem(root);
 
-            this.RegisterPluginMenuItem(this, new MenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
+            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
 
-            XDocument xdoc = XDocument.Load("Feeds.xml");
-            var entries = from feed in xdoc.Descendants("Feed")
-                          select new
-                          {
-                              Title = feed.Element("Name").Value,
-                              URL = feed.Element("URL").Value,
-                          };
-
-
-            foreach (var entry in entries)
+            try
             {
-                Feed f = new Feed(entry.Title,entry.URL);
-                this._feeds.Add(f);
+                XDocument xdoc = XDocument.Load("Feeds.xml");
+                var entries = from feed in xdoc.Descendants("Feed")
+                              select new
+                              {
+                                  Title = feed.Element("Name").Value,
+                                  URL = feed.Element("URL").Value,
+                              };
+
+                foreach (var entry in entries)
+                {
+                    Feed f = new Feed(entry.Title, entry.URL);
+                    this._feeds.Add(f);
+                }
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Xml-parser error: \n {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your feeds.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]",e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);                
             }
 
             int unread = 0;
@@ -74,7 +83,7 @@ namespace LibFeeds
                 root.SetTitle(string.Format("{0} ({1})",root.Title,unread.ToString()));
             }
 
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(true));            
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(success));            
         }
 
         public void MenuSubscriptionsClicked(object sender, EventArgs e)

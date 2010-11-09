@@ -21,33 +21,57 @@ using Microsoft.Win32.SafeHandles;
 
 namespace LibBlizzTV.Utils
 {
+    /// <summary>
+    /// Serves a debug-console.
+    /// </summary>
     public class DebugConsole : IDisposable
     {
+        #region members
+
         private static DebugConsole _instance = new DebugConsole();
+        /// <summary>
+        /// DebugConsole instance.
+        /// </summary>
         public static DebugConsole Instance { get { return _instance; } }
 
         private bool _debug_console_enabled = false;
         private bool disposed = false;
 
+        // The GetStdHandle() and AllocConsole() functions to bind a console window to a windowed application.
         [DllImport("kernel32.dll", EntryPoint = "GetStdHandle", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         private static extern IntPtr GetStdHandle(int nStdHandle);
         [DllImport("kernel32.dll", EntryPoint = "AllocConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-
         private static extern int AllocConsole();
+
+        // API constants.
         private const int STD_OUTPUT_HANDLE = -11;
         private const int MY_CODE_PAGE = 437;
 
+        #endregion
+
+        #region ctor
+
         private DebugConsole() { }
 
+        #endregion
+
+        #region public functions 
+
+        /// <summary>
+        /// Enables the debug-console.
+        /// </summary>
         public void EnableDebugConsole()
         {
-            if (!this._debug_console_enabled)
+            if (!this._debug_console_enabled) // make sure it's not already inited.
             {
                 this.init();
                 this._debug_console_enabled = true;
             }
         }
 
+        /// <summary>
+        /// Disables the debug-console.
+        /// </summary>
         public void DisableDebugConsole()
         {
             if (this._debug_console_enabled)
@@ -56,19 +80,38 @@ namespace LibBlizzTV.Utils
             }
         }
 
-        private  void init()
+        /// <summary>
+        /// Writes a given message to console with given message-type.
+        /// </summary>
+        /// <param name="_type">The message type.</param>
+        /// <param name="_str">The message.</param>
+        public void Write(LogMessageTypes _type, string _str)
         {
-            AllocConsole();
-            IntPtr stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-            SafeFileHandle safeFileHandle = new SafeFileHandle(stdHandle, true);
-            FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write);
-            Encoding encoding = System.Text.Encoding.GetEncoding(MY_CODE_PAGE);
-            StreamWriter standardOutput = new StreamWriter(fileStream, encoding);
-            standardOutput.AutoFlush = true;
-            Console.SetOut(standardOutput);
+            if (this._debug_console_enabled) // make sure that the console is enable
+            {
+                Console.ForegroundColor = GetMessageColor(_type); // the foreground color.
+                Console.WriteLine(string.Format("[{0} {1}] {2}", _type.ToString(), DateTime.Now.ToString("HH:mm:ss"), _str));
+                Console.ResetColor(); // reset color back.
+            }
         }
 
-        private ConsoleColor GetMessageColor(LogMessageTypes _type)
+        #endregion
+
+        #region internal logic
+
+        private  void init() // binds a new console window to a windowed application
+        {
+            AllocConsole(); // allocate a console.
+            IntPtr stdHandle = GetStdHandle(STD_OUTPUT_HANDLE); // the console handle.
+            SafeFileHandle safeFileHandle = new SafeFileHandle(stdHandle, true);
+            FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write); // filestream.
+            Encoding encoding = System.Text.Encoding.GetEncoding(MY_CODE_PAGE); // encoding.
+            StreamWriter standardOutput = new StreamWriter(fileStream, encoding); // streamwriter.
+            standardOutput.AutoFlush = true; // auto-flush ON.
+            Console.SetOut(standardOutput); 
+        }
+
+        private ConsoleColor GetMessageColor(LogMessageTypes _type) // Allows coloring of message-type's.
         {
             switch (_type)
             {
@@ -80,18 +123,18 @@ namespace LibBlizzTV.Utils
             }
         }
 
-        public void Write(LogMessageTypes _type, string _str)
-        {
-            if (this._debug_console_enabled)
-            {
-                Console.ForegroundColor = GetMessageColor(_type);
-                Console.WriteLine(string.Format("[{0} {1}] {2}", _type.ToString(), DateTime.Now.ToString("HH:mm:ss"), _str));
-                Console.ResetColor();
-            }
-        }
+        #endregion
 
+        #region de-ctor
+
+        /// <summary>
+        /// De-constructor.
+        /// </summary>
         ~DebugConsole() { Dispose(false); }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -104,5 +147,7 @@ namespace LibBlizzTV.Utils
             {
             }
         }
+
+    #endregion
     }
 }

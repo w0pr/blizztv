@@ -16,71 +16,137 @@
 using System;
 using System.IO;
 using System.Reflection;
+using LibBlizzTV.Utils;
 
 namespace LibBlizzTV
 {
+    /// <summary>
+    /// The plugin info and activator.
+    /// </summary>
     public class PluginInfo : IDisposable
-    {        
-        private bool _valid = false; // is the module a valid LibBlizzTV module?
-        private string _assembly_file; // the assemblie's file name on the disk.        
-        private Assembly _assembly; // the module assembly itself.
-        private Type _plugin_entrance; // the module's entrance point (actual module's ctor).
-        private PluginAttribute _attributes;
+    {
+        #region members
+
+        private bool _valid = false; // is it a valid BlizzTV plugin?
+        private string _assembly_file; // the plugins file name on the disk.        
+        private Assembly _assembly; // the plugin assembly itself.
+        private Type _plugin_entrance; // the plugin's entrance point (actual module's ctor).
+        private PluginAttribute _attributes; // the plugin's attributes
         private bool disposed = false;
 
+        /// <summary>
+        /// The plugin's assembly name.
+        /// </summary>
         public string AssemblyName { get { return this._assembly_file; } }
+
+        /// <summary>
+        /// The plugin's assembly version.
+        /// </summary>
         public string AssemblyVersion { get { return this._assembly.GetName().Version.ToString(); } }
+
+        /// <summary>
+        /// Is it a valid BlizzTV plugin?
+        /// </summary>
         public bool Valid { get { return this._valid; } }
+
+        /// <summary>
+        /// The plugin's attributes
+        /// </summary>
         public PluginAttribute Attributes { get { return _attributes; } }
 
+        #endregion
+
+        #region ctor
+
+        /// <summary>
+        /// Constructs a new PluginInfo based on given assembly filename.
+        /// </summary>
+        /// <param name="AssemblyFile">The assemblies filename.</param>
         public PluginInfo(string AssemblyFile)
         {
-            this._assembly_file = AssemblyFile;
-            if (Path.GetFileName(Assembly.GetExecutingAssembly().Location) == this._assembly_file) this._valid = false; // libblizztv.dll itself is not a valid module ;)
-            else this.ReadPluginInfo();
+            this._assembly_file = AssemblyFile; // store the assemblies filename.
+            if (Path.GetFileName(Assembly.GetExecutingAssembly().Location) == this._assembly_file) this._valid = false; // libblizztv.dll itself is not a valid plugin ;)
+            else this.ReadPluginInfo(); // read the assemblies details.
         }
 
-        private void ReadPluginInfo()
+        #endregion
+
+        #region PluginInfo API
+
+        /// <summary>
+        /// Creates a instance
+        /// </summary>
+        /// <returns>Returns the instance of the plugin asked for.</returns>
+        public Plugin CreateInstance()
+        {
+            Plugin plugin=null; 
+            try
+            {
+                if (!this._valid) throw new NotSupportedException(); // If the plugin asked for is not a valid BlizzTV pluin, fire an exception.
+                plugin = (Plugin)Activator.CreateInstance(this._plugin_entrance); // Create the plugin instance using the ctor we stored as entrance point.
+                plugin.PluginInfo = this; // attach the plugin-info to plugin itself.
+            }
+            catch (Exception e)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("PluginInfo:CreateInstance() exception: {0}", e.ToString()));
+            }
+            return plugin;
+        }
+
+        /// <summary>
+        /// Returns the plugin's assembly name and version.
+        /// </summary>
+        /// <returns>Plugin's assembly name and version.</returns>
+        public override string ToString()
+        {
+            return string.Format("{0} - v{1}", this.AssemblyName, this.AssemblyVersion);
+        }
+
+        #endregion
+
+        #region internal logic
+
+        private void ReadPluginInfo() // reads a supplied assemblies details
         {
             try
             {
-                this._assembly = Assembly.LoadFile(string.Format("{0}\\{1}", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), this._assembly_file)); // Load the asked modules assembly.
+                this._assembly = Assembly.LoadFile(string.Format("{0}\\{1}", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), this._assembly_file)); // load the asked plugins assembly.
 
-                foreach (Type t in this._assembly.GetTypes()) // Loop through each available types to see if it actually implements a LibBlizzTV Module.
+                foreach (Type t in this._assembly.GetTypes()) // Loop through each available types to see if it actually implements a LibBlizzTV plugin.
                 {
-                    if (t.IsSubclassOf(typeof(Plugin)))
+                    if (t.IsSubclassOf(typeof(Plugin))) // if type extends the Plugin class
                     {
                         this._plugin_entrance = t; // this is our entry point (the module's ctor).                        
                         object[] _attr = t.GetCustomAttributes(typeof(PluginAttribute), true); // get the attributes for the plugin
 
-                        if (_attr.Length > 0)
+                        if (_attr.Length > 0) // if plugin defines attributes, check them
                         {
-                            (_attr[0] as PluginAttribute).ResolveResources(this._assembly);
-                            this._attributes = (PluginAttribute)_attr[0];
+                            (_attr[0] as PluginAttribute).ResolveResources(this._assembly); // resolve the attribute resources
+                            this._attributes = (PluginAttribute)_attr[0]; // store the attributes
                             this._valid = true; // yes we're valid ;)
                         }
                         else throw new LoadPluginInfoException(this._assembly_file, "Plugin does not define the required attributes."); // all plugins should define the required atributes
                     }
                 }
             }
-            catch (Exception e) { }
+            catch (Exception e) 
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR,string.Format("ReadPluginInfo() exception: {0}",e.ToString()));
+            }
         }
 
-        public Plugin CreateInstance()
-        {
-            if (!this._valid) throw new NotSupportedException(); // If the plugin asked is not a valid one, ignore it
-            Plugin p = (Plugin)Activator.CreateInstance(this._plugin_entrance); // Create the module instance using the ctor we stored as entrance point.
-            p.PluginInfo = this; // attach the plugin-info to plugin itself.
-            return p;
-        }
+        #endregion
 
-        public override string ToString()
-        {
-            return string.Format("{0} - v{1}", this.AssemblyName, this.AssemblyVersion);
-        }
+        #region de-ctor
 
+        /// <summary>
+        /// de-ctor.
+        /// </summary>
         ~PluginInfo() { Dispose(false); }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -100,12 +166,26 @@ namespace LibBlizzTV
                 disposed = true;
             }
         }
+
+        #endregion
     }
 
+    #region exceptions 
+
+    /// <summary>
+    /// Load PlugiInfo Exception
+    /// </summary>
     public class LoadPluginInfoException : Exception
     {
+        /// <summary>
+        /// Contains information about a plugin load exception.
+        /// </summary>
+        /// <param name="PluginFile">The plugin assembly.</param>
+        /// <param name="Message">The exception message.</param>
         public LoadPluginInfoException(string PluginFile, string Message)
             : base(string.Format("{0} - {1}", PluginFile, Message))
         { }
     }
+
+    #endregion
 }

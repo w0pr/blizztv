@@ -70,7 +70,7 @@ namespace BlizzTV
             p.Load(SettingsStorage.Instance.Settings.PluginSettings[p.PluginInfo.AssemblyName]); // run the plugin & apply it's stored settings.
         }
 
-        private void RegisterPluginMenuItem(object sender, MenuItemEventArgs e) // Register's a sub-menu in plugins menu for the plugin.
+        private void RegisterPluginMenuItem(object sender, NewMenuItemEventArgs e) // Register's a sub-menu in plugins menu for the plugin.
         {
             if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterPluginMenuItem(sender,e); })); // switch to UI-thread.
             else
@@ -136,6 +136,11 @@ namespace BlizzTV
             f.ShowDialog();
         }
 
+        private void MenuDonate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TDWWEWYQ9CSU2", null);            
+        }
+
         #endregion
 
         #region Form-specific code
@@ -157,6 +162,6 @@ namespace BlizzTV
             db_prop.SetValue(c, true, null);
         }
 
-        #endregion
+        #endregion 
     }
 }

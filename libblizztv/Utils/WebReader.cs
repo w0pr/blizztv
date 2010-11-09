@@ -19,8 +19,16 @@ using System.IO;
 
 namespace LibBlizzTV.Utils
 {
+    /// <summary>
+    /// Reads data from web and returns.
+    /// </summary>
     public static class WebReader
     {
+        /// <summary>
+        /// Returns content's of a given http url.
+        /// </summary>
+        /// <param name="url">The web-page's address.</param>
+        /// <returns>Returns contents of the given wep-page.</returns>
         public static string Read(string url)
         {
             string buffer;
@@ -34,7 +42,11 @@ namespace LibBlizzTV.Utils
                         buffer = reader.ReadToEnd();
                     }
                 }
-                catch (Exception e) { return null; }
+                catch (Exception e)
+                {
+                    Log.Instance.Write(LogMessageTypes.ERROR,string.Format("WebReader:Read() Exception: {0}",e.ToString()));
+                    return null;
+                }
             }
             return buffer;
         }

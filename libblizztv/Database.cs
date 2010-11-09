@@ -22,19 +22,67 @@ using Microsoft.Isam.Esent.Collections.Generic;
 
 namespace LibBlizzTV
 {
+    /// <summary>
+    /// Wrapper for NO-SQL,embedded and key-value typed ESENT database.
+    /// </summary>
     public sealed class Database : IDisposable
     {
+        #region Members
+
         private string _storage_folder = "state-storage";
         private PersistentDictionary<string, byte> _dictionary;
         private bool disposed = false;
 
         private static Database _instance = new Database();
-        public static Database Instance { get { return _instance; } }        
+        /// <summary>
+        /// Database instance.
+        /// </summary>
+        public static Database Instance { get { return _instance; } }
+
+        #endregion
+
+        #region ctor
 
         private Database() 
         {
             if (!this.StorageExists()) Directory.CreateDirectory(this._storage_folder);
             this._dictionary=new PersistentDictionary<string,byte>(this._storage_folder);
+        }
+
+        #endregion
+
+        #region Database Logic
+
+        /// <summary>
+        /// Puts a new byte-value on given key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The byte-value.</param>
+        public void Put(string key, byte value)
+        {
+            this._dictionary[key] = value;
+        }
+
+        /// <summary>
+        /// Gets the byte-value stored on given key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        public byte Get(string key)
+        {
+            if (this._dictionary.ContainsKey(key)) return this._dictionary[key];
+            else return 0;
+        }
+
+        /// <summary>
+        /// Returns true if the given key-value pair exists.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        public bool KeyExists(string key)
+        {
+            if (this._dictionary.ContainsKey(key)) return true;
+            else return false;
         }
 
         private bool StorageExists()
@@ -43,25 +91,18 @@ namespace LibBlizzTV
             else return true;
         }
 
-        public void Put(string key, byte value)
-        {
-            this._dictionary[key] = value;
-        }
+        #endregion
 
-        public byte Get(string key)
-        {
-            if (this._dictionary.ContainsKey(key)) return this._dictionary[key];
-            else return 0;
-        }
+        #region de-ctor
 
-        public bool KeyExists(string key)
-        {
-            if (this._dictionary.ContainsKey(key)) return true;
-            else return false;
-        }
-
+        /// <summary>
+        /// De-constructor.
+        /// </summary>
         ~Database() { Dispose(false); }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -80,5 +121,7 @@ namespace LibBlizzTV
                 disposed = true;
             }
         }
+
+        #endregion
     }
 }

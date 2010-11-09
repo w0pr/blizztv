@@ -20,18 +20,42 @@ using System.Text;
 
 namespace LibBlizzTV
 {
+    /// <summary>
+    /// Global settings that is used by both the BlizzTV and it's plugins.
+    /// </summary>
     [Serializable]
     public class GlobalSettings
     {
+        /// <summary>
+        /// The default content viewing-method.
+        /// </summary>
         public ContentViewMethods ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
+        /// <summary>
+        /// The default video player width.
+        /// </summary>
         public int VideoPlayerWidth = 640;
+        /// <summary>
+        /// The default video player height.
+        /// </summary>
         public int VideoPlayerHeight = 385;
+        /// <summary>
+        /// States if video's should be played automatically.
+        /// </summary>
         public bool VideoAutoPlay = true;
     }
 
+    /// <summary>
+    /// Available content-viewing methods.
+    /// </summary>
     public enum ContentViewMethods
     {
+        /// <summary>
+        /// Render content with internal viewers.
+        /// </summary>
         INTERNAL_VIEWERS,
+        /// <summary>
+        /// Render content with computer's default web-browser.
+        /// </summary>
         DEFAULT_WEB_BROWSER
     }
 }
