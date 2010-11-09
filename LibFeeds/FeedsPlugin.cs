@@ -69,7 +69,7 @@ namespace LibFeeds
                 foreach (var entry in entries) // create up the feed items
                 {
                     Feed f = new Feed(entry.Title, entry.URL);
-                    this._feeds.Add(f);
+                    this._feeds.Add(f); 
                 }
             }
             catch (Exception e)
@@ -82,9 +82,9 @@ namespace LibFeeds
             int unread = 0; // feeds with unread storyies count
 
             foreach (Feed feed in this._feeds) // loop through feeds
-            {
-                RegisterListItem(feed, root); // register the feed item.
+            {                
                 feed.Update(); // update the feed
+                if (feed.Valid) RegisterListItem(feed, root); // if the feed parsed all okay, regiser the feed-item.
 
                 foreach (Story story in feed.Stories) { RegisterListItem(story, feed); } // register the story item.
                 if (feed.State == ItemState.UNREAD) unread++; 

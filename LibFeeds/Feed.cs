@@ -27,12 +27,16 @@ namespace LibFeeds
     {
         #region members
 
-        // TODO: should be a readonly collection.
-        public List<Story> Stories = new List<Story>(); // the feed's stories
+        private bool _valid = true; // did the feed parsed all okay?        
         private string _url; // the feed url
-        public string URL { get { return this._url; } }                
         private bool disposed = false;
 
+        public string URL { get { return this._url; } }
+        public bool Valid { get { return this._valid; } }
+
+        // TODO: should be a readonly collection.
+        public List<Story> Stories = new List<Story>(); // the feed's stories
+       
         #endregion
 
         #region ctor
@@ -52,22 +56,26 @@ namespace LibFeeds
             try
             {
                 string response = WebReader.Read(this.URL); // read the feed xml
-                XDocument xdoc = XDocument.Parse(response); // parse the xml
-
-                var entries = from item in xdoc.Descendants("item") // get the stories
-                              select new
-                              {
-                                  GUID = item.Element("guid").Value,
-                                  Title = item.Element("title").Value,
-                                  Link = item.Element("link").Value,
-                                  Description = item.Element("description").Value
-                              };
-
-                foreach (var entry in entries) // create the story-item's.
+                if (response != null)
                 {
-                    Story s = new Story(entry.Title, entry.GUID, entry.Link, entry.Description);
-                    this.Stories.Add(s);
+                    XDocument xdoc = XDocument.Parse(response); // parse the xml
+
+                    var entries = from item in xdoc.Descendants("item") // get the stories
+                                  select new
+                                  {
+                                      GUID = item.Element("guid").Value,
+                                      Title = item.Element("title").Value,
+                                      Link = item.Element("link").Value,
+                                      Description = item.Element("description").Value
+                                  };
+
+                    foreach (var entry in entries) // create the story-item's.
+                    {
+                        Story s = new Story(entry.Title, entry.GUID, entry.Link, entry.Description);
+                        this.Stories.Add(s);
+                    }
                 }
+                else this._valid = false;
             }
             catch (Exception e)
             {
@@ -75,13 +83,16 @@ namespace LibFeeds
                 System.Windows.Forms.MessageBox.Show(string.Format("An error occured while updating feed. Feed URL. {0} \n\n[Error Details: {1}]",this.URL, e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
 
-            int unread = 0; // unread stories count
-            foreach (Story s in this.Stories) { if (s.State == ItemState.UNREAD) unread++;}
-
-            if (unread > 0) // if there are unread feed stories
+            if (this._valid)
             {
-                this.SetTitle(string.Format(" {0} ({1})",this.Title, unread.ToString()));
-                this.SetState(ItemState.UNREAD); // then mark the feed itself as unread also
+                int unread = 0; // unread stories count
+                foreach (Story s in this.Stories) { if (s.State == ItemState.UNREAD) unread++; }
+
+                if (unread > 0) // if there are unread feed stories
+                {
+                    this.SetTitle(string.Format(" {0} ({1})", this.Title, unread.ToString()));
+                    this.SetState(ItemState.UNREAD); // then mark the feed itself as unread also
+                }
             }
         }
 
