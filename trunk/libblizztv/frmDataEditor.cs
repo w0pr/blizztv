@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace LibBlizzTV
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class frmDataEditor : Form
     {
         private string _xml_file;
@@ -17,6 +20,11 @@ namespace LibBlizzTV
         #pragma warning disable 618 // okay we don't want to hear it dear compiler. (XmlDataDocument is obsolote warning.)
         private XmlDataDocument _xml_doc;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="FileName"></param>
+        /// <param name="DataMeber"></param>
         public frmDataEditor(string FileName,string DataMeber)
         {
             InitializeComponent();

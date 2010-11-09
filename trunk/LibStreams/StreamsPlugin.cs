@@ -37,7 +37,7 @@ namespace LibStreams
             ListItem root = new ListItem("Streams");
             RegisterListItem(root);
 
-            this.RegisterPluginMenuItem(this, new MenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
+            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
 
             XDocument xdoc = XDocument.Load("Streams.xml");
             var entries = from stream in xdoc.Descendants("Stream")

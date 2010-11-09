@@ -21,54 +21,129 @@ using System.Drawing;
 
 namespace LibBlizzTV
 {
+    /// <summary>
+    /// A list item that can be rendered on main form's treeview.
+    /// </summary>
     public class ListItem : IDisposable
     {
+        #region members
+
         private string _title; 
         private string _key;
         private ItemState _state = ItemState.READ;
         private bool disposed = false;
 
+        /// <summary>
+        /// The title.
+        /// </summary>
         public string Title { get { return this._title; } }
+        /// <summary>
+        /// The key.
+        /// </summary>
         public string Key { get { return this._key; } }
+        /// <summary>
+        /// The state.
+        /// </summary>
         public ItemState State { get { return this._state; } }
 
-        public ListItem(string Title) { this._title = Title; this.generate_random_key(); }
+        #endregion
 
-        public virtual void DoubleClick(object sender, EventArgs e) {}
-        public virtual void UpdateState() { }
+        #region ctor
 
-        private void generate_random_key() { this._key = System.Convert.ToBase64String(Guid.NewGuid().ToByteArray()); }
+        /// <summary>
+        /// Constructs a new list item with given title.
+        /// </summary>
+        /// <param name="Title">The title.</param>
+        public ListItem(string Title) { this._title = Title; this.generate_unique_random_key(); } // generate an unique-random key for the item.
 
+        #endregion
+
+        #region The list-item API & events
+
+        /// <summary>
+        /// The double-click event handler.
+        /// </summary>
+        /// <remarks>Should be implemented if the item wants to be notified of double-click's.</remarks>
+        /// <param name="sender">The ender object.</param>
+        /// <param name="e">The event paremeters.</param>
+        public virtual void DoubleClick(object sender, EventArgs e) { }
+
+        /// <summary>
+        /// Title change event handler delegate.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
         public delegate void TitleChangedEventHandler(object sender);
+        /// <summary>
+        /// Title change event handler
+        /// </summary>
         public event TitleChangedEventHandler OnTitleChange;
-
+        /// <summary>
+        /// Set's title of the item.
+        /// </summary>
+        /// <param name="Title">The new title.</param>
         public void SetTitle(string Title)
         {
             this._title = Title;
-            if (OnTitleChange != null) OnTitleChange(this);
+            if (OnTitleChange != null) OnTitleChange(this); // notify observers.
         }
 
+        /// <summary>
+        /// State change event handler delegate.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
         public delegate void StateChangedEventHandler(object sender);
+        /// <summary>
+        /// State change event handler.
+        /// </summary>
         public event StateChangedEventHandler OnStateChange;
-
+        /// <summary>
+        /// Set's state of the item.
+        /// </summary>
+        /// <param name="State">The new state.</param>
         protected void SetState(ItemState State)
         {
             this._state = State;
-            if (OnStateChange != null) OnStateChange(this);
+            if (OnStateChange != null) OnStateChange(this); // notify observers.
         }
 
-        /* context menu */
-        public delegate void RegisterContextMenuItemEventHandler(object sender, MenuItemEventArgs e);
+        /// <summary>
+        /// RegisterContextMenuItem event handler delegate.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e"><see cref="NewMenuItemEventArgs"/></param>
+        public delegate void RegisterContextMenuItemEventHandler(object sender, NewMenuItemEventArgs e);
+        /// <summary>
+        /// RegisterContextMenuItem event handler.
+        /// </summary>
         public event RegisterContextMenuItemEventHandler OnRegisterContextMenuItem;
-
-        protected void RegisterContextMenuItem(object sender, MenuItemEventArgs e)
+        /// <summary>
+        /// Registers a new context-menu for the item.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e"><see cref="NewMenuItemEventArgs"/></param>
+        protected void RegisterContextMenuItem(object sender, NewMenuItemEventArgs e)
         {
-            if (OnRegisterContextMenuItem != null) OnRegisterContextMenuItem(this, e);
+            if (OnRegisterContextMenuItem != null) OnRegisterContextMenuItem(this, e); // notify observers.
         }
+        
+        #endregion
 
+        #region internal logic
 
+        private void generate_unique_random_key() { this._key = System.Convert.ToBase64String(Guid.NewGuid().ToByteArray()); } // generates an unique-random key for the item.
+        
+        #endregion
+
+        #region de-ctor
+
+        /// <summary>
+        /// De-constructor.
+        /// </summary>
         ~ListItem() { Dispose(false); }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -86,13 +161,30 @@ namespace LibBlizzTV
                 }
                 disposed = true;
             }
-        }
+        } 
+        #endregion
     }
 
+    #region item-state enum
+		
+    /// <summary>
+    /// Available item states.
+    /// </summary>
     public enum ItemState
     {
+        /// <summary>
+        /// Unread or non-viewed item.
+        /// </summary>
         UNREAD,
+        /// <summary>
+        /// Read or vieweed item.
+        /// </summary>
         READ,
+        /// <summary>
+        /// Marked item.
+        /// </summary>
         MARKED
-    }
+    } 
+
+	#endregion
 }

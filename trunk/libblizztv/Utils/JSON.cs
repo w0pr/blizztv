@@ -25,6 +25,9 @@ using System.Text;
 
 namespace LibBlizzTV.Utils
 {
+    #pragma warning disable 1591 // ignore 'Missing XML comment for publicly visible type or member 'Type_or_Member' for JSON.cs
+    // TODO: If we feel all okay with JSON.cs, let's XML-comment this file to and fix it's (if any?) problems.
+
     /// <summary>
     /// This class encodes and decodes JSON strings.
     /// Spec. details, see http://www.json.org/
