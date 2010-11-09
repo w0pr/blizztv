@@ -40,7 +40,7 @@ namespace LibBlizzTV
             
             foreach (KeyValuePair<string,PluginInfo> pi in this.Plugins)
             {
-                Log.Instance.Write(LogMessageTypes.INFO, string.Format("Available Plugin: {0}", pi.Value.AssemblyName.ToString()));
+                Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found Plugin: {0}", pi.Value.AssemblyName.ToString()));
             }                
         }
 

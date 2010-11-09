@@ -25,43 +25,53 @@ namespace BlizzTV
 {
     public class TreeItem:TreeNode
     {
-        private ListItem _item;
-        private Plugin _plugin;
-        private Font _bold = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold);
-        private Font _regular = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Regular);
+        #region Members
 
+        private ListItem _item; // the plugin-item bound to.
+        private Plugin _plugin; // the plugin itself.
+        private Font _bold = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold); // font for unread items.
+        private Font _regular = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Regular); // font for read items.
         private bool disposed = false;
 
-        public ListItem Item { get { return this._item; } }
-        
+        public ListItem Item { get { return this._item; } } // the item getter.
+
+        #endregion
+
+        #region ctor
+
         public TreeItem(Plugin Plugin,ListItem Item)
         {
             this._plugin = Plugin;
             this._item = Item;
             this.Name = _item.Key;
 
-            this._item.OnTitleChange += TitleChange;
-            this._item.OnStateChange += StateChange;
+            // register communication events
+            this._item.OnTitleChange += TitleChange; // the title-change event
+            this._item.OnStateChange += StateChange; // the state-change event
         }
 
-        public void Render()
+        #endregion
+
+        #region Logic
+
+        public void Render() // renders the item with title, state and icon information
         {
             this.Text = this._item.Title; // set the inital title
             this.StateChange(this); // set the initial state
 
-            if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.PluginInfo.AssemblyName)) this.TreeView.ImageList.Images.Add(this._plugin.PluginInfo.AssemblyName, this._plugin.PluginInfo.Attributes.Icon); // add the plugin icon to image list in it doesn't exists
-            this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.PluginInfo.AssemblyName); // render the icon
+            if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.PluginInfo.AssemblyName)) this.TreeView.ImageList.Images.Add(this._plugin.PluginInfo.AssemblyName, this._plugin.PluginInfo.Attributes.Icon); // add the plugin icon to image list in it doesn't exists yet.
+            this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.PluginInfo.AssemblyName); // use the item's plugin icon.
         }
 
         public void TitleChange(object sender)
         {
-            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { TitleChange(sender); }));
+            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { TitleChange(sender); })); // switch to UI-thread.
             else this.Text = this._item.Title;
         }
 
         public void StateChange(object sender)
         {
-            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { StateChange(sender); }));
+            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { StateChange(sender); })); // switch to UI-thread.
             else
             {
                 switch (this._item.State)
@@ -72,7 +82,7 @@ namespace BlizzTV
                     case ItemState.READ:
                         this.NodeFont = _regular;
                         break;
-                    case ItemState.MARKED:
+                    case ItemState.MARKED: //TODO: Not yet implemented :)
                         break;
                     default:
                         break;
@@ -80,10 +90,14 @@ namespace BlizzTV
             }
         }
 
-        public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e) // Notify the item about the double-click event
         {
             this._item.DoubleClick(sender,e);
         }
+
+        #endregion
+
+        #region de-ctor
 
         ~TreeItem() { Dispose(false); }
 
@@ -111,5 +125,7 @@ namespace BlizzTV
                 disposed = true;
             }
         }
+
+        #endregion
     }
 }
