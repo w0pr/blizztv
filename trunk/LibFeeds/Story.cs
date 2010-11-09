@@ -23,27 +23,44 @@ namespace LibFeeds
 {
     public class Story : ListItem
     {
-        public string GUID;
-        public string Link;
-        public string Description;
+        #region members
+
+        private string _guid; // the story-guid.
+        private string _link; // the story-link .
+        private string _description; // the story-excerpt.
+
+        public string GUID { get { return this._guid; } }
+        public string Link { get { return this._link; } }
+        public string Description { get { return this._description; } }
+
+        #endregion
+
+        #region ctor
 
         public Story(string Title, string GUID, string Link, string Description)
             : base(Title)
         {
-            this.GUID = GUID;
-            this.Link = Link;
-            this.Description = Description;
+            this._guid = GUID;
+            this._link = Link;
+            this._description = Description;
 
-            if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));
+            // check the persistent storage for if the story is read before.
+            if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));  
             else this.SetState(ItemState.UNREAD);
         }
 
+        #endregion
+
+        #region internal logic
+
         public override void DoubleClick(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(this.Link, null);
+            System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
 
-            this.SetState(ItemState.READ);
-            Plugin.Storage.Put(this.GUID, (byte)this.State);
+            this.SetState(ItemState.READ); // set the story state to READ.
+            Plugin.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
         }
+
+        #endregion
     }
 }
