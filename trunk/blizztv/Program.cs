@@ -27,14 +27,23 @@ namespace BlizzTV
         [STAThread]
         static void Main()
         {
-            // Check global settings and start logger and debug console if enabled
-            if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
-            if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
+            try
+            {
+                // Check global settings and start logger and debug console if enabled
+                if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
+                if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
 
-            // Startup the main form
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+                Log.Instance.Write(LogMessageTypes.INFO, "Program startup.."); // the startup message so we can see sessions in log easier.
+
+                // Startup the main form
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new frmMain());                
+            }
+            catch (Exception e) // catch the unhandled expceptions and log them
+            {
+                Log.Instance.Write(LogMessageTypes.FATAL, string.Format("Unhandled Exception: {0}", e.ToString()));
+            }
         }
     }
 }

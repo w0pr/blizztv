@@ -14,6 +14,7 @@ namespace LibBlizzTV
     {
         private string _xml_file;
         private string _data_member;
+        #pragma warning disable 618 // okay we don't want to hear it dear compiler. (XmlDataDocument is obsolote warning.)
         private XmlDataDocument _xml_doc;
 
         public frmDataEditor(string FileName,string DataMeber)
