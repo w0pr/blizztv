@@ -34,7 +34,7 @@ namespace LibStreams
 
             var entries = from provider in xdoc.Descendants("Provider") 
                           select new {
-                                Name = provider.Element("Name").Value,
+                                Name = provider.Element("Name").Value.ToLower(),
                                 Movie = provider.Element("Movie").Value, 
                                 FlashVars=provider.Element("FlashVars").Value
                             };
@@ -79,7 +79,7 @@ namespace LibStreams
 
         public Provider(string Name, string Movie, string FlashVars)
         {
-            this._name = Name;
+            this._name = Name.ToLower();
             this._movie = Movie;
             this._flash_vars = FlashVars;
         }
