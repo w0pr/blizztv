@@ -147,10 +147,34 @@ namespace BlizzTV
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.notifyIcon.Visible = false;
-            this.notifyIcon.Dispose();
-            this.notifyIcon = null;
+            e.Cancel = true; // live in system-tray even if form is closed
+            this.WindowState = FormWindowState.Minimized; // go minimized
+            this.ShowInTaskbar = false; // hide ourself from taskbar
         }
+
+        private void TrayIcon_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized && this.ShowInTaskbar == false) // if we're just living in system-tray, remake the main form visible again
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+            }
+        }
+
+        private void ExitApplication() // Exits the application.
+        {
+            if (this.TrayIcon != null) // Destroy the notify-icon.
+            {
+                this.TrayIcon.Visible = false;
+                this.TrayIcon.Dispose();
+                this.TrayIcon = null;
+            }
+            Application.ExitThread(); // Exit the application.
+        }
+
+        private void MenuExit_Click(object sender, EventArgs e) { this.ExitApplication(); }
+
+        private void TrayIconMenuExit_Click(object sender, EventArgs e) { this.ExitApplication(); }
 
         public static void DoubleBufferControl(System.Windows.Forms.Control c)
         {

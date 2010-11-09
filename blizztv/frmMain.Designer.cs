@@ -35,20 +35,22 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bugReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuDonate = new System.Windows.Forms.ToolStripMenuItem();
             this.blizzTVcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bugReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.LabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressStatus = new System.Windows.Forms.ToolStripProgressBar();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextAboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeView = new System.Windows.Forms.TreeView();
             this.ItemContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
-            this.MenuDonate = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.TrayIconMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
@@ -69,7 +71,8 @@
             // 
             this.blizzTVToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.preferencesToolStripMenuItem,
-            this.MenuPlugins});
+            this.MenuPlugins,
+            this.MenuExit});
             this.blizzTVToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("blizzTVToolStripMenuItem.Image")));
             this.blizzTVToolStripMenuItem.Name = "blizzTVToolStripMenuItem";
             this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(28, 20);
@@ -78,7 +81,7 @@
             // 
             this.preferencesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("preferencesToolStripMenuItem.Image")));
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
@@ -86,7 +89,7 @@
             // 
             this.MenuPlugins.Image = ((System.Drawing.Image)(resources.GetObject("MenuPlugins.Image")));
             this.MenuPlugins.Name = "MenuPlugins";
-            this.MenuPlugins.Size = new System.Drawing.Size(135, 22);
+            this.MenuPlugins.Size = new System.Drawing.Size(152, 22);
             this.MenuPlugins.Text = "Plugins";
             // 
             // HelpToolStripMenuItem
@@ -101,37 +104,45 @@
             this.HelpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.HelpToolStripMenuItem.Text = "Help";
             // 
-            // userGuideToolStripMenuItem
+            // MenuDonate
             // 
-            this.userGuideToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("userGuideToolStripMenuItem.Image")));
-            this.userGuideToolStripMenuItem.Name = "userGuideToolStripMenuItem";
-            this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.userGuideToolStripMenuItem.Text = "User Guide";
-            this.userGuideToolStripMenuItem.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
-            // 
-            // bugReportsToolStripMenuItem
-            // 
-            this.bugReportsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("bugReportsToolStripMenuItem.Image")));
-            this.bugReportsToolStripMenuItem.Name = "bugReportsToolStripMenuItem";
-            this.bugReportsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.bugReportsToolStripMenuItem.Text = "Bug Reports";
-            this.bugReportsToolStripMenuItem.Click += new System.EventHandler(this.bugReportsToolStripMenuItem_Click);
+            this.MenuDonate.Image = ((System.Drawing.Image)(resources.GetObject("MenuDonate.Image")));
+            this.MenuDonate.Name = "MenuDonate";
+            this.MenuDonate.Size = new System.Drawing.Size(138, 22);
+            this.MenuDonate.Text = "Donate";
+            this.MenuDonate.Click += new System.EventHandler(this.MenuDonate_Click);
             // 
             // blizzTVcomToolStripMenuItem
             // 
             this.blizzTVcomToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("blizzTVcomToolStripMenuItem.Image")));
             this.blizzTVcomToolStripMenuItem.Name = "blizzTVcomToolStripMenuItem";
-            this.blizzTVcomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.blizzTVcomToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.blizzTVcomToolStripMenuItem.Text = "BlizzTV.com";
             this.blizzTVcomToolStripMenuItem.Click += new System.EventHandler(this.blizzTVcomToolStripMenuItem_Click);
+            // 
+            // userGuideToolStripMenuItem
+            // 
+            this.userGuideToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("userGuideToolStripMenuItem.Image")));
+            this.userGuideToolStripMenuItem.Name = "userGuideToolStripMenuItem";
+            this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.userGuideToolStripMenuItem.Text = "User Guide";
+            this.userGuideToolStripMenuItem.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
             // 
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AboutToolStripMenuItem.Image")));
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.AboutToolStripMenuItem.Text = "About";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+            // 
+            // bugReportsToolStripMenuItem
+            // 
+            this.bugReportsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("bugReportsToolStripMenuItem.Image")));
+            this.bugReportsToolStripMenuItem.Name = "bugReportsToolStripMenuItem";
+            this.bugReportsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.bugReportsToolStripMenuItem.Text = "Bug Reports";
+            this.bugReportsToolStripMenuItem.Click += new System.EventHandler(this.bugReportsToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -156,19 +167,21 @@
             this.ProgressStatus.Size = new System.Drawing.Size(100, 16);
             this.ProgressStatus.Visible = false;
             // 
-            // notifyIcon
+            // TrayIcon
             // 
-            this.notifyIcon.ContextMenuStrip = this.TrayContextMenu;
-            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "BlizzTV";
-            this.notifyIcon.Visible = true;
+            this.TrayIcon.ContextMenuStrip = this.TrayContextMenu;
+            this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
+            this.TrayIcon.Text = "BlizzTV";
+            this.TrayIcon.Visible = true;
+            this.TrayIcon.DoubleClick += new System.EventHandler(this.TrayIcon_DoubleClick);
             // 
             // TrayContextMenu
             // 
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ContextAboutToolStripMenuItem});
+            this.ContextAboutToolStripMenuItem,
+            this.TrayIconMenuExit});
             this.TrayContextMenu.Name = "TrayContextMenu";
-            this.TrayContextMenu.Size = new System.Drawing.Size(108, 26);
+            this.TrayContextMenu.Size = new System.Drawing.Size(108, 48);
             // 
             // ContextAboutToolStripMenuItem
             // 
@@ -204,13 +217,19 @@
             this.NodeIcons.TransparentColor = System.Drawing.Color.Transparent;
             this.NodeIcons.Images.SetKeyName(0, "current.gif");
             // 
-            // MenuDonate
+            // MenuExit
             // 
-            this.MenuDonate.Image = ((System.Drawing.Image)(resources.GetObject("MenuDonate.Image")));
-            this.MenuDonate.Name = "MenuDonate";
-            this.MenuDonate.Size = new System.Drawing.Size(152, 22);
-            this.MenuDonate.Text = "Donate";
-            this.MenuDonate.Click += new System.EventHandler(this.MenuDonate_Click);
+            this.MenuExit.Name = "MenuExit";
+            this.MenuExit.Size = new System.Drawing.Size(152, 22);
+            this.MenuExit.Text = "Exit";
+            this.MenuExit.Click += new System.EventHandler(this.MenuExit_Click);
+            // 
+            // TrayIconMenuExit
+            // 
+            this.TrayIconMenuExit.Name = "TrayIconMenuExit";
+            this.TrayIconMenuExit.Size = new System.Drawing.Size(107, 22);
+            this.TrayIconMenuExit.Text = "Exit";
+            this.TrayIconMenuExit.Click += new System.EventHandler(this.TrayIconMenuExit_Click);
             // 
             // frmMain
             // 
@@ -247,7 +266,7 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel LabelStatus;
         private System.Windows.Forms.ToolStripProgressBar ProgressStatus;
-        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.NotifyIcon TrayIcon;
         private System.Windows.Forms.ContextMenuStrip TrayContextMenu;
         private System.Windows.Forms.ToolStripMenuItem ContextAboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
@@ -259,6 +278,8 @@
         private System.Windows.Forms.ContextMenuStrip ItemContextMenu;
         private System.Windows.Forms.ToolStripMenuItem MenuPlugins;
         private System.Windows.Forms.ToolStripMenuItem MenuDonate;
+        private System.Windows.Forms.ToolStripMenuItem MenuExit;
+        private System.Windows.Forms.ToolStripMenuItem TrayIconMenuExit;
     }
 }
 
