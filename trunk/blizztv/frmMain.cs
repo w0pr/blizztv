@@ -89,14 +89,14 @@ namespace BlizzTV
         }
 
         private void RegisterListItem(object sender, ListItem item, ListItem parent)
-        {
+        {            
             if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItem(sender, item, parent); }));
             else
             {
                 TreeItem t = new TreeItem((Plugin)sender, item);
                 if (parent != null) (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.Add(t);                       
                 else TreeView.Nodes.Add(t);
-                t.Render();
+                t.Render();                
             }
         }
 
