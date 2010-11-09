@@ -45,7 +45,7 @@ namespace LibStreams
                           {
                               Name = stream.Element("Name").Value,
                               Slug = stream.Element("Slug").Value,
-                              Provider = stream.Element("Provider").Value,
+                              Provider = stream.Element("Provider").Value.ToLower(),
                           };
 
             foreach (var entry in entries)

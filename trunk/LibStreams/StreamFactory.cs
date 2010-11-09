@@ -23,16 +23,15 @@ namespace LibStreams
         public static Stream CreateStream(string Title,string Slug,string Provider)
         {
             Stream _stream=null;
-            switch (Provider)
+            switch (Provider.ToLower())
             {
-                case "LiveStream":
-                    
+                case "livestream":                    
                     _stream = new LiveStream(Title,Slug,Provider);
                     break;
-                case "JustinTV":
+                case "justintv":
                     _stream = new JustinTV(Title, Slug, Provider);
                     break;
-                case "UStream":
+                case "ustream":
                     _stream = new UStream(Title, Slug, Provider);
                     break;
                 default:

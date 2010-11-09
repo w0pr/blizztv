@@ -6,6 +6,16 @@
     <Slug>gosugamers</Slug>
     <Provider>UStream</Provider>
   </Stream>
+  <Stream>
+    <Name>GLHF.tv</Name>
+    <Slug>TheGunrun</Slug>
+    <Provider>UStream</Provider>
+  </Stream>
+  <Stream>
+    <Name>CellaWerra</Name>
+    <Slug>cellawerra</Slug>
+    <Provider>LiveStream</Provider>
+  </Stream>
 </Streams>
 
 

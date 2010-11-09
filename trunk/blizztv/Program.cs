@@ -43,6 +43,7 @@ namespace BlizzTV
             catch (Exception e) // catch the unhandled expceptions and log them
             {
                 Log.Instance.Write(LogMessageTypes.FATAL, string.Format("Unhandled Exception: {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("Unhandled error: {0}", e.Message), "Unhandled Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
