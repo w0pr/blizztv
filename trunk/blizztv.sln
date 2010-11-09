@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibVideoChannels", "LibVide
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibEvents", "LibEvents\LibEvents.csproj", "{84F02BF5-DEBB-43B3-B1AC-B931C805A267}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Upstream", "Upstream", "{D6BA34FB-6EF3-4CA2-83C0-CB4CBF3088B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

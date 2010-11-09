@@ -48,6 +48,8 @@ namespace LibEvents
             ListItem events_past = new ListItem("Past");
             this.RegisterListItem(events_past, root);
 
+            this.RegisterPluginMenuItem(this, new MenuItemEventArgs("Calendar", new EventHandler(MenuCalendarClicked),this.PluginInfo.Attributes.Icon));
+
 
             string xml = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml");
             XDocument xdoc = XDocument.Parse(xml);
@@ -86,13 +88,21 @@ namespace LibEvents
 
             foreach (Event e in this._events)
             {
-                if (e._is_over) RegisterListItem(e, events_past);
+                if (e.IsOver) RegisterListItem(e, events_past);
                 else
                 {
-                    if (e._time.LocalTime.Date == DateTime.Now.Date) RegisterListItem(e, events_today);
+                    if (e.Time.LocalTime.Date == DateTime.Now.Date) RegisterListItem(e, events_today);
                     else RegisterListItem(e, events_upcoming);
                 }
             }
+
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(true));            
+        }
+
+        private void MenuCalendarClicked(object sender, EventArgs e)
+        {
+            //frmCalendar c = new frmCalendar(this._events);
+            //c.Show();
         }
 
         ~EventsPlugin() { Dispose(false); }
