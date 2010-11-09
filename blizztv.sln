@@ -18,13 +18,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibVideoChannels", "LibVideoChannels\LibVideoChannels.csproj", "{5A11D4CE-753A-42DE-A634-68B63DBDFACB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibEvents", "LibEvents\LibEvents.csproj", "{84F02BF5-DEBB-43B3-B1AC-B931C805A267}"
-	ProjectSection(ProjectDependencies) = postProject
-		{25649F08-3046-4891-ADB8-7EA787B57063} = {25649F08-3046-4891-ADB8-7EA787B57063}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Upstream", "Upstream", "{D6BA34FB-6EF3-4CA2-83C0-CB4CBF3088B2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Forms.Calendar", "upstream\System.Windows.Forms.Calendar\System.Windows.Forms.Calendar.csproj", "{25649F08-3046-4891-ADB8-7EA787B57063}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,16 +89,6 @@ Global
 		{84F02BF5-DEBB-43B3-B1AC-B931C805A267}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{84F02BF5-DEBB-43B3-B1AC-B931C805A267}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{84F02BF5-DEBB-43B3-B1AC-B931C805A267}.Release|x86.ActiveCfg = Release|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{25649F08-3046-4891-ADB8-7EA787B57063}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +100,8 @@ Global
 		{416B9819-3F4C-4FA2-85DC-A2CA1FB78DAC} = {02364A03-BECA-4362-8C75-B9E133B9450D}
 		{5A11D4CE-753A-42DE-A634-68B63DBDFACB} = {02364A03-BECA-4362-8C75-B9E133B9450D}
 		{84F02BF5-DEBB-43B3-B1AC-B931C805A267} = {02364A03-BECA-4362-8C75-B9E133B9450D}
-		{25649F08-3046-4891-ADB8-7EA787B57063} = {D6BA34FB-6EF3-4CA2-83C0-CB4CBF3088B2}
+	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ""
 	EndGlobalSection
 EndGlobal

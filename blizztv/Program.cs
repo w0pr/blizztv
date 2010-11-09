@@ -27,10 +27,11 @@ namespace BlizzTV
         [STAThread]
         static void Main()
         {
-            // Check global settings
+            // Check global settings and start logger and debug console if enabled
             if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
 
+            // Startup the main form
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());

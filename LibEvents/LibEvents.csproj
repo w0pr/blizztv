@@ -36,6 +36,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.Calendar, Version=1.0.3965.23369, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\upstream\System.Windows.Forms.Calendar.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,10 +66,6 @@
     <ProjectReference Include="..\LibBlizzTV\LibBlizzTV.csproj">
       <Project>{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9}</Project>
       <Name>LibBlizzTV</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\upstream\System.Windows.Forms.Calendar\System.Windows.Forms.Calendar.csproj">
-      <Project>{25649F08-3046-4891-ADB8-7EA787B57063}</Project>
-      <Name>System.Windows.Forms.Calendar</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
