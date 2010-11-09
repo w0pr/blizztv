@@ -101,8 +101,8 @@ namespace LibEvents
 
         private void MenuCalendarClicked(object sender, EventArgs e)
         {
-            //frmCalendar c = new frmCalendar(this._events);
-            //c.Show();
+            frmCalendar c = new frmCalendar(this._events);
+            c.Show();
         }
 
         ~EventsPlugin() { Dispose(false); }
