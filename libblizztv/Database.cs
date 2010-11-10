@@ -61,6 +61,7 @@ namespace LibBlizzTV
         public void Put(string key, byte value)
         {
             this._dictionary[key] = value;
+            this._dictionary.Flush(); // immediatly flush the data to database.
         }
 
         /// <summary>
