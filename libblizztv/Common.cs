@@ -22,43 +22,7 @@ using System.Text;
 namespace LibBlizzTV
 {
     #region Common stuff used by BlizzTV and it's plugins
-
-    /// <summary>
-    /// Used when registering a new menu-item.
-    /// </summary>
-    public class NewMenuItemEventArgs:EventArgs 
-    {
-        private string _name;
-        private EventHandler _handler;
-        private Image _icon;
-
-        /// <summary>
-        /// The name of the menu.
-        /// </summary>
-        public string Name { get { return this._name; } }
-        /// <summary>
-        /// The click-handler.
-        /// </summary>
-        public EventHandler Handler { get { return this._handler; } }
-        /// <summary>
-        /// The icon.
-        /// </summary>
-        public Image Icon { get { return this._icon; } }
-
-        /// <summary>
-        /// Creates a new NewMenuItemEventArgs.
-        /// </summary>
-        /// <param name="Name">The name of the menu.</param>
-        /// <param name="Handler">The click-handler.</param>
-        /// <param name="Icon">The icon.</param>
-        public NewMenuItemEventArgs(string Name, EventHandler Handler, Image Icon = null)
-        {
-            this._name = Name;
-            this._handler = Handler;
-            this._icon = Icon;
-        }
-    }
-
+ 
     /// <summary>
     /// Stores DateTime with zone information and allows to get store DateTime in original, UTC and local-time zone.
     /// </summary>

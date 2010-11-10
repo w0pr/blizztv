@@ -49,7 +49,6 @@
             this.ContextAboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayIconMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeView = new System.Windows.Forms.TreeView();
-            this.ItemContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -206,7 +205,6 @@
             // 
             // TreeView
             // 
-            this.TreeView.ContextMenuStrip = this.ItemContextMenu;
             this.TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TreeView.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.TreeView.FullRowSelect = true;
@@ -220,11 +218,6 @@
             this.TreeView.Size = new System.Drawing.Size(256, 269);
             this.TreeView.TabIndex = 3;
             this.TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseDoubleClick);
-            // 
-            // ItemContextMenu
-            // 
-            this.ItemContextMenu.Name = "ItemContextMenu";
-            this.ItemContextMenu.Size = new System.Drawing.Size(61, 4);
             // 
             // NodeIcons
             // 
@@ -276,7 +269,6 @@
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.TreeView TreeView;
         private System.Windows.Forms.ImageList NodeIcons;
-        private System.Windows.Forms.ContextMenuStrip ItemContextMenu;
         private System.Windows.Forms.ToolStripMenuItem MenuPlugins;
         private System.Windows.Forms.ToolStripMenuItem MenuDonate;
         private System.Windows.Forms.ToolStripMenuItem MenuExit;

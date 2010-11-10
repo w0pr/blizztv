@@ -36,7 +36,10 @@ namespace LibVideoChannels
 
         #region ctor
 
-        public VideoChannelsPlugin() { }
+        public VideoChannelsPlugin()
+        {
+            this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
+        }
 
         #endregion
 
@@ -46,8 +49,7 @@ namespace LibVideoChannels
         {
             VideoChannelsPlugin.PluginSettings = ps;
 
-            this.RegisterListItem(_root_item); // register root item.
-            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
+            this.RegisterListItem(_root_item); // register root item.            
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseChannels())); // parse channels
         }

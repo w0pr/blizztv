@@ -54,6 +54,12 @@ namespace LibBlizzTV
         /// </summary>
         public static Storage Storage { get { return Plugin._storage; } }
 
+        /// <summary>
+        /// Plugin sub-menus.
+        /// </summary>
+        public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> Menus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
+
+
         #endregion
 
         #region ctor
@@ -128,26 +134,6 @@ namespace LibBlizzTV
         protected void RegisterListItem(ListItem Item, ListItem Parent=null)
         {
             if (OnRegisterListItem != null) OnRegisterListItem(this, Item, Parent); // notify observers.
-        }
-
-        /// <summary>
-        /// RegisterPluginMenuItem event handler delegate.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e"><see cref="NewMenuItemEventArgs"/></param>
-        public delegate void RegisterPluginMenuItemEventHandler(object sender,NewMenuItemEventArgs e);
-        /// <summary>
-        /// RegisterPluginMenuItem event handler.
-        /// </summary>
-        public event RegisterPluginMenuItemEventHandler OnRegisterPluginMenuItem;
-        /// <summary>
-        /// Registers a sub-menu under plugin's menu in main window.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e"><see cref="NewMenuItemEventArgs"/></param>
-        protected void RegisterPluginMenuItem(object sender,NewMenuItemEventArgs e)
-        {
-            if (OnRegisterPluginMenuItem != null) OnRegisterPluginMenuItem(this, e); // notify observers.
         }
 
         #endregion

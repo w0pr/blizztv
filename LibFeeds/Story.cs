@@ -47,6 +47,8 @@ namespace LibFeeds
             // check the persistent storage for if the story is read before.
             if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));  
             else this.SetState(ItemState.UNREAD);
+
+            this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked)));
         }
 
         #endregion
@@ -59,6 +61,11 @@ namespace LibFeeds
 
             this.SetState(ItemState.READ); // set the story state to READ.
             Plugin.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
+        }
+
+        public void MenuMarkAsReadClicked(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
