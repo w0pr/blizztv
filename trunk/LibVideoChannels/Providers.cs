@@ -17,34 +17,52 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using LibBlizzTV.Utils;
 
 namespace LibVideoChannels
 {
-    public sealed class Providers : IDisposable
+    public sealed class Providers : IDisposable // video providers
     {
-        private static readonly Providers _instance = new Providers();
+        #region members
+
+        private static readonly Providers _instance = new Providers(); // the providers instance.
         public static Providers Instance { get { return _instance; } }
 
-        public Dictionary<string, Provider> List = new Dictionary<string, Provider>();
+        public Dictionary<string, Provider> List = new Dictionary<string, Provider>(); // the list of defined providers.
         private bool disposed = false;
+
+        #endregion 
+
+        #region ctor
 
         private Providers()
         {
-            XDocument xdoc = XDocument.Load("VideoProviders.xml");
-
-            var entries = from provider in xdoc.Descendants("Provider")
-                          select new
-                          {
-                              Name = provider.Element("Name").Value,
-                              Movie = provider.Element("Movie").Value,
-                              FlashVars = provider.Element("FlashVars").Value,
-                          };
-
-            foreach (var entry in entries)
+            try
             {
-                this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie,entry.FlashVars));
+                XDocument xdoc = XDocument.Load("VideoProviders.xml"); // read providers xml.
+                var entries = from provider in xdoc.Descendants("Provider")
+                              select new
+                              {
+                                  Name = provider.Element("Name").Value,
+                                  Movie = provider.Element("Movie").Value,
+                                  FlashVars = provider.Element("FlashVars").Value,
+                              };
+
+                foreach (var entry in entries) // add provider's to the list.
+                {
+                    this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie, entry.FlashVars));
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannelsPlugin Providers:Providers() Error: \n {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your videoproviders.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }
+
+        #endregion
+
+        #region de-ctor
 
         ~Providers() { Dispose(false); }
 
@@ -67,13 +85,16 @@ namespace LibVideoChannels
             }
         }
 
+        #endregion
     }
+
+    #region Provider
 
     public class Provider
     {
-        private string _name;
-        private string _movie;
-        private string _flash_vars;
+        private string _name; // provider name.
+        private string _movie; // provider movie template.
+        private string _flash_vars; // provider flash template.
 
         public string Name { get { return this._name; } internal set { this._name = value; } }
         public string Movie { get { return this._movie; } internal set { this._movie = value; } }
@@ -86,4 +107,6 @@ namespace LibVideoChannels
             this._flash_vars = FlashVars;
         }
     }
+
+    #endregion
 }

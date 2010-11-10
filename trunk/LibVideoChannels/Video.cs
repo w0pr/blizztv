@@ -23,13 +23,14 @@ namespace LibVideoChannels
 {
     public class Video:ListItem
     {
-        private string _guid;
-        private string _video_id;
-        private string _link;
-        private string _provider;
+        #region members
 
-        private string _movie;
-        private string _flash_vars;
+        private string _guid; // the guid.
+        private string _video_id; // the video id.
+        private string _link; // the video link.
+        private string _provider; // the video provider.
+        private string _movie; // the movie template.
+        private string _flash_vars; // the flash vars.
 
         public string GUID { get { return this._guid; } internal set { this._guid = value; } }
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
@@ -38,6 +39,10 @@ namespace LibVideoChannels
         public string Movie { get { return this._movie; } set { this._movie = value; } }
         public string FlashVars { get { return this._flash_vars; } set { this._flash_vars = value; } }
 
+        #endregion
+
+        #region ctor
+
         public Video(string Title, string Guid, string Link, string Provider)
             : base(Title)
         {            
@@ -45,34 +50,41 @@ namespace LibVideoChannels
             this.Link = Link;
             this.Provider = Provider;
 
-            Regex regex = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled);
+            Regex regex = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled); // get the youtube video id
             Match m = regex.Match(this.Link);  
             if (m.Success) this.VideoID = m.Groups[1].Value;
 
+            // check the persistent storage for if the video is watched before.
             if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));
             else this.SetState(ItemState.UNREAD);
         }
 
-        public virtual void Process()
-        {
-            this._movie = Providers.Instance.List[this.Provider].Movie;
-            this._flash_vars = Providers.Instance.List[this.Provider].FlashVars;
+        #endregion
 
-            this._movie = this._movie.Replace("%video_id%", this._video_id);
-            this._flash_vars = this._flash_vars.Replace("%slug%", this._video_id);
+        #region internal logic
+
+        public virtual void Process() // get the stream data by replacing provider variables. 
+        {
+            this._movie = Providers.Instance.List[this.Provider].Movie; // provider supplied movie source. 
+            this._flash_vars = Providers.Instance.List[this.Provider].FlashVars; // provider supplied flashvars.
+
+            this._movie = this._movie.Replace("%video_id%", this._video_id); // replace video_id variable in movie source.
+            this._flash_vars = this._flash_vars.Replace("%video_id%", this._video_id); // replace video_id variable in flashvars.
         }
 
         public override void DoubleClick(object sender, EventArgs e)
         {
-            if (VideoChannelsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS)
+            if (VideoChannelsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
             {
-                Player p = new Player(this);
+                Player p = new Player(this); // render the video with our own video player
                 p.Show();
             }
-            else System.Diagnostics.Process.Start(this.Link, null);
+            else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
 
-            this.SetState(ItemState.READ);
-            Plugin.Storage.Put(this.GUID, (byte)this.State);
+            this.SetState(ItemState.READ); // set the video state to READ.
+            Plugin.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
         }
+
+        #endregion
     }
 }

@@ -47,7 +47,7 @@ namespace LibFeeds
             FeedsPlugin.PluginSettings = ps; 
            
             this.RegisterListItem(this.root); // register root item.
-            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.           
+            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(this.ParseFeeds()));  // parse feeds.    
         }
@@ -62,15 +62,15 @@ namespace LibFeeds
 
             try
             {
-                XDocument xdoc = XDocument.Load("Feeds.xml"); // load the xml
-                var entries = from feed in xdoc.Descendants("Feed") // get the feeds
+                XDocument xdoc = XDocument.Load("Feeds.xml"); // load the xml.
+                var entries = from feed in xdoc.Descendants("Feed") // get the feeds.
                               select new
                               {
                                   Title = feed.Element("Name").Value,
                                   URL = feed.Element("URL").Value,
                               };
 
-                foreach (var entry in entries) // create up the feed items
+                foreach (var entry in entries) // create up the feed items.
                 {
                     Feed f = new Feed(entry.Title, entry.URL);
                     this._feeds.Add(f); 
@@ -83,20 +83,22 @@ namespace LibFeeds
                 System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your feeds.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
 
-            if (success) // if parsing of feeds.xml all okay
+            if (success) // if parsing of feeds.xml all okay.
             {
-                int unread = 0; // feeds with unread storyies count
+                int unread = 0; // feeds with unread stories count.
 
-                foreach (Feed feed in this._feeds) // loop through feeds
+                foreach (Feed feed in this._feeds) // loop through feeds.
                 {
-                    feed.Update(); // update the feed
-                    if (feed.Valid) RegisterListItem(feed, root); // if the feed parsed all okay, regiser the feed-item.
-
-                    foreach (Story story in feed.Stories) { RegisterListItem(story, feed); } // register the story item.
-                    if (feed.State == ItemState.UNREAD) unread++;
+                    feed.Update(); // update the feed.
+                    if (feed.Valid)
+                    {
+                        RegisterListItem(feed, root); // if the feed parsed all okay, regiser the feed-item.
+                        foreach (Story story in feed.Stories) { RegisterListItem(story, feed); } // register the story items.
+                        if (feed.State == ItemState.UNREAD) unread++;
+                    }
                 }
 
-                if (unread > 0) { root.SetTitle(string.Format("{0} ({1})", root.Title, unread.ToString())); }
+                if (unread > 0) { root.SetTitle(string.Format("{0} ({1})", root.Title, unread.ToString())); } // add unread feeds count to root item's title.
             }
 
             return success;

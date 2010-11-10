@@ -21,27 +21,37 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using LibBlizzTV.Utils;
 
 namespace LibVideoChannels
 {
-    public partial class Player : Form
+    public partial class Player : Form // The video player.
     {
-        private Video _video;
+        private Video _video; // The video. 
 
         public Player(Video Video)
         {
             InitializeComponent();
-            this._video = Video;
-            this.Width = VideoChannelsPlugin.GlobalSettings.VideoPlayerWidth;
-            this.Height = VideoChannelsPlugin.GlobalSettings.VideoPlayerHeight;
-            this._video.Process();
+
+            this._video = Video; // set the video.
+            this.Width = VideoChannelsPlugin.GlobalSettings.VideoPlayerWidth; // get the default player width. 
+            this.Height = VideoChannelsPlugin.GlobalSettings.VideoPlayerHeight; // get the default player height.
+            this._video.Process(); // process the video so that it's template variables are replaced.
         }
 
         private void Player_Load(object sender, EventArgs e)
         {
-            this.Text = string.Format("Video Channel: {0}@{1}", this._video.Title, this._video.Provider);
-            this.Stage.FlashVars = this._video.FlashVars;
-            this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars));
+            try
+            {
+                this.Text = string.Format("Video Channel: {0}@{1}", this._video.Title, this._video.Provider); // set the window title.
+                this.Stage.FlashVars = this._video.FlashVars; // set the flashvars.
+                this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars)); // load the movie.
+            }
+            catch (Exception exc)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannelsPlugin Player Error: \n {0}", exc.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured in video player. \n\n[Error Details: {0}]", exc.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
     }
 }
