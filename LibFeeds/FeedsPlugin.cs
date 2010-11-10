@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
+using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
@@ -38,7 +39,7 @@ namespace LibFeeds
 
         public FeedsPlugin()
         {
-            this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
+            this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.                     
         }
 
         #endregion
@@ -47,20 +48,26 @@ namespace LibFeeds
 
         public override void Load(PluginSettings ps)
         {            
-            FeedsPlugin.PluginSettings = ps;         
-   
-            this.RegisterListItem(this._root_item); // register root item.     
-       
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(this.ParseFeeds()));  // parse feeds.    
+            FeedsPlugin.PluginSettings = ps;            
+            this.RegisterListItem(this._root_item); // register root item.            
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(this.UpdateFeeds()));  // parse feeds.    
+
+            // setup update timer for next data updates
+            Timer update_timer = new Timer(1000 * 60 * 5);
+            update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            update_timer.Enabled = true;
         }
 
         #endregion
 
         #region internal logic
 
-        private bool ParseFeeds()
+        private bool UpdateFeeds()
         {
-            bool success = true; 
+            bool success = true;
+
+            this._root_item.SetTitle("Updating feeds..");
+            if (this._feeds.Count > 0) this.DeleteExistingFeeds(); // clear previous entries before doing an update.
 
             try
             {
@@ -100,13 +107,26 @@ namespace LibFeeds
                     }
                 }
 
-                if (unread > 0) { _root_item.SetTitle(string.Format("{0} ({1})", _root_item.Title, unread.ToString())); } // add unread feeds count to root item's title.
+                this._root_item.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
             }
 
             return success;
         }
 
-        public void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler
+        private void DeleteExistingFeeds() // removes all current feeds.
+        {
+            foreach (Feed f in this._feeds) { f.Delete(); } // Delete the feeds.
+            this._feeds.Clear(); // remove them from the list.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        private void OnTimerHit(object source, ElapsedEventArgs e)
+        {
+            PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateFeeds()));               
+        }
+
+        private void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler
         {
             frmDataEditor f = new frmDataEditor("Feeds.xml", "Feed");
             f.Show();

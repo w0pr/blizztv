@@ -109,12 +109,36 @@ namespace LibBlizzTV
         /// Notifies about the plugin load process supplying a success code.
         /// </summary>
         /// <param name="e"><see cref="PluginLoadCompleteEventArgs"/></param>
-        /// <remarks>Plugins can use this method to notify BlizzTV application about it's loading results.</remarks>
+        /// <remarks>Plugins can use this method to notify observers about it's loading results.</remarks>
         protected void PluginLoadComplete(PluginLoadCompleteEventArgs e)
         {
-            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin loading completed: {0}", this.PluginInfo.AssemblyName.ToString()));
-            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugin loading failed: {0}", this.PluginInfo.AssemblyName.ToString()));
+            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin '{0}' loaded with success.", this.PluginInfo.AssemblyName.ToString()));
+            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugin '{0}' load failed.", this.PluginInfo.AssemblyName.ToString()));
             if (OnPluginLoadComplete != null) OnPluginLoadComplete(this,e); // notify observers.
+        }
+
+        /// <summary>
+        /// PluginDataUpdateComplete event handler delegate.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e"><see cref="PluginDataUpdateCompleteEventArgs"/></param>
+        public delegate void PluginDataUpdateCompleteEventHandler(object sender, PluginDataUpdateCompleteEventArgs e);
+
+        /// <summary>
+        /// PluginDataUpdateComplete event handler.
+        /// </summary>
+        public event PluginDataUpdateCompleteEventHandler OnPluginDataUpdate;
+
+        /// <summary>
+        /// Notifies about the plugin data update process supplying a success code.
+        /// </summary>
+        /// <param name="e"><see cref="PluginDataUpdateCompleteEventArgs"/></param>
+        /// <remarks>Plugins can use this method to notify observers about it's data update results.</remarks>
+        protected void PluginDataUpdateComplete(PluginDataUpdateCompleteEventArgs e)
+        {
+            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("{0} updated it's data with success.", this.PluginInfo.AssemblyName.ToString()));
+            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("{0} failed to update it's data.", this.PluginInfo.AssemblyName.ToString()));
+            if (OnPluginLoadComplete != null) OnPluginDataUpdate(this, e); // notify observers.
         }
 
         /// <summary>
@@ -185,6 +209,7 @@ namespace LibBlizzTV
     public class PluginLoadCompleteEventArgs : EventArgs
     {
         private bool _success;
+
         /// <summary>
         /// Returns true if plugin load was succesfull.
         /// </summary>
@@ -195,6 +220,28 @@ namespace LibBlizzTV
         /// </summary>
         /// <param name="Success">Did plugin loaded with success?</param>
         public PluginLoadCompleteEventArgs(bool Success)
+        {
+            this._success = Success;
+        }
+    }
+
+    /// <summary>
+    /// Notifies about plugin data update results.
+    /// </summary>
+    public class PluginDataUpdateCompleteEventArgs : EventArgs
+    {
+        private bool _success;
+
+        /// <summary>
+        /// Returns true if plugin update was succesfull.
+        /// </summary>
+        public bool Success { get { return this._success; } }
+
+        /// <summary>
+        /// Constructs a new PluginDataUpdateEventArgs.
+        /// </summary>
+        /// <param name="Success">Did plugin data updated with success?</param>
+        public PluginDataUpdateCompleteEventArgs(bool Success)
         {
             this._success = Success;
         }

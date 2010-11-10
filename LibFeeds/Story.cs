@@ -88,12 +88,12 @@ namespace LibFeeds
             }
         }
 
-        public void MenuMarkAsReadClicked(object sender, EventArgs e)
+        private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
             this.SetState(ItemState.READ); // set the story state as read.          
         }
 
-        public void MenuMarkAsUnReadClicked(object sender, EventArgs e)
+        private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
             this.SetState(ItemState.UNREAD); // set the story state as unread.          
         }

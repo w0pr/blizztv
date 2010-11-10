@@ -48,8 +48,9 @@ namespace BlizzTV
             this.Name = _item.Key;
 
             // register communication events
-            this._item.OnTitleChange += TitleChange; // the title-change event
-            this._item.OnStateChange += StateChange; // the state-change event            
+            this._item.OnTitleChange += TitleChange; // the title-change event.
+            this._item.OnStateChange += StateChange; // the state-change event.        
+            this._item.OnDelete += OnDelete; // delete event.
         }
 
         #endregion
@@ -73,13 +74,13 @@ namespace BlizzTV
             }
         }
 
-        public void TitleChange(object sender)
+        private void TitleChange(object sender)
         {
             if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { TitleChange(sender); })); // switch to UI-thread.
             else this.Text = this._item.Title;
         }
 
-        public void StateChange(object sender)
+        private void StateChange(object sender)
         {
             if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { StateChange(sender); })); // switch to UI-thread.
             else
@@ -97,6 +98,16 @@ namespace BlizzTV
                     default:
                         break;
                 }
+            }
+        }
+
+        private void OnDelete() 
+        {
+            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { OnDelete(); })); // switch to UI-thread.
+            else
+            {
+                if (this.Nodes.Count > 0) { this.Nodes.Clear(); } // remove our childs from treeview.
+                this.Remove(); // remove ourself too.
             }
         }
 
@@ -130,6 +141,7 @@ namespace BlizzTV
                 {
                     this._item.OnTitleChange -= TitleChange;
                     this._item.OnStateChange -= StateChange;
+                    this._item.OnDelete -= OnDelete;
                     this._item = null;
                     this._plugin = null;
                     this._bold.Dispose();
