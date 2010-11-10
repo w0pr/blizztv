@@ -65,24 +65,26 @@ namespace BlizzTV
         {
             // register plugin communication events.
             p.OnRegisterListItem += RegisterListItem;  // the treeview item handler.
-            p.OnRegisterPluginMenuItem += RegisterPluginMenuItem; // the main-plugin-menu handler.
+            this.RegisterPluginMenus(p); // register plugin sub-menu's.
             p.ApplyGlobalSettings(SettingsStorage.Instance.Settings.GlobalSettings); // apply global settings.
             p.Load(SettingsStorage.Instance.Settings.PluginSettings[p.PluginInfo.AssemblyName]); // run the plugin & apply it's stored settings.
         }
 
-        private void RegisterPluginMenuItem(object sender, NewMenuItemEventArgs e) // Register's a sub-menu in plugins menu for the plugin.
+        private void RegisterPluginMenus(Plugin p) // Registers plugin's sub-menus.
         {
-            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterPluginMenuItem(sender,e); })); // switch to UI-thread.
+            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterPluginMenus(p); })); // switch to UI-thread.
             else
             {
-                if (!MenuPlugins.DropDownItems.ContainsKey((sender as Plugin).PluginInfo.Attributes.Name)) // Does plugin parent-menu already exists?
+                if (p.Menus.Count > 0) // if plugin requests sub-menu's.
                 {
-                    ToolStripMenuItem m = new ToolStripMenuItem((sender as Plugin).PluginInfo.Attributes.Name,(sender as Plugin).PluginInfo.Attributes.Icon); // if not so create it.
-                    m.Name = m.Text; // set the menu-key, cmon MS, the key should be set by it's own constructor!
-                    MenuPlugins.DropDownItems.Add(m); // add the parent-menu.
+                    ToolStripMenuItem parent = new ToolStripMenuItem(p.PluginInfo.Attributes.Name, p.PluginInfo.Attributes.Icon); // create the parent plugin-menu first.
+                    MenuPlugins.DropDownItems.Add(parent); // add the parent-menu.
+
+                    foreach(KeyValuePair<string,ToolStripMenuItem> pair in p.Menus) // loop through all plugin sub-menus.
+                    {
+                        parent.DropDownItems.Add(pair.Value); // add requested sub-menu as a drop-down menu.
+                    }
                 }
-                ToolStripMenuItem plugin_parent = (ToolStripMenuItem)MenuPlugins.DropDownItems[(sender as Plugin).PluginInfo.Attributes.Name]; // find the plugin-parent menu.
-                plugin_parent.DropDownItems.Add(e.Name, e.Icon, e.Handler); // add the sub-menu.
             }
         }
 

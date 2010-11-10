@@ -40,7 +40,10 @@ namespace LibEvents
 
         #region ctor
 
-        public EventsPlugin() { }
+        public EventsPlugin()
+        {
+            this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", this.PluginInfo.Attributes.Icon, new EventHandler(MenuCalendarClicked))); // register calender menu.
+        }
 
         #endregion
 
@@ -53,8 +56,7 @@ namespace LibEvents
             this.RegisterListItem(this._root_item); // register root item.           
             this.RegisterListItem(_events_today_item, _root_item); // register today's events item.            
             this.RegisterListItem(_events_upcoming_item, _root_item); // register upcoming events item.          
-            this.RegisterListItem(_events_past_item, _root_item); // register past events item.
-            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Calendar", new EventHandler(MenuCalendarClicked), this.PluginInfo.Attributes.Icon)); // register calendar menu.            
+            this.RegisterListItem(_events_past_item, _root_item); // register past events item.            
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseEvents())); // parse events.            
         }

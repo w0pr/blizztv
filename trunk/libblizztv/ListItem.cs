@@ -37,14 +37,21 @@ namespace LibBlizzTV
         /// The title.
         /// </summary>
         public string Title { get { return this._title; } }
+
         /// <summary>
         /// The key.
         /// </summary>
         public string Key { get { return this._key; } }
+
         /// <summary>
         /// The state.
         /// </summary>
         public ItemState State { get { return this._state; } }
+
+        /// <summary>
+        /// Context Menus for Item
+        /// </summary>
+        public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> ContextMenus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
 
         #endregion
 
@@ -73,10 +80,12 @@ namespace LibBlizzTV
         /// </summary>
         /// <param name="sender">The sender object.</param>
         public delegate void TitleChangedEventHandler(object sender);
+
         /// <summary>
         /// Title change event handler
         /// </summary>
         public event TitleChangedEventHandler OnTitleChange;
+
         /// <summary>
         /// Set's title of the item.
         /// </summary>
@@ -92,10 +101,12 @@ namespace LibBlizzTV
         /// </summary>
         /// <param name="sender">The sender object.</param>
         public delegate void StateChangedEventHandler(object sender);
+
         /// <summary>
         /// State change event handler.
         /// </summary>
         public event StateChangedEventHandler OnStateChange;
+
         /// <summary>
         /// Set's state of the item.
         /// </summary>
@@ -104,26 +115,6 @@ namespace LibBlizzTV
         {
             this._state = State;
             if (OnStateChange != null) OnStateChange(this); // notify observers.
-        }
-
-        /// <summary>
-        /// RegisterContextMenuItem event handler delegate.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e"><see cref="NewMenuItemEventArgs"/></param>
-        public delegate void RegisterContextMenuItemEventHandler(object sender, NewMenuItemEventArgs e);
-        /// <summary>
-        /// RegisterContextMenuItem event handler.
-        /// </summary>
-        public event RegisterContextMenuItemEventHandler OnRegisterContextMenuItem;
-        /// <summary>
-        /// Registers a new context-menu for the item.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e"><see cref="NewMenuItemEventArgs"/></param>
-        protected void RegisterContextMenuItem(object sender, NewMenuItemEventArgs e)
-        {
-            if (OnRegisterContextMenuItem != null) OnRegisterContextMenuItem(this, e); // notify observers.
         }
         
         #endregion

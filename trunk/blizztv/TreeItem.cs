@@ -14,6 +14,7 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,10 +31,11 @@ namespace BlizzTV
         private ListItem _item; // the plugin-item bound to.
         private Plugin _plugin; // the plugin itself.
         private Font _bold = new Font("Tahoma", 9, FontStyle.Bold); // font for unread items.
-        private Font _regular = new Font("Tahoma", 9, FontStyle.Regular); // font for read items.
+        private Font _regular = new Font("Tahoma", 9, FontStyle.Regular); // font for read items.       
         private bool disposed = false;
 
         public ListItem Item { get { return this._item; } } // the item getter.
+        
 
         #endregion
 
@@ -47,7 +49,7 @@ namespace BlizzTV
 
             // register communication events
             this._item.OnTitleChange += TitleChange; // the title-change event
-            this._item.OnStateChange += StateChange; // the state-change event
+            this._item.OnStateChange += StateChange; // the state-change event            
         }
 
         #endregion
@@ -59,8 +61,16 @@ namespace BlizzTV
             this.Text = this._item.Title; // set the inital title
             this.StateChange(this); // set the initial state
 
+            // set the node icon
             if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.PluginInfo.AssemblyName)) this.TreeView.ImageList.Images.Add(this._plugin.PluginInfo.AssemblyName, this._plugin.PluginInfo.Attributes.Icon); // add the plugin icon to image list in it doesn't exists yet.
             this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.PluginInfo.AssemblyName); // use the item's plugin icon.
+
+            // set the node context menus
+            this.ContextMenuStrip = new ContextMenuStrip();
+            foreach (KeyValuePair<string,ToolStripMenuItem> pair in this._item.ContextMenus)
+            {
+                this.ContextMenuStrip.Items.Add(pair.Value);
+            }
         }
 
         public void TitleChange(object sender)
@@ -90,9 +100,9 @@ namespace BlizzTV
             }
         }
 
-        public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e) // Notify the item about the double-click event
+        public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e) 
         {
-            this._item.DoubleClick(sender,e);
+            this._item.DoubleClick(sender,e); // notify the item about the double-click event.
         }
 
         #endregion
