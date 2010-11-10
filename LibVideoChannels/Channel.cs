@@ -24,51 +24,82 @@ namespace LibVideoChannels
 {
     public class Channel:ListItem
     {
-        private string _slug;
-        private string _provider;         
+        #region members
+
+        private bool _valid = true; // did the feed parsed all okay?
+        private string _slug; // the channel slug
+        private string _provider; // the channel provider
         private bool disposed = false;
 
-        public string Slug { get { return this._slug; } set { this._slug = value; } }
-        public string Provider { get { return this._provider; } set { this._provider = value; } }
+        public bool Valid { get { return this._valid; } }
+        public string Slug { get { return this._slug; } }
+        public string Provider { get { return this._provider; } }
                 
         public List<Video> Videos = new List<Video>();
+
+        #endregion
+
+        #region ctor
 
         public Channel(string Title, string Slug, String Provider)
             : base(Title)
         {
-            this.Slug = Slug;
-            this.Provider = Provider;
+            this._slug = Slug;
+            this._provider = Provider;
         }
 
-        public void Update() 
+        #endregion
+
+        #region internal logic
+
+        public void Update() // Update the channel data.
         {
-            string api_url = string.Format(@"http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results=5", this.Slug);
-            string response = WebReader.Read(api_url);
+            try
+            {
+                string api_url = string.Format(@"http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results=5", this.Slug); // the api url.
+                string response = WebReader.Read(api_url); // read the api response.
+                if (response != null)
+                {
+                    XDocument xdoc = XDocument.Parse(response); // parse the api response.
+                    var entries = from item in xdoc.Descendants("item") // get the videos
+                                  select new
+                                  {
+                                      GUID = item.Element("guid").Value,
+                                      Title = item.Element("title").Value,
+                                      Link = item.Element("link").Value
+                                  };
 
-            XDocument xdoc = XDocument.Parse(response);
-            var entries = from item in xdoc.Descendants("item")
-                          select new
-                          {
-                              GUID = item.Element("guid").Value,
-                              Title = item.Element("title").Value,
-                              Link = item.Element("link").Value
-                          };
-
-            foreach (var entry in entries)
-            {                
-                Video v = new Video(entry.Title,entry.GUID,entry.Link,this.Provider);
-                this.Videos.Add(v);
+                    foreach (var entry in entries) // create the video items.
+                    {
+                        Video v = new Video(entry.Title, entry.GUID, entry.Link, this.Provider);
+                        this.Videos.Add(v);
+                    }
+                }
+                else this._valid = false;
+            }
+            catch (Exception e)
+            {
+                this._valid = false;
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Channel - Update() Error: \n {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while updating video channel. Channel Name: {0} \n\n[Error Details: {1}]", this.Slug, e.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
 
-            int unread = 0;
-            foreach (Video v in this.Videos) { if (v.State == ItemState.UNREAD) unread++; }
-
-            if (unread > 0)
+            if (this._valid)
             {
-                this.SetTitle(string.Format("{0} ({1})",this.Title,unread.ToString()));
-                this.SetState(ItemState.UNREAD);
+                int unread = 0; // non-watched videos count.
+                foreach (Video v in this.Videos) { if (v.State == ItemState.UNREAD) unread++; }
+
+                if (unread > 0) // if there non-watched channel videos.
+                {
+                    this.SetTitle(string.Format("{0} ({1})", this.Title, unread.ToString()));
+                    this.SetState(ItemState.UNREAD); // then mark the channel itself as unread also
+                }
             }
         }
+
+        #endregion
+
+        #region de-ctor
 
         ~Channel() { Dispose(false); }
 
@@ -85,5 +116,7 @@ namespace LibVideoChannels
                 disposed = true;
             }
         }
+
+        #endregion
     }
 }

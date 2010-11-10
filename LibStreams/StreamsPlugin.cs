@@ -62,8 +62,8 @@ namespace LibStreams
 
             try
             {
-                XDocument xdoc = XDocument.Load("Streams.xml");
-                var entries = from stream in xdoc.Descendants("Stream")
+                XDocument xdoc = XDocument.Load("Streams.xml"); // load the xml.
+                var entries = from stream in xdoc.Descendants("Stream") // get the streams.
                               select new
                               {
                                   Name = stream.Element("Name").Value,
@@ -71,7 +71,7 @@ namespace LibStreams
                                   Provider = stream.Element("Provider").Value.ToLower(),
                               };
 
-                foreach (var entry in entries)
+                foreach (var entry in entries) // create up the stream items.
                 {
                     Stream s = StreamFactory.CreateStream(entry.Name, entry.Slug, entry.Provider);
                     this._streams.Add(s);

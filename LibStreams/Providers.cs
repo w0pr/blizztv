@@ -39,8 +39,7 @@ namespace LibStreams
         {
             try
             {
-                XDocument xdoc = XDocument.Load("StreamProviders.xml"); // read providers xml
-
+                XDocument xdoc = XDocument.Load("StreamProviders.xml"); // read providers xml.
                 var entries = from provider in xdoc.Descendants("Provider") 
                               select new
                               {
@@ -49,7 +48,7 @@ namespace LibStreams
                                   FlashVars = provider.Element("FlashVars").Value
                               };
 
-                foreach (var entry in entries)
+                foreach (var entry in entries) // add provider's to the list.
                 {
                     this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie, entry.FlashVars));
                 }

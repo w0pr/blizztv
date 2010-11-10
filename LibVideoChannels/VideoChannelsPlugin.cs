@@ -19,67 +19,100 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Text;
 using LibBlizzTV;
+using LibBlizzTV.Utils;
 
 namespace LibVideoChannels
 {
-    [Plugin("LibVideoChannels", "Video channel aggregator plugin for BlizzTV","video_16.png")]
+    [Plugin("Video Channels", "Video channel aggregator plugin for BlizzTV","video_16.png")]
     public class VideoChannelsPlugin:Plugin
     {
-        private List<Channel> _channels = new List<Channel>();
+        #region members
+
+        ListItem root = new ListItem("Videos"); // root item on treeview.
+        private List<Channel> _channels = new List<Channel>(); // the channels list.
         private bool disposed = false;
 
+        #endregion
+
+        #region ctor
+
         public VideoChannelsPlugin() { }
+
+        #endregion
+
+        #region API handlers
 
         public override void Load(PluginSettings ps)
         {
             VideoChannelsPlugin.PluginSettings = ps;
 
-            ListItem root = new ListItem("Videos");
-            RegisterListItem(root);
+            this.RegisterListItem(root); // register root item.
+            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
 
-            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
-
-            XDocument xdoc = XDocument.Load("VideoChannels.xml");
-            var entries = from videochannel in xdoc.Descendants("VideoChannel")
-                          select new
-                          {
-                              Name = videochannel.Element("Name").Value,
-                              Slug = videochannel.Element("Slug").Value,
-                              Provider = videochannel.Element("Provider").Value,
-                          };
-
-            foreach (var entry in entries)
-            {
-                Channel c = new Channel(entry.Name,entry.Slug,entry.Provider);
-                this._channels.Add(c);
-            }
-
-            int unread = 0;
-
-            foreach (Channel channel in this._channels)
-            {
-                RegisterListItem(channel,root);
-                channel.Update();
-                foreach (Video v in channel.Videos)
-                {
-                    RegisterListItem(v, channel);
-                }
-                if (channel.State == ItemState.UNREAD) unread++;
-            }
-
-            if (unread > 0)
-            {
-                root.SetTitle(string.Format("{0} ({1})", root.Title, unread.ToString()));
-            }
-
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseChannels())); // parse channels
         }
 
-        public void MenuSubscriptionsClicked(object sender, EventArgs e)
+        #endregion
+
+        #region internal logic
+
+        private bool ParseChannels()
+        {
+            bool success = true;
+
+            try
+            {
+                XDocument xdoc = XDocument.Load("VideoChannels.xml"); // load the xml.
+                var entries = from videochannel in xdoc.Descendants("VideoChannel") // get the channels.
+                              select new
+                              {
+                                  Name = videochannel.Element("Name").Value,
+                                  Slug = videochannel.Element("Slug").Value,
+                                  Provider = videochannel.Element("Provider").Value,
+                              };
+
+                foreach (var entry in entries) // create up the channel items.
+                {
+                    Channel c = new Channel(entry.Name, entry.Slug, entry.Provider);
+                    this._channels.Add(c);
+                }
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannelsPlugin ParseChannels() Error: \n {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your videochannels.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+
+            if (success) // if parsing of videochannels.xml all okay.
+            {
+                int unread = 0; // channels with un-watched videos count.
+
+                foreach (Channel channel in this._channels) // loop through videos.
+                {
+                    channel.Update(); // update the channel.
+                    if (channel.Valid)
+                    {
+                        RegisterListItem(channel, root);  // if the channel parsed all okay, regiser the channel-item.                    
+                        foreach (Video v in channel.Videos) { RegisterListItem(v, channel); } // register the video items.
+                        if (channel.State == ItemState.UNREAD) unread++;
+                    }
+                }
+
+                if (unread > 0) { root.SetTitle(string.Format("{0} ({1})", root.Title, unread.ToString())); } // add non-watched channels count to root item's title.
+            }
+            return success;
+        }
+
+        public void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler
         {
             frmDataEditor f = new frmDataEditor("VideoChannels.xml", "VideoChannel");
             f.Show();
         }
+
+        #endregion
+
+        #region de-ctor
 
         ~VideoChannelsPlugin() { Dispose(false); }
 
@@ -96,5 +129,7 @@ namespace LibVideoChannels
                 disposed = true;
             }
         }
+
+        #endregion
     }
 }

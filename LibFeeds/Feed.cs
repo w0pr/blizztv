@@ -79,8 +79,9 @@ namespace LibFeeds
             }
             catch (Exception e)
             {
+                this._valid = false;
                 Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while updating feed. Feed URL. {0} \n\n[Error Details: {1}]",this.URL, e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while updating feed. Feed URL: {0} \n\n[Error Details: {1}]",this.URL, e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
 
             if (this._valid)

@@ -75,9 +75,9 @@ namespace BlizzTV
             if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterPluginMenuItem(sender,e); })); // switch to UI-thread.
             else
             {
-                if (!MenuPlugins.DropDownItems.ContainsKey((sender as Plugin).PluginInfo.Attributes.Name)) // TODO: plugin-parent menu's should be created on plugin-load-time.
+                if (!MenuPlugins.DropDownItems.ContainsKey((sender as Plugin).PluginInfo.Attributes.Name)) // Does plugin parent-menu already exists?
                 {
-                    ToolStripMenuItem m = new ToolStripMenuItem((sender as Plugin).PluginInfo.Attributes.Name,(sender as Plugin).PluginInfo.Attributes.Icon);
+                    ToolStripMenuItem m = new ToolStripMenuItem((sender as Plugin).PluginInfo.Attributes.Name,(sender as Plugin).PluginInfo.Attributes.Icon); // if not so create it.
                     m.Name = m.Text; // set the menu-key, cmon MS, the key should be set by it's own constructor!
                     MenuPlugins.DropDownItems.Add(m); // add the parent-menu.
                 }
