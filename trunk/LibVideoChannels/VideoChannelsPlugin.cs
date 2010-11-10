@@ -28,7 +28,7 @@ namespace LibVideoChannels
     {
         #region members
 
-        ListItem root = new ListItem("Videos"); // root item on treeview.
+        private ListItem _root_item = new ListItem("Videos"); // root item on treeview.
         private List<Channel> _channels = new List<Channel>(); // the channels list.
         private bool disposed = false;
 
@@ -46,7 +46,7 @@ namespace LibVideoChannels
         {
             VideoChannelsPlugin.PluginSettings = ps;
 
-            this.RegisterListItem(root); // register root item.
+            this.RegisterListItem(_root_item); // register root item.
             this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseChannels())); // parse channels
@@ -93,13 +93,13 @@ namespace LibVideoChannels
                     channel.Update(); // update the channel.
                     if (channel.Valid)
                     {
-                        RegisterListItem(channel, root);  // if the channel parsed all okay, regiser the channel-item.                    
+                        RegisterListItem(channel, _root_item);  // if the channel parsed all okay, regiser the channel-item.                    
                         foreach (Video v in channel.Videos) { RegisterListItem(v, channel); } // register the video items.
                         if (channel.State == ItemState.UNREAD) unread++;
                     }
                 }
 
-                if (unread > 0) { root.SetTitle(string.Format("{0} ({1})", root.Title, unread.ToString())); } // add non-watched channels count to root item's title.
+                if (unread > 0) { _root_item.SetTitle(string.Format("{0} ({1})", _root_item.Title, unread.ToString())); } // add non-watched channels count to root item's title.
             }
             return success;
         }

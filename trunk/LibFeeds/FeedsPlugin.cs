@@ -28,7 +28,7 @@ namespace LibFeeds
     {
         #region members
 
-        ListItem root = new ListItem("Feeds");  // root item on treeview.
+        private ListItem _root_item = new ListItem("Feeds");  // root item on treeview.
         private List<Feed> _feeds = new List<Feed>(); // the feeds list 
         private bool disposed = false;
 
@@ -46,7 +46,7 @@ namespace LibFeeds
         {            
             FeedsPlugin.PluginSettings = ps; 
            
-            this.RegisterListItem(this.root); // register root item.
+            this.RegisterListItem(this._root_item); // register root item.
             this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
 
             PluginLoadComplete(new PluginLoadCompleteEventArgs(this.ParseFeeds()));  // parse feeds.    
@@ -92,13 +92,13 @@ namespace LibFeeds
                     feed.Update(); // update the feed.
                     if (feed.Valid)
                     {
-                        RegisterListItem(feed, root); // if the feed parsed all okay, regiser the feed-item.
+                        RegisterListItem(feed, _root_item); // if the feed parsed all okay, regiser the feed-item.
                         foreach (Story story in feed.Stories) { RegisterListItem(story, feed); } // register the story items.
                         if (feed.State == ItemState.UNREAD) unread++;
                     }
                 }
 
-                if (unread > 0) { root.SetTitle(string.Format("{0} ({1})", root.Title, unread.ToString())); } // add unread feeds count to root item's title.
+                if (unread > 0) { _root_item.SetTitle(string.Format("{0} ({1})", _root_item.Title, unread.ToString())); } // add unread feeds count to root item's title.
             }
 
             return success;
@@ -123,8 +123,8 @@ namespace LibFeeds
                 if (disposing) // managed resources
                 {
                     FeedsPlugin.PluginSettings = null;
-                    this.root.Dispose();
-                    this.root = null;
+                    this._root_item.Dispose();
+                    this._root_item = null;
                     foreach (Feed f in this._feeds) { f.Dispose(); }
                     this._feeds.Clear();
                     this._feeds = null;

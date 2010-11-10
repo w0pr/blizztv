@@ -24,17 +24,23 @@ namespace LibEvents
 {
     public class Event:ListItem
     {
-        private string _full_title;
-        private string _description;
-        private string _event_id;
-        private bool _is_over = false;
-        private ZonedDateTime _time;
+        #region members
+
+        private string _full_title; // the full title of the event.
+        private string _description; // the event description.
+        private string _event_id; // the event id.
+        private bool _is_over = false; // is the event over?
+        private ZonedDateTime _time; // zoned event time info. 
 
         public string FullTitle { get { return this._full_title; } }
         public string Description { get { return this._description; } }
         public string EventID { get { return this._event_id; } }
         public bool IsOver { get { return this._is_over; } }
         public ZonedDateTime Time { get { return this._time; } }
+
+        #endregion
+
+        #region ctor
 
         public Event(string Title, string FullTitle, string Description, string EventID,bool isOver, ZonedDateTime Time)
             : base(Title)
@@ -45,5 +51,7 @@ namespace LibEvents
             this._is_over = isOver;
             this._time = Time;
         }
+
+        #endregion
     }
 }
