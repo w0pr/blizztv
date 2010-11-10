@@ -21,52 +21,62 @@ namespace LibStreams
 {
     public class Stream:ListItem
     {
-        private string _slug;
-        private string _provider;
-        private string _link;
-        protected string _movie;
-        protected string _flash_vars;
+        #region members
 
-        private bool _is_live = false;
-        private string _description;
-        private Int32 _viewer_count;
+        private string _slug; // the stream slug.
+        private string _provider; // the stream provider.
+        private string _link; // the stream link.
+        private bool _is_live = false; // is the stream live?
+        private string _description; // the stream description.
+        private Int32 _viewer_count = 0; // stream viewers count.
+        private string _movie; // the stream's movie source.
+        private string _flash_vars; // the streams's flash vars.
 
-        public string Slug { get { return this._slug; } set { this._slug = value; } }
-        public string Provider { get { return this._provider; } set { this._provider = value; } }
-        public string Link { get { return this._link; } set { this._link = value; } }
-        public string Movie { get { return this._movie; } set { this._movie = value; } }
-        public string FlashVars { get { return this._flash_vars; } set { this._flash_vars = value; } }
-
+        public string Slug { get { return this._slug; } internal set { this._slug = value; } }
+        public string Provider { get { return this._provider; } internal set { this._provider = value; } }
+        public string Link { get { return this._link; } internal set { this._link = value; } }
         public bool IsLive { get { return this._is_live; } internal set { this._is_live = value; } }
         public string Description { get { return this._description; } internal set { this._description = value; } }
         public Int32 ViewerCount { get { return this._viewer_count; } internal set { this._viewer_count = value; } }
+        public string Movie { get { return this._movie; } internal set { this._movie = value; } }
+        public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
+
+        #endregion
+
+        #region ctor
 
         public Stream(string Title, string Slug, string Provider)
             : base(Title)
         {
-            this.Slug = Slug;
-            this.Provider = Provider;
+            this._slug = Slug;
+            this._provider = Provider;
         }
 
-        public virtual void Process()
-        {
-            this._movie = Providers.Instance.List[this.Provider].Movie;
-            this._flash_vars = Providers.Instance.List[this.Provider].FlashVars;
+        #endregion
 
-            this._movie = this._movie.Replace("%slug%", this.Slug);
-            this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug);
+        #region internal logic 
+
+        public virtual void Process() // get the stream data by replacing provider variables. handler's can override this method to run their own routines, though base.Process() should be called also.
+        {
+            this._movie = Providers.Instance.List[this.Provider].Movie; // provider supplied movie source. 
+            this._flash_vars = Providers.Instance.List[this.Provider].FlashVars; // provider supplied flashvars.
+
+            this._movie = this._movie.Replace("%slug%", this.Slug); // replace slug variable in movie source.
+            this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.
         }
 
-        public override void DoubleClick(object sender, EventArgs e)
+        public override void DoubleClick(object sender, EventArgs e) // double-click handler
         {
-            if (StreamsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS)
+            if (StreamsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
             {
-                Player p = new Player(this);
+                Player p = new Player(this); // render the stream with our own video player
                 p.Show();
             }
-            else System.Diagnostics.Process.Start(this.Link, null);
+            else System.Diagnostics.Process.Start(this.Link, null); // render the stream with default web-browser.
         }
 
-        public virtual void Update() { throw new NotImplementedException(); }
+        public virtual void Update() { throw new NotImplementedException(); } // the stream updater. 
+
+        #endregion
     }
 }

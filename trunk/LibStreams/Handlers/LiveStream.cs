@@ -20,25 +20,37 @@ using LibBlizzTV.Utils;
 
 namespace LibStreams.Handlers
 {
-    public class LiveStream:Stream
+    public class LiveStream:Stream // livestream wrapper
     {
+        #region ctor
+
         public LiveStream(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
+
+        #endregion 
+
+        #region internal logic 
 
         public override void Update()
         {
-            this.Link = string.Format("http://www.livestream.com/{0}", this.Slug);
+            this.Link = string.Format("http://www.livestream.com/{0}", this.Slug); // the stream link.
 
-            string api_url=string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json",this.Slug);
-            string response = WebReader.Read(api_url);
-            if (response != null)
+            try
             {
-                Hashtable data = (Hashtable)JSON.JsonDecode(response);
-                data = (Hashtable)data["rss"];
-                data = (Hashtable)data["channel"];
-                this.IsLive = (bool)data["isLive"];
-                this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString());
-                this.Description = (string)data["description"].ToString();
+                string api_url = string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json", this.Slug); // the api url.
+                string response = WebReader.Read(api_url); // read the api response
+                if (response != null) // start parsing json.
+                {
+                    Hashtable data = (Hashtable)JSON.JsonDecode(response);
+                    data = (Hashtable)data["rss"]; 
+                    data = (Hashtable)data["channel"];
+                    this.IsLive = (bool)data["isLive"]; // is the stream live?
+                    this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
+                    this.Description = (string)data["description"].ToString(); // stream description.
+                }
             }
+            catch (Exception e) { throw new Exception("LiveStream Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
         }
+
+        #endregion
     }
 }

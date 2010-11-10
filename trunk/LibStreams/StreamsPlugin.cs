@@ -1,4 +1,4 @@
-﻿/*    
+﻿/*   
  * Copyright (C) 2010, BlizzTV Project - http://code.google.com/p/blizztv/
  *  
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General 
@@ -19,67 +19,105 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Text;
 using LibBlizzTV;
+using LibBlizzTV.Utils;
 
 namespace LibStreams
 {
-    [Plugin("LibStreams", "Stream aggregator plugin for BlizzTV","stream_16.png")]
+    [Plugin("Streams", "Stream aggregator plugin for BlizzTV","stream_16.png")]
     public class StreamsPlugin:Plugin
     {
+        #region members
+
+        private ListItem root = new ListItem("Streams"); // root item on treeview.
         private List<Stream> _streams = new List<Stream>();
         private bool disposed = false;
 
+        #endregion
+
+        #region ctor
+
         public StreamsPlugin() { }
+
+        #endregion
+
+        #region API handlers
 
         public override void Load(PluginSettings ps)
         {
             StreamsPlugin.PluginSettings = ps;
 
-            ListItem root = new ListItem("Streams");
-            RegisterListItem(root);
-
-            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked)));
-
-            XDocument xdoc = XDocument.Load("Streams.xml");
-            var entries = from stream in xdoc.Descendants("Stream")
-                          select new
-                          {
-                              Name = stream.Element("Name").Value,
-                              Slug = stream.Element("Slug").Value,
-                              Provider = stream.Element("Provider").Value.ToLower(),
-                          };
-
-            foreach (var entry in entries)
-            {
-                Stream s = StreamFactory.CreateStream(entry.Name,entry.Slug,entry.Provider);
-                this._streams.Add(s);
-            }
-
-            int available_count = 0;
-
-            foreach (Stream stream in this._streams)
-            {                
-                stream.Update();
-                if (stream.IsLive)
-                {
-                    stream.SetTitle(string.Format("{0} ({1})", stream.Title, stream.ViewerCount));
-                    RegisterListItem(stream, root);
-                    available_count++;
-                }
-            }
-
-            if (available_count > 0)
-            {
-                root.SetTitle(string.Format("{0} ({1})", root.Title, available_count));
-            }
-
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(true));
+            this.RegisterListItem(root); // register root item.
+            this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu
+            
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseStreams())); // parse the streams.
         }
 
-        public void MenuSubscriptionsClicked(object sender, EventArgs e)
+        #endregion
+
+        #region internal logic
+
+        private bool ParseStreams()
+        {
+            bool success = true;
+
+            try
+            {
+                XDocument xdoc = XDocument.Load("Streams.xml");
+                var entries = from stream in xdoc.Descendants("Stream")
+                              select new
+                              {
+                                  Name = stream.Element("Name").Value,
+                                  Slug = stream.Element("Slug").Value,
+                                  Provider = stream.Element("Provider").Value.ToLower(),
+                              };
+
+                foreach (var entry in entries)
+                {
+                    Stream s = StreamFactory.CreateStream(entry.Name, entry.Slug, entry.Provider);
+                    this._streams.Add(s);
+                }
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your streams.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+
+            if (success) // if parsing of streams.xml all okay
+            {
+                int available_count = 0; // available live streams count
+
+                foreach (Stream stream in this._streams) // loop through all streams
+                {
+                    try
+                    {
+                        stream.Update(); // update the stream
+                        if (stream.IsLive) // if it's live
+                        {
+                            stream.SetTitle(string.Format("{0} ({1})", stream.Title, stream.ViewerCount)); // put stream viewers count on title.
+                            available_count++; // increment available live streams count.
+                            RegisterListItem(stream, root); // register the stream item.
+                        }
+                    }
+                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
+                }
+
+                if (available_count > 0) { root.SetTitle(string.Format("{0} ({1})", root.Title, available_count)); } // put available streams count on root object's title.
+            }
+
+            return success;
+        }
+
+        public void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler
         {
             frmDataEditor f = new frmDataEditor("Streams.xml", "Stream");
             f.Show();
         }
+
+        #endregion
+
+        #region de-ctor
 
         ~StreamsPlugin() { Dispose(false); }
 
@@ -96,5 +134,7 @@ namespace LibStreams
                 disposed = true;
             }
         }
+
+        #endregion
     }
 }

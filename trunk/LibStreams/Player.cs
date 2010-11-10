@@ -21,28 +21,38 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using LibBlizzTV.Utils;
 
 namespace LibStreams
 {
-    public partial class Player : Form
+    public partial class Player : Form // The stream player.
     {
-        private Stream _stream;
+        private Stream _stream; // the stream.
 
         public Player(Stream Stream)
         {
             InitializeComponent();
-            this._stream = Stream;
-            this.Width = StreamsPlugin.GlobalSettings.VideoPlayerWidth;
-            this.Height = StreamsPlugin.GlobalSettings.VideoPlayerHeight;
-            this._stream.Process();
+
+            this._stream = Stream; // set the stream.
+            this.Width = StreamsPlugin.GlobalSettings.VideoPlayerWidth; // get the default player width.
+            this.Height = StreamsPlugin.GlobalSettings.VideoPlayerHeight; // get the default player height.
+            this._stream.Process(); // process the stream so that it's template variables are replaced.
         }
 
-        private void Player_Load(object sender, EventArgs e)
+        private void Player_Load(object sender, EventArgs e) 
         {
-            this.Text=string.Format("Stream: {0}@{1}",this._stream.Title,this._stream.Provider);
-            this.Stage.FlashVars = this._stream.FlashVars;
-            this.Stage.MovieData = string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars);
-            this.Stage.LoadMovie(0, string.Format("{0}?{1}",this._stream.Movie,this._stream.FlashVars));            
+            try
+            {
+                this.Text = string.Format("Stream: {0}@{1}", this._stream.Title, this._stream.Provider); // set the window title.
+                this.Stage.FlashVars = this._stream.FlashVars; // set the flashvars.
+                this.Stage.MovieData = string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars); // set the moviedata.
+                this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars)); // load the movie.
+            }
+            catch (Exception exc)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin Player Error: \n {0}", exc.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured in stream player. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
     }
 }

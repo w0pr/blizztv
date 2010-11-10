@@ -20,25 +20,37 @@ using LibBlizzTV.Utils;
 
 namespace LibStreams.Handlers
 {
-    public class JustinTV:Stream
+    public class JustinTV:Stream // justintv wrapper
     {
+        #region ctor
+
         public JustinTV(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
+
+        #endregion
+
+        #region internal logic 
 
         public override void Update()
         {
-            this.Link = string.Format("http://www.justin.tv/{0}", this.Slug);
+            this.Link = string.Format("http://www.justin.tv/{0}", this.Slug); // the stream link.
 
-            string api_url = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug);
-            string response = WebReader.Read(api_url);
-
-            ArrayList data = (ArrayList)JSON.JsonDecode(response);
-            if (data.Count > 0)
+            try
             {
-                this.IsLive = true;
-                Hashtable table = (Hashtable)data[0];
-                this.ViewerCount = Int32.Parse(table["stream_count"].ToString());
-                this.Description = (string)table["title"].ToString();
-            }            
+                string api_url = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug); // the api url.
+                string response = WebReader.Read(api_url); // read the api response.
+
+                ArrayList data = (ArrayList)JSON.JsonDecode(response); // start parsing the json.
+                if (data.Count > 0)
+                {
+                    this.IsLive = true; // is the stream live?
+                    Hashtable table = (Hashtable)data[0];
+                    this.ViewerCount = Int32.Parse(table["stream_count"].ToString()); // stream viewers count.
+                    this.Description = (string)table["title"].ToString(); // stream description.
+                }
+            }
+            catch (Exception e) { throw new Exception("JustinTV Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
         }
+
+        #endregion
     }
 }
