@@ -100,11 +100,20 @@ namespace BlizzTV
             }
         }
 
-        private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) // Treeview Double-Click handler.
+        private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) // Treeview node double-click handler.
         {
             TreeItem selection = (TreeItem)e.Node; // get the selected node
             if (selection.Nodes.Count > 0) if (selection.IsExpanded) selection.Expand();  else selection.Collapse(); // if it's a parent node, let it expand() or collapse().
-            else selection.DoubleClick(sender, e);  // notify the item about the double-click event.
+            else selection.DoubleClicked(sender, e);  // notify the item about the double-click event.
+        }
+
+        private void TreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) // Treeview node click handler
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right) // if node is right clicked, that means context menu will be rendered for the node.
+            {
+                TreeItem selection = (TreeItem)e.Node; // get the selected node
+                selection.RightClicked(sender, e); // notify the item about the right click, so it can manage it's context-menu's.
+            }
         }
 
         #endregion

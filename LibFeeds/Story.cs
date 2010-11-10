@@ -48,24 +48,54 @@ namespace LibFeeds
             if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));  
             else this.SetState(ItemState.UNREAD);
 
-            this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked)));
+            // register context menus.
+            this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
+            this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.
         }
 
         #endregion
 
         #region internal logic
 
-        public override void DoubleClick(object sender, EventArgs e)
+        public override void SetState(ItemState State) // override setstate function so that we can commit our state to storage.
+        {
+            base.SetState(State); // let the base function also do it's own job.
+            Plugin.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
+        }
+
+        public override void DoubleClicked(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
+            this.SetState(ItemState.READ); // set the story state as read.
+        }
 
-            this.SetState(ItemState.READ); // set the story state to READ.
-            Plugin.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
+        public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
+        {
+            // make conditional context-menus invisible.
+            this.ContextMenus["markasread"].Visible=false;
+            this.ContextMenus["markasunread"].Visible=false;
+
+            switch (this.State) // switch on the item state.
+	        {
+		        case ItemState.UNREAD:
+                    this.ContextMenus["markasread"].Visible=true; // make mark as read menu visible.
+                    break;
+                case ItemState.READ:
+                    this.ContextMenus["markasunread"].Visible = true; // make mark as unread menu visible.
+                    break;
+                case ItemState.MARKED:
+                    break;
+            }
         }
 
         public void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
+            this.SetState(ItemState.READ); // set the story state as read.          
+        }
 
+        public void MenuMarkAsUnReadClicked(object sender, EventArgs e)
+        {
+            this.SetState(ItemState.UNREAD); // set the story state as unread.          
         }
 
         #endregion

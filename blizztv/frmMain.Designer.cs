@@ -206,7 +206,7 @@
             // TreeView
             // 
             this.TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TreeView.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.TreeView.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.TreeView.FullRowSelect = true;
             this.TreeView.ImageIndex = 0;
             this.TreeView.ImageList = this.NodeIcons;
@@ -217,6 +217,7 @@
             this.TreeView.ShowRootLines = false;
             this.TreeView.Size = new System.Drawing.Size(256, 269);
             this.TreeView.TabIndex = 3;
+            this.TreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseClick);
             this.TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseDoubleClick);
             // 
             // NodeIcons

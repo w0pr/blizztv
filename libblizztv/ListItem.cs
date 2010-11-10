@@ -71,9 +71,16 @@ namespace LibBlizzTV
         /// The double-click event handler.
         /// </summary>
         /// <remarks>Should be implemented if the item wants to be notified of double-click's.</remarks>
-        /// <param name="sender">The ender object.</param>
-        /// <param name="e">The event paremeters.</param>
-        public virtual void DoubleClick(object sender, EventArgs e) { }
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event parameters.</param>
+        public virtual void DoubleClicked(object sender, EventArgs e) { }
+
+        /// <summary>
+        /// Fired when an item's right clicked.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event parameters.</param>
+        public virtual void RightClicked(object sender, EventArgs e) { }
 
         /// <summary>
         /// Title change event handler delegate.
@@ -90,7 +97,7 @@ namespace LibBlizzTV
         /// Set's title of the item.
         /// </summary>
         /// <param name="Title">The new title.</param>
-        public void SetTitle(string Title)
+        public virtual void SetTitle(string Title)
         {
             this._title = Title;
             if (OnTitleChange != null) OnTitleChange(this); // notify observers.
@@ -111,7 +118,7 @@ namespace LibBlizzTV
         /// Set's state of the item.
         /// </summary>
         /// <param name="State">The new state.</param>
-        protected void SetState(ItemState State)
+        public virtual void SetState(ItemState State)
         {
             this._state = State;
             if (OnStateChange != null) OnStateChange(this); // notify observers.

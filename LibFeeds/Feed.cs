@@ -45,6 +45,10 @@ namespace LibFeeds
             : base(Title)
         {
             this._url = URL;
+
+            // register context menus.
+            this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            this.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
         }
 
         #endregion
@@ -95,6 +99,18 @@ namespace LibFeeds
                     this.SetState(ItemState.UNREAD); // then mark the feed itself as unread also
                 }
             }
+        }
+
+        public void MenuMarkAllAsReadClicked(object sender, EventArgs e)
+        {
+            foreach (Story s in Stories) { s.SetState(ItemState.READ); } // marked all stories as read.
+            this.SetState(ItemState.READ); // also mark self as read.
+        }
+
+        public void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
+        {
+            foreach (Story s in Stories) { s.SetState(ItemState.UNREAD); } // marked all stories as unread.
+            this.SetState(ItemState.UNREAD); // also mark self as unread.      
         }
 
         #endregion
