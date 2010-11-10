@@ -72,7 +72,7 @@ namespace LibVideoChannels
             this._flash_vars = this._flash_vars.Replace("%video_id%", this._video_id); // replace video_id variable in flashvars.
         }
 
-        public override void DoubleClick(object sender, EventArgs e)
+        public override void DoubleClicked(object sender, EventArgs e)
         {
             if (VideoChannelsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
             {

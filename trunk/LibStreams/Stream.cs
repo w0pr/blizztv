@@ -65,7 +65,7 @@ namespace LibStreams
             this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.
         }
 
-        public override void DoubleClick(object sender, EventArgs e) // double-click handler
+        public override void DoubleClicked(object sender, EventArgs e) // double-click handler
         {
             if (StreamsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
             {

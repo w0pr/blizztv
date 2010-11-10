@@ -99,10 +99,12 @@ namespace LibBlizzTV
         /// <param name="sender">The sender object.</param>
         /// <param name="e"><see cref="PluginLoadCompleteEventArgs"/></param>
         public delegate void PluginLoadCompleteEventHandler(object sender,PluginLoadCompleteEventArgs e);
+
         /// <summary>
         /// PluginLoadComplete event handler.
         /// </summary>
         public event PluginLoadCompleteEventHandler OnPluginLoadComplete;
+
         /// <summary>
         /// Notifies about the plugin load process supplying a success code.
         /// </summary>
@@ -122,10 +124,12 @@ namespace LibBlizzTV
         /// <param name="i">The item to register.</param>
         /// <param name="g">If appliable, the parent item to be placed under.</param>
         public delegate void RegisterListItemEventHandler(object sender, ListItem i, ListItem g);
+
         /// <summary>
         /// RegisterListItem event handler.
         /// </summary>
         public event RegisterListItemEventHandler OnRegisterListItem;
+
         /// <summary>
         /// Registers a list item to be render in main form's treeview.
         /// </summary>

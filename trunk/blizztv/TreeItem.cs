@@ -100,9 +100,14 @@ namespace BlizzTV
             }
         }
 
-        public void DoubleClick(object sender, TreeNodeMouseClickEventArgs e) 
+        public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e) 
         {
-            this._item.DoubleClick(sender,e); // notify the item about the double-click event.
+            this._item.DoubleClicked(sender,e); // notify the item about the double-click event.
+        }
+
+        public void RightClicked(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            this._item.RightClicked(sender, e); // notify the item about the click event.
         }
 
         #endregion
