@@ -42,7 +42,7 @@ namespace LibEvents
 
         public EventsPlugin()
         {
-            this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", this.PluginInfo.Attributes.Icon, new EventHandler(MenuCalendarClicked))); // register calender menu.
+            this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // register calender menu.
         }
 
         #endregion
