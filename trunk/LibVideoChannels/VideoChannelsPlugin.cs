@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
+using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
@@ -48,19 +49,25 @@ namespace LibVideoChannels
         public override void Load(PluginSettings ps)
         {
             VideoChannelsPlugin.PluginSettings = ps;
-
             this.RegisterListItem(_root_item); // register root item.            
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateChannels())); // parse channels
 
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseChannels())); // parse channels
+            // setup update timer for next data updates
+            Timer update_timer = new Timer(1000 * 60 * 5);
+            update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            update_timer.Enabled = true;
         }
 
         #endregion
 
         #region internal logic
 
-        private bool ParseChannels()
+        private bool UpdateChannels()
         {
             bool success = true;
+
+            this._root_item.SetTitle("Updating videos..");
+            if (this._channels.Count > 0) this.DeleteExistingChannels(); // clear previous entries before doing an update.
 
             try
             {
@@ -101,9 +108,22 @@ namespace LibVideoChannels
                     }
                 }
 
-                if (unread > 0) { _root_item.SetTitle(string.Format("{0} ({1})", _root_item.Title, unread.ToString())); } // add non-watched channels count to root item's title.
+                _root_item.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
             }
             return success;
+        }
+
+        private void DeleteExistingChannels() // removes all current feeds.
+        {
+            foreach (Channel c in this._channels) { c.Delete(); } // Delete the feeds.
+            this._channels.Clear(); // remove them from the list.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        private void OnTimerHit(object source, ElapsedEventArgs e)
+        {
+            PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateChannels()));
         }
 
         public void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler

@@ -55,7 +55,7 @@ namespace LibFeeds
 
         #region internal logic
 
-        public virtual void Update() // Updates the feed data.
+        public void Update() // Updates the feed data.
         {
             try
             {
@@ -101,13 +101,13 @@ namespace LibFeeds
             }
         }
 
-        public void MenuMarkAllAsReadClicked(object sender, EventArgs e)
+        private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
             foreach (Story s in Stories) { s.SetState(ItemState.READ); } // marked all stories as read.
-            this.SetState(ItemState.READ); // also mark self as read.
+            this.SetState(ItemState.READ); // also mark self as read.            
         }
 
-        public void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
+        private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
             foreach (Story s in Stories) { s.SetState(ItemState.UNREAD); } // marked all stories as unread.
             this.SetState(ItemState.UNREAD); // also mark self as unread.      
@@ -119,7 +119,7 @@ namespace LibFeeds
 
         ~Feed() { Dispose(false); }
 
-        private void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
+using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
@@ -38,7 +39,7 @@ namespace LibStreams
 
         public StreamsPlugin()
         {
-            this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
+            this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.         
         }
 
         #endregion
@@ -48,19 +49,25 @@ namespace LibStreams
         public override void Load(PluginSettings ps)
         {
             StreamsPlugin.PluginSettings = ps;
+            this.RegisterListItem(_root_item); // register root item.                        
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateStreams())); // parse the streams.
 
-            this.RegisterListItem(_root_item); // register root item.            
-            
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseStreams())); // parse the streams.
+            // setup update timer for next data updates
+            Timer update_timer = new Timer(1000 * 60 * 5);
+            update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            update_timer.Enabled = true;
         }
 
         #endregion
 
         #region internal logic
 
-        private bool ParseStreams()
+        private bool UpdateStreams()
         {
             bool success = true;
+
+            this._root_item.SetTitle("Updating streams..");
+            if (this._streams.Count > 0) this.DeleteExistingStreams(); // clear previous entries before doing an update.
 
             try
             {
@@ -105,10 +112,23 @@ namespace LibStreams
                     catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
                 }
 
-                if (available_count > 0) { _root_item.SetTitle(string.Format("{0} ({1})", _root_item.Title, available_count)); } // put available streams count on root object's title.
+                _root_item.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
             }
 
             return success;
+        }
+
+        private void DeleteExistingStreams() // removes all current feeds.
+        {
+            foreach (Stream s in this._streams) { s.Delete(); } // Delete the feeds.
+            this._streams.Clear(); // remove them from the list.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        private void OnTimerHit(object source, ElapsedEventArgs e)
+        {
+            PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateStreams()));
         }
 
         public void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler

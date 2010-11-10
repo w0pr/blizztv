@@ -103,7 +103,7 @@ namespace LibVideoChannels
 
         ~Channel() { Dispose(false); }
 
-        private void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

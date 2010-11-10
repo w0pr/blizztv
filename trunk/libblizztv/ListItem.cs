@@ -96,6 +96,7 @@ namespace LibBlizzTV
         /// <summary>
         /// Set's title of the item.
         /// </summary>
+        /// <remarks>Can be overridden though you should still call base.SetTitle().</remarks>  
         /// <param name="Title">The new title.</param>
         public virtual void SetTitle(string Title)
         {
@@ -117,13 +118,35 @@ namespace LibBlizzTV
         /// <summary>
         /// Set's state of the item.
         /// </summary>
+        /// <remarks>Can be overridden though you should still call base.SetState().</remarks> 
         /// <param name="State">The new state.</param>
         public virtual void SetState(ItemState State)
         {
             this._state = State;
             if (OnStateChange != null) OnStateChange(this); // notify observers.
         }
-        
+
+        /// <summary>
+        /// Item delete event handler delegate.
+        /// </summary>
+        public delegate void DeleteEventHandler();
+
+        /// <summary>
+        /// Item delete event handler.
+        /// </summary>
+        public event DeleteEventHandler OnDelete;
+
+        /// <summary>
+        /// Delete's the item and notifies it's observers.
+        /// <remarks>Can be overridden though you should still call base.Delete().</remarks> 
+        /// </summary>
+        public virtual void Delete()
+        {
+            if (OnDelete != null) OnDelete();
+            this.Dispose();
+        }
+
+
         #endregion
 
         #region internal logic
@@ -148,7 +171,11 @@ namespace LibBlizzTV
             GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool disposing)
+        /// <summary>
+        /// Actual dispose function, can be overriden.
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -156,6 +183,7 @@ namespace LibBlizzTV
                 {
                     this.OnTitleChange = null;
                     this.OnStateChange = null;
+                    this.OnDelete = null;
                 }
                 disposed = true;
             }
