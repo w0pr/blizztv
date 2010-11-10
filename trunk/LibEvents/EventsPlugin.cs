@@ -68,6 +68,7 @@ namespace LibEvents
         private bool ParseEvents()
         {
             bool success = true;
+            this._root_item.SetTitle("Updating events..");
 
             try
             {
@@ -123,6 +124,8 @@ namespace LibEvents
                         else RegisterListItem(e, _events_upcoming_item); // else register it in upcoming-events section.
                     }
                 }
+
+                this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.
             }
 
             return success;
