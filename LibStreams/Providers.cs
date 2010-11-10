@@ -17,33 +17,53 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using LibBlizzTV.Utils;
 
 namespace LibStreams
 {
-    public sealed class Providers : IDisposable
+    public sealed class Providers : IDisposable // stream providers
     {
-        private static readonly Providers _instance = new Providers();
+        #region members
+
+        private static readonly Providers _instance = new Providers(); // the providers instance.
         public static Providers Instance { get { return _instance; } }
 
-        public Dictionary<string, Provider> List = new Dictionary<string, Provider>();
+        public Dictionary<string, Provider> List = new Dictionary<string, Provider>(); // the list of defined providers.
         private bool disposed = false;
+
+        #endregion
+
+        #region ctor
 
         private Providers()
         {
-            XDocument xdoc = XDocument.Load("StreamProviders.xml");
-
-            var entries = from provider in xdoc.Descendants("Provider") 
-                          select new {
-                                Name = provider.Element("Name").Value.ToLower(),
-                                Movie = provider.Element("Movie").Value, 
-                                FlashVars=provider.Element("FlashVars").Value
-                            };
-
-            foreach (var entry in entries)
+            try
             {
-                this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie,entry.FlashVars));
+                XDocument xdoc = XDocument.Load("StreamProviders.xml"); // read providers xml
+
+                var entries = from provider in xdoc.Descendants("Provider") 
+                              select new
+                              {
+                                  Name = provider.Element("Name").Value.ToLower(),
+                                  Movie = provider.Element("Movie").Value,
+                                  FlashVars = provider.Element("FlashVars").Value
+                              };
+
+                foreach (var entry in entries)
+                {
+                    this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie, entry.FlashVars));
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin Providers:Providers() Error: \n {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your streamproviders.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }
+
+        #endregion ctor
+
+        #region de-ctor
 
         ~Providers() { Dispose(false); }
 
@@ -65,13 +85,17 @@ namespace LibStreams
                 disposed = true;
             }
         }
+
+        #endregion
     }
+
+    #region Provider
 
     public class Provider
     {
-        private string _name;
-        private string _movie;
-        private string _flash_vars;
+        private string _name; // provider name.
+        private string _movie; // provider movie template.
+        private string _flash_vars; // provider flash template.
 
         public string Name { get { return this._name; } internal set { this._name = value; } }
         public string Movie { get { return this._movie; } internal set { this._movie = value; } }
@@ -84,4 +108,6 @@ namespace LibStreams
             this._flash_vars = FlashVars;
         }
     }
+
+    #endregion
 }

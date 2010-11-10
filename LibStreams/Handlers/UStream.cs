@@ -20,43 +20,55 @@ using LibBlizzTV.Utils;
 
 namespace LibStreams.Handlers
 {
-    public class UStream:Stream
+    public class UStream:Stream // ustream wrapper
     {
+        #region members
+
         private UInt32 _stream_id;
+
+        #endregion 
+
+        #region ctor
 
         public UStream(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
 
+        #endregion
+
+        #region internal logic
+
         public override void Update()
         {
-            this.Link = string.Format("http://www.ustream.com/channel/{0}", this.Slug);
+            this.Link = string.Format("http://www.ustream.com/channel/{0}", this.Slug); // the stream link.
 
-            string api_url = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug,"F7DE9C9A56F4ABB48D170A9881E5AF66");
-            string response = WebReader.Read(api_url);
-
-            Hashtable data = (Hashtable)JSON.JsonDecode(response);
             try
             {
-                ArrayList results = (ArrayList)data["results"];
+                string api_url = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "F7DE9C9A56F4ABB48D170A9881E5AF66"); // the api url
+                string response = WebReader.Read(api_url); // read the api response.
+
+                Hashtable data = (Hashtable)JSON.JsonDecode(response); // start parsing json.
+                ArrayList results = (ArrayList)data["results"]; // the results object.
                 if (results.Count > 0)
                 {
                     Hashtable table = (Hashtable)results[0];
-                    if ((string)table["status"].ToString() == "live")
+                    if ((string)table["status"].ToString() == "live") // if the stream is live.
                     {
                         this.IsLive = true;
-                        this._stream_id = UInt32.Parse(table["id"].ToString());
-                        this.ViewerCount = Int32.Parse(table["viewersNow"].ToString());
-                        this.Description = (string)table["title"].ToString();
+                        this._stream_id = UInt32.Parse(table["id"].ToString()); // the stream id.
+                        this.ViewerCount = Int32.Parse(table["viewersNow"].ToString()); // viewers count.
+                        this.Description = (string)table["title"].ToString(); // stream description.
                     }
                 }
             }
-            catch (Exception e) { }
+            catch (Exception e) { throw new Exception("Ustream Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
         }
 
-        public override void Process()
+        public override void Process() // for ustream we also need to replace stream_id variable in movie and flash vars templates.
         {
-            base.Process();
-            this._movie = this._movie.Replace("%stream_id%", this._stream_id.ToString());
-            this._flash_vars = this._flash_vars.Replace("%stream_id%", this._stream_id.ToString());
+            base.Process(); // base processor should also work (to let it replace the slug variable).
+            this.Movie = this.Movie.Replace("%stream_id%", this._stream_id.ToString()); // replace stream_id in movie template.
+            this.FlashVars = this.FlashVars.Replace("%stream_id%", this._stream_id.ToString()); // replace stream_id in flashvars template.
         }
+
+        #endregion
     }
 }

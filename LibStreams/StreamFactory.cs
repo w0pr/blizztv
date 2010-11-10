@@ -15,15 +15,16 @@
 
 using System;
 using LibStreams.Handlers;
+using LibBlizzTV.Utils;
 
 namespace LibStreams
 {
-    public static class StreamFactory
+    public static class StreamFactory // streams factory
     {
-        public static Stream CreateStream(string Title,string Slug,string Provider)
+        public static Stream CreateStream(string Title,string Slug,string Provider) // creates a stream object based on it's provider
         {
             Stream _stream=null;
-            switch (Provider.ToLower())
+            switch (Provider.ToLower()) // create the appr. stream object based on it's provider.
             {
                 case "livestream":                    
                     _stream = new LiveStream(Title,Slug,Provider);
@@ -38,8 +39,8 @@ namespace LibStreams
                     break;
             }
 
-            if(_stream!=null) return _stream;
-            else throw new NotImplementedException();
+            if (_stream != null) return _stream; // if we found a valid stream provider.
+            else throw new NotImplementedException(string.Format("Stream provider not implemented: '{0}'", Provider)); // throw an exception if stream was not associated with a valid provider.
         }
     }
 }
