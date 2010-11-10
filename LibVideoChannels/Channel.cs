@@ -45,7 +45,11 @@ namespace LibVideoChannels
             : base(Title)
         {
             this._slug = Slug;
-            this._provider = Provider;
+            this._provider = Provider;         
+
+             // register context menus.
+            this.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
+            this.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
         }
 
         #endregion
@@ -95,6 +99,18 @@ namespace LibVideoChannels
                     this.SetState(ItemState.UNREAD); // then mark the channel itself as unread also
                 }
             }
+        }
+
+        private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
+        {
+            foreach (Video v in this.Videos) { v.SetState(ItemState.READ); } // marked all videos as watched.
+            this.SetState(ItemState.READ); // also mark self as read.            
+        }
+
+        private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
+        {
+            foreach (Video v in this.Videos) { v.SetState(ItemState.UNREAD); } // marked all videos as unread.
+            this.SetState(ItemState.UNREAD); // also mark self as unread.      
         }
 
         #endregion

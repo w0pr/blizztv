@@ -57,6 +57,10 @@ namespace LibVideoChannels
             // check the persistent storage for if the video is watched before.
             if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));
             else this.SetState(ItemState.UNREAD);
+
+            // register context menus.
+            this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
+            this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAsUnWatchedClicked))); // mark as unread menu.
         }
 
         #endregion
@@ -72,6 +76,12 @@ namespace LibVideoChannels
             this._flash_vars = this._flash_vars.Replace("%video_id%", this._video_id); // replace video_id variable in flashvars.
         }
 
+        public override void SetState(ItemState State) // override setstate function so that we can commit our state to storage.
+        {
+            base.SetState(State); // let the base function also do it's own job.
+            Plugin.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
+        }
+
         public override void DoubleClicked(object sender, EventArgs e)
         {
             if (VideoChannelsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
@@ -83,6 +93,36 @@ namespace LibVideoChannels
 
             this.SetState(ItemState.READ); // set the video state to READ.
             Plugin.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
+        }
+
+
+        public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
+        {
+            // make conditional context-menus invisible.
+            this.ContextMenus["markaswatched"].Visible = false;
+            this.ContextMenus["markasunwatched"].Visible = false;
+
+            switch (this.State) // switch on the item state.
+            {
+                case ItemState.UNREAD:
+                    this.ContextMenus["markaswatched"].Visible = true; // make mark as watched menu visible.
+                    break;
+                case ItemState.READ:
+                    this.ContextMenus["markasunwatched"].Visible = true; // make mark as unwatched menu visible.
+                    break;
+                case ItemState.MARKED:
+                    break;
+            }
+        }
+
+        private void MenuMarkAsWatchedClicked(object sender, EventArgs e)
+        {
+            this.SetState(ItemState.READ); // set the video state as read.          
+        }
+
+        private void MenuMarkAsUnWatchedClicked(object sender, EventArgs e)
+        {
+            this.SetState(ItemState.UNREAD); // set the video state as unread.          
         }
 
         #endregion

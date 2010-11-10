@@ -103,13 +103,13 @@ namespace LibFeeds
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in Stories) { s.SetState(ItemState.READ); } // marked all stories as read.
+            foreach (Story s in this.Stories) { s.SetState(ItemState.READ); } // marked all stories as read.
             this.SetState(ItemState.READ); // also mark self as read.            
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in Stories) { s.SetState(ItemState.UNREAD); } // marked all stories as unread.
+            foreach (Story s in this.Stories) { s.SetState(ItemState.UNREAD); } // marked all stories as unread.
             this.SetState(ItemState.UNREAD); // also mark self as unread.      
         }
 
