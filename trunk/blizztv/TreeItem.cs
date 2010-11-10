@@ -29,8 +29,8 @@ namespace BlizzTV
 
         private ListItem _item; // the plugin-item bound to.
         private Plugin _plugin; // the plugin itself.
-        private Font _bold = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold); // font for unread items.
-        private Font _regular = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Regular); // font for read items.
+        private Font _bold = new Font("Tahoma", 9, FontStyle.Bold); // font for unread items.
+        private Font _regular = new Font("Tahoma", 9, FontStyle.Regular); // font for read items.
         private bool disposed = false;
 
         public ListItem Item { get { return this._item; } } // the item getter.
