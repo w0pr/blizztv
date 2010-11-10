@@ -28,7 +28,7 @@ namespace LibStreams
     {
         #region members
 
-        private ListItem root = new ListItem("Streams"); // root item on treeview.
+        private ListItem _root_item = new ListItem("Streams"); // root item on treeview.
         private List<Stream> _streams = new List<Stream>();
         private bool disposed = false;
 
@@ -46,7 +46,7 @@ namespace LibStreams
         {
             StreamsPlugin.PluginSettings = ps;
 
-            this.RegisterListItem(root); // register root item.
+            this.RegisterListItem(_root_item); // register root item.
             this.RegisterPluginMenuItem(this, new NewMenuItemEventArgs("Subscriptions", new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu
             
             PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseStreams())); // parse the streams.
@@ -97,13 +97,13 @@ namespace LibStreams
                         {
                             stream.SetTitle(string.Format("{0} ({1})", stream.Title, stream.ViewerCount)); // put stream viewers count on title.
                             available_count++; // increment available live streams count.
-                            RegisterListItem(stream, root); // register the stream item.
+                            RegisterListItem(stream, _root_item); // register the stream item.
                         }
                     }
                     catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
                 }
 
-                if (available_count > 0) { root.SetTitle(string.Format("{0} ({1})", root.Title, available_count)); } // put available streams count on root object's title.
+                if (available_count > 0) { _root_item.SetTitle(string.Format("{0} ({1})", _root_item.Title, available_count)); } // put available streams count on root object's title.
             }
 
             return success;
