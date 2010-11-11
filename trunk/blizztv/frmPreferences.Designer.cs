@@ -54,14 +54,14 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButtonUseInternalViewers = new System.Windows.Forms.RadioButton();
             this.radioButtonUseDefaultWebBrowser = new System.Windows.Forms.RadioButton();
-            this.tabPreferences = new System.Windows.Forms.TabControl();
+            this.TabControl = new System.Windows.Forms.TabControl();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPlugins.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.tabPreferences.SuspendLayout();
+            this.TabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageList
@@ -297,15 +297,15 @@
             // 
             // tabPreferences
             // 
-            this.tabPreferences.Controls.Add(this.tabGeneral);
-            this.tabPreferences.Controls.Add(this.tabPlugins);
-            this.tabPreferences.Controls.Add(this.tabDebug);
-            this.tabPreferences.ImageList = this.ImageList;
-            this.tabPreferences.Location = new System.Drawing.Point(3, 3);
-            this.tabPreferences.Name = "tabPreferences";
-            this.tabPreferences.SelectedIndex = 0;
-            this.tabPreferences.Size = new System.Drawing.Size(469, 303);
-            this.tabPreferences.TabIndex = 0;
+            this.TabControl.Controls.Add(this.tabGeneral);
+            this.TabControl.Controls.Add(this.tabPlugins);
+            this.TabControl.Controls.Add(this.tabDebug);
+            this.TabControl.ImageList = this.ImageList;
+            this.TabControl.Location = new System.Drawing.Point(3, 3);
+            this.TabControl.Name = "tabPreferences";
+            this.TabControl.SelectedIndex = 0;
+            this.TabControl.Size = new System.Drawing.Size(469, 303);
+            this.TabControl.TabIndex = 0;
             // 
             // frmPreferences
             // 
@@ -316,7 +316,7 @@
             this.ClientSize = new System.Drawing.Size(474, 340);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.tabPreferences);
+            this.Controls.Add(this.TabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -333,7 +333,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.tabPreferences.ResumeLayout(false);
+            this.TabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -364,6 +364,6 @@
         private System.Windows.Forms.TextBox txtVideoPlayerWidth;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabControl tabPreferences;
+        private System.Windows.Forms.TabControl TabControl;
     }
 }

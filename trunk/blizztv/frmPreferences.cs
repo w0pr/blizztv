@@ -62,6 +62,7 @@ namespace BlizzTV
             checkBoxEnableDebugConsole.Checked = SettingsStorage.Instance.Settings.EnableDebugConsole;
 
             // load plugins specific preferences tabs
+            this.LoadPluginTabs();
         }
 
         private void LoadPluginTabs() // loads plugins specific preferences tabs
@@ -70,7 +71,18 @@ namespace BlizzTV
             {
                 if (pair.Value.Enabled) // if plugin is enabled
                 {
-
+                    Form plugin_form = PluginManager.Instance.GetPlugin(pair.Key).GetPreferencesForm(); // get plugin's preferences form.
+                    if (plugin_form != null) // if plugin defined a preferences form in reality.
+                    {
+                        TabPage t = new TabPage(pair.Key); // create up a new tabpage for it.
+                        plugin_form.TopLevel = false; // plugin form should not behave as top most.
+                        plugin_form.Dock = DockStyle.Fill; // let it fill it's parent.
+                        plugin_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None; // it should not have borders too.
+                        plugin_form.Show(); // show the settings form.
+                        t.Controls.Add(plugin_form); // add the form to tabpage.
+                        this._plugin_tabs.Add(t); // add tabpage to list so we can access it later.
+                        this.TabControl.Controls.Add(t); // add tabpage to our tabcontrol.
+                    }
                 }
             }
         }
@@ -106,7 +118,8 @@ namespace BlizzTV
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            this.SaveSettings();
+            this.SaveSettings();  // save global settings
+            foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IPluginSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
             this.Close();
         }
     }
