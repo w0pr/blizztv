@@ -59,14 +59,14 @@ namespace BlizzTV
             {
                 using (FileStream stream = new FileStream(this._storage_file, FileMode.Open))
                 {
-                    byte[] p_data = new byte[stream.Length];
-                    stream.Read(p_data, 0, (int)stream.Length);
+                    byte[] data = new byte[stream.Length];
+                    stream.Read(data, 0, (int)stream.Length);
                     stream.Close();
-                    using (MemoryStream unserialized = new MemoryStream(ProtectedData.Unprotect(p_data, this._entropy, DataProtectionScope.CurrentUser))) // decrypt the data using DPAPI.
+                    using (MemoryStream mstream = new MemoryStream(data))
                     {
                         BinaryFormatter b = new BinaryFormatter();
-                        this._settings = (Settings)b.Deserialize(unserialized);
-                        unserialized.Close();
+                        this._settings = (Settings)b.Deserialize(mstream);
+                        mstream.Close();
                     }
                 }
             }
@@ -89,8 +89,7 @@ namespace BlizzTV
                     {
                         BinaryFormatter b = new BinaryFormatter();
                         b.Serialize(serialized, this._settings);
-                        byte[] p_data = ProtectedData.Protect(serialized.ToArray(), this._entropy, DataProtectionScope.CurrentUser); // okay this is not the world's *most* secure storage but we still add a protection level using DPAPI (http://msdn.microsoft.com/en-us/library/system.security.cryptography.protecteddata.aspx).
-                        stream.Write(p_data, 0, p_data.Length);
+                        stream.Write(serialized.ToArray(), 0, serialized.ToArray().Length);
                         serialized.Close();
                         stream.Close();
                     }
