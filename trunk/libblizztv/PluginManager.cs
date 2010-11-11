@@ -30,6 +30,8 @@ namespace LibBlizzTV
         #region members
 
         private static readonly PluginManager _instance = new PluginManager();
+        private bool disposed = false;
+
         /// <summary>
         /// The plugin manager instance.
         /// </summary>
@@ -39,7 +41,7 @@ namespace LibBlizzTV
         /// <summary>
         /// The available valid plugin's list.
         /// </summary>
-        public Dictionary<string, PluginInfo> Plugins = new Dictionary<string, PluginInfo>(); 
+        public Dictionary<string, PluginInfo> AvailablePlugins = new Dictionary<string, PluginInfo>();        
 
         /// <summary>
         /// The plugin-manager's so the LibBlizzTV's assembly name.
@@ -50,7 +52,6 @@ namespace LibBlizzTV
         /// The plugin-manager's so the LibBlizzTV's assembly version.
         /// </summary>
         public string AssemblyVersion { get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
-        private bool disposed = false;
 
         #endregion
 
@@ -61,9 +62,9 @@ namespace LibBlizzTV
             Log.Instance.Write(LogMessageTypes.INFO, string.Format("Plugin manager - ({0}) initialized..", this.GetType().Module.Name)); // log the plugin-manager startup message.
             this.ScanPlugins(); // scan the available plugins
             
-            foreach (KeyValuePair<string,PluginInfo> pi in this.Plugins) // print all avaiable plugin's list to log.
+            foreach (KeyValuePair<string,PluginInfo> pi in this.AvailablePlugins) // print all avaiable plugin's list to log.
             {
-                Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found Plugin: {0}", pi.Value.AssemblyName.ToString()));
+                Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found Plugin: {0}", pi.Value.Attributes.Name.ToString()));
             }                
         }
 
@@ -74,8 +75,20 @@ namespace LibBlizzTV
             foreach (FileInfo _dll in _dll_files) // loop through all avaible dll files
             {
                 PluginInfo pi = new PluginInfo(_dll.Name); // get the assembly info
-                if (pi.Valid) Plugins.Add(pi.AssemblyName, pi); // if it's a valid BlizzTV plugin add it to list
+                if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi); // if it's a valid BlizzTV plugin add it to list
             }
+        }
+
+        /// <summary>
+        /// Returns instance of asked plugin.
+        /// </summary>
+        /// <param name="key">The asked plugin's name.</param>
+        /// <returns>Instance of asked plugin.</returns>
+        /// <remarks>If plugin has not been instiated yet it'll do so.</remarks>
+        public Plugin GetPlugin(string key)
+        {
+            PluginInfo pi = this.AvailablePlugins[key]; // get the plugin information.
+            return pi.Instance; // return the instance -- instantation will be handled by PluginInfo if not have instated before.
         }
 
         #endregion
@@ -102,9 +115,9 @@ namespace LibBlizzTV
             {
                 if (disposing) // managed resources
                 {
-                    foreach (KeyValuePair<string, PluginInfo> pair in this.Plugins) { pair.Value.Dispose(); }
-                    this.Plugins.Clear();
-                    this.Plugins = null;
+                    foreach (KeyValuePair<string, PluginInfo> pair in this.AvailablePlugins) { pair.Value.Dispose(); }
+                    this.AvailablePlugins.Clear();
+                    this.AvailablePlugins = null;
                 }
                 disposed = true;
             }

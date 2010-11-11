@@ -24,7 +24,7 @@ using LibBlizzTV.Utils;
 
 namespace LibVideoChannels
 {
-    [Plugin("Video Channels", "Video channel aggregator plugin for BlizzTV","video_16.png")]
+    [PluginAttributes("Video Channels", "Video channel aggregator plugin for BlizzTV","video_16.png")]
     public class VideoChannelsPlugin:Plugin
     {
         #region members

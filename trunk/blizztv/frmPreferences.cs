@@ -27,6 +27,8 @@ namespace BlizzTV
 {
     public partial class frmPreferences : Form
     {
+        private List<TabPage> _plugin_tabs = new List<TabPage>();
+
         public frmPreferences()
         {
             InitializeComponent();
@@ -48,16 +50,29 @@ namespace BlizzTV
             checkBoxVideoAutoPlay.Checked = SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay;
 
             // load plugin settings
-            foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.Plugins)
+            foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
             {
                 ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
                 this.ListviewPlugins.Items.Add(item);
-                if (SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(pair.Value.AssemblyName) && SettingsStorage.Instance.Settings.PluginSettings[pair.Value.AssemblyName].Enabled) item.Checked = true;
+                if (SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(pair.Value.Attributes.Name) && SettingsStorage.Instance.Settings.PluginSettings[pair.Value.Attributes.Name].Enabled) item.Checked = true;
             }
             
             // load ui-specific settings
             checkBoxEnableDebugLogging.Checked = SettingsStorage.Instance.Settings.EnableDebugLogging;
             checkBoxEnableDebugConsole.Checked = SettingsStorage.Instance.Settings.EnableDebugConsole;
+
+            // load plugins specific preferences tabs
+        }
+
+        private void LoadPluginTabs() // loads plugins specific preferences tabs
+        {
+            foreach (KeyValuePair<string, PluginSettings> pair in SettingsStorage.Instance.Settings.PluginSettings) // loop through available plugins
+            {
+                if (pair.Value.Enabled) // if plugin is enabled
+                {
+
+                }
+            }
         }
 
         private void SaveSettings()
@@ -73,7 +88,7 @@ namespace BlizzTV
             // save plugin settings
             foreach (ListviewPluginsItem item in ListviewPlugins.Items)
             {
-                string plugin_name = item.PluginInfo.AssemblyName;
+                string plugin_name = item.PluginInfo.Attributes.Name;
                 if (!SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(plugin_name)) SettingsStorage.Instance.Settings.PluginSettings.Add(plugin_name, new PluginSettings());
                 SettingsStorage.Instance.Settings.PluginSettings[plugin_name].Enabled = item.Checked;                
             }

@@ -41,7 +41,7 @@ namespace BlizzTV
             ListviewModules.Items.Add(new ListviewModulesItem(Assembly.GetExecutingAssembly().GetName().Name, Assembly.GetExecutingAssembly().GetName().Version.ToString(), "The user-interface."));
             ListviewModules.Items.Add(new ListviewModulesItem(PluginManager.Instance.AssemblyName, PluginManager.Instance.AssemblyVersion, "The core."));
 
-            foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.Plugins)
+            foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
             {
                 ListviewModules.Items.Add(new ListviewModulesItem(pair.Value.AssemblyName, pair.Value.AssemblyVersion, pair.Value.Attributes.Description));
             }

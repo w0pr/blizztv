@@ -31,7 +31,8 @@ namespace LibBlizzTV
         private string _assembly_file; // the plugins file name on the disk.        
         private Assembly _assembly; // the plugin assembly itself.
         private Type _plugin_entrance; // the plugin's entrance point (actual module's ctor).
-        private PluginAttribute _attributes; // the plugin's attributes
+        private PluginAttributes _attributes; // the plugin's attributes
+        private Plugin _instance = null; // contains the plugin instance if initiated.
         private bool disposed = false;
 
         /// <summary>
@@ -52,7 +53,20 @@ namespace LibBlizzTV
         /// <summary>
         /// The plugin's attributes
         /// </summary>
-        public PluginAttribute Attributes { get { return _attributes; } }
+        public PluginAttributes Attributes { get { return _attributes; } }
+
+        /// <summary>
+        /// Returns the plugin instance.
+        /// <remarks>If the plugin is not initiated before it will be so.</remarks>
+        /// </summary>
+        public Plugin Instance
+        {
+            get
+            {
+                if (this._instance == null) this._instance = this.CreateInstance();
+                return this._instance;
+            }
+        }
 
         #endregion
 
@@ -77,14 +91,14 @@ namespace LibBlizzTV
         /// Creates a instance
         /// </summary>
         /// <returns>Returns the instance of the plugin asked for.</returns>
-        public Plugin CreateInstance()
+        private Plugin CreateInstance()
         {
             Plugin plugin=null; 
             try
             {
                 if (!this._valid) throw new NotSupportedException(); // If the plugin asked for is not a valid BlizzTV pluin, fire an exception.
                 plugin = (Plugin)Activator.CreateInstance(this._plugin_entrance); // Create the plugin instance using the ctor we stored as entrance point.
-                plugin.PluginInfo = this; // attach the plugin-info to plugin itself.
+                plugin.Attributes = this._attributes;
             }
             catch (Exception e)
             {
@@ -117,12 +131,12 @@ namespace LibBlizzTV
                     if (t.IsSubclassOf(typeof(Plugin))) // if type extends the Plugin class
                     {
                         this._plugin_entrance = t; // this is our entry point (the module's ctor).                        
-                        object[] _attr = t.GetCustomAttributes(typeof(PluginAttribute), true); // get the attributes for the plugin
+                        object[] _attr = t.GetCustomAttributes(typeof(PluginAttributes), true); // get the attributes for the plugin
 
                         if (_attr.Length > 0) // if plugin defines attributes, check them
                         {
-                            (_attr[0] as PluginAttribute).ResolveResources(this._assembly); // resolve the attribute resources
-                            this._attributes = (PluginAttribute)_attr[0]; // store the attributes
+                            (_attr[0] as PluginAttributes).ResolveResources(this._assembly); // resolve the attribute resources
+                            this._attributes = (PluginAttributes)_attr[0]; // store the attributes
                             this._valid = true; // yes we're valid ;)
                         }
                         else throw new LoadPluginInfoException(this._assembly_file, "Plugin does not define the required attributes."); // all plugins should define the required atributes

@@ -30,7 +30,7 @@ namespace LibBlizzTV
         #region members
 
         private Assembly _assembly; // the assembly 
-        private PluginInfo _plugin_info; // the plugin info
+        private PluginAttributes _attributes;
         private static Storage _storage; // the key-value storage
         private bool disposed = false;
 
@@ -45,9 +45,9 @@ namespace LibBlizzTV
         public static GlobalSettings GlobalSettings;
 
         /// <summary>
-        /// The plugin info.
+        /// The plugins attributes.
         /// </summary>
-        public PluginInfo PluginInfo { get { return this._plugin_info; } internal set { this._plugin_info = value; } }
+        public PluginAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } }
 
         /// <summary>
         /// The key-value storage for plugin's use.
@@ -94,6 +94,15 @@ namespace LibBlizzTV
         }
 
         /// <summary>
+        /// Plugins shoud override this method and return the preferences form.
+        /// </summary>
+        /// <returns>The preferences form.</returns>
+        public virtual System.Windows.Forms.Form GetPreferencesForm()
+        {
+            return null;
+        }
+
+        /// <summary>
         /// PluginLoadComplete event handler delegate.
         /// </summary>
         /// <param name="sender">The sender object.</param>
@@ -112,8 +121,8 @@ namespace LibBlizzTV
         /// <remarks>Plugins can use this method to notify observers about it's loading results.</remarks>
         protected void PluginLoadComplete(PluginLoadCompleteEventArgs e)
         {
-            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin '{0}' loaded with success.", this.PluginInfo.AssemblyName.ToString()));
-            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugin '{0}' load failed.", this.PluginInfo.AssemblyName.ToString()));
+            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin '{0}' loaded with success.", this.Attributes.Name));
+            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugin '{0}' load failed.", this.Attributes.Name));
             if (OnPluginLoadComplete != null) OnPluginLoadComplete(this,e); // notify observers.
         }
 
@@ -136,8 +145,8 @@ namespace LibBlizzTV
         /// <remarks>Plugins can use this method to notify observers about it's data update results.</remarks>
         protected void PluginDataUpdateComplete(PluginDataUpdateCompleteEventArgs e)
         {
-            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("{0} updated it's data with success.", this.PluginInfo.AssemblyName.ToString()));
-            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("{0} failed to update it's data.", this.PluginInfo.AssemblyName.ToString()));
+            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("{0} updated it's data with success.", this.Attributes.Name));
+            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("{0} failed to update it's data.", this.Attributes.Name));
             if (OnPluginLoadComplete != null) OnPluginDataUpdate(this, e); // notify observers.
         }
 
@@ -189,7 +198,7 @@ namespace LibBlizzTV
                 if (disposing) // managed resources
                 {
                     this._assembly = null;
-                    this._plugin_info = null;
+                    this._attributes = null;
                     PluginSettings = null;
                     GlobalSettings = null;
                     _storage = null;
@@ -252,10 +261,10 @@ namespace LibBlizzTV
     #region plugin attributes 
 
     /// <summary>
-    /// Plugin attributes.
+    /// Defines plugin attributes.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class PluginAttribute : Attribute
+    public class PluginAttributes : Attribute
     {
         #region members
 
@@ -291,7 +300,7 @@ namespace LibBlizzTV
         /// <param name="Description">The plugin description.</param>
         /// <param name="IconName">Pass null as value or do not supply a value if you don't want to specify an icon for your plugin.</param>
         /// <remarks>Pass null as value or do not supply a value if you don't want to specify an icon for your plugin.</remarks>
-        public PluginAttribute(string Name, string Description, string IconName = null)
+        public PluginAttributes(string Name, string Description, string IconName = null)
         {
             this._name = Name;
             this._description = Description;
@@ -330,7 +339,7 @@ namespace LibBlizzTV
         /// <summary>
         /// de-ctor.
         /// </summary>
-        ~PluginAttribute() { Dispose(false); }
+        ~PluginAttributes() { Dispose(false); }
 
         /// <summary>
         /// Disposes the object.
