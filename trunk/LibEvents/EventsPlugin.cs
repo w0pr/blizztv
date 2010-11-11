@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
+using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
@@ -34,6 +35,7 @@ namespace LibEvents
         private ListItem _events_today_item = new ListItem("Today"); // today's events item.
         private ListItem _events_upcoming_item = new ListItem("Upcoming"); // upcoming events item.
         private ListItem _events_past_item = new ListItem("Past"); // past events item.
+        private Timer EventTimer;
         private bool disposed = false;
 
         #endregion        
@@ -43,6 +45,7 @@ namespace LibEvents
         public EventsPlugin()
         {
             this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // register calender menu.
+            this._root_item.ContextMenus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
         }
 
         #endregion
@@ -58,7 +61,14 @@ namespace LibEvents
             this.RegisterListItem(_events_upcoming_item, _root_item); // register upcoming events item.          
             this.RegisterListItem(_events_past_item, _root_item); // register past events item.            
 
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(ParseEvents())); // parse events.            
+            bool success = this.ParseEvents(); // parse events.
+            PluginLoadComplete(new PluginLoadCompleteEventArgs(success));
+            PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(success));                
+
+            // setup update timer for event checks
+            EventTimer = new Timer(5000);
+            EventTimer.Elapsed += new ElapsedEventHandler(CheckEvents);
+            EventTimer.Enabled = true;
         }
 
         #endregion
@@ -125,10 +135,24 @@ namespace LibEvents
                     }
                 }
 
-                this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.
+                this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.                               
             }
 
             return success;
+        }
+
+        private void CheckEvents(object source, ElapsedEventArgs e)
+        {
+            foreach (Event _event in this._events) // loop through all events.
+            {
+                if (!_event.IsOver) // if it's not already over.
+                {
+                    if (_event.Time.LocalTime.Date == DateTime.Now.Date) // if the event is scheduled for today.
+                    {
+                        _event.Check(); // check the event
+                    }
+                }
+            }
         }
 
         private void MenuCalendarClicked(object sender, EventArgs e) // calendars menu handler

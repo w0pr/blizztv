@@ -37,7 +37,7 @@ namespace BlizzTV
         private void frmMain_Load(object sender, EventArgs e)
         {
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.
-            this.LoadPlugins(); // Load the enabled plugins.
+            this.LoadPlugins(); // Load the enabled plugins.           
         }
 
         #endregion        
@@ -161,6 +161,11 @@ namespace BlizzTV
             e.Cancel = true; // live in system-tray even if form is closed
             this.WindowState = FormWindowState.Minimized; // go minimized
             this.ShowInTaskbar = false; // hide ourself from taskbar
+        }
+
+        private void TrayIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            (this.TrayIcon.Tag as ListItem).BalloonClicked(sender, e);
         }
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)

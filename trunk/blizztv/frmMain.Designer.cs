@@ -34,11 +34,13 @@
             this.blizzTVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuPlugins = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuDonate = new System.Windows.Forms.ToolStripMenuItem();
             this.blizzTVcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bugReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -50,6 +52,7 @@
             this.TrayIconMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeView = new System.Windows.Forms.TreeView();
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
@@ -71,16 +74,17 @@
             this.blizzTVToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.preferencesToolStripMenuItem,
             this.MenuPlugins,
+            this.toolStripSeparator1,
             this.MenuExit});
-            this.blizzTVToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("blizzTVToolStripMenuItem.Image")));
             this.blizzTVToolStripMenuItem.Name = "blizzTVToolStripMenuItem";
-            this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(28, 20);
+            this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.blizzTVToolStripMenuItem.Text = "Town Portal";
             // 
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("preferencesToolStripMenuItem.Image")));
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
@@ -90,6 +94,11 @@
             this.MenuPlugins.Name = "MenuPlugins";
             this.MenuPlugins.Size = new System.Drawing.Size(135, 22);
             this.MenuPlugins.Text = "Plugins";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
             // 
             // MenuExit
             // 
@@ -104,6 +113,7 @@
             this.MenuDonate,
             this.blizzTVcomToolStripMenuItem,
             this.userGuideToolStripMenuItem,
+            this.toolStripSeparator2,
             this.AboutToolStripMenuItem,
             this.bugReportsToolStripMenuItem});
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
@@ -133,6 +143,11 @@
             this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.userGuideToolStripMenuItem.Text = "User Guide";
             this.userGuideToolStripMenuItem.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(135, 6);
             // 
             // AboutToolStripMenuItem
             // 
@@ -179,27 +194,30 @@
             this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
             this.TrayIcon.Text = "BlizzTV";
             this.TrayIcon.Visible = true;
+            this.TrayIcon.BalloonTipClicked += new System.EventHandler(this.TrayIcon_BalloonTipClicked);
             this.TrayIcon.DoubleClick += new System.EventHandler(this.TrayIcon_DoubleClick);
             // 
             // TrayContextMenu
             // 
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ContextAboutToolStripMenuItem,
+            this.toolStripSeparator3,
             this.TrayIconMenuExit});
             this.TrayContextMenu.Name = "TrayContextMenu";
-            this.TrayContextMenu.Size = new System.Drawing.Size(108, 48);
+            this.TrayContextMenu.Size = new System.Drawing.Size(108, 54);
             // 
             // ContextAboutToolStripMenuItem
             // 
+            this.ContextAboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ContextAboutToolStripMenuItem.Image")));
             this.ContextAboutToolStripMenuItem.Name = "ContextAboutToolStripMenuItem";
-            this.ContextAboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.ContextAboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ContextAboutToolStripMenuItem.Text = "About";
             this.ContextAboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // TrayIconMenuExit
             // 
             this.TrayIconMenuExit.Name = "TrayIconMenuExit";
-            this.TrayIconMenuExit.Size = new System.Drawing.Size(107, 22);
+            this.TrayIconMenuExit.Size = new System.Drawing.Size(152, 22);
             this.TrayIconMenuExit.Text = "Exit";
             this.TrayIconMenuExit.Click += new System.EventHandler(this.TrayIconMenuExit_Click);
             // 
@@ -225,6 +243,11 @@
             this.NodeIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("NodeIcons.ImageStream")));
             this.NodeIcons.TransparentColor = System.Drawing.Color.Transparent;
             this.NodeIcons.Images.SetKeyName(0, "current.gif");
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // frmMain
             // 
@@ -261,7 +284,7 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel LabelStatus;
         private System.Windows.Forms.ToolStripProgressBar ProgressStatus;
-        private System.Windows.Forms.NotifyIcon TrayIcon;
+        internal System.Windows.Forms.NotifyIcon TrayIcon;
         private System.Windows.Forms.ContextMenuStrip TrayContextMenu;
         private System.Windows.Forms.ToolStripMenuItem ContextAboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
@@ -274,6 +297,9 @@
         private System.Windows.Forms.ToolStripMenuItem MenuDonate;
         private System.Windows.Forms.ToolStripMenuItem MenuExit;
         private System.Windows.Forms.ToolStripMenuItem TrayIconMenuExit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 
