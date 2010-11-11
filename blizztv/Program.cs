@@ -27,6 +27,15 @@ namespace BlizzTV
         [STAThread]
         static void Main()
         {
+            // don't allow more than one instances. (method explanation: http://www.ai.uga.edu/~mc/SingleInstance.html)
+            bool got_mutex = false; // states if got the mutex lock
+            System.Threading.Mutex single_instance_lock = new System.Threading.Mutex(true, System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, out got_mutex); // try to create a new mutex named after our app-name.
+            if (!got_mutex) // if we can't own the mutex, that means another instance was already owning it!
+            {
+                MessageBox.Show("Another instance of BlizzTV is already running!", "Startup Error!", MessageBoxButtons.OK, MessageBoxIcon.Error); // give a non-friendly error message :/
+                return; // exit
+            }
+
             // Check global settings and start logger and debug console if enabled
             if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
@@ -37,6 +46,8 @@ namespace BlizzTV
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
+
+            GC.KeepAlive(single_instance_lock); // okay GC, single_instance_lock is an important variable for us, so never ever throw it to garbage!
         }
     }
 }
