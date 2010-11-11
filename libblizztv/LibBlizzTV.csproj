@@ -57,6 +57,7 @@
     <Compile Include="frmDataEditor.Designer.cs">
       <DependentUpon>frmDataEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="IPluginSettingsForm.cs" />
     <Compile Include="Utils\DebugConsole.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="ListItem.cs" />

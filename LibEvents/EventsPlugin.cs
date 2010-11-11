@@ -71,6 +71,11 @@ namespace LibEvents
             EventTimer.Enabled = true;
         }
 
+        public override System.Windows.Forms.Form GetPreferencesForm()
+        {
+            return new frmSettings();
+        }
+
         #endregion
 
         #region internal logic
