@@ -1,4 +1,25 @@
-[08.11.2010] - 0.1.alpha
-------------------------
+[11.11.2010] - 0.11-beta (r59)
+-------------------------------
+
+* Implemented event details window. 
+* Events plugin will not notify about upcoming & inprogress events (though timer values are hardcoded for now).
+* Plugins now can update their data (though timer values are hardcoded for now). Feeds, Streams and Videos plugins now will update their data frequently.
+* Implementing Mark As Read/Unread support for Feeds plugin, Mark as Watched/Unwatched support for Video Channels plugin.
+* Improved plugin key-value pair storage API.
+* Changed treeview rendering font to Tahoma to get a better looking.
+* The application will not die when user closes main form but will stay in system tray until user explicility exits it using the menu.
+* Commented most of the code.
+* XML-commented the LibBlizzTV, so that plugin developers now will see IntelliSense hints while coding a plugin.
+* Hardened code with proper exception & error handling.
+* Implemented a calendar view for LibEvents plugin.
+* Added support for local time conversion for event date & time's.
+* Added brand new plugin LibEvents, as of right now basically syndicates events from TeamLiquid.
+* Implemented treeview item context menu support for plugins.
+* Plugins now can register their own menu's on main window.
+* Implemented a basic xml editor for plugin data's. 
+* Implemented logging support (for debugging purposes).
+
+[08.11.2010] - 0.10-alpha (r35)
+-------------------------------
 
  * The very basic functional but "non-stable" alpha for testers.
