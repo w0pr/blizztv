@@ -75,10 +75,10 @@ namespace LibEvents
                     this._notified = true; // don't notify about it more then once
                     this.ShowBalloonTip(string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
                 }
-                else if ((this.Time.LocalTime - DateTime.Now).TotalMinutes <= 5) // start notifying about the upcoming event.
+                else if ((this.Time.LocalTime - DateTime.Now).TotalMinutes > 0 && (this.Time.LocalTime - DateTime.Now).TotalMinutes <= 5) // start notifying about the upcoming event.
                 {
                     this._notified = true; // don't notify about it more then once
-                    this.ShowBalloonTip(string.Format("Event starts in {0} minutes: {1}",(this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString(), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                    this.ShowBalloonTip(string.Format("Event starts in {0} minutes: {1}",(this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
                 }
             }
         }
