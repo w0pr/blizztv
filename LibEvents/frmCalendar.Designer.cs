@@ -36,6 +36,9 @@
             System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange6 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
             this.MonthView = new System.Windows.Forms.Calendar.MonthView();
             this.Calendar = new System.Windows.Forms.Calendar.Calendar();
+            this.StatusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // MonthView
@@ -44,10 +47,10 @@
                         | System.Windows.Forms.AnchorStyles.Left)));
             this.MonthView.FirstDayOfWeek = System.DayOfWeek.Monday;
             this.MonthView.ItemPadding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.MonthView.Location = new System.Drawing.Point(-2, -3);
+            this.MonthView.Location = new System.Drawing.Point(-2, 4);
             this.MonthView.MaxSelectionCount = 30;
             this.MonthView.Name = "MonthView";
-            this.MonthView.Size = new System.Drawing.Size(191, 417);
+            this.MonthView.Size = new System.Drawing.Size(191, 449);
             this.MonthView.TabIndex = 0;
             this.MonthView.SelectionChanged += new System.EventHandler<System.Windows.Forms.Calendar.DateRangeChangedEventArgs>(this.MonthView_SelectionChanged);
             // 
@@ -85,24 +88,45 @@
         calendarHighlightRange4,
         calendarHighlightRange5,
         calendarHighlightRange6};
-            this.Calendar.Location = new System.Drawing.Point(195, -3);
+            this.Calendar.Location = new System.Drawing.Point(194, 4);
             this.Calendar.Name = "Calendar";
-            this.Calendar.Size = new System.Drawing.Size(551, 418);
+            this.Calendar.Size = new System.Drawing.Size(570, 448);
             this.Calendar.TabIndex = 1;
             this.Calendar.LoadItems += new System.EventHandler<System.Windows.Forms.Calendar.CalendarLoadEventArgs>(this.Calendar_LoadItems);
             this.Calendar.ItemCreating += new System.EventHandler<System.Windows.Forms.Calendar.CalendarItemCancelEventArgs>(this.Calendar_ItemCreating);
+            this.Calendar.ItemClick += new System.EventHandler<System.Windows.Forms.Calendar.CalendarItemEventArgs>(this.Calendar_ItemClick);
+            // 
+            // StatusStrip
+            // 
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.StatusStrip.Location = new System.Drawing.Point(0, 455);
+            this.StatusStrip.Name = "StatusStrip";
+            this.StatusStrip.Size = new System.Drawing.Size(764, 22);
+            this.StatusStrip.TabIndex = 2;
+            this.StatusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // frmCalendar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(745, 416);
+            this.ClientSize = new System.Drawing.Size(764, 477);
+            this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.Calendar);
             this.Controls.Add(this.MonthView);
             this.Name = "frmCalendar";
             this.Text = "Calendar";
             this.Load += new System.EventHandler(this.frmCalendar_Load);
+            this.StatusStrip.ResumeLayout(false);
+            this.StatusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -110,5 +134,7 @@
 
         private System.Windows.Forms.Calendar.MonthView MonthView;
         private System.Windows.Forms.Calendar.Calendar Calendar;
+        private System.Windows.Forms.StatusStrip StatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }

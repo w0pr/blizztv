@@ -76,11 +76,19 @@ namespace LibBlizzTV
         public virtual void DoubleClicked(object sender, EventArgs e) { }
 
         /// <summary>
-        /// Fired when an item's right clicked.
+        /// Fires when an item's right clicked.
         /// </summary>
         /// <param name="sender">The sender object.</param>
         /// <param name="e">The event parameters.</param>
         public virtual void RightClicked(object sender, EventArgs e) { }
+
+
+        /// <summary>
+        /// Fires when a notify balloon about the item is clicked.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event parameters.</param>
+        public virtual void BalloonClicked(object sender, EventArgs e) { }
 
         /// <summary>
         /// Title change event handler delegate.
@@ -125,6 +133,33 @@ namespace LibBlizzTV
             this._state = State;
             if (OnStateChange != null) OnStateChange(this); // notify observers.
         }
+
+        /// <summary>
+        /// Show balloon tip event handler delegate.
+        /// </summary>
+        /// <param name="Title">The tip title.</param>
+        /// <param name="Text">The tip text.</param>
+        /// <param name="Icon">The tip icon.</param>
+        /// <param name="sender">The sender object.</param>
+        public delegate void ShowBalloonTipEventHandler(object sender,string Title, string Text, System.Windows.Forms.ToolTipIcon Icon);
+
+        /// <summary>
+        /// Show balloon tip event handler.
+        /// </summary>
+        public event ShowBalloonTipEventHandler OnShowBalloonTip;
+
+        /// <summary>
+        /// Shows a balloon tip on system tray.
+        /// </summary>
+        /// <remarks>Can be overridden though you should still call base.ShowBalloonTip().</remarks> 
+        /// <param name="Title">The tip title.</param>
+        /// <param name="Text">The tip text.</param>
+        /// <param name="Icon">The tip icon.</param>
+        public virtual void ShowBalloonTip(string Title,string Text,System.Windows.Forms.ToolTipIcon Icon)
+        {
+            if (OnShowBalloonTip != null) OnShowBalloonTip(this,Title, Text, Icon);
+        }
+
 
         /// <summary>
         /// Item delete event handler delegate.

@@ -30,12 +30,14 @@ namespace LibEvents
         private string _description; // the event description.
         private string _event_id; // the event id.
         private bool _is_over = false; // is the event over?
+        private bool _notified = false; // was user notified about the event?
         private ZonedDateTime _time; // zoned event time info. 
 
         public string FullTitle { get { return this._full_title; } }
         public string Description { get { return this._description; } }
         public string EventID { get { return this._event_id; } }
         public bool IsOver { get { return this._is_over; } }
+        public bool Notified { get { return this._notified; } }
         public ZonedDateTime Time { get { return this._time; } }
 
         #endregion
@@ -49,9 +51,80 @@ namespace LibEvents
             this._description = Description;
             this._event_id = EventID;
             this._is_over = isOver;
-            this._time = Time;
+            this._time = Time;          
+        }
+
+        public override void DoubleClicked(object sender, EventArgs e)
+        {
+            frmEventViewer f = new frmEventViewer(this);
+            f.Show();
+        }
+
+        public override void BalloonClicked(object sender, EventArgs e)
+        {
+            frmEventViewer f = new frmEventViewer(this);
+            f.Show();
+        }
+
+        public void Check() // Check the event and notify user about it if it's in progress or soon to be so.
+        {
+            if (!this.Notified) // if we haven't notified before
+            {
+                if (this.Time.LocalTime <= DateTime.Now && DateTime.Now <= this.Time.LocalTime.AddHours(1)) // is event already in progress?
+                {
+                    this._notified = true; // don't notify about it more then once
+                    this.ShowBalloonTip(string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                }
+                else if ((this.Time.LocalTime - DateTime.Now).TotalMinutes <= 5) // start notifying about the upcoming event.
+                {
+                    this._notified = true; // don't notify about it more then once
+                    this.ShowBalloonTip(string.Format("Event starts in {0} minutes: {1}",(this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString(), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                }
+            }
+        }
+
+        public EventStatus Status // returns event status. 
+        {
+            get
+            {
+                if (this.IsOver || DateTime.Now > this.Time.LocalTime.AddHours(1)) return EventStatus.OVER; // is it over?
+                else if (this.Time.LocalTime <= DateTime.Now && DateTime.Now <= this.Time.LocalTime.AddHours(1)) return EventStatus.IN_PROGRESS; // is it in progress?
+                else return EventStatus.UPCOMING; // or is it upcoming?
+            }
+        }
+
+        public string StatusText // returns event status text.
+        {            
+            get
+            {
+                string status = "";
+                switch (this.Status)
+                {
+                    case EventStatus.OVER:
+                        status = "Over";
+                        break;
+                    case EventStatus.IN_PROGRESS:
+                        status = "In progress";
+                        break;
+                    case EventStatus.UPCOMING:
+                        TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
+                        if (timeleft.Days > 0) status += string.Format("{0} day, ", timeleft.Days);
+                        if (timeleft.Hours > 0) status += string.Format("{0} hour, ", timeleft.Hours);
+                        if (timeleft.Minutes > 0) status += string.Format("{0} minutes", timeleft.Minutes);
+                        status += " to go.";
+                        break;
+                }
+                return status;     
+            }
         }
 
         #endregion
+    }
+
+    public enum EventStatus
+    {
+        OVER,
+        IN_PROGRESS,
+        UPCOMING
     }
 }

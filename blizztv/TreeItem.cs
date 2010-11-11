@@ -51,6 +51,7 @@ namespace BlizzTV
             this._item.OnTitleChange += TitleChange; // the title-change event.
             this._item.OnStateChange += StateChange; // the state-change event.        
             this._item.OnDelete += OnDelete; // delete event.
+            this._item.OnShowBalloonTip += OnShowBalloonTip; // shows a balloon tooltip on system tray.
         }
 
         #endregion
@@ -111,6 +112,12 @@ namespace BlizzTV
             }
         }
 
+        private void OnShowBalloonTip(object sender,string Title, string Text, ToolTipIcon Icon)
+        {
+            (this.TreeView.FindForm() as frmMain).TrayIcon.Tag = sender;
+            (this.TreeView.FindForm() as frmMain).TrayIcon.ShowBalloonTip(10000, Title, Text, Icon);
+        }
+
         public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e) 
         {
             this._item.DoubleClicked(sender,e); // notify the item about the double-click event.
@@ -142,6 +149,7 @@ namespace BlizzTV
                     this._item.OnTitleChange -= TitleChange;
                     this._item.OnStateChange -= StateChange;
                     this._item.OnDelete -= OnDelete;
+                    this._item.OnShowBalloonTip -= OnShowBalloonTip;
                     this._item = null;
                     this._plugin = null;
                     this._bold.Dispose();

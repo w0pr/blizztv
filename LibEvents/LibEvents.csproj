@@ -32,6 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -54,6 +56,12 @@
     <Compile Include="frmCalendar.Designer.cs">
       <DependentUpon>frmCalendar.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmEventViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEventViewer.Designer.cs">
+      <DependentUpon>frmEventViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -71,6 +79,9 @@
   <ItemGroup>
     <EmbeddedResource Include="frmCalendar.resx">
       <DependentUpon>frmCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEventViewer.resx">
+      <DependentUpon>frmEventViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

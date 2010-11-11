@@ -27,24 +27,16 @@ namespace BlizzTV
         [STAThread]
         static void Main()
         {
-            try
-            {
-                // Check global settings and start logger and debug console if enabled
-                if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
-                if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
+            // Check global settings and start logger and debug console if enabled
+            if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
+            if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
 
-                Log.Instance.Write(LogMessageTypes.INFO, "Program startup.."); // the startup message so we can see sessions in log easier.
+            Log.Instance.Write(LogMessageTypes.INFO, "Program startup.."); // the startup message so we can see sessions in log easier.
 
-                // Startup the main form
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new frmMain());                
-            }
-            catch (Exception e) // catch the unhandled expceptions and log them
-            {
-                Log.Instance.Write(LogMessageTypes.FATAL, string.Format("Unhandled Exception: {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("Unhandled error: {0}", e.Message), "Unhandled Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Startup the main form
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new frmMain());
         }
     }
 }

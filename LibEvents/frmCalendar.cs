@@ -37,8 +37,9 @@ namespace LibEvents
                 CalendarItem c = new CalendarItem(this.Calendar, _event.Time.LocalTime, _event.Time.LocalTime.AddHours(1), _event.FullTitle); // create a calendar item.
                 if (Calendar.ViewIntersects(c)) // if the event intersects view calendars current view range (start day-end day).
                 {
-                    Calendar.Items.Add(c); // add it to calendar.
+                    c.Tag = _event; // store event on the tag.
                     c.ToolTipText = _event.FullTitle; // item tooltip.
+                    Calendar.Items.Add(c); // add it to calendar.
                 }
                 else 
                 {
@@ -57,6 +58,11 @@ namespace LibEvents
         private void Calendar_ItemCreating(object sender, CalendarItemCancelEventArgs e) 
         {
             e.Cancel = true; // cancel new item creation on calendar.
+        }
+
+        private void Calendar_ItemClick(object sender, CalendarItemEventArgs e)
+        {
+            (e.Item.Tag as Event).DoubleClicked(sender, e);
         }
     }
 }
