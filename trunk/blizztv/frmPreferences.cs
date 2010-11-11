@@ -78,6 +78,7 @@ namespace BlizzTV
                         plugin_form.TopLevel = false; // plugin form should not behave as top most.
                         plugin_form.Dock = DockStyle.Fill; // let it fill it's parent.
                         plugin_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None; // it should not have borders too.
+                        plugin_form.BackColor = Color.White; 
                         plugin_form.Show(); // show the settings form.
                         t.Controls.Add(plugin_form); // add the form to tabpage.
                         this._plugin_tabs.Add(t); // add tabpage to list so we can access it later.
