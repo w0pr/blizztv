@@ -50,11 +50,10 @@ namespace BlizzTV
 
             foreach (KeyValuePair<string, PluginSettings> pair in SettingsStorage.Instance.Settings.PluginSettings) // loop through available plugins.
             {
-                if (pair.Value.Enabled && pm.Plugins.ContainsKey(pair.Key)) // if the plugin is enabled then run it within it's own thread.
+                if (pair.Value.Enabled && pm.AvailablePlugins.ContainsKey(pair.Key)) // if the plugin is enabled then run it within it's own thread.
                 {
-                    PluginInfo pi = pm.Plugins[pair.Key]; // the plugin information and instance-creator.
-                    Plugin Plugin = pi.CreateInstance(); // create the plugin instance in memory.
-                    ThreadStart plugin_thread = delegate { RunPlugin(Plugin); }; // define plugin's own thread.
+                    Plugin plugin=pm.GetPlugin(pair.Key); // get the plugins instane.
+                    ThreadStart plugin_thread = delegate { RunPlugin(plugin); }; // define plugin's own thread.
                     Thread t = new Thread(plugin_thread) { IsBackground = true };  // let the thread a background-one.
                     t.Start(); // nuclear-launch detected :)
                 }
@@ -67,7 +66,7 @@ namespace BlizzTV
             p.OnRegisterListItem += RegisterListItem;  // the treeview item handler.
             this.RegisterPluginMenus(p); // register plugin sub-menu's.
             p.ApplyGlobalSettings(SettingsStorage.Instance.Settings.GlobalSettings); // apply global settings.
-            p.Load(SettingsStorage.Instance.Settings.PluginSettings[p.PluginInfo.AssemblyName]); // run the plugin & apply it's stored settings.
+            p.Load(SettingsStorage.Instance.Settings.PluginSettings[p.Attributes.Name]); // run the plugin & apply it's stored settings.
         }
 
         private void RegisterPluginMenus(Plugin p) // Registers plugin's sub-menus.
@@ -77,7 +76,7 @@ namespace BlizzTV
             {
                 if (p.Menus.Count > 0) // if plugin requests sub-menu's.
                 {
-                    ToolStripMenuItem parent = new ToolStripMenuItem(p.PluginInfo.Attributes.Name, p.PluginInfo.Attributes.Icon); // create the parent plugin-menu first.
+                    ToolStripMenuItem parent = new ToolStripMenuItem(p.Attributes.Name, p.Attributes.Icon); // create the parent plugin-menu first.
                     MenuPlugins.DropDownItems.Add(parent); // add the parent-menu.
 
                     foreach(KeyValuePair<string,ToolStripMenuItem> pair in p.Menus) // loop through all plugin sub-menus.

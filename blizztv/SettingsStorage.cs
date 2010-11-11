@@ -36,7 +36,6 @@ namespace BlizzTV
         public Settings Settings { get { return this._settings; } }
         
         private string _storage_file = "settings.storage"; // the settings file
-        private byte[] _entropy = { 123, 217, 19, 11, 24, 26, 85, 45, 114, 184, 27, 162, 37, 112, 222, 209, 241, 24, 175, 144, 173, 53, 196, 29, 24, 26, 17, 218, 131, 236, 53, 209 }; // the entropy that will be used by the DPAPI.
         private bool disposed = false;
 
         #endregion 
