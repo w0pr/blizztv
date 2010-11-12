@@ -99,12 +99,9 @@ namespace LibFeeds
                 foreach (Feed feed in this._feeds) // loop through feeds.
                 {
                     feed.Update(); // update the feed.
-                    if (feed.Valid)
-                    {
-                        RegisterListItem(feed, _root_item); // if the feed parsed all okay, regiser the feed-item.
-                        foreach (Story story in feed.Stories) { RegisterListItem(story, feed); } // register the story items.
-                        if (feed.State == ItemState.UNREAD) unread++;
-                    }
+                    RegisterListItem(feed, _root_item); // if the feed parsed all okay, regiser the feed-item.
+                    foreach (Story story in feed.Stories) { RegisterListItem(story, feed); } // register the story items.
+                    if (feed.State == ItemState.UNREAD) unread++;
                 }
 
                 this._root_item.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.

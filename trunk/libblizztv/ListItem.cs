@@ -237,14 +237,21 @@ namespace LibBlizzTV
         /// Unread or non-viewed item.
         /// </summary>
         UNREAD,
+
         /// <summary>
         /// Read or vieweed item.
         /// </summary>
         READ,
+
         /// <summary>
         /// Marked item.
         /// </summary>
-        MARKED
+        MARKED,
+
+        /// <summary>
+        /// Error information.
+        /// </summary>
+        ERROR
     } 
 
 	#endregion
