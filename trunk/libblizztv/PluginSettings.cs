@@ -29,6 +29,6 @@ namespace LibBlizzTV
         /// <summary>
         /// Is the plugin enabled?
         /// </summary>
-        public bool Enabled;
+        public bool Enabled=true;
     }
 }

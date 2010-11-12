@@ -42,7 +42,8 @@ namespace LibEvents
 
         #region ctor
 
-        public EventsPlugin()
+        public EventsPlugin(GlobalSettings gs, PluginSettings ps)
+            : base(gs, ps)
         {
             this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // register calender menu.
             this._root_item.ContextMenus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
@@ -52,10 +53,8 @@ namespace LibEvents
 
         #region API handlers
 
-        public override void Load(PluginSettings ps)
-        {
-            EventsPlugin.PluginSettings = ps;
-
+        public override void Run()
+        {            
             this.RegisterListItem(this._root_item); // register root item.           
             this.RegisterListItem(_events_today_item, _root_item); // register today's events item.            
             this.RegisterListItem(_events_upcoming_item, _root_item); // register upcoming events item.          
@@ -178,7 +177,6 @@ namespace LibEvents
             {
                 if (disposing) // managed resources
                 {
-                    EventsPlugin.PluginSettings = null;
                     foreach (Event e in this._events) { e.Dispose(); }
                     this._events.Clear();
                     this._events = null;

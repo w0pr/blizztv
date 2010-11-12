@@ -23,16 +23,27 @@ using System.Security.Cryptography;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
-namespace BlizzTV
+namespace LibBlizzTV
 {
+    /// <summary>
+    /// Storage for settings.
+    /// </summary>
     public sealed class SettingsStorage : IDisposable
     {
         #region Members 
 
         private static SettingsStorage _instance = new SettingsStorage();
+
+        /// <summary>
+        /// Returns instance of the settings storage.
+        /// </summary>
         public static SettingsStorage Instance { get { return _instance; } }
 
         private Settings _settings = new Settings(); // the settings
+
+        /// <summary>
+        /// The settings stored.
+        /// </summary>
         public Settings Settings { get { return this._settings; } }
         
         private string _storage_file = "settings.storage"; // the settings file
@@ -78,6 +89,9 @@ namespace BlizzTV
             }
         }
 
+        /// <summary>
+        /// Saves the settings.
+        /// </summary>
         public void Save() // saves the settings and protects them using DPAPI
         {
             try
@@ -101,6 +115,10 @@ namespace BlizzTV
             }
         }
 
+        /// <summary>
+        /// Does settings storage exists?
+        /// </summary>
+        /// <returns>Returns true if settings storage exists</returns>
         public bool StorageExists() // does the storage file exists?
         {
             return File.Exists(this._storage_file);
@@ -110,8 +128,14 @@ namespace BlizzTV
 
         #region de-ctor
 
+        /// <summary>
+        /// de-ctor.
+        /// </summary>
         ~SettingsStorage() { Dispose(false); }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -133,16 +157,32 @@ namespace BlizzTV
         #endregion
     }
 
+    /// <summary>
+    /// Holds settings.
+    /// </summary>
     [Serializable]
     public sealed class Settings
     {
         #region Members
 
+        /// <summary>
+        /// Holds global setttings than can be used by both plugins and UI itself.
+        /// </summary>
         public GlobalSettings GlobalSettings = new GlobalSettings(); // Global settings that can be used by both plugins and the UI itself.
+
+        /// <summary>
+        /// Holds a list of plugin settings.
+        /// </summary>
         public Dictionary<String, PluginSettings> PluginSettings = new Dictionary<String, PluginSettings>(); // Plugin-specific settings
 
-        // UI-specific settings
+        /// <summary>
+        /// Enable debug log.
+        /// </summary>
         public bool EnableDebugLogging = false;
+
+        /// <summary>
+        /// Enables debug console.
+        /// </summary>
         public bool EnableDebugConsole = false;
 
         private bool disposed = false;
@@ -151,8 +191,14 @@ namespace BlizzTV
 
         #region de-ctor
 
+        /// <summary>
+        /// de-ctor.
+        /// </summary>
         ~Settings() { Dispose(false); }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);

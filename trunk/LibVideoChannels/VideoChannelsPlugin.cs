@@ -37,7 +37,8 @@ namespace LibVideoChannels
 
         #region ctor
 
-        public VideoChannelsPlugin()
+        public VideoChannelsPlugin(GlobalSettings gs, PluginSettings ps)
+            : base(gs, ps)
         {
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
         }
@@ -46,9 +47,8 @@ namespace LibVideoChannels
 
         #region API handlers
 
-        public override void Load(PluginSettings ps)
+        public override void Run()
         {
-            VideoChannelsPlugin.PluginSettings = ps;
             this.RegisterListItem(_root_item); // register root item.            
             PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateChannels())); // parse channels
 

@@ -67,7 +67,7 @@ namespace LibStreams
 
         public override void DoubleClicked(object sender, EventArgs e) // double-click handler
         {
-            if (StreamsPlugin.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
+            if (Plugin.Instance.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
             {
                 Player p = new Player(this); // render the stream with our own video player
                 p.Show();

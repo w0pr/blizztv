@@ -21,6 +21,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using LibBlizzTV;
 using LibBlizzTV.Utils;
 
 namespace LibStreams
@@ -34,8 +35,8 @@ namespace LibStreams
             InitializeComponent();
 
             this._stream = Stream; // set the stream.
-            this.Width = StreamsPlugin.GlobalSettings.VideoPlayerWidth; // get the default player width.
-            this.Height = StreamsPlugin.GlobalSettings.VideoPlayerHeight; // get the default player height.
+            this.Width = Plugin.Instance.GlobalSettings.VideoPlayerWidth; // get the default player width.
+            this.Height = Plugin.Instance.GlobalSettings.VideoPlayerHeight; // get the default player height.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
         }
 

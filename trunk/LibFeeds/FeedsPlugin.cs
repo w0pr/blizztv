@@ -37,7 +37,8 @@ namespace LibFeeds
 
         #region ctor
 
-        public FeedsPlugin()
+        public FeedsPlugin(GlobalSettings gs, PluginSettings ps)
+            : base(gs, ps)
         {
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.                     
         }
@@ -46,9 +47,8 @@ namespace LibFeeds
 
         #region API handlers
 
-        public override void Load(PluginSettings ps)
+        public override void Run()
         {            
-            FeedsPlugin.PluginSettings = ps;            
             this.RegisterListItem(this._root_item); // register root item.            
             PluginLoadComplete(new PluginLoadCompleteEventArgs(this.UpdateFeeds()));  // parse feeds.    
 
@@ -144,7 +144,6 @@ namespace LibFeeds
             {
                 if (disposing) // managed resources
                 {
-                    FeedsPlugin.PluginSettings = null;
                     this._root_item.Dispose();
                     this._root_item = null;
                     foreach (Feed f in this._feeds) { f.Dispose(); }

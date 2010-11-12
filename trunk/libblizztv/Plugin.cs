@@ -29,20 +29,18 @@ namespace LibBlizzTV
     {
         #region members
 
+        private static Plugin _instance;
         private Assembly _assembly; // the assembly 
         private PluginAttributes _attributes;
-        private static Storage _storage; // the key-value storage
+        private Storage _storage; // the key-value storage
+        private PluginSettings _settings; // the plugin's settings.
+        private GlobalSettings _global_settings; // the global settings.
         private bool disposed = false;
 
         /// <summary>
-        /// Plugin specific settings.
+        /// The plugin instance.
         /// </summary>
-        public static PluginSettings PluginSettings;
-
-        /// <summary>
-        /// Global settings that are also usable by plugins.
-        /// </summary>
-        public static GlobalSettings GlobalSettings;
+        public static Plugin Instance { get { return Plugin._instance; } }
 
         /// <summary>
         /// The plugins attributes.
@@ -50,15 +48,24 @@ namespace LibBlizzTV
         public PluginAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } }
 
         /// <summary>
-        /// The key-value storage for plugin's use.
+        /// The plugin's settings.
         /// </summary>
-        public static Storage Storage { get { return Plugin._storage; } }
+        public PluginSettings Settings { get { return this._settings; } }
+
+        /// <summary>
+        /// Global settings defined by the program.
+        /// </summary>
+        public GlobalSettings GlobalSettings { get { return this._global_settings; } }
+
+        /// <summary>
+        /// Plugin specific NO-SQL, embedded, key-value typed storage.
+        /// </summary>
+        public Storage Storage { get { return this._storage; } }
 
         /// <summary>
         /// Plugin sub-menus.
         /// </summary>
         public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> Menus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
-
 
         #endregion
 
@@ -67,31 +74,24 @@ namespace LibBlizzTV
         /// <summary>
         /// ctor
         /// </summary>
-        public Plugin()
-        {            
+        public Plugin(GlobalSettings gs, PluginSettings ps)
+        {
+            Plugin._instance = this; // set the instance.
             this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
-            Plugin._storage = new Storage(this._assembly.GetName().Name); // startup the storage for the plugin. (plugin's name should be supplied as they're used in key-name's)
+            this._storage = new Storage(this._assembly.GetName().Name); // startup the storage for the plugin. (plugin's name should be supplied as they're used in key-name's)
+            this._global_settings = gs; // set the global settings.
+            this.ResolveSettings(ps); // resolve derived plugin settings if any defined.
         }
 
         #endregion
 
-        #region The plugin API & events.
+        #region plugin API & events.
 
         /// <summary>
-        /// Loads the plugin with supplied plugin settings.
+        /// Notifies the plugin to start running.
         /// </summary>
-        /// <param name="ps">The plugin's specific settings.</param>
         /// <remarks>All plugin's should override this method.</remarks>
-        public virtual void Load(PluginSettings ps) { throw new NotImplementedException(); }
-
-        /// <summary>
-        /// Applies global settings that's usable by the plugins.
-        /// </summary>
-        /// <param name="gs">The global settings</param>
-        public void ApplyGlobalSettings(GlobalSettings gs)
-        {
-            GlobalSettings = gs;
-        }
+        public virtual void Run() { throw new NotImplementedException(); }
 
         /// <summary>
         /// Plugins shoud override this method and return the preferences form.
@@ -100,6 +100,26 @@ namespace LibBlizzTV
         public virtual System.Windows.Forms.Form GetPreferencesForm()
         {
             return null;
+        }
+
+        /// <summary>
+        /// SavePluginSettings event handler delegate.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="Settings">The plugin settings.</param>
+        public delegate void SavePluginSettingsEventHandler(object sender,PluginSettings Settings);
+
+        /// <summary>
+        /// SavePluginSettings event.
+        /// </summary>
+        public event SavePluginSettingsEventHandler OnSavePluginSettings;
+
+        /// <summary>
+        /// Saves the plugins settings.
+        /// </summary>
+        public void SaveSettings()
+        {
+            if (OnSavePluginSettings != null) OnSavePluginSettings(this, this._settings);
         }
 
         /// <summary>
@@ -175,6 +195,29 @@ namespace LibBlizzTV
 
         #endregion
 
+        #region internal-logic
+
+        private void ResolveSettings(PluginSettings ps) // If plugin defined a derived settings class from PluginSettings, it'll automaticly resolve the data.
+        {
+            Type _plugin_settings_type = this.GetPluginSettingsType(); // get type of derived settings class.
+            if (_plugin_settings_type != null) // if a derived settings class was defined.
+            {
+                if (ps.GetType() != _plugin_settings_type) this._settings = (PluginSettings)Activator.CreateInstance(_plugin_settings_type); // if supplied settings data is not the same of type of plugin's derived settings class, then just create a new instance of derived settings class with default values.
+                else this._settings = ps; // if the supplied data is within the same typeof plugin's derived settings class, just go on and set it.
+            }
+        }
+
+        private Type GetPluginSettingsType() // Searches for a derived PluginSettings class.
+        {
+            foreach (Type t in this._assembly.GetTypes()) // loop through available types.
+            {
+                if (t.IsSubclassOf(typeof(PluginSettings))) return t; // return type found derived PluginSettings class type.
+            }
+            return null; // if not found just return null.
+        }
+
+        #endregion
+
         #region de-ctor
 
         /// <summary>
@@ -199,9 +242,9 @@ namespace LibBlizzTV
                 {
                     this._assembly = null;
                     this._attributes = null;
-                    PluginSettings = null;
-                    GlobalSettings = null;
-                    _storage = null;
+                    this._global_settings = null;
+                    this._settings = null;
+                    this._storage = null;
                 }
                 disposed = true;
             }
