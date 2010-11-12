@@ -4,7 +4,7 @@
   <Provider>
     <Name>Youtube</Name>
     <Movie><![CDATA[http://www.youtube.com/v/%video_id%]]></Movie>
-    <FlashVars><![CDATA[fs=1&autoplay=1&hl=en_US]]></FlashVars>
+    <FlashVars><![CDATA[fs=1&autoplay=%auto_play%&hl=en_US]]></FlashVars>
   </Provider>  
 </Providers>
 

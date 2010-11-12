@@ -72,8 +72,11 @@ namespace LibVideoChannels
             this._movie = Providers.Instance.List[this.Provider].Movie; // provider supplied movie source. 
             this._flash_vars = Providers.Instance.List[this.Provider].FlashVars; // provider supplied flashvars.
 
-            this._movie = this._movie.Replace("%video_id%", this._video_id); // replace video_id variable in movie source.
-            this._flash_vars = this._flash_vars.Replace("%video_id%", this._video_id); // replace video_id variable in flashvars.
+            this._movie = this._movie.Replace("%video_id%", this._video_id); // replace movie source variables
+            this._movie = this._movie.Replace("%auto_play%", (SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay) ? "1" : "0");
+            
+            this._flash_vars = this._flash_vars.Replace("%video_id%", this._video_id); // replace flashvars variables.
+            this._flash_vars = this._flash_vars.Replace("%auto_play%", (SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay)?"1":"0");
         }
 
         public override void SetState(ItemState State) // override setstate function so that we can commit our state to storage.
