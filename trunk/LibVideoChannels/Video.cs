@@ -55,7 +55,7 @@ namespace LibVideoChannels
             if (m.Success) this.VideoID = m.Groups[1].Value;
 
             // check the persistent storage for if the video is watched before.
-            if (Plugin.Instance.Storage.KeyExists("state",this.GUID)) this.SetState((ItemState)Plugin.Instance.Storage.Get("state",this.GUID));
+            if (KeyValueStorage.Instance.KeyExists("video", "state", this.GUID)) this.SetState((ItemState)KeyValueStorage.Instance.Get("video", "state", this.GUID));
             else this.SetState(ItemState.UNREAD);
 
             // register context menus.
@@ -79,12 +79,12 @@ namespace LibVideoChannels
         public override void SetState(ItemState State) // override setstate function so that we can commit our state to storage.
         {
             base.SetState(State); // let the base function also do it's own job.
-            Plugin.Instance.Storage.Put("state",this.GUID, (byte)this.State); // commit it to persistent storage.
+            KeyValueStorage.Instance.Put("video", "state", this.GUID, (byte)this.State); // commit it to persistent storage.
         }
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
-            if (Plugin.Instance.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
+            if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
             {
                 Player p = new Player(this); // render the video with our own video player
                 p.Show();
@@ -92,7 +92,7 @@ namespace LibVideoChannels
             else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
 
             this.SetState(ItemState.READ); // set the video state to READ.
-            Plugin.Instance.Storage.Put("state",this.GUID, (byte)this.State); // commit it to persistent storage.
+            KeyValueStorage.Instance.Put("video", "state", this.GUID, (byte)this.State); // commit it to persistent storage.
         }
 
 

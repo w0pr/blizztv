@@ -73,8 +73,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Database.cs" />
-    <Compile Include="Storage.cs" />
+    <Compile Include="KeyValueStorage.cs" />
     <Compile Include="Utils\JSON.cs" />
     <Compile Include="Utils\WebReader.cs" />
   </ItemGroup>

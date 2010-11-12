@@ -29,18 +29,10 @@ namespace LibBlizzTV
     {
         #region members
 
-        private static Plugin _instance;
         private Assembly _assembly; // the assembly 
         private PluginAttributes _attributes;
-        private Storage _storage; // the key-value storage
         private PluginSettings _settings; // the plugin's settings.
-        private GlobalSettings _global_settings; // the global settings.
         private bool disposed = false;
-
-        /// <summary>
-        /// The plugin instance.
-        /// </summary>
-        public static Plugin Instance { get { return Plugin._instance; } }
 
         /// <summary>
         /// The plugins attributes.
@@ -51,16 +43,6 @@ namespace LibBlizzTV
         /// The plugin's settings.
         /// </summary>
         public PluginSettings Settings { get { return this._settings; } }
-
-        /// <summary>
-        /// Global settings defined by the program.
-        /// </summary>
-        public GlobalSettings GlobalSettings { get { return this._global_settings; } }
-
-        /// <summary>
-        /// Plugin specific NO-SQL, embedded, key-value typed storage.
-        /// </summary>
-        public Storage Storage { get { return this._storage; } }
 
         /// <summary>
         /// Plugin sub-menus.
@@ -74,12 +56,9 @@ namespace LibBlizzTV
         /// <summary>
         /// ctor
         /// </summary>
-        public Plugin(GlobalSettings gs, PluginSettings ps)
+        public Plugin(PluginSettings ps)
         {
-            Plugin._instance = this; // set the instance.
             this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
-            this._storage = new Storage(); // startup the storage for the plugin. (plugin's name should be supplied as they're used in key-name's)
-            this._global_settings = gs; // set the global settings.
             this.ResolveSettings(ps); // resolve derived plugin settings if any defined.
         }
 
@@ -242,9 +221,7 @@ namespace LibBlizzTV
                 {
                     this._assembly = null;
                     this._attributes = null;
-                    this._global_settings = null;
                     this._settings = null;
-                    this._storage = null;
                 }
                 disposed = true;
             }
