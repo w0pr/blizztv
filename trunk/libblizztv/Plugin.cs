@@ -78,7 +78,7 @@ namespace LibBlizzTV
         {
             Plugin._instance = this; // set the instance.
             this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
-            this._storage = new Storage(this._assembly.GetName().Name); // startup the storage for the plugin. (plugin's name should be supplied as they're used in key-name's)
+            this._storage = new Storage(); // startup the storage for the plugin. (plugin's name should be supplied as they're used in key-name's)
             this._global_settings = gs; // set the global settings.
             this.ResolveSettings(ps); // resolve derived plugin settings if any defined.
         }
