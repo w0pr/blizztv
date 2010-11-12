@@ -65,8 +65,15 @@ namespace LibFeeds
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-            this.SetState(ItemState.READ); // set the story state as read.
+            if (this.State != ItemState.ERROR)
+            {
+                System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
+                this.SetState(ItemState.READ); // set the story state as read.
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show(string.Format("An error encoutered while parsing the feed: {0}", this.Description), "Feed parsing error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
