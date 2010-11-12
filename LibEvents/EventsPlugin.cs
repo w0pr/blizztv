@@ -38,13 +38,16 @@ namespace LibEvents
         private Timer EventTimer;
         private bool disposed = false;
 
+        public static Plugin Instance;
+
         #endregion        
 
         #region ctor
 
-        public EventsPlugin(GlobalSettings gs, PluginSettings ps)
-            : base(gs, ps)
+        public EventsPlugin(PluginSettings ps)
+            : base(ps)
         {
+            EventsPlugin.Instance = this;
             this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // register calender menu.
             this._root_item.ContextMenus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
         }

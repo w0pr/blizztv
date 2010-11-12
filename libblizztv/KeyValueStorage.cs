@@ -25,63 +25,71 @@ namespace LibBlizzTV
     /// <summary>
     /// Wrapper for NO-SQL,embedded and key-value typed ESENT database.
     /// </summary>
-    public sealed class Database : IDisposable
+    public sealed class KeyValueStorage
     {
-        #region Members
+        #region members
 
+        private static KeyValueStorage _instance = new KeyValueStorage();        
         private string _storage_folder = "state-storage";
         private PersistentDictionary<string, byte> _dictionary;
         private bool disposed = false;
 
-        private static Database _instance = new Database();
         /// <summary>
-        /// Database instance.
+        /// KeyValueStorage instance.
         /// </summary>
-        public static Database Instance { get { return _instance; } }
+        public static KeyValueStorage Instance { get { return _instance; } }
 
         #endregion
 
-        #region ctor
+        #region storage API
 
-        private Database() 
+        /// <summary>
+        /// Creates a new storage for the plugin with the given plugin identifier.
+        /// </summary>
+        private KeyValueStorage()
         {
             if (!this.StorageExists()) Directory.CreateDirectory(this._storage_folder);
-            this._dictionary=new PersistentDictionary<string,byte>(this._storage_folder);
+            this._dictionary = new PersistentDictionary<string, byte>(this._storage_folder);
         }
 
-        #endregion
-
-        #region Database Logic
-
         /// <summary>
-        /// Puts a new byte-value on given key.
+        /// Puts a new key-value pair in plugin storage.
         /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="value">The byte-value.</param>
-        public void Put(string key, byte value)
+        /// <param name="plugin_name">The caller plugin's name. </param>
+        /// <param name="category">The category.</param>
+        /// <param name="key">The key.</param>        
+        /// <param name="value">The byte-value</param>
+        public void Put(string plugin_name, string category, string key, byte value)
         {
+            key = string.Format("{0}.{1}.{2}", plugin_name,category, key); // construct the key-name based on caller plugin and the category.
             this._dictionary[key] = value;
             this._dictionary.Flush(); // immediatly flush the data to database.
         }
 
         /// <summary>
-        /// Gets the byte-value stored on given key.
+        /// Get's the byte-value for supplied key.
         /// </summary>
+        /// <param name="plugin_name">The caller plugin's name. </param>
+        /// <param name="category">The category.</param>
         /// <param name="key">The key.</param>
-        /// <returns></returns>
-        public byte Get(string key)
+        /// <returns>Returns the byte-value for the supplied key.</returns>
+        public byte Get(string plugin_name,string category, string key)
         {
+            key = string.Format("{0}.{1}.{2}", plugin_name, category, key); // construct the key-name based on caller plugin and the category.
             if (this._dictionary.ContainsKey(key)) return this._dictionary[key];
             else return 0;
         }
 
         /// <summary>
-        /// Returns true if the given key-value pair exists.
+        /// Returns true if the given key-value pair exists in storage.
         /// </summary>
+        /// <param name="plugin_name">The caller plugin's name. </param>
+        /// <param name="category">The category.</param>
         /// <param name="key">The key.</param>
-        /// <returns></returns>
-        public bool KeyExists(string key)
+        /// <returns>Returns true if the given key-value pair exists in storage.</returns>
+        public bool KeyExists(string plugin_name,string category, string key)
         {
+            key = string.Format("{0}.{1}.{2}", plugin_name, category, key); // construct the key-name based on caller plugin and the category.
             if (this._dictionary.ContainsKey(key)) return true;
             else return false;
         }
@@ -99,7 +107,7 @@ namespace LibBlizzTV
         /// <summary>
         /// De-constructor.
         /// </summary>
-        ~Database() { Dispose(false); }
+        ~KeyValueStorage() { Dispose(false); }
 
         /// <summary>
         /// Disposes the object.

@@ -37,8 +37,8 @@ namespace LibVideoChannels
 
         #region ctor
 
-        public VideoChannelsPlugin(GlobalSettings gs, PluginSettings ps)
-            : base(gs, ps)
+        public VideoChannelsPlugin(PluginSettings ps)
+            : base(ps)
         {
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
         }

@@ -35,8 +35,8 @@ namespace LibVideoChannels
             InitializeComponent();
 
             this._video = Video; // set the video.
-            this.Width = Plugin.Instance.GlobalSettings.VideoPlayerWidth; // get the default player width. 
-            this.Height = Plugin.Instance.GlobalSettings.VideoPlayerHeight; // get the default player height.
+            this.Width = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth; // get the default player width. 
+            this.Height = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight; // get the default player height.
             this._video.Process(); // process the video so that it's template variables are replaced.
         }
 

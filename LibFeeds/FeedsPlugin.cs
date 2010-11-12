@@ -37,8 +37,8 @@ namespace LibFeeds
 
         #region ctor
 
-        public FeedsPlugin(GlobalSettings gs, PluginSettings ps)
-            : base(gs, ps)
+        public FeedsPlugin(PluginSettings ps)
+            : base(ps)
         {
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.                     
         }

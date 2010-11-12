@@ -37,7 +37,7 @@ namespace LibStreams
 
         #region ctor
 
-        public StreamsPlugin(GlobalSettings gs, PluginSettings ps):base(gs,ps)
+        public StreamsPlugin(PluginSettings ps):base(ps)
         {
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.         
         }
