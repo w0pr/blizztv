@@ -68,14 +68,14 @@ namespace LibEvents
 
         public void Check() // Check the event and notify user about it if it's in progress or soon to be so.
         {
-            if (!this.Notified) // if we haven't notified before
+            if ((EventsPlugin.Instance.Settings as Settings).AllowEventNotifications && !this.Notified) // if notifications are enabled & we haven't notified before.
             {
-                if (this.Time.LocalTime <= DateTime.Now && DateTime.Now <= this.Time.LocalTime.AddHours(1)) // is event already in progress?
+                if (((EventsPlugin.Instance.Settings as Settings).AllowNotificationOfInprogressEvents) && (this.Time.LocalTime <= DateTime.Now && DateTime.Now <= this.Time.LocalTime.AddHours(1))) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this._notified = true; // don't notify about it more then once
                     this.ShowBalloonTip(string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
                 }
-                else if ((this.Time.LocalTime - DateTime.Now).TotalMinutes > 0 && (this.Time.LocalTime - DateTime.Now).TotalMinutes <= 5) // start notifying about the upcoming event.
+                else if ((this.Time.LocalTime - DateTime.Now).TotalMinutes > 0 && (this.Time.LocalTime - DateTime.Now).TotalMinutes <= (EventsPlugin.Instance.Settings as Settings).MinutesToNotifyBeforeEvent) // start notifying about the upcoming event.
                 {
                     this._notified = true; // don't notify about it more then once
                     this.ShowBalloonTip(string.Format("Event starts in {0} minutes: {1}",(this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
