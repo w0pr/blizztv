@@ -97,7 +97,7 @@ namespace LibBlizzTV
             try
             {
                 if (!this._valid) throw new NotSupportedException(); // If the plugin asked for is not a valid BlizzTV pluin, fire an exception.
-                plugin = (Plugin)Activator.CreateInstance(this._plugin_entrance); // Create the plugin instance using the ctor we stored as entrance point.
+                plugin = (Plugin)Activator.CreateInstance(this._plugin_entrance, new object[] { SettingsStorage.Instance.Settings.GlobalSettings, SettingsStorage.Instance.Settings.PluginSettings[this._attributes.Name] }); // Create the plugin instance using the ctor we stored as entrance point.
                 plugin.Attributes = this._attributes;
             }
             catch (Exception e)

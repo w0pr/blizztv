@@ -45,7 +45,7 @@ namespace LibFeeds
             this._description = Description;
 
             // check the persistent storage for if the story is read before.
-            if (Plugin.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Storage.Get(this.GUID));  
+            if (Plugin.Instance.Storage.KeyExists(this.GUID)) this.SetState((ItemState)Plugin.Instance.Storage.Get(this.GUID));  
             else this.SetState(ItemState.UNREAD);
 
             // register context menus.
@@ -60,7 +60,7 @@ namespace LibFeeds
         public override void SetState(ItemState State) // override setstate function so that we can commit our state to storage.
         {
             base.SetState(State); // let the base function also do it's own job.
-            Plugin.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
+            Plugin.Instance.Storage.Put(this.GUID, (byte)this.State); // commit it to persistent storage.
         }
 
         public override void DoubleClicked(object sender, EventArgs e)

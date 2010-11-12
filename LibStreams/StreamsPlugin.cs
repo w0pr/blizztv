@@ -37,7 +37,7 @@ namespace LibStreams
 
         #region ctor
 
-        public StreamsPlugin()
+        public StreamsPlugin(GlobalSettings gs, PluginSettings ps):base(gs,ps)
         {
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.         
         }
@@ -46,9 +46,8 @@ namespace LibStreams
 
         #region API handlers
 
-        public override void Load(PluginSettings ps)
+        public override void Run()
         {
-            StreamsPlugin.PluginSettings = ps;
             this.RegisterListItem(_root_item); // register root item.                        
             PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateStreams())); // parse the streams.
 

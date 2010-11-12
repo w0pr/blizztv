@@ -64,9 +64,15 @@ namespace BlizzTV
         {
             // register plugin communication events.
             p.OnRegisterListItem += RegisterListItem;  // the treeview item handler.
+            p.OnSavePluginSettings += SavePluginSettings;
             this.RegisterPluginMenus(p); // register plugin sub-menu's.
-            p.ApplyGlobalSettings(SettingsStorage.Instance.Settings.GlobalSettings); // apply global settings.
-            p.Load(SettingsStorage.Instance.Settings.PluginSettings[p.Attributes.Name]); // run the plugin & apply it's stored settings.
+            p.Run(); // run the plugin & apply it's stored settings.
+        }
+
+        private void SavePluginSettings(object sender, PluginSettings settings)
+        {
+            SettingsStorage.Instance.Settings.PluginSettings[(sender as Plugin).Attributes.Name] = settings;
+            SettingsStorage.Instance.Save();
         }
 
         private void RegisterPluginMenus(Plugin p) // Registers plugin's sub-menus.
