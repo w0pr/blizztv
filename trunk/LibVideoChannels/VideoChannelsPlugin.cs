@@ -33,6 +33,8 @@ namespace LibVideoChannels
         private List<Channel> _channels = new List<Channel>(); // the channels list.
         private bool disposed = false;
 
+        public static Plugin Instance;
+
         #endregion
 
         #region ctor
@@ -40,6 +42,7 @@ namespace LibVideoChannels
         public VideoChannelsPlugin(PluginSettings ps)
             : base(ps)
         {
+            VideoChannelsPlugin.Instance = this;
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
         }
 
@@ -56,6 +59,11 @@ namespace LibVideoChannels
             Timer update_timer = new Timer(1000 * 60 * 5);
             update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
             update_timer.Enabled = true;
+        }
+
+        public override System.Windows.Forms.Form GetPreferencesForm()
+        {
+            return new frmSettings();
         }
 
         #endregion

@@ -101,6 +101,7 @@
             this.RichTextboxDescription.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.RichTextboxDescription.Size = new System.Drawing.Size(376, 80);
             this.RichTextboxDescription.TabIndex = 5;
+            this.RichTextboxDescription.TabStop = false;
             this.RichTextboxDescription.Text = "";
             this.RichTextboxDescription.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.RichTextboxDescription_LinkClicked);
             // 
