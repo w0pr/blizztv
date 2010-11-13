@@ -58,10 +58,7 @@ namespace LibEvents
 
         public override void Run()
         {            
-            this.RegisterListItem(this._root_item); // register root item.           
-            this.RegisterListItem(_events_today_item, _root_item); // register today's events item.            
-            this.RegisterListItem(_events_upcoming_item, _root_item); // register upcoming events item.          
-            this.RegisterListItem(_events_past_item, _root_item); // register past events item.            
+            this.RegisterListItem(this._root_item); // register root item.                
 
             bool success = this.ParseEvents(); // parse events.
             PluginLoadComplete(new PluginLoadCompleteEventArgs(success));
@@ -127,8 +124,7 @@ namespace LibEvents
             catch (Exception e)
             {
                 success = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("EventsPlugin ParseEvents() Error: \n {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing TeamLiquid calendar. Please try again. \n\n[Error Details: {0}]", e.Message), "Events Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("EventsPlugin ParseEvents() Error: \n {0}", e.ToString()));                
             }
 
             if (success) // if parsing of calendar xml all okay.
@@ -137,6 +133,10 @@ namespace LibEvents
                 List<ListItem> events_upcoming = new List<ListItem>();
                 List<ListItem> events_past = new List<ListItem>();
 
+                this.RegisterListItem(_events_today_item, _root_item); // register today's events item.            
+                this.RegisterListItem(_events_upcoming_item, _root_item); // register upcoming events item.          
+                this.RegisterListItem(_events_past_item, _root_item); // register past events item.       
+
                 foreach (Event e in this._events) // loop through events.
                 {
                     if (e.IsOver) events_past.Add(e); // if event is over register it in past-events section.
@@ -144,16 +144,21 @@ namespace LibEvents
                     {
                         if (e.Time.LocalTime.Date == DateTime.Now.Date) events_today.Add(e); // if event takes place today, register it in todays-events section.
                         else events_upcoming.Add(e); // else register it in upcoming-events section.
-                    }                    
+                    }
                 }
 
                 if (events_today.Count > 0) this.RegisterListItems(events_today, this._events_today_item);
                 if (events_upcoming.Count > 0) this.RegisterListItems(events_upcoming, this._events_upcoming_item);
-                if (events_past.Count > 0) this.RegisterListItems(events_past, this._events_past_item);
-
-                this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.                               
+                if (events_past.Count > 0) this.RegisterListItems(events_past, this._events_past_item);                
+            }
+            else
+            {
+                ListItem error = new ListItem("Error parsing TeamLiquid calendar feed.");
+                error.SetState(ItemState.ERROR);
+                this.RegisterListItem(error, this._root_item);
             }
 
+            this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.                               
             this.StepWorkload();
             return success;
         }

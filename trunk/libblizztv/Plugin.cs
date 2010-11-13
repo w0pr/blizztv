@@ -146,7 +146,7 @@ namespace LibBlizzTV
         {
             if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("{0} updated it's data with success.", this.Attributes.Name));
             else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("{0} failed to update it's data.", this.Attributes.Name));
-            if (OnPluginLoadComplete != null) OnPluginDataUpdate(this, e); // notify observers.
+            if (OnPluginDataUpdate != null) OnPluginDataUpdate(this, e); // notify observers.
         }
 
         /// <summary>
