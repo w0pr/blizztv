@@ -21,6 +21,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using LibBlizzTV;
+using BlizzTV.Updates;
 
 namespace BlizzTV
 {
@@ -45,6 +46,9 @@ namespace BlizzTV
             {
                 ListviewModules.Items.Add(new ListviewModulesItem(pair.Value.AssemblyName, pair.Value.AssemblyVersion, pair.Value.Attributes.Description));
             }
+
+            UpdateManager.Instance.Check();
+            if (UpdateManager.Instance.UpdateAvailable) this.LabelNewUpdateIsAvailable.Visible = true;
         }
 
         private void LinkLabelBlizzTV_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

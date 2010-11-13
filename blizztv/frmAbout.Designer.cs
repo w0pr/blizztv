@@ -41,6 +41,7 @@
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonOK = new System.Windows.Forms.Button();
             this.LinkLabelBlizzTV = new System.Windows.Forms.LinkLabel();
+            this.LabelNewUpdateIsAvailable = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -154,12 +155,25 @@
             this.LinkLabelBlizzTV.Text = "http://www.blizztv.com";
             this.LinkLabelBlizzTV.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelBlizzTV_LinkClicked);
             // 
+            // LabelNewUpdateIsAvailable
+            // 
+            this.LabelNewUpdateIsAvailable.AutoSize = true;
+            this.LabelNewUpdateIsAvailable.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LabelNewUpdateIsAvailable.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.LabelNewUpdateIsAvailable.Location = new System.Drawing.Point(12, 324);
+            this.LabelNewUpdateIsAvailable.Name = "LabelNewUpdateIsAvailable";
+            this.LabelNewUpdateIsAvailable.Size = new System.Drawing.Size(150, 13);
+            this.LabelNewUpdateIsAvailable.TabIndex = 12;
+            this.LabelNewUpdateIsAvailable.Text = "A new update is available";
+            this.LabelNewUpdateIsAvailable.Visible = false;
+            // 
             // frmAbout
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(435, 352);
+            this.Controls.Add(this.LabelNewUpdateIsAvailable);
             this.Controls.Add(this.LinkLabelBlizzTV);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupBox2);
@@ -196,5 +210,6 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.LinkLabel LinkLabelBlizzTV;
         private System.Windows.Forms.ColumnHeader ColIcon;
+        private System.Windows.Forms.Label LabelNewUpdateIsAvailable;
     }
 }

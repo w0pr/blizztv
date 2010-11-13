@@ -110,12 +110,9 @@ namespace LibVideoChannels
                 foreach (Channel channel in this._channels) // loop through videos.
                 {
                     channel.Update(); // update the channel.
-                    if (channel.Valid)
-                    {
-                        RegisterListItem(channel, _root_item);  // if the channel parsed all okay, regiser the channel-item.                    
-                        foreach (Video v in channel.Videos) { RegisterListItem(v, channel); } // register the video items.
-                        if (channel.State == ItemState.UNREAD) unread++;
-                    }
+                    RegisterListItem(channel, _root_item);  // if the channel parsed all okay, regiser the channel-item.                    
+                    foreach (Video v in channel.Videos) { RegisterListItem(v, channel); } // register the video items.
+                    if (channel.State == ItemState.UNREAD) unread++;
                     this.StepWorkload();
                 }
 

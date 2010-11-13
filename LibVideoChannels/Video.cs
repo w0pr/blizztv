@@ -87,15 +87,18 @@ namespace LibVideoChannels
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
-            if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
+            if (this.State != ItemState.ERROR)
             {
-                Player p = new Player(this); // render the video with our own video player
-                p.Show();
-            }
-            else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
+                if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
+                {
+                    Player p = new Player(this); // render the video with our own video player
+                    p.Show();
+                }
+                else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
 
-            this.SetState(ItemState.READ); // set the video state to READ.
-            KeyValueStorage.Instance.Put("video", "state", this.GUID, (byte)this.State); // commit it to persistent storage.
+                this.SetState(ItemState.READ); // set the video state to READ.
+                KeyValueStorage.Instance.Put("video", "state", this.GUID, (byte)this.State); // commit it to persistent storage.
+            }
         }
 
 

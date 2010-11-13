@@ -20,8 +20,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
-using LibBlizzTV;
 using BlizzTV.Updates;
+using LibBlizzTV;
+using LibBlizzTV.Utils;
 
 namespace BlizzTV
 {
@@ -29,8 +30,8 @@ namespace BlizzTV
     {
         #region members
 
-        private Dictionary<string, Thread> _plugin_threads = new Dictionary<string, Thread>(); // the running plugin instance threads.
-        private Workload _workload; 
+        private Workload _workload;
+        private int _loaded_plugins_count = 0;
 
         #endregion
 
@@ -47,8 +48,6 @@ namespace BlizzTV
         {
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.            
             this.LoadPlugins(); // Load the enabled plugins.   
-            UpdateManager.Instance.OnFoundNewAvailableUpdate += FoundNewAvailableUpdate;
-            UpdateManager.Instance.Check(); // Check for updates.
         }
 
         private void FoundNewAvailableUpdate()
@@ -56,7 +55,7 @@ namespace BlizzTV
             string update_question = "";
             string update_title = "";
 
-            switch (UpdateManager.Instance.AvailableUpdate.UpdateType)
+            switch (UpdateManager.Instance.FoundUpdate.UpdateType)
             {
                 case UpdateTypes.STABLE:
                     update_question = "Found a new available update. Do you want to update now?";
@@ -71,7 +70,7 @@ namespace BlizzTV
             System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(update_question, update_title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
             if (result == System.Windows.Forms.DialogResult.Yes)
             {
-                System.Diagnostics.Process.Start(UpdateManager.Instance.AvailableUpdate.Link);
+                System.Diagnostics.Process.Start(UpdateManager.Instance.FoundUpdate.Link);
             }
         }
 
@@ -111,8 +110,7 @@ namespace BlizzTV
         {
             Plugin plugin = PluginManager.Instance.Instantiate(key); // get the plugins instance.
             ThreadStart plugin_thread = delegate { RunPlugin(plugin); }; // define plugin's own thread.
-            Thread t = new Thread(plugin_thread) { IsBackground = true };  // let the thread a background-one.
-            this._plugin_threads.Add(plugin.Attributes.Name, t); // add thread to list.
+            Thread t = new Thread(plugin_thread) { IsBackground = true, Name = string.Format("plugin-{0}-{1}", plugin.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };  // let the thread a background-one.
             t.Start(); // nuclear-launch detected :)
         }
 
@@ -126,10 +124,6 @@ namespace BlizzTV
             }
 
             PluginManager.Instance.Kill(key);
-            Thread t=this._plugin_threads[key];
-            t.Interrupt();
-            if (t.Join(2000)) t.Abort();
-            this._plugin_threads.Remove(key);
         }
 
         private void RunPlugin(Plugin p) // Applies plugin settings and run the plugin.
@@ -138,11 +132,12 @@ namespace BlizzTV
             p.OnRegisterListItem += RegisterListItem;  // the treeview item handler.
             p.OnRegisterListItems += RegisterListItems; // the treeview item handler for more than one items.
             p.OnSavePluginSettings += SavePluginSettings;
+            p.OnPluginLoadComplete += PluginLoadComplete;
             p.OnWorkloadAdd += this._workload.Add;
             p.OnWorkloadStep += this._workload.Step;
             this.RegisterPluginMenus(p); // register plugin sub-menu's.
             p.Run(); // run the plugin & apply it's stored settings.
-        }
+        }       
 
         private void RegisterListItem(object sender, ListItem item, ListItem parent) // Register's a treeview-item for plugins.
         {
@@ -192,6 +187,17 @@ namespace BlizzTV
                         parent.DropDownItems.Add(pair.Value); // add requested sub-menu as a drop-down menu.
                     }
                 }
+            }
+        }
+
+        private void PluginLoadComplete(object sender, PluginLoadCompleteEventArgs e)
+        {
+            this._loaded_plugins_count++;
+            if ((SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks) && (this._loaded_plugins_count == PluginManager.Instance.InstantiatedPlugins.Count)) // if all plugins are loaded, it's a good time to check for updates.
+            {
+                Log.Instance.Write(LogMessageTypes.INFO, "Automatically checking for updates..");
+                UpdateManager.Instance.OnFoundNewAvailableUpdate += FoundNewAvailableUpdate;
+                UpdateManager.Instance.Check(); // Check for updates.
             }
         }
 
@@ -246,6 +252,12 @@ namespace BlizzTV
         private void MenuDonate_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TDWWEWYQ9CSU2", null);            
+        }
+
+        private void checkUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateManager.Instance.OnFoundNewAvailableUpdate += FoundNewAvailableUpdate;
+            UpdateManager.Instance.Check(); // Check for updates.
         }
 
         #endregion

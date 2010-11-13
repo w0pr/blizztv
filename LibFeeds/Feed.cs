@@ -85,10 +85,6 @@ namespace LibFeeds
             {
                 this._valid = false;
                 Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString()));
-
-                Story s = new Story("Error parsing feed", "error","", e.Message);
-                s.SetState(ItemState.ERROR);
-                this.Stories.Add(s);
             }
 
             if (this._valid)
@@ -101,6 +97,12 @@ namespace LibFeeds
                     this.SetTitle(string.Format(" {0} ({1})", this.Title, unread.ToString()));
                     this.SetState(ItemState.UNREAD); // then mark the feed itself as unread also
                 }
+            }
+            else
+            {
+                Story error = new Story("Error parsing feed.", "", "", "");
+                error.SetState(ItemState.ERROR);
+                this.Stories.Add(error);
             }
         }
 

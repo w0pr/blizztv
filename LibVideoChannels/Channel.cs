@@ -85,7 +85,6 @@ namespace LibVideoChannels
             {
                 this._valid = false;
                 Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Channel - Update() Error: \n {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while updating video channel. Channel Name: {0} \n\n[Error Details: {1}]", this.Slug, e.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
 
             if (this._valid)
@@ -98,6 +97,12 @@ namespace LibVideoChannels
                     this.SetTitle(string.Format("{0} ({1})", this.Title, unread.ToString()));
                     this.SetState(ItemState.UNREAD); // then mark the channel itself as unread also
                 }
+            }
+            else
+            {
+                Video error = new Video("Error updating channel.", "", "", this.Provider);
+                error.SetState(ItemState.ERROR);
+                this.Videos.Add(error);
             }
         }
 
