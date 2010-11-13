@@ -71,11 +71,39 @@ namespace BlizzTV
         {
             // register plugin communication events.
             p.OnRegisterListItem += RegisterListItem;  // the treeview item handler.
+            p.OnRegisterListItems += RegisterListItems; // the treeview item handler for more than one items.
             p.OnSavePluginSettings += SavePluginSettings;
             p.OnWorkloadAdd += this._workload.Add;
             p.OnWorkloadStep += this._workload.Step;
             this.RegisterPluginMenus(p); // register plugin sub-menu's.
             p.Run(); // run the plugin & apply it's stored settings.
+        }
+
+        private void RegisterListItem(object sender, ListItem item, ListItem parent) // Register's a treeview-item for plugins.
+        {
+            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItem(sender, item, parent); })); // switch to UI-thread.
+            else
+            {
+                TreeItem t = new TreeItem((Plugin)sender, item); // Create a new treeitem wrapper.
+                if (parent != null) (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.Add(t); // if we have a parent, add the item as sub-item.                        
+                else TreeView.Nodes.Add(t); // oh, look we're the root!
+                t.Render(); // let the treeview-item wrapper do it's own job.
+            }
+        }
+
+        private void RegisterListItems(object sender, List<ListItem> items, ListItem parent) // Registers treeview items for plugins.
+        {
+            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItems(sender, items, parent); })); // switch to UI-thread.
+            else
+            {
+                foreach (ListItem item in items)
+                {
+                    TreeItem t = new TreeItem((Plugin)sender, item); // Create a new treeitem wrapper.
+                    if (parent != null) (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.Add(t); // if we have a parent, add the item as sub-item.                        
+                    else TreeView.Nodes.Add(t); // oh, look we're the root!
+                    t.Render(); // let the treeview-item wrapper do it's own job.
+                } 
+            }
         }
 
         private void SavePluginSettings(object sender, PluginSettings settings)
@@ -99,18 +127,6 @@ namespace BlizzTV
                         parent.DropDownItems.Add(pair.Value); // add requested sub-menu as a drop-down menu.
                     }
                 }
-            }
-        }
-
-        private void RegisterListItem(object sender, ListItem item, ListItem parent) // Register's a treeview-item for plugins.
-        {
-            if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItem(sender, item, parent); })); // switch to UI-thread.
-            else
-            {
-                TreeItem t = new TreeItem((Plugin)sender, item); // Create a new treeitem wrapper.
-                if (parent != null) (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.Add(t); // if we have a parent, add the item as sub-item.                        
-                else TreeView.Nodes.Add(t); // oh, look we're the root!
-                t.Render(); // let the treeview-item wrapper do it's own job.
             }
         }
 
