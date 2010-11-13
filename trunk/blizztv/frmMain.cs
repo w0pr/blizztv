@@ -26,12 +26,19 @@ namespace BlizzTV
 {
     public partial class frmMain : Form
     {
+        #region members
+
+        private Workload _workload; 
+
+        #endregion
+
         #region ctor
 
         public frmMain()
         {
             InitializeComponent();
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
+            this._workload = new Workload(this.ProgressBar);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -65,6 +72,8 @@ namespace BlizzTV
             // register plugin communication events.
             p.OnRegisterListItem += RegisterListItem;  // the treeview item handler.
             p.OnSavePluginSettings += SavePluginSettings;
+            p.OnWorkloadAdd += this._workload.Add;
+            p.OnWorkloadStep += this._workload.Step;
             this.RegisterPluginMenus(p); // register plugin sub-menu's.
             p.Run(); // run the plugin & apply it's stored settings.
         }
@@ -94,7 +103,7 @@ namespace BlizzTV
         }
 
         private void RegisterListItem(object sender, ListItem item, ListItem parent) // Register's a treeview-item for plugins.
-        {            
+        {
             if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItem(sender, item, parent); })); // switch to UI-thread.
             else
             {
@@ -209,4 +218,50 @@ namespace BlizzTV
 
         #endregion 
     }
+
+    #region workload processor
+
+    public class Workload // contains information about current workload progress of plugins so we can animate our progressbar on status strip
+    {
+        private ToolStripProgressBar _progress_bar;
+        private int _workload = 0;
+        private int _maximum_workload = 0;
+
+        public Workload(ToolStripProgressBar ProgressBar)
+        {
+            this._progress_bar = ProgressBar;
+        }
+
+        public void Add(object sender, int units)
+        {
+            if (_progress_bar.Owner.InvokeRequired) _progress_bar.Owner.BeginInvoke(new MethodInvoker(delegate() { Add(sender, units); })); // switch to UI-thread.
+            else
+            {
+                this._maximum_workload += units;
+                this._workload += units;
+                this._progress_bar.Visible = true;
+                this._progress_bar.Maximum = this._maximum_workload += units;
+                LibBlizzTV.Utils.Log.Instance.Write(LibBlizzTV.Utils.LogMessageTypes.DEBUG, string.Format("{0}: Add workload progress: {1} - total workload: {2}",(sender as Plugin).Attributes.Name, units,this._workload));
+            }
+        }
+
+        public void Step(object sender)
+        {
+            if (_progress_bar.Owner.InvokeRequired) _progress_bar.Owner.BeginInvoke(new MethodInvoker(delegate() { Step(sender); })); // switch to UI-thread.
+            else
+            {                
+                this._workload -= 1;
+                this._progress_bar.Value = (this._maximum_workload - this._workload);
+                if (this._workload == 0)
+                {
+                    this._progress_bar.Visible = false;
+                    this._progress_bar.Value = 0;
+                    this._maximum_workload = 0;
+                }
+                LibBlizzTV.Utils.Log.Instance.Write(LibBlizzTV.Utils.LogMessageTypes.DEBUG, string.Format("{0}: --StepWorkload - total workload: {1}",(sender as Plugin).Attributes.Name, this._workload));
+            }
+        }
+    }
+
+    #endregion
 }

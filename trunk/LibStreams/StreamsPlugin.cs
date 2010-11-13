@@ -96,6 +96,8 @@ namespace LibStreams
             {
                 int available_count = 0; // available live streams count
 
+                this.AddWorkload(this._streams.Count);
+
                 foreach (Stream stream in this._streams) // loop through all streams
                 {
                     try
@@ -107,6 +109,7 @@ namespace LibStreams
                             available_count++; // increment available live streams count.
                             RegisterListItem(stream, _root_item); // register the stream item.
                         }
+                        this.StepWorkload();
                     }
                     catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
                 }
