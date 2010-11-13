@@ -105,6 +105,8 @@ namespace LibVideoChannels
             {
                 int unread = 0; // channels with un-watched videos count.
 
+                this.AddWorkload(this._channels.Count);
+
                 foreach (Channel channel in this._channels) // loop through videos.
                 {
                     channel.Update(); // update the channel.
@@ -114,6 +116,7 @@ namespace LibVideoChannels
                         foreach (Video v in channel.Videos) { RegisterListItem(v, channel); } // register the video items.
                         if (channel.State == ItemState.UNREAD) unread++;
                     }
+                    this.StepWorkload();
                 }
 
                 _root_item.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.

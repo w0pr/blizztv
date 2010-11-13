@@ -132,6 +132,8 @@ namespace LibEvents
 
             if (success) // if parsing of calendar xml all okay.
             {
+                this.AddWorkload(1);
+
                 foreach (Event e in this._events) // loop through events.
                 {
                     if (e.IsOver) RegisterListItem(e, _events_past_item); // if event is over register it in past-events section.
@@ -139,9 +141,10 @@ namespace LibEvents
                     {
                         if (e.Time.LocalTime.Date == DateTime.Now.Date) RegisterListItem(e, _events_today_item); // if event takes place today, register it in todays-events section.
                         else RegisterListItem(e, _events_upcoming_item); // else register it in upcoming-events section.
-                    }
+                    }                    
                 }
 
+                this.StepWorkload();
                 this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.                               
             }
 
