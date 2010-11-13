@@ -21,6 +21,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using LibBlizzTV;
+using BlizzTV.Updates;
 
 namespace BlizzTV
 {
@@ -44,8 +45,34 @@ namespace BlizzTV
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.
-            this.LoadPlugins(); // Load the enabled plugins.           
+            Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.            
+            this.LoadPlugins(); // Load the enabled plugins.   
+            UpdateManager.Instance.OnFoundNewAvailableUpdate += FoundNewAvailableUpdate;
+            UpdateManager.Instance.Check(); // Check for updates.
+        }
+
+        private void FoundNewAvailableUpdate()
+        {
+            string update_question = "";
+            string update_title = "";
+
+            switch (UpdateManager.Instance.AvailableUpdate.UpdateType)
+            {
+                case UpdateTypes.STABLE:
+                    update_question = "Found a new available update. Do you want to update now?";
+                    update_title = "New Update Found!";
+                    break;
+                case UpdateTypes.BETA:
+                    update_question = "Found a new available BETA update. Do you want to update to this BETA version now?";
+                    update_title = "New Beta Update Found!";
+                    break;
+            }
+
+            System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(update_question, update_title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start(UpdateManager.Instance.AvailableUpdate.Link);
+            }
         }
 
         #endregion        

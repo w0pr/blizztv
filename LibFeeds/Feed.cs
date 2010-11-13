@@ -86,7 +86,7 @@ namespace LibFeeds
                 this._valid = false;
                 Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString()));
 
-                Story s = new Story("Error parsing feed", "error","", e.ToString());
+                Story s = new Story("Error parsing feed", "error","", e.Message);
                 s.SetState(ItemState.ERROR);
                 this.Stories.Add(s);
             }

@@ -190,6 +190,16 @@ namespace LibBlizzTV
         /// </summary>
         public bool MinimizeToSystemTrayInsteadOfClosingTheApplication = true;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool AllowAutomaticUpdateChecks = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool AllowBetaVersionNotifications = false;
+
         private bool disposed = false;
 
         #endregion

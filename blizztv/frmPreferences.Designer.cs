@@ -44,11 +44,15 @@
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.checkBoxAllowBetaVersionNotifications = new System.Windows.Forms.CheckBox();
+            this.checkBoxAllowAutomaticUpdateChecks = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButtonUseDefaultWebBrowser = new System.Windows.Forms.RadioButton();
             this.radioButtonUseInternalViewers = new System.Windows.Forms.RadioButton();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.tabUI = new System.Windows.Forms.TabPage();
+            this.checkBoxMinimimizeToSystemTray = new System.Windows.Forms.CheckBox();
             this.tabPlayer = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBoxVideoAutoPlay = new System.Windows.Forms.CheckBox();
@@ -57,11 +61,11 @@
             this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.checkBoxMinimimizeToSystemTray = new System.Windows.Forms.CheckBox();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPlugins.SuspendLayout();
             this.tabGeneral.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.tabUI.SuspendLayout();
@@ -192,6 +196,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.groupBox4);
             this.tabGeneral.Controls.Add(this.groupBox2);
             this.tabGeneral.ImageIndex = 0;
             this.tabGeneral.Location = new System.Drawing.Point(4, 23);
@@ -201,6 +206,37 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.checkBoxAllowBetaVersionNotifications);
+            this.groupBox4.Controls.Add(this.checkBoxAllowAutomaticUpdateChecks);
+            this.groupBox4.Location = new System.Drawing.Point(9, 79);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(446, 68);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Updates";
+            // 
+            // checkBoxAllowBetaVersionNotifications
+            // 
+            this.checkBoxAllowBetaVersionNotifications.AutoSize = true;
+            this.checkBoxAllowBetaVersionNotifications.Location = new System.Drawing.Point(9, 42);
+            this.checkBoxAllowBetaVersionNotifications.Name = "checkBoxAllowBetaVersionNotifications";
+            this.checkBoxAllowBetaVersionNotifications.Size = new System.Drawing.Size(174, 17);
+            this.checkBoxAllowBetaVersionNotifications.TabIndex = 1;
+            this.checkBoxAllowBetaVersionNotifications.Text = "Notify also about beta versions.";
+            this.checkBoxAllowBetaVersionNotifications.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxAllowAutomaticUpdateChecks
+            // 
+            this.checkBoxAllowAutomaticUpdateChecks.AutoSize = true;
+            this.checkBoxAllowAutomaticUpdateChecks.Location = new System.Drawing.Point(9, 19);
+            this.checkBoxAllowAutomaticUpdateChecks.Name = "checkBoxAllowAutomaticUpdateChecks";
+            this.checkBoxAllowAutomaticUpdateChecks.Size = new System.Drawing.Size(180, 17);
+            this.checkBoxAllowAutomaticUpdateChecks.TabIndex = 0;
+            this.checkBoxAllowAutomaticUpdateChecks.Text = "Automatically check for updates.";
+            this.checkBoxAllowAutomaticUpdateChecks.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -257,6 +293,16 @@
             this.tabUI.TabIndex = 3;
             this.tabUI.Text = "User Interface";
             this.tabUI.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMinimimizeToSystemTray
+            // 
+            this.checkBoxMinimimizeToSystemTray.AutoSize = true;
+            this.checkBoxMinimimizeToSystemTray.Location = new System.Drawing.Point(17, 17);
+            this.checkBoxMinimimizeToSystemTray.Name = "checkBoxMinimimizeToSystemTray";
+            this.checkBoxMinimimizeToSystemTray.Size = new System.Drawing.Size(133, 17);
+            this.checkBoxMinimimizeToSystemTray.TabIndex = 0;
+            this.checkBoxMinimimizeToSystemTray.Text = "Minimize to system tray";
+            this.checkBoxMinimimizeToSystemTray.UseVisualStyleBackColor = true;
             // 
             // tabPlayer
             // 
@@ -335,16 +381,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Player Size:";
             // 
-            // checkBoxMinimimizeToSystemTray
-            // 
-            this.checkBoxMinimimizeToSystemTray.AutoSize = true;
-            this.checkBoxMinimimizeToSystemTray.Location = new System.Drawing.Point(17, 17);
-            this.checkBoxMinimimizeToSystemTray.Name = "checkBoxMinimimizeToSystemTray";
-            this.checkBoxMinimimizeToSystemTray.Size = new System.Drawing.Size(133, 17);
-            this.checkBoxMinimimizeToSystemTray.TabIndex = 0;
-            this.checkBoxMinimimizeToSystemTray.Text = "Minimize to system tray";
-            this.checkBoxMinimimizeToSystemTray.UseVisualStyleBackColor = true;
-            // 
             // frmPreferences
             // 
             this.AcceptButton = this.buttonOK;
@@ -367,6 +403,8 @@
             this.groupBox3.PerformLayout();
             this.tabPlugins.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.TabControl.ResumeLayout(false);
@@ -409,5 +447,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox checkBoxMinimimizeToSystemTray;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox checkBoxAllowBetaVersionNotifications;
+        private System.Windows.Forms.CheckBox checkBoxAllowAutomaticUpdateChecks;
     }
 }
