@@ -59,14 +59,7 @@ namespace LibBlizzTV
         /// Returns the plugin instance.
         /// <remarks>If the plugin is not initiated before it will be so.</remarks>
         /// </summary>
-        public Plugin Instance
-        {
-            get
-            {
-                if (this._instance == null) this._instance = this.CreateInstance();
-                return this._instance;
-            }
-        }
+        public Plugin Instance { get { return this._instance; } }
 
         #endregion
 
@@ -91,20 +84,31 @@ namespace LibBlizzTV
         /// Creates a instance
         /// </summary>
         /// <returns>Returns the instance of the plugin asked for.</returns>
-        private Plugin CreateInstance()
+        public Plugin CreateInstance()
         {
-            Plugin plugin=null; 
-            try
+            if (this._instance == null) // just allow one instance.
             {
-                if (!this._valid) throw new NotSupportedException(); // If the plugin asked for is not a valid BlizzTV pluin, fire an exception.
-                plugin = (Plugin)Activator.CreateInstance(this._plugin_entrance, new object[] { SettingsStorage.Instance.Settings.PluginSettings[this._attributes.Name] }); // Create the plugin instance using the ctor we stored as entrance point.
-                plugin.Attributes = this._attributes;
+                try
+                {
+                    if (!this._valid) throw new NotSupportedException(); // If the plugin asked for is not a valid BlizzTV pluin, fire an exception.
+                    this._instance = (Plugin)Activator.CreateInstance(this._plugin_entrance, new object[] { SettingsStorage.Instance.Settings.PluginSettings[this._attributes.Name] }); // Create the plugin instance using the ctor we stored as entrance point.
+                    this._instance.Attributes = this._attributes;
+                }
+                catch (Exception e)
+                {
+                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("PluginInfo:CreateInstance() exception: {0}", e.ToString()));
+                }
             }
-            catch (Exception e)
-            {
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("PluginInfo:CreateInstance() exception: {0}", e.ToString()));
-            }
-            return plugin;
+            return this._instance;
+        }
+
+        /// <summary>
+        /// Kills the plugin instance.
+        /// </summary>
+        public void Kill()
+        {
+            this._instance.Dispose();
+            this._instance = null;
         }
 
         /// <summary>

@@ -31,6 +31,7 @@ namespace LibFeeds
 
         private ListItem _root_item = new ListItem("Feeds");  // root item on treeview.
         private List<Feed> _feeds = new List<Feed>(); // the feeds list 
+        private Timer _update_timer = new Timer(1000 * 60 * 5);
         private bool disposed = false;
 
         #endregion
@@ -53,9 +54,8 @@ namespace LibFeeds
             PluginLoadComplete(new PluginLoadCompleteEventArgs(this.UpdateFeeds()));  // parse feeds.    
 
             // setup update timer for next data updates
-            Timer update_timer = new Timer(1000 * 60 * 5);
-            update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            update_timer.Enabled = true;
+            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            _update_timer.Enabled = true;
         }
 
         #endregion
@@ -136,22 +136,24 @@ namespace LibFeeds
 
         #region de-ctor
 
-        ~FeedsPlugin() { Dispose(false); }
-
-        private void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing) // managed resources
                 {
+                    this._update_timer.Enabled = false;
+                    this._update_timer.Elapsed -= OnTimerHit;
+                    this._update_timer.Dispose();
+                    this._update_timer = null;
                     this._root_item.Dispose();
                     this._root_item = null;
                     foreach (Feed f in this._feeds) { f.Dispose(); }
                     this._feeds.Clear();
                     this._feeds = null;
                 }
-                disposed = true;
-            }
+                base.Dispose(disposing);
+            }            
         }
 
         #endregion
