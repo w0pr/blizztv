@@ -85,6 +85,8 @@ namespace LibEvents
         private bool ParseEvents()
         {
             bool success = true;
+
+            this.AddWorkload(1);
             this._root_item.SetTitle("Updating events..");
 
             try
@@ -132,22 +134,28 @@ namespace LibEvents
 
             if (success) // if parsing of calendar xml all okay.
             {
-                this.AddWorkload(1);
+                List<ListItem> events_today = new List<ListItem>();
+                List<ListItem> events_upcoming = new List<ListItem>();
+                List<ListItem> events_past = new List<ListItem>();
 
                 foreach (Event e in this._events) // loop through events.
                 {
-                    if (e.IsOver) RegisterListItem(e, _events_past_item); // if event is over register it in past-events section.
+                    if (e.IsOver) events_past.Add(e); // if event is over register it in past-events section.
                     else
                     {
-                        if (e.Time.LocalTime.Date == DateTime.Now.Date) RegisterListItem(e, _events_today_item); // if event takes place today, register it in todays-events section.
-                        else RegisterListItem(e, _events_upcoming_item); // else register it in upcoming-events section.
+                        if (e.Time.LocalTime.Date == DateTime.Now.Date) events_today.Add(e); // if event takes place today, register it in todays-events section.
+                        else events_upcoming.Add(e); // else register it in upcoming-events section.
                     }                    
                 }
 
-                this.StepWorkload();
+                if (events_today.Count > 0) this.RegisterListItems(events_today, this._events_today_item);
+                if (events_upcoming.Count > 0) this.RegisterListItems(events_upcoming, this._events_upcoming_item);
+                if (events_past.Count > 0) this.RegisterListItems(events_past, this._events_past_item);
+
                 this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.                               
             }
 
+            this.StepWorkload();
             return success;
         }
 

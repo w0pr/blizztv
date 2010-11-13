@@ -167,9 +167,33 @@ namespace LibBlizzTV
         /// </summary>
         /// <param name="Item">The item to register.</param>
         /// <param name="Parent">If appliable, the parent item to be placed under.</param>
+        /// <remarks>If adding a lot of items, RegisterListItems should be prefered as this call may result excessive number of context-switches with many frequent calls.</remarks>
         protected void RegisterListItem(ListItem Item, ListItem Parent=null)
         {
             if (OnRegisterListItem != null) OnRegisterListItem(this, Item, Parent); // notify observers.
+        }
+
+        /// <summary>
+        /// RegsiterListItem event handler delegate.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="items">The item to register.</param>
+        /// <param name="g">If appliable, the parent item to be placed under.</param>
+        public delegate void RegisterListItemsEventHandler(object sender, List<ListItem> items, ListItem g);
+
+        /// <summary>
+        /// RegisterListItem event handler.
+        /// </summary>
+        public event RegisterListItemsEventHandler OnRegisterListItems;
+
+        /// <summary>
+        /// Registers a list item to be render in main form's treeview.
+        /// </summary>
+        /// <param name="Items">The item to register.</param>
+        /// <param name="Parent">If appliable, the parent item to be placed under.</param>
+        protected void RegisterListItems(List<ListItem> Items, ListItem Parent)
+        {
+            if (OnRegisterListItems != null) OnRegisterListItems(this, Items, Parent);
         }
 
         /// <summary>
