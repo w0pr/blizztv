@@ -44,15 +44,22 @@ namespace BlizzTV
 
         private void LoadSettings()
         {
-            // load global settings
+
             if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) radioButtonUseInternalViewers.Checked = true;
             else radioButtonUseDefaultWebBrowser.Checked = true;
+
+            checkBoxAllowAutomaticUpdateChecks.Checked = SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks;
+            checkBoxAllowBetaVersionNotifications.Checked = SettingsStorage.Instance.Settings.AllowBetaVersionNotifications;
 
             txtVideoPlayerWidth.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth.ToString();
             txtVideoPlayerHeight.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight.ToString();
             checkBoxVideoAutoPlay.Checked = SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay;
 
-            // load plugin settings
+            checkBoxMinimimizeToSystemTray.Checked = SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication;
+            checkBoxEnableDebugLogging.Checked = SettingsStorage.Instance.Settings.EnableDebugLogging;
+            checkBoxEnableDebugConsole.Checked = SettingsStorage.Instance.Settings.EnableDebugConsole;
+
+            // plugin settings.
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
             {
                 ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
@@ -60,11 +67,6 @@ namespace BlizzTV
                 if (SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(pair.Value.Attributes.Name) && SettingsStorage.Instance.Settings.PluginSettings[pair.Value.Attributes.Name].Enabled) item.Checked = true;
             }
             
-            // load ui-specific settings
-            checkBoxMinimimizeToSystemTray.Checked = SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication;
-            checkBoxEnableDebugLogging.Checked = SettingsStorage.Instance.Settings.EnableDebugLogging;
-            checkBoxEnableDebugConsole.Checked = SettingsStorage.Instance.Settings.EnableDebugConsole;
-
             // load plugins specific preferences tabs
             this.LoadPluginTabs();
         }
@@ -98,9 +100,16 @@ namespace BlizzTV
             if (radioButtonUseInternalViewers.Checked) SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
             else SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer = ContentViewMethods.DEFAULT_WEB_BROWSER;
 
+            SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
+            SettingsStorage.Instance.Settings.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
+
             SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
             SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
             SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
+
+            SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication = checkBoxMinimimizeToSystemTray.Checked;
+            SettingsStorage.Instance.Settings.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
+            SettingsStorage.Instance.Settings.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
 
             // save plugin settings
             foreach (ListviewPluginsItem item in ListviewPlugins.Items)
@@ -109,10 +118,6 @@ namespace BlizzTV
                 if (!SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(plugin_name)) SettingsStorage.Instance.Settings.PluginSettings.Add(plugin_name, new PluginSettings());
                 SettingsStorage.Instance.Settings.PluginSettings[plugin_name].Enabled = item.Checked;                
             }
-
-            SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication = checkBoxMinimimizeToSystemTray.Checked;
-            SettingsStorage.Instance.Settings.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
-            SettingsStorage.Instance.Settings.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
 
             SettingsStorage.Instance.Save();
         }
