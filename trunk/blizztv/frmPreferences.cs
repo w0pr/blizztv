@@ -58,6 +58,7 @@ namespace BlizzTV
             }
             
             // load ui-specific settings
+            checkBoxMinimimizeToSystemTray.Checked = SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication;
             checkBoxEnableDebugLogging.Checked = SettingsStorage.Instance.Settings.EnableDebugLogging;
             checkBoxEnableDebugConsole.Checked = SettingsStorage.Instance.Settings.EnableDebugConsole;
 
@@ -106,6 +107,7 @@ namespace BlizzTV
                 SettingsStorage.Instance.Settings.PluginSettings[plugin_name].Enabled = item.Checked;                
             }
 
+            SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication = checkBoxMinimimizeToSystemTray.Checked;
             SettingsStorage.Instance.Settings.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
             SettingsStorage.Instance.Settings.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
 

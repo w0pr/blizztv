@@ -35,8 +35,8 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.tabDebug = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBoxEnableDebugLogging = new System.Windows.Forms.CheckBox();
             this.checkBoxEnableDebugConsole = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnableDebugLogging = new System.Windows.Forms.CheckBox();
             this.tabPlugins = new System.Windows.Forms.TabPage();
             this.ListviewPlugins = new System.Windows.Forms.ListView();
             this.ColEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,24 +44,29 @@
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtVideoPlayerHeight = new System.Windows.Forms.TextBox();
-            this.checkBoxVideoAutoPlay = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButtonUseInternalViewers = new System.Windows.Forms.RadioButton();
             this.radioButtonUseDefaultWebBrowser = new System.Windows.Forms.RadioButton();
+            this.radioButtonUseInternalViewers = new System.Windows.Forms.RadioButton();
             this.TabControl = new System.Windows.Forms.TabControl();
+            this.tabUI = new System.Windows.Forms.TabPage();
+            this.tabPlayer = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxVideoAutoPlay = new System.Windows.Forms.CheckBox();
+            this.txtVideoPlayerHeight = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkBoxMinimimizeToSystemTray = new System.Windows.Forms.CheckBox();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPlugins.SuspendLayout();
             this.tabGeneral.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.TabControl.SuspendLayout();
+            this.tabUI.SuspendLayout();
+            this.tabPlayer.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageList
@@ -116,16 +121,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Debug Support";
             // 
-            // checkBoxEnableDebugLogging
-            // 
-            this.checkBoxEnableDebugLogging.AutoSize = true;
-            this.checkBoxEnableDebugLogging.Location = new System.Drawing.Point(9, 19);
-            this.checkBoxEnableDebugLogging.Name = "checkBoxEnableDebugLogging";
-            this.checkBoxEnableDebugLogging.Size = new System.Drawing.Size(129, 17);
-            this.checkBoxEnableDebugLogging.TabIndex = 0;
-            this.checkBoxEnableDebugLogging.Text = "Enable debug-logging";
-            this.checkBoxEnableDebugLogging.UseVisualStyleBackColor = true;
-            // 
             // checkBoxEnableDebugConsole
             // 
             this.checkBoxEnableDebugConsole.AutoSize = true;
@@ -135,6 +130,16 @@
             this.checkBoxEnableDebugConsole.TabIndex = 1;
             this.checkBoxEnableDebugConsole.Text = "Enable debug-console";
             this.checkBoxEnableDebugConsole.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxEnableDebugLogging
+            // 
+            this.checkBoxEnableDebugLogging.AutoSize = true;
+            this.checkBoxEnableDebugLogging.Location = new System.Drawing.Point(9, 19);
+            this.checkBoxEnableDebugLogging.Name = "checkBoxEnableDebugLogging";
+            this.checkBoxEnableDebugLogging.Size = new System.Drawing.Size(129, 17);
+            this.checkBoxEnableDebugLogging.TabIndex = 0;
+            this.checkBoxEnableDebugLogging.Text = "Enable debug-logging";
+            this.checkBoxEnableDebugLogging.UseVisualStyleBackColor = true;
             // 
             // tabPlugins
             // 
@@ -188,7 +193,6 @@
             // tabGeneral
             // 
             this.tabGeneral.Controls.Add(this.groupBox2);
-            this.tabGeneral.Controls.Add(this.groupBox1);
             this.tabGeneral.ImageIndex = 0;
             this.tabGeneral.Location = new System.Drawing.Point(4, 23);
             this.tabGeneral.Name = "tabGeneral";
@@ -197,72 +201,6 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.checkBoxVideoAutoPlay);
-            this.groupBox1.Controls.Add(this.txtVideoPlayerHeight);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtVideoPlayerWidth);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(9, 79);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(446, 67);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Internal Video Player Settings";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Player Size:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Width:";
-            // 
-            // txtVideoPlayerWidth
-            // 
-            this.txtVideoPlayerWidth.Location = new System.Drawing.Point(118, 18);
-            this.txtVideoPlayerWidth.Name = "txtVideoPlayerWidth";
-            this.txtVideoPlayerWidth.Size = new System.Drawing.Size(49, 20);
-            this.txtVideoPlayerWidth.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(173, 21);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Height:";
-            // 
-            // txtVideoPlayerHeight
-            // 
-            this.txtVideoPlayerHeight.Location = new System.Drawing.Point(220, 18);
-            this.txtVideoPlayerHeight.Name = "txtVideoPlayerHeight";
-            this.txtVideoPlayerHeight.Size = new System.Drawing.Size(49, 20);
-            this.txtVideoPlayerHeight.TabIndex = 3;
-            // 
-            // checkBoxVideoAutoPlay
-            // 
-            this.checkBoxVideoAutoPlay.AutoSize = true;
-            this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 44);
-            this.checkBoxVideoAutoPlay.Name = "checkBoxVideoAutoPlay";
-            this.checkBoxVideoAutoPlay.Size = new System.Drawing.Size(70, 17);
-            this.checkBoxVideoAutoPlay.TabIndex = 4;
-            this.checkBoxVideoAutoPlay.Text = "Auto-play";
-            this.checkBoxVideoAutoPlay.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -275,16 +213,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "For viewing content:";
             // 
-            // radioButtonUseInternalViewers
-            // 
-            this.radioButtonUseInternalViewers.AutoSize = true;
-            this.radioButtonUseInternalViewers.Location = new System.Drawing.Point(9, 19);
-            this.radioButtonUseInternalViewers.Name = "radioButtonUseInternalViewers";
-            this.radioButtonUseInternalViewers.Size = new System.Drawing.Size(120, 17);
-            this.radioButtonUseInternalViewers.TabIndex = 0;
-            this.radioButtonUseInternalViewers.Text = "Use internal viewers";
-            this.radioButtonUseInternalViewers.UseVisualStyleBackColor = true;
-            // 
             // radioButtonUseDefaultWebBrowser
             // 
             this.radioButtonUseDefaultWebBrowser.AutoSize = true;
@@ -295,17 +223,127 @@
             this.radioButtonUseDefaultWebBrowser.Text = "Use default web-browser";
             this.radioButtonUseDefaultWebBrowser.UseVisualStyleBackColor = true;
             // 
-            // tabPreferences
+            // radioButtonUseInternalViewers
+            // 
+            this.radioButtonUseInternalViewers.AutoSize = true;
+            this.radioButtonUseInternalViewers.Location = new System.Drawing.Point(9, 19);
+            this.radioButtonUseInternalViewers.Name = "radioButtonUseInternalViewers";
+            this.radioButtonUseInternalViewers.Size = new System.Drawing.Size(120, 17);
+            this.radioButtonUseInternalViewers.TabIndex = 0;
+            this.radioButtonUseInternalViewers.Text = "Use internal viewers";
+            this.radioButtonUseInternalViewers.UseVisualStyleBackColor = true;
+            // 
+            // TabControl
             // 
             this.TabControl.Controls.Add(this.tabGeneral);
-            this.TabControl.Controls.Add(this.tabPlugins);
+            this.TabControl.Controls.Add(this.tabUI);
+            this.TabControl.Controls.Add(this.tabPlayer);
             this.TabControl.Controls.Add(this.tabDebug);
+            this.TabControl.Controls.Add(this.tabPlugins);
             this.TabControl.ImageList = this.ImageList;
             this.TabControl.Location = new System.Drawing.Point(3, 3);
-            this.TabControl.Name = "tabPreferences";
+            this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.Size = new System.Drawing.Size(469, 303);
             this.TabControl.TabIndex = 0;
+            // 
+            // tabUI
+            // 
+            this.tabUI.Controls.Add(this.checkBoxMinimimizeToSystemTray);
+            this.tabUI.Location = new System.Drawing.Point(4, 23);
+            this.tabUI.Name = "tabUI";
+            this.tabUI.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUI.Size = new System.Drawing.Size(461, 276);
+            this.tabUI.TabIndex = 3;
+            this.tabUI.Text = "User Interface";
+            this.tabUI.UseVisualStyleBackColor = true;
+            // 
+            // tabPlayer
+            // 
+            this.tabPlayer.Controls.Add(this.groupBox1);
+            this.tabPlayer.Location = new System.Drawing.Point(4, 23);
+            this.tabPlayer.Name = "tabPlayer";
+            this.tabPlayer.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPlayer.Size = new System.Drawing.Size(461, 276);
+            this.tabPlayer.TabIndex = 4;
+            this.tabPlayer.Text = "Player";
+            this.tabPlayer.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBoxVideoAutoPlay);
+            this.groupBox1.Controls.Add(this.txtVideoPlayerHeight);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.txtVideoPlayerWidth);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(446, 67);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Internal Video Player Settings";
+            // 
+            // checkBoxVideoAutoPlay
+            // 
+            this.checkBoxVideoAutoPlay.AutoSize = true;
+            this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 44);
+            this.checkBoxVideoAutoPlay.Name = "checkBoxVideoAutoPlay";
+            this.checkBoxVideoAutoPlay.Size = new System.Drawing.Size(70, 17);
+            this.checkBoxVideoAutoPlay.TabIndex = 4;
+            this.checkBoxVideoAutoPlay.Text = "Auto-play";
+            this.checkBoxVideoAutoPlay.UseVisualStyleBackColor = true;
+            // 
+            // txtVideoPlayerHeight
+            // 
+            this.txtVideoPlayerHeight.Location = new System.Drawing.Point(220, 18);
+            this.txtVideoPlayerHeight.Name = "txtVideoPlayerHeight";
+            this.txtVideoPlayerHeight.Size = new System.Drawing.Size(49, 20);
+            this.txtVideoPlayerHeight.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(173, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Height:";
+            // 
+            // txtVideoPlayerWidth
+            // 
+            this.txtVideoPlayerWidth.Location = new System.Drawing.Point(118, 18);
+            this.txtVideoPlayerWidth.Name = "txtVideoPlayerWidth";
+            this.txtVideoPlayerWidth.Size = new System.Drawing.Size(49, 20);
+            this.txtVideoPlayerWidth.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(74, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Width:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Player Size:";
+            // 
+            // checkBoxMinimimizeToSystemTray
+            // 
+            this.checkBoxMinimimizeToSystemTray.AutoSize = true;
+            this.checkBoxMinimimizeToSystemTray.Location = new System.Drawing.Point(17, 17);
+            this.checkBoxMinimimizeToSystemTray.Name = "checkBoxMinimimizeToSystemTray";
+            this.checkBoxMinimimizeToSystemTray.Size = new System.Drawing.Size(133, 17);
+            this.checkBoxMinimimizeToSystemTray.TabIndex = 0;
+            this.checkBoxMinimimizeToSystemTray.Text = "Minimize to system tray";
+            this.checkBoxMinimimizeToSystemTray.UseVisualStyleBackColor = true;
             // 
             // frmPreferences
             // 
@@ -329,11 +367,14 @@
             this.groupBox3.PerformLayout();
             this.tabPlugins.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.TabControl.ResumeLayout(false);
+            this.tabUI.ResumeLayout(false);
+            this.tabUI.PerformLayout();
+            this.tabPlayer.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -357,6 +398,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton radioButtonUseDefaultWebBrowser;
         private System.Windows.Forms.RadioButton radioButtonUseInternalViewers;
+        private System.Windows.Forms.TabControl TabControl;
+        private System.Windows.Forms.TabPage tabUI;
+        private System.Windows.Forms.TabPage tabPlayer;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox checkBoxVideoAutoPlay;
         private System.Windows.Forms.TextBox txtVideoPlayerHeight;
@@ -364,6 +408,6 @@
         private System.Windows.Forms.TextBox txtVideoPlayerWidth;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabControl TabControl;
+        private System.Windows.Forms.CheckBox checkBoxMinimimizeToSystemTray;
     }
 }

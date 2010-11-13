@@ -188,23 +188,45 @@ namespace BlizzTV
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true; // live in system-tray even if form is closed
-            this.WindowState = FormWindowState.Minimized; // go minimized
-            this.ShowInTaskbar = false; // hide ourself from taskbar
+            if (SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication)
+            {
+                e.Cancel = true; // live in system-tray even if form is closed
+                this.HideForm();
+            }
+            else this.ExitApplication();
         }
 
-        private void TrayIcon_BalloonTipClicked(object sender, EventArgs e)
+        private void frmMain_SizeChanged(object sender, EventArgs e)
         {
-            (this.TrayIcon.Tag as ListItem).BalloonClicked(sender, e);
+            if (this.WindowState == FormWindowState.Minimized) this.HideForm();
         }
+
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized && this.ShowInTaskbar == false) // if we're just living in system-tray, remake the main form visible again
             {
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
+                this.ShowForm();
             }
+        }
+
+        private void HideForm()
+        {            
+            this.WindowState = FormWindowState.Minimized; // go minimized
+            this.ShowInTaskbar = false; // hide ourself from taskbar
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow; // hide from alt-tab.
+        }
+
+        private void ShowForm()
+        {
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
+        }
+
+        private void TrayIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            (this.TrayIcon.Tag as ListItem).BalloonClicked(sender, e);
         }
 
         private void ExitApplication() // Exits the application.
