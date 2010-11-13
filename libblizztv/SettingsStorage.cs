@@ -185,6 +185,11 @@ namespace LibBlizzTV
         /// </summary>
         public bool EnableDebugConsole = false;
 
+        /// <summary>
+        /// Minimizes to system tray instead of closing the application when main form's close button is clicked.
+        /// </summary>
+        public bool MinimizeToSystemTrayInsteadOfClosingTheApplication = true;
+
         private bool disposed = false;
 
         #endregion
