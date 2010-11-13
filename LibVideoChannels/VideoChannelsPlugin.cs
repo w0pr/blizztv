@@ -31,6 +31,7 @@ namespace LibVideoChannels
 
         private ListItem _root_item = new ListItem("Videos"); // root item on treeview.
         private List<Channel> _channels = new List<Channel>(); // the channels list.
+        private Timer _update_timer = new Timer(1000 * 60 * 5);
         private bool disposed = false;
 
         public static Plugin Instance;
@@ -56,9 +57,8 @@ namespace LibVideoChannels
             PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateChannels())); // parse channels
 
             // setup update timer for next data updates
-            Timer update_timer = new Timer(1000 * 60 * 5);
-            update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            update_timer.Enabled = true;
+            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            _update_timer.Enabled = true;
         }
 
         public override System.Windows.Forms.Form GetPreferencesForm()
@@ -147,19 +147,21 @@ namespace LibVideoChannels
 
         #region de-ctor
 
-        ~VideoChannelsPlugin() { Dispose(false); }
-
-        private void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing) // managed resources
                 {
+                    this._update_timer.Enabled = false;
+                    this._update_timer.Elapsed -= OnTimerHit;
+                    this._update_timer.Dispose();
+                    this._update_timer = null;
                     foreach (Channel c in this._channels) { c.Dispose(); }
                     this._channels.Clear();
                     this._channels = null;
                 }
-                disposed = true;
+                base.Dispose(disposing);
             }
         }
 

@@ -41,7 +41,9 @@ namespace LibBlizzTV
         /// <summary>
         /// The available valid plugin's list.
         /// </summary>
-        public Dictionary<string, PluginInfo> AvailablePlugins = new Dictionary<string, PluginInfo>();        
+        public Dictionary<string, PluginInfo> AvailablePlugins = new Dictionary<string, PluginInfo>();
+
+        private Dictionary<string, Plugin> _instantiated_plugins = new Dictionary<string, Plugin>();
 
         /// <summary>
         /// The plugin-manager's so the LibBlizzTV's assembly name.
@@ -52,6 +54,12 @@ namespace LibBlizzTV
         /// The plugin-manager's so the LibBlizzTV's assembly version.
         /// </summary>
         public string AssemblyVersion { get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
+
+
+        /// <summary>
+        /// The instantiated plugins list.
+        /// </summary>
+        public Dictionary<string, Plugin> InstantiatedPlugins { get { return this._instantiated_plugins; } }
 
         #endregion
 
@@ -80,15 +88,31 @@ namespace LibBlizzTV
         }
 
         /// <summary>
-        /// Returns instance of asked plugin.
+        /// Instantiates the asked plugin.
         /// </summary>
-        /// <param name="key">The asked plugin's name.</param>
-        /// <returns>Instance of asked plugin.</returns>
-        /// <remarks>If plugin has not been instiated yet it'll do so.</remarks>
-        public Plugin GetPlugin(string key)
+        /// <param name="key">The plugin to instantiate.</param>
+        /// <returns>Plugin instance.</returns>
+        public Plugin Instantiate(string key)
         {
-            PluginInfo pi = this.AvailablePlugins[key]; // get the plugin information.
-            return pi.Instance; // return the instance -- instantation will be handled by PluginInfo if not have instated before.
+            PluginInfo pi = this.AvailablePlugins[key];
+            if (this._instantiated_plugins.ContainsKey(key)) return pi.Instance;
+            else
+            {
+                Plugin p= pi.CreateInstance();
+                this._instantiated_plugins.Add(key,p);
+                return p;
+            }
+        }
+
+        /// <summary>
+        /// Kills the asked plugin instance.
+        /// </summary>
+        /// <param name="key">The plugin to kill.</param>
+        public void Kill(string key)
+        {
+            PluginInfo pi = this.AvailablePlugins[key];
+            this.InstantiatedPlugins.Remove(key);
+            pi.Kill();
         }
 
         #endregion

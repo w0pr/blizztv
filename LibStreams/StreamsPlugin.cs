@@ -31,6 +31,7 @@ namespace LibStreams
 
         private ListItem _root_item = new ListItem("Streams"); // root item on treeview.
         private List<Stream> _streams = new List<Stream>();
+        private Timer _update_timer=new Timer(1000 * 60 * 5);
         private bool disposed = false;
 
         #endregion
@@ -52,9 +53,8 @@ namespace LibStreams
             PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateStreams())); // parse the streams.
 
             // setup update timer for next data updates
-            Timer update_timer = new Timer(1000 * 60 * 5);
-            update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            update_timer.Enabled = true;
+            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            _update_timer.Enabled = true;
         }
 
         #endregion
@@ -143,19 +143,21 @@ namespace LibStreams
 
         #region de-ctor
 
-        ~StreamsPlugin() { Dispose(false); }
-
-        private void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing) // managed resources
                 {
+                    this._update_timer.Enabled = false;
+                    this._update_timer.Elapsed -= OnTimerHit;
+                    this._update_timer.Dispose();
+                    this._update_timer = null;
                     foreach (Stream s in this._streams) { s.Dispose(); }
                     this._streams.Clear();
                     this._streams = null;
                 }
-                disposed = true;
+                base.Dispose(disposing);
             }
         }
 

@@ -35,7 +35,7 @@ namespace LibEvents
         private ListItem _events_today_item = new ListItem("Today"); // today's events item.
         private ListItem _events_upcoming_item = new ListItem("Upcoming"); // upcoming events item.
         private ListItem _events_past_item = new ListItem("Past"); // past events item.
-        private Timer EventTimer;
+        private Timer _event_timer = new Timer(5000);
         private bool disposed = false;
 
         public static Plugin Instance;
@@ -68,9 +68,8 @@ namespace LibEvents
             PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(success));                
 
             // setup update timer for event checks
-            EventTimer = new Timer(5000);
-            EventTimer.Elapsed += new ElapsedEventHandler(CheckEvents);
-            EventTimer.Enabled = true;
+            _event_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            _event_timer.Enabled = true;
         }
 
         public override System.Windows.Forms.Form GetPreferencesForm()
@@ -159,7 +158,7 @@ namespace LibEvents
             return success;
         }
 
-        private void CheckEvents(object source, ElapsedEventArgs e)
+        private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             foreach (Event _event in this._events) // loop through all events.
             {
@@ -183,19 +182,21 @@ namespace LibEvents
 
         #region de-ctor
 
-        ~EventsPlugin() { Dispose(false); }
-
-        private void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing) // managed resources
                 {
+                    this._event_timer.Enabled = false;
+                    this._event_timer.Elapsed -= OnTimerHit;
+                    this._event_timer.Dispose();
+                    this._event_timer = null;
                     foreach (Event e in this._events) { e.Dispose(); }
                     this._events.Clear();
                     this._events = null;
                 }
-                disposed = true;
+                base.Dispose(disposing);
             }
         }
 

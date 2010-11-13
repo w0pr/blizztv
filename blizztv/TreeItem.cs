@@ -35,6 +35,7 @@ namespace BlizzTV
         private bool disposed = false;
 
         public ListItem Item { get { return this._item; } } // the item getter.
+        public Plugin Plugin { get { return this._plugin; } }
         
 
         #endregion

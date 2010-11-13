@@ -28,6 +28,7 @@ namespace BlizzTV
     {
         #region members
 
+        private Dictionary<string, Thread> _plugin_threads = new Dictionary<string, Thread>(); // the running plugin instance threads.
         private Workload _workload; 
 
         #endregion
@@ -59,12 +60,49 @@ namespace BlizzTV
             {
                 if (pair.Value.Enabled && pm.AvailablePlugins.ContainsKey(pair.Key)) // if the plugin is enabled then run it within it's own thread.
                 {
-                    Plugin plugin=pm.GetPlugin(pair.Key); // get the plugins instane.
-                    ThreadStart plugin_thread = delegate { RunPlugin(plugin); }; // define plugin's own thread.
-                    Thread t = new Thread(plugin_thread) { IsBackground = true };  // let the thread a background-one.
-                    t.Start(); // nuclear-launch detected :)
+                    this.InstantiatePlugin(pair.Key);
                 }
             }
+        }
+
+        private void OnPreferencesWindowApplySettings() // Insantiates or kills plugins based on new applied plugin settings.
+        {
+            foreach (KeyValuePair<string, PluginSettings> pair in SettingsStorage.Instance.Settings.PluginSettings)
+            {
+                if (pair.Value.Enabled && !PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) // instantiate the plugin.
+                {
+                    this.InstantiatePlugin(pair.Key);
+                }
+                else if (!pair.Value.Enabled && PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) // kill the plugin.
+                {
+                    this.KillPlugin(pair.Key);
+                }
+            }
+        }
+
+        private void InstantiatePlugin(string key)
+        {
+            Plugin plugin = PluginManager.Instance.Instantiate(key); // get the plugins instance.
+            ThreadStart plugin_thread = delegate { RunPlugin(plugin); }; // define plugin's own thread.
+            Thread t = new Thread(plugin_thread) { IsBackground = true };  // let the thread a background-one.
+            this._plugin_threads.Add(plugin.Attributes.Name, t); // add thread to list.
+            t.Start(); // nuclear-launch detected :)
+        }
+
+        private void KillPlugin(string key)
+        {
+            foreach(TreeItem node in this.TreeView.Nodes) // kill plugins bound listitems
+            {
+                if(node!=null)
+                if (node.Plugin.Attributes.Name == key) 
+                    node.Remove();
+            }
+
+            PluginManager.Instance.Kill(key);
+            Thread t=this._plugin_threads[key];
+            t.Interrupt();
+            if (t.Join(2000)) t.Abort();
+            this._plugin_threads.Remove(key);
         }
 
         private void RunPlugin(Plugin p) // Applies plugin settings and run the plugin.
@@ -168,6 +206,7 @@ namespace BlizzTV
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmPreferences p = new frmPreferences();
+            p.OnApplySettings += OnPreferencesWindowApplySettings;
             p.ShowDialog();
         }
 
@@ -279,7 +318,6 @@ namespace BlizzTV
                 this._workload += units;
                 this._progress_bar.Visible = true;
                 this._progress_bar.Maximum = this._maximum_workload += units;
-                LibBlizzTV.Utils.Log.Instance.Write(LibBlizzTV.Utils.LogMessageTypes.DEBUG, string.Format("{0}: Add workload progress: {1} - total workload: {2}",(sender as Plugin).Attributes.Name, units,this._workload));
             }
         }
 
@@ -296,7 +334,6 @@ namespace BlizzTV
                     this._progress_bar.Value = 0;
                     this._maximum_workload = 0;
                 }
-                LibBlizzTV.Utils.Log.Instance.Write(LibBlizzTV.Utils.LogMessageTypes.DEBUG, string.Format("{0}: --StepWorkload - total workload: {1}",(sender as Plugin).Attributes.Name, this._workload));
             }
         }
     }

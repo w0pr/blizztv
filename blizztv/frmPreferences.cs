@@ -39,6 +39,9 @@ namespace BlizzTV
             this.LoadSettings();
         }
 
+        public delegate void ApplySettingsEventHandler();
+        public event ApplySettingsEventHandler OnApplySettings; 
+
         private void LoadSettings()
         {
             // load global settings
@@ -72,7 +75,7 @@ namespace BlizzTV
             {
                 if (pair.Value.Enabled) // if plugin is enabled
                 {
-                    Form plugin_form = PluginManager.Instance.GetPlugin(pair.Key).GetPreferencesForm(); // get plugin's preferences form.
+                    Form plugin_form = PluginManager.Instance.InstantiatedPlugins[pair.Key].GetPreferencesForm(); // get plugin's preferences form.
                     if (plugin_form != null) // if plugin defined a preferences form in reality.
                     {
                         TabPage t = new TabPage(pair.Key); // create up a new tabpage for it.
@@ -123,6 +126,7 @@ namespace BlizzTV
         {
             this.SaveSettings();  // save global settings
             foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IPluginSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
+            if (this.OnApplySettings != null) this.OnApplySettings(); // notify observers.
             this.Close();
         }
     }

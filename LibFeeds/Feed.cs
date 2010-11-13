@@ -132,7 +132,7 @@ namespace LibFeeds
                     this.Stories.Clear();
                     this.Stories = null;
                 }
-                disposed = true;
+                base.Dispose(disposing);
             }
         }
 

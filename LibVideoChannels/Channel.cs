@@ -117,8 +117,6 @@ namespace LibVideoChannels
 
         #region de-ctor
 
-        ~Channel() { Dispose(false); }
-
         protected override void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -129,7 +127,7 @@ namespace LibVideoChannels
                     this.Videos.Clear();
                     this.Videos = null;
                 }
-                disposed = true;
+                base.Dispose(disposing);
             }
         }
 
