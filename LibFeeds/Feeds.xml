@@ -9,7 +9,24 @@
     <URL><![CDATA[http://www.gosugamers.net/starcraft2/sc2.rss]]></URL>
   </Feed>
   <Feed>
-    <Name>TeamLiquid</Name>
-    <URL>http://www.teamliquid.net/rss/news.xml</URL>
+    <Name>SCArmory</Name>
+    <URL><![CDATA[http://feeds.feedburner.com/starcraft]]></URL>
+  </Feed>
+  <Feed>
+    <Name>MMO-Champion</Name>
+    <URL><![CDATA[http://www.mmo-champion.com/external.php?do=rss&type=newcontent&sectionid=1&days=120&count=10]]></URL>
+  </Feed>
+  <Feed>
+    <Name>BlizzPlanet</Name>
+    <URL><![CDATA[http://feeds.feedburner.com/blizzplanetcom]]></URL>
+  </Feed>
+  <Feed>
+    <Name>Diablo IncGamers</Name>
+    <URL><![CDATA[http://diablo.incgamers.com/blog/rss_2.0/]]></URL>
+  </Feed>
+  <Feed>
+    <Name>Diablo Fans</Name>
+    <URL><![CDATA[http://www.diablofans.com/rss/forums/1-diablo-fans-home-page-news/]]></URL>
   </Feed>
 </Feeds>
+
