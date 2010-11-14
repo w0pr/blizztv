@@ -274,8 +274,8 @@
             this.TabControl.Controls.Add(this.tabGeneral);
             this.TabControl.Controls.Add(this.tabUI);
             this.TabControl.Controls.Add(this.tabPlayer);
-            this.TabControl.Controls.Add(this.tabDebug);
             this.TabControl.Controls.Add(this.tabPlugins);
+            this.TabControl.Controls.Add(this.tabDebug);
             this.TabControl.ImageList = this.ImageList;
             this.TabControl.Location = new System.Drawing.Point(3, 3);
             this.TabControl.Name = "TabControl";

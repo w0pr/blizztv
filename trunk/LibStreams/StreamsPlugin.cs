@@ -31,8 +31,10 @@ namespace LibStreams
 
         private ListItem _root_item = new ListItem("Streams"); // root item on treeview.
         private List<Stream> _streams = new List<Stream>();
-        private Timer _update_timer=new Timer(1000 * 60 * 5);
+        private Timer _update_timer;
         private bool disposed = false;
+
+        public static Plugin Instance;
 
         #endregion
 
@@ -40,6 +42,7 @@ namespace LibStreams
 
         public StreamsPlugin(PluginSettings ps):base(ps)
         {
+            StreamsPlugin.Instance = this;
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.         
         }
 
@@ -53,8 +56,14 @@ namespace LibStreams
             PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateStreams())); // parse the streams.
 
             // setup update timer for next data updates
+            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
             _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
             _update_timer.Enabled = true;
+        }
+
+        public override System.Windows.Forms.Form GetPreferencesForm()
+        {
+            return new frmSettings();
         }
 
         #endregion

@@ -39,6 +39,12 @@ namespace BlizzTV
             this.LoadSettings();
         }
 
+        public void ShowTabPage(string PageName)
+        {
+            TabControl.SelectedTab = TabControl.TabPages[PageName];
+        }
+
+
         public delegate void ApplySettingsEventHandler();
         public event ApplySettingsEventHandler OnApplySettings; 
 
@@ -86,9 +92,11 @@ namespace BlizzTV
                         plugin_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None; // it should not have borders too.
                         plugin_form.BackColor = Color.White; 
                         plugin_form.Show(); // show the settings form.
-                        t.Controls.Add(plugin_form); // add the form to tabpage.
+                        TabControl.ImageList.Images.Add(pair.Key, PluginManager.Instance.InstantiatedPlugins[pair.Key].Attributes.Icon); // get the plugin icon.
+                        t.ImageIndex = TabControl.ImageList.Images.IndexOfKey(pair.Key); // set the icon.
+                        t.Controls.Add(plugin_form); // add the form to tabpage.                        
                         this._plugin_tabs.Add(t); // add tabpage to list so we can access it later.
-                        this.TabControl.Controls.Add(t); // add tabpage to our tabcontrol.
+                        this.TabControl.TabPages.Insert(this.TabControl.TabPages.Count - 1, t); // add tabpage to our tabcontrol -- insert it before the last tab, tabDebug.                        
                     }
                 }
             }

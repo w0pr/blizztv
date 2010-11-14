@@ -31,7 +31,7 @@ namespace LibVideoChannels
 
         private ListItem _root_item = new ListItem("Videos"); // root item on treeview.
         private List<Channel> _channels = new List<Channel>(); // the channels list.
-        private Timer _update_timer = new Timer(1000 * 60 * 5);
+        private Timer _update_timer;
         private bool disposed = false;
 
         public static Plugin Instance;
@@ -57,6 +57,7 @@ namespace LibVideoChannels
             PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateChannels())); // parse channels
 
             // setup update timer for next data updates
+            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
             _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
             _update_timer.Enabled = true;
         }

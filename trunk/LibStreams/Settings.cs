@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using LibBlizzTV;
 
-namespace LibVideoChannels
+namespace LibStreams
 {
     [Serializable]
-    public class Settings:PluginSettings
+    public class Settings : PluginSettings
     {
-        public int NumberOfVideosToQueryChannelFor = 10;
         public int UpdateEveryXMinutes = 10;
     }
 }

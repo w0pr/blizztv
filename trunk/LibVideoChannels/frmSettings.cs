@@ -20,11 +20,13 @@ namespace LibVideoChannels
         private void frmSettings_Load(object sender, EventArgs e)
         {
             numericUpDownNumberOfVideosToQueryChannelFor.Value = (decimal)(VideoChannelsPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor;
+            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)(VideoChannelsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes;
         }
        
         public void SaveSettings()
         {
             (VideoChannelsPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor = (int)numericUpDownNumberOfVideosToQueryChannelFor.Value;
+            (VideoChannelsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             VideoChannelsPlugin.Instance.SaveSettings();
         }
     }
