@@ -260,6 +260,14 @@ namespace BlizzTV
             UpdateManager.Instance.Check(); // Check for updates.
         }
 
+        private void MenuPlugins_Click(object sender, EventArgs e)
+        {
+            frmPreferences p = new frmPreferences();
+            p.OnApplySettings += OnPreferencesWindowApplySettings;
+            p.ShowTabPage("tabPlugins");
+            p.ShowDialog();
+        }
+
         #endregion
 
         #region Form-specific code

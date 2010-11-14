@@ -35,7 +35,7 @@ namespace LibEvents
         private ListItem _events_today_item = new ListItem("Today"); // today's events item.
         private ListItem _events_upcoming_item = new ListItem("Upcoming"); // upcoming events item.
         private ListItem _events_past_item = new ListItem("Past"); // past events item.
-        private Timer _event_timer = new Timer(5000);
+        private Timer _event_timer = new Timer(60000); // runs every one minute and check events & alarms.
         private bool disposed = false;
 
         public static Plugin Instance;
@@ -160,10 +160,16 @@ namespace LibEvents
 
             this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.                               
             this.StepWorkload();
+
             return success;
         }
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
+        {
+            this.CheckEvents();
+        }
+
+        private void CheckEvents()
         {
             foreach (Event _event in this._events) // loop through all events.
             {

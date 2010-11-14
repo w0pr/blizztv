@@ -41,8 +41,9 @@
             this.blizzTVcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bugReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -52,7 +53,6 @@
             this.TrayIconMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeView = new System.Windows.Forms.TreeView();
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
-            this.checkUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
@@ -84,7 +84,7 @@
             // 
             this.preferencesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("preferencesToolStripMenuItem.Image")));
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
@@ -92,18 +92,19 @@
             // 
             this.MenuPlugins.Image = ((System.Drawing.Image)(resources.GetObject("MenuPlugins.Image")));
             this.MenuPlugins.Name = "MenuPlugins";
-            this.MenuPlugins.Size = new System.Drawing.Size(135, 22);
+            this.MenuPlugins.Size = new System.Drawing.Size(152, 22);
             this.MenuPlugins.Text = "Plugins";
+            this.MenuPlugins.Click += new System.EventHandler(this.MenuPlugins_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // MenuExit
             // 
             this.MenuExit.Name = "MenuExit";
-            this.MenuExit.Size = new System.Drawing.Size(135, 22);
+            this.MenuExit.Size = new System.Drawing.Size(152, 22);
             this.MenuExit.Text = "Exit";
             this.MenuExit.Click += new System.EventHandler(this.MenuExit_Click);
             // 
@@ -150,13 +151,12 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(150, 6);
             // 
-            // AboutToolStripMenuItem
+            // checkUpdatesToolStripMenuItem
             // 
-            this.AboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AboutToolStripMenuItem.Image")));
-            this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.AboutToolStripMenuItem.Text = "About";
-            this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+            this.checkUpdatesToolStripMenuItem.Name = "checkUpdatesToolStripMenuItem";
+            this.checkUpdatesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.checkUpdatesToolStripMenuItem.Text = "Check Updates";
+            this.checkUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkUpdatesToolStripMenuItem_Click);
             // 
             // bugReportsToolStripMenuItem
             // 
@@ -165,6 +165,14 @@
             this.bugReportsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.bugReportsToolStripMenuItem.Text = "Bug Reports";
             this.bugReportsToolStripMenuItem.Click += new System.EventHandler(this.bugReportsToolStripMenuItem_Click);
+            // 
+            // AboutToolStripMenuItem
+            // 
+            this.AboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AboutToolStripMenuItem.Image")));
+            this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.AboutToolStripMenuItem.Text = "About";
+            this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // StatusStrip
             // 
@@ -242,13 +250,6 @@
             this.NodeIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("NodeIcons.ImageStream")));
             this.NodeIcons.TransparentColor = System.Drawing.Color.Transparent;
             this.NodeIcons.Images.SetKeyName(0, "current.gif");
-            // 
-            // checkUpdatesToolStripMenuItem
-            // 
-            this.checkUpdatesToolStripMenuItem.Name = "checkUpdatesToolStripMenuItem";
-            this.checkUpdatesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.checkUpdatesToolStripMenuItem.Text = "Check Updates";
-            this.checkUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkUpdatesToolStripMenuItem_Click);
             // 
             // frmMain
             // 

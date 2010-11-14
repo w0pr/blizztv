@@ -31,8 +31,10 @@ namespace LibFeeds
 
         private ListItem _root_item = new ListItem("Feeds");  // root item on treeview.
         private List<Feed> _feeds = new List<Feed>(); // the feeds list 
-        private Timer _update_timer = new Timer(1000 * 60 * 5);
+        private Timer _update_timer;
         private bool disposed = false;
+
+        public static Plugin Instance;
 
         #endregion
 
@@ -41,6 +43,7 @@ namespace LibFeeds
         public FeedsPlugin(PluginSettings ps)
             : base(ps)
         {
+            FeedsPlugin.Instance = this;
             this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.                     
         }
 
@@ -54,8 +57,14 @@ namespace LibFeeds
             PluginLoadComplete(new PluginLoadCompleteEventArgs(this.UpdateFeeds()));  // parse feeds.    
 
             // setup update timer for next data updates
+            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
             _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
             _update_timer.Enabled = true;
+        }
+
+        public override System.Windows.Forms.Form GetPreferencesForm()
+        {
+            return new frmSettings();
         }
 
         #endregion
