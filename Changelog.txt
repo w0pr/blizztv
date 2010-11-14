@@ -1,3 +1,27 @@
+[14.11.2010] - 0.12-beta (r78)
+-------------------------------
+
+* Improved Events plugin event-checking code.
+* Implemented plugins menu.
+* Implemented update checking function and is configurable in preferences window.
+* Improved memory managment for plugins and listitems.
+* When a plugin is enabled/disabled, after applying the settings, the plugin will instantly start running / get killed.
+* Added configuration option for hiding to system tray. Also when minimized the main window will no longer in Alt-Tab menu's.
+* Fixed UI blocking bug of Events plugin.
+* Implemented progress bar on main-form.
+* Improved error handling for Feeds, Events and Video Channels plugins which will show the errors on Treeview instead of a blocking MessageBox.
+* Implemented auto-play setting for Video Channels plugin.
+* Users are now able to configure set amount of videos to query for Video Channels plugin.
+* users are now able to configure data-update period for Video Channels, Feeds and Streams plugins.
+* Users are now able to configure notification settings for Events.
+* Improvements in key-value storage database.
+* Implemented plugin's settings tabs.
+* Plugins can now define their own settings.
+* Added support for plugin settings tabs which are now rendered on Preferences window.
+* Improvements on plugin architecture.
+* The application now checkes for it's existing instances and will only allow running one instance at a time.
+* Fixed bug with settings storage file's where we're not be able to distribute a default settings file with releases.
+
 [11.11.2010] - 0.11-beta (r60)
 -------------------------------
 
