@@ -3,11 +3,6 @@
   <VideoChannel>
     <Name>Day[9]</Name>
     <Slug>day9tv</Slug>
-    <Provider>Youtube</Provider>
-  </VideoChannel>
-  <VideoChannel>
-    <Name>Day[9]</Name>
-    <Slug>day9tv</Slug>
     <Provider>BlipTV</Provider>
   </VideoChannel>
   <VideoChannel>      
