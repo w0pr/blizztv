@@ -41,6 +41,12 @@ namespace BlizzTV
             if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
 
+            // Check if our dependencies are satisfied.
+            using (DependencyChecker dc = new DependencyChecker())
+            {
+
+            }
+
             Log.Instance.Write(LogMessageTypes.INFO, "Program startup.."); // the startup message so we can see sessions in log easier.
 
             // Startup the main form
