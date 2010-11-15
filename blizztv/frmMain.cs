@@ -208,7 +208,7 @@ namespace BlizzTV
 
         private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) // Treeview node double-click handler.
         {
-            TreeItem selection = (TreeItem)e.Node; // get the selected node
+            TreeItem selection = (TreeItem)TreeView.SelectedNode; // get the selected node
             if (selection.Nodes.Count > 0) if (selection.IsExpanded) selection.Expand();  else selection.Collapse(); // if it's a parent node, let it expand() or collapse().
             else selection.DoubleClicked(sender, e);  // notify the item about the double-click event.
         }
