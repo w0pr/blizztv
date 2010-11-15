@@ -57,6 +57,27 @@ namespace LibVideoChannels
 
         public virtual void Update() { throw new NotImplementedException(); } // the channel updater. 
 
+        public void Process()
+        {
+            if (this.Valid)
+            {
+                int unread = 0; // non-watched videos count.
+                foreach (Video v in this.Videos) { if (v.State == ItemState.UNREAD) unread++; }
+
+                if (unread > 0) // if there non-watched channel videos.
+                {
+                    this.SetTitle(string.Format("{0} ({1})", this.Title, unread.ToString()));
+                    this.SetState(ItemState.UNREAD); // then mark the channel itself as unread also
+                }
+            }
+            else
+            {
+                Video error = new Video("Error updating channel.", "", "", this.Provider);
+                error.SetState(ItemState.ERROR);
+                this.Videos.Add(error);
+            }
+        }
+
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
             foreach (Video v in this.Videos) { v.SetState(ItemState.READ); } // marked all videos as watched.

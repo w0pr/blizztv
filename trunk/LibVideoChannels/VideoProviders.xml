@@ -8,8 +8,8 @@
   </Provider>
   <Provider>
     <Name>BlipTV</Name>
-    <Movie><![CDATA[http://blip.tv/play/%video_id%]]></Movie>
-    <FlashVars></FlashVars>
+    <Movie><![CDATA[http://a.blip.tv/scripts/flash/stratos.swf]]></Movie>
+    <FlashVars><![CDATA[showplayerpath=http://a.blip.tv/scripts/flash/stratos.swf&enablejs=true&allowm4v=true&streamscript=lighttpd&allowScriptAccess=always&file=http://blip.tv/rss/flash/%video_id%]]></FlashVars>
   </Provider>
 </Providers>
 

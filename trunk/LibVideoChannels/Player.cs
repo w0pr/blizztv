@@ -44,7 +44,7 @@ namespace LibVideoChannels
         {
             try
             {
-                this.Text = string.Format("Video Channel: {0}@{1}", this._video.Title, this._video.Provider); // set the window title.
+                this.Text = this._video.Title; // set the window title.
                 this.Stage.FlashVars = this._video.FlashVars; // set the flashvars.
                 this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars)); // load the movie.
             }

@@ -55,6 +55,7 @@
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Handlers\BlipTV.cs" />
+    <Compile Include="Handlers\BlipTVVideo.cs" />
     <Compile Include="Handlers\Youtube.cs" />
     <Compile Include="Handlers\YoutubeVideo.cs" />
     <Compile Include="Player.cs">
