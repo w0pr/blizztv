@@ -156,13 +156,18 @@ namespace BlizzTV
             if (this.InvokeRequired) BeginInvoke(new MethodInvoker(delegate() { RegisterListItems(sender, items, parent); })); // switch to UI-thread.
             else
             {
-                foreach (ListItem item in items)
+                List<TreeItem> nodes = new List<TreeItem>(items.Count);
+
+                if (parent != null) // only childs item's should be added as a collection.
                 {
-                    TreeItem t = new TreeItem((Plugin)sender, item); // Create a new treeitem wrapper.
-                    if (parent != null) (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.Add(t); // if we have a parent, add the item as sub-item.                        
-                    else TreeView.Nodes.Add(t); // oh, look we're the root!
-                    t.Render(); // let the treeview-item wrapper do it's own job.
-                } 
+                    foreach (ListItem item in items)
+                    {
+                        TreeItem t = new TreeItem((Plugin)sender, item); // Create a new treeitem wrapper.
+                        nodes.Add(t); // add it to our treeitem collection;
+                    }
+                    (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.AddRange(nodes.ToArray()); // add all the treenodes at once.                       
+                    foreach (TreeItem t in nodes) { t.Render(); } // let the treeview-item's wrapper do it's own job.                    
+                }
             }
         }
 
