@@ -8,6 +8,6 @@ You can find answers for the most frequently asked questions here.
 
 = Installation =
 
-Q: I've installed the application but it gives an error: "The application failed to initialize properly (0xc0000135). Click on OK to terminate the application."
+ * I've installed the application but it gives an error: _"The application failed to initialize properly (0xc0000135). Click on OK to terminate the application."_
 
-A: You should install [http://www.microsoft.com/downloads/en/details.aspx?FamilyID=e5ad0459-cbcc-4b4f-97b6-fb17111cf544&displaylang=en Microsoft .NET Framework 4 Client Profile] to run BlizzTV.
+You should install *[http://www.microsoft.com/downloads/en/details.aspx?FamilyID=e5ad0459-cbcc-4b4f-97b6-fb17111cf544&displaylang=en Microsoft .NET Framework 4 Client Profile]* to run BlizzTV.
