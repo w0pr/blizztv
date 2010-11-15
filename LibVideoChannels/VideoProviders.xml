@@ -5,6 +5,11 @@
     <Name>Youtube</Name>
     <Movie><![CDATA[http://www.youtube.com/v/%video_id%]]></Movie>
     <FlashVars><![CDATA[fs=1&autoplay=%auto_play%&hl=en_US]]></FlashVars>
-  </Provider>  
+  </Provider>
+  <Provider>
+    <Name>BlipTV</Name>
+    <Movie><![CDATA[http://blip.tv/play/%video_id%]]></Movie>
+    <FlashVars></FlashVars>
+  </Provider>
 </Providers>
 

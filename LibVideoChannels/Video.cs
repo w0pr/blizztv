@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using LibBlizzTV;
 
 namespace LibVideoChannels
@@ -31,7 +30,6 @@ namespace LibVideoChannels
         private string _provider; // the video provider.
         private string _movie; // the movie template.
         private string _flash_vars; // the flash vars.
-        private static Regex _regex = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled); // compiled regex for reading video id's.
 
         public string GUID { get { return this._guid; } internal set { this._guid = value; } }
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
@@ -50,9 +48,6 @@ namespace LibVideoChannels
             this.GUID = Guid;
             this.Link = Link;
             this.Provider = Provider;
-
-            Match m = _regex.Match(this.Link);  
-            if (m.Success) this.VideoID = m.Groups[1].Value;
 
             // check the persistent storage for if the video is watched before.
             if (KeyValueStorage.Instance.KeyExists("video", "state", this.GUID)) this.SetState((ItemState)KeyValueStorage.Instance.Get("video", "state", this.GUID));
