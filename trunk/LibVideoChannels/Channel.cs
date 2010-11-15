@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
@@ -31,9 +30,9 @@ namespace LibVideoChannels
         private string _provider; // the channel provider
         private bool disposed = false;
 
-        public bool Valid { get { return this._valid; } }
-        public string Slug { get { return this._slug; } }
-        public string Provider { get { return this._provider; } }
+        public bool Valid { get { return this._valid; } internal set { this._valid = value; } }
+        public string Slug { get { return this._slug; } internal set { this._slug = value; }  }
+        public string Provider { get { return this._provider; } internal set { this._provider = value; } }
                 
         public List<Video> Videos = new List<Video>();
 
@@ -56,55 +55,7 @@ namespace LibVideoChannels
 
         #region internal logic
 
-        public void Update() // Update the channel data.
-        {
-            try
-            {
-                string api_url = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}",this.Slug,(VideoChannelsPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor); // the api url.
-                string response = WebReader.Read(api_url); // read the api response.
-                if (response != null)
-                {
-                    XDocument xdoc = XDocument.Parse(response); // parse the api response.
-                    var entries = from item in xdoc.Descendants("item") // get the videos
-                                  select new
-                                  {
-                                      GUID = item.Element("guid").Value,
-                                      Title = item.Element("title").Value,
-                                      Link = item.Element("link").Value
-                                  };
-
-                    foreach (var entry in entries) // create the video items.
-                    {
-                        Video v = new Video(entry.Title, entry.GUID, entry.Link, this.Provider);
-                        this.Videos.Add(v);
-                    }
-                }
-                else this._valid = false;
-            }
-            catch (Exception e)
-            {
-                this._valid = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Channel - Update() Error: \n {0}", e.ToString()));
-            }
-
-            if (this._valid)
-            {
-                int unread = 0; // non-watched videos count.
-                foreach (Video v in this.Videos) { if (v.State == ItemState.UNREAD) unread++; }
-
-                if (unread > 0) // if there non-watched channel videos.
-                {
-                    this.SetTitle(string.Format("{0} ({1})", this.Title, unread.ToString()));
-                    this.SetState(ItemState.UNREAD); // then mark the channel itself as unread also
-                }
-            }
-            else
-            {
-                Video error = new Video("Error updating channel.", "", "", this.Provider);
-                error.SetState(ItemState.ERROR);
-                this.Videos.Add(error);
-            }
-        }
+        public virtual void Update() { throw new NotImplementedException(); } // the channel updater. 
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {

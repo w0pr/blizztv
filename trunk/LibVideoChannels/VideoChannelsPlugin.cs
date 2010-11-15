@@ -91,7 +91,7 @@ namespace LibVideoChannels
 
                 foreach (var entry in entries) // create up the channel items.
                 {
-                    Channel c = new Channel(entry.Name, entry.Slug, entry.Provider);
+                    Channel c = ChannelFactory.CreateChannel(entry.Name, entry.Slug, entry.Provider);
                     this._channels.Add(c);
                 }
             }
