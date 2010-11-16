@@ -17,6 +17,7 @@ using System;
 using System.Windows.Forms;
 using LibBlizzTV.Utils;
 using LibBlizzTV;
+using BlizzTV.Utils;
 
 namespace BlizzTV
 {
@@ -41,11 +42,7 @@ namespace BlizzTV
             if (SettingsStorage.Instance.Settings.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (SettingsStorage.Instance.Settings.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
 
-            // Check if our dependencies are satisfied.
-            using (DependencyChecker dc = new DependencyChecker())
-            {
-
-            }
+            using (DependencyChecker dc = new DependencyChecker()) { } // Check if our dependencies are satisfied.
 
             Log.Instance.Write(LogMessageTypes.INFO, "Program startup.."); // the startup message so we can see sessions in log easier.
 
