@@ -77,8 +77,8 @@
             this.toolStripSeparator1,
             this.MenuExit});
             this.blizzTVToolStripMenuItem.Name = "blizzTVToolStripMenuItem";
-            this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
-            this.blizzTVToolStripMenuItem.Text = "Town Portal";
+            this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.blizzTVToolStripMenuItem.Text = "File";
             // 
             // preferencesToolStripMenuItem
             // 
