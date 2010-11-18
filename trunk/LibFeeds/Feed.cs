@@ -26,12 +26,18 @@ namespace LibFeeds
     public class Feed : ListItem
     {
         #region members
-
+        
+        private string _url; // the feed url.
+        private string _name; // the feed name.
         private bool _valid = true; // did the feed parsed all okay?        
-        private string _url; // the feed url
+        private bool _commit_on_save = false; // add feed to xml file on save.
+        private bool _delete_on_save = false; // remove feed from xml file on save.
         private bool disposed = false;
 
+        public string Name { get { return this._name; } }
         public string URL { get { return this._url; } }
+        public bool CommitOnSave { get { return this._commit_on_save; } set { this._commit_on_save = value; } }
+        public bool DeleteOnSave { get { return this._delete_on_save; } set { this._delete_on_save = value; } }
         public bool Valid { get { return this._valid; } }
 
         // TODO: should be a readonly collection.
@@ -41,9 +47,10 @@ namespace LibFeeds
 
         #region ctor
 
-        public Feed(string Title, string URL)
-            : base(Title)
+        public Feed(string Name, string URL)
+            : base(Name)
         {
+            this._name = Name;
             this._url = URL;
 
             // register context menus.
