@@ -12,12 +12,32 @@ namespace LibFeeds
 {
     public partial class frmSettings : Form, IPluginSettingsForm
     {
+        private bool _feeds_list_updated = false;
+
         public frmSettings()
         {
             InitializeComponent();
         }
 
         private void frmSettings_Load(object sender, EventArgs e)
+        {
+            this.LoadFeeds();
+            this.LoadSettings();
+        }
+
+        private void AddListviewItem(string Name, string URL)
+        {
+            ListViewItem item = new ListViewItem(Name);
+            item.SubItems.Add(URL);
+            this.ListviewSubscriptions.Items.Add(item);
+        }
+
+        private void LoadFeeds()
+        {
+            foreach (KeyValuePair<string,Feed> pair in FeedsPlugin.Instance._feeds) { this.AddListviewItem(pair.Value.Name, pair.Value.URL); }
+        }
+
+        private void LoadSettings()
         {
             numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)(FeedsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes;
         }
@@ -26,6 +46,38 @@ namespace LibFeeds
         {
             (FeedsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             FeedsPlugin.Instance.SaveSettings();
+            if (this._feeds_list_updated)
+            {
+                FeedsPlugin.Instance.SaveFeedsXML();
+                FeedsPlugin.Instance.UpdateFeeds();
+            }
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            frmAddFeed f = new frmAddFeed();
+            f.OnAddFeed += OnAddFeed;
+            f.ShowDialog();
+        }
+
+        private void buttonRemove_Click(object sender, EventArgs e)
+        {
+            if (ListviewSubscriptions.SelectedItems.Count > 0)
+            {
+                this._feeds_list_updated = true;
+                ListViewItem selection = ListviewSubscriptions.SelectedItems[0];
+                FeedsPlugin.Instance._feeds[selection.Text].DeleteOnSave = true;                
+                selection.Remove();
+            }
+        }
+
+        private void OnAddFeed(string Name, string URL)
+        {
+            this._feeds_list_updated=true;
+            this.AddListviewItem(Name, URL); // add to listview.
+            Feed f = new Feed(Name, URL);
+            f.CommitOnSave = true;
+            FeedsPlugin.Instance._feeds.Add(Name,f); // add to our feeds list.
         }
     }
 }

@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using System.Text;
 using System.Timers;
 using LibBlizzTV;
@@ -30,11 +31,11 @@ namespace LibFeeds
         #region members
 
         private ListItem _root_item = new ListItem("Feeds");  // root item on treeview.
-        private List<Feed> _feeds = new List<Feed>(); // the feeds list 
+        internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 
         private Timer _update_timer;
         private bool disposed = false;
 
-        public static Plugin Instance;
+        public static FeedsPlugin Instance;
 
         #endregion
 
@@ -44,7 +45,6 @@ namespace LibFeeds
             : base(ps)
         {
             FeedsPlugin.Instance = this;
-            this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.                     
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace LibFeeds
 
         #region internal logic
 
-        private bool UpdateFeeds()
+        internal bool UpdateFeeds()
         {
             bool success = true;
 
@@ -84,14 +84,14 @@ namespace LibFeeds
                 var entries = from feed in xdoc.Descendants("Feed") // get the feeds.
                               select new
                               {
-                                  Title = feed.Element("Name").Value,
+                                  Title = feed.Attribute("Name").Value,
                                   URL = feed.Element("URL").Value,
                               };
 
                 foreach (var entry in entries) // create up the feed items.
                 {
                     Feed f = new Feed(entry.Title, entry.URL);
-                    this._feeds.Add(f); 
+                    this._feeds.Add(f.Name, f);
                 }
             }
             catch (Exception e)
@@ -107,12 +107,12 @@ namespace LibFeeds
 
                 this.AddWorkload(this._feeds.Count);
 
-                foreach (Feed feed in this._feeds) // loop through feeds.
+                foreach (KeyValuePair<string,Feed> pair in this._feeds) // loop through feeds.
                 {
-                    feed.Update(); // update the feed.
-                    RegisterListItem(feed, _root_item); // if the feed parsed all okay, regiser the feed-item.
-                    foreach (Story story in feed.Stories) { RegisterListItem(story, feed); } // register the story items.
-                    if (feed.State == ItemState.UNREAD) unread++;
+                    pair.Value.Update(); // update the feed.
+                    RegisterListItem(pair.Value, _root_item); // if the feed parsed all okay, regiser the feed-item.
+                    foreach (Story story in pair.Value.Stories) { RegisterListItem(story, pair.Value); } // register the story items.
+                    if (pair.Value.State == ItemState.UNREAD) unread++;
                     this.StepWorkload();
                 }
 
@@ -122,9 +122,35 @@ namespace LibFeeds
             return success;
         }
 
+        internal void SaveFeedsXML()
+        {
+            try
+            {
+                foreach (KeyValuePair<string,Feed> pair in this._feeds)
+                {
+                    if (pair.Value.CommitOnSave)
+                    {
+                        XDocument xdoc = XDocument.Load("Feeds.xml");
+                        xdoc.Element("Feeds").Add(new XElement("Feed", new XAttribute("Name", pair.Value.Name), new XElement("URL", pair.Value.URL)));
+                        xdoc.Save("Feeds.xml");
+                    }
+                    else if (pair.Value.DeleteOnSave)
+                    {
+                        XDocument xdoc = XDocument.Load("Feeds.xml");
+                        xdoc.XPathSelectElement(string.Format("Feeds/Feed[@Name='{0}']", pair.Value.Name)).Remove();
+                        xdoc.Save("Feeds.xml");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin SaveFeedsXML() Error: \n {0}", e.ToString()));
+            }
+        }
+
         private void DeleteExistingFeeds() // removes all current feeds.
         {
-            foreach (Feed f in this._feeds) { f.Delete(); } // Delete the feeds.
+            foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Delete(); } // Delete the feeds.
             this._feeds.Clear(); // remove them from the list.
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -133,12 +159,6 @@ namespace LibFeeds
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateFeeds()));               
-        }
-
-        private void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler
-        {
-            frmDataEditor f = new frmDataEditor("Feeds.xml", "Feed");
-            f.Show();
         }
 
         #endregion
@@ -157,7 +177,7 @@ namespace LibFeeds
                     this._update_timer = null;
                     this._root_item.Dispose();
                     this._root_item = null;
-                    foreach (Feed f in this._feeds) { f.Dispose(); }
+                    foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Dispose(); }
                     this._feeds.Clear();
                     this._feeds = null;
                 }
