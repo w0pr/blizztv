@@ -35,6 +35,9 @@ namespace LibStreams
                 case "ustream":
                     _stream = new UStream(Title, Slug, Provider);
                     break;
+                case "own3dtv":
+                    _stream = new Own3DTV(Title, Slug, Provider);
+                    break;
                 default:
                     break;
             }

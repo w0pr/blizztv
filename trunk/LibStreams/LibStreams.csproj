@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Handlers\JustinTV.cs" />
     <Compile Include="Handlers\LiveStream.cs" />
+    <Compile Include="Handlers\Own3DTV.cs" />
     <Compile Include="Handlers\UStream.cs" />
     <Compile Include="Player.cs">
       <SubType>Form</SubType>
