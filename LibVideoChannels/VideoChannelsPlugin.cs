@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using System.Text;
 using System.Timers;
 using LibBlizzTV;
@@ -30,11 +31,11 @@ namespace LibVideoChannels
         #region members
 
         private ListItem _root_item = new ListItem("Videos"); // root item on treeview.
-        private List<Channel> _channels = new List<Channel>(); // the channels list.
+        internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private Timer _update_timer;
         private bool disposed = false;
 
-        public static Plugin Instance;
+        public static VideoChannelsPlugin Instance;
 
         #endregion
 
@@ -44,7 +45,6 @@ namespace LibVideoChannels
             : base(ps)
         {
             VideoChannelsPlugin.Instance = this;
-            this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace LibVideoChannels
 
         #region internal logic
 
-        private bool UpdateChannels()
+        internal bool UpdateChannels()
         {
             bool success = true;
 
@@ -81,18 +81,18 @@ namespace LibVideoChannels
             try
             {
                 XDocument xdoc = XDocument.Load("VideoChannels.xml"); // load the xml.
-                var entries = from videochannel in xdoc.Descendants("VideoChannel") // get the channels.
+                var entries = from channel in xdoc.Descendants("Channel") // get the channels.
                               select new
                               {
-                                  Name = videochannel.Element("Name").Value,
-                                  Slug = videochannel.Element("Slug").Value,
-                                  Provider = videochannel.Element("Provider").Value,
+                                  Name = channel.Attribute("Name").Value,
+                                  Slug = channel.Element("Slug").Value,
+                                  Provider = channel.Element("Provider").Value,
                               };
 
                 foreach (var entry in entries) // create up the channel items.
                 {
                     Channel c = ChannelFactory.CreateChannel(entry.Name, entry.Slug, entry.Provider);
-                    this._channels.Add(c);
+                    this._channels.Add(entry.Name,c);
                 }
             }
             catch (Exception e)
@@ -108,12 +108,12 @@ namespace LibVideoChannels
 
                 this.AddWorkload(this._channels.Count);
 
-                foreach (Channel channel in this._channels) // loop through videos.
+                foreach (KeyValuePair<string,Channel> pair in this._channels) // loop through videos.
                 {
-                    channel.Update(); // update the channel.
-                    RegisterListItem(channel, _root_item);  // if the channel parsed all okay, regiser the channel-item.                    
-                    foreach (Video v in channel.Videos) { RegisterListItem(v, channel); } // register the video items.
-                    if (channel.State == ItemState.UNREAD) unread++;
+                    pair.Value.Update(); // update the channel.
+                    RegisterListItem(pair.Value, _root_item);  // if the channel parsed all okay, regiser the channel-item.                    
+                    foreach (Video v in pair.Value.Videos) { RegisterListItem(v, pair.Value); } // register the video items.
+                    if (pair.Value.State == ItemState.UNREAD) unread++;
                     this.StepWorkload();
                 }
 
@@ -122,9 +122,35 @@ namespace LibVideoChannels
             return success;
         }
 
+        internal void SaveChannelsXML()
+        {
+            try
+            {
+                foreach (KeyValuePair<string, Channel> pair in this._channels)
+                {
+                    if (pair.Value.CommitOnSave)
+                    {
+                        XDocument xdoc = XDocument.Load("VideoChannels.xml");
+                        xdoc.Element("Channels").Add(new XElement("Channel", new XAttribute("Name", pair.Value.Name), new XElement("Slug", pair.Value.Slug), new XElement("Provider", pair.Value.Provider)));
+                        xdoc.Save("VideoChannels.xml");
+                    }
+                    else if (pair.Value.DeleteOnSave)
+                    {
+                        XDocument xdoc = XDocument.Load("VideoChannels.xml");
+                        xdoc.XPathSelectElement(string.Format("Channels/Channel[@Name='{0}']", pair.Value.Name)).Remove();
+                        xdoc.Save("VideoChannels.xml");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin SaveFeedsXML() Error: \n {0}", e.ToString()));
+            }
+        }
+
         private void DeleteExistingChannels() // removes all current feeds.
         {
-            foreach (Channel c in this._channels) { c.Delete(); } // Delete the feeds.
+            foreach (KeyValuePair<string,Channel> pair in this._channels) { pair.Value.Delete(); } // Delete the feeds.
             this._channels.Clear(); // remove them from the list.
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -133,12 +159,6 @@ namespace LibVideoChannels
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateChannels()));
-        }
-
-        public void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler
-        {
-            frmDataEditor f = new frmDataEditor("VideoChannels.xml", "VideoChannel");
-            f.Show();
         }
 
         #endregion
@@ -155,7 +175,7 @@ namespace LibVideoChannels
                     this._update_timer.Elapsed -= OnTimerHit;
                     this._update_timer.Dispose();
                     this._update_timer = null;
-                    foreach (Channel c in this._channels) { c.Dispose(); }
+                    foreach (KeyValuePair<string,Channel> pair in this._channels) { pair.Value.Dispose(); }
                     this._channels.Clear();
                     this._channels = null;
                 }

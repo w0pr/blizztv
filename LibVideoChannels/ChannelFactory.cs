@@ -8,16 +8,16 @@ namespace LibVideoChannels
 {
     public static class ChannelFactory
     {
-        public static Channel CreateChannel(string Title, string Slug, string Provider)
+        public static Channel CreateChannel(string Name, string Slug, string Provider)
         {
             Channel _channel = null;
             switch (Provider.ToLower())
             {
                 case "youtube":
-                    _channel = new Youtube(Title, Slug, Provider);
+                    _channel = new Youtube(Name, Slug, Provider);
                     break;
                 case "bliptv":
-                    _channel = new BlipTV(Title, Slug, Provider);
+                    _channel = new BlipTV(Name, Slug, Provider);
                     break;
                 default:
                     break;
