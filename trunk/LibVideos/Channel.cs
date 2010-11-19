@@ -19,7 +19,7 @@ using System.Linq;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
-namespace LibVideoChannels
+namespace LibVideos
 {
     public class Channel:ListItem
     {

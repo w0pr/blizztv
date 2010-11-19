@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using LibVideoChannels;
+using LibVideos;
 
-namespace LibVideoChannels.Handlers
+namespace LibVideos.Handlers
 {
     public class YoutubeVideo:Video
     {

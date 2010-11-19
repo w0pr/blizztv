@@ -1,4 +1,4 @@
-﻿namespace LibVideoChannels
+﻿namespace LibVideos
 {
     partial class Player
     {

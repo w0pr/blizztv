@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using LibBlizzTV;
 
-namespace LibVideoChannels
+namespace LibVideos
 {
     [Serializable]
     public class Settings:PluginSettings

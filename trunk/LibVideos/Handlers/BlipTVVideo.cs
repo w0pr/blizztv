@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LibVideoChannels.Handlers
+namespace LibVideos.Handlers
 {
     public class BlipTVVideo:Video
     {
