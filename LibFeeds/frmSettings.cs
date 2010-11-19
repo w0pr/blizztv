@@ -21,20 +21,20 @@ namespace LibFeeds
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
-            this.LoadFeeds();
+            this.LoadSubscriptions();
             this.LoadSettings();
         }
 
-        private void AddListviewItem(string Name, string URL)
+        private void AddSubscriptionToListview(string Name, string URL)
         {
             ListViewItem item = new ListViewItem(Name);
             item.SubItems.Add(URL);
             this.ListviewSubscriptions.Items.Add(item);
         }
 
-        private void LoadFeeds()
+        private void LoadSubscriptions()
         {
-            foreach (KeyValuePair<string,Feed> pair in FeedsPlugin.Instance._feeds) { this.AddListviewItem(pair.Value.Name, pair.Value.URL); }
+            foreach (KeyValuePair<string,Feed> pair in FeedsPlugin.Instance._feeds) { this.AddSubscriptionToListview(pair.Value.Name, pair.Value.URL); }
         }
 
         private void LoadSettings()
@@ -74,7 +74,7 @@ namespace LibFeeds
         private void OnAddFeed(string Name, string URL)
         {
             this._feeds_list_updated=true;
-            this.AddListviewItem(Name, URL); // add to listview.
+            this.AddSubscriptionToListview(Name, URL); // add to listview.
             Feed f = new Feed(Name, URL);
             f.CommitOnSave = true;
             FeedsPlugin.Instance._feeds.Add(Name,f); // add to our feeds list.

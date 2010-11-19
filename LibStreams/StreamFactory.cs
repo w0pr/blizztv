@@ -21,22 +21,22 @@ namespace LibStreams
 {
     public static class StreamFactory // streams factory
     {
-        public static Stream CreateStream(string Title,string Slug,string Provider) // creates a stream object based on it's provider
+        public static Stream CreateStream(string Name,string Slug,string Provider) // creates a stream object based on it's provider
         {
             Stream _stream=null;
             switch (Provider.ToLower()) // create the appr. stream object based on it's provider.
             {
                 case "livestream":                    
-                    _stream = new LiveStream(Title,Slug,Provider);
+                    _stream = new LiveStream(Name,Slug,Provider);
                     break;
                 case "justintv":
-                    _stream = new JustinTV(Title, Slug, Provider);
+                    _stream = new JustinTV(Name, Slug, Provider);
                     break;
                 case "ustream":
-                    _stream = new UStream(Title, Slug, Provider);
+                    _stream = new UStream(Name, Slug, Provider);
                     break;
                 case "own3dtv":
-                    _stream = new Own3DTV(Title, Slug, Provider);
+                    _stream = new Own3DTV(Name, Slug, Provider);
                     break;
                 default:
                     break;

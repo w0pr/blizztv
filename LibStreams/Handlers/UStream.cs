@@ -30,7 +30,7 @@ namespace LibStreams.Handlers
 
         #region ctor
 
-        public UStream(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
+        public UStream(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
 
         #endregion
 

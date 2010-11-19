@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using System.Text;
 using System.Timers;
 using LibBlizzTV;
@@ -30,11 +31,11 @@ namespace LibStreams
         #region members
 
         private ListItem _root_item = new ListItem("Streams"); // root item on treeview.
-        private List<Stream> _streams = new List<Stream>();
+        internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _update_timer;
         private bool disposed = false;
 
-        public static Plugin Instance;
+        public static StreamsPlugin Instance;
 
         #endregion
 
@@ -43,7 +44,6 @@ namespace LibStreams
         public StreamsPlugin(PluginSettings ps):base(ps)
         {
             StreamsPlugin.Instance = this;
-            this.Menus.Add("subscriptions", new System.Windows.Forms.ToolStripMenuItem("Subscriptions", null, new EventHandler(MenuSubscriptionsClicked))); // register subscriptions menu.         
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace LibStreams
 
         #region internal logic
 
-        private bool UpdateStreams()
+        internal bool UpdateStreams()
         {
             bool success = true;
 
@@ -83,7 +83,7 @@ namespace LibStreams
                 var entries = from stream in xdoc.Descendants("Stream") // get the streams.
                               select new
                               {
-                                  Name = stream.Element("Name").Value,
+                                  Name = stream.Attribute("Name").Value,
                                   Slug = stream.Element("Slug").Value,
                                   Provider = stream.Element("Provider").Value.ToLower(),
                               };
@@ -91,7 +91,7 @@ namespace LibStreams
                 foreach (var entry in entries) // create up the stream items.
                 {
                     Stream s = StreamFactory.CreateStream(entry.Name, entry.Slug, entry.Provider);
-                    this._streams.Add(s);
+                    this._streams.Add(entry.Name,s);
                 }
             }
             catch (Exception e)
@@ -107,16 +107,16 @@ namespace LibStreams
 
                 this.AddWorkload(this._streams.Count);
 
-                foreach (Stream stream in this._streams) // loop through all streams
+                foreach (KeyValuePair<string,Stream> pair in this._streams) // loop through all streams
                 {
                     try
                     {
-                        stream.Update(); // update the stream
-                        if (stream.IsLive) // if it's live
+                        pair.Value.Update(); // update the stream
+                        if (pair.Value.IsLive) // if it's live
                         {
-                            stream.SetTitle(string.Format("{0} ({1})", stream.Title, stream.ViewerCount)); // put stream viewers count on title.
+                            pair.Value.SetTitle(string.Format("{0} ({1})", pair.Value.Title, pair.Value.ViewerCount)); // put stream viewers count on title.
                             available_count++; // increment available live streams count.
-                            RegisterListItem(stream, _root_item); // register the stream item.
+                            RegisterListItem(pair.Value, _root_item); // register the stream item.
                         }
                         this.StepWorkload();
                     }
@@ -129,9 +129,35 @@ namespace LibStreams
             return success;
         }
 
+        internal void SaveStreamsXML()
+        {
+            try
+            {
+                foreach (KeyValuePair<string, Stream> pair in this._streams)
+                {
+                    if (pair.Value.CommitOnSave)
+                    {
+                        XDocument xdoc = XDocument.Load("Streams.xml");
+                        xdoc.Element("Streams").Add(new XElement("Stream", new XAttribute("Name", pair.Value.Name), new XElement("Slug", pair.Value.Slug), new XElement("Provider", pair.Value.Provider)));
+                        xdoc.Save("Streams.xml");
+                    }
+                    else if (pair.Value.DeleteOnSave)
+                    {
+                        XDocument xdoc = XDocument.Load("Streams.xml");
+                        xdoc.XPathSelectElement(string.Format("Streams/Stream[@Name='{0}']", pair.Value.Name)).Remove();
+                        xdoc.Save("Streams.xml");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin SaveFeedsXML() Error: \n {0}", e.ToString()));
+            }
+        }
+
         private void DeleteExistingStreams() // removes all current feeds.
         {
-            foreach (Stream s in this._streams) { s.Delete(); } // Delete the feeds.
+            foreach (KeyValuePair<string,Stream> pair in this._streams) { pair.Value.Delete(); } // Delete the feeds.
             this._streams.Clear(); // remove them from the list.
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -140,12 +166,6 @@ namespace LibStreams
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateStreams()));
-        }
-
-        public void MenuSubscriptionsClicked(object sender, EventArgs e) // subscriptions menu handler
-        {
-            frmDataEditor f = new frmDataEditor("Streams.xml", "Stream");
-            f.Show();
         }
 
         #endregion
@@ -162,7 +182,7 @@ namespace LibStreams
                     this._update_timer.Elapsed -= OnTimerHit;
                     this._update_timer.Dispose();
                     this._update_timer = null;
-                    foreach (Stream s in this._streams) { s.Dispose(); }
+                    foreach (KeyValuePair<string,Stream> pair in this._streams) { pair.Value.Dispose(); }
                     this._streams.Clear();
                     this._streams = null;
                 }
