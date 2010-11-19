@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using LibBlizzTV;
 
-namespace LibVideoChannels
+namespace LibVideos
 {
     public partial class frmSettings : Form,IPluginSettingsForm
     {
@@ -35,25 +35,25 @@ namespace LibVideoChannels
 
         private void LoadSettings()
         {
-            numericUpDownNumberOfVideosToQueryChannelFor.Value = (decimal)(VideoChannelsPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor;
-            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)(VideoChannelsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes;
+            numericUpDownNumberOfVideosToQueryChannelFor.Value = (decimal)(VideosPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor;
+            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)(VideosPlugin.Instance.Settings as Settings).UpdateEveryXMinutes;
         }
 
         private void LoadSubscriptions()
         {
-            foreach (KeyValuePair<string, Channel> pair in VideoChannelsPlugin.Instance._channels) { this.AddSubscriptionToListview(pair.Value.Name, pair.Value.Slug, pair.Value.Provider); }
+            foreach (KeyValuePair<string, Channel> pair in VideosPlugin.Instance._channels) { this.AddSubscriptionToListview(pair.Value.Name, pair.Value.Slug, pair.Value.Provider); }
         }
 
         public void SaveSettings()
         {
-            (VideoChannelsPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor = (int)numericUpDownNumberOfVideosToQueryChannelFor.Value;
-            (VideoChannelsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
-            VideoChannelsPlugin.Instance.SaveSettings();
+            (VideosPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor = (int)numericUpDownNumberOfVideosToQueryChannelFor.Value;
+            (VideosPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
+            VideosPlugin.Instance.SaveSettings();
 
             if (this._video_channels_list_updated)
             {
-                VideoChannelsPlugin.Instance.SaveChannelsXML();
-                VideoChannelsPlugin.Instance.UpdateChannels();
+                VideosPlugin.Instance.SaveChannelsXML();
+                VideosPlugin.Instance.UpdateChannels();
             }
         }
 
@@ -70,7 +70,7 @@ namespace LibVideoChannels
             {
                 this._video_channels_list_updated = true;
                 ListViewItem selection = ListviewSubscriptions.SelectedItems[0];
-                VideoChannelsPlugin.Instance._channels[selection.Text].DeleteOnSave = true;
+                VideosPlugin.Instance._channels[selection.Text].DeleteOnSave = true;
                 selection.Remove();
             }
         }
@@ -81,7 +81,7 @@ namespace LibVideoChannels
             this.AddSubscriptionToListview(Name, Slug, Provider);
             Channel c = ChannelFactory.CreateChannel(Name, Slug, Provider);
             c.CommitOnSave = true;
-            VideoChannelsPlugin.Instance._channels.Add(Name, c);
+            VideosPlugin.Instance._channels.Add(Name, c);
         }
     }
 }

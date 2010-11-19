@@ -8,8 +8,8 @@
     <ProjectGuid>{5A11D4CE-753A-42DE-A634-68B63DBDFACB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LibVideoChannels</RootNamespace>
-    <AssemblyName>LibVideoChannels</AssemblyName>
+    <RootNamespace>LibVideos</RootNamespace>
+    <AssemblyName>LibVideos</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -71,7 +71,7 @@
       <DependentUpon>Player.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="VideoChannelsPlugin.cs" />
+    <Compile Include="VideosPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers.cs" />
     <Compile Include="Resources.Designer.cs">

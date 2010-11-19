@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
-namespace LibVideoChannels
+namespace LibVideos
 {
     public partial class Player : Form // The video player.
     {

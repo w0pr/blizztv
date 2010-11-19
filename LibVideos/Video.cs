@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using LibBlizzTV;
 
-namespace LibVideoChannels
+namespace LibVideos
 {
     public class Video:ListItem
     {

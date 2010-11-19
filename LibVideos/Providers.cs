@@ -19,7 +19,7 @@ using System.Linq;
 using System.Xml.Linq;
 using LibBlizzTV.Utils;
 
-namespace LibVideoChannels
+namespace LibVideos
 {
     public sealed class Providers : IDisposable // video providers
     {

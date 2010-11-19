@@ -23,10 +23,10 @@ using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
-namespace LibVideoChannels
+namespace LibVideos
 {
     [PluginAttributes("Video Channels", "Video channel aggregator plugin for BlizzTV","video_16.png")]
-    public class VideoChannelsPlugin:Plugin
+    public class VideosPlugin:Plugin
     {
         #region members
 
@@ -35,16 +35,16 @@ namespace LibVideoChannels
         private Timer _update_timer;
         private bool disposed = false;
 
-        public static VideoChannelsPlugin Instance;
+        public static VideosPlugin Instance;
 
         #endregion
 
         #region ctor
 
-        public VideoChannelsPlugin(PluginSettings ps)
+        public VideosPlugin(PluginSettings ps)
             : base(ps)
         {
-            VideoChannelsPlugin.Instance = this;
+            VideosPlugin.Instance = this;
         }
 
         #endregion

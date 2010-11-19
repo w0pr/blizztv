@@ -5,42 +5,35 @@ using System.Xml.Linq;
 using System.Text;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
-using LibVideoChannels;
+using LibVideos;
 
-namespace LibVideoChannels.Handlers
+namespace LibVideos.Handlers
 {
-    public class BlipTV : Channel
+    public class Youtube : Channel
     {
-        public BlipTV(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
+        public Youtube(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
 
         public override void Update()
         {
             try
             {
-                string api_url = string.Format("http://{0}.blip.tv/rss", this.Slug); // the api url.
+                string api_url = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, (VideosPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor); // the api url.
                 string response = WebReader.Read(api_url); // read the api response.
                 if (response != null)
                 {
                     XDocument xdoc = XDocument.Parse(response); // parse the api response.
-                    XNamespace xmlns = "http://blip.tv/dtd/blip/1.0";
                     var entries = from item in xdoc.Descendants("item") // get the videos
                                   select new
                                   {
                                       GUID = item.Element("guid").Value,
                                       Title = item.Element("title").Value,
-                                      Link = item.Element("link").Value,
-                                      VideoID = item.Element(xmlns + "posts_id").Value
+                                      Link = item.Element("link").Value
                                   };
-
-                    int i = 0;
 
                     foreach (var entry in entries) // create the video items.
                     {
-                        BlipTVVideo v = new BlipTVVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
-                        v.VideoID = entry.VideoID;
+                        YoutubeVideo v = new YoutubeVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
                         this.Videos.Add(v);
-                        i++;
-                        if (i >= (VideoChannelsPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor) break;
                     }
                 }
                 else this.Valid = false;
@@ -48,10 +41,10 @@ namespace LibVideoChannels.Handlers
             catch (Exception e)
             {
                 this.Valid = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Blip.TV Channel - Update() Error: \n {0}", e.ToString()));
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e.ToString()));
             }
-
-            this.Process();  
+            
+            this.Process();            
         }
     }
 }

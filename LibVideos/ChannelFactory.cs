@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using LibVideoChannels.Handlers;
+using LibVideos.Handlers;
 
-namespace LibVideoChannels
+namespace LibVideos
 {
     public static class ChannelFactory
     {
