@@ -30,6 +30,7 @@ namespace LibFeeds
     {
         #region members
 
+        private string _xml_file = @"plugins\xml\feeds\feeds.xml";
         private ListItem _root_item = new ListItem("Feeds");  // root item on treeview.
         internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 
         private Timer _update_timer;
@@ -80,7 +81,7 @@ namespace LibFeeds
 
             try
             {
-                XDocument xdoc = XDocument.Load("Feeds.xml"); // load the xml.
+                XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
                 var entries = from feed in xdoc.Descendants("Feed") // get the feeds.
                               select new
                               {
@@ -130,15 +131,15 @@ namespace LibFeeds
                 {
                     if (pair.Value.CommitOnSave)
                     {
-                        XDocument xdoc = XDocument.Load("Feeds.xml");
+                        XDocument xdoc = XDocument.Load(this._xml_file);
                         xdoc.Element("Feeds").Add(new XElement("Feed", new XAttribute("Name", pair.Value.Name), new XElement("URL", pair.Value.URL)));
-                        xdoc.Save("Feeds.xml");
+                        xdoc.Save(this._xml_file);
                     }
                     else if (pair.Value.DeleteOnSave)
                     {
-                        XDocument xdoc = XDocument.Load("Feeds.xml");
+                        XDocument xdoc = XDocument.Load(this._xml_file);
                         xdoc.XPathSelectElement(string.Format("Feeds/Feed[@Name='{0}']", pair.Value.Name)).Remove();
-                        xdoc.Save("Feeds.xml");
+                        xdoc.Save(this._xml_file);
                     }
                 }
             }

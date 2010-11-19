@@ -25,6 +25,7 @@ namespace LibStreams
     {
         #region members
 
+        private string _xml_file = @"plugins\xml\streams\providers.xml";
         private static readonly Providers _instance = new Providers(); // the providers instance.
         public static Providers Instance { get { return _instance; } }
 
@@ -39,7 +40,7 @@ namespace LibStreams
         {
             try
             {
-                XDocument xdoc = XDocument.Load("StreamProviders.xml"); // read providers xml.
+                XDocument xdoc = XDocument.Load(this._xml_file); // read providers xml.
                 var entries = from provider in xdoc.Descendants("Provider") 
                               select new
                               {

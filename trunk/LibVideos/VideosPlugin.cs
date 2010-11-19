@@ -25,11 +25,12 @@ using LibBlizzTV.Utils;
 
 namespace LibVideos
 {
-    [PluginAttributes("Video Channels", "Video channel aggregator plugin for BlizzTV","video_16.png")]
+    [PluginAttributes("Videos", "Video channel aggregator plugin for BlizzTV","video_16.png")]
     public class VideosPlugin:Plugin
     {
         #region members
 
+        private string _xml_file = @"plugins\xml\videos\channels.xml";
         private ListItem _root_item = new ListItem("Videos"); // root item on treeview.
         internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private Timer _update_timer;
@@ -80,7 +81,7 @@ namespace LibVideos
 
             try
             {
-                XDocument xdoc = XDocument.Load("VideoChannels.xml"); // load the xml.
+                XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
                 var entries = from channel in xdoc.Descendants("Channel") // get the channels.
                               select new
                               {
@@ -130,15 +131,15 @@ namespace LibVideos
                 {
                     if (pair.Value.CommitOnSave)
                     {
-                        XDocument xdoc = XDocument.Load("VideoChannels.xml");
+                        XDocument xdoc = XDocument.Load(this._xml_file);
                         xdoc.Element("Channels").Add(new XElement("Channel", new XAttribute("Name", pair.Value.Name), new XElement("Slug", pair.Value.Slug), new XElement("Provider", pair.Value.Provider)));
-                        xdoc.Save("VideoChannels.xml");
+                        xdoc.Save(this._xml_file);
                     }
                     else if (pair.Value.DeleteOnSave)
                     {
-                        XDocument xdoc = XDocument.Load("VideoChannels.xml");
+                        XDocument xdoc = XDocument.Load(this._xml_file);
                         xdoc.XPathSelectElement(string.Format("Channels/Channel[@Name='{0}']", pair.Value.Name)).Remove();
-                        xdoc.Save("VideoChannels.xml");
+                        xdoc.Save(this._xml_file);
                     }
                 }
             }

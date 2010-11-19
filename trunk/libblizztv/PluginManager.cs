@@ -78,12 +78,19 @@ namespace LibBlizzTV
 
         private void ScanPlugins() // scans the program directory and finds valid BlizzTV plugins
         {
-            DirectoryInfo SelfDir = new DirectoryInfo("."); // plugin's are stored in BlizzTV's directory itself.
-            FileInfo[] _dll_files = SelfDir.GetFiles("*.dll"); // find all available dll files
-            foreach (FileInfo _dll in _dll_files) // loop through all avaible dll files
+            try
             {
-                PluginInfo pi = new PluginInfo(_dll.Name); // get the assembly info
-                if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi); // if it's a valid BlizzTV plugin add it to list
+                DirectoryInfo SelfDir = new DirectoryInfo("./plugins"); // plugin's are stored in BlizzTV's directory itself.
+                FileInfo[] _dll_files = SelfDir.GetFiles("*.dll"); // find all available dll files
+                foreach (FileInfo _dll in _dll_files) // loop through all avaible dll files
+                {
+                    PluginInfo pi = new PluginInfo(_dll.Name); // get the assembly info
+                    if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi); // if it's a valid BlizzTV plugin add it to list
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, "Plugins directory not found..");
             }
         }
 

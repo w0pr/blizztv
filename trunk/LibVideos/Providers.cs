@@ -25,6 +25,7 @@ namespace LibVideos
     {
         #region members
 
+        private string _xml_file = @"plugins\xml\videos\providers.xml";
         private static readonly Providers _instance = new Providers(); // the providers instance.
         public static Providers Instance { get { return _instance; } }
 
@@ -39,7 +40,7 @@ namespace LibVideos
         {
             try
             {
-                XDocument xdoc = XDocument.Load("VideoProviders.xml"); // read providers xml.
+                XDocument xdoc = XDocument.Load(this._xml_file); // read providers xml.
                 var entries = from provider in xdoc.Descendants("Provider")
                               select new
                               {
