@@ -18,8 +18,8 @@
   </Provider>
   <Provider>
     <Name>Own3DTV</Name>
-    <Movie><![CDATA[NOT_YET_IMPLEMENTED]]></Movie>
-    <FlashVars><![CDATA[NOT_YET_IMPLEMENTED]]></FlashVars>
+    <Movie><![CDATA[http://static.ec.own3d.tv/embed/3.2.2.4/flowplayer.swf]]></Movie>
+    <FlashVars><![CDATA[config=http://www.own3d.tv/inc/flowplayer/embed/json_cfg_live.php%3fstream=%slug%]]></FlashVars>
   </Provider>
 </Providers>
 
