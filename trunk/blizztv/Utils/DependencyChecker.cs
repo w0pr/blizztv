@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LibBlizzTV.Utils;
 
 namespace BlizzTV.Utils
 {
@@ -29,6 +30,7 @@ namespace BlizzTV.Utils
             catch (Exception e)
             {
                 satisfied = false;
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("CheckShockwaveFlash Exception: {0}", e.ToString()));
             }
             finally
             {

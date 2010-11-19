@@ -46,6 +46,10 @@ namespace LibFeeds
             : base(ps)
         {
             FeedsPlugin.Instance = this;
+
+            // register context menu's.
+            _root_item.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            _root_item.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
         }
 
         #endregion
@@ -160,6 +164,24 @@ namespace LibFeeds
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateFeeds()));               
+        }
+
+        private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, Feed> pair in this._feeds)
+            {
+                pair.Value.SetState(ItemState.READ);
+                foreach (Story s in pair.Value.Stories) { s.SetState(ItemState.READ); }
+            }
+        }
+
+        private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, Feed> pair in this._feeds)
+            {
+                pair.Value.SetState(ItemState.UNREAD);
+                foreach (Story s in pair.Value.Stories) { s.SetState(ItemState.UNREAD); }
+            }
         }
 
         #endregion

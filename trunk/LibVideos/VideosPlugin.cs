@@ -46,6 +46,10 @@ namespace LibVideos
             : base(ps)
         {
             VideosPlugin.Instance = this;
+
+            // register context menu's.
+            _root_item.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
+            _root_item.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
         }
 
         #endregion
@@ -160,6 +164,24 @@ namespace LibVideos
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateChannels()));
+        }
+
+        private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, Channel> pair in this._channels)
+            {
+                pair.Value.SetState(ItemState.READ);
+                foreach (Video v in pair.Value.Videos) { v.SetState(ItemState.READ); }
+            }
+        }
+
+        private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, Channel> pair in this._channels)
+            {
+                pair.Value.SetState(ItemState.UNREAD);
+                foreach (Video v in pair.Value.Videos) { v.SetState(ItemState.UNREAD); }
+            }
         }
 
         #endregion
