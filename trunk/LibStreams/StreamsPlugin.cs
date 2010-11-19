@@ -45,6 +45,9 @@ namespace LibStreams
         public StreamsPlugin(PluginSettings ps):base(ps)
         {
             StreamsPlugin.Instance = this;
+
+            // register context-menu's.
+            _root_item.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
         }
 
         #endregion
@@ -167,6 +170,15 @@ namespace LibStreams
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateStreams()));
+        }
+
+        private void MenuManualUpdate(object sender, EventArgs e)
+        {
+            System.Threading.Thread t = new System.Threading.Thread(delegate()
+            {
+                PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateStreams()));
+            }) { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
+            t.Start();            
         }
 
         #endregion
