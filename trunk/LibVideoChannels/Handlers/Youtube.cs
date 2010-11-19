@@ -11,7 +11,7 @@ namespace LibVideoChannels.Handlers
 {
     public class Youtube : Channel
     {
-        public Youtube(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
+        public Youtube(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
 
         public override void Update()
         {
@@ -41,7 +41,7 @@ namespace LibVideoChannels.Handlers
             catch (Exception e)
             {
                 this.Valid = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Channel - Update() Error: \n {0}", e.ToString()));
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e.ToString()));
             }
             
             this.Process();            

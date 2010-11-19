@@ -52,7 +52,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(437, 262);
+            this.tabControl1.Size = new System.Drawing.Size(447, 262);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage2
@@ -63,7 +63,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(429, 236);
+            this.tabPage2.Size = new System.Drawing.Size(439, 236);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Subscriptions";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -71,7 +71,7 @@
             // buttonRemove
             // 
             this.buttonRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRemove.Location = new System.Drawing.Point(348, 204);
+            this.buttonRemove.Location = new System.Drawing.Point(358, 204);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(75, 23);
             this.buttonRemove.TabIndex = 2;
@@ -82,7 +82,7 @@
             // buttonAdd
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.Location = new System.Drawing.Point(270, 204);
+            this.buttonAdd.Location = new System.Drawing.Point(280, 204);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(72, 23);
             this.buttonAdd.TabIndex = 1;
@@ -100,7 +100,7 @@
             this.colURL});
             this.ListviewSubscriptions.Location = new System.Drawing.Point(6, 6);
             this.ListviewSubscriptions.Name = "ListviewSubscriptions";
-            this.ListviewSubscriptions.Size = new System.Drawing.Size(417, 192);
+            this.ListviewSubscriptions.Size = new System.Drawing.Size(427, 192);
             this.ListviewSubscriptions.TabIndex = 0;
             this.ListviewSubscriptions.UseCompatibleStateImageBehavior = false;
             this.ListviewSubscriptions.View = System.Windows.Forms.View.Details;
@@ -113,7 +113,7 @@
             // colURL
             // 
             this.colURL.Text = "URL";
-            this.colURL.Width = 286;
+            this.colURL.Width = 295;
             // 
             // tabPage1
             // 
@@ -162,7 +162,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(437, 262);
+            this.ClientSize = new System.Drawing.Size(447, 262);
             this.Controls.Add(this.tabControl1);
             this.Name = "frmSettings";
             this.Text = "frmSettings";
