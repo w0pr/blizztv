@@ -11,7 +11,7 @@ namespace LibStreams.Handlers
     {
         private Regex _regex = new Regex("liveViewers=(.*)&liveStatus=(.*)&liveVerified=.*", RegexOptions.Compiled);
 
-        public Own3DTV(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
+        public Own3DTV(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
 
         public override void Update()
         {

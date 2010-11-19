@@ -1,31 +1,25 @@
 <Streams>
-  <Stream>
-    <Name>Day[9]</Name>
+  <Stream Name="Day[9]">
     <Slug>day9tv</Slug>
     <Provider>UStream</Provider>
   </Stream>
-  <Stream>
-    <Name>GosuGamers</Name>
+  <Stream Name="GosuGamers">   
     <Slug>gosugamers</Slug>
     <Provider>UStream</Provider>
   </Stream>
-  <Stream>
-    <Name>GLHF.tv</Name>
+  <Stream Name="GLHF.tv">
     <Slug>TheGunrun</Slug>
     <Provider>UStream</Provider>
   </Stream>
-  <Stream>
-    <Name>ICCupTV</Name>
+  <Stream Name="ICCupTV">
     <Slug>iccup-tv</Slug>
     <Provider>UStream</Provider>
   </Stream>
-  <Stream>
-    <Name>TeamLiquidTV</Name>
+  <Stream Name="TeamLiquidTV">
     <Slug>teamliquidtv</Slug>
     <Provider>UStream</Provider>
   </Stream>
-  <Stream>
-    <Name>CellaWerra</Name>
+  <Stream Name="CellaWerra">
     <Slug>cellawerra</Slug>
     <Provider>LiveStream</Provider>
   </Stream>

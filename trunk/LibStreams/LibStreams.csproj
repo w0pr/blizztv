@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAddStream.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddStream.Designer.cs">
+      <DependentUpon>frmAddStream.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAddStream.resx">
+      <DependentUpon>frmAddStream.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>

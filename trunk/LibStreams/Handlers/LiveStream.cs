@@ -24,7 +24,7 @@ namespace LibStreams.Handlers
     {
         #region ctor
 
-        public LiveStream(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
+        public LiveStream(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
 
         #endregion 
 

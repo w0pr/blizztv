@@ -29,16 +29,25 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonRemove = new System.Windows.Forms.Button();
+            this.buttonAdd = new System.Windows.Forms.Button();
+            this.ListviewSubscriptions = new System.Windows.Forms.ListView();
+            this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colProvider = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colSlug = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.numericUpDownUpdateFeedsEveryXMinutes = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -46,6 +55,72 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(447, 262);
             this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.buttonRemove);
+            this.tabPage2.Controls.Add(this.buttonAdd);
+            this.tabPage2.Controls.Add(this.ListviewSubscriptions);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(439, 236);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Subscriptions";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonRemove
+            // 
+            this.buttonRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRemove.Location = new System.Drawing.Point(356, 204);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(75, 23);
+            this.buttonRemove.TabIndex = 4;
+            this.buttonRemove.Text = "Remove";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
+            // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAdd.Location = new System.Drawing.Point(278, 204);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(72, 23);
+            this.buttonAdd.TabIndex = 3;
+            this.buttonAdd.Text = "Add";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // ListviewSubscriptions
+            // 
+            this.ListviewSubscriptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ListviewSubscriptions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colName,
+            this.colProvider,
+            this.colSlug});
+            this.ListviewSubscriptions.Location = new System.Drawing.Point(4, 6);
+            this.ListviewSubscriptions.Name = "ListviewSubscriptions";
+            this.ListviewSubscriptions.Size = new System.Drawing.Size(432, 192);
+            this.ListviewSubscriptions.TabIndex = 1;
+            this.ListviewSubscriptions.UseCompatibleStateImageBehavior = false;
+            this.ListviewSubscriptions.View = System.Windows.Forms.View.Details;
+            // 
+            // colName
+            // 
+            this.colName.Text = "Name";
+            this.colName.Width = 127;
+            // 
+            // colProvider
+            // 
+            this.colProvider.Text = "Provider";
+            this.colProvider.Width = 120;
+            // 
+            // colSlug
+            // 
+            this.colSlug.Text = "Slug";
+            this.colSlug.Width = 180;
             // 
             // tabPage1
             // 
@@ -100,6 +175,7 @@
             this.Text = "frmSettings";
             this.Load += new System.EventHandler(this.frmSettings_Load);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).EndInit();
@@ -113,5 +189,12 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.NumericUpDown numericUpDownUpdateFeedsEveryXMinutes;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ListView ListviewSubscriptions;
+        private System.Windows.Forms.ColumnHeader colName;
+        private System.Windows.Forms.Button buttonRemove;
+        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.ColumnHeader colProvider;
+        private System.Windows.Forms.ColumnHeader colSlug;
     }
 }

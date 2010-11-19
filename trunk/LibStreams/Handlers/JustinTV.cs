@@ -24,7 +24,7 @@ namespace LibStreams.Handlers
     {
         #region ctor
 
-        public JustinTV(string Title, string Slug, string Provider) : base(Title, Slug, Provider) { }
+        public JustinTV(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
 
         #endregion
 

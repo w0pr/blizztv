@@ -52,8 +52,7 @@ namespace BlizzTV.Updates
                     foreach (var e in entries) { updates.Add(new Update(e.id, e.date, e.link, e.filename, e.details)); } // parse update details.
 
                     foreach (Update u in updates)
-                    {
-                        Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found update: {0} - {1}", u.UpdateType, u.Version));
+                    {                        
                         if ((u.Valid) && ((u.UpdateType == UpdateTypes.STABLE) || (u.UpdateType == UpdateTypes.BETA && SettingsStorage.Instance.Settings.AllowBetaVersionNotifications)) && (u.Version > latest_version))
                         {
                             this._found_update = u;
@@ -62,7 +61,11 @@ namespace BlizzTV.Updates
                         }
                     }
 
-                    if (this._found_update != null && this.OnFoundNewAvailableUpdate != null) this.OnFoundNewAvailableUpdate();
+                    if (this._found_update != null && this.OnFoundNewAvailableUpdate != null)
+                    {
+                        Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found update: {0} - {1}", this._found_update.UpdateType, this._found_update.Version));
+                        this.OnFoundNewAvailableUpdate();
+                    }
                 }
                 else
                 {

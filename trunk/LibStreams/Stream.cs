@@ -23,6 +23,7 @@ namespace LibStreams
     {
         #region members
 
+        private string _name; // the stream name.
         private string _slug; // the stream slug.
         private string _provider; // the stream provider.
         private string _link; // the stream link.
@@ -31,7 +32,10 @@ namespace LibStreams
         private Int32 _viewer_count = 0; // stream viewers count.
         private string _movie; // the stream's movie source.
         private string _flash_vars; // the streams's flash vars.
+        private bool _commit_on_save = false; // add stream to xml file on save.
+        private bool _delete_on_save = false; // remove stream from xml file on save.
 
+        public string Name { get { return this._name; } internal set { this._name = value; } }
         public string Slug { get { return this._slug; } internal set { this._slug = value; } }
         public string Provider { get { return this._provider; } internal set { this._provider = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
@@ -40,14 +44,17 @@ namespace LibStreams
         public Int32 ViewerCount { get { return this._viewer_count; } internal set { this._viewer_count = value; } }
         public string Movie { get { return this._movie; } internal set { this._movie = value; } }
         public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
+        public bool CommitOnSave { get { return this._commit_on_save; } set { this._commit_on_save = value; } }
+        public bool DeleteOnSave { get { return this._delete_on_save; } set { this._delete_on_save = value; } }
 
         #endregion
 
         #region ctor
 
-        public Stream(string Title, string Slug, string Provider)
-            : base(Title)
+        public Stream(string Name, string Slug, string Provider)
+            : base(Name)
         {
+            this._name = Name;
             this._slug = Slug;
             this._provider = Provider;
         }
