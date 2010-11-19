@@ -30,7 +30,7 @@ namespace LibBlizzTV
         #region members
 
         private static KeyValueStorage _instance = new KeyValueStorage();        
-        private string _storage_folder = "state-storage";
+        private string _storage_folder = "storage";
         private PersistentDictionary<string, byte> _dictionary;
         private bool disposed = false;
 

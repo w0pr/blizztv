@@ -128,7 +128,7 @@ namespace LibBlizzTV
         {
             try
             {
-                this._assembly = Assembly.LoadFile(string.Format("{0}\\{1}", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), this._assembly_file)); // load the asked plugins assembly.
+                this._assembly = Assembly.LoadFile(string.Format("{0}\\plugins\\{1}", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), this._assembly_file)); // load the asked plugins assembly.
 
                 foreach (Type t in this._assembly.GetTypes()) // Loop through each available types to see if it actually implements a LibBlizzTV plugin.
                 {

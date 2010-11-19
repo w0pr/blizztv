@@ -46,7 +46,7 @@ namespace LibBlizzTV
         /// </summary>
         public Settings Settings { get { return this._settings; } }
         
-        private string _storage_file = "settings.storage"; // the settings file
+        private string _storage_file = "settings"; // the settings file
         private bool disposed = false;
 
         #endregion 

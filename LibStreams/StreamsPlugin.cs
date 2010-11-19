@@ -30,6 +30,7 @@ namespace LibStreams
     {
         #region members
 
+        private string _xml_file = @"plugins\xml\streams\streams.xml";
         private ListItem _root_item = new ListItem("Streams"); // root item on treeview.
         internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _update_timer;
@@ -79,7 +80,7 @@ namespace LibStreams
 
             try
             {
-                XDocument xdoc = XDocument.Load("Streams.xml"); // load the xml.
+                XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
                 var entries = from stream in xdoc.Descendants("Stream") // get the streams.
                               select new
                               {
@@ -137,15 +138,15 @@ namespace LibStreams
                 {
                     if (pair.Value.CommitOnSave)
                     {
-                        XDocument xdoc = XDocument.Load("Streams.xml");
+                        XDocument xdoc = XDocument.Load(this._xml_file);
                         xdoc.Element("Streams").Add(new XElement("Stream", new XAttribute("Name", pair.Value.Name), new XElement("Slug", pair.Value.Slug), new XElement("Provider", pair.Value.Provider)));
-                        xdoc.Save("Streams.xml");
+                        xdoc.Save(this._xml_file);
                     }
                     else if (pair.Value.DeleteOnSave)
                     {
-                        XDocument xdoc = XDocument.Load("Streams.xml");
+                        XDocument xdoc = XDocument.Load(this._xml_file);
                         xdoc.XPathSelectElement(string.Format("Streams/Stream[@Name='{0}']", pair.Value.Name)).Remove();
-                        xdoc.Save("Streams.xml");
+                        xdoc.Save(this._xml_file);
                     }
                 }
             }

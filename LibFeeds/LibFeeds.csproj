@@ -34,6 +34,9 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,7 +79,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Feeds.xml">
+    <Content Include="xml\feeds.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
@@ -97,7 +100,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF NOT EXIST "$(SolutionDir)blizztv\$(OutDir)plugins\" mkdir "$(SolutionDir)blizztv\$(OutDir)plugins\"
-copy "$(TargetPath)" "$(SolutionDir)blizztv\$(OutDir)plugins\$(TargetFileName)"</PostBuildEvent>
+IF NOT EXIST "$(SolutionDir)blizztv\$(OutDir)plugins\xml\feeds\" mkdir "$(SolutionDir)blizztv\$(OutDir)plugins\xml\feeds\"
+copy "$(TargetPath)" "$(SolutionDir)blizztv\$(OutDir)plugins\$(TargetFileName)"
+copy "$(TargetDir)\xml\*" "$(SolutionDir)blizztv\$(OutDir)plugins\xml\feeds\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
