@@ -48,8 +48,9 @@ namespace LibFeeds
             FeedsPlugin.Instance = this;
 
             // register context menu's.
+            _root_item.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
             _root_item.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            _root_item.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
+            _root_item.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
         }
 
         #endregion
@@ -182,6 +183,15 @@ namespace LibFeeds
                 pair.Value.SetState(ItemState.UNREAD);
                 foreach (Story s in pair.Value.Stories) { s.SetState(ItemState.UNREAD); }
             }
+        }
+
+        private void MenuManualUpdate(object sender, EventArgs e)
+        {
+            System.Threading.Thread t = new System.Threading.Thread(delegate()
+            {
+                PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateFeeds()));
+            }) { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
+            t.Start();                 
         }
 
         #endregion
