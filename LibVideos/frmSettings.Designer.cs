@@ -141,7 +141,7 @@
             // 
             // numericUpDownUpdateFeedsEveryXMinutes
             // 
-            this.numericUpDownUpdateFeedsEveryXMinutes.Location = new System.Drawing.Point(166, 11);
+            this.numericUpDownUpdateFeedsEveryXMinutes.Location = new System.Drawing.Point(183, 11);
             this.numericUpDownUpdateFeedsEveryXMinutes.Maximum = new decimal(new int[] {
             1440,
             0,

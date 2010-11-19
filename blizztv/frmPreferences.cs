@@ -137,6 +137,9 @@ namespace BlizzTV
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            this.LabelSaving.Visible = true;
+            Application.DoEvents();
+
             this.SaveSettings();  // save global settings
             foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IPluginSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
             if (this.OnApplySettings != null) this.OnApplySettings(); // notify observers.
