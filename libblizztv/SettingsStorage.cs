@@ -55,6 +55,10 @@ namespace LibBlizzTV
 
         private SettingsStorage()
         {
+            #pragma warning disable 0618 // ignore obsolete warning.
+            AppDomain.CurrentDomain.AppendPrivatePath("plugins"); // let the app.domain be aware of our custom plugin assemblies folder.           
+            #pragma warning restore 0618 // restore obsolete warnings.
+
             if (this.StorageExists()) this.Load(); // load the saved-settings
             else System.Windows.Forms.MessageBox.Show("Can not read the settings file. BlizzTV will be start with default settings and you have to reconfigure from the Preferences menu.", "Can not read settings file!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
         }
