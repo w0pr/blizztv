@@ -4,3 +4,7 @@
 = User Guide =
 
 placeholder..
+
+= FAQ =
+
+Also check [FAQ] page for answers to mostly frequently asked questions.
