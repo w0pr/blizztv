@@ -61,7 +61,6 @@
             this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.LabelSaving = new System.Windows.Forms.Label();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPlugins.SuspendLayout();
@@ -382,16 +381,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Player Size:";
             // 
-            // LabelSaving
-            // 
-            this.LabelSaving.AutoSize = true;
-            this.LabelSaving.Location = new System.Drawing.Point(4, 317);
-            this.LabelSaving.Name = "LabelSaving";
-            this.LabelSaving.Size = new System.Drawing.Size(144, 13);
-            this.LabelSaving.TabIndex = 3;
-            this.LabelSaving.Text = "Saving settings, please wait..";
-            this.LabelSaving.Visible = false;
-            // 
             // frmPreferences
             // 
             this.AcceptButton = this.buttonOK;
@@ -399,7 +388,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(474, 340);
-            this.Controls.Add(this.LabelSaving);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.TabControl);
@@ -426,7 +414,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -463,6 +450,5 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox checkBoxAllowBetaVersionNotifications;
         private System.Windows.Forms.CheckBox checkBoxAllowAutomaticUpdateChecks;
-        private System.Windows.Forms.Label LabelSaving;
     }
 }

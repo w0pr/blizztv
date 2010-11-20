@@ -15,9 +15,6 @@
   <Feed Name="BlizzPlanet">
     <URL><![CDATA[http://feeds.feedburner.com/blizzplanetcom]]></URL>
   </Feed>
-  <Feed Name="Diablo IncGamers">
-    <URL><![CDATA[http://diablo.incgamers.com/blog/rss_2.0/]]></URL>
-  </Feed>
   <Feed Name="Diablo Fans">
     <URL><![CDATA[http://www.diablofans.com/rss/forums/1-diablo-fans-home-page-news/]]></URL>
   </Feed>

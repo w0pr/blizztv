@@ -20,16 +20,24 @@ namespace LibFeeds
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            using (Feed f = new Feed(txtName.Text, txtURL.Text))
+            if (txtName.Text.Trim() != "" && txtURL.Text.Trim() != "")
             {
-                f.Update();
-                if (f.Valid)
+                if (!FeedsPlugin.Instance._feeds.ContainsKey(txtName.Text))
                 {
-                    this.AddFeed(txtName.Text, txtURL.Text);
-                    this.Close();
+                    using (Feed f = new Feed(txtName.Text, txtURL.Text))
+                    {
+                        f.Update();
+                        if (f.Valid)
+                        {
+                            this.AddFeed(txtName.Text, txtURL.Text);
+                            this.Close();
+                        }
+                        else MessageBox.Show("There was an error parsing the feed. Please check the feed URL and retry.", "Error parsing feed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else MessageBox.Show("There was an error parsing the feed. Please check the feed URL and retry.", "Error parsing feed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else MessageBox.Show(string.Format("A feed already exists with name '{0}', please choose another name and retry.", txtName.Text), "Key exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else MessageBox.Show("Please fill the feed name and URL fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

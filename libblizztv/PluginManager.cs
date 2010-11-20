@@ -90,7 +90,7 @@ namespace LibBlizzTV
             }
             catch (Exception e)
             {
-                Log.Instance.Write(LogMessageTypes.ERROR, "Plugins directory not found..");
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugins directory not found.. Exception: {0}", e.ToString()));
             }
         }
 

@@ -24,16 +24,24 @@ namespace LibVideos
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            using (Channel c = ChannelFactory.CreateChannel(txtName.Text, txtSlug.Text, comboBoxProviders.SelectedItem.ToString()))
+            if (txtName.Text.Trim() != "" && txtSlug.Text.Trim() != "")
             {
-                c.Update();
-                if (c.Valid)
+                if (!VideosPlugin.Instance._channels.ContainsKey(txtName.Text))
                 {
-                    this.AddVideoChannel(txtName.Text, txtSlug.Text, comboBoxProviders.SelectedItem.ToString());
-                    this.Close();
+                    using (Channel c = ChannelFactory.CreateChannel(txtName.Text, txtSlug.Text, comboBoxProviders.SelectedItem.ToString()))
+                    {
+                        c.Update();
+                        if (c.Valid)
+                        {
+                            this.AddVideoChannel(txtName.Text, txtSlug.Text, comboBoxProviders.SelectedItem.ToString());
+                            this.Close();
+                        }
+                        else MessageBox.Show("There was an error parsing the video channel feed. Please check the channel slug and retry.", "Error parsing video channel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else MessageBox.Show("There was an error parsing the video channel feed. Please check the channel slug and retry.", "Error parsing video channel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else MessageBox.Show(string.Format("A channel already exists with name '{0}', please choose another name and retry.", txtName.Text), "Key exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else MessageBox.Show("Please fill the channel name and slug fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
