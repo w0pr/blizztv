@@ -50,11 +50,7 @@ namespace LibVideos
             (VideosPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             VideosPlugin.Instance.SaveSettings();
 
-            if (this._video_channels_list_updated)
-            {
-                VideosPlugin.Instance.SaveChannelsXML();
-                VideosPlugin.Instance.UpdateChannels();
-            }
+            if (this._video_channels_list_updated) { VideosPlugin.Instance.SaveChannelsXML(); }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)

@@ -46,11 +46,7 @@ namespace LibFeeds
         {
             (FeedsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             FeedsPlugin.Instance.SaveSettings();
-            if (this._feeds_list_updated)
-            {
-                FeedsPlugin.Instance.SaveFeedsXML();
-                FeedsPlugin.Instance.UpdateFeeds();
-            }
+            if (this._feeds_list_updated) { FeedsPlugin.Instance.SaveFeedsXML(); }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)

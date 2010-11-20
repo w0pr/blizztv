@@ -24,8 +24,16 @@ namespace LibStreams
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            this.AddStream(txtName.Text, txtSlug.Text, comboBoxProviders.SelectedItem.ToString());
-            this.Close();
+            if (txtName.Text.Trim() != "" && txtSlug.Text.Trim() != "")
+            {
+                if (!StreamsPlugin.Instance._streams.ContainsKey(txtName.Text))
+                {
+                    this.AddStream(txtName.Text, txtSlug.Text, comboBoxProviders.SelectedItem.ToString());
+                    this.Close();
+                }
+                else MessageBox.Show(string.Format("A stream already exists with name '{0}', please choose another name and retry.", txtName.Text), "Key exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else MessageBox.Show("Please fill the stream name and slug fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

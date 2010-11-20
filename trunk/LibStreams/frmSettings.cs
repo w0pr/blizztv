@@ -47,11 +47,7 @@ namespace LibStreams
         {
             (StreamsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             StreamsPlugin.Instance.SaveSettings();
-            if (this._streams_list_updated)
-            {
-                StreamsPlugin.Instance.SaveStreamsXML();
-                StreamsPlugin.Instance.UpdateStreams();
-            }
+            if (this._streams_list_updated) { StreamsPlugin.Instance.SaveStreamsXML(); }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
