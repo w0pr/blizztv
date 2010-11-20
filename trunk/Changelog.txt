@@ -1,4 +1,4 @@
-[20.11.2010] - 0.12-beta (r103)
+[20.11.2010] - 0.13-beta (r103)
 -------------------------------
 
 * Fixed a bug with setting serializer which will now correctly locate plugin assemblies.
