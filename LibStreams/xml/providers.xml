@@ -14,7 +14,7 @@
   <Provider>
     <Name>JustinTV</Name>
     <Movie><![CDATA[http://www.justin.tv/widgets/live_embed_player.swf]]></Movie>
-    <FlashVars><![CDATA[channel=%slug%&auto_play=false&start_volume=25]]></FlashVars>
+    <FlashVars><![CDATA[channel=%slug%&auto_play=true&start_volume=25]]></FlashVars>
   </Provider>
   <Provider>
     <Name>Own3DTV</Name>

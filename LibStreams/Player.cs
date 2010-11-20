@@ -45,8 +45,10 @@ namespace LibStreams
             try
             {
                 this.Text = string.Format("Stream: {0}@{1}", this._stream.Name, this._stream.Provider); // set the window title.
+                this.Stage.AllowFullScreen = "true";
+                this.Stage.AllowNetworking = "all";
+                this.Stage.AllowScriptAccess = "always";
                 this.Stage.FlashVars = this._stream.FlashVars; // set the flashvars.
-                this.Stage.MovieData = string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars); // set the moviedata.
                 this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars)); // load the movie.
             }
             catch (Exception exc)
