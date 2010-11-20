@@ -1,3 +1,25 @@
+[20.11.2010] - 0.12-beta (r103)
+-------------------------------
+
+* Fixed a bug with setting serializer which will now correctly locate plugin assemblies.
+* Implemented manual refresh context-menu support for LibFeeds,LibVideos and LibStreams. 
+* Implemented 'Mark All As Read/Watched' context menu for LibFeeds and LibVideos.
+* Improved plugin-manager's plugin scan code.
+* Re-structured project output, plugin and and their xml data will now reside in \plugins directory.
+* Renamed settings.storage file as settings.
+* Renamed key-value pair db directory as storage.
+* Renamed videos plugin as 'LibVideos'.
+* Implemented subscriptions editor for LibFeeds, LibStreams and and LibVideos plugin and updated their xml structure
+* Implemented own3d.tv provider for streams.
+* Renamed main menu to 'File'.
+* Fixed treeview double-click bug. When a user expand's a parent treeview node, child's double-click handlers will no longer get triggered (Issue40). 
+* Improved treeview node handling (Issue47).
+* Implemented Blip.TV provider for LibVideos plugin which means yes fresh day9 :) (Sidenote: Blip.tv player as of right now does not support autoplay and resizing).
+* Added a basic dependency checker which implements as of right now a Adobe Flash Player dependency check.
+* The project is now build as targeted to 32-bit (as if we target AnyCPU or x64, a 32-bit adobe flash player dll can't be load). Though our 32-bit targeted output's will also work in a 64-bit OS environment. 
+* Fixed Event details window bug (Issue35) where it was warning about a missing assembly.
+
+
 [14.11.2010] - 0.12-beta (r78)
 -------------------------------
 
