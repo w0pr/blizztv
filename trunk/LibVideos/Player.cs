@@ -45,6 +45,9 @@ namespace LibVideos
             try
             {
                 this.Text = this._video.Title; // set the window title.
+                this.Stage.AllowFullScreen = "true";
+                this.Stage.AllowNetworking = "all";
+                this.Stage.AllowScriptAccess = "always";
                 this.Stage.FlashVars = this._video.FlashVars; // set the flashvars.
                 this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars)); // load the movie.
             }
