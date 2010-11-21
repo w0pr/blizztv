@@ -25,7 +25,7 @@ using LibBlizzTV.Utils;
 
 namespace LibStreams
 {
-    [PluginAttributes("Streams", "Stream aggregator plugin for BlizzTV","stream_16.png")]
+    [PluginAttributes("Streams", "Live stream aggregator plugin.","stream_16.png")]
     public class StreamsPlugin:Plugin
     {
         #region members

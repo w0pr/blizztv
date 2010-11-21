@@ -25,7 +25,7 @@ using LibBlizzTV.Utils;
 
 namespace LibFeeds
 {
-    [PluginAttributes("Feeds","Feed aggregator plugin for BlizzTV","feed_16.png")]
+    [PluginAttributes("Feeds","Feed aggregator plugin.","feed_16.png")]
     public class FeedsPlugin:Plugin
     {
         #region members

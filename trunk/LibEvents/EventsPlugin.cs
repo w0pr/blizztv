@@ -24,7 +24,7 @@ using LibBlizzTV.Utils;
 
 namespace LibEvents
 {
-    [PluginAttributes("Events", "Events plugin based on TeamLiquid events calendar.", "event_16.png")]
+    [PluginAttributes("Events", "Events aggregator plugin.", "event_16.png")]
     public class EventsPlugin : Plugin
     {
         #region members

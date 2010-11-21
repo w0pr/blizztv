@@ -256,7 +256,7 @@ namespace BlizzTV
 
         private void MenuDonate_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TDWWEWYQ9CSU2", null);            
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null);            
         }
 
         private void checkUpdatesToolStripMenuItem_Click(object sender, EventArgs e)

@@ -29,22 +29,32 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Hüseyin Uslu",
+            "Developer"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            "TeamLiquid",
+            "Thanks for calendar API and all suggestions from TL users."}, -1);
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ListviewModules = new System.Windows.Forms.ListView();
-            this.ColIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ListviewPlugins = new System.Windows.Forms.ListView();
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonOK = new System.Windows.Forms.Button();
             this.LinkLabelBlizzTV = new System.Windows.Forms.LinkLabel();
-            this.LabelNewUpdateIsAvailable = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ListviewCredits = new System.Windows.Forms.ListView();
+            this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnAbout = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.LinkFlattr = new System.Windows.Forms.PictureBox();
+            this.LinkPaypal = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LinkFlattr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LinkPaypal)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -67,57 +77,32 @@
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(6, 213);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(421, 100);
-            this.groupBox1.TabIndex = 8;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Copyleft 2010, BlizzTV project";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 16);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(409, 76);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
-            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.ListviewModules);
-            this.groupBox2.Location = new System.Drawing.Point(6, 67);
+            this.groupBox2.Controls.Add(this.ListviewPlugins);
+            this.groupBox2.Location = new System.Drawing.Point(7, 169);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(421, 140);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Plugins";
             // 
-            // ListviewModules
+            // ListviewPlugins
             // 
-            this.ListviewModules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ColIcon,
+            this.ListviewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColName,
             this.ColVersion,
             this.ColDescription});
-            this.ListviewModules.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ListviewModules.FullRowSelect = true;
-            this.ListviewModules.Location = new System.Drawing.Point(3, 16);
-            this.ListviewModules.Name = "ListviewModules";
-            this.ListviewModules.Size = new System.Drawing.Size(415, 121);
-            this.ListviewModules.TabIndex = 0;
-            this.ListviewModules.UseCompatibleStateImageBehavior = false;
-            this.ListviewModules.View = System.Windows.Forms.View.Details;
-            // 
-            // ColIcon
-            // 
-            this.ColIcon.Text = "";
-            this.ColIcon.Width = 16;
+            this.ListviewPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListviewPlugins.FullRowSelect = true;
+            this.ListviewPlugins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ListviewPlugins.Location = new System.Drawing.Point(3, 16);
+            this.ListviewPlugins.Name = "ListviewPlugins";
+            this.ListviewPlugins.ShowItemToolTips = true;
+            this.ListviewPlugins.Size = new System.Drawing.Size(415, 121);
+            this.ListviewPlugins.TabIndex = 0;
+            this.ListviewPlugins.UseCompatibleStateImageBehavior = false;
+            this.ListviewPlugins.View = System.Windows.Forms.View.Details;
             // 
             // ColName
             // 
@@ -132,11 +117,11 @@
             // ColDescription
             // 
             this.ColDescription.Text = "Description";
-            this.ColDescription.Width = 215;
+            this.ColDescription.Width = 237;
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(352, 319);
+            this.buttonOK.Location = new System.Drawing.Point(350, 312);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -155,29 +140,79 @@
             this.LinkLabelBlizzTV.Text = "http://www.blizztv.com";
             this.LinkLabelBlizzTV.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelBlizzTV_LinkClicked);
             // 
-            // LabelNewUpdateIsAvailable
+            // groupBox1
             // 
-            this.LabelNewUpdateIsAvailable.AutoSize = true;
-            this.LabelNewUpdateIsAvailable.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LabelNewUpdateIsAvailable.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.LabelNewUpdateIsAvailable.Location = new System.Drawing.Point(12, 324);
-            this.LabelNewUpdateIsAvailable.Name = "LabelNewUpdateIsAvailable";
-            this.LabelNewUpdateIsAvailable.Size = new System.Drawing.Size(150, 13);
-            this.LabelNewUpdateIsAvailable.TabIndex = 12;
-            this.LabelNewUpdateIsAvailable.Text = "A new update is available";
-            this.LabelNewUpdateIsAvailable.Visible = false;
+            this.groupBox1.Controls.Add(this.ListviewCredits);
+            this.groupBox1.Location = new System.Drawing.Point(7, 61);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(421, 102);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Credits";
+            // 
+            // ListviewCredits
+            // 
+            this.ListviewCredits.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnName,
+            this.columnAbout});
+            this.ListviewCredits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListviewCredits.FullRowSelect = true;
+            this.ListviewCredits.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ListviewCredits.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem5,
+            listViewItem6});
+            this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
+            this.ListviewCredits.Name = "ListviewCredits";
+            this.ListviewCredits.ShowItemToolTips = true;
+            this.ListviewCredits.Size = new System.Drawing.Size(415, 83);
+            this.ListviewCredits.TabIndex = 1;
+            this.ListviewCredits.UseCompatibleStateImageBehavior = false;
+            this.ListviewCredits.View = System.Windows.Forms.View.Details;
+            // 
+            // columnName
+            // 
+            this.columnName.Text = "Name";
+            this.columnName.Width = 127;
+            // 
+            // columnAbout
+            // 
+            this.columnAbout.Text = "About";
+            this.columnAbout.Width = 284;
+            // 
+            // LinkFlattr
+            // 
+            this.LinkFlattr.Image = ((System.Drawing.Image)(resources.GetObject("LinkFlattr.Image")));
+            this.LinkFlattr.Location = new System.Drawing.Point(10, 315);
+            this.LinkFlattr.Name = "LinkFlattr";
+            this.LinkFlattr.Size = new System.Drawing.Size(93, 20);
+            this.LinkFlattr.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.LinkFlattr.TabIndex = 13;
+            this.LinkFlattr.TabStop = false;
+            this.LinkFlattr.Click += new System.EventHandler(this.LinkFlattr_Click);
+            // 
+            // LinkPaypal
+            // 
+            this.LinkPaypal.Image = ((System.Drawing.Image)(resources.GetObject("LinkPaypal.Image")));
+            this.LinkPaypal.Location = new System.Drawing.Point(109, 315);
+            this.LinkPaypal.Name = "LinkPaypal";
+            this.LinkPaypal.Size = new System.Drawing.Size(74, 21);
+            this.LinkPaypal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.LinkPaypal.TabIndex = 14;
+            this.LinkPaypal.TabStop = false;
+            this.LinkPaypal.Click += new System.EventHandler(this.LinkPaypal_Click);
             // 
             // frmAbout
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(435, 352);
-            this.Controls.Add(this.LabelNewUpdateIsAvailable);
+            this.ClientSize = new System.Drawing.Size(435, 345);
+            this.Controls.Add(this.LinkPaypal);
+            this.Controls.Add(this.LinkFlattr);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.LinkLabelBlizzTV);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -188,9 +223,10 @@
             this.Text = "About BlizzTV";
             this.Load += new System.EventHandler(this.frmAbout_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LinkFlattr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LinkPaypal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -200,16 +236,18 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListView ListviewModules;
+        private System.Windows.Forms.ListView ListviewPlugins;
         private System.Windows.Forms.ColumnHeader ColName;
         private System.Windows.Forms.ColumnHeader ColVersion;
         private System.Windows.Forms.ColumnHeader ColDescription;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.LinkLabel LinkLabelBlizzTV;
-        private System.Windows.Forms.ColumnHeader ColIcon;
-        private System.Windows.Forms.Label LabelNewUpdateIsAvailable;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ListView ListviewCredits;
+        private System.Windows.Forms.ColumnHeader columnName;
+        private System.Windows.Forms.ColumnHeader columnAbout;
+        private System.Windows.Forms.PictureBox LinkFlattr;
+        private System.Windows.Forms.PictureBox LinkPaypal;
     }
 }
