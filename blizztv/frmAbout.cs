@@ -39,21 +39,30 @@ namespace BlizzTV
 
         private void frmAbout_Load(object sender, EventArgs e)
         {            
-            ListviewModules.Items.Add(new ListviewModulesItem(Assembly.GetExecutingAssembly().GetName().Name, Assembly.GetExecutingAssembly().GetName().Version.ToString(), "The user-interface."));
-            ListviewModules.Items.Add(new ListviewModulesItem(PluginManager.Instance.AssemblyName, PluginManager.Instance.AssemblyVersion, "The core."));
+            ListviewPlugins.Items.Add(new ListviewModulesItem(Assembly.GetExecutingAssembly().GetName().Name, Assembly.GetExecutingAssembly().GetName().Version.ToString(), "The user-interface."));
+            ListviewPlugins.Items.Add(new ListviewModulesItem(PluginManager.Instance.AssemblyName, PluginManager.Instance.AssemblyVersion, "The core."));
 
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
             {
-                ListviewModules.Items.Add(new ListviewModulesItem(pair.Value.AssemblyName, pair.Value.AssemblyVersion, pair.Value.Attributes.Description));
+                ListviewPlugins.Items.Add(new ListviewModulesItem(pair.Value.AssemblyName, pair.Value.AssemblyVersion, pair.Value.Attributes.Description));
             }
 
-            UpdateManager.Instance.Check();
-            if (UpdateManager.Instance.UpdateAvailable) this.LabelNewUpdateIsAvailable.Visible = true;
+            ListviewPlugins.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
         private void LinkLabelBlizzTV_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.blizztv.com", null);
+        }
+
+        private void LinkFlattr_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://flattr.com/thing/86300/BlizzTV", null);
+        }
+
+        private void LinkPaypal_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null);
         }
     }
 
@@ -61,7 +70,7 @@ namespace BlizzTV
     {
         public ListviewModulesItem(string Name, string Version, string Description)
         {
-            this.SubItems.Add(new ListViewSubItem(this, Name));
+            this.Text = Name;
             this.SubItems.Add(new ListViewSubItem(this, Version));
             this.SubItems.Add(new ListViewSubItem(this, Description));
         }

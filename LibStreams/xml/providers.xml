@@ -5,6 +5,7 @@
     <Name>LiveStream</Name>
     <Movie><![CDATA[http://cdn.livestream.com/grid/LSPlayer.swf]]></Movie>
     <FlashVars><![CDATA[channel=%slug%&autoPlay=true]]></FlashVars>
+    <Chat>http://cdn.livestream.com/chat/LivestreamChat.swf?&showTimestamp=true&channel=%slug%</Chat>
   </Provider>
   <Provider>
     <Name>UStream</Name>

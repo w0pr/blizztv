@@ -39,6 +39,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.numericUpDownUpdateFeedsEveryXMinutes = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBoxAutomaticallyOpenChatForStreams = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -124,6 +125,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBoxAutomaticallyOpenChatForStreams);
             this.tabPage1.Controls.Add(this.numericUpDownUpdateFeedsEveryXMinutes);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -131,7 +133,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(439, 236);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Updates";
+            this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // numericUpDownUpdateFeedsEveryXMinutes
@@ -165,6 +167,16 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Update streams every X minutes:";
             // 
+            // checkBoxAutomaticallyOpenChatForStreams
+            // 
+            this.checkBoxAutomaticallyOpenChatForStreams.AutoSize = true;
+            this.checkBoxAutomaticallyOpenChatForStreams.Location = new System.Drawing.Point(11, 40);
+            this.checkBoxAutomaticallyOpenChatForStreams.Name = "checkBoxAutomaticallyOpenChatForStreams";
+            this.checkBoxAutomaticallyOpenChatForStreams.Size = new System.Drawing.Size(193, 17);
+            this.checkBoxAutomaticallyOpenChatForStreams.TabIndex = 4;
+            this.checkBoxAutomaticallyOpenChatForStreams.Text = "Automatically open chat for streams";
+            this.checkBoxAutomaticallyOpenChatForStreams.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -196,5 +208,6 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.ColumnHeader colProvider;
         private System.Windows.Forms.ColumnHeader colSlug;
+        private System.Windows.Forms.CheckBox checkBoxAutomaticallyOpenChatForStreams;
     }
 }
