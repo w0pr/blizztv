@@ -27,11 +27,11 @@ using LibBlizzTV.Players;
 
 namespace LibVideos
 {
-    public partial class Player : Form // The video player.
+    public partial class frmPlayer : Form // The video player.
     {
         private Video _video; // The video. 
 
-        public Player(Video Video)
+        public frmPlayer(Video Video)
         {
             InitializeComponent();
 
@@ -47,8 +47,8 @@ namespace LibVideos
             try
             {
                 this.Text = this._video.Title; // set the window title.
-                this.Stage.FlashVars = this._video.FlashVars; // set the flashvars.
-                this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars)); // load the movie.
+                this.Player.FlashVars = this._video.FlashVars; // set the flashvars.
+                this.Player.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars)); // load the movie.
             }
             catch (Exception exc)
             {

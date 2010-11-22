@@ -51,6 +51,9 @@ namespace LibStreams
         private void LoadSettings()
         {
             numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)(StreamsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes;
+            checkBoxAutomaticallyOpenChatForAvailableStreams.Checked = (StreamsPlugin.Instance.Settings as Settings).AutomaticallyOpenChatForAvailableStreams;
+            txtStreamChatWindowWidth.Text = (StreamsPlugin.Instance.Settings as Settings).StreamChatWindowWidth.ToString();
+            txtStreamChatWindowHeight.Text = (StreamsPlugin.Instance.Settings as Settings).StreamChatWindowHeight.ToString();
         }
 
         private void LoadSubscriptions()
@@ -61,6 +64,10 @@ namespace LibStreams
         public void SaveSettings()
         {
             (StreamsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
+            (StreamsPlugin.Instance.Settings as Settings).AutomaticallyOpenChatForAvailableStreams = checkBoxAutomaticallyOpenChatForAvailableStreams.Checked;
+            (StreamsPlugin.Instance.Settings as Settings).StreamChatWindowWidth = int.Parse(txtStreamChatWindowWidth.Text);
+            (StreamsPlugin.Instance.Settings as Settings).StreamChatWindowHeight = int.Parse(txtStreamChatWindowHeight.Text);
+
             StreamsPlugin.Instance.SaveSettings();
             if (this._streams_list_updated) { StreamsPlugin.Instance.SaveStreamsXML(); }
         }

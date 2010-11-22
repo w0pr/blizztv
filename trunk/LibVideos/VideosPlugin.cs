@@ -138,12 +138,14 @@ namespace LibVideos
                     {
                         XDocument xdoc = XDocument.Load(this._xml_file);
                         xdoc.Element("Channels").Add(new XElement("Channel", new XAttribute("Name", pair.Value.Name), new XElement("Slug", pair.Value.Slug), new XElement("Provider", pair.Value.Provider)));
+                        pair.Value.CommitOnSave = false;
                         xdoc.Save(this._xml_file);
                     }
                     else if (pair.Value.DeleteOnSave)
                     {
                         XDocument xdoc = XDocument.Load(this._xml_file);
                         xdoc.XPathSelectElement(string.Format("Channels/Channel[@Name='{0}']", pair.Value.Name)).Remove();
+                        pair.Value.DeleteOnSave = false;
                         xdoc.Save(this._xml_file);
                     }
                 }

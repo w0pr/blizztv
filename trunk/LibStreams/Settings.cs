@@ -25,5 +25,8 @@ namespace LibStreams
     public class Settings : PluginSettings
     {
         public int UpdateEveryXMinutes = 10;
+        public bool AutomaticallyOpenChatForAvailableStreams = false;
+        public int StreamChatWindowWidth = 640;
+        public int StreamChatWindowHeight = 385;
     }
 }

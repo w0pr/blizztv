@@ -86,7 +86,7 @@ namespace LibVideos
             {
                 if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
                 {
-                    Player p = new Player(this); // render the video with our own video player
+                    frmPlayer p = new frmPlayer(this); // render the video with our own video player
                     p.Show();
                 }
                 else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.

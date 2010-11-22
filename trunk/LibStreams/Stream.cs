@@ -32,6 +32,8 @@ namespace LibStreams
         private Int32 _viewer_count = 0; // stream viewers count.
         private string _movie; // the stream's movie source.
         private string _flash_vars; // the streams's flash vars.
+        private bool _chat_available = false; // // Is chat functionality available for the provider?
+        private string _chat_movie; // the streams chat movie's source.
         private bool _commit_on_save = false; // add stream to xml file on save.
         private bool _delete_on_save = false; // remove stream from xml file on save.
 
@@ -44,6 +46,8 @@ namespace LibStreams
         public Int32 ViewerCount { get { return this._viewer_count; } internal set { this._viewer_count = value; } }
         public string Movie { get { return this._movie; } internal set { this._movie = value; } }
         public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
+        public string ChatMovie { get { return this._chat_movie; } }
+        public bool ChatAvailable { get { return this._chat_available; } }
         public bool CommitOnSave { get { return this._commit_on_save; } set { this._commit_on_save = value; } }
         public bool DeleteOnSave { get { return this._delete_on_save; } set { this._delete_on_save = value; } }
 
@@ -67,16 +71,19 @@ namespace LibStreams
         {
             this._movie = Providers.Instance.List[this.Provider].Movie; // provider supplied movie source. 
             this._flash_vars = Providers.Instance.List[this.Provider].FlashVars; // provider supplied flashvars.
+            this._chat_available = Providers.Instance.List[this.Provider].ChatAvailable; // Is chat functionality available for the provider?
+            if (this._chat_available) this._chat_movie = Providers.Instance.List[this.Provider].ChatMovie; // the streams chat movie's source.
 
             this._movie = this._movie.Replace("%slug%", this.Slug); // replace slug variable in movie source.
             this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.
+            this._chat_movie = this._chat_movie.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
         }
 
         public override void DoubleClicked(object sender, EventArgs e) // double-click handler
         {
             if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
             {
-                Player p = new Player(this); // render the stream with our own video player
+                frmPlayer p = new frmPlayer(this); // render the stream with our own video player
                 p.Show();
             }
             else System.Diagnostics.Process.Start(this.Link, null); // render the stream with default web-browser.
