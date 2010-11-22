@@ -50,30 +50,6 @@ namespace BlizzTV
             this.LoadPlugins(); // Load the enabled plugins.   
         }
 
-        private void FoundNewAvailableUpdate()
-        {
-            string update_question = "";
-            string update_title = "";
-
-            switch (UpdateManager.Instance.FoundUpdate.UpdateType)
-            {
-                case UpdateTypes.STABLE:
-                    update_question = "Found a new available update. Do you want to update now?";
-                    update_title = "New Update Found!";
-                    break;
-                case UpdateTypes.BETA:
-                    update_question = "Found a new available BETA update. Do you want to update to this BETA version now?";
-                    update_title = "New Beta Update Found!";
-                    break;
-            }
-
-            System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(update_question, update_title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
-            if (result == System.Windows.Forms.DialogResult.Yes)
-            {
-                System.Diagnostics.Process.Start(UpdateManager.Instance.FoundUpdate.Link);
-            }
-        }
-
         #endregion        
 
         #region Plugins-specific code & handlers
@@ -200,10 +176,14 @@ namespace BlizzTV
             this._loaded_plugins_count++;
             if ((SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks) && (this._loaded_plugins_count == PluginManager.Instance.InstantiatedPlugins.Count)) // if all plugins are loaded, it's a good time to check for updates.
             {
-                Log.Instance.Write(LogMessageTypes.INFO, "Automatically checking for updates..");
-                UpdateManager.Instance.OnFoundNewAvailableUpdate += FoundNewAvailableUpdate;
+                UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateAutoCheckResult;
                 UpdateManager.Instance.Check(); // Check for updates.
             }
+        }
+
+        private void OnUpdateAutoCheckResult(bool FoundUpdate)
+        {
+            this.ProcessUpdateCheckResult(FoundUpdate, false);
         }
 
         private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) // Treeview node double-click handler.
@@ -261,8 +241,44 @@ namespace BlizzTV
 
         private void checkUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateManager.Instance.OnFoundNewAvailableUpdate += FoundNewAvailableUpdate;
+            UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateManualCheckResult;
             UpdateManager.Instance.Check(); // Check for updates.
+        }
+
+        private void OnUpdateManualCheckResult(bool UpdateFound)
+        {
+            this.ProcessUpdateCheckResult(UpdateFound, true);
+        }
+
+        private void ProcessUpdateCheckResult(bool FoundUpdate, bool AllowNoUpdatesFoundNotification)
+        {
+            if (FoundUpdate)
+            {
+                string update_question = "";
+                string update_title = "";
+
+                switch (UpdateManager.Instance.FoundUpdate.UpdateType)
+                {
+                    case UpdateTypes.STABLE:
+                        update_question = "Found a new available update. Do you want to update now?";
+                        update_title = "New Update Found!";
+                        break;
+                    case UpdateTypes.BETA:
+                        update_question = "Found a new available BETA update. Do you want to update to this BETA version now?";
+                        update_title = "New Beta Update Found!";
+                        break;
+                }
+
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(update_question, update_title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(UpdateManager.Instance.FoundUpdate.Link);
+                }
+            }
+            else if (AllowNoUpdatesFoundNotification)
+            {
+                MessageBox.Show("You're already running the latest version.", "No available updates found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void MenuPlugins_Click(object sender, EventArgs e)
