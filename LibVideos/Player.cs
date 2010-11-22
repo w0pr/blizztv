@@ -23,6 +23,7 @@ using System.Text;
 using System.Windows.Forms;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
+using LibBlizzTV.Players;
 
 namespace LibVideos
 {
@@ -34,6 +35,7 @@ namespace LibVideos
         {
             InitializeComponent();
 
+            this.SwitchTopMostMode(SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
             this._video = Video; // set the video.
             this.Width = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth; // get the default player width. 
             this.Height = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight; // get the default player height.
@@ -45,9 +47,6 @@ namespace LibVideos
             try
             {
                 this.Text = this._video.Title; // set the window title.
-                this.Stage.AllowFullScreen = "true";
-                this.Stage.AllowNetworking = "all";
-                this.Stage.AllowScriptAccess = "always";
                 this.Stage.FlashVars = this._video.FlashVars; // set the flashvars.
                 this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars)); // load the movie.
             }
@@ -55,6 +54,25 @@ namespace LibVideos
             {
                 Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannelsPlugin Player Error: \n {0}", exc.ToString()));
                 System.Windows.Forms.MessageBox.Show(string.Format("An error occured in video player. \n\n[Error Details: {0}]", exc.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+        }
+
+        private void MenuAlwaysOnTop_Click(object sender, EventArgs e)
+        {
+            SwitchTopMostMode(!this.MenuAlwaysOnTop.Checked);
+        }
+
+        private void SwitchTopMostMode(bool TopMost)
+        {
+            if (TopMost)
+            {
+                this.TopMost = true;
+                this.MenuAlwaysOnTop.Checked = true;
+            }
+            else
+            {
+                this.TopMost = false;
+                this.MenuAlwaysOnTop.Checked = false;
             }
         }
     }

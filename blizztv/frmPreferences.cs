@@ -60,6 +60,7 @@ namespace BlizzTV
             txtVideoPlayerWidth.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth.ToString();
             txtVideoPlayerHeight.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight.ToString();
             checkBoxVideoAutoPlay.Checked = SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay;
+            CheckBoxPlayerAlwaysOnTop.Checked = SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop;
 
             checkBoxMinimimizeToSystemTray.Checked = SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication;
             checkBoxEnableDebugLogging.Checked = SettingsStorage.Instance.Settings.EnableDebugLogging;
@@ -114,6 +115,7 @@ namespace BlizzTV
             SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
             SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
             SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
+            SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
 
             SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication = checkBoxMinimimizeToSystemTray.Checked;
             SettingsStorage.Instance.Settings.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;

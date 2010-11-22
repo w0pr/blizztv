@@ -61,6 +61,7 @@
             this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.CheckBoxPlayerAlwaysOnTop = new System.Windows.Forms.CheckBox();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPlugins.SuspendLayout();
@@ -317,6 +318,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.CheckBoxPlayerAlwaysOnTop);
             this.groupBox1.Controls.Add(this.checkBoxVideoAutoPlay);
             this.groupBox1.Controls.Add(this.txtVideoPlayerHeight);
             this.groupBox1.Controls.Add(this.label3);
@@ -325,7 +327,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(446, 67);
+            this.groupBox1.Size = new System.Drawing.Size(446, 90);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Internal Video Player Settings";
@@ -333,7 +335,7 @@
             // checkBoxVideoAutoPlay
             // 
             this.checkBoxVideoAutoPlay.AutoSize = true;
-            this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 44);
+            this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 67);
             this.checkBoxVideoAutoPlay.Name = "checkBoxVideoAutoPlay";
             this.checkBoxVideoAutoPlay.Size = new System.Drawing.Size(70, 17);
             this.checkBoxVideoAutoPlay.TabIndex = 4;
@@ -380,6 +382,16 @@
             this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Player Size:";
+            // 
+            // CheckBoxPlayerAlwaysOnTop
+            // 
+            this.CheckBoxPlayerAlwaysOnTop.AutoSize = true;
+            this.CheckBoxPlayerAlwaysOnTop.Location = new System.Drawing.Point(9, 44);
+            this.CheckBoxPlayerAlwaysOnTop.Name = "CheckBoxPlayerAlwaysOnTop";
+            this.CheckBoxPlayerAlwaysOnTop.Size = new System.Drawing.Size(98, 17);
+            this.CheckBoxPlayerAlwaysOnTop.TabIndex = 5;
+            this.CheckBoxPlayerAlwaysOnTop.Text = "Always On Top";
+            this.CheckBoxPlayerAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
             // frmPreferences
             // 
@@ -450,5 +462,6 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox checkBoxAllowBetaVersionNotifications;
         private System.Windows.Forms.CheckBox checkBoxAllowAutomaticUpdateChecks;
+        private System.Windows.Forms.CheckBox CheckBoxPlayerAlwaysOnTop;
     }
 }
