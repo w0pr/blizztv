@@ -27,19 +27,21 @@ using LibBlizzTV.Players;
 
 namespace LibStreams
 {
-    public partial class Player : Form // The stream player.
+    public partial class frmPlayer : Form // The stream player.
     {
         private Stream _stream; // the stream.
 
-        public Player(Stream Stream)
-        {
+        public frmPlayer(Stream Stream)
+        {            
             InitializeComponent();
 
-            this.SwitchTopMostMode(SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
             this._stream = Stream; // set the stream.
+            this.SwitchTopMostMode(SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
             this.Width = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth; // get the default player width.
             this.Height = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight; // get the default player height.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
+
+            if (!Providers.Instance.List[this._stream.Provider].ChatAvailable) this.MenuOpenChat.Enabled = true;
         }
 
         private void Player_Load(object sender, EventArgs e) 
@@ -47,8 +49,10 @@ namespace LibStreams
             try
             {
                 this.Text = string.Format("Stream: {0}@{1}", this._stream.Name, this._stream.Provider); // set the window title.
-                this.Stage.FlashVars = this._stream.FlashVars; // set the flashvars.
-                this.Stage.LoadMovie(0, string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars)); // load the movie.
+                this.Player.FlashVars = this._stream.FlashVars; // set the flashvars.
+                this.Player.LoadMovie(0, string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars)); // load the movie.
+
+                if (this._stream.ChatAvailable && (StreamsPlugin.Instance.Settings as Settings).AutomaticallyOpenChatForAvailableStreams) this.OpenChatWindow();
             }
             catch (Exception exc)
             {
@@ -60,6 +64,11 @@ namespace LibStreams
         private void MenuAlwaysOnTop_Click(object sender, EventArgs e)
         {
             SwitchTopMostMode(!this.MenuAlwaysOnTop.Checked);
+        }
+
+        private void MenuOpenChat_Click(object sender, EventArgs e)
+        {
+            this.OpenChatWindow();
         }
 
         private void SwitchTopMostMode(bool TopMost)
@@ -74,6 +83,12 @@ namespace LibStreams
                 this.TopMost = false;
                 this.MenuAlwaysOnTop.Checked = false;
             }
+        }
+
+        private void OpenChatWindow()
+        {
+            frmChat f = new frmChat(this._stream);
+            f.Show();
         }
     }
 }

@@ -55,6 +55,12 @@
     <Compile Include="frmAddStream.Designer.cs">
       <DependentUpon>frmAddStream.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmChat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChat.Designer.cs">
+      <DependentUpon>frmChat.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,11 +71,11 @@
     <Compile Include="Handlers\LiveStream.cs" />
     <Compile Include="Handlers\Own3DTV.cs" />
     <Compile Include="Handlers\UStream.cs" />
-    <Compile Include="Player.cs">
+    <Compile Include="frmPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Player.Designer.cs">
-      <DependentUpon>Player.cs</DependentUpon>
+    <Compile Include="frmPlayer.Designer.cs">
+      <DependentUpon>frmPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Providers.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -93,11 +99,14 @@
     <EmbeddedResource Include="frmAddStream.resx">
       <DependentUpon>frmAddStream.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmChat.resx">
+      <DependentUpon>frmChat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Player.resx">
-      <DependentUpon>Player.cs</DependentUpon>
+    <EmbeddedResource Include="frmPlayer.resx">
+      <DependentUpon>frmPlayer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\stream_16.png" />
     <Content Include="xml\providers.xml">

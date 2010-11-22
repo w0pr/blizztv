@@ -37,13 +37,20 @@
             this.colProvider = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colSlug = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams = new System.Windows.Forms.CheckBox();
             this.numericUpDownUpdateFeedsEveryXMinutes = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.checkBoxAutomaticallyOpenChatForStreams = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtStreamChatWindowHeight = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtStreamChatWindowWidth = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -125,7 +132,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.checkBoxAutomaticallyOpenChatForStreams);
+            this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.numericUpDownUpdateFeedsEveryXMinutes);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -135,6 +142,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxAutomaticallyOpenChatForAvailableStreams
+            // 
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.AutoSize = true;
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Name = "checkBoxAutomaticallyOpenChatForAvailableStreams";
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Size = new System.Drawing.Size(285, 17);
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.TabIndex = 4;
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Text = "Automatically open chat windows for available streams.";
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.UseVisualStyleBackColor = true;
             // 
             // numericUpDownUpdateFeedsEveryXMinutes
             // 
@@ -167,15 +184,63 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Update streams every X minutes:";
             // 
-            // checkBoxAutomaticallyOpenChatForStreams
+            // groupBox1
             // 
-            this.checkBoxAutomaticallyOpenChatForStreams.AutoSize = true;
-            this.checkBoxAutomaticallyOpenChatForStreams.Location = new System.Drawing.Point(11, 40);
-            this.checkBoxAutomaticallyOpenChatForStreams.Name = "checkBoxAutomaticallyOpenChatForStreams";
-            this.checkBoxAutomaticallyOpenChatForStreams.Size = new System.Drawing.Size(193, 17);
-            this.checkBoxAutomaticallyOpenChatForStreams.TabIndex = 4;
-            this.checkBoxAutomaticallyOpenChatForStreams.Text = "Automatically open chat for streams";
-            this.checkBoxAutomaticallyOpenChatForStreams.UseVisualStyleBackColor = true;
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.txtStreamChatWindowHeight);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.txtStreamChatWindowWidth);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.checkBoxAutomaticallyOpenChatForAvailableStreams);
+            this.groupBox1.Location = new System.Drawing.Point(6, 38);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(430, 100);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Chat Windows";
+            // 
+            // txtStreamChatWindowHeight
+            // 
+            this.txtStreamChatWindowHeight.Location = new System.Drawing.Point(185, 36);
+            this.txtStreamChatWindowHeight.Name = "txtStreamChatWindowHeight";
+            this.txtStreamChatWindowHeight.Size = new System.Drawing.Size(49, 20);
+            this.txtStreamChatWindowHeight.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(138, 39);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Height:";
+            // 
+            // txtStreamChatWindowWidth
+            // 
+            this.txtStreamChatWindowWidth.Location = new System.Drawing.Point(83, 36);
+            this.txtStreamChatWindowWidth.Name = "txtStreamChatWindowWidth";
+            this.txtStreamChatWindowWidth.Size = new System.Drawing.Size(49, 20);
+            this.txtStreamChatWindowWidth.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(39, 39);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Width:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 39);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(30, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Size:";
             // 
             // frmSettings
             // 
@@ -191,6 +256,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -208,6 +275,12 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.ColumnHeader colProvider;
         private System.Windows.Forms.ColumnHeader colSlug;
-        private System.Windows.Forms.CheckBox checkBoxAutomaticallyOpenChatForStreams;
+        private System.Windows.Forms.CheckBox checkBoxAutomaticallyOpenChatForAvailableStreams;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtStreamChatWindowHeight;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtStreamChatWindowWidth;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
     }
 }

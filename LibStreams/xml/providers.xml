@@ -5,12 +5,13 @@
     <Name>LiveStream</Name>
     <Movie><![CDATA[http://cdn.livestream.com/grid/LSPlayer.swf]]></Movie>
     <FlashVars><![CDATA[channel=%slug%&autoPlay=true]]></FlashVars>
-    <Chat><![CDATA[http://cdn.livestream.com/chat/LivestreamChat.swf?&showTimestamp=true&channel=%slug%]]></Chat>
+    <ChatMovie><![CDATA[http://cdn.livestream.com/chat/LivestreamChat.swf?&showTimestamp=true&channel=%slug%]]></ChatMovie>
   </Provider>
   <Provider>
     <Name>UStream</Name>
     <Movie><![CDATA[http://www.ustream.tv/flash/live/1/%stream_id%?v3=1]]></Movie>
     <FlashVars><![CDATA[autoplay=true&brand=embed&cid=%stream_id%&locale=en_US]]></FlashVars>
+    <ChatMovie><![CDATA[http://www.ustream.tv/flash/irc.swf?brandId=1&amp;channelId=%stream_id%&amp;server=chat1.ustream.tv&amp;locale=en_US]]></ChatMovie>
   </Provider>
   <Provider>
     <Name>JustinTV</Name>

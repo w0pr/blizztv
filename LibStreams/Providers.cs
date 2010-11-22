@@ -41,17 +41,18 @@ namespace LibStreams
             try
             {
                 XDocument xdoc = XDocument.Load(this._xml_file); // read providers xml.
-                var entries = from provider in xdoc.Descendants("Provider") 
+                var entries = from provider in xdoc.Descendants("Provider")
                               select new
                               {
                                   Name = provider.Element("Name").Value.ToLower(),
                                   Movie = provider.Element("Movie").Value,
-                                  FlashVars = provider.Element("FlashVars").Value
+                                  FlashVars = provider.Element("FlashVars").Value,
+                                  ChatMovie = (string)provider.Element("ChatMovie") ?? ""
                               };
 
                 foreach (var entry in entries) // add provider's to the list.
                 {
-                    this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie, entry.FlashVars));
+                    this.List.Add(entry.Name, new Provider(entry.Name, entry.Movie, entry.FlashVars,entry.ChatMovie));
                 }
             }
             catch (Exception e)
@@ -96,16 +97,25 @@ namespace LibStreams
         private string _name; // provider name.
         private string _movie; // provider movie template.
         private string _flash_vars; // provider flash template.
+        private bool _chat_available = false; // Is chat functionality available for the provider?
+        private string _chat_movie; // If chat is enabled, the movie source for chat window.
 
-        public string Name { get { return this._name; } internal set { this._name = value; } }
-        public string Movie { get { return this._movie; } internal set { this._movie = value; } }
-        public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
+        public string Name { get { return this._name; } }
+        public string Movie { get { return this._movie; } }
+        public string FlashVars { get { return this._flash_vars; } }
+        public bool ChatAvailable { get { return this._chat_available; } }
+        public string ChatMovie { get { return this._chat_movie; } }
 
-        public Provider(string Name, string Movie, string FlashVars)
+        public Provider(string Name, string Movie, string FlashVars,string ChatMovie=null)
         {
             this._name = Name.ToLower();
             this._movie = Movie;
             this._flash_vars = FlashVars;
+            if (ChatMovie.Trim() != "")
+            {
+                this._chat_available = true;
+                this._chat_movie = ChatMovie;
+            }
         }
     }
 

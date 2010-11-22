@@ -67,11 +67,11 @@
     <Compile Include="Handlers\BlipTVVideo.cs" />
     <Compile Include="Handlers\Youtube.cs" />
     <Compile Include="Handlers\YoutubeVideo.cs" />
-    <Compile Include="Player.cs">
+    <Compile Include="frmPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Player.Designer.cs">
-      <DependentUpon>Player.cs</DependentUpon>
+    <Compile Include="frmPlayer.Designer.cs">
+      <DependentUpon>frmPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="VideosPlugin.cs" />
@@ -97,8 +97,8 @@
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Player.resx">
-      <DependentUpon>Player.cs</DependentUpon>
+    <EmbeddedResource Include="frmPlayer.resx">
+      <DependentUpon>frmPlayer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\video_16.png" />
     <Content Include="xml\channels.xml">
