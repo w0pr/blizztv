@@ -134,15 +134,12 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF NOT EXIST "$(SolutionDir)blizztv\$(OutDir)plugins\" mkdir "$(SolutionDir)blizztv\$(OutDir)plugins\"
 IF NOT EXIST "$(SolutionDir)blizztv\$(OutDir)plugins\xml\videos\" mkdir "$(SolutionDir)blizztv\$(OutDir)plugins\xml\videos\"
 copy "$(TargetPath)" "$(SolutionDir)blizztv\$(OutDir)plugins\$(TargetFileName)"
-copy "$(TargetDir)\xml\*" "$(SolutionDir)blizztv\$(OutDir)plugins\xml\videos\"
-copy "$(TargetDir)AxInterop.ShockwaveFlashObjects.dll" "$(SolutionDir)blizztv\$(OutDir)AxInterop.ShockwaveFlashObjects.dll"
-copy "$(TargetDir)Interop.ShockwaveFlashObjects.dll" "$(SolutionDir)blizztv\$(OutDir)Interop.ShockwaveFlashObjects.dll"</PostBuildEvent>
+copy "$(TargetDir)\xml\*" "$(SolutionDir)blizztv\$(OutDir)plugins\xml\videos\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Player));
-            this.Stage = new AxShockwaveFlashObjects.AxShockwaveFlash();
+            this.Stage = new LibBlizzTV.Players.FlashPlayer();
+            this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.Stage)).BeginInit();
+            this.PlayerContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // Stage
             // 
+            this.Stage.ContextMenuStrip = this.PlayerContextMenu;
             this.Stage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Stage.Enabled = true;
             this.Stage.Location = new System.Drawing.Point(0, 0);
@@ -42,6 +47,20 @@
             this.Stage.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Stage.OcxState")));
             this.Stage.Size = new System.Drawing.Size(624, 347);
             this.Stage.TabIndex = 0;
+            // 
+            // PlayerContextMenu
+            // 
+            this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuAlwaysOnTop});
+            this.PlayerContextMenu.Name = "PlayerContextMenu";
+            this.PlayerContextMenu.Size = new System.Drawing.Size(155, 48);
+            // 
+            // MenuAlwaysOnTop
+            // 
+            this.MenuAlwaysOnTop.Name = "MenuAlwaysOnTop";
+            this.MenuAlwaysOnTop.Size = new System.Drawing.Size(154, 22);
+            this.MenuAlwaysOnTop.Text = "Always On Top";
+            this.MenuAlwaysOnTop.Click += new System.EventHandler(this.MenuAlwaysOnTop_Click);
             // 
             // Player
             // 
@@ -55,12 +74,15 @@
             this.Text = "Player";
             this.Load += new System.EventHandler(this.Player_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Stage)).EndInit();
+            this.PlayerContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private AxShockwaveFlashObjects.AxShockwaveFlash Stage;
+        private LibBlizzTV.Players.FlashPlayer Stage;
+        private System.Windows.Forms.ContextMenuStrip PlayerContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem MenuAlwaysOnTop;
     }
 }

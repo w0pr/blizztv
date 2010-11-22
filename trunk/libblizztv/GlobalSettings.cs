@@ -30,18 +30,26 @@ namespace LibBlizzTV
         /// The default content viewing-method.
         /// </summary>
         public ContentViewMethods ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
+
         /// <summary>
         /// The default video player width.
         /// </summary>
         public int VideoPlayerWidth = 640;
+
         /// <summary>
         /// The default video player height.
         /// </summary>
         public int VideoPlayerHeight = 385;
+
         /// <summary>
         /// States if video's should be played automatically.
         /// </summary>
         public bool VideoAutoPlay = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool PlayerWindowsAlwaysOnTop = true;
     }
 
     /// <summary>

@@ -54,6 +54,9 @@
   <ItemGroup>
     <Compile Include="Common.cs" />
     <Compile Include="IPluginSettingsForm.cs" />
+    <Compile Include="Players\FlashPlayer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SettingsStorage.cs" />
     <Compile Include="Utils\DebugConsole.cs" />
     <Compile Include="GlobalSettings.cs" />
@@ -81,6 +84,25 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\blizztv_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="ShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
