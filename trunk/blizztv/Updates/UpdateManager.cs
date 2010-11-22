@@ -19,6 +19,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Text;
 using System.Reflection;
+using System.Threading;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 
@@ -36,10 +37,18 @@ namespace BlizzTV.Updates
 
         private UpdateManager() { }
 
-        public delegate void NewAvailableUpdateFoundEventHandler();
+        public delegate void NewAvailableUpdateFoundEventHandler(bool FoundUpdate);
         public event NewAvailableUpdateFoundEventHandler OnFoundNewAvailableUpdate;
 
         public void Check()
+        {
+            Log.Instance.Write(LogMessageTypes.INFO, "UpdateManager thread running..");
+            ThreadStart update_thread = delegate { CheckUpdates(); };
+            Thread t = new Thread(update_thread) { IsBackground = true, Name = string.Format("update-thread-{0}", DateTime.Now.TimeOfDay.ToString()) };
+            t.Start();
+        }
+
+        private void CheckUpdates()
         {
             if (!this.UpdateAvailable)
             {
@@ -67,7 +76,7 @@ namespace BlizzTV.Updates
                     foreach (var e in entries) { updates.Add(new Update(e.id, e.date, e.link, e.filename, e.details)); } // parse update details.
 
                     foreach (Update u in updates)
-                    {                        
+                    {
                         if ((u.Valid) && ((u.UpdateType == UpdateTypes.STABLE) || (u.UpdateType == UpdateTypes.BETA && SettingsStorage.Instance.Settings.AllowBetaVersionNotifications)) && (u.Version > latest_version))
                         {
                             this._found_update = u;
@@ -76,16 +85,19 @@ namespace BlizzTV.Updates
                         }
                     }
 
-                    if (this._found_update != null && this.OnFoundNewAvailableUpdate != null)
-                    {
-                        Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found update: {0} - {1}", this._found_update.UpdateType, this._found_update.Version));
-                        this.OnFoundNewAvailableUpdate();
-                    }
+                    if (this._found_update != null) Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found update: {0} - {1}", this._found_update.UpdateType, this._found_update.Version));
                 }
                 else
                 {
                     this._update_available = false;
                     this._found_update = null;
+                }
+
+                if (this.OnFoundNewAvailableUpdate != null)
+                {
+
+                    if (this._found_update != null) this.OnFoundNewAvailableUpdate(true);
+                    this.OnFoundNewAvailableUpdate(false);
                 }
             }
         }
