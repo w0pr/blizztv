@@ -51,7 +51,7 @@ namespace LibEvents
             this._description = Description;
             this._event_id = EventID;
             this._is_over = isOver;
-            this._time = Time;          
+            this._time = Time;
         }
 
         public override void DoubleClicked(object sender, EventArgs e)

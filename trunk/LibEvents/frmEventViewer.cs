@@ -55,6 +55,7 @@ namespace LibEvents
                     break;
                 case EventStatus.UPCOMING:
                     this.LabelStatus.ForeColor = FutureEventColor;
+                    this.ButtonSetupAlarm.Enabled = true;
                     break;
             }
         }
@@ -67,6 +68,12 @@ namespace LibEvents
         private void ButtonClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ButtonSetupAlarm_Click(object sender, EventArgs e)
+        {
+            frmSetupAlarm f = new frmSetupAlarm(this._event);
+            f.ShowDialog();
         }
     }
 }

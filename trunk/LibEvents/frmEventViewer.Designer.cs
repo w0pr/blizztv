@@ -33,6 +33,7 @@
             this.LabelLocalTime = new System.Windows.Forms.Label();
             this.RichTextboxDescription = new System.Windows.Forms.RichTextBox();
             this.ButtonClose = new System.Windows.Forms.Button();
+            this.ButtonSetupAlarm = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LabelFullTitle
@@ -91,12 +92,24 @@
             this.ButtonClose.UseVisualStyleBackColor = true;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
+            // ButtonSetupAlarm
+            // 
+            this.ButtonSetupAlarm.Enabled = false;
+            this.ButtonSetupAlarm.Location = new System.Drawing.Point(228, 158);
+            this.ButtonSetupAlarm.Name = "ButtonSetupAlarm";
+            this.ButtonSetupAlarm.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSetupAlarm.TabIndex = 7;
+            this.ButtonSetupAlarm.Text = "Setup Alarm";
+            this.ButtonSetupAlarm.UseVisualStyleBackColor = true;
+            this.ButtonSetupAlarm.Click += new System.EventHandler(this.ButtonSetupAlarm_Click);
+            // 
             // frmEventViewer
             // 
             this.AcceptButton = this.ButtonClose;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(393, 189);
+            this.Controls.Add(this.ButtonSetupAlarm);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.RichTextboxDescription);
             this.Controls.Add(this.LabelLocalTime);
@@ -121,6 +134,7 @@
         private System.Windows.Forms.Label LabelLocalTime;
         private System.Windows.Forms.RichTextBox RichTextboxDescription;
         private System.Windows.Forms.Button ButtonClose;
+        private System.Windows.Forms.Button ButtonSetupAlarm;
 
     }
 }
