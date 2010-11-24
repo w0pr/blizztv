@@ -67,6 +67,7 @@ namespace LibStreams.Handlers
             base.Process(); // base processor should also work (to let it replace the slug variable).
             this.Movie = this.Movie.Replace("%stream_id%", this._stream_id.ToString()); // replace stream_id in movie template.
             this.FlashVars = this.FlashVars.Replace("%stream_id%", this._stream_id.ToString()); // replace stream_id in flashvars template.
+            if (this.ChatAvailable) this.ChatMovie = this.ChatMovie.Replace("%stream_id%", this._stream_id.ToString());
         }
 
         #endregion
