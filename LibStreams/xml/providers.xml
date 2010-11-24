@@ -11,7 +11,7 @@
     <Name>UStream</Name>
     <Movie><![CDATA[http://www.ustream.tv/flash/live/1/%stream_id%?v3=1]]></Movie>
     <FlashVars><![CDATA[autoplay=true&brand=embed&cid=%stream_id%&locale=en_US]]></FlashVars>
-    <ChatMovie><![CDATA[http://www.ustream.tv/flash/irc.swf?brandId=1&amp;channelId=%stream_id%&amp;server=chat1.ustream.tv&amp;locale=en_US]]></ChatMovie>
+    <ChatMovie><![CDATA[http://www.ustream.tv/flash/irc.swf?brandId=1&channelId=%stream_id%&channel=#%slug%&server=chat1.ustream.tv&locale=en_US]]></ChatMovie>
   </Provider>
   <Provider>
     <Name>JustinTV</Name>

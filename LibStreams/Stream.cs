@@ -46,7 +46,7 @@ namespace LibStreams
         public Int32 ViewerCount { get { return this._viewer_count; } internal set { this._viewer_count = value; } }
         public string Movie { get { return this._movie; } internal set { this._movie = value; } }
         public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
-        public string ChatMovie { get { return this._chat_movie; } }
+        public string ChatMovie { get { return this._chat_movie; } internal set { this._chat_movie = value; } }
         public bool ChatAvailable { get { return this._chat_available; } }
         public bool CommitOnSave { get { return this._commit_on_save; } set { this._commit_on_save = value; } }
         public bool DeleteOnSave { get { return this._delete_on_save; } set { this._delete_on_save = value; } }
