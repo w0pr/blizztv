@@ -27,5 +27,6 @@ namespace LibEvents
         public bool AllowEventNotifications = true;
         public bool AllowNotificationOfInprogressEvents = true;
         public int MinutesToNotifyBeforeEvent = 15;
+        public int NumberOfDaysToShowEventsOnMainWindow = 7;
     }
 }

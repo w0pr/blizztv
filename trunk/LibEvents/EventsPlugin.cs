@@ -139,11 +139,17 @@ namespace LibEvents
 
                 foreach (Event e in this._events) // loop through events.
                 {
-                    if (e.IsOver) events_past.Add(e); // if event is over register it in past-events section.
-                    else
+                    DateTime _filter_start = DateTime.Now.Date.Subtract(new TimeSpan((Settings as Settings).NumberOfDaysToShowEventsOnMainWindow, 0, 0, 0));
+                    DateTime _filter_end = DateTime.Now.Date.AddDays((Settings as Settings).NumberOfDaysToShowEventsOnMainWindow);
+
+                    if ((_filter_start <= e.Time.LocalTime) && (e.Time.LocalTime <= _filter_end))
                     {
-                        if (e.Time.LocalTime.Date == DateTime.Now.Date) events_today.Add(e); // if event takes place today, register it in todays-events section.
-                        else events_upcoming.Add(e); // else register it in upcoming-events section.
+                        if (e.IsOver) events_past.Add(e); // if event is over register it in past-events section.
+                        else
+                        {
+                            if (e.Time.LocalTime.Date == DateTime.Now.Date) events_today.Add(e); // if event takes place today, register it in todays-events section.
+                            else events_upcoming.Add(e); // else register it in upcoming-events section.
+                        }
                     }
                 }
 
