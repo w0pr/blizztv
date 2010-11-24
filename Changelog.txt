@@ -1,3 +1,8 @@
+[24.11.2010] - 0.14b-beta (r12*)
+--------------------------------
+
+* Applied hotfix for bug that causing internal stream player crashing with providers that have no chat-support (own3d.tv).
+
 [24.11.2010] - 0.14-beta (r119)
 -------------------------------
 
