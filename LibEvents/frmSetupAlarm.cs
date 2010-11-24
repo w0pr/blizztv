@@ -17,13 +17,13 @@ namespace LibEvents
         {
             InitializeComponent();
 
-            byte[] minutes={5,10,15,30,60,90};
+            byte[] minutes={5,10,15,30,60,90,120};
 
             this._event = Event;
             this.Text = string.Format("Setup alarm for event: {0}", this._event.FullTitle);
             this.LabelEventName.Text = this._event.FullTitle;
             this.LabelEventTime.Text = this._event.Time.LocalTime.ToString();
-            this.LabelTimeLeft.Text = this._event.StatusText;
+            this.LabelTimeLeft.Text = this._event.TimeLeft;
 
             foreach (byte m in minutes)
             {

@@ -93,11 +93,14 @@ namespace LibEvents
         {
             if (this.AlarmExists())
             {
-                if ((int)this.GetAlarmMinutes() == (int)this.MinutesLeft)
+                if (this.Status == EventStatus.UPCOMING)
                 {
-                    frmAlarm f = new frmAlarm(this);
-                    f.Show();
+                    if ((int)this.GetAlarmMinutes() == (int)this.MinutesLeft)
+                    {
+                        this.ShowForm(new frmAlarm(this));
+                    }
                 }
+                else this.DeleteAlarm();
             }
         }
 
@@ -111,25 +114,18 @@ namespace LibEvents
             }
         }
 
-        public string StatusText // returns event status text.
+        public string TimeLeft // returns event status text.
         {            
             get
             {
                 string status = "";
                 switch (this.Status)
                 {
-                    case EventStatus.OVER:
-                        status = "Over";
-                        break;
-                    case EventStatus.IN_PROGRESS:
-                        status = "In progress";
-                        break;
                     case EventStatus.UPCOMING:
                         TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
                         if (timeleft.Days > 0) status += string.Format("{0} day, ", timeleft.Days);
                         if (timeleft.Hours > 0) status += string.Format("{0} hour, ", timeleft.Hours);
                         if (timeleft.Minutes > 0) status += string.Format("{0} minutes", timeleft.Minutes);
-                        status += " to go.";
                         break;
                 }
                 return status;     
