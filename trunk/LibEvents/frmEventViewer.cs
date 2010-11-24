@@ -41,7 +41,6 @@ namespace LibEvents
         {
             this.Text = string.Format("Event: {0}", this._event.FullTitle);
             this.LabelFullTitle.Text = this._event.FullTitle;
-            this.LabelStatus.Text = this._event.StatusText;
             this.LabelLocalTime.Text = string.Format("({0})", this._event.Time.LocalTime.ToString());
             this.RichTextboxDescription.Text = this._event.Description;
 
@@ -50,15 +49,18 @@ namespace LibEvents
                 case EventStatus.OVER:
                     this.LabelStatus.ForeColor = EventOverColor;
                     this.ButtonSetupAlarm.Enabled = false;
+                    this.LabelStatus.Text = "Over.";
                     break;
                 case EventStatus.IN_PROGRESS:
                     this.LabelStatus.ForeColor = EventInProgressColor;
                     this.ButtonSetupAlarm.Enabled = false;
+                    this.LabelStatus.Text = "In progress.";
                     break;
                 case EventStatus.UPCOMING:
                     this.LabelStatus.ForeColor = FutureEventColor;
                     this.ButtonSetupAlarm.Enabled = true;
                     this.LabelAlarm.Visible = true;
+                    this.LabelStatus.Text = string.Format("{0} to go.", this._event.TimeLeft);
                     break;
             }
 

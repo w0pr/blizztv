@@ -181,6 +181,26 @@ namespace LibBlizzTV
             this.Dispose();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public delegate void ShowFormEventHandler(System.Windows.Forms.Form Form, bool IsModal);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event ShowFormEventHandler OnShowForm;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Form"></param>
+        /// <param name="IsModal"></param>
+        public void ShowForm(System.Windows.Forms.Form Form,bool IsModal=false)
+        {
+            if (OnShowForm != null) OnShowForm(Form,IsModal);
+        }
+
 
         #endregion
 

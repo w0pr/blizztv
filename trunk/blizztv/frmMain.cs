@@ -47,7 +47,7 @@ namespace BlizzTV
         private void frmMain_Load(object sender, EventArgs e)
         {
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.            
-            this.LoadPlugins(); // Load the enabled plugins.   
+            this.LoadPlugins(); // Load the enabled plugins.               
         }
 
         #endregion        

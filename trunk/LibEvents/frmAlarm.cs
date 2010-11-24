@@ -22,8 +22,9 @@ namespace LibEvents
 
         private void frmAlarm_Load(object sender, EventArgs e)
         {
+            this.Text = string.Format("Event: {0}", this._event.FullTitle);
             this.LabelEvent.Text = string.Format("Event {0}", this._event.FullTitle);
-            this.LabelStatus.Text = string.Format("is about to start in {0} minutes.", this._event.MinutesLeft.ToString());
+            this.LabelStatus.Text = string.Format("is about to start in {0}.", this._event.TimeLeft);
             this._event.DeleteAlarm();
         }
 

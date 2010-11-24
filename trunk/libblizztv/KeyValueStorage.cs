@@ -107,6 +107,7 @@ namespace LibBlizzTV
             {
                 key = string.Format("{0}.{1}.{2}", type, category, key); // construct the key-name based on caller plugin and the category.
                 this._dictionary.Remove(key);
+                this._dictionary.Flush();
                 return true;
             }
             else return false;

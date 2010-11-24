@@ -53,6 +53,7 @@ namespace BlizzTV
             this._item.OnStateChange += StateChange; // the state-change event.        
             this._item.OnDelete += OnDelete; // delete event.
             this._item.OnShowBalloonTip += OnShowBalloonTip; // shows a balloon tooltip on system tray.
+            this._item.OnShowForm += OnShowForm;
         }
 
         #endregion
@@ -115,8 +116,22 @@ namespace BlizzTV
 
         private void OnShowBalloonTip(object sender,string Title, string Text, ToolTipIcon Icon)
         {
-            (this.TreeView.FindForm() as frmMain).TrayIcon.Tag = sender;
-            (this.TreeView.FindForm() as frmMain).TrayIcon.ShowBalloonTip(10000, Title, Text, Icon);
+            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { OnShowBalloonTip(sender,Title,Text,Icon); })); // switch to UI-thread.
+            else
+            {
+                (this.TreeView.FindForm() as frmMain).TrayIcon.Tag = sender;
+                (this.TreeView.FindForm() as frmMain).TrayIcon.ShowBalloonTip(10000, Title, Text, Icon);
+            }
+        }
+
+        private void OnShowForm(Form Form, bool IsModal)
+        {
+            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { OnShowForm(Form, IsModal); })); // switch to UI-thread.
+            else
+            {
+                if (IsModal) Form.ShowDialog();
+                else Form.Show();
+            }
         }
 
         public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e) 
