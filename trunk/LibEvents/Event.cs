@@ -66,19 +66,37 @@ namespace LibEvents
             f.Show();
         }
 
-        public void Check() // Check the event and notify user about it if it's in progress or soon to be so.
+        public void Check() // Check the event for notifications and alarms.
+        {
+            this.CheckForNotifications();
+            this.CheckForAlarms();
+        }
+
+        private void CheckForNotifications()
         {
             if ((EventsPlugin.Instance.Settings as Settings).AllowEventNotifications && !this.Notified) // if notifications are enabled & we haven't notified before.
             {
-                if (((EventsPlugin.Instance.Settings as Settings).AllowNotificationOfInprogressEvents) && (this.Time.LocalTime <= DateTime.Now && DateTime.Now <= this.Time.LocalTime.AddHours(1))) // if in-progress event notifications are enabled, check for it the event has started.
+                if (((EventsPlugin.Instance.Settings as Settings).AllowNotificationOfInprogressEvents) && (this.Status == EventStatus.IN_PROGRESS)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this._notified = true; // don't notify about it more then once
                     this.ShowBalloonTip(string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
                 }
-                else if ((this.Time.LocalTime - DateTime.Now).TotalMinutes > 0 && (this.Time.LocalTime - DateTime.Now).TotalMinutes <= (EventsPlugin.Instance.Settings as Settings).MinutesToNotifyBeforeEvent) // start notifying about the upcoming event.
+                else if (this.MinutesLeft > 0 && (this.MinutesLeft <= (EventsPlugin.Instance.Settings as Settings).MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
                 {
                     this._notified = true; // don't notify about it more then once
-                    this.ShowBalloonTip(string.Format("Event starts in {0} minutes: {1}",(this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                    this.ShowBalloonTip(string.Format("Event starts in {0} minutes: {1}", (this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                }
+            }
+        }
+
+        private void CheckForAlarms()
+        {
+            if (this.AlarmExists())
+            {
+                if ((int)this.GetAlarmMinutes() == (int)this.MinutesLeft)
+                {
+                    frmAlarm f = new frmAlarm(this);
+                    f.Show();
                 }
             }
         }
@@ -116,6 +134,46 @@ namespace LibEvents
                 }
                 return status;     
             }
+        }
+
+        public double MinutesLeft
+        {
+            get
+            {
+                if (this.Status == EventStatus.UPCOMING)
+                {
+                    TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
+                    return timeleft.TotalMinutes;
+                }
+                else return 0;
+            }
+        }
+
+        public bool SetupAlarm(byte minutesbefore)
+        {
+            if (!this.AlarmExists())
+            {
+                KeyValueStorage.Instance.Put("event", "alarm", this._event_id, minutesbefore);
+                return true;
+            }
+            else return false;
+        }
+
+        public bool AlarmExists()
+        {
+            if (KeyValueStorage.Instance.KeyExists("event", "alarm", this._event_id)) return true;
+            else return false;
+        }
+
+        public byte GetAlarmMinutes()
+        {
+            if (this.AlarmExists()) return KeyValueStorage.Instance.Get("event", "alarm", this._event_id);
+            return 0;
+        }
+
+        public void DeleteAlarm()
+        {
+            if (this.AlarmExists()) KeyValueStorage.Instance.Delete("event", "alarm", this._event_id);
         }
 
         #endregion

@@ -49,14 +49,23 @@ namespace LibEvents
             {
                 case EventStatus.OVER:
                     this.LabelStatus.ForeColor = EventOverColor;
+                    this.ButtonSetupAlarm.Enabled = false;
                     break;
                 case EventStatus.IN_PROGRESS:
                     this.LabelStatus.ForeColor = EventInProgressColor;
+                    this.ButtonSetupAlarm.Enabled = false;
                     break;
                 case EventStatus.UPCOMING:
                     this.LabelStatus.ForeColor = FutureEventColor;
                     this.ButtonSetupAlarm.Enabled = true;
+                    this.LabelAlarm.Visible = true;
                     break;
+            }
+
+            if (this._event.AlarmExists())
+            {
+                this.LabelAlarm.Text = string.Format("An alarm is set for event {0} minutes before.", this._event.GetAlarmMinutes().ToString());
+                this.ButtonSetupAlarm.Enabled = false;
             }
         }
 
