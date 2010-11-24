@@ -75,8 +75,8 @@ namespace LibStreams
             if (this._chat_available) this._chat_movie = Providers.Instance.List[this.Provider].ChatMovie; // the streams chat movie's source.
 
             this._movie = this._movie.Replace("%slug%", this.Slug); // replace slug variable in movie source.
-            this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.
-            this._chat_movie = this._chat_movie.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
+            this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
+            if(this._chat_available) this._chat_movie = this._chat_movie.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
         }
 
         public override void DoubleClicked(object sender, EventArgs e) // double-click handler

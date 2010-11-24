@@ -23,4 +23,8 @@
     <Slug>cellawerra</Slug>
     <Provider>LiveStream</Provider>
   </Stream>
+  <Stream Name="HomerJ">
+    <Slug>150</Slug>
+    <Provider>Own3DTV</Provider>
+  </Stream>
 </Streams>
