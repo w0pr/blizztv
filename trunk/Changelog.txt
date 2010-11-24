@@ -1,3 +1,20 @@
+[20.11.2010] - 0.14-beta (r118)
+-------------------------------
+
+* Added a day filter to LibEvents plugin's settings (Number of days to Show Events On Main Window).
+* Implemented alerts for Events plugin.
+* When update checks are triggered from main menu it'll show a result notification for both if an update is available or not.
+* Checking for updates no longer block the UI.
+* Implemented chat window functionality streams (as of right now LiveStream and Ustream supports it).
+* Implemented on-top functionality for LibEvents and LibVideos plugins players.
+* Implemented a custom flash player wrapper.
+* The new custom flash player detaches default context-menu and allows custom attaching new ones by the plugin.
+* Updated plugin descriptions.
+* Also added donation link in About window for whom interested in supporting the project.
+* Improved About window, added credits section. 
+* Fixed a bug in internal video player which was sometimes preventing going fullscreen.
+
+
 [20.11.2010] - 0.13-beta (r103)
 -------------------------------
 
