@@ -141,7 +141,7 @@
             // 
             // numericUpDownUpdateFeedsEveryXMinutes
             // 
-            this.numericUpDownUpdateFeedsEveryXMinutes.Location = new System.Drawing.Point(183, 11);
+            this.numericUpDownUpdateFeedsEveryXMinutes.Location = new System.Drawing.Point(232, 11);
             this.numericUpDownUpdateFeedsEveryXMinutes.Maximum = new decimal(new int[] {
             1440,
             0,
@@ -163,7 +163,7 @@
             // 
             // numericUpDownNumberOfVideosToQueryChannelFor
             // 
-            this.numericUpDownNumberOfVideosToQueryChannelFor.Location = new System.Drawing.Point(232, 32);
+            this.numericUpDownNumberOfVideosToQueryChannelFor.Location = new System.Drawing.Point(232, 38);
             this.numericUpDownNumberOfVideosToQueryChannelFor.Name = "numericUpDownNumberOfVideosToQueryChannelFor";
             this.numericUpDownNumberOfVideosToQueryChannelFor.Size = new System.Drawing.Size(53, 20);
             this.numericUpDownNumberOfVideosToQueryChannelFor.TabIndex = 1;
@@ -180,7 +180,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 34);
+            this.label1.Location = new System.Drawing.Point(8, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(218, 13);
             this.label1.TabIndex = 0;
