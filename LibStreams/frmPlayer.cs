@@ -41,7 +41,7 @@ namespace LibStreams
             this.Height = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight; // get the default player height.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
 
-            if (!Providers.Instance.List[this._stream.Provider].ChatAvailable) this.MenuOpenChat.Enabled = true;
+            if (!Providers.Instance.List[this._stream.Provider].ChatAvailable) this.MenuOpenChat.Enabled = false; 
         }
 
         private void Player_Load(object sender, EventArgs e) 
