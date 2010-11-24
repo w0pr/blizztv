@@ -87,13 +87,6 @@
             // 
             this.ComboBoxAlertBefore.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBoxAlertBefore.FormattingEnabled = true;
-            this.ComboBoxAlertBefore.Items.AddRange(new object[] {
-            "5",
-            "10",
-            "15",
-            "30",
-            "60",
-            "90"});
             this.ComboBoxAlertBefore.Location = new System.Drawing.Point(124, 73);
             this.ComboBoxAlertBefore.Name = "ComboBoxAlertBefore";
             this.ComboBoxAlertBefore.Size = new System.Drawing.Size(244, 21);
@@ -107,6 +100,7 @@
             this.ButtonSetup.TabIndex = 6;
             this.ButtonSetup.Text = "Setup";
             this.ButtonSetup.UseVisualStyleBackColor = true;
+            this.ButtonSetup.Click += new System.EventHandler(this.ButtonSetup_Click);
             // 
             // ButtonCancel
             // 

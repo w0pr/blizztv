@@ -31,7 +31,7 @@ namespace LibBlizzTV
 
         private static KeyValueStorage _instance = new KeyValueStorage();        
         private string _storage_folder = "storage";
-        private PersistentDictionary<string, byte> _dictionary;
+        private PersistentDictionary <string, byte> _dictionary;
         private bool disposed = false;
 
         /// <summary>
@@ -55,13 +55,13 @@ namespace LibBlizzTV
         /// <summary>
         /// Puts a new key-value pair in plugin storage.
         /// </summary>
-        /// <param name="plugin_name">The caller plugin's name. </param>
+        /// <param name="type">The pair type. </param>
         /// <param name="category">The category.</param>
         /// <param name="key">The key.</param>        
         /// <param name="value">The byte-value</param>
-        public void Put(string plugin_name, string category, string key, byte value)
+        public void Put(string type, string category, string key, byte value)
         {
-            key = string.Format("{0}.{1}.{2}", plugin_name,category, key); // construct the key-name based on caller plugin and the category.
+            key = string.Format("{0}.{1}.{2}", type,category, key); // construct the key-name based on caller plugin and the category.
             this._dictionary[key] = value;
             this._dictionary.Flush(); // immediatly flush the data to database.
         }
@@ -69,13 +69,13 @@ namespace LibBlizzTV
         /// <summary>
         /// Get's the byte-value for supplied key.
         /// </summary>
-        /// <param name="plugin_name">The caller plugin's name. </param>
+        /// <param name="type">The pair type. </param>
         /// <param name="category">The category.</param>
         /// <param name="key">The key.</param>
         /// <returns>Returns the byte-value for the supplied key.</returns>
-        public byte Get(string plugin_name,string category, string key)
+        public byte Get(string type,string category, string key)
         {
-            key = string.Format("{0}.{1}.{2}", plugin_name, category, key); // construct the key-name based on caller plugin and the category.
+            key = string.Format("{0}.{1}.{2}", type, category, key); // construct the key-name based on caller plugin and the category.
             if (this._dictionary.ContainsKey(key)) return this._dictionary[key];
             else return 0;
         }
@@ -83,14 +83,32 @@ namespace LibBlizzTV
         /// <summary>
         /// Returns true if the given key-value pair exists in storage.
         /// </summary>
-        /// <param name="plugin_name">The caller plugin's name. </param>
+        /// <param name="type">The pair type. </param>
         /// <param name="category">The category.</param>
         /// <param name="key">The key.</param>
         /// <returns>Returns true if the given key-value pair exists in storage.</returns>
-        public bool KeyExists(string plugin_name,string category, string key)
+        public bool KeyExists(string type,string category, string key)
         {
-            key = string.Format("{0}.{1}.{2}", plugin_name, category, key); // construct the key-name based on caller plugin and the category.
+            key = string.Format("{0}.{1}.{2}", type, category, key); // construct the key-name based on caller plugin and the category.
             if (this._dictionary.ContainsKey(key)) return true;
+            else return false;
+        }
+
+        /// <summary>
+        /// Returns true if the given key-value pair existed in storage and deleted successfuly.
+        /// </summary>
+        /// <param name="type">The pair type. </param>
+        /// <param name="category">The category.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>Returns true if the given key-value pair existed in storage and deleted successfuly.</returns>
+        public bool Delete(string type, string category, string key)
+        {
+            if (this.KeyExists(type, category, key))
+            {
+                key = string.Format("{0}.{1}.{2}", type, category, key); // construct the key-name based on caller plugin and the category.
+                this._dictionary.Remove(key);
+                return true;
+            }
             else return false;
         }
 
