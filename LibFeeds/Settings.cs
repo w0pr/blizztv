@@ -24,6 +24,6 @@ namespace LibFeeds
     [Serializable]
     public class Settings : PluginSettings
     {
-        public int UpdateEveryXMinutes = 10;
+        public int UpdateEveryXMinutes = 60;
     }
 }

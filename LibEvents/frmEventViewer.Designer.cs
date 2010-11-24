@@ -55,7 +55,7 @@
             this.LabelStatus.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LabelStatus.Location = new System.Drawing.Point(12, 48);
             this.LabelStatus.Name = "LabelStatus";
-            this.LabelStatus.Size = new System.Drawing.Size(373, 16);
+            this.LabelStatus.Size = new System.Drawing.Size(208, 16);
             this.LabelStatus.TabIndex = 3;
             this.LabelStatus.Text = "status";
             // 
@@ -63,9 +63,9 @@
             // 
             this.LabelLocalTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelLocalTime.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LabelLocalTime.Location = new System.Drawing.Point(200, 48);
+            this.LabelLocalTime.Location = new System.Drawing.Point(226, 48);
             this.LabelLocalTime.Name = "LabelLocalTime";
-            this.LabelLocalTime.Size = new System.Drawing.Size(184, 16);
+            this.LabelLocalTime.Size = new System.Drawing.Size(158, 16);
             this.LabelLocalTime.TabIndex = 4;
             this.LabelLocalTime.Text = "local time";
             this.LabelLocalTime.TextAlign = System.Drawing.ContentAlignment.TopRight;

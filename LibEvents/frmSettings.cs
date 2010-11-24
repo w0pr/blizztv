@@ -37,6 +37,7 @@ namespace LibEvents
             checkBoxAllowEventNotifications.Checked = (EventsPlugin.Instance.Settings as Settings).AllowEventNotifications;
             checkBoxAllowNotificationOfEventsInProgress.Checked = (EventsPlugin.Instance.Settings as Settings).AllowNotificationOfInprogressEvents;
             numericUpDownMinutesBefore.Value = (decimal)(EventsPlugin.Instance.Settings as Settings).MinutesToNotifyBeforeEvent;
+            numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value = (decimal)(EventsPlugin.Instance.Settings as Settings).NumberOfDaysToShowEventsOnMainWindow;
         }
 
         public void SaveSettings()
@@ -44,6 +45,7 @@ namespace LibEvents
             (EventsPlugin.Instance.Settings as Settings).AllowEventNotifications = checkBoxAllowEventNotifications.Checked;
             (EventsPlugin.Instance.Settings as Settings).AllowNotificationOfInprogressEvents = checkBoxAllowNotificationOfEventsInProgress.Checked;
             (EventsPlugin.Instance.Settings as Settings).MinutesToNotifyBeforeEvent = (int)numericUpDownMinutesBefore.Value;
+            (EventsPlugin.Instance.Settings as Settings).NumberOfDaysToShowEventsOnMainWindow = (int)numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value;
 
             EventsPlugin.Instance.SaveSettings();
         }

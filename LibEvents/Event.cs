@@ -123,8 +123,8 @@ namespace LibEvents
                 {
                     case EventStatus.UPCOMING:
                         TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
-                        if (timeleft.Days > 0) status += string.Format("{0} day, ", timeleft.Days);
-                        if (timeleft.Hours > 0) status += string.Format("{0} hour, ", timeleft.Hours);
+                        if (timeleft.Days > 0) status += string.Format("{0} days, ", timeleft.Days);
+                        if (timeleft.Hours > 0) status += string.Format("{0} hours, ", timeleft.Hours);
                         if (timeleft.Minutes > 0) status += string.Format("{0} minutes", timeleft.Minutes);
                         break;
                 }

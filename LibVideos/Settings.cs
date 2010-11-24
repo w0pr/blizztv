@@ -25,6 +25,6 @@ namespace LibVideos
     public class Settings:PluginSettings
     {
         public int NumberOfVideosToQueryChannelFor = 10;
-        public int UpdateEveryXMinutes = 10;
+        public int UpdateEveryXMinutes = 60;
     }
 }
