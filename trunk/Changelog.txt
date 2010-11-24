@@ -1,4 +1,4 @@
-[20.11.2010] - 0.14-beta (r118)
+[24.11.2010] - 0.14-beta (r119)
 -------------------------------
 
 * Added a day filter to LibEvents plugin's settings (Number of days to Show Events On Main Window).
