@@ -31,10 +31,9 @@ namespace LibEvents
 
         private List<Event> _events = new List<Event>(); // the items list.
         private TimeZoneInfo KOREAN_TIME_ZONE { get { TimeZoneInfo zone = TimeZoneInfo.Local; foreach (TimeZoneInfo z in TimeZoneInfo.GetSystemTimeZones()) { if (z.Id == "Korea Standard Time") zone = z; } return zone; } } // teamliquid calendar flags events in Korean time.
-        private ListItem _root_item = new ListItem("Events");  // root item on treeview.
-        private ListItem _events_today_item = new ListItem("Today"); // today's events item.
-        private ListItem _events_upcoming_item = new ListItem("Upcoming"); // upcoming events item.
-        private ListItem _events_past_item = new ListItem("Past"); // past events item.
+        private ListItem _events_today = new ListItem("Today"); // today's events item.
+        private ListItem _events_upcoming = new ListItem("Upcoming"); // upcoming events item.
+        private ListItem _events_over = new ListItem("Past"); // past events item.
         private Timer _event_timer = new Timer(60000); // runs every one minute and check events & alarms.
         private bool disposed = false;
 
@@ -48,8 +47,10 @@ namespace LibEvents
             : base(ps)
         {
             EventsPlugin.Instance = this;
+            this.RootListItem = new ListItem("Events");
+
             this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // register calender menu.
-            this._root_item.ContextMenus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
+            this.RootListItem.ContextMenus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
         }
 
         #endregion
@@ -57,12 +58,8 @@ namespace LibEvents
         #region API handlers
 
         public override void Run()
-        {            
-            this.RegisterListItem(this._root_item); // register root item.                
-
-            bool success = this.ParseEvents(); // parse events.
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(success));
-            PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(success));                
+        {
+            this.ParseEvents();
 
             // setup update timer for event checks
             _event_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
@@ -78,12 +75,14 @@ namespace LibEvents
 
         #region internal logic
 
-        private bool ParseEvents()
+        private void ParseEvents()
         {
             bool success = true;
 
+            this.NotifyUpdateStarted();
+
             this.AddWorkload(1);
-            this._root_item.SetTitle("Updating events..");
+            this.RootListItem.SetTitle("Updating events..");
 
             try
             {
@@ -129,13 +128,9 @@ namespace LibEvents
 
             if (success) // if parsing of calendar xml all okay.
             {
-                List<ListItem> events_today = new List<ListItem>();
-                List<ListItem> events_upcoming = new List<ListItem>();
-                List<ListItem> events_past = new List<ListItem>();
-
-                this.RegisterListItem(_events_today_item, _root_item); // register today's events item.            
-                this.RegisterListItem(_events_upcoming_item, _root_item); // register upcoming events item.          
-                this.RegisterListItem(_events_past_item, _root_item); // register past events item.       
+                this.RootListItem.Childs.Add("events-today", _events_today);
+                this.RootListItem.Childs.Add("events-upcoming", _events_upcoming);
+                this.RootListItem.Childs.Add("events-over", _events_over);      
 
                 foreach (Event e in this._events) // loop through events.
                 {
@@ -144,30 +139,26 @@ namespace LibEvents
 
                     if ((_filter_start <= e.Time.LocalTime) && (e.Time.LocalTime <= _filter_end))
                     {
-                        if (e.IsOver) events_past.Add(e); // if event is over register it in past-events section.
+                        if (e.IsOver) _events_over.Childs.Add(e.EventID, e); // if event is over register it in past-events section.
                         else
                         {
-                            if (e.Time.LocalTime.Date == DateTime.Now.Date) events_today.Add(e); // if event takes place today, register it in todays-events section.
-                            else events_upcoming.Add(e); // else register it in upcoming-events section.
+                            if (e.Time.LocalTime.Date == DateTime.Now.Date) _events_today.Childs.Add(e.EventID, e); // if event takes place today, register it in todays-events section.
+                            else _events_upcoming.Childs.Add(e.EventID, e); // else register it in upcoming-events section.
                         }
                     }
-                }
-
-                if (events_today.Count > 0) this.RegisterListItems(events_today, this._events_today_item);
-                if (events_upcoming.Count > 0) this.RegisterListItems(events_upcoming, this._events_upcoming_item);
-                if (events_past.Count > 0) this.RegisterListItems(events_past, this._events_past_item);                
+                }            
             }
             else
             {
                 ListItem error = new ListItem("Error parsing TeamLiquid calendar feed.");
-                error.SetState(ItemState.ERROR);
-                this.RegisterListItem(error, this._root_item);
+                error.SetState(ItemState.ERROR);           
+                this.RootListItem.Childs.Add("error", error);
             }
 
-            this._root_item.SetTitle("Events");  // add unread feeds count to root item's title.                               
+            this.RootListItem.SetTitle("Events");  // add unread feeds count to root item's title.                               
             this.StepWorkload();
 
-            return success;
+            this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
         }
 
         private void OnTimerHit(object source, ElapsedEventArgs e)

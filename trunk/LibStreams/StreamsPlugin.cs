@@ -31,7 +31,6 @@ namespace LibStreams
         #region members
 
         private string _xml_file = @"plugins\xml\streams\streams.xml";
-        private ListItem _root_item = new ListItem("Streams"); // root item on treeview.
         internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _update_timer;
         private bool disposed = false;
@@ -45,9 +44,10 @@ namespace LibStreams
         public StreamsPlugin(PluginSettings ps):base(ps)
         {
             StreamsPlugin.Instance = this;
+            this.RootListItem = new ListItem("Streams");
 
             // register context-menu's.
-            _root_item.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
         }
 
         #endregion
@@ -56,8 +56,7 @@ namespace LibStreams
 
         public override void Run()
         {
-            this.RegisterListItem(_root_item); // register root item.                        
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateStreams())); // parse the streams.
+            UpdateStreams();
 
             // setup update timer for next data updates
             _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
@@ -74,12 +73,19 @@ namespace LibStreams
 
         #region internal logic
 
-        internal bool UpdateStreams()
+        internal void UpdateStreams()
         {
             bool success = true;
 
-            this._root_item.SetTitle("Updating streams..");
-            if (this._streams.Count > 0) this.DeleteExistingStreams(); // clear previous entries before doing an update.
+            this.NotifyUpdateStarted();
+
+            if (this._streams.Count > 0)// clear previous entries before doing an update.
+            {
+                this._streams.Clear();
+                this.RootListItem.Childs.Clear();
+            }
+
+            this.RootListItem.SetTitle("Updating streams..");
 
             try
             {
@@ -120,17 +126,17 @@ namespace LibStreams
                         {
                             pair.Value.SetTitle(string.Format("{0} ({1})", pair.Value.Title, pair.Value.ViewerCount)); // put stream viewers count on title.
                             available_count++; // increment available live streams count.
-                            RegisterListItem(pair.Value, _root_item); // register the stream item.
+                            this.RootListItem.Childs.Add(pair.Key, pair.Value);
                         }
                         this.StepWorkload();
                     }
                     catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
                 }
 
-                _root_item.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
+                this.RootListItem.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
             }
 
-            return success;
+            NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
         }
 
         internal void SaveStreamsXML()
@@ -161,25 +167,15 @@ namespace LibStreams
             }
         }
 
-        private void DeleteExistingStreams() // removes all current feeds.
-        {
-            foreach (KeyValuePair<string,Stream> pair in this._streams) { pair.Value.Delete(); } // Delete the feeds.
-            this._streams.Clear(); // remove them from the list.
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateStreams()));
+            UpdateStreams();
         }
 
         private void MenuManualUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread t = new System.Threading.Thread(delegate()
-            {
-                PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateStreams()));
-            }) { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
+            System.Threading.Thread t = new System.Threading.Thread(delegate() { UpdateStreams(); }) 
+            { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
             t.Start();            
         }
 

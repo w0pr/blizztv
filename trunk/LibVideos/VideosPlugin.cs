@@ -31,7 +31,6 @@ namespace LibVideos
         #region members
 
         private string _xml_file = @"plugins\xml\videos\channels.xml";
-        private ListItem _root_item = new ListItem("Videos"); // root item on treeview.
         internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private Timer _update_timer;
         private bool disposed = false;
@@ -46,11 +45,12 @@ namespace LibVideos
             : base(ps)
         {
             VideosPlugin.Instance = this;
+            this.RootListItem = new ListItem("Videos");
 
             // register context menu's.
-            _root_item.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
-            _root_item.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
-            _root_item.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
+            this.RootListItem.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
         }
 
         #endregion
@@ -59,8 +59,7 @@ namespace LibVideos
 
         public override void Run()
         {
-            this.RegisterListItem(_root_item); // register root item.            
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(UpdateChannels())); // parse channels
+            this.UpdateChannels();
 
             // setup update timer for next data updates
             _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
@@ -77,12 +76,19 @@ namespace LibVideos
 
         #region internal logic
 
-        internal bool UpdateChannels()
+        internal void UpdateChannels()
         {
             bool success = true;
 
-            this._root_item.SetTitle("Updating videos..");
-            if (this._channels.Count > 0) this.DeleteExistingChannels(); // clear previous entries before doing an update.
+            this.NotifyUpdateStarted();
+
+            if (this._channels.Count > 0)  // clear previous entries before doing an update.
+            {
+                this._channels.Clear();
+                this.RootListItem.Childs.Clear();
+            }
+
+            this.RootListItem.SetTitle("Updating videos..");
 
             try
             {
@@ -117,15 +123,16 @@ namespace LibVideos
                 foreach (KeyValuePair<string,Channel> pair in this._channels) // loop through videos.
                 {
                     pair.Value.Update(); // update the channel.
-                    RegisterListItem(pair.Value, _root_item);  // if the channel parsed all okay, regiser the channel-item.                    
-                    foreach (Video v in pair.Value.Videos) { RegisterListItem(v, pair.Value); } // register the video items.
+                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                    foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
                     if (pair.Value.State == ItemState.UNREAD) unread++;
                     this.StepWorkload();
                 }
 
-                _root_item.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
+                this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
             }
-            return success;
+
+            NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
         }
 
         internal void SaveChannelsXML()
@@ -156,17 +163,16 @@ namespace LibVideos
             }
         }
 
-        private void DeleteExistingChannels() // removes all current feeds.
-        {
-            foreach (KeyValuePair<string,Channel> pair in this._channels) { pair.Value.Delete(); } // Delete the feeds.
-            this._channels.Clear(); // remove them from the list.
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateChannels()));
+            UpdateChannels();
+        }
+
+        private void MenuManualUpdate(object sender, EventArgs e)
+        {
+            System.Threading.Thread t = new System.Threading.Thread(delegate() { UpdateChannels(); }) 
+            { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
+            t.Start();
         }
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
@@ -187,15 +193,6 @@ namespace LibVideos
             }
         }
 
-        private void MenuManualUpdate(object sender, EventArgs e)
-        {
-            System.Threading.Thread t = new System.Threading.Thread(delegate()
-            {
-                PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateChannels()));
-            }) { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
-            t.Start();
-        }
-
         #endregion
 
         #region de-ctor
@@ -206,10 +203,13 @@ namespace LibVideos
             {
                 if (disposing) // managed resources
                 {
-                    this._update_timer.Enabled = false;
-                    this._update_timer.Elapsed -= OnTimerHit;
-                    this._update_timer.Dispose();
-                    this._update_timer = null;
+                    if (this._update_timer != null)
+                    {
+                        this._update_timer.Enabled = false;
+                        this._update_timer.Elapsed -= OnTimerHit;
+                        this._update_timer.Dispose();
+                        this._update_timer = null;
+                    }
                     foreach (KeyValuePair<string,Channel> pair in this._channels) { pair.Value.Dispose(); }
                     this._channels.Clear();
                     this._channels = null;

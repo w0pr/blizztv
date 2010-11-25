@@ -51,7 +51,6 @@ namespace BlizzTV
             // register communication events
             this._item.OnTitleChange += TitleChange; // the title-change event.
             this._item.OnStateChange += StateChange; // the state-change event.        
-            this._item.OnDelete += OnDelete; // delete event.
             this._item.OnShowBalloonTip += OnShowBalloonTip; // shows a balloon tooltip on system tray.
             this._item.OnShowForm += OnShowForm;
         }
@@ -105,15 +104,6 @@ namespace BlizzTV
             });
         }
 
-        private void OnDelete() 
-        {
-            this.TreeView.AsyncInvokeHandler(() =>
-            {
-                if (this.Nodes.Count > 0) { this.Nodes.Clear(); } // remove our childs from treeview.
-                this.Remove(); // remove ourself too.
-            });
-        }
-
         private void OnShowBalloonTip(object sender,string Title, string Text, ToolTipIcon Icon)
         {
             this.TreeView.AsyncInvokeHandler(() =>
@@ -162,7 +152,6 @@ namespace BlizzTV
                 {
                     this._item.OnTitleChange -= TitleChange;
                     this._item.OnStateChange -= StateChange;
-                    this._item.OnDelete -= OnDelete;
                     this._item.OnShowBalloonTip -= OnShowBalloonTip;
                     this._item = null;
                     this._plugin = null;
