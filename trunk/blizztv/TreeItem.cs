@@ -79,14 +79,15 @@ namespace BlizzTV
 
         private void TitleChange(object sender)
         {
-            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { TitleChange(sender); })); // switch to UI-thread.
-            else this.Text = this._item.Title;
+            this.TreeView.AsyncInvokeHandler(() =>
+            {
+                this.Text = this._item.Title;
+            });
         }
 
         private void StateChange(object sender)
         {
-            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { StateChange(sender); })); // switch to UI-thread.
-            else
+            this.TreeView.AsyncInvokeHandler(() =>
             {
                 switch (this._item.State)
                 {
@@ -101,37 +102,34 @@ namespace BlizzTV
                     default:
                         break;
                 }
-            }
+            });
         }
 
         private void OnDelete() 
         {
-            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { OnDelete(); })); // switch to UI-thread.
-            else
+            this.TreeView.AsyncInvokeHandler(() =>
             {
                 if (this.Nodes.Count > 0) { this.Nodes.Clear(); } // remove our childs from treeview.
                 this.Remove(); // remove ourself too.
-            }
+            });
         }
 
         private void OnShowBalloonTip(object sender,string Title, string Text, ToolTipIcon Icon)
         {
-            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { OnShowBalloonTip(sender,Title,Text,Icon); })); // switch to UI-thread.
-            else
-            {
-                (this.TreeView.FindForm() as frmMain).TrayIcon.Tag = sender;
-                (this.TreeView.FindForm() as frmMain).TrayIcon.ShowBalloonTip(10000, Title, Text, Icon);
-            }
+            this.TreeView.AsyncInvokeHandler(() =>
+                {
+                    (this.TreeView.FindForm() as frmMain).TrayIcon.Tag = sender;
+                    (this.TreeView.FindForm() as frmMain).TrayIcon.ShowBalloonTip(10000, Title, Text, Icon);
+                });
         }
 
         private void OnShowForm(Form Form, bool IsModal)
         {
-            if (this.TreeView.InvokeRequired) this.TreeView.BeginInvoke(new MethodInvoker(delegate() { OnShowForm(Form, IsModal); })); // switch to UI-thread.
-            else
+            this.TreeView.AsyncInvokeHandler(() =>
             {
                 if (IsModal) Form.ShowDialog();
                 else Form.Show();
-            }
+            });
         }
 
         public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e) 
