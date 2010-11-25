@@ -31,7 +31,6 @@ namespace LibFeeds
         #region members
 
         private string _xml_file = @"plugins\xml\feeds\feeds.xml";
-        private ListItem _root_item = new ListItem("Feeds");  // root item on treeview.
         internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 
         private Timer _update_timer;
         private bool disposed = false;
@@ -46,11 +45,12 @@ namespace LibFeeds
             : base(ps)
         {
             FeedsPlugin.Instance = this;
+            this.RootListItem = new ListItem("Feeds");
 
             // register context menu's.
-            _root_item.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
-            _root_item.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            _root_item.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
         }
 
         #endregion
@@ -58,9 +58,8 @@ namespace LibFeeds
         #region API handlers
 
         public override void Run()
-        {            
-            this.RegisterListItem(this._root_item); // register root item.            
-            PluginLoadComplete(new PluginLoadCompleteEventArgs(this.UpdateFeeds()));  // parse feeds.    
+        {
+            this.UpdateFeeds();
 
             // setup update timer for next data updates
             _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
@@ -77,12 +76,19 @@ namespace LibFeeds
 
         #region internal logic
 
-        internal bool UpdateFeeds()
-        {
+        internal void UpdateFeeds()
+        {            
             bool success = true;
 
-            this._root_item.SetTitle("Updating feeds..");
-            if (this._feeds.Count > 0) this.DeleteExistingFeeds(); // clear previous entries before doing an update.
+            this.NotifyUpdateStarted();
+
+            if (this._feeds.Count > 0) // clear previous entries before doing an update.
+            {
+                this._feeds.Clear();
+                this.RootListItem.Childs.Clear();
+            }
+
+            this.RootListItem.SetTitle("Updating feeds..");
 
             try
             {
@@ -116,16 +122,16 @@ namespace LibFeeds
                 foreach (KeyValuePair<string,Feed> pair in this._feeds) // loop through feeds.
                 {
                     pair.Value.Update(); // update the feed.
-                    RegisterListItem(pair.Value, _root_item); // if the feed parsed all okay, regiser the feed-item.
-                    foreach (Story story in pair.Value.Stories) { RegisterListItem(story, pair.Value); } // register the story items.
+                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                    foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
                     if (pair.Value.State == ItemState.UNREAD) unread++;
                     this.StepWorkload();
                 }
 
-                this._root_item.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
+                this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
             }
 
-            return success;
+            this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
         }
 
         internal void SaveFeedsXML()
@@ -154,17 +160,9 @@ namespace LibFeeds
             }
         }
 
-        private void DeleteExistingFeeds() // removes all current feeds.
-        {
-            foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Delete(); } // Delete the feeds.
-            this._feeds.Clear(); // remove them from the list.
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateFeeds()));               
+            this.UpdateFeeds();
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
@@ -187,10 +185,8 @@ namespace LibFeeds
 
         private void MenuManualUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread t = new System.Threading.Thread(delegate()
-            {
-                PluginDataUpdateComplete(new PluginDataUpdateCompleteEventArgs(UpdateFeeds()));
-            }) { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
+            System.Threading.Thread t = new System.Threading.Thread(delegate() { this.UpdateFeeds(); }) 
+            { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
             t.Start();                 
         }
 
@@ -208,8 +204,6 @@ namespace LibFeeds
                     this._update_timer.Elapsed -= OnTimerHit;
                     this._update_timer.Dispose();
                     this._update_timer = null;
-                    this._root_item.Dispose();
-                    this._root_item = null;
                     foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Dispose(); }
                     this._feeds.Clear();
                     this._feeds = null;

@@ -32,6 +32,7 @@ namespace LibBlizzTV
         private Assembly _assembly; // the assembly 
         private PluginAttributes _attributes;
         private PluginSettings _settings; // the plugin's settings.
+        private ListItem _root_list_item;
         private bool disposed = false;
 
         /// <summary>
@@ -48,6 +49,11 @@ namespace LibBlizzTV
         /// Plugin sub-menus.
         /// </summary>
         public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> Menus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ListItem RootListItem { get { return this._root_list_item; } protected set { this._root_list_item = value; } }
 
         #endregion
 
@@ -102,99 +108,49 @@ namespace LibBlizzTV
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        public delegate void PluginUpdateStartedEventHandler(object sender);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event PluginUpdateStartedEventHandler OnPluginUpdateStarted;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected void NotifyUpdateStarted()
+        {
+            Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin update started: '{0}'.", this.Attributes.Name));
+            if (OnPluginUpdateStarted != null) OnPluginUpdateStarted(this);
+        }
+
+
+        /// <summary>
         /// PluginLoadComplete event handler delegate.
         /// </summary>
         /// <param name="sender">The sender object.</param>
-        /// <param name="e"><see cref="PluginLoadCompleteEventArgs"/></param>
-        public delegate void PluginLoadCompleteEventHandler(object sender,PluginLoadCompleteEventArgs e);
+        /// <param name="e"><see cref="PluginUpdateCompleteEventArgs"/></param>
+        public delegate void PluginUpdateCompleteEventHandler(object sender,PluginUpdateCompleteEventArgs e);
 
         /// <summary>
         /// PluginLoadComplete event handler.
         /// </summary>
-        public event PluginLoadCompleteEventHandler OnPluginLoadComplete;
+        public event PluginUpdateCompleteEventHandler OnPluginUpdateComplete;
 
         /// <summary>
         /// Notifies about the plugin load process supplying a success code.
         /// </summary>
-        /// <param name="e"><see cref="PluginLoadCompleteEventArgs"/></param>
+        /// <param name="e"><see cref="PluginUpdateCompleteEventArgs"/></param>
         /// <remarks>Plugins can use this method to notify observers about it's loading results.</remarks>
-        protected void PluginLoadComplete(PluginLoadCompleteEventArgs e)
+        protected void NotifyUpdateComplete(PluginUpdateCompleteEventArgs e)
         {
-            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin '{0}' loaded with success.", this.Attributes.Name));
-            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugin '{0}' load failed.", this.Attributes.Name));
-            if (OnPluginLoadComplete != null) OnPluginLoadComplete(this,e); // notify observers.
-        }
-
-        /// <summary>
-        /// PluginDataUpdateComplete event handler delegate.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e"><see cref="PluginDataUpdateCompleteEventArgs"/></param>
-        public delegate void PluginDataUpdateCompleteEventHandler(object sender, PluginDataUpdateCompleteEventArgs e);
-
-        /// <summary>
-        /// PluginDataUpdateComplete event handler.
-        /// </summary>
-        public event PluginDataUpdateCompleteEventHandler OnPluginDataUpdate;
-
-        /// <summary>
-        /// Notifies about the plugin data update process supplying a success code.
-        /// </summary>
-        /// <param name="e"><see cref="PluginDataUpdateCompleteEventArgs"/></param>
-        /// <remarks>Plugins can use this method to notify observers about it's data update results.</remarks>
-        protected void PluginDataUpdateComplete(PluginDataUpdateCompleteEventArgs e)
-        {
-            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("{0} updated it's data with success.", this.Attributes.Name));
-            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("{0} failed to update it's data.", this.Attributes.Name));
-            if (OnPluginDataUpdate != null) OnPluginDataUpdate(this, e); // notify observers.
-        }
-
-        /// <summary>
-        /// RegsiterListItem event handler delegate.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="i">The item to register.</param>
-        /// <param name="g">If appliable, the parent item to be placed under.</param>
-        public delegate void RegisterListItemEventHandler(object sender, ListItem i, ListItem g);
-
-        /// <summary>
-        /// RegisterListItem event handler.
-        /// </summary>
-        public event RegisterListItemEventHandler OnRegisterListItem;
-
-        /// <summary>
-        /// Registers a list item to be render in main form's treeview.
-        /// </summary>
-        /// <param name="Item">The item to register.</param>
-        /// <param name="Parent">If appliable, the parent item to be placed under.</param>
-        /// <remarks>If adding a lot of items, RegisterListItems should be prefered as this call may result excessive number of context-switches with many frequent calls.</remarks>
-        protected void RegisterListItem(ListItem Item, ListItem Parent=null)
-        {
-            if (OnRegisterListItem != null) OnRegisterListItem(this, Item, Parent); // notify observers.
-        }
-
-        /// <summary>
-        /// RegsiterListItem event handler delegate.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="items">The item to register.</param>
-        /// <param name="g">If appliable, the parent item to be placed under.</param>
-        public delegate void RegisterListItemsEventHandler(object sender, List<ListItem> items, ListItem g);
-
-        /// <summary>
-        /// RegisterListItem event handler.
-        /// </summary>
-        public event RegisterListItemsEventHandler OnRegisterListItems;
-
-        /// <summary>
-        /// Registers a list item to be render in main form's treeview.
-        /// </summary>
-        /// <param name="Items">The item to register.</param>
-        /// <param name="Parent">If appliable, the parent item to be placed under.</param>
-        protected void RegisterListItems(List<ListItem> Items, ListItem Parent)
-        {
-            if (OnRegisterListItems != null) OnRegisterListItems(this, Items, Parent);
-        }
+            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin update completed with success: '{0}'.", this.Attributes.Name));
+            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugin update failed: '{0}'.", this.Attributes.Name));
+            if (OnPluginUpdateComplete != null) OnPluginUpdateComplete(this,e); // notify observers.
+        }      
 
         /// <summary>
         /// Delegate for event handler that notifies about the plugins current workload.
@@ -290,6 +246,8 @@ namespace LibBlizzTV
                     this._assembly = null;
                     this._attributes = null;
                     this._settings = null;
+                    this.RootListItem.Childs.Clear();
+                    this.RootListItem = null;
                 }
                 disposed = true;
             }
@@ -303,7 +261,7 @@ namespace LibBlizzTV
     /// <summary>
     /// Notifies information about plugin's loading results.
     /// </summary>
-    public class PluginLoadCompleteEventArgs : EventArgs
+    public class PluginUpdateCompleteEventArgs : EventArgs
     {
         private bool _success;
 
@@ -313,32 +271,10 @@ namespace LibBlizzTV
         public bool Success { get { return this._success; } }
 
         /// <summary>
-        /// Constructs a new PluginLoadCompleteEventArgs.
+        /// Constructs a new PluginUpdateCompleteEventArgs.
         /// </summary>
         /// <param name="Success">Did plugin loaded with success?</param>
-        public PluginLoadCompleteEventArgs(bool Success)
-        {
-            this._success = Success;
-        }
-    }
-
-    /// <summary>
-    /// Notifies about plugin data update results.
-    /// </summary>
-    public class PluginDataUpdateCompleteEventArgs : EventArgs
-    {
-        private bool _success;
-
-        /// <summary>
-        /// Returns true if plugin update was succesfull.
-        /// </summary>
-        public bool Success { get { return this._success; } }
-
-        /// <summary>
-        /// Constructs a new PluginDataUpdateEventArgs.
-        /// </summary>
-        /// <param name="Success">Did plugin data updated with success?</param>
-        public PluginDataUpdateCompleteEventArgs(bool Success)
+        public PluginUpdateCompleteEventArgs(bool Success)
         {
             this._success = Success;
         }

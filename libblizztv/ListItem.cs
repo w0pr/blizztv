@@ -53,6 +53,11 @@ namespace LibBlizzTV
         /// </summary>
         public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> ContextMenus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
 
+        /// <summary>
+        /// The visible list childs.
+        /// </summary>
+        public Dictionary<string, ListItem> Childs = new Dictionary<string, ListItem>();
+
         #endregion
 
         #region ctor
@@ -160,27 +165,6 @@ namespace LibBlizzTV
             if (OnShowBalloonTip != null) OnShowBalloonTip(this,Title, Text, Icon);
         }
 
-
-        /// <summary>
-        /// Item delete event handler delegate.
-        /// </summary>
-        public delegate void DeleteEventHandler();
-
-        /// <summary>
-        /// Item delete event handler.
-        /// </summary>
-        public event DeleteEventHandler OnDelete;
-
-        /// <summary>
-        /// Delete's the item and notifies it's observers.
-        /// <remarks>Can be overridden though you should still call base.Delete().</remarks> 
-        /// </summary>
-        public virtual void Delete()
-        {
-            if (OnDelete != null) OnDelete();
-            this.Dispose();
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -238,7 +222,6 @@ namespace LibBlizzTV
                 {
                     this.OnTitleChange = null;
                     this.OnStateChange = null;
-                    this.OnDelete = null;
                 }
                 disposed = true;
             }

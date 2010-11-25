@@ -32,6 +32,7 @@ namespace BlizzTV
 
         private Workload _workload;
         private int _loaded_plugins_count = 0;
+        private Dictionary<string, TreeItem> _plugin_root_items = new Dictionary<string, TreeItem>();
 
         #endregion
 
@@ -92,57 +93,71 @@ namespace BlizzTV
 
         private void KillPlugin(string key)
         {
-            foreach(TreeItem node in this.TreeView.Nodes) // kill plugins bound listitems
+            if (this._plugin_root_items.ContainsKey(key))
             {
-                if(node!=null)
-                if (node.Plugin.Attributes.Name == key) 
-                    node.Remove();
+                this._plugin_root_items[key].Nodes.Clear();
+                this._plugin_root_items.Remove(key);
             }
-
+            
             PluginManager.Instance.Kill(key);
         }
 
         private void RunPlugin(Plugin p) // Applies plugin settings and run the plugin.
         {
-            // register plugin communication events.
-            p.OnRegisterListItem += RegisterListItem;  // the treeview item handler.
-            p.OnRegisterListItems += RegisterListItems; // the treeview item handler for more than one items.
+            // register plugin communication events.     
+            p.OnPluginUpdateStarted += PluginUpdateStarted;
+            p.OnPluginUpdateComplete += PluginUpdateComplete;
             p.OnSavePluginSettings += SavePluginSettings;
-            p.OnPluginLoadComplete += PluginLoadComplete;
             p.OnWorkloadAdd += this._workload.Add;
             p.OnWorkloadStep += this._workload.Step;
             this.RegisterPluginMenus(p); // register plugin sub-menu's.
             p.Run(); // run the plugin & apply it's stored settings.
-        }       
+        }
 
-        private void RegisterListItem(object sender, ListItem item, ListItem parent) // Register's a treeview-item for plugins.
+
+        private void PluginUpdateStarted(object sender)
         {
-            this.InvokeHandler(() =>
+            this.TreeView.InvokeHandler(() =>
                 {
-                    TreeItem t = new TreeItem((Plugin)sender, item); // Create a new treeitem wrapper.
-                    if (parent != null) (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.Add(t); // if we have a parent, add the item as sub-item.                        
-                    else TreeView.Nodes.Add(t); // oh, look we're the root!
-                    t.Render(); // let the treeview-item wrapper do it's own job.
+                    if (!this._plugin_root_items.ContainsKey((sender as Plugin).Attributes.Name))
+                    {
+                        TreeItem t = new TreeItem((Plugin)sender, (sender as Plugin).RootListItem);
+                        TreeView.Nodes.Add(t);
+                        t.Render();
+                        this._plugin_root_items.Add((sender as Plugin).Attributes.Name, t);
+                    }
+                    else this._plugin_root_items[(sender as Plugin).Attributes.Name].Nodes.Clear();
                 });
         }
 
-        private void RegisterListItems(object sender, List<ListItem> items, ListItem parent) // Registers treeview items for plugins.
+        private void PluginUpdateComplete(object sender, PluginUpdateCompleteEventArgs e)
         {
-            this.InvokeHandler(() =>
+            this.TreeView.InvokeHandler(() =>
                 {
-                    List<TreeItem> nodes = new List<TreeItem>(items.Count);
-
-                    if (parent != null) // only childs item's should be added as a collection.
+                    if (this._plugin_root_items.ContainsKey((sender as Plugin).Attributes.Name))
                     {
-                        foreach (ListItem item in items)
+                        this.TreeView.BeginUpdate();
+                        TreeItem _root_item = this._plugin_root_items[(sender as Plugin).Attributes.Name];
+                        foreach (KeyValuePair<string, ListItem> pair in _root_item.Item.Childs) { this.LoadPluginListItems((Plugin)sender, pair.Value, _root_item); }
+                        this.TreeView.EndUpdate();
+
+                        this._loaded_plugins_count++;
+                        if ((SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks) && (this._loaded_plugins_count == PluginManager.Instance.InstantiatedPlugins.Count)) // if all plugins are loaded, it's a good time to check for updates.
                         {
-                            TreeItem t = new TreeItem((Plugin)sender, item); // Create a new treeitem wrapper.
-                            nodes.Add(t); // add it to our treeitem collection;
+                            UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateAutoCheckResult;
+                            UpdateManager.Instance.Check(); // Check for updates.
                         }
-                        (this.TreeView.Nodes.Find(parent.Key, true).GetValue(0) as TreeNode).Nodes.AddRange(nodes.ToArray()); // add all the treenodes at once.                       
-                        foreach (TreeItem t in nodes) { t.Render(); } // let the treeview-item's wrapper do it's own job.                    
                     }
                 });
+        }
+
+        private void LoadPluginListItems(Plugin Plugin,ListItem Item,TreeItem Parent)
+        {
+            TreeItem t = new TreeItem(Plugin, Item);
+            Parent.Nodes.Add(t);
+            t.Render();
+
+            if (Item.Childs.Count > 0) { foreach (KeyValuePair<string, ListItem> pair in Item.Childs) { this.LoadPluginListItems(Plugin, pair.Value, t); } }            
         }
 
         private void SavePluginSettings(object sender, PluginSettings settings)
@@ -166,16 +181,6 @@ namespace BlizzTV
                         }
                     }
                 });
-        }
-
-        private void PluginLoadComplete(object sender, PluginLoadCompleteEventArgs e)
-        {
-            this._loaded_plugins_count++;
-            if ((SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks) && (this._loaded_plugins_count == PluginManager.Instance.InstantiatedPlugins.Count)) // if all plugins are loaded, it's a good time to check for updates.
-            {
-                UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateAutoCheckResult;
-                UpdateManager.Instance.Check(); // Check for updates.
-            }
         }
 
         private void OnUpdateAutoCheckResult(bool FoundUpdate)
