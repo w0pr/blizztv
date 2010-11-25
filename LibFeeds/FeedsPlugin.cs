@@ -48,7 +48,7 @@ namespace LibFeeds
             this.RootListItem = new ListItem("Feeds");
 
             // register context menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
             this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
             this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
         }
@@ -153,6 +153,7 @@ namespace LibFeeds
                         xdoc.Save(this._xml_file);
                     }
                 }
+                this.RunManualUpdate(this, EventArgs.Empty);
             }
             catch (Exception e)
             {
@@ -183,7 +184,7 @@ namespace LibFeeds
             }
         }
 
-        private void MenuManualUpdate(object sender, EventArgs e)
+        private void RunManualUpdate(object sender, EventArgs e)
         {
             System.Threading.Thread t = new System.Threading.Thread(delegate() { this.UpdateFeeds(); }) 
             { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };

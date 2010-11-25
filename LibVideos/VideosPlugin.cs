@@ -48,7 +48,7 @@ namespace LibVideos
             this.RootListItem = new ListItem("Videos");
 
             // register context menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
             this.RootListItem.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
             this.RootListItem.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
         }
@@ -156,6 +156,7 @@ namespace LibVideos
                         xdoc.Save(this._xml_file);
                     }
                 }
+                this.RunManualUpdate(this, EventArgs.Empty);
             }
             catch (Exception e)
             {
@@ -168,7 +169,7 @@ namespace LibVideos
             UpdateChannels();
         }
 
-        private void MenuManualUpdate(object sender, EventArgs e)
+        private void RunManualUpdate(object sender, EventArgs e)
         {
             System.Threading.Thread t = new System.Threading.Thread(delegate() { UpdateChannels(); }) 
             { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };

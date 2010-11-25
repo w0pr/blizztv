@@ -47,7 +47,7 @@ namespace LibStreams
             this.RootListItem = new ListItem("Streams");
 
             // register context-menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", null, new EventHandler(MenuManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
         }
 
         #endregion
@@ -158,8 +158,9 @@ namespace LibStreams
                         xdoc.XPathSelectElement(string.Format("Streams/Stream[@Name='{0}']", pair.Value.Name)).Remove();
                         pair.Value.DeleteOnSave = false;
                         xdoc.Save(this._xml_file);
-                    }
+                    }                    
                 }
+                this.RunManualUpdate(this, EventArgs.Empty);
             }
             catch (Exception e)
             {
@@ -172,7 +173,7 @@ namespace LibStreams
             UpdateStreams();
         }
 
-        private void MenuManualUpdate(object sender, EventArgs e)
+        private void RunManualUpdate(object sender, EventArgs e)
         {
             System.Threading.Thread t = new System.Threading.Thread(delegate() { UpdateStreams(); }) 
             { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
