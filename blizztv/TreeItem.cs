@@ -67,13 +67,6 @@ namespace BlizzTV
             // set the node icon
             if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.Attributes.Name)) this.TreeView.ImageList.Images.Add(this._plugin.Attributes.Name, this._plugin.Attributes.Icon); // add the plugin icon to image list in it doesn't exists yet.
             this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.Attributes.Name); // use the item's plugin icon.
-
-            // set the node context menus
-            this.ContextMenuStrip = new ContextMenuStrip();
-            foreach (KeyValuePair<string,ToolStripMenuItem> pair in this._item.ContextMenus)
-            {
-                this.ContextMenuStrip.Items.Add(pair.Value);
-            }
         }
 
         private void TitleChange(object sender)

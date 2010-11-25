@@ -123,8 +123,8 @@ namespace BlizzTV
                     {
                         TreeItem t = new TreeItem((Plugin)sender, (sender as Plugin).RootListItem);
                         TreeView.Nodes.Add(t);
-                        t.Render();
                         this._plugin_root_items.Add((sender as Plugin).Attributes.Name, t);
+                        t.Render();
                     }
                     else this._plugin_root_items[(sender as Plugin).Attributes.Name].Nodes.Clear();
                 });
@@ -201,6 +201,29 @@ namespace BlizzTV
             {
                 TreeItem selection = (TreeItem)e.Node; // get the selected node
                 selection.RightClicked(sender, e); // notify the item about the right click, so it can manage it's context-menu's.
+            }
+        }
+
+        private void TreeView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point p_click = new Point(e.X, e.Y);
+                TreeItem selection = (TreeItem)TreeView.GetNodeAt(p_click);
+                if (selection != null)
+                {
+                    if (selection.Item.ContextMenus.Count > 0)
+                    {
+                        TreeviewContextMenu.Items.Clear();
+                        foreach (KeyValuePair<string, ToolStripMenuItem> pair in selection.Item.ContextMenus)
+                        {
+                            TreeviewContextMenu.Items.Add(pair.Value);
+                        }
+                        Point p_client = this.PointToClient(TreeView.PointToScreen(p_click));
+                        Point p_show = new Point(p_client.X + 5, p_client.Y - 20);
+                        TreeviewContextMenu.Show(TreeView, p_show);
+                    }
+                }
             }
         }
 
@@ -363,7 +386,7 @@ namespace BlizzTV
             db_prop.SetValue(c, true, null);
         }
 
-        #endregion 
+        #endregion              
     }
 
     #region workload processor
