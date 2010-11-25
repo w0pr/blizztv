@@ -96,6 +96,7 @@ namespace BlizzTV
             if (this._plugin_root_items.ContainsKey(key))
             {
                 this._plugin_root_items[key].Nodes.Clear();
+                this.TreeView.Nodes.Remove(this._plugin_root_items[key]);
                 this._plugin_root_items.Remove(key);
             }
             
