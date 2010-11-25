@@ -31,7 +31,6 @@ namespace BlizzTV
         #region members
 
         private Workload _workload;
-        private int _loaded_plugins_count = 0;
         private Dictionary<string, TreeItem> _plugin_root_items = new Dictionary<string, TreeItem>();
 
         #endregion
@@ -65,6 +64,12 @@ namespace BlizzTV
                 {
                     this.InstantiatePlugin(pair.Key);
                 }
+            }
+
+            if (SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks)
+            {
+                UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateAutoCheckResult;
+                UpdateManager.Instance.Check(); // Check for updates.
             }
         }
 
@@ -141,13 +146,6 @@ namespace BlizzTV
                         TreeItem _root_item = this._plugin_root_items[(sender as Plugin).Attributes.Name];
                         foreach (KeyValuePair<string, ListItem> pair in _root_item.Item.Childs) { this.LoadPluginListItems((Plugin)sender, pair.Value, _root_item); }
                         this.TreeView.EndUpdate();
-
-                        this._loaded_plugins_count++;
-                        if ((SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks) && (this._loaded_plugins_count == PluginManager.Instance.InstantiatedPlugins.Count)) // if all plugins are loaded, it's a good time to check for updates.
-                        {
-                            UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateAutoCheckResult;
-                            UpdateManager.Instance.Check(); // Check for updates.
-                        }
                     }
                 });
         }
