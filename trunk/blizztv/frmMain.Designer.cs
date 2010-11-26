@@ -86,7 +86,7 @@
             // 
             this.preferencesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("preferencesToolStripMenuItem.Image")));
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
@@ -94,19 +94,20 @@
             // 
             this.MenuPlugins.Image = ((System.Drawing.Image)(resources.GetObject("MenuPlugins.Image")));
             this.MenuPlugins.Name = "MenuPlugins";
-            this.MenuPlugins.Size = new System.Drawing.Size(135, 22);
+            this.MenuPlugins.Size = new System.Drawing.Size(152, 22);
             this.MenuPlugins.Text = "Plugins";
             this.MenuPlugins.Click += new System.EventHandler(this.MenuPlugins_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // MenuExit
             // 
+            this.MenuExit.Image = ((System.Drawing.Image)(resources.GetObject("MenuExit.Image")));
             this.MenuExit.Name = "MenuExit";
-            this.MenuExit.Size = new System.Drawing.Size(135, 22);
+            this.MenuExit.Size = new System.Drawing.Size(152, 22);
             this.MenuExit.Text = "Exit";
             this.MenuExit.Click += new System.EventHandler(this.MenuExit_Click);
             // 
@@ -156,6 +157,7 @@
             // 
             // checkUpdatesToolStripMenuItem
             // 
+            this.checkUpdatesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("checkUpdatesToolStripMenuItem.Image")));
             this.checkUpdatesToolStripMenuItem.Name = "checkUpdatesToolStripMenuItem";
             this.checkUpdatesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.checkUpdatesToolStripMenuItem.Text = "Check Updates";
@@ -214,23 +216,24 @@
             this.toolStripSeparator3,
             this.TrayIconMenuExit});
             this.TrayContextMenu.Name = "TrayContextMenu";
-            this.TrayContextMenu.Size = new System.Drawing.Size(108, 54);
+            this.TrayContextMenu.Size = new System.Drawing.Size(153, 76);
             // 
             // ContextAboutToolStripMenuItem
             // 
             this.ContextAboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ContextAboutToolStripMenuItem.Image")));
             this.ContextAboutToolStripMenuItem.Name = "ContextAboutToolStripMenuItem";
-            this.ContextAboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ContextAboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.ContextAboutToolStripMenuItem.Text = "About";
             this.ContextAboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(104, 6);
             // 
             // TrayIconMenuExit
             // 
+            this.TrayIconMenuExit.Image = ((System.Drawing.Image)(resources.GetObject("TrayIconMenuExit.Image")));
             this.TrayIconMenuExit.Name = "TrayIconMenuExit";
             this.TrayIconMenuExit.Size = new System.Drawing.Size(152, 22);
             this.TrayIconMenuExit.Text = "Exit";
@@ -263,7 +266,7 @@
             // TreeviewContextMenu
             // 
             this.TreeviewContextMenu.Name = "TreeviewContextMenu";
-            this.TreeviewContextMenu.Size = new System.Drawing.Size(153, 26);
+            this.TreeviewContextMenu.Size = new System.Drawing.Size(61, 4);
             // 
             // frmMain
             // 

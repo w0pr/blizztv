@@ -33,6 +33,7 @@ namespace LibFeeds
         private string _xml_file = @"plugins\xml\feeds\feeds.xml";
         internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 
         private Timer _update_timer;
+        private bool _updating = false;
         private bool disposed = false;
 
         public static FeedsPlugin Instance;
@@ -77,61 +78,65 @@ namespace LibFeeds
         #region internal logic
 
         internal void UpdateFeeds()
-        {            
+        {
             bool success = true;
 
-            this.NotifyUpdateStarted();
-
-            if (this._feeds.Count > 0) // clear previous entries before doing an update.
+            if (!this._updating)
             {
-                this._feeds.Clear();
-                this.RootListItem.Childs.Clear();
-            }
+                this._updating = true;
+                this.NotifyUpdateStarted();
 
-            this.RootListItem.SetTitle("Updating feeds..");
-
-            try
-            {
-                XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
-                var entries = from feed in xdoc.Descendants("Feed") // get the feeds.
-                              select new
-                              {
-                                  Title = feed.Attribute("Name").Value,
-                                  URL = feed.Element("URL").Value,
-                              };
-
-                foreach (var entry in entries) // create up the feed items.
+                if (this._feeds.Count > 0) // clear previous entries before doing an update.
                 {
-                    Feed f = new Feed(entry.Title, entry.URL);
-                    this._feeds.Add(f.Name, f);
-                }
-            }
-            catch (Exception e)
-            {
-                success = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin ParseFeeds() Error: \n {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your feeds.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-            }
-
-            if (success) // if parsing of feeds.xml all okay.
-            {
-                int unread = 0; // feeds with unread stories count.
-
-                this.AddWorkload(this._feeds.Count);
-
-                foreach (KeyValuePair<string,Feed> pair in this._feeds) // loop through feeds.
-                {
-                    pair.Value.Update(); // update the feed.
-                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                    foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
-                    if (pair.Value.State == ItemState.UNREAD) unread++;
-                    this.StepWorkload();
+                    this._feeds.Clear();
+                    this.RootListItem.Childs.Clear();
                 }
 
-                this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
-            }
+                this.RootListItem.SetTitle("Updating feeds..");
 
-            this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+                try
+                {
+                    XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
+                    var entries = from feed in xdoc.Descendants("Feed") // get the feeds.
+                                  select new
+                                  {
+                                      Title = feed.Attribute("Name").Value,
+                                      URL = feed.Element("URL").Value,
+                                  };
+
+                    foreach (var entry in entries) // create up the feed items.
+                    {
+                        Feed f = new Feed(entry.Title, entry.URL);
+                        this._feeds.Add(f.Name, f);
+                    }
+                }
+                catch (Exception e)
+                {
+                    success = false;
+                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin ParseFeeds() Error: \n {0}", e.ToString()));
+                    System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your feeds.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                }
+
+                if (success) // if parsing of feeds.xml all okay.
+                {
+                    int unread = 0; // feeds with unread stories count.
+
+                    this.AddWorkload(this._feeds.Count);
+
+                    foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
+                    {
+                        pair.Value.Update(); // update the feed.
+                        this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                        foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
+                        if (pair.Value.State == ItemState.UNREAD) unread++;
+                        this.StepWorkload();
+                    }
+
+                    this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
+                }                
+                this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+                this._updating = false;
+            }
         }
 
         internal void SaveFeedsXML()

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Hüseyin Uslu",
             "Developer"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "TeamLiquid",
             "Thanks for calendar API and all suggestions from TL users."}, -1);
             this.label1 = new System.Windows.Forms.Label();
@@ -159,8 +159,8 @@
             this.ListviewCredits.FullRowSelect = true;
             this.ListviewCredits.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ListviewCredits.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
+            listViewItem1,
+            listViewItem2});
             this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
             this.ListviewCredits.Name = "ListviewCredits";
             this.ListviewCredits.ShowItemToolTips = true;

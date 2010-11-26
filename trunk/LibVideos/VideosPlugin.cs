@@ -33,6 +33,7 @@ namespace LibVideos
         private string _xml_file = @"plugins\xml\videos\channels.xml";
         internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private Timer _update_timer;
+        private bool _updating = false;
         private bool disposed = false;
 
         public static VideosPlugin Instance;
@@ -80,59 +81,63 @@ namespace LibVideos
         {
             bool success = true;
 
-            this.NotifyUpdateStarted();
-
-            if (this._channels.Count > 0)  // clear previous entries before doing an update.
+            if (!this._updating)
             {
-                this._channels.Clear();
-                this.RootListItem.Childs.Clear();
-            }
+                this._updating = true;
+                this.NotifyUpdateStarted();
 
-            this.RootListItem.SetTitle("Updating videos..");
-
-            try
-            {
-                XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
-                var entries = from channel in xdoc.Descendants("Channel") // get the channels.
-                              select new
-                              {
-                                  Name = channel.Attribute("Name").Value,
-                                  Slug = channel.Element("Slug").Value,
-                                  Provider = channel.Element("Provider").Value,
-                              };
-
-                foreach (var entry in entries) // create up the channel items.
+                if (this._channels.Count > 0)  // clear previous entries before doing an update.
                 {
-                    Channel c = ChannelFactory.CreateChannel(entry.Name, entry.Slug, entry.Provider);
-                    this._channels.Add(entry.Name,c);
-                }
-            }
-            catch (Exception e)
-            {
-                success = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannelsPlugin ParseChannels() Error: \n {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your channels.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-            }
-
-            if (success) // if parsing of videochannels.xml all okay.
-            {
-                int unread = 0; // channels with un-watched videos count.
-
-                this.AddWorkload(this._channels.Count);
-
-                foreach (KeyValuePair<string,Channel> pair in this._channels) // loop through videos.
-                {
-                    pair.Value.Update(); // update the channel.
-                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                    foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
-                    if (pair.Value.State == ItemState.UNREAD) unread++;
-                    this.StepWorkload();
+                    this._channels.Clear();
+                    this.RootListItem.Childs.Clear();
                 }
 
-                this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
-            }
+                this.RootListItem.SetTitle("Updating videos..");
 
-            NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+                try
+                {
+                    XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
+                    var entries = from channel in xdoc.Descendants("Channel") // get the channels.
+                                  select new
+                                  {
+                                      Name = channel.Attribute("Name").Value,
+                                      Slug = channel.Element("Slug").Value,
+                                      Provider = channel.Element("Provider").Value,
+                                  };
+
+                    foreach (var entry in entries) // create up the channel items.
+                    {
+                        Channel c = ChannelFactory.CreateChannel(entry.Name, entry.Slug, entry.Provider);
+                        this._channels.Add(entry.Name, c);
+                    }
+                }
+                catch (Exception e)
+                {
+                    success = false;
+                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannelsPlugin ParseChannels() Error: \n {0}", e.ToString()));
+                    System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your channels.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                }
+
+                if (success) // if parsing of videochannels.xml all okay.
+                {
+                    int unread = 0; // channels with un-watched videos count.
+
+                    this.AddWorkload(this._channels.Count);
+
+                    foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
+                    {
+                        pair.Value.Update(); // update the channel.
+                        this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                        foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
+                        if (pair.Value.State == ItemState.UNREAD) unread++;
+                        this.StepWorkload();
+                    }
+
+                    this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
+                }
+                NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+                this._updating = false;
+            }
         }
 
         internal void SaveChannelsXML()

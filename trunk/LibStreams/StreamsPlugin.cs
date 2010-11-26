@@ -33,6 +33,7 @@ namespace LibStreams
         private string _xml_file = @"plugins\xml\streams\streams.xml";
         internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _update_timer;
+        private bool _updating = false;
         private bool disposed = false;
 
         public static StreamsPlugin Instance;
@@ -77,66 +78,70 @@ namespace LibStreams
         {
             bool success = true;
 
-            this.NotifyUpdateStarted();
-
-            if (this._streams.Count > 0)// clear previous entries before doing an update.
+            if (!this._updating)
             {
-                this._streams.Clear();
-                this.RootListItem.Childs.Clear();
-            }
+                this._updating = true;
+                this.NotifyUpdateStarted();
 
-            this.RootListItem.SetTitle("Updating streams..");
-
-            try
-            {
-                XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
-                var entries = from stream in xdoc.Descendants("Stream") // get the streams.
-                              select new
-                              {
-                                  Name = stream.Attribute("Name").Value,
-                                  Slug = stream.Element("Slug").Value,
-                                  Provider = stream.Element("Provider").Value.ToLower(),
-                              };
-
-                foreach (var entry in entries) // create up the stream items.
+                if (this._streams.Count > 0)// clear previous entries before doing an update.
                 {
-                    Stream s = StreamFactory.CreateStream(entry.Name, entry.Slug, entry.Provider);
-                    this._streams.Add(entry.Name,s);
+                    this._streams.Clear();
+                    this.RootListItem.Childs.Clear();
                 }
-            }
-            catch (Exception e)
-            {
-                success = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your streams.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-            }
 
-            if (success) // if parsing of streams.xml all okay
-            {
-                int available_count = 0; // available live streams count
+                this.RootListItem.SetTitle("Updating streams..");
 
-                this.AddWorkload(this._streams.Count);
-
-                foreach (KeyValuePair<string,Stream> pair in this._streams) // loop through all streams
+                try
                 {
-                    try
+                    XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
+                    var entries = from stream in xdoc.Descendants("Stream") // get the streams.
+                                  select new
+                                  {
+                                      Name = stream.Attribute("Name").Value,
+                                      Slug = stream.Element("Slug").Value,
+                                      Provider = stream.Element("Provider").Value.ToLower(),
+                                  };
+
+                    foreach (var entry in entries) // create up the stream items.
                     {
-                        pair.Value.Update(); // update the stream
-                        if (pair.Value.IsLive) // if it's live
-                        {
-                            pair.Value.SetTitle(string.Format("{0} ({1})", pair.Value.Title, pair.Value.ViewerCount)); // put stream viewers count on title.
-                            available_count++; // increment available live streams count.
-                            this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                        }
-                        this.StepWorkload();
+                        Stream s = StreamFactory.CreateStream(entry.Name, entry.Slug, entry.Provider);
+                        this._streams.Add(entry.Name, s);
                     }
-                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
+                }
+                catch (Exception e)
+                {
+                    success = false;
+                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString()));
+                    System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your streams.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 }
 
-                this.RootListItem.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
-            }
+                if (success) // if parsing of streams.xml all okay
+                {
+                    int available_count = 0; // available live streams count
 
-            NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+                    this.AddWorkload(this._streams.Count);
+
+                    foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
+                    {
+                        try
+                        {
+                            pair.Value.Update(); // update the stream
+                            if (pair.Value.IsLive) // if it's live
+                            {
+                                pair.Value.SetTitle(string.Format("{0} ({1})", pair.Value.Title, pair.Value.ViewerCount)); // put stream viewers count on title.
+                                available_count++; // increment available live streams count.
+                                this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                            }
+                            this.StepWorkload();
+                        }
+                        catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
+                    }
+
+                    this.RootListItem.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
+                }
+                NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+                this._updating = false;
+            }
         }
 
         internal void SaveStreamsXML()
