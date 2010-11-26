@@ -1,13 +1,13 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
-*[24.11.2010] - 0.14b-beta (r122)*
+[24.11.2010] - 0.14b-beta (r122)
 --------------------------------
  * Applied hotfix for bug that causing internal stream player crashing with providers that have no chat-support (own3d.tv).
  * Stream players context-menu item open chat will be disabled if stream provider does not support chat.
  * Fixed bug for ustream's chat window's.
 
-*[24.11.2010] - 0.14-beta (r119)*
+[24.11.2010] - 0.14-beta (r119)
 -------------------------------
  * Added a day filter to LibEvents plugin's settings (Number of days to Show Events On Main Window).
  * Implemented alerts for Events plugin.
@@ -22,7 +22,7 @@
  * Improved About window, added credits section. 
  * Fixed a bug in internal video player which was sometimes preventing going fullscreen.
 
-*[20.11.2010] - 0.13-beta (r103)*
+[20.11.2010] - 0.13-beta (r103)
 -------------------------------
  * Fixed a bug with setting serializer which will now correctly locate plugin assemblies.
  * Implemented manual refresh context-menu support for LibFeeds,LibVideos and LibStreams. 
@@ -42,7 +42,7 @@
  * The project is now build as targeted to 32-bit (as if we target AnyCPU or x64, a 32-bit adobe flash player dll can't be load). Though our 32-bit targeted output's will also work in a 64-bit OS environment. 
  * Fixed Event details window bug (Issue35) where it was warning about a missing assembly.
 
-*[14.11.2010] - 0.12-beta (r78)*
+[14.11.2010] - 0.12-beta (r78)
 -------------------------------
  * Improved Events plugin event-checking code.
  * Implemented plugins menu.
@@ -65,7 +65,7 @@
  * The application now checkes for it's existing instances and will only allow running one instance at a time.
  * Fixed bug with settings storage file's where we're not be able to distribute a default settings file with releases.
 
-*[11.11.2010] - 0.11-beta (r60)*
+[11.11.2010] - 0.11-beta (r60)
 -------------------------------
  * Implemented event details window. 
  * Events plugin will not notify about upcoming & inprogress events (though timer values are hardcoded for now).
@@ -85,6 +85,6 @@
  * Implemented a basic xml editor for plugin data's. 
  * Implemented logging support (for debugging purposes).
 
-*[08.11.2010] - 0.10-alpha (r35)*
+[08.11.2010] - 0.10-alpha (r35)
 -------------------------------
  * The very basic functional but "non-stable" alpha for testers.
