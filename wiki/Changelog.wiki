@@ -1,14 +1,27 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
+*26.11.2010 - 0.15-beta (r137)*
+----
+ * Improved the user interface responsiveness a lot. It should freeze even during plugin updates.
+ * Fixed the video stuttering/lagging bug while plugin's updates (related with above fix).
+ * Improved automatic updates checks feature.
+ * We do have now shiny new icons.
+ * Fixed a bug in Setup Alarm window.
+ * Improved plugin update routines, they'll not try to run update again while an update is in progress.
+ * Cosmetic changes in About window.
+ * Implemented sleep mode when enabled plugin's will not update data and run notifications.
+ * Fixed a bug related with LibFeeds,LibVideos and LibStream's automatic update interval setting.
+ * Changelog will no more be included with releases but instead available over: http://code.google.com/p/blizztv/wiki/Changelog.
+
 *24.11.2010 - 0.14b-beta (r122)*
---------------------------------
+----
  * Applied hotfix for bug that causing internal stream player crashing with providers that have no chat-support (own3d.tv).
  * Stream players context-menu item open chat will be disabled if stream provider does not support chat.
  * Fixed bug for ustream's chat window's.
 
 *24.11.2010 - 0.14-beta (r119)*
--------------------------------
+----
  * Added a day filter to LibEvents plugin's settings (Number of days to Show Events On Main Window).
  * Implemented alerts for Events plugin.
  * When update checks are triggered from main menu it'll show a result notification for both if an update is available or not.
@@ -23,7 +36,7 @@
  * Fixed a bug in internal video player which was sometimes preventing going fullscreen.
 
 *20.11.2010 - 0.13-beta (r103)*
--------------------------------
+----
  * Fixed a bug with setting serializer which will now correctly locate plugin assemblies.
  * Implemented manual refresh context-menu support for LibFeeds,LibVideos and LibStreams. 
  * Implemented 'Mark All As Read/Watched' context menu for LibFeeds and LibVideos.
@@ -43,7 +56,7 @@
  * Fixed Event details window bug (Issue35) where it was warning about a missing assembly.
 
 *14.11.2010 - 0.12-beta (r78)*
--------------------------------
+----
  * Improved Events plugin event-checking code.
  * Implemented plugins menu.
  * Implemented update checking function and is configurable in preferences window.
@@ -66,7 +79,7 @@
  * Fixed bug with settings storage file's where we're not be able to distribute a default settings file with releases.
 
 *11.11.2010 - 0.11-beta (r60)*
--------------------------------
+----
  * Implemented event details window. 
  * Events plugin will not notify about upcoming & inprogress events (though timer values are hardcoded for now).
  * Plugins now can update their data (though timer values are hardcoded for now). Feeds, Streams and Videos plugins now will update their data frequently.
@@ -86,5 +99,5 @@
  * Implemented logging support (for debugging purposes).
 
 *08.11.2010 - 0.10-alpha (r35)*
--------------------------------
+----
  * The very basic functional but "non-stable" alpha for testers.
