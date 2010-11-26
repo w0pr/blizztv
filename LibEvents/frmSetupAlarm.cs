@@ -27,7 +27,7 @@ namespace LibEvents
 
             foreach (byte m in minutes)
             {
-                if (m < (byte)this._event.MinutesLeft) this.ComboBoxAlertBefore.Items.Add(m);
+                if ((double)m < this._event.MinutesLeft) this.ComboBoxAlertBefore.Items.Add(m);
             }
 
             if (this.ComboBoxAlertBefore.Items.Count > 0) this.ComboBoxAlertBefore.SelectedIndex = 0;

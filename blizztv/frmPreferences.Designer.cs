@@ -55,13 +55,13 @@
             this.checkBoxMinimimizeToSystemTray = new System.Windows.Forms.CheckBox();
             this.tabPlayer = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CheckBoxPlayerAlwaysOnTop = new System.Windows.Forms.CheckBox();
             this.checkBoxVideoAutoPlay = new System.Windows.Forms.CheckBox();
             this.txtVideoPlayerHeight = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.CheckBoxPlayerAlwaysOnTop = new System.Windows.Forms.CheckBox();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPlugins.SuspendLayout();
@@ -78,9 +78,11 @@
             // 
             this.ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList.ImageStream")));
             this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.ImageList.Images.SetKeyName(0, "preferences.png");
-            this.ImageList.Images.SetKeyName(1, "plugin.png");
-            this.ImageList.Images.SetKeyName(2, "bug_16.png");
+            this.ImageList.Images.SetKeyName(0, "settings_16.png");
+            this.ImageList.Images.SetKeyName(1, "userinterface_16.png");
+            this.ImageList.Images.SetKeyName(2, "player_16.png");
+            this.ImageList.Images.SetKeyName(3, "plugin_16.png");
+            this.ImageList.Images.SetKeyName(4, "bug_16.png");
             // 
             // buttonOK
             // 
@@ -106,7 +108,7 @@
             // tabDebug
             // 
             this.tabDebug.Controls.Add(this.groupBox3);
-            this.tabDebug.ImageIndex = 2;
+            this.tabDebug.ImageIndex = 4;
             this.tabDebug.Location = new System.Drawing.Point(4, 23);
             this.tabDebug.Name = "tabDebug";
             this.tabDebug.Padding = new System.Windows.Forms.Padding(3);
@@ -149,7 +151,7 @@
             // tabPlugins
             // 
             this.tabPlugins.Controls.Add(this.ListviewPlugins);
-            this.tabPlugins.ImageIndex = 1;
+            this.tabPlugins.ImageIndex = 3;
             this.tabPlugins.Location = new System.Drawing.Point(4, 23);
             this.tabPlugins.Name = "tabPlugins";
             this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
@@ -287,6 +289,7 @@
             // tabUI
             // 
             this.tabUI.Controls.Add(this.checkBoxMinimimizeToSystemTray);
+            this.tabUI.ImageIndex = 1;
             this.tabUI.Location = new System.Drawing.Point(4, 23);
             this.tabUI.Name = "tabUI";
             this.tabUI.Padding = new System.Windows.Forms.Padding(3);
@@ -308,6 +311,7 @@
             // tabPlayer
             // 
             this.tabPlayer.Controls.Add(this.groupBox1);
+            this.tabPlayer.ImageIndex = 2;
             this.tabPlayer.Location = new System.Drawing.Point(4, 23);
             this.tabPlayer.Name = "tabPlayer";
             this.tabPlayer.Padding = new System.Windows.Forms.Padding(3);
@@ -331,6 +335,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Internal Video Player Settings";
+            // 
+            // CheckBoxPlayerAlwaysOnTop
+            // 
+            this.CheckBoxPlayerAlwaysOnTop.AutoSize = true;
+            this.CheckBoxPlayerAlwaysOnTop.Location = new System.Drawing.Point(9, 44);
+            this.CheckBoxPlayerAlwaysOnTop.Name = "CheckBoxPlayerAlwaysOnTop";
+            this.CheckBoxPlayerAlwaysOnTop.Size = new System.Drawing.Size(98, 17);
+            this.CheckBoxPlayerAlwaysOnTop.TabIndex = 5;
+            this.CheckBoxPlayerAlwaysOnTop.Text = "Always On Top";
+            this.CheckBoxPlayerAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
             // checkBoxVideoAutoPlay
             // 
@@ -382,16 +396,6 @@
             this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Player Size:";
-            // 
-            // CheckBoxPlayerAlwaysOnTop
-            // 
-            this.CheckBoxPlayerAlwaysOnTop.AutoSize = true;
-            this.CheckBoxPlayerAlwaysOnTop.Location = new System.Drawing.Point(9, 44);
-            this.CheckBoxPlayerAlwaysOnTop.Name = "CheckBoxPlayerAlwaysOnTop";
-            this.CheckBoxPlayerAlwaysOnTop.Size = new System.Drawing.Size(98, 17);
-            this.CheckBoxPlayerAlwaysOnTop.TabIndex = 5;
-            this.CheckBoxPlayerAlwaysOnTop.Text = "Always On Top";
-            this.CheckBoxPlayerAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
             // frmPreferences
             // 

@@ -90,7 +90,7 @@ namespace LibBlizzTV.Utils
             if (this._debug_console_enabled) // make sure that the console is enable
             {
                 Console.ForegroundColor = GetMessageColor(_type); // the foreground color.
-                Console.WriteLine(string.Format("[{0} {1}] {2}", _type.ToString(), DateTime.Now.ToString("HH:mm:ss"), _str));
+                Console.WriteLine(string.Format("[{0}] [{1}]: {2}", DateTime.Now.ToString("HH:mm:ss"), _type.ToString().PadLeft(5), _str));
                 Console.ResetColor(); // reset color back.
             }
         }
