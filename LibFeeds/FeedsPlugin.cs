@@ -125,11 +125,15 @@ namespace LibFeeds
 
                     foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
                     {
-                        pair.Value.Update(); // update the feed.
-                        this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                        foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
-                        if (pair.Value.State == ItemState.UNREAD) unread++;
-                        this.StepWorkload();
+                        try
+                        {
+                            pair.Value.Update(); // update the feed.
+                            this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                            foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
+                            if (pair.Value.State == ItemState.UNREAD) unread++;
+                            this.StepWorkload();
+                        }
+                        catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
                     }
 
                     this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
