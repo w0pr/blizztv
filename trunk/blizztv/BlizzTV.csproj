@@ -97,6 +97,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blizztv.ico" />
+    <None Include="Resources\sleep_16.ico" />
+    <None Include="Resources\blizztv_16.ico" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AxShockwaveFlashObjects">

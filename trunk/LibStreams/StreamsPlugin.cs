@@ -57,12 +57,8 @@ namespace LibStreams
 
         public override void Run()
         {
-            UpdateStreams();
-
-            // setup update timer for next data updates
-            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
-            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            _update_timer.Enabled = true;
+            this.UpdateStreams();
+            this.SetupUpdateTimer();
         }
 
         public override System.Windows.Forms.Form GetPreferencesForm()
@@ -173,9 +169,29 @@ namespace LibStreams
             }
         }
 
+        public override void SaveSettings()
+        {
+            base.SaveSettings();
+            this.SetupUpdateTimer();
+        }
+
+        private void SetupUpdateTimer()
+        {
+            if (this._update_timer != null)
+            {
+                this._update_timer.Enabled = false;
+                this._update_timer.Elapsed -= OnTimerHit;
+                this._update_timer = null;
+            }
+
+            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
+            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            _update_timer.Enabled = true;
+        }
+
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            UpdateStreams();
+            if (!SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode) UpdateStreams();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

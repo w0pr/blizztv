@@ -102,7 +102,7 @@ namespace LibBlizzTV
         /// <summary>
         /// Saves the plugins settings.
         /// </summary>
-        public void SaveSettings()
+        public virtual void SaveSettings()
         {
             if (OnSavePluginSettings != null) OnSavePluginSettings(this, this._settings);
         }

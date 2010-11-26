@@ -61,11 +61,7 @@ namespace LibVideos
         public override void Run()
         {
             this.UpdateChannels();
-
-            // setup update timer for next data updates
-            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
-            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            _update_timer.Enabled = true;
+            this.SetupUpdateTimer();
         }
 
         public override System.Windows.Forms.Form GetPreferencesForm()
@@ -169,9 +165,29 @@ namespace LibVideos
             }
         }
 
+        public override void SaveSettings()
+        {
+            base.SaveSettings();
+            this.SetupUpdateTimer();
+        }
+
+        private void SetupUpdateTimer()
+        {
+            if (this._update_timer != null)
+            {
+                this._update_timer.Enabled = false;
+                this._update_timer.Elapsed -= OnTimerHit;                
+                this._update_timer = null;
+            }
+
+            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
+            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            _update_timer.Enabled = true;
+        }
+
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            UpdateChannels();
+            if(!SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode) UpdateChannels();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

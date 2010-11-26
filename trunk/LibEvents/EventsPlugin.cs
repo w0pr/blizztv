@@ -163,7 +163,7 @@ namespace LibEvents
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            this.CheckEvents();
+            if (!SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode) this.CheckEvents();
         }
 
         private void CheckEvents()

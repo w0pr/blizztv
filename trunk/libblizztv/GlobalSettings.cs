@@ -47,9 +47,14 @@ namespace LibBlizzTV
         public bool VideoAutoPlay = true;
 
         /// <summary>
-        /// 
+        /// Always on top setting for player windows.
         /// </summary>
         public bool PlayerWindowsAlwaysOnTop = true;
+
+        /// <summary>
+        /// States the sleep mode in which plugin's should not automaticly refresh it's data.
+        /// </summary>
+        public bool InSleepMode = false;
     }
 
     /// <summary>
