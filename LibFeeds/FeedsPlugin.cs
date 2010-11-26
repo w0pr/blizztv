@@ -61,11 +61,7 @@ namespace LibFeeds
         public override void Run()
         {
             this.UpdateFeeds();
-
-            // setup update timer for next data updates
-            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
-            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            _update_timer.Enabled = true;
+            this.SetupUpdateTimer();
         }
 
         public override System.Windows.Forms.Form GetPreferencesForm()
@@ -130,10 +126,10 @@ namespace LibFeeds
                             pair.Value.Update(); // update the feed.
                             this.RootListItem.Childs.Add(pair.Key, pair.Value);
                             foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
-                            if (pair.Value.State == ItemState.UNREAD) unread++;
-                            this.StepWorkload();
+                            if (pair.Value.State == ItemState.UNREAD) unread++;                            
                         }
                         catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
+                        this.StepWorkload();
                     }
 
                     this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
@@ -170,9 +166,29 @@ namespace LibFeeds
             }
         }
 
+        public override void SaveSettings()
+        {
+            base.SaveSettings();
+            this.SetupUpdateTimer();
+        }
+
+        private void SetupUpdateTimer()
+        {
+            if (this._update_timer != null)
+            {
+                this._update_timer.Enabled = false;
+                this._update_timer.Elapsed -= OnTimerHit;
+                this._update_timer = null;
+            }
+
+            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
+            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
+            _update_timer.Enabled = true;
+        }
+
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            this.UpdateFeeds();
+            if (!SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode) this.UpdateFeeds();
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)

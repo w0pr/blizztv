@@ -30,6 +30,7 @@ namespace BlizzTV
     {
         #region members
 
+        private bool _sleep_mode = false;
         private Workload _workload;
         private Dictionary<string, TreeItem> _plugin_root_items = new Dictionary<string, TreeItem>();
 
@@ -311,6 +312,28 @@ namespace BlizzTV
             p.OnApplySettings += OnPreferencesWindowApplySettings;
             p.ShowTabPage("tabPlugins");
             p.ShowDialog();
+        }
+
+        private void MenuSleepMode_Click(object sender, EventArgs e)
+        {
+            if (!this._sleep_mode)
+            {
+                this._sleep_mode = true;
+                this.MenuSleepMode.Checked = true;
+                this.ContextMenuSleepMode.Checked = true;
+                this.TrayIcon.Icon = Properties.Resources.sleep_16;
+                this.TrayIcon.Text = "BlizzTV is in sleep mode.";
+                SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode = true;
+            }
+            else
+            {
+                this._sleep_mode = false;
+                this.MenuSleepMode.Checked = false;
+                this.ContextMenuSleepMode.Checked = false;
+                this.TrayIcon.Icon = Properties.Resources.blizztv_16;
+                this.TrayIcon.Text = "BlizzTV";
+                SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode = false;
+            }
         }
 
         #endregion

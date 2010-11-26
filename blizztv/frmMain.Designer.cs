@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.blizzTVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuSleepMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -49,7 +51,7 @@
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ContextAboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuSleepMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.TrayIconMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeView = new System.Windows.Forms.TreeView();
@@ -74,6 +76,8 @@
             // blizzTVToolStripMenuItem
             // 
             this.blizzTVToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuSleepMode,
+            this.toolStripSeparator5,
             this.preferencesToolStripMenuItem,
             this.MenuPlugins,
             this.toolStripSeparator1,
@@ -82,11 +86,26 @@
             this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.blizzTVToolStripMenuItem.Text = "File";
             // 
+            // MenuSleepMode
+            // 
+            this.MenuSleepMode.Image = ((System.Drawing.Image)(resources.GetObject("MenuSleepMode.Image")));
+            this.MenuSleepMode.Name = "MenuSleepMode";
+            this.MenuSleepMode.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.MenuSleepMode.Size = new System.Drawing.Size(176, 22);
+            this.MenuSleepMode.Text = "Sleep Mode";
+            this.MenuSleepMode.Click += new System.EventHandler(this.MenuSleepMode_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(173, 6);
+            // 
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("preferencesToolStripMenuItem.Image")));
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.preferencesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
@@ -94,20 +113,20 @@
             // 
             this.MenuPlugins.Image = ((System.Drawing.Image)(resources.GetObject("MenuPlugins.Image")));
             this.MenuPlugins.Name = "MenuPlugins";
-            this.MenuPlugins.Size = new System.Drawing.Size(152, 22);
+            this.MenuPlugins.Size = new System.Drawing.Size(176, 22);
             this.MenuPlugins.Text = "Plugins";
             this.MenuPlugins.Click += new System.EventHandler(this.MenuPlugins_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
             // 
             // MenuExit
             // 
             this.MenuExit.Image = ((System.Drawing.Image)(resources.GetObject("MenuExit.Image")));
             this.MenuExit.Name = "MenuExit";
-            this.MenuExit.Size = new System.Drawing.Size(152, 22);
+            this.MenuExit.Size = new System.Drawing.Size(176, 22);
             this.MenuExit.Text = "Exit";
             this.MenuExit.Click += new System.EventHandler(this.MenuExit_Click);
             // 
@@ -212,24 +231,24 @@
             // TrayContextMenu
             // 
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ContextAboutToolStripMenuItem,
+            this.ContextMenuSleepMode,
             this.toolStripSeparator3,
             this.TrayIconMenuExit});
             this.TrayContextMenu.Name = "TrayContextMenu";
             this.TrayContextMenu.Size = new System.Drawing.Size(153, 76);
             // 
-            // ContextAboutToolStripMenuItem
+            // ContextMenuSleepMode
             // 
-            this.ContextAboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ContextAboutToolStripMenuItem.Image")));
-            this.ContextAboutToolStripMenuItem.Name = "ContextAboutToolStripMenuItem";
-            this.ContextAboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.ContextAboutToolStripMenuItem.Text = "About";
-            this.ContextAboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+            this.ContextMenuSleepMode.Image = ((System.Drawing.Image)(resources.GetObject("ContextMenuSleepMode.Image")));
+            this.ContextMenuSleepMode.Name = "ContextMenuSleepMode";
+            this.ContextMenuSleepMode.Size = new System.Drawing.Size(152, 22);
+            this.ContextMenuSleepMode.Text = "Sleep Mode";
+            this.ContextMenuSleepMode.Click += new System.EventHandler(this.MenuSleepMode_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(104, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // TrayIconMenuExit
             // 
@@ -305,7 +324,6 @@
         private System.Windows.Forms.ToolStripProgressBar ProgressBar;
         internal System.Windows.Forms.NotifyIcon TrayIcon;
         private System.Windows.Forms.ContextMenuStrip TrayContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem ContextAboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bugReportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blizzTVcomToolStripMenuItem;
@@ -322,6 +340,9 @@
         private System.Windows.Forms.ToolStripMenuItem checkUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ContextMenuStrip TreeviewContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem MenuSleepMode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem ContextMenuSleepMode;
     }
 }
 
