@@ -179,31 +179,6 @@ namespace LibBlizzTV
         /// </summary>
         public Dictionary<String, PluginSettings> PluginSettings = new Dictionary<String, PluginSettings>(); // Plugin-specific settings
 
-        /// <summary>
-        /// Enable debug log.
-        /// </summary>
-        public bool EnableDebugLogging = false;
-
-        /// <summary>
-        /// Enables debug console.
-        /// </summary>
-        public bool EnableDebugConsole = false;
-
-        /// <summary>
-        /// Minimizes to system tray instead of closing the application when main form's close button is clicked.
-        /// </summary>
-        public bool MinimizeToSystemTrayInsteadOfClosingTheApplication = true;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool AllowAutomaticUpdateChecks = true;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool AllowBetaVersionNotifications = false;
-
         private bool disposed = false;
 
         #endregion
