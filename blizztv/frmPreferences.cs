@@ -51,20 +51,20 @@ namespace BlizzTV
         private void LoadSettings()
         {
 
-            if (GlobalSettings.Instance.ContentViewerMode == ContentViewerModes.InternalViewers) radioButtonUseInternalViewers.Checked = true;
+            if (GlobalSettings.Instance.UseInternalViewers) radioButtonUseInternalViewers.Checked = true;
             else radioButtonUseDefaultWebBrowser.Checked = true;
 
-            checkBoxAllowAutomaticUpdateChecks.Checked = Properties.Settings.Default.AllowAutomaticUpdateChecks;
-            checkBoxAllowBetaVersionNotifications.Checked = Properties.Settings.Default.AllowBetaVersionNotifications;
+            checkBoxAllowAutomaticUpdateChecks.Checked = Settings.Instance.AllowAutomaticUpdateChecks;
+            checkBoxAllowBetaVersionNotifications.Checked = Settings.Instance.AllowBetaVersionNotifications;
 
             txtVideoPlayerWidth.Text = GlobalSettings.Instance.VideoPlayerWidth.ToString();
             txtVideoPlayerHeight.Text = GlobalSettings.Instance.VideoPlayerHeight.ToString();
-            checkBoxVideoAutoPlay.Checked = GlobalSettings.Instance.VideoAutoPlay;
+            checkBoxVideoAutoPlay.Checked = GlobalSettings.Instance.AutoPlayVideos;
             CheckBoxPlayerAlwaysOnTop.Checked = GlobalSettings.Instance.PlayerWindowsAlwaysOnTop;
 
-            checkBoxMinimimizeToSystemTray.Checked = Properties.Settings.Default.MinimizeToSystemTray;
-            checkBoxEnableDebugLogging.Checked = Properties.Settings.Default.EnableDebugLogging;
-            checkBoxEnableDebugConsole.Checked = Properties.Settings.Default.EnableDebugConsole;
+            checkBoxMinimimizeToSystemTray.Checked = Settings.Instance.MinimizeToSystemTray;
+            checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
+            checkBoxEnableDebugConsole.Checked = Settings.Instance.EnableDebugConsole;
 
             // plugin settings.
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
@@ -106,20 +106,20 @@ namespace BlizzTV
         private void SaveSettings()
         {
             // save global settings
-            if (radioButtonUseInternalViewers.Checked) GlobalSettings.Instance.ContentViewerMode = ContentViewerModes.InternalViewers;
-            else GlobalSettings.Instance.ContentViewerMode = ContentViewerModes.DefaultWebBrowser;
+            if (radioButtonUseInternalViewers.Checked) GlobalSettings.Instance.UseInternalViewers = true;
+            else GlobalSettings.Instance.UseInternalViewers = false;
 
-            Properties.Settings.Default.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
-            Properties.Settings.Default.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
+            Settings.Instance.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
+            Settings.Instance.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
 
             GlobalSettings.Instance.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
             GlobalSettings.Instance.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
-            GlobalSettings.Instance.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
+            GlobalSettings.Instance.AutoPlayVideos = checkBoxVideoAutoPlay.Checked;
             GlobalSettings.Instance.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
 
-            Properties.Settings.Default.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
-            Properties.Settings.Default.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
-            Properties.Settings.Default.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
+            Settings.Instance.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
+            Settings.Instance.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
+            Settings.Instance.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
 
             // save plugin settings
             foreach (ListviewPluginsItem item in ListviewPlugins.Items)
@@ -130,8 +130,8 @@ namespace BlizzTV
             }
 
             SettingsStorage.Instance.Save();
+            Settings.Instance.Save();
             GlobalSettings.Instance.Save();
-            Properties.Settings.Default.Save();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

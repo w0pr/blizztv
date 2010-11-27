@@ -38,17 +38,9 @@ namespace BlizzTV
                 return; // exit
             }
 
-            // After a version upgrade our settings file will be needing an upgrade.
-            if (Properties.Settings.Default.NeedsUpgrade)
-            {
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.NeedsUpgrade = false;
-                Properties.Settings.Default.Save();
-            }
-
             // Check global settings and start logger and debug console if enabled
-            if (Properties.Settings.Default.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
-            if (Properties.Settings.Default.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
+            if (Settings.Instance.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
+            if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
 
             using (DependencyChecker dc = new DependencyChecker()) { } // Check if our dependencies are satisfied.
 

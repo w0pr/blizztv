@@ -42,7 +42,11 @@
     <Reference Include="Esent.Interop">
       <HintPath>..\upstream\Esent.Interop.dll</HintPath>
     </Reference>
+    <Reference Include="Nini">
+      <HintPath>..\upstream\Nini.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -57,11 +61,6 @@
     <Compile Include="IPluginSettingsForm.cs" />
     <Compile Include="Players\FlashPlayer.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SettingsStorage.cs" />
     <Compile Include="Utils\DebugConsole.cs" />
@@ -110,10 +109,8 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <None Include="global.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
