@@ -187,7 +187,7 @@ namespace LibVideos
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if(!SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode) UpdateChannels();
+            if (!GlobalSettings.Instance.InSleepMode) UpdateChannels();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LibBlizzTV")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("BlizzTV")]
 [assembly: AssemblyProduct("LibBlizzTV")]
 [assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]

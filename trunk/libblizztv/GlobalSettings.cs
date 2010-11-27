@@ -23,52 +23,77 @@ namespace LibBlizzTV
     /// <summary>
     /// Global settings that is used by both the BlizzTV and it's plugins.
     /// </summary>
-    [Serializable]
-    public class GlobalSettings
+    public sealed class GlobalSettings
     {
+        private static GlobalSettings _instance = new GlobalSettings();
+
+        /// <summary>
+        /// Returns instance of Global.Settings.
+        /// </summary>
+        public static GlobalSettings Instance { get { return _instance; } }
+
+        private GlobalSettings()
+        {
+            if (Properties.Settings.Default.NeedsUpgrade)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.NeedsUpgrade = false;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         /// <summary>
         /// The default content viewing-method.
         /// </summary>
-        public ContentViewMethods ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
+        public ContentViewerModes ContentViewerMode = Properties.Settings.Default.ContentViewerMode;
 
         /// <summary>
         /// The default video player width.
         /// </summary>
-        public int VideoPlayerWidth = 640;
+        public int VideoPlayerWidth = Properties.Settings.Default.VideoPlayerWidth;
 
         /// <summary>
         /// The default video player height.
         /// </summary>
-        public int VideoPlayerHeight = 385;
+        public int VideoPlayerHeight = Properties.Settings.Default.VideoPlayerHeight;
 
         /// <summary>
         /// States if video's should be played automatically.
         /// </summary>
-        public bool VideoAutoPlay = true;
+        public bool VideoAutoPlay = Properties.Settings.Default.AutoplayVideos;
 
         /// <summary>
         /// Always on top setting for player windows.
         /// </summary>
-        public bool PlayerWindowsAlwaysOnTop = true;
+        public bool PlayerWindowsAlwaysOnTop = Properties.Settings.Default.PlayerWindowsAlwaysOnTop;
 
         /// <summary>
         /// States the sleep mode in which plugin's should not automaticly refresh it's data.
         /// </summary>
         public bool InSleepMode = false;
+
+        /// <summary>
+        /// Saves the global settings.
+        /// </summary>
+        public void Save()
+        {
+            Properties.Settings.Default.Save();
+        }
     }
 
     /// <summary>
     /// Available content-viewing methods.
     /// </summary>
-    public enum ContentViewMethods
+    [Serializable]
+    public enum ContentViewerModes
     {
         /// <summary>
         /// Render content with internal viewers.
         /// </summary>
-        INTERNAL_VIEWERS,
+        InternalViewers,
         /// <summary>
         /// Render content with computer's default web-browser.
         /// </summary>
-        DEFAULT_WEB_BROWSER
+        DefaultWebBrowser
     }
 }

@@ -36,9 +36,9 @@ namespace LibStreams
             InitializeComponent();
 
             this._stream = Stream; // set the stream.
-            this.SwitchTopMostMode(SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
-            this.Width = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth; // get the default player width.
-            this.Height = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight; // get the default player height.
+            this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
+            this.Width = GlobalSettings.Instance.VideoPlayerWidth; // get the default player width.
+            this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
 
             if (!Providers.Instance.List[this._stream.Provider].ChatAvailable) this.MenuOpenChat.Enabled = false; 

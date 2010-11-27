@@ -68,10 +68,10 @@ namespace LibVideos
             this._flash_vars = Providers.Instance.List[this.Provider].FlashVars; // provider supplied flashvars.
 
             this._movie = this._movie.Replace("%video_id%", this._video_id); // replace movie source variables
-            this._movie = this._movie.Replace("%auto_play%", (SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay) ? "1" : "0");
+            this._movie = this._movie.Replace("%auto_play%", (GlobalSettings.Instance.VideoAutoPlay) ? "1" : "0");
             
             this._flash_vars = this._flash_vars.Replace("%video_id%", this._video_id); // replace flashvars variables.
-            this._flash_vars = this._flash_vars.Replace("%auto_play%", (SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay)?"1":"0");
+            this._flash_vars = this._flash_vars.Replace("%auto_play%", (GlobalSettings.Instance.VideoAutoPlay)?"1":"0");
         }
 
         public override void SetState(ItemState State) // override setstate function so that we can commit our state to storage.
@@ -84,7 +84,7 @@ namespace LibVideos
         {
             if (this.State != ItemState.ERROR)
             {
-                if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
+                if (GlobalSettings.Instance.ContentViewerMode ==  ContentViewerModes.InternalViewers) // if internal-viewers method is selected
                 {
                     frmPlayer p = new frmPlayer(this); // render the video with our own video player
                     p.Show();

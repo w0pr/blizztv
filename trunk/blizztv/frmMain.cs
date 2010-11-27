@@ -323,7 +323,7 @@ namespace BlizzTV
                 this.ContextMenuSleepMode.Checked = true;
                 this.TrayIcon.Icon = Properties.Resources.sleep_16;
                 this.TrayIcon.Text = "BlizzTV is in sleep mode.";
-                SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode = true;
+                GlobalSettings.Instance.InSleepMode = true;
             }
             else
             {
@@ -332,7 +332,7 @@ namespace BlizzTV
                 this.ContextMenuSleepMode.Checked = false;
                 this.TrayIcon.Icon = Properties.Resources.blizztv_16;
                 this.TrayIcon.Text = "BlizzTV";
-                SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode = false;
+                GlobalSettings.Instance.InSleepMode = false;
             }
         }
 

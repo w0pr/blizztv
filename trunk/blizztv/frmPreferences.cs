@@ -51,16 +51,16 @@ namespace BlizzTV
         private void LoadSettings()
         {
 
-            if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) radioButtonUseInternalViewers.Checked = true;
+            if (GlobalSettings.Instance.ContentViewerMode == ContentViewerModes.InternalViewers) radioButtonUseInternalViewers.Checked = true;
             else radioButtonUseDefaultWebBrowser.Checked = true;
 
             checkBoxAllowAutomaticUpdateChecks.Checked = Properties.Settings.Default.AllowAutomaticUpdateChecks;
             checkBoxAllowBetaVersionNotifications.Checked = Properties.Settings.Default.AllowBetaVersionNotifications;
 
-            txtVideoPlayerWidth.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth.ToString();
-            txtVideoPlayerHeight.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight.ToString();
-            checkBoxVideoAutoPlay.Checked = SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay;
-            CheckBoxPlayerAlwaysOnTop.Checked = SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop;
+            txtVideoPlayerWidth.Text = GlobalSettings.Instance.VideoPlayerWidth.ToString();
+            txtVideoPlayerHeight.Text = GlobalSettings.Instance.VideoPlayerHeight.ToString();
+            checkBoxVideoAutoPlay.Checked = GlobalSettings.Instance.VideoAutoPlay;
+            CheckBoxPlayerAlwaysOnTop.Checked = GlobalSettings.Instance.PlayerWindowsAlwaysOnTop;
 
             checkBoxMinimimizeToSystemTray.Checked = Properties.Settings.Default.MinimizeToSystemTray;
             checkBoxEnableDebugLogging.Checked = Properties.Settings.Default.EnableDebugLogging;
@@ -106,16 +106,16 @@ namespace BlizzTV
         private void SaveSettings()
         {
             // save global settings
-            if (radioButtonUseInternalViewers.Checked) SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
-            else SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer = ContentViewMethods.DEFAULT_WEB_BROWSER;
+            if (radioButtonUseInternalViewers.Checked) GlobalSettings.Instance.ContentViewerMode = ContentViewerModes.InternalViewers;
+            else GlobalSettings.Instance.ContentViewerMode = ContentViewerModes.DefaultWebBrowser;
 
             Properties.Settings.Default.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
             Properties.Settings.Default.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
 
-            SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
-            SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
-            SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
-            SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
+            GlobalSettings.Instance.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
+            GlobalSettings.Instance.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
+            GlobalSettings.Instance.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
+            GlobalSettings.Instance.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
 
             Properties.Settings.Default.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
             Properties.Settings.Default.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
@@ -130,6 +130,7 @@ namespace BlizzTV
             }
 
             SettingsStorage.Instance.Save();
+            GlobalSettings.Instance.Save();
             Properties.Settings.Default.Save();
         }
 

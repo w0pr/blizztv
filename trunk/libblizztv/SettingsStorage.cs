@@ -39,12 +39,12 @@ namespace LibBlizzTV
         /// </summary>
         public static SettingsStorage Instance { get { return _instance; } }
 
-        private Settings _settings = new Settings(); // the settings
+        private OldSettings _settings = new OldSettings(); // the settings
 
         /// <summary>
         /// The settings stored.
         /// </summary>
-        public Settings Settings { get { return this._settings; } }
+        public OldSettings Settings { get { return this._settings; } }
         
         private string _storage_file = "settings"; // the settings file
         private bool disposed = false;
@@ -79,7 +79,7 @@ namespace LibBlizzTV
                     using (MemoryStream mstream = new MemoryStream(data))
                     {
                         BinaryFormatter b = new BinaryFormatter();
-                        this._settings = (Settings)b.Deserialize(mstream);
+                        this._settings = (OldSettings)b.Deserialize(mstream);
                         mstream.Close();
                     }
                 }
@@ -165,14 +165,9 @@ namespace LibBlizzTV
     /// Holds settings.
     /// </summary>
     [Serializable]
-    public sealed class Settings
+    public sealed class OldSettings
     {
         #region Members
-
-        /// <summary>
-        /// Holds global setttings than can be used by both plugins and UI itself.
-        /// </summary>
-        public GlobalSettings GlobalSettings = new GlobalSettings(); // Global settings that can be used by both plugins and the UI itself.
 
         /// <summary>
         /// Holds a list of plugin settings.
@@ -188,7 +183,7 @@ namespace LibBlizzTV
         /// <summary>
         /// de-ctor.
         /// </summary>
-        ~Settings() { Dispose(false); }
+        ~OldSettings() { Dispose(false); }
 
         /// <summary>
         /// Disposes the object.
@@ -205,7 +200,6 @@ namespace LibBlizzTV
             {
                 if (disposing) // managed resources
                 {
-                    this.GlobalSettings = null;
                     this.PluginSettings.Clear();
                     this.PluginSettings = null;
                 }
