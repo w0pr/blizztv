@@ -188,7 +188,7 @@ namespace LibFeeds
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode) this.UpdateFeeds();
+            if (!GlobalSettings.Instance.InSleepMode) this.UpdateFeeds();
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)

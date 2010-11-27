@@ -35,10 +35,10 @@ namespace LibVideos
         {
             InitializeComponent();
 
-            this.SwitchTopMostMode(SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
+            this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
             this._video = Video; // set the video.
-            this.Width = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth; // get the default player width. 
-            this.Height = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight; // get the default player height.
+            this.Width = GlobalSettings.Instance.VideoPlayerWidth; // get the default player width. 
+            this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
             this._video.Process(); // process the video so that it's template variables are replaced.
         }
 

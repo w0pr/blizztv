@@ -191,7 +191,7 @@ namespace LibStreams
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!SettingsStorage.Instance.Settings.GlobalSettings.InSleepMode) UpdateStreams();
+            if (!GlobalSettings.Instance.InSleepMode) UpdateStreams();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

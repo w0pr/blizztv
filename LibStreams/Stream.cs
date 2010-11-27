@@ -81,7 +81,7 @@ namespace LibStreams
 
         public override void DoubleClicked(object sender, EventArgs e) // double-click handler
         {
-            if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) // if internal-viewers method is selected
+            if (GlobalSettings.Instance.ContentViewerMode == ContentViewerModes.InternalViewers) // if internal-viewers method is selected
             {
                 frmPlayer p = new frmPlayer(this); // render the stream with our own video player
                 p.Show();
