@@ -77,7 +77,7 @@ namespace BlizzTV.Updates
 
                     foreach (Update u in updates)
                     {
-                        if ((u.Valid) && ((u.UpdateType == UpdateTypes.STABLE) || (u.UpdateType == UpdateTypes.BETA && SettingsStorage.Instance.Settings.AllowBetaVersionNotifications)) && (u.Version > latest_version))
+                        if ((u.Valid) && ((u.UpdateType == UpdateTypes.STABLE) || (u.UpdateType == UpdateTypes.BETA && Properties.Settings.Default.AllowBetaVersionNotifications)) && (u.Version > latest_version))
                         {
                             this._found_update = u;
                             this._update_available = true;

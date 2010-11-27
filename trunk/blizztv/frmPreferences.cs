@@ -54,17 +54,17 @@ namespace BlizzTV
             if (SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer == ContentViewMethods.INTERNAL_VIEWERS) radioButtonUseInternalViewers.Checked = true;
             else radioButtonUseDefaultWebBrowser.Checked = true;
 
-            checkBoxAllowAutomaticUpdateChecks.Checked = SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks;
-            checkBoxAllowBetaVersionNotifications.Checked = SettingsStorage.Instance.Settings.AllowBetaVersionNotifications;
+            checkBoxAllowAutomaticUpdateChecks.Checked = Properties.Settings.Default.AllowAutomaticUpdateChecks;
+            checkBoxAllowBetaVersionNotifications.Checked = Properties.Settings.Default.AllowBetaVersionNotifications;
 
             txtVideoPlayerWidth.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth.ToString();
             txtVideoPlayerHeight.Text = SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight.ToString();
             checkBoxVideoAutoPlay.Checked = SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay;
             CheckBoxPlayerAlwaysOnTop.Checked = SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop;
 
-            checkBoxMinimimizeToSystemTray.Checked = SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication;
-            checkBoxEnableDebugLogging.Checked = SettingsStorage.Instance.Settings.EnableDebugLogging;
-            checkBoxEnableDebugConsole.Checked = SettingsStorage.Instance.Settings.EnableDebugConsole;
+            checkBoxMinimimizeToSystemTray.Checked = Properties.Settings.Default.MinimizeToSystemTray;
+            checkBoxEnableDebugLogging.Checked = Properties.Settings.Default.EnableDebugLogging;
+            checkBoxEnableDebugConsole.Checked = Properties.Settings.Default.EnableDebugConsole;
 
             // plugin settings.
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
@@ -109,17 +109,17 @@ namespace BlizzTV
             if (radioButtonUseInternalViewers.Checked) SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer = ContentViewMethods.INTERNAL_VIEWERS;
             else SettingsStorage.Instance.Settings.GlobalSettings.ContentViewer = ContentViewMethods.DEFAULT_WEB_BROWSER;
 
-            SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
-            SettingsStorage.Instance.Settings.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
+            Properties.Settings.Default.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
+            Properties.Settings.Default.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
 
             SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
             SettingsStorage.Instance.Settings.GlobalSettings.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
             SettingsStorage.Instance.Settings.GlobalSettings.VideoAutoPlay = checkBoxVideoAutoPlay.Checked;
             SettingsStorage.Instance.Settings.GlobalSettings.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
 
-            SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication = checkBoxMinimimizeToSystemTray.Checked;
-            SettingsStorage.Instance.Settings.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
-            SettingsStorage.Instance.Settings.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
+            Properties.Settings.Default.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
+            Properties.Settings.Default.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
+            Properties.Settings.Default.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
 
             // save plugin settings
             foreach (ListviewPluginsItem item in ListviewPlugins.Items)
@@ -130,6 +130,7 @@ namespace BlizzTV
             }
 
             SettingsStorage.Instance.Save();
+            Properties.Settings.Default.Save();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

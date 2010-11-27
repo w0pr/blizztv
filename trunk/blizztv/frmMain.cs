@@ -67,11 +67,11 @@ namespace BlizzTV
                 }
             }
 
-            if (SettingsStorage.Instance.Settings.AllowAutomaticUpdateChecks)
+            if (Properties.Settings.Default.AllowAutomaticUpdateChecks)
             {
                 UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateAutoCheckResult;
                 UpdateManager.Instance.Check(); // Check for updates.
-            }
+            }            
         }
 
         private void OnPreferencesWindowApplySettings() // Insantiates or kills plugins based on new applied plugin settings.
@@ -342,7 +342,7 @@ namespace BlizzTV
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (SettingsStorage.Instance.Settings.MinimizeToSystemTrayInsteadOfClosingTheApplication)
+            if (Properties.Settings.Default.MinimizeToSystemTray)
             {
                 e.Cancel = true; // live in system-tray even if form is closed
                 this.HideForm();

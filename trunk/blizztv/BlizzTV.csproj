@@ -55,6 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InvokeExtensions.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Utils\DependencyChecker.cs" />
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>
@@ -108,6 +113,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blizztv.ico" />
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\sleep_16.ico" />
     <None Include="Resources\blizztv_16.ico" />
   </ItemGroup>
