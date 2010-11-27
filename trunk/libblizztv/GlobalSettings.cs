@@ -17,6 +17,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Nini.Config;
+using LibBlizzTV.Utils;
 
 namespace LibBlizzTV
 {
@@ -25,75 +27,78 @@ namespace LibBlizzTV
     /// </summary>
     public sealed class GlobalSettings
     {
+        private IConfigSource _source;
         private static GlobalSettings _instance = new GlobalSettings();
 
         /// <summary>
-        /// Returns instance of Global.Settings.
+        /// Returns instance of GlobalSettings.
         /// </summary>
         public static GlobalSettings Instance { get { return _instance; } }
 
-        private GlobalSettings()
-        {
-            if (Properties.Settings.Default.NeedsUpgrade)
-            {
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.NeedsUpgrade = false;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        /// <summary>
-        /// The default content viewing-method.
-        /// </summary>
-        public ContentViewerModes ContentViewerMode = Properties.Settings.Default.ContentViewerMode;
+        private int _video_player_width = 640;
+        private int _video_player_height = 385;
+        private bool _auto_play_videos = true;
+        private bool _player_windows_always_on_top = true;
+        private bool _use_internal_viewers = true;
 
         /// <summary>
         /// The default video player width.
         /// </summary>
-        public int VideoPlayerWidth = Properties.Settings.Default.VideoPlayerWidth;
+        public int VideoPlayerWidth { get { return this._video_player_width; } set { this._video_player_width = value; } }
 
         /// <summary>
         /// The default video player height.
         /// </summary>
-        public int VideoPlayerHeight = Properties.Settings.Default.VideoPlayerHeight;
+        public int VideoPlayerHeight { get { return this._video_player_height; } set { this._video_player_height = value; } }
 
         /// <summary>
         /// States if video's should be played automatically.
         /// </summary>
-        public bool VideoAutoPlay = Properties.Settings.Default.AutoplayVideos;
+        public bool AutoPlayVideos { get { return this._auto_play_videos; } set { this._auto_play_videos = value; } }
 
         /// <summary>
         /// Always on top setting for player windows.
         /// </summary>
-        public bool PlayerWindowsAlwaysOnTop = Properties.Settings.Default.PlayerWindowsAlwaysOnTop;
+        public bool PlayerWindowsAlwaysOnTop { get { return this._player_windows_always_on_top; } set { this._player_windows_always_on_top = value; } }
+
+        /// <summary>
+        /// The default content viewing-method.
+        /// </summary>
+        public bool UseInternalViewers { get { return this._use_internal_viewers; } set { this._use_internal_viewers = value; } }
 
         /// <summary>
         /// States the sleep mode in which plugin's should not automaticly refresh it's data.
         /// </summary>
         public bool InSleepMode = false;
 
+        private GlobalSettings()
+        {
+            try
+            {
+                this._source = new IniConfigSource("global.ini");
+                this._video_player_width = this._source.Configs["Global"].GetInt("VideoPlayerWidth", 640);
+                this._video_player_height = this._source.Configs["Global"].GetInt("VideoPlayerHeight", 385);
+                this._auto_play_videos = this._source.Configs["Global"].GetBoolean("AutoPlayVideos", true);
+                this._player_windows_always_on_top = this._source.Configs["Global"].GetBoolean("PlayerWindowsAlwaysOnTop", true);
+                this._use_internal_viewers = this._source.Configs["Global"].GetBoolean("UseInternalViewers", true);
+            }
+            catch (Exception e)
+            {
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("GlobalSettings load exception: {0}", e.ToString()));
+            }
+        }
+
         /// <summary>
         /// Saves the global settings.
         /// </summary>
         public void Save()
         {
-            Properties.Settings.Default.Save();
+            this._source.Configs["Global"].Set("VideoPlayerWidth", this._video_player_width);
+            this._source.Configs["Global"].Set("VideoPlayerHeight", this._video_player_height);
+            this._source.Configs["Global"].Set("AutoPlayVideos", this._auto_play_videos);
+            this._source.Configs["Global"].Set("PlayerWindowsAlwaysOnTop", this._player_windows_always_on_top);
+            this._source.Configs["Global"].Set("UseInternalViewers", this._use_internal_viewers);
+            this._source.Save();
         }
-    }
-
-    /// <summary>
-    /// Available content-viewing methods.
-    /// </summary>
-    [Serializable]
-    public enum ContentViewerModes
-    {
-        /// <summary>
-        /// Render content with internal viewers.
-        /// </summary>
-        InternalViewers,
-        /// <summary>
-        /// Render content with computer's default web-browser.
-        /// </summary>
-        DefaultWebBrowser
     }
 }

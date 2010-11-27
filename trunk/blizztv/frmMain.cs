@@ -67,7 +67,7 @@ namespace BlizzTV
                 }
             }
 
-            if (Properties.Settings.Default.AllowAutomaticUpdateChecks)
+            if (Settings.Instance.AllowAutomaticUpdateChecks)
             {
                 UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateAutoCheckResult;
                 UpdateManager.Instance.Check(); // Check for updates.
@@ -342,7 +342,7 @@ namespace BlizzTV
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Properties.Settings.Default.MinimizeToSystemTray)
+            if (Settings.Instance.MinimizeToSystemTray)
             {
                 e.Cancel = true; // live in system-tray even if form is closed
                 this.HideForm();
