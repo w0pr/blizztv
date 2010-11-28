@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LibBlizzTV;
 using LibBlizzTV.Utils;
 using Nini.Config;
 
@@ -9,7 +10,6 @@ namespace BlizzTV
 {
     public sealed class Settings
     {
-        private IConfigSource _source;
         private static Settings _instance = new Settings();        
         public static Settings Instance { get { return _instance; } }
 
@@ -29,12 +29,11 @@ namespace BlizzTV
         {
             try
             {
-                this._source = new IniConfigSource("ui.ini");
-                this._minimize_to_system_tray = this._source.Configs["UI"].GetBoolean("MinimizeToSystemTray", true);
-                this._allow_automatic_update_checks = this._source.Configs["UI"].GetBoolean("AllowAutomaticUpdateChecks", true);
-                this._allow_beta_version_notifications = this._source.Configs["UI"].GetBoolean("AllowBetaVersionNotifications", true);
-                this._enable_debug_logging = this._source.Configs["UI"].GetBoolean("EnableDebugLogging", true);
-                this._enable_debug_console = this._source.Configs["UI"].GetBoolean("EnableDebugConsole", false);
+                this._minimize_to_system_tray = SettingsParser.Instance.Section("UI").GetBoolean("MinimizeToSystemTray", true);
+                this._allow_automatic_update_checks = SettingsParser.Instance.Section("UI").GetBoolean("AllowAutomaticUpdateChecks", true);
+                this._allow_beta_version_notifications = SettingsParser.Instance.Section("UI").GetBoolean("AllowBetaVersionNotifications", true);
+                this._enable_debug_logging = SettingsParser.Instance.Section("UI").GetBoolean("EnableDebugLogging", true);
+                this._enable_debug_console = SettingsParser.Instance.Section("UI").GetBoolean("EnableDebugConsole", false);
             }
             catch (Exception e)
             {
@@ -44,12 +43,14 @@ namespace BlizzTV
 
         public void Save()
         {
-            this._source.Configs["UI"].Set("MinimizeToSystemTray", this._minimize_to_system_tray);
-            this._source.Configs["UI"].Set("AllowAutomaticUpdateChecks", this._allow_automatic_update_checks);
-            this._source.Configs["UI"].Set("AllowBetaVersionNotifications", this._allow_beta_version_notifications);
-            this._source.Configs["UI"].Set("EnableDebugLogging", this._enable_debug_logging);
-            this._source.Configs["UI"].Set("EnableDebugConsole", this._enable_debug_logging);
-            this._source.Save();
+            IConfig config = SettingsParser.Instance.Section("UI");
+            if (config == null) config = SettingsParser.Instance.AddSection("UI");
+            config.Set("MinimizeToSystemTray", this._minimize_to_system_tray);
+            config.Set("AllowAutomaticUpdateChecks", this._allow_automatic_update_checks);
+            config.Set("AllowBetaVersionNotifications", this._allow_beta_version_notifications);
+            config.Set("EnableDebugLogging", this._enable_debug_logging);
+            config.Set("EnableDebugConsole", this._enable_debug_logging);
+            SettingsParser.Instance.Save();
         }
     }
 }
