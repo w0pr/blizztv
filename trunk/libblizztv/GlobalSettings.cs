@@ -27,7 +27,6 @@ namespace LibBlizzTV
     /// </summary>
     public sealed class GlobalSettings
     {
-        private IConfigSource _source;
         private static GlobalSettings _instance = new GlobalSettings();
 
         /// <summary>
@@ -75,12 +74,11 @@ namespace LibBlizzTV
         {
             try
             {
-                this._source = new IniConfigSource("global.ini");
-                this._video_player_width = this._source.Configs["Global"].GetInt("VideoPlayerWidth", 640);
-                this._video_player_height = this._source.Configs["Global"].GetInt("VideoPlayerHeight", 385);
-                this._auto_play_videos = this._source.Configs["Global"].GetBoolean("AutoPlayVideos", true);
-                this._player_windows_always_on_top = this._source.Configs["Global"].GetBoolean("PlayerWindowsAlwaysOnTop", true);
-                this._use_internal_viewers = this._source.Configs["Global"].GetBoolean("UseInternalViewers", true);
+                this._video_player_width = SettingsParser.Instance.Section("Global").GetInt("VideoPlayerWidth", 640);
+                this._video_player_height = SettingsParser.Instance.Section("Global").GetInt("VideoPlayerHeight", 385);
+                this._auto_play_videos = SettingsParser.Instance.Section("Global").GetBoolean("AutoPlayVideos", true);
+                this._player_windows_always_on_top = SettingsParser.Instance.Section("Global").GetBoolean("PlayerWindowsAlwaysOnTop", true);
+                this._use_internal_viewers = SettingsParser.Instance.Section("Global").GetBoolean("UseInternalViewers", true);
             }
             catch (Exception e)
             {
@@ -93,12 +91,14 @@ namespace LibBlizzTV
         /// </summary>
         public void Save()
         {
-            this._source.Configs["Global"].Set("VideoPlayerWidth", this._video_player_width);
-            this._source.Configs["Global"].Set("VideoPlayerHeight", this._video_player_height);
-            this._source.Configs["Global"].Set("AutoPlayVideos", this._auto_play_videos);
-            this._source.Configs["Global"].Set("PlayerWindowsAlwaysOnTop", this._player_windows_always_on_top);
-            this._source.Configs["Global"].Set("UseInternalViewers", this._use_internal_viewers);
-            this._source.Save();
+            IConfig config = SettingsParser.Instance.Section("Global");
+            if (config == null) config = SettingsParser.Instance.AddSection("Global");
+            config.Set("VideoPlayerWidth", this._video_player_width);
+            config.Set("VideoPlayerHeight", this._video_player_height);
+            config.Set("AutoPlayVideos", this._auto_play_videos);
+            config.Set("PlayerWindowsAlwaysOnTop", this._player_windows_always_on_top);
+            config.Set("UseInternalViewers", this._use_internal_viewers);
+            SettingsParser.Instance.Save();
         }
     }
 }

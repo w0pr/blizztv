@@ -112,9 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blizztv.ico" />
-    <None Include="ui.ini">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\sleep_16.ico" />
     <None Include="Resources\blizztv_16.ico" />
   </ItemGroup>
