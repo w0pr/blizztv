@@ -61,6 +61,9 @@ namespace LibEvents
         {
             this.ParseEvents();
 
+            // Go check for events.
+            if (!GlobalSettings.Instance.InSleepMode) this.CheckEvents();
+
             // setup update timer for event checks
             _event_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
             _event_timer.Enabled = true;

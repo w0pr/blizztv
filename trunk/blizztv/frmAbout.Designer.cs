@@ -37,8 +37,11 @@
             "Thanks for calendar API and all suggestions from TL users."}, -1);
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Mark James",
-            "The shiny icons."}, -1);
+            "The shiny icons. (http://www.famfamfam.com/)"}, -1);
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Brent R. Matzelle",
+            "Nini - http://nini.sourceforge.net"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "SaveTheMurlocs.org",
             "No murlocs were harmed during making of this program."}, -1);
             this.label1 = new System.Windows.Forms.Label();
@@ -172,7 +175,8 @@
             listViewItem1,
             listViewItem2,
             listViewItem3,
-            listViewItem4});
+            listViewItem4,
+            listViewItem5});
             this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
             this.ListviewCredits.Name = "ListviewCredits";
             this.ListviewCredits.ShowItemToolTips = true;
@@ -229,7 +233,7 @@
             this.Player.Location = new System.Drawing.Point(14, 372);
             this.Player.Name = "Player";
             this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Player.OcxState")));
-            this.Player.Size = new System.Drawing.Size(1, 1);
+            this.Player.Size = new System.Drawing.Size(415, 211);
             this.Player.TabIndex = 16;
             // 
             // frmAbout
