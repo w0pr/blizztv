@@ -18,15 +18,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibBlizzTV;
+using Nini.Config;
 
 namespace LibStreams
 {
-    [Serializable]
     public class Settings : PluginSettings
     {
-        public int UpdateEveryXMinutes = 60;
-        public bool AutomaticallyOpenChatForAvailableStreams = false;
-        public int StreamChatWindowWidth = 640;
-        public int StreamChatWindowHeight = 385;
+        private static Settings _instance = new Settings();
+        public static Settings Instance { get { return _instance; } }
+        private Settings() : base("Streams") { }
+
+        public int UpdateEveryXMinutes { get { return this.Config.GetInt("UpdateEveryXMinutes", 60); } set { this.Config.Set("UpdateEveryXMinutes", value); } }
+        public bool AutomaticallyOpenChatForAvailableStreams { get { return this.Config.GetBoolean("AutomaticallyOpenChatForAvailableStreams", false); } set { this.Config.Set("AutomaticallyOpenChatForAvailableStreams", value); } }
+        public int StreamChatWindowWidth { get { return this.Config.GetInt("StreamChatWindowWidth", 640); } set { this.Config.Set("StreamChatWindowWidth", value); } }
+        public int StreamChatWindowHeight { get { return this.Config.GetInt("StreamChatWindowHeight", 385); } set { this.Config.Set("StreamChatWindowHeight", value); } }
     }
 }

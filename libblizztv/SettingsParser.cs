@@ -42,6 +42,8 @@ namespace LibBlizzTV
             try
             {
                 this._parser = new IniConfigSource(this._config_file);
+                this._parser.Alias.AddAlias("On", true);
+                this._parser.Alias.AddAlias("Off", false);
             }
             catch (Exception e)
             {

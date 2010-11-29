@@ -42,7 +42,7 @@ namespace LibStreams
 
         #region ctor
 
-        public StreamsPlugin(PluginSettings ps):base(ps)
+        public StreamsPlugin():base()
         {
             StreamsPlugin.Instance = this;
             this.RootListItem = new ListItem("Streams");
@@ -169,9 +169,9 @@ namespace LibStreams
             }
         }
 
-        public override void SaveSettings()
+        public void SaveSettings()
         {
-            base.SaveSettings();
+            Settings.Instance.Save();
             this.SetupUpdateTimer();
         }
 
@@ -184,7 +184,7 @@ namespace LibStreams
                 this._update_timer = null;
             }
 
-            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
+            _update_timer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
             _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
             _update_timer.Enabled = true;
         }

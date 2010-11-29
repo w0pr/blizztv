@@ -32,7 +32,7 @@ namespace LibVideos.Handlers
         {
             try
             {
-                string api_url = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, (VideosPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor); // the api url.
+                string api_url = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, Settings.Instance.NumberOfVideosToQueryChannelFor); // the api url.
                 string response = WebReader.Read(api_url); // read the api response.
                 if (response != null)
                 {

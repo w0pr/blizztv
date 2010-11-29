@@ -52,5 +52,39 @@ namespace BlizzTV
             config.Set("EnableDebugConsole", this._enable_debug_logging);
             SettingsParser.Instance.Save();
         }
+
+        public void EnablePlugin(string Name)
+        {
+            IConfig config = SettingsParser.Instance.Section("Plugins");
+            if (config == null) config = SettingsParser.Instance.Section("Plugins");
+            config.Set(Name, "On");
+            SettingsParser.Instance.Save();
+        }
+
+        public void DisablePlugin(string Name)
+        {
+            IConfig config = SettingsParser.Instance.Section("Plugins");
+            if (config == null) config = SettingsParser.Instance.AddSection("Plugins");
+            config.Set(Name, "Off");
+            SettingsParser.Instance.Save();
+        }
+
+        public bool PluginEnabled(string Name)
+        {
+            IConfig config = SettingsParser.Instance.Section("Plugins");
+            if (config == null) config = SettingsParser.Instance.AddSection("Plugins");
+            return config.GetBoolean(Name);
+        }
+
+        public Dictionary<string, bool> GetPluginEntries()
+        {
+            IConfig config = SettingsParser.Instance.Section("Plugins");
+            if (config == null) config = SettingsParser.Instance.AddSection("Plugins");
+
+            Dictionary<string, bool> entries = new Dictionary<string, bool>();
+            string[] keys = config.GetKeys();
+            foreach (string key in keys) { entries.Add(key, config.GetBoolean(key, false)); }
+            return entries;
+        }
     }
 }

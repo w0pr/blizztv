@@ -19,8 +19,8 @@ namespace LibStreams
             InitializeComponent();
 
             this._stream = Stream; // set the stream.
-            this.Width = (StreamsPlugin.Instance.Settings as Settings).StreamChatWindowWidth;
-            this.Height = (StreamsPlugin.Instance.Settings as Settings).StreamChatWindowHeight;
+            this.Width = Settings.Instance.StreamChatWindowWidth;
+            this.Height = Settings.Instance.StreamChatWindowHeight;
         }
 
         private void frmChat_Load(object sender, EventArgs e)

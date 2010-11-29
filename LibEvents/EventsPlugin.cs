@@ -43,8 +43,7 @@ namespace LibEvents
 
         #region ctor
 
-        public EventsPlugin(PluginSettings ps)
-            : base(ps)
+        public EventsPlugin() : base()
         {
             EventsPlugin.Instance = this;
             this.RootListItem = new ListItem("Events");
@@ -137,8 +136,8 @@ namespace LibEvents
 
                 foreach (Event e in this._events) // loop through events.
                 {
-                    DateTime _filter_start = DateTime.Now.Date.Subtract(new TimeSpan((Settings as Settings).NumberOfDaysToShowEventsOnMainWindow, 0, 0, 0));
-                    DateTime _filter_end = DateTime.Now.Date.AddDays((Settings as Settings).NumberOfDaysToShowEventsOnMainWindow);
+                    DateTime _filter_start = DateTime.Now.Date.Subtract(new TimeSpan(Settings.Instance.NumberOfDaysToShowEventsOnMainWindow, 0, 0, 0));
+                    DateTime _filter_end = DateTime.Now.Date.AddDays(Settings.Instance.NumberOfDaysToShowEventsOnMainWindow);
 
                     if ((_filter_start <= e.Time.LocalTime) && (e.Time.LocalTime <= _filter_end))
                     {

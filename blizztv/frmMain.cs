@@ -59,12 +59,9 @@ namespace BlizzTV
         {
             PluginManager pm = PluginManager.Instance; // Let the plugin-manager run..
 
-            foreach (KeyValuePair<string, PluginSettings> pair in SettingsStorage.Instance.Settings.PluginSettings) // loop through available plugins.
+            foreach (KeyValuePair<string, bool> pair in Settings.Instance.GetPluginEntries()) // loop through available plugins.
             {
-                if (pair.Value.Enabled && pm.AvailablePlugins.ContainsKey(pair.Key)) // if the plugin is enabled then run it within it's own thread.
-                {
-                    this.InstantiatePlugin(pair.Key);
-                }
+                if (pair.Value && pm.AvailablePlugins.ContainsKey(pair.Key)) this.InstantiatePlugin(pair.Key); // if the plugin is enabled then run it within it's own thread.
             }
 
             if (Settings.Instance.AllowAutomaticUpdateChecks)
@@ -76,16 +73,10 @@ namespace BlizzTV
 
         private void OnPreferencesWindowApplySettings() // Insantiates or kills plugins based on new applied plugin settings.
         {
-            foreach (KeyValuePair<string, PluginSettings> pair in SettingsStorage.Instance.Settings.PluginSettings)
+            foreach(KeyValuePair<string,bool> pair in Settings.Instance.GetPluginEntries())
             {
-                if (pair.Value.Enabled && !PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) // instantiate the plugin.
-                {
-                    this.InstantiatePlugin(pair.Key);
-                }
-                else if (!pair.Value.Enabled && PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) // kill the plugin.
-                {
-                    this.KillPlugin(pair.Key);
-                }
+                if (pair.Value && !PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.InstantiatePlugin(pair.Key); // instantiate the plugin.
+                else if (!pair.Value && PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.KillPlugin(pair.Key); // kill the plugin.
             }
         }
 
@@ -114,7 +105,6 @@ namespace BlizzTV
             // register plugin communication events.     
             p.OnPluginUpdateStarted += PluginUpdateStarted;
             p.OnPluginUpdateComplete += PluginUpdateComplete;
-            p.OnSavePluginSettings += SavePluginSettings;
             p.OnWorkloadAdd += this._workload.Add;
             p.OnWorkloadStep += this._workload.Step;
             this.RegisterPluginMenus(p); // register plugin sub-menu's.
@@ -158,12 +148,6 @@ namespace BlizzTV
             t.Render();
 
             if (Item.Childs.Count > 0) { foreach (KeyValuePair<string, ListItem> pair in Item.Childs) { this.LoadPluginListItems(Plugin, pair.Value, t); } }            
-        }
-
-        private void SavePluginSettings(object sender, PluginSettings settings)
-        {
-            SettingsStorage.Instance.Settings.PluginSettings[(sender as Plugin).Attributes.Name] = settings;
-            SettingsStorage.Instance.Save();
         }
 
         private void RegisterPluginMenus(Plugin p) // Registers plugin's sub-menus.

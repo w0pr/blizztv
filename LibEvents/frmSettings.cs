@@ -34,20 +34,19 @@ namespace LibEvents
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
-            checkBoxAllowEventNotifications.Checked = (EventsPlugin.Instance.Settings as Settings).AllowEventNotifications;
-            checkBoxAllowNotificationOfEventsInProgress.Checked = (EventsPlugin.Instance.Settings as Settings).AllowNotificationOfInprogressEvents;
-            numericUpDownMinutesBefore.Value = (decimal)(EventsPlugin.Instance.Settings as Settings).MinutesToNotifyBeforeEvent;
-            numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value = (decimal)(EventsPlugin.Instance.Settings as Settings).NumberOfDaysToShowEventsOnMainWindow;
+            checkBoxAllowEventNotifications.Checked = Settings.Instance.AllowEventNotifications;
+            checkBoxAllowNotificationOfEventsInProgress.Checked = Settings.Instance.AllowNotificationOfInprogressEvents;
+            numericUpDownMinutesBefore.Value = (decimal)Settings.Instance.MinutesToNotifyBeforeEvent;
+            numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value = (decimal)Settings.Instance.NumberOfDaysToShowEventsOnMainWindow;
         }
 
         public void SaveSettings()
         {
-            (EventsPlugin.Instance.Settings as Settings).AllowEventNotifications = checkBoxAllowEventNotifications.Checked;
-            (EventsPlugin.Instance.Settings as Settings).AllowNotificationOfInprogressEvents = checkBoxAllowNotificationOfEventsInProgress.Checked;
-            (EventsPlugin.Instance.Settings as Settings).MinutesToNotifyBeforeEvent = (int)numericUpDownMinutesBefore.Value;
-            (EventsPlugin.Instance.Settings as Settings).NumberOfDaysToShowEventsOnMainWindow = (int)numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value;
-
-            EventsPlugin.Instance.SaveSettings();
+            Settings.Instance.AllowEventNotifications = checkBoxAllowEventNotifications.Checked;
+            Settings.Instance.AllowNotificationOfInprogressEvents = checkBoxAllowNotificationOfEventsInProgress.Checked;
+            Settings.Instance.MinutesToNotifyBeforeEvent = (int)numericUpDownMinutesBefore.Value;
+            Settings.Instance.NumberOfDaysToShowEventsOnMainWindow = (int)numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value;
+            Settings.Instance.Save();
         }
     }
 }
