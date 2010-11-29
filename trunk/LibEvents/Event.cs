@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
+using LibBlizzTV.Notifications;
 
 namespace LibEvents
 {
@@ -81,12 +82,12 @@ namespace LibEvents
                 if ((Settings.Instance.AllowNotificationOfInprogressEvents) && (this.Status == EventStatus.IN_PROGRESS)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this._notified = true; // don't notify about it more then once
-                    this.ShowBalloonTip(string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                    Notifications.Instance.Show(this, string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
                 }
                 else if (this.MinutesLeft > 0 && (this.MinutesLeft <= Settings.Instance.MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
                 {
                     this._notified = true; // don't notify about it more then once
-                    this.ShowBalloonTip(string.Format("Event starts in {0} minutes: {1}", (this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                    Notifications.Instance.Show(this, string.Format("Event starts in {0} minutes: {1}", (this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
                 }
             }
         }

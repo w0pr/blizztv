@@ -26,6 +26,7 @@ using BlizzTV.Updates;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 using LibBlizzTV.Settings;
+using LibBlizzTV.Notifications;
 
 namespace BlizzTV
 {
@@ -53,12 +54,22 @@ namespace BlizzTV
             if (Settings.Instance.NeedInitialConfig) { Wizard.frmWizardHost f = new Wizard.frmWizardHost(); f.ShowDialog(); } // run the configuration wizard
 
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.            
+            Notifications.Instance.OnNotificationRequest += OnNotificationRequest;            
             this.LoadPlugins(); // Load the enabled plugins.     
         }
 
         #endregion        
 
         #region Plugins-specific code & handlers
+
+        private void OnNotificationRequest(object sender, string Title, string Text, System.Windows.Forms.ToolTipIcon Icon)
+        {
+            this.AsyncInvokeHandler(() =>
+            {
+                this.TrayIcon.Tag = sender;
+                this.TrayIcon.ShowBalloonTip(10000, Title, Text, Icon);
+            });
+        }
 
         private void LoadPlugins() // Loads enabled plugins
         {

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
+    <Compile Include="Notifications\Notifications.cs" />
     <Compile Include="Settings\Global.cs" />
     <Compile Include="IPluginSettingsForm.cs" />
     <Compile Include="Players\FlashPlayer.cs">
@@ -110,6 +111,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
