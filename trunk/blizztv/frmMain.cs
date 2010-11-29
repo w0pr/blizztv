@@ -23,6 +23,7 @@ using System.Threading;
 using BlizzTV.Updates;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
+using LibBlizzTV.Settings;
 
 namespace BlizzTV
 {
@@ -59,7 +60,7 @@ namespace BlizzTV
         {
             PluginManager pm = PluginManager.Instance; // Let the plugin-manager run..
 
-            foreach (KeyValuePair<string, bool> pair in Settings.Instance.GetPluginEntries()) // loop through available plugins.
+            foreach (KeyValuePair<string, bool> pair in Settings.Instance.Plugins.List) // loop through available plugins.
             {
                 if (pair.Value && pm.AvailablePlugins.ContainsKey(pair.Key)) this.InstantiatePlugin(pair.Key); // if the plugin is enabled then run it within it's own thread.
             }
@@ -73,7 +74,7 @@ namespace BlizzTV
 
         private void OnPreferencesWindowApplySettings() // Insantiates or kills plugins based on new applied plugin settings.
         {
-            foreach(KeyValuePair<string,bool> pair in Settings.Instance.GetPluginEntries())
+            foreach(KeyValuePair<string,bool> pair in Settings.Instance.Plugins.List)
             {
                 if (pair.Value && !PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.InstantiatePlugin(pair.Key); // instantiate the plugin.
                 else if (!pair.Value && PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.KillPlugin(pair.Key); // kill the plugin.
@@ -307,7 +308,7 @@ namespace BlizzTV
                 this.ContextMenuSleepMode.Checked = true;
                 this.TrayIcon.Icon = Properties.Resources.sleep_16;
                 this.TrayIcon.Text = "BlizzTV is in sleep mode.";
-                GlobalSettings.Instance.InSleepMode = true;
+                Global.Instance.InSleepMode = true;
             }
             else
             {
@@ -316,7 +317,7 @@ namespace BlizzTV
                 this.ContextMenuSleepMode.Checked = false;
                 this.TrayIcon.Icon = Properties.Resources.blizztv_16;
                 this.TrayIcon.Text = "BlizzTV";
-                GlobalSettings.Instance.InSleepMode = false;
+                Global.Instance.InSleepMode = false;
             }
         }
 

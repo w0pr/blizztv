@@ -19,38 +19,17 @@ using System.Linq;
 using System.Text;
 using Nini.Config;
 
-namespace LibBlizzTV
+namespace LibBlizzTV.Settings
 {
     /// <summary>
     /// Plugin-spefic settings.
     /// </summary>
-    public class PluginSettings
+    public class PluginSettings : Settings
     {
-        private string _name;
-        private IConfig _config;
-
-        /// <summary>
-        /// The config.
-        /// </summary>
-        public IConfig Config { get { return this._config; } }
-
         /// <summary>
         /// Plugin settings.
         /// </summary>
         /// <param name="Name"></param>
-        protected PluginSettings(string Name)
-        {
-            this._name = string.Format("Plugin-{0}", Name);
-            this._config = SettingsParser.Instance.Section(this._name);
-            if (this._config == null) this._config = SettingsParser.Instance.AddSection(this._name);
-        }
-
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        public void Save()
-        {
-            SettingsParser.Instance.Save();
-        }
+        protected PluginSettings(string Name) : base(string.Format("Plugin-{0}", Name)) { }
     }
 }

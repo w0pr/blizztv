@@ -22,6 +22,7 @@ using System.Text;
 using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
+using LibBlizzTV.Settings;
 
 namespace LibVideos
 {
@@ -186,7 +187,7 @@ namespace LibVideos
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!GlobalSettings.Instance.InSleepMode) UpdateChannels();
+            if (!Global.Instance.InSleepMode) UpdateChannels();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

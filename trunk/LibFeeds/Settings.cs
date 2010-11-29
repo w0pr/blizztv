@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibBlizzTV;
-using Nini.Config;
+using LibBlizzTV.Settings;
 
 namespace LibFeeds
 {
@@ -28,6 +28,6 @@ namespace LibFeeds
         public static Settings Instance { get { return _instance; } }
         private Settings() : base("Feeds") { }
 
-        public int UpdateEveryXMinutes { get { return this.Config.GetInt("UpdateEveryXMinutes", 60); } set { this.Config.Set("UpdateEveryXMinutes", value); } }
+        public int UpdateEveryXMinutes { get { return this.GetInt("UpdateEveryXMinutes", 60); } set { this.Set("UpdateEveryXMinutes", value); } }
     }
 }

@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibBlizzTV;
-using Nini.Config;
+using LibBlizzTV.Settings;
 
 namespace LibVideos
 {   
@@ -28,7 +28,7 @@ namespace LibVideos
         public static Settings Instance { get { return _instance; } }
         private Settings() : base("Videos") { }
 
-        public int NumberOfVideosToQueryChannelFor { get { return this.Config.GetInt("NumberOfVideosToQueryChannelFor", 10); } set { this.Config.Set("NumberOfVideosToQueryChannelFor", value); } }
-        public int UpdateEveryXMinutes { get { return this.Config.GetInt("UpdateEveryXMinutes", 60); } set { this.Config.Set("UpdateEveryXMinutes", value); } }
+        public int NumberOfVideosToQueryChannelFor { get { return this.GetInt("NumberOfVideosToQueryChannelFor", 10); } set { this.Set("NumberOfVideosToQueryChannelFor", value); } }
+        public int UpdateEveryXMinutes { get { return this.GetInt("UpdateEveryXMinutes", 60); } set { this.Set("UpdateEveryXMinutes", value); } }
     }
 }

@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 using LibBlizzTV.Players;
+using LibBlizzTV.Settings;
 
 namespace LibVideos
 {
@@ -35,10 +36,10 @@ namespace LibVideos
         {
             InitializeComponent();
 
-            this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
+            this.SwitchTopMostMode(Global.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
             this._video = Video; // set the video.
-            this.Width = GlobalSettings.Instance.VideoPlayerWidth; // get the default player width. 
-            this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
+            this.Width = Global.Instance.VideoPlayerWidth; // get the default player width. 
+            this.Height = Global.Instance.VideoPlayerHeight; // get the default player height.
             this._video.Process(); // process the video so that it's template variables are replaced.
         }
 
