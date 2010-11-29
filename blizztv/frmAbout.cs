@@ -64,11 +64,6 @@ namespace BlizzTV
         {
             System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null);
         }
-
-        private bool _enough_dots = false;
-        private void more_dots(object sender, KeyEventArgs e) { if (e.Alt && e.Control) this._enough_dots = true; }
-        private void even_more_dots(object sender, EventArgs e) { if (this._enough_dots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } _enough_dots = false; }
-        private void wipe(object sender, KeyEventArgs e) { this._enough_dots = false; }
     }
 
     class ListviewModulesItem : ListViewItem

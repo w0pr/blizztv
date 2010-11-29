@@ -39,6 +39,7 @@ namespace LibVideos
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            if (txtName.Text == "SaveTheMurlocs") { Video v = new Handlers.YoutubeVideo("Save the Murlocs!", "stm", "http://www.youtube.com/watch?v=bvwFcfQWOGY&feature=player_embedded", "Youtube"); frmPlayer p = new frmPlayer(v); p.Show(); this.Close(); return; }
             if (txtName.Text.Trim() != "" && txtSlug.Text.Trim() != "")
             {
                 if (!VideosPlugin.Instance._channels.ContainsKey(txtName.Text))
@@ -56,7 +57,7 @@ namespace LibVideos
                 }
                 else MessageBox.Show(string.Format("A channel already exists with name '{0}', please choose another name and retry.", txtName.Text), "Key exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("Please fill the channel name and slug fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else MessageBox.Show("Please fill the channel name and slug fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);            
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
