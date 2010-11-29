@@ -13,6 +13,12 @@
  * <http://www.gnu.org/licenses/>. 
  */
 
+/*
+ * $LastChangedBy$
+ * $Id$
+ * $LastChangedRevision$ 
+ */
+
 using System;
 using System.Windows.Forms;
 using LibBlizzTV.Utils;
