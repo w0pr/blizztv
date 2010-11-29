@@ -231,6 +231,11 @@ namespace BlizzTV
             System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/UserGuide", null);            
         }
 
+        private void MenuFAQ_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/FAQ", null);            
+        }
+
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmPreferences p = new frmPreferences();
@@ -394,6 +399,7 @@ namespace BlizzTV
         }
 
         #endregion              
+        
     }
 
     #region workload processor

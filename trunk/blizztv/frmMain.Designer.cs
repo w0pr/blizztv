@@ -57,6 +57,7 @@
             this.TreeView = new System.Windows.Forms.TreeView();
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
             this.TreeviewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MenuFAQ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
@@ -135,6 +136,7 @@
             this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.blizzTVcomToolStripMenuItem,
             this.userGuideToolStripMenuItem,
+            this.MenuFAQ,
             this.toolStripSeparator2,
             this.bugReportsToolStripMenuItem,
             this.checkUpdatesToolStripMenuItem,
@@ -287,6 +289,14 @@
             this.TreeviewContextMenu.Name = "TreeviewContextMenu";
             this.TreeviewContextMenu.Size = new System.Drawing.Size(61, 4);
             // 
+            // MenuFAQ
+            // 
+            this.MenuFAQ.Image = ((System.Drawing.Image)(resources.GetObject("MenuFAQ.Image")));
+            this.MenuFAQ.Name = "MenuFAQ";
+            this.MenuFAQ.Size = new System.Drawing.Size(153, 22);
+            this.MenuFAQ.Text = "FAQ";
+            this.MenuFAQ.Click += new System.EventHandler(this.MenuFAQ_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -343,6 +353,7 @@
         private System.Windows.Forms.ToolStripMenuItem MenuSleepMode;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem ContextMenuSleepMode;
+        private System.Windows.Forms.ToolStripMenuItem MenuFAQ;
     }
 }
 
