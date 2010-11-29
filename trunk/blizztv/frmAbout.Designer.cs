@@ -59,15 +59,11 @@
             this.columnAbout = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LinkFlattr = new System.Windows.Forms.PictureBox();
             this.LinkPaypal = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.Player = new LibBlizzTV.Players.FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LinkFlattr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LinkPaypal)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -217,33 +213,12 @@
             this.LinkPaypal.TabStop = false;
             this.LinkPaypal.Click += new System.EventHandler(this.LinkPaypal_Click);
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(10, 10);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(51, 50);
-            this.pictureBox2.TabIndex = 15;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.even_more_dots);
-            // 
-            // Player
-            // 
-            this.Player.Enabled = true;
-            this.Player.Location = new System.Drawing.Point(14, 372);
-            this.Player.Name = "Player";
-            this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Player.OcxState")));
-            this.Player.Size = new System.Drawing.Size(415, 211);
-            this.Player.TabIndex = 16;
-            // 
             // frmAbout
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(451, 341);
-            this.Controls.Add(this.Player);
-            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.LinkPaypal);
             this.Controls.Add(this.LinkFlattr);
             this.Controls.Add(this.groupBox1);
@@ -260,15 +235,11 @@
             this.Name = "frmAbout";
             this.Text = "About BlizzTV";
             this.Load += new System.EventHandler(this.frmAbout_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.more_dots);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.wipe);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LinkFlattr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LinkPaypal)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Player)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,7 +262,5 @@
         private System.Windows.Forms.ColumnHeader columnAbout;
         private System.Windows.Forms.PictureBox LinkFlattr;
         private System.Windows.Forms.PictureBox LinkPaypal;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private LibBlizzTV.Players.FlashPlayer Player;
     }
 }
