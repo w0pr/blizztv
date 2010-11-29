@@ -14,6 +14,7 @@ namespace BlizzTV
         public static Settings Instance { get { return _instance; } }
         public Plugins Plugins = new Plugins();
 
+        public bool NeedInitialConfig { get { return this.GetBoolean("NeedInitialConfig", true); } set { this.Set("NeedInitialConfig", value); } }
         public bool MinimizeToSystemTray { get { return this.GetBoolean("MinimizeToSystemTray", true); } set { this.Set("MinimizeToSystemTray", value); } }
         public bool AllowAutomaticUpdateChecks { get { return this.GetBoolean("AllowAutomaticUpdateChecks", true); } set { this.Set("AllowAutomaticUpdateChecks", value); } }
         public bool AllowBetaVersionNotifications { get { return this.GetBoolean("AllowBetaVersionNotifications", true); } set { this.Set("AllowBetaVersionNotifications", value); } }

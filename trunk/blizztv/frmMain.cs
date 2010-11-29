@@ -48,8 +48,10 @@ namespace BlizzTV
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            if (Settings.Instance.NeedInitialConfig) { Wizard.frmWizardHost f = new Wizard.frmWizardHost(); f.ShowDialog(); } // run the configuration wizard
+
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.            
-            this.LoadPlugins(); // Load the enabled plugins.               
+            this.LoadPlugins(); // Load the enabled plugins.     
         }
 
         #endregion        
