@@ -142,32 +142,6 @@ namespace LibBlizzTV
         }
 
         /// <summary>
-        /// Show balloon tip event handler delegate.
-        /// </summary>
-        /// <param name="Title">The tip title.</param>
-        /// <param name="Text">The tip text.</param>
-        /// <param name="Icon">The tip icon.</param>
-        /// <param name="sender">The sender object.</param>
-        public delegate void ShowBalloonTipEventHandler(object sender,string Title, string Text, System.Windows.Forms.ToolTipIcon Icon);
-
-        /// <summary>
-        /// Show balloon tip event handler.
-        /// </summary>
-        public event ShowBalloonTipEventHandler OnShowBalloonTip;
-
-        /// <summary>
-        /// Shows a balloon tip on system tray.
-        /// </summary>
-        /// <remarks>Can be overridden though you should still call base.ShowBalloonTip().</remarks> 
-        /// <param name="Title">The tip title.</param>
-        /// <param name="Text">The tip text.</param>
-        /// <param name="Icon">The tip icon.</param>
-        public virtual void ShowBalloonTip(string Title,string Text,System.Windows.Forms.ToolTipIcon Icon)
-        {
-            if (OnShowBalloonTip != null) OnShowBalloonTip(this,Title, Text, Icon);
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         public delegate void ShowFormEventHandler(System.Windows.Forms.Form Form, bool IsModal);
