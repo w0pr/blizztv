@@ -54,12 +54,12 @@ namespace LibFeeds
 
         private void LoadSettings()
         {
-            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)(FeedsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes;
+            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)Settings.Instance.UpdateEveryXMinutes;
         }
 
         public void SaveSettings()
         {
-            (FeedsPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
+            Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             FeedsPlugin.Instance.SaveSettings();
             if (this._feeds_list_updated) { FeedsPlugin.Instance.SaveFeedsXML(); }
         }

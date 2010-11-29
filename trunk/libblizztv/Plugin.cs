@@ -31,7 +31,6 @@ namespace LibBlizzTV
 
         private Assembly _assembly; // the assembly 
         private PluginAttributes _attributes;
-        private PluginSettings _settings; // the plugin's settings.
         private ListItem _root_list_item;
         private bool disposed = false;
 
@@ -39,11 +38,6 @@ namespace LibBlizzTV
         /// The plugins attributes.
         /// </summary>
         public PluginAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } }
-
-        /// <summary>
-        /// The plugin's settings.
-        /// </summary>
-        public PluginSettings Settings { get { return this._settings; } }
 
         /// <summary>
         /// Plugin sub-menus.
@@ -62,10 +56,9 @@ namespace LibBlizzTV
         /// <summary>
         /// ctor
         /// </summary>
-        public Plugin(PluginSettings ps)
+        public Plugin()
         {
             this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
-            this.ResolveSettings(ps); // resolve derived plugin settings if any defined.
         }
 
         #endregion
@@ -85,26 +78,6 @@ namespace LibBlizzTV
         public virtual System.Windows.Forms.Form GetPreferencesForm()
         {
             return null;
-        }
-
-        /// <summary>
-        /// SavePluginSettings event handler delegate.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="Settings">The plugin settings.</param>
-        public delegate void SavePluginSettingsEventHandler(object sender,PluginSettings Settings);
-
-        /// <summary>
-        /// SavePluginSettings event.
-        /// </summary>
-        public event SavePluginSettingsEventHandler OnSavePluginSettings;
-
-        /// <summary>
-        /// Saves the plugins settings.
-        /// </summary>
-        public virtual void SaveSettings()
-        {
-            if (OnSavePluginSettings != null) OnSavePluginSettings(this, this._settings);
         }
 
         /// <summary>
@@ -196,25 +169,6 @@ namespace LibBlizzTV
 
         #region internal-logic
 
-        private void ResolveSettings(PluginSettings ps) // If plugin defined a derived settings class from PluginSettings, it'll automaticly resolve the data.
-        {
-            Type _plugin_settings_type = this.GetPluginSettingsType(); // get type of derived settings class.
-            if (_plugin_settings_type != null) // if a derived settings class was defined.
-            {
-                if (ps.GetType() != _plugin_settings_type) this._settings = (PluginSettings)Activator.CreateInstance(_plugin_settings_type); // if supplied settings data is not the same of type of plugin's derived settings class, then just create a new instance of derived settings class with default values.
-                else this._settings = ps; // if the supplied data is within the same typeof plugin's derived settings class, just go on and set it.
-            }
-        }
-
-        private Type GetPluginSettingsType() // Searches for a derived PluginSettings class.
-        {
-            foreach (Type t in this._assembly.GetTypes()) // loop through available types.
-            {
-                if (t.IsSubclassOf(typeof(PluginSettings))) return t; // return type found derived PluginSettings class type.
-            }
-            return null; // if not found just return null.
-        }
-
         #endregion
 
         #region de-ctor
@@ -245,7 +199,6 @@ namespace LibBlizzTV
                 {
                     this._assembly = null;
                     this._attributes = null;
-                    this._settings = null;
                     this.RootListItem.Childs.Clear();
                     this.RootListItem = null;
                 }

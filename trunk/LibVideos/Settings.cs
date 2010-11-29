@@ -18,13 +18,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibBlizzTV;
+using Nini.Config;
 
 namespace LibVideos
-{
-    [Serializable]
+{   
     public class Settings:PluginSettings
     {
-        public int NumberOfVideosToQueryChannelFor = 10;
-        public int UpdateEveryXMinutes = 60;
+        private static Settings _instance = new Settings();
+        public static Settings Instance { get { return _instance; } }
+        private Settings() : base("Videos") { }
+
+        public int NumberOfVideosToQueryChannelFor { get { return this.Config.GetInt("NumberOfVideosToQueryChannelFor", 10); } set { this.Config.Set("NumberOfVideosToQueryChannelFor", value); } }
+        public int UpdateEveryXMinutes { get { return this.Config.GetInt("UpdateEveryXMinutes", 60); } set { this.Config.Set("UpdateEveryXMinutes", value); } }
     }
 }

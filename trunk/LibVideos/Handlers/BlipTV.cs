@@ -55,7 +55,7 @@ namespace LibVideos.Handlers
                         v.VideoID = entry.VideoID;
                         this.Videos.Add(v);
                         i++;
-                        if (i >= (VideosPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor) break;
+                        if (i >= Settings.Instance.NumberOfVideosToQueryChannelFor) break;
                     }
                 }
                 else this.Valid = false;

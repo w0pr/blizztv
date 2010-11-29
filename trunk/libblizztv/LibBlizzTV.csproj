@@ -63,7 +63,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsParser.cs" />
-    <Compile Include="SettingsStorage.cs" />
     <Compile Include="Utils\DebugConsole.cs" />
     <Compile Include="ListItem.cs" />
     <Compile Include="Utils\Log.cs" />

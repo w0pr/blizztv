@@ -18,15 +18,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibBlizzTV;
+using Nini.Config;
 
 namespace LibEvents
 {
-    [Serializable]
     public class Settings:PluginSettings
     {
-        public bool AllowEventNotifications = true;
-        public bool AllowNotificationOfInprogressEvents = true;
-        public int MinutesToNotifyBeforeEvent = 15;
-        public int NumberOfDaysToShowEventsOnMainWindow = 7;
+        private static Settings _instance = new Settings();
+        public static Settings Instance { get { return _instance; } }
+        private Settings() : base("Events") { }
+
+        public bool AllowEventNotifications { get { return this.Config.GetBoolean("AllowEventNotifications", true); } set { this.Config.Set("AllowEventNotifications", value); } }
+        public bool AllowNotificationOfInprogressEvents { get { return this.Config.GetBoolean("AllowNotificationOfInprogressEvents", true); } set { this.Config.Set("AllowNotificationOfInprogressEvents", value); } }
+        public int MinutesToNotifyBeforeEvent { get { return this.Config.GetInt("MinutesToNotifyBeforeEvent", 15); } set { this.Config.Set("MinutesToNotifyBeforeEvent", value); } }
+        public int NumberOfDaysToShowEventsOnMainWindow { get { return this.Config.GetInt("NumberOfDaysToShowEventsOnMainWindow", 7); } set { this.Config.Set("NumberOfDaysToShowEventsOnMainWindow", value); } }
     }
 }

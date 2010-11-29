@@ -50,8 +50,8 @@ namespace LibVideos
 
         private void LoadSettings()
         {
-            numericUpDownNumberOfVideosToQueryChannelFor.Value = (decimal)(VideosPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor;
-            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)(VideosPlugin.Instance.Settings as Settings).UpdateEveryXMinutes;
+            numericUpDownNumberOfVideosToQueryChannelFor.Value = (decimal)Settings.Instance.NumberOfVideosToQueryChannelFor;
+            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)Settings.Instance.UpdateEveryXMinutes;
         }
 
         private void LoadSubscriptions()
@@ -61,8 +61,8 @@ namespace LibVideos
 
         public void SaveSettings()
         {
-            (VideosPlugin.Instance.Settings as Settings).NumberOfVideosToQueryChannelFor = (int)numericUpDownNumberOfVideosToQueryChannelFor.Value;
-            (VideosPlugin.Instance.Settings as Settings).UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
+            Settings.Instance.NumberOfVideosToQueryChannelFor = (int)numericUpDownNumberOfVideosToQueryChannelFor.Value;
+            Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             VideosPlugin.Instance.SaveSettings();
 
             if (this._video_channels_list_updated) { VideosPlugin.Instance.SaveChannelsXML(); }

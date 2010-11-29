@@ -18,12 +18,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibBlizzTV;
+using Nini.Config;
 
 namespace LibFeeds
 {
-    [Serializable]
     public class Settings : PluginSettings
     {
-        public int UpdateEveryXMinutes = 60;
+        private static Settings _instance = new Settings();
+        public static Settings Instance { get { return _instance; } }
+        private Settings() : base("Feeds") { }
+
+        public int UpdateEveryXMinutes { get { return this.Config.GetInt("UpdateEveryXMinutes", 60); } set { this.Config.Set("UpdateEveryXMinutes", value); } }
     }
 }

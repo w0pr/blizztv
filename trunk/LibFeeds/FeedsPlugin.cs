@@ -42,8 +42,7 @@ namespace LibFeeds
 
         #region ctor
 
-        public FeedsPlugin(PluginSettings ps)
-            : base(ps)
+        public FeedsPlugin(): base()
         {
             FeedsPlugin.Instance = this;
             this.RootListItem = new ListItem("Feeds");
@@ -166,9 +165,9 @@ namespace LibFeeds
             }
         }
 
-        public override void SaveSettings()
+        public void SaveSettings()
         {
-            base.SaveSettings();
+            Settings.Instance.Save();
             this.SetupUpdateTimer();
         }
 
@@ -181,7 +180,7 @@ namespace LibFeeds
                 this._update_timer = null;
             }
 
-            _update_timer = new Timer((Settings as Settings).UpdateEveryXMinutes * 60000);
+            _update_timer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
             _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
             _update_timer.Enabled = true;
         }

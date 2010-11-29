@@ -17,18 +17,40 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Nini.Config;
 
 namespace LibBlizzTV
 {
     /// <summary>
     /// Plugin-spefic settings.
     /// </summary>
-    [Serializable]
     public class PluginSettings
     {
+        private string _name;
+        private IConfig _config;
+
         /// <summary>
-        /// Is the plugin enabled?
+        /// The config.
         /// </summary>
-        public bool Enabled=true;
+        public IConfig Config { get { return this._config; } }
+
+        /// <summary>
+        /// Plugin settings.
+        /// </summary>
+        /// <param name="Name"></param>
+        protected PluginSettings(string Name)
+        {
+            this._name = string.Format("Plugin-{0}", Name);
+            this._config = SettingsParser.Instance.Section(this._name);
+            if (this._config == null) this._config = SettingsParser.Instance.AddSection(this._name);
+        }
+
+        /// <summary>
+        /// Saves the settings.
+        /// </summary>
+        public void Save()
+        {
+            SettingsParser.Instance.Save();
+        }
     }
 }

@@ -71,7 +71,7 @@ namespace BlizzTV
             {
                 ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
                 this.ListviewPlugins.Items.Add(item);
-                if (SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(pair.Value.Attributes.Name) && SettingsStorage.Instance.Settings.PluginSettings[pair.Value.Attributes.Name].Enabled) item.Checked = true;
+                if (Settings.Instance.PluginEnabled(pair.Value.Attributes.Name)) item.Checked = true;
             }
             
             // load plugins specific preferences tabs
@@ -80,9 +80,9 @@ namespace BlizzTV
 
         private void LoadPluginTabs() // loads plugins specific preferences tabs
         {
-            foreach (KeyValuePair<string, PluginSettings> pair in SettingsStorage.Instance.Settings.PluginSettings) // loop through available plugins
+            foreach (KeyValuePair<string, bool> pair in Settings.Instance.GetPluginEntries())
             {
-                if (pair.Value.Enabled) // if plugin is enabled
+                if (pair.Value) // if plugin is enabled
                 {
                     Form plugin_form = PluginManager.Instance.InstantiatedPlugins[pair.Key].GetPreferencesForm(); // get plugin's preferences form.
                     if (plugin_form != null) // if plugin defined a preferences form in reality.
@@ -91,7 +91,7 @@ namespace BlizzTV
                         plugin_form.TopLevel = false; // plugin form should not behave as top most.
                         plugin_form.Dock = DockStyle.Fill; // let it fill it's parent.
                         plugin_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None; // it should not have borders too.
-                        plugin_form.BackColor = Color.White; 
+                        plugin_form.BackColor = Color.White;
                         plugin_form.Show(); // show the settings form.
                         TabControl.ImageList.Images.Add(pair.Key, PluginManager.Instance.InstantiatedPlugins[pair.Key].Attributes.Icon); // get the plugin icon.
                         t.ImageIndex = TabControl.ImageList.Images.IndexOfKey(pair.Key); // set the icon.
@@ -124,14 +124,11 @@ namespace BlizzTV
             // save plugin settings
             foreach (ListviewPluginsItem item in ListviewPlugins.Items)
             {
-                string plugin_name = item.PluginInfo.Attributes.Name;
-                if (!SettingsStorage.Instance.Settings.PluginSettings.ContainsKey(plugin_name)) SettingsStorage.Instance.Settings.PluginSettings.Add(plugin_name, new PluginSettings());
-                SettingsStorage.Instance.Settings.PluginSettings[plugin_name].Enabled = item.Checked;                
+                if (item.Checked) Settings.Instance.EnablePlugin(item.PluginInfo.Attributes.Name);
+                else Settings.Instance.DisablePlugin(item.PluginInfo.Attributes.Name);          
             }
 
-            SettingsStorage.Instance.Save();
             Settings.Instance.Save();
-            GlobalSettings.Instance.Save();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
