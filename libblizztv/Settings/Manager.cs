@@ -20,14 +20,14 @@ using System.Text;
 using LibBlizzTV.Utils;
 using Nini.Config;
 
-namespace LibBlizzTV
+namespace LibBlizzTV.Settings
 {
     /// <summary>
     /// The settings parser wrapper.
     /// </summary>
-    public sealed class SettingsParser
+    internal sealed class Manager
     {        
-        private static SettingsParser _instance = new SettingsParser();
+        private static Manager _instance = new Manager();
         private IniConfigSource _parser;
         private bool _file_exists = true;
         private string _config_file = "blizztv.ini";
@@ -35,21 +35,24 @@ namespace LibBlizzTV
         /// <summary>
         /// Returns instance of GlobalSettings.
         /// </summary>
-        public static SettingsParser Instance { get { return _instance; } }             
+        public static Manager Instance { get { return _instance; } }             
 
-        private SettingsParser()
+        private Manager()
         {
             try
             {
                 this._parser = new IniConfigSource(this._config_file);
-                this._parser.Alias.AddAlias("On", true);
-                this._parser.Alias.AddAlias("Off", false);
             }
             catch (Exception e)
             {
                 this._file_exists = false;
                 this._parser = new IniConfigSource();
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("SettingsParser load exception: {0}", e.ToString()));                
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("SettingsParser load exception: {0}", e.ToString()));
+            }
+            finally
+            {
+                this._parser.Alias.AddAlias("On", true);
+                this._parser.Alias.AddAlias("Off", false);
             }
         }
 
@@ -58,7 +61,7 @@ namespace LibBlizzTV
         /// </summary>
         /// <param name="Section">The asked section name.</param>
         /// <returns>The asked config section.</returns>
-        public IConfig Section(string Section)
+        internal IConfig Section(string Section)
         {
             return this._parser.Configs[Section];
         }
@@ -68,7 +71,7 @@ namespace LibBlizzTV
         /// </summary>
         /// <param name="Section">The config section name.</param>
         /// <returns>Returns added config section.</returns>
-        public IConfig AddSection(string Section)
+        internal IConfig AddSection(string Section)
         {
             return this._parser.AddConfig(Section);
         }
@@ -76,7 +79,7 @@ namespace LibBlizzTV
         /// <summary>
         /// Saves the settings.
         /// </summary>
-        public void Save()
+        internal void Save()
         {
             if (this._file_exists) this._parser.Save();
             else

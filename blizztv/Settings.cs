@@ -4,87 +4,42 @@ using System.Linq;
 using System.Text;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
-using Nini.Config;
+using LibBlizzTV.Settings;
 
 namespace BlizzTV
 {
-    public sealed class Settings
+    public sealed class Settings : LibBlizzTV.Settings.Settings
     {
         private static Settings _instance = new Settings();        
         public static Settings Instance { get { return _instance; } }
+        public Plugins Plugins = new Plugins();
 
-        private bool _minimize_to_system_tray = true;
-        private bool _allow_automatic_update_checks = true;
-        private bool _allow_beta_version_notifications = true;
-        private bool _enable_debug_logging = true;
-        private bool _enable_debug_console = false;
+        public bool MinimizeToSystemTray { get { return this.GetBoolean("MinimizeToSystemTray", true); } set { this.Set("MinimizeToSystemTray", value); } }
+        public bool AllowAutomaticUpdateChecks { get { return this.GetBoolean("AllowAutomaticUpdateChecks", true); } set { this.Set("AllowAutomaticUpdateChecks", value); } }
+        public bool AllowBetaVersionNotifications { get { return this.GetBoolean("AllowBetaVersionNotifications", true); } set { this.Set("AllowBetaVersionNotifications", value); } }
+        public bool EnableDebugLogging { get { return this.GetBoolean("EnableDebugLogging", true); } set { this.Set("EnableDebugLogging", value); } }
+        public bool EnableDebugConsole { get { return this.GetBoolean("EnableDebugConsole", false); } set { this.Set("EnableDebugConsole", value); } }
 
-        public bool MinimizeToSystemTray { get { return this._minimize_to_system_tray; } set { this._minimize_to_system_tray = value; } }
-        public bool AllowAutomaticUpdateChecks { get { return this._allow_automatic_update_checks; } set { this._allow_automatic_update_checks = value; } }
-        public bool AllowBetaVersionNotifications { get { return this._allow_beta_version_notifications; } set { this._allow_beta_version_notifications = value; } }
-        public bool EnableDebugLogging { get { return this._enable_debug_logging; } set { this._enable_debug_logging = value; } }
-        public bool EnableDebugConsole { get { return this._enable_debug_console; } set { this._enable_debug_console = value; } }
+        private Settings() : base("UI") { }       
+    }
 
-        private Settings()
+    public class Plugins : LibBlizzTV.Settings.Settings
+    {
+        public Plugins() : base("Plugins") { }
+
+        public void Disable(string Name) { this.Set(Name, "Off"); }
+        public void Enable(string Name) { this.Set(Name, "On"); }
+        public bool Enabled(string Name) { return this.GetBoolean(Name, false); }
+
+        public Dictionary<string, bool> List
         {
-            try
+            get
             {
-                this._minimize_to_system_tray = SettingsParser.Instance.Section("UI").GetBoolean("MinimizeToSystemTray", true);
-                this._allow_automatic_update_checks = SettingsParser.Instance.Section("UI").GetBoolean("AllowAutomaticUpdateChecks", true);
-                this._allow_beta_version_notifications = SettingsParser.Instance.Section("UI").GetBoolean("AllowBetaVersionNotifications", true);
-                this._enable_debug_logging = SettingsParser.Instance.Section("UI").GetBoolean("EnableDebugLogging", true);
-                this._enable_debug_console = SettingsParser.Instance.Section("UI").GetBoolean("EnableDebugConsole", false);
+                Dictionary<string, bool> entries = new Dictionary<string, bool>();
+                string[] keys = this.GetEntryKeys();
+                foreach (string key in keys) { entries.Add(key, this.GetBoolean(key, false)); }
+                return entries;
             }
-            catch (Exception e)
-            {
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("ApplicationSettings load exception: {0}", e.ToString()));
-            }
-        }
-
-        public void Save()
-        {
-            IConfig config = SettingsParser.Instance.Section("UI");
-            if (config == null) config = SettingsParser.Instance.AddSection("UI");
-            config.Set("MinimizeToSystemTray", this._minimize_to_system_tray);
-            config.Set("AllowAutomaticUpdateChecks", this._allow_automatic_update_checks);
-            config.Set("AllowBetaVersionNotifications", this._allow_beta_version_notifications);
-            config.Set("EnableDebugLogging", this._enable_debug_logging);
-            config.Set("EnableDebugConsole", this._enable_debug_logging);
-            SettingsParser.Instance.Save();
-        }
-
-        public void EnablePlugin(string Name)
-        {
-            IConfig config = SettingsParser.Instance.Section("Plugins");
-            if (config == null) config = SettingsParser.Instance.Section("Plugins");
-            config.Set(Name, "On");
-            SettingsParser.Instance.Save();
-        }
-
-        public void DisablePlugin(string Name)
-        {
-            IConfig config = SettingsParser.Instance.Section("Plugins");
-            if (config == null) config = SettingsParser.Instance.AddSection("Plugins");
-            config.Set(Name, "Off");
-            SettingsParser.Instance.Save();
-        }
-
-        public bool PluginEnabled(string Name)
-        {
-            IConfig config = SettingsParser.Instance.Section("Plugins");
-            if (config == null) config = SettingsParser.Instance.AddSection("Plugins");
-            return config.GetBoolean(Name);
-        }
-
-        public Dictionary<string, bool> GetPluginEntries()
-        {
-            IConfig config = SettingsParser.Instance.Section("Plugins");
-            if (config == null) config = SettingsParser.Instance.AddSection("Plugins");
-
-            Dictionary<string, bool> entries = new Dictionary<string, bool>();
-            string[] keys = config.GetKeys();
-            foreach (string key in keys) { entries.Add(key, config.GetBoolean(key, false)); }
-            return entries;
         }
     }
 }

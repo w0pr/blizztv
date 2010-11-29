@@ -21,6 +21,7 @@ using System.Text;
 using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
+using LibBlizzTV.Settings;
 
 namespace LibEvents
 {
@@ -61,7 +62,7 @@ namespace LibEvents
             this.ParseEvents();
 
             // Go check for events.
-            if (!GlobalSettings.Instance.InSleepMode) this.CheckEvents();
+            if (!Global.Instance.InSleepMode) this.CheckEvents();
 
             // setup update timer for event checks
             _event_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
@@ -165,7 +166,7 @@ namespace LibEvents
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!GlobalSettings.Instance.InSleepMode) this.CheckEvents();
+            if (!Global.Instance.InSleepMode) this.CheckEvents();
         }
 
         private void CheckEvents()

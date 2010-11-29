@@ -41,9 +41,6 @@
     <ApplicationIcon>blizztv.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Nini">
-      <HintPath>..\upstream\Nini.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />

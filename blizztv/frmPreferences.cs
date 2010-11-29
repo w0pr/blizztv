@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using LibBlizzTV;
+using LibBlizzTV.Settings;
 
 namespace BlizzTV
 {
@@ -51,16 +52,16 @@ namespace BlizzTV
         private void LoadSettings()
         {
 
-            if (GlobalSettings.Instance.UseInternalViewers) radioButtonUseInternalViewers.Checked = true;
+            if (Global.Instance.UseInternalViewers) radioButtonUseInternalViewers.Checked = true;
             else radioButtonUseDefaultWebBrowser.Checked = true;
 
             checkBoxAllowAutomaticUpdateChecks.Checked = Settings.Instance.AllowAutomaticUpdateChecks;
             checkBoxAllowBetaVersionNotifications.Checked = Settings.Instance.AllowBetaVersionNotifications;
 
-            txtVideoPlayerWidth.Text = GlobalSettings.Instance.VideoPlayerWidth.ToString();
-            txtVideoPlayerHeight.Text = GlobalSettings.Instance.VideoPlayerHeight.ToString();
-            checkBoxVideoAutoPlay.Checked = GlobalSettings.Instance.AutoPlayVideos;
-            CheckBoxPlayerAlwaysOnTop.Checked = GlobalSettings.Instance.PlayerWindowsAlwaysOnTop;
+            txtVideoPlayerWidth.Text = Global.Instance.VideoPlayerWidth.ToString();
+            txtVideoPlayerHeight.Text = Global.Instance.VideoPlayerHeight.ToString();
+            checkBoxVideoAutoPlay.Checked = Global.Instance.AutoPlayVideos;
+            CheckBoxPlayerAlwaysOnTop.Checked = Global.Instance.PlayerWindowsAlwaysOnTop;
 
             checkBoxMinimimizeToSystemTray.Checked = Settings.Instance.MinimizeToSystemTray;
             checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
@@ -71,7 +72,7 @@ namespace BlizzTV
             {
                 ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
                 this.ListviewPlugins.Items.Add(item);
-                if (Settings.Instance.PluginEnabled(pair.Value.Attributes.Name)) item.Checked = true;
+                if (Settings.Instance.Plugins.Enabled(pair.Value.Attributes.Name)) item.Checked = true;
             }
             
             // load plugins specific preferences tabs
@@ -80,7 +81,7 @@ namespace BlizzTV
 
         private void LoadPluginTabs() // loads plugins specific preferences tabs
         {
-            foreach (KeyValuePair<string, bool> pair in Settings.Instance.GetPluginEntries())
+            foreach (KeyValuePair<string, bool> pair in Settings.Instance.Plugins.List)
             {
                 if (pair.Value) // if plugin is enabled
                 {
@@ -106,16 +107,16 @@ namespace BlizzTV
         private void SaveSettings()
         {
             // save global settings
-            if (radioButtonUseInternalViewers.Checked) GlobalSettings.Instance.UseInternalViewers = true;
-            else GlobalSettings.Instance.UseInternalViewers = false;
+            if (radioButtonUseInternalViewers.Checked) Global.Instance.UseInternalViewers = true;
+            else Global.Instance.UseInternalViewers = false;
 
             Settings.Instance.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
             Settings.Instance.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
 
-            GlobalSettings.Instance.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
-            GlobalSettings.Instance.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
-            GlobalSettings.Instance.AutoPlayVideos = checkBoxVideoAutoPlay.Checked;
-            GlobalSettings.Instance.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
+            Global.Instance.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
+            Global.Instance.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
+            Global.Instance.AutoPlayVideos = checkBoxVideoAutoPlay.Checked;
+            Global.Instance.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
 
             Settings.Instance.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
             Settings.Instance.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
@@ -124,8 +125,8 @@ namespace BlizzTV
             // save plugin settings
             foreach (ListviewPluginsItem item in ListviewPlugins.Items)
             {
-                if (item.Checked) Settings.Instance.EnablePlugin(item.PluginInfo.Attributes.Name);
-                else Settings.Instance.DisablePlugin(item.PluginInfo.Attributes.Name);          
+                if (item.Checked) Settings.Instance.Plugins.Enable(item.PluginInfo.Attributes.Name);
+                else Settings.Instance.Plugins.Disable(item.PluginInfo.Attributes.Name);          
             }
 
             Settings.Instance.Save();

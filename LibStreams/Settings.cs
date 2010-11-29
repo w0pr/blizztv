@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibBlizzTV;
-using Nini.Config;
+using LibBlizzTV.Settings;
 
 namespace LibStreams
 {
@@ -28,9 +28,9 @@ namespace LibStreams
         public static Settings Instance { get { return _instance; } }
         private Settings() : base("Streams") { }
 
-        public int UpdateEveryXMinutes { get { return this.Config.GetInt("UpdateEveryXMinutes", 60); } set { this.Config.Set("UpdateEveryXMinutes", value); } }
-        public bool AutomaticallyOpenChatForAvailableStreams { get { return this.Config.GetBoolean("AutomaticallyOpenChatForAvailableStreams", false); } set { this.Config.Set("AutomaticallyOpenChatForAvailableStreams", value); } }
-        public int StreamChatWindowWidth { get { return this.Config.GetInt("StreamChatWindowWidth", 640); } set { this.Config.Set("StreamChatWindowWidth", value); } }
-        public int StreamChatWindowHeight { get { return this.Config.GetInt("StreamChatWindowHeight", 385); } set { this.Config.Set("StreamChatWindowHeight", value); } }
+        public int UpdateEveryXMinutes { get { return this.GetInt("UpdateEveryXMinutes", 60); } set { this.Set("UpdateEveryXMinutes", value); } }
+        public bool AutomaticallyOpenChatForAvailableStreams { get { return this.GetBoolean("AutomaticallyOpenChatForAvailableStreams", false); } set { this.Set("AutomaticallyOpenChatForAvailableStreams", value); } }
+        public int StreamChatWindowWidth { get { return this.GetInt("StreamChatWindowWidth", 640); } set { this.Set("StreamChatWindowWidth", value); } }
+        public int StreamChatWindowHeight { get { return this.GetInt("StreamChatWindowHeight", 385); } set { this.Set("StreamChatWindowHeight", value); } }
     }
 }

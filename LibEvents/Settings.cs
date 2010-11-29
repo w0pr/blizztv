@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibBlizzTV;
-using Nini.Config;
+using LibBlizzTV.Settings;
 
 namespace LibEvents
 {
@@ -28,9 +28,9 @@ namespace LibEvents
         public static Settings Instance { get { return _instance; } }
         private Settings() : base("Events") { }
 
-        public bool AllowEventNotifications { get { return this.Config.GetBoolean("AllowEventNotifications", true); } set { this.Config.Set("AllowEventNotifications", value); } }
-        public bool AllowNotificationOfInprogressEvents { get { return this.Config.GetBoolean("AllowNotificationOfInprogressEvents", true); } set { this.Config.Set("AllowNotificationOfInprogressEvents", value); } }
-        public int MinutesToNotifyBeforeEvent { get { return this.Config.GetInt("MinutesToNotifyBeforeEvent", 15); } set { this.Config.Set("MinutesToNotifyBeforeEvent", value); } }
-        public int NumberOfDaysToShowEventsOnMainWindow { get { return this.Config.GetInt("NumberOfDaysToShowEventsOnMainWindow", 7); } set { this.Config.Set("NumberOfDaysToShowEventsOnMainWindow", value); } }
+        public bool AllowEventNotifications { get { return this.GetBoolean("AllowEventNotifications", true); } set { this.Set("AllowEventNotifications", value); } }
+        public bool AllowNotificationOfInprogressEvents { get { return this.GetBoolean("AllowNotificationOfInprogressEvents", true); } set { this.Set("AllowNotificationOfInprogressEvents", value); } }
+        public int MinutesToNotifyBeforeEvent { get { return this.GetInt("MinutesToNotifyBeforeEvent", 15); } set { this.Set("MinutesToNotifyBeforeEvent", value); } }
+        public int NumberOfDaysToShowEventsOnMainWindow { get { return this.GetInt("NumberOfDaysToShowEventsOnMainWindow", 7); } set { this.Set("NumberOfDaysToShowEventsOnMainWindow", value); } }
     }
 }

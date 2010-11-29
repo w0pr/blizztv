@@ -42,7 +42,8 @@
     <Reference Include="Esent.Interop">
       <HintPath>..\upstream\Esent.Interop.dll</HintPath>
     </Reference>
-    <Reference Include="Nini">
+    <Reference Include="Nini, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\upstream\Nini.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -57,19 +58,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
-    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="Settings\Global.cs" />
     <Compile Include="IPluginSettingsForm.cs" />
     <Compile Include="Players\FlashPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SettingsParser.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\Manager.cs" />
     <Compile Include="Utils\DebugConsole.cs" />
     <Compile Include="ListItem.cs" />
     <Compile Include="Utils\Log.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="PluginInfo.cs" />
-    <Compile Include="PluginSettings.cs" />
+    <Compile Include="Settings\PluginSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

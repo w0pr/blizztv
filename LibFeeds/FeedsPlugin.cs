@@ -22,6 +22,7 @@ using System.Text;
 using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
+using LibBlizzTV.Settings;
 
 namespace LibFeeds
 {
@@ -187,7 +188,7 @@ namespace LibFeeds
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!GlobalSettings.Instance.InSleepMode) this.UpdateFeeds();
+            if (!Global.Instance.InSleepMode) this.UpdateFeeds();
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
