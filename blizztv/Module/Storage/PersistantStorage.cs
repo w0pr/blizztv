@@ -9,7 +9,7 @@ namespace BlizzTV.Module.Storage
     public class PersistantStorage
     {     
         private static PersistantStorage _instance = new PersistantStorage();
-        private string _storage_folder = "storage";
+        private string _storage_folder = "Storage";
         private PersistentDictionary<string, byte> _dictionary;
 
         

@@ -69,7 +69,6 @@ namespace BlizzTV.Module
         private PluginManager()
         {
             Log.Instance.Write(LogMessageTypes.INFO, string.Format("Plugin manager - ({0}) initialized..", this.GetType().Module.Name)); // log the plugin-manager startup message.
-            //this.ScanPlugins(); // scan the available plugins
             this.ScanModules();
             
             foreach (KeyValuePair<string,PluginInfo> pi in this.AvailablePlugins) // print all avaiable plugin's list to log.
@@ -87,24 +86,6 @@ namespace BlizzTV.Module
                     PluginInfo pi=new PluginInfo(t);
                     if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi);
                 }
-            }
-        }
-
-        private void ScanPlugins() // scans the program directory and finds valid BlizzTV plugins
-        {
-            try
-            {
-                DirectoryInfo SelfDir = new DirectoryInfo("./plugins"); // plugin's are stored in BlizzTV's directory itself.
-                FileInfo[] _dll_files = SelfDir.GetFiles("*.dll"); // find all available dll files
-                foreach (FileInfo _dll in _dll_files) // loop through all avaible dll files
-                {
-                    //PluginInfo pi = new PluginInfo(_dll.Name); // get the assembly info
-                    //if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi); // if it's a valid BlizzTV plugin add it to list
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugins directory not found.. Exception: {0}", e.ToString()));
             }
         }
 
