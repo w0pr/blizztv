@@ -41,16 +41,13 @@
     <ApplicationIcon>blizztv.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Esent.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Esent.Collections">
       <HintPath>..\upstream\Esent.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="Esent.Interop, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Esent.Interop">
       <HintPath>..\upstream\Esent.Interop.dll</HintPath>
     </Reference>
-    <Reference Include="Nini, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Nini">
       <HintPath>..\upstream\Nini.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -366,8 +363,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>IF NOT EXIST "$(TargetDir)Libs" mkdir "$(TargetDir)Libs"
+Move "$(TargetDir)*.dll" "$(TargetDir)Libs"
+Del "$(TargetDir)*.xml"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

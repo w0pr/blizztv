@@ -39,6 +39,10 @@ namespace BlizzTV
                 return; // exit
             }
 
+            #pragma warning disable 0618 // ignore obsolete warning.
+            AppDomain.CurrentDomain.AppendPrivatePath("Libs"); // let the app.domain be aware of our custom assemblies folder.           
+            #pragma warning restore 0618 // restore obsolete warnings.
+
             // Check global settings and start logger and debug console if enabled
             if (Settings.Instance.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
