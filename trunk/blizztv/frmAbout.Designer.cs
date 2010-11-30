@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Hüseyin Uslu",
@@ -47,10 +48,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ListviewPlugins = new System.Windows.Forms.ListView();
+            this.ListviewModules = new System.Windows.Forms.ListView();
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.buttonOK = new System.Windows.Forms.Button();
             this.LinkLabelBlizzTV = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -60,6 +61,7 @@
             this.LinkFlattr = new System.Windows.Forms.PictureBox();
             this.LinkPaypal = new System.Windows.Forms.PictureBox();
             this.Murloc = new System.Windows.Forms.PictureBox();
+            this.LabelVersion = new System.Windows.Forms.Label();
             this.Player = new BlizzTV.Module.Players.FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -74,7 +76,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(334, 9);
+            this.label1.Location = new System.Drawing.Point(346, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 33);
             this.label1.TabIndex = 5;
@@ -83,7 +85,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(305, 7);
+            this.pictureBox1.Location = new System.Drawing.Point(308, 7);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -92,45 +94,46 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.ListviewPlugins);
-            this.groupBox2.Location = new System.Drawing.Point(7, 169);
+            this.groupBox2.Controls.Add(this.ListviewModules);
+            this.groupBox2.Location = new System.Drawing.Point(7, 192);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(438, 140);
+            this.groupBox2.Size = new System.Drawing.Size(438, 117);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Plugins";
+            this.groupBox2.Text = "Modules";
             // 
-            // ListviewPlugins
+            // ListviewModules
             // 
-            this.ListviewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ListviewModules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColName,
-            this.ColVersion,
             this.ColDescription});
-            this.ListviewPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ListviewPlugins.FullRowSelect = true;
-            this.ListviewPlugins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ListviewPlugins.Location = new System.Drawing.Point(3, 16);
-            this.ListviewPlugins.Name = "ListviewPlugins";
-            this.ListviewPlugins.ShowItemToolTips = true;
-            this.ListviewPlugins.Size = new System.Drawing.Size(432, 121);
-            this.ListviewPlugins.TabIndex = 0;
-            this.ListviewPlugins.UseCompatibleStateImageBehavior = false;
-            this.ListviewPlugins.View = System.Windows.Forms.View.Details;
+            this.ListviewModules.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListviewModules.FullRowSelect = true;
+            this.ListviewModules.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ListviewModules.Location = new System.Drawing.Point(3, 16);
+            this.ListviewModules.Name = "ListviewModules";
+            this.ListviewModules.ShowItemToolTips = true;
+            this.ListviewModules.Size = new System.Drawing.Size(432, 98);
+            this.ListviewModules.SmallImageList = this.imageList;
+            this.ListviewModules.TabIndex = 0;
+            this.ListviewModules.UseCompatibleStateImageBehavior = false;
+            this.ListviewModules.View = System.Windows.Forms.View.Details;
             // 
             // ColName
             // 
             this.ColName.Text = "Name";
             this.ColName.Width = 100;
             // 
-            // ColVersion
-            // 
-            this.ColVersion.Text = "Version";
-            this.ColVersion.Width = 74;
-            // 
             // ColDescription
             // 
             this.ColDescription.Text = "Description";
-            this.ColDescription.Width = 237;
+            this.ColDescription.Width = 310;
+            // 
+            // imageList
+            // 
+            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // buttonOK
             // 
@@ -144,21 +147,22 @@
             // 
             // LinkLabelBlizzTV
             // 
-            this.LinkLabelBlizzTV.AutoSize = true;
-            this.LinkLabelBlizzTV.Location = new System.Drawing.Point(316, 47);
+            this.LinkLabelBlizzTV.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LinkLabelBlizzTV.Location = new System.Drawing.Point(320, 61);
             this.LinkLabelBlizzTV.Name = "LinkLabelBlizzTV";
-            this.LinkLabelBlizzTV.Size = new System.Drawing.Size(117, 13);
+            this.LinkLabelBlizzTV.Size = new System.Drawing.Size(125, 13);
             this.LinkLabelBlizzTV.TabIndex = 11;
             this.LinkLabelBlizzTV.TabStop = true;
             this.LinkLabelBlizzTV.Text = "http://www.blizztv.com";
+            this.LinkLabelBlizzTV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.LinkLabelBlizzTV.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelBlizzTV_LinkClicked);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.ListviewCredits);
-            this.groupBox1.Location = new System.Drawing.Point(7, 61);
+            this.groupBox1.Location = new System.Drawing.Point(7, 77);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(441, 102);
+            this.groupBox1.Size = new System.Drawing.Size(438, 109);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credits";
@@ -180,7 +184,7 @@
             this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
             this.ListviewCredits.Name = "ListviewCredits";
             this.ListviewCredits.ShowItemToolTips = true;
-            this.ListviewCredits.Size = new System.Drawing.Size(435, 83);
+            this.ListviewCredits.Size = new System.Drawing.Size(432, 90);
             this.ListviewCredits.TabIndex = 1;
             this.ListviewCredits.UseCompatibleStateImageBehavior = false;
             this.ListviewCredits.View = System.Windows.Forms.View.Details;
@@ -220,7 +224,7 @@
             // Murloc
             // 
             this.Murloc.Image = ((System.Drawing.Image)(resources.GetObject("Murloc.Image")));
-            this.Murloc.Location = new System.Drawing.Point(12, 5);
+            this.Murloc.Location = new System.Drawing.Point(10, 7);
             this.Murloc.Name = "Murloc";
             this.Murloc.Size = new System.Drawing.Size(56, 50);
             this.Murloc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -228,13 +232,23 @@
             this.Murloc.TabStop = false;
             this.Murloc.Click += new System.EventHandler(this.even_more_dots);
             // 
+            // LabelVersion
+            // 
+            this.LabelVersion.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LabelVersion.Location = new System.Drawing.Point(345, 42);
+            this.LabelVersion.Name = "LabelVersion";
+            this.LabelVersion.Size = new System.Drawing.Size(100, 12);
+            this.LabelVersion.TabIndex = 17;
+            this.LabelVersion.Text = "version";
+            this.LabelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Player
             // 
             this.Player.Enabled = true;
             this.Player.Location = new System.Drawing.Point(10, 359);
             this.Player.Name = "Player";
             this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Player.OcxState")));
-            this.Player.Size = new System.Drawing.Size(0, 0);
+            this.Player.Size = new System.Drawing.Size(624, 347);
             this.Player.TabIndex = 16;
             // 
             // frmAbout
@@ -253,6 +267,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.LabelVersion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -279,9 +294,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListView ListviewPlugins;
+        private System.Windows.Forms.ListView ListviewModules;
         private System.Windows.Forms.ColumnHeader ColName;
-        private System.Windows.Forms.ColumnHeader ColVersion;
         private System.Windows.Forms.ColumnHeader ColDescription;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.LinkLabel LinkLabelBlizzTV;
@@ -293,5 +307,7 @@
         private System.Windows.Forms.PictureBox LinkPaypal;
         private System.Windows.Forms.PictureBox Murloc;
         private Module.Players.FlashPlayer Player;
+        private System.Windows.Forms.ImageList imageList;
+        private System.Windows.Forms.Label LabelVersion;
     }
 }

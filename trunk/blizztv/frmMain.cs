@@ -170,7 +170,7 @@ namespace BlizzTV
                     if (p.Menus.Count > 0) // if plugin requests sub-menu's.
                     {
                         ToolStripMenuItem parent = new ToolStripMenuItem(p.Attributes.Name, p.Attributes.Icon); // create the parent plugin-menu first.
-                        MenuPlugins.DropDownItems.Add(parent); // add the parent-menu.
+                        menuModules.DropDownItems.Add(parent); // add the parent-menu.
 
                         foreach (KeyValuePair<string, ToolStripMenuItem> pair in p.Menus) // loop through all plugin sub-menus.
                         {
@@ -321,7 +321,7 @@ namespace BlizzTV
             if (!this._sleep_mode)
             {
                 this._sleep_mode = true;
-                this.MenuSleepMode.Checked = true;
+                this.menuSleepMode.Checked = true;
                 this.ContextMenuSleepMode.Checked = true;
                 this.TrayIcon.Icon = Properties.Resources.ico_sleep_16;
                 this.TrayIcon.Text = "BlizzTV is in sleep mode.";
@@ -330,7 +330,7 @@ namespace BlizzTV
             else
             {
                 this._sleep_mode = false;
-                this.MenuSleepMode.Checked = false;
+                this.menuSleepMode.Checked = false;
                 this.ContextMenuSleepMode.Checked = false;
                 this.TrayIcon.Icon = Properties.Resources.ico_blizztv_16;
                 this.TrayIcon.Text = "BlizzTV";

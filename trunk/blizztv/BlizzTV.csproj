@@ -365,7 +365,8 @@
   <PropertyGroup>
     <PostBuildEvent>IF NOT EXIST "$(TargetDir)Libs" mkdir "$(TargetDir)Libs"
 Move "$(TargetDir)*.dll" "$(TargetDir)Libs"
-Del "$(TargetDir)*.xml"</PostBuildEvent>
+Del "$(TargetDir)*.xml"
+attrib -R "$(TargetDir)*.*" /S</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

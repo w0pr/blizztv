@@ -65,16 +65,16 @@ namespace BlizzTV
             checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
             checkBoxEnableDebugConsole.Checked = Settings.Instance.EnableDebugConsole;
 
+            // load plugins specific preferences tabs
+            this.LoadPluginTabs();
+
             // plugin settings.
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
             {
                 ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
                 this.ListviewPlugins.Items.Add(item);
                 if (Settings.Instance.Plugins.Enabled(pair.Value.Attributes.Name)) item.Checked = true;
-            }
-            
-            // load plugins specific preferences tabs
-            this.LoadPluginTabs();
+            }           
         }
 
         private void LoadPluginTabs() // loads plugins specific preferences tabs
@@ -152,7 +152,7 @@ namespace BlizzTV
         public ListviewPluginsItem(PluginInfo p)
         {
             _plugin_info = p;
-            this.SubItems.Add(new ListViewSubItem());
+            this.ImageKey = p.Attributes.Name;
             this.SubItems.Add(p.Attributes.Name);
             this.SubItems.Add(p.Attributes.Description);
         }

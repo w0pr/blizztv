@@ -37,10 +37,9 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.checkBoxEnableDebugConsole = new System.Windows.Forms.CheckBox();
             this.checkBoxEnableDebugLogging = new System.Windows.Forms.CheckBox();
-            this.tabPlugins = new System.Windows.Forms.TabPage();
+            this.tabModules = new System.Windows.Forms.TabPage();
             this.ListviewPlugins = new System.Windows.Forms.ListView();
             this.ColEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabGeneral = new System.Windows.Forms.TabPage();
@@ -64,7 +63,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.tabPlugins.SuspendLayout();
+            this.tabModules.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -148,31 +147,32 @@
             this.checkBoxEnableDebugLogging.Text = "Enable debug-logging";
             this.checkBoxEnableDebugLogging.UseVisualStyleBackColor = true;
             // 
-            // tabPlugins
+            // tabModules
             // 
-            this.tabPlugins.Controls.Add(this.ListviewPlugins);
-            this.tabPlugins.ImageIndex = 3;
-            this.tabPlugins.Location = new System.Drawing.Point(4, 23);
-            this.tabPlugins.Name = "tabPlugins";
-            this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPlugins.Size = new System.Drawing.Size(461, 276);
-            this.tabPlugins.TabIndex = 1;
-            this.tabPlugins.Text = "Plugins";
-            this.tabPlugins.UseVisualStyleBackColor = true;
+            this.tabModules.Controls.Add(this.ListviewPlugins);
+            this.tabModules.ImageIndex = 3;
+            this.tabModules.Location = new System.Drawing.Point(4, 23);
+            this.tabModules.Name = "tabModules";
+            this.tabModules.Padding = new System.Windows.Forms.Padding(3);
+            this.tabModules.Size = new System.Drawing.Size(461, 276);
+            this.tabModules.TabIndex = 1;
+            this.tabModules.Text = "Modules";
+            this.tabModules.UseVisualStyleBackColor = true;
             // 
             // ListviewPlugins
             // 
             this.ListviewPlugins.CheckBoxes = true;
             this.ListviewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColEnabled,
-            this.colIcon,
             this.ColName,
             this.ColDescription});
             this.ListviewPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ListviewPlugins.FullRowSelect = true;
             this.ListviewPlugins.Location = new System.Drawing.Point(3, 3);
             this.ListviewPlugins.Name = "ListviewPlugins";
+            this.ListviewPlugins.ShowGroups = false;
             this.ListviewPlugins.Size = new System.Drawing.Size(455, 270);
+            this.ListviewPlugins.SmallImageList = this.ImageList;
             this.ListviewPlugins.TabIndex = 1;
             this.ListviewPlugins.UseCompatibleStateImageBehavior = false;
             this.ListviewPlugins.View = System.Windows.Forms.View.Details;
@@ -182,11 +182,6 @@
             this.ColEnabled.Text = "Enabled";
             this.ColEnabled.Width = 56;
             // 
-            // colIcon
-            // 
-            this.colIcon.Text = "Icon";
-            this.colIcon.Width = 33;
-            // 
             // ColName
             // 
             this.ColName.Text = "Name";
@@ -195,7 +190,7 @@
             // ColDescription
             // 
             this.ColDescription.Text = "Description";
-            this.ColDescription.Width = 262;
+            this.ColDescription.Width = 295;
             // 
             // tabGeneral
             // 
@@ -277,7 +272,7 @@
             this.TabControl.Controls.Add(this.tabGeneral);
             this.TabControl.Controls.Add(this.tabUI);
             this.TabControl.Controls.Add(this.tabPlayer);
-            this.TabControl.Controls.Add(this.tabPlugins);
+            this.TabControl.Controls.Add(this.tabModules);
             this.TabControl.Controls.Add(this.tabDebug);
             this.TabControl.ImageList = this.ImageList;
             this.TabControl.Location = new System.Drawing.Point(3, 3);
@@ -417,7 +412,7 @@
             this.tabDebug.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.tabPlugins.ResumeLayout(false);
+            this.tabModules.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -442,10 +437,9 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox checkBoxEnableDebugConsole;
         private System.Windows.Forms.CheckBox checkBoxEnableDebugLogging;
-        private System.Windows.Forms.TabPage tabPlugins;
+        private System.Windows.Forms.TabPage tabModules;
         private System.Windows.Forms.ListView ListviewPlugins;
         private System.Windows.Forms.ColumnHeader ColEnabled;
-        private System.Windows.Forms.ColumnHeader colIcon;
         private System.Windows.Forms.ColumnHeader ColName;
         private System.Windows.Forms.ColumnHeader ColDescription;
         private System.Windows.Forms.TabPage tabGeneral;
