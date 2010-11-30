@@ -156,7 +156,7 @@ namespace LibEvents
             else
             {
                 ListItem error = new ListItem("Error parsing TeamLiquid calendar feed.");
-                error.SetState(ItemState.ERROR);           
+                error.State = ItemState.ERROR;
                 this.RootListItem.Childs.Add("error", error);
             }
 

@@ -22,6 +22,7 @@ using System.Xml.Linq;
 using System.Text;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
+using LibBlizzTV.Notifications;
 
 namespace LibFeeds
 {
@@ -99,32 +100,35 @@ namespace LibFeeds
             if (this._valid)
             {
                 int unread = 0; // unread stories count
-                foreach (Story s in this.Stories) { if (s.State == ItemState.UNREAD) unread++; }
+                foreach (Story s in this.Stories) 
+                {
+                    if (s.State == ItemState.UNREAD || s.State == ItemState.FRESH) unread++;
+                }
 
                 if (unread > 0) // if there are unread feed stories
                 {
                     this.SetTitle(string.Format(" {0} ({1})", this.Title, unread.ToString()));
-                    this.SetState(ItemState.UNREAD); // then mark the feed itself as unread also
+                    this.SetStyle(ItemStyle.BOLD);
                 }
             }
             else
             {
                 Story error = new Story("Error parsing feed.", "", "", "");
-                error.SetState(ItemState.ERROR);
+                error.State = ItemState.ERROR;
                 this.Stories.Add(error);
             }
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.SetState(ItemState.READ); } // marked all stories as read.
-            this.SetState(ItemState.READ); // also mark self as read.            
+            foreach (Story s in this.Stories) { s.State = ItemState.READ; } // marked all stories as read.
+            this.SetStyle(ItemStyle.BOLD);   
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.SetState(ItemState.UNREAD); } // marked all stories as unread.
-            this.SetState(ItemState.UNREAD); // also mark self as unread.      
+            foreach (Story s in this.Stories) { s.State = ItemState.UNREAD; } // marked all stories as unread.
+            this.SetStyle(ItemStyle.NORMAL);
         }
 
         #endregion

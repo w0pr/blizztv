@@ -52,7 +52,7 @@ namespace BlizzTV
 
             // register communication events
             this._item.OnTitleChange += TitleChange; // the title-change event.
-            this._item.OnStateChange += StateChange; // the state-change event.        
+            this._item.OnStyleChange+=StyleChange;
             this._item.OnShowForm += OnShowForm;
         }
 
@@ -63,7 +63,7 @@ namespace BlizzTV
         public void Render() // renders the item with title, state and icon information
         {
             this.Text = this._item.Title; // set the inital title
-            this.StateChange(this); // set the initial state
+            this.StyleChange();
 
             // set the node icon
             if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.Attributes.Name)) this.TreeView.ImageList.Images.Add(this._plugin.Attributes.Name, this._plugin.Attributes.Icon); // add the plugin icon to image list in it doesn't exists yet.
@@ -78,24 +78,20 @@ namespace BlizzTV
             });
         }
 
-        private void StateChange(object sender)
+        private void StyleChange()
         {
             this.TreeView.AsyncInvokeHandler(() =>
-            {
-                switch (this._item.State)
                 {
-                    case ItemState.UNREAD:
-                        this.NodeFont = _bold;
-                        break;
-                    case ItemState.READ:
-                        this.NodeFont = _regular;
-                        break;
-                    case ItemState.MARKED: //TODO: Not yet implemented :)
-                        break;
-                    default:
-                        break;
-                }
-            });
+                    switch (this._item.Style)
+                    {
+                        case ItemStyle.NORMAL:
+                            this.NodeFont = _regular;
+                            break;
+                        case ItemStyle.BOLD:
+                            this.NodeFont = _bold;
+                            break;
+                    }
+                });
         }
 
         private void OnShowForm(Form Form, bool IsModal)
@@ -136,7 +132,7 @@ namespace BlizzTV
                 if (disposing) // managed resources
                 {
                     this._item.OnTitleChange -= TitleChange;
-                    this._item.OnStateChange -= StateChange;
+                    this._item.OnStyleChange -= StyleChange;
                     this._item = null;
                     this._plugin = null;
                     this._bold.Dispose();

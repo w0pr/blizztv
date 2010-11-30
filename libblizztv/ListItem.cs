@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using LibBlizzTV.Storage;
 
 namespace LibBlizzTV
 {
@@ -32,7 +33,10 @@ namespace LibBlizzTV
 
         private string _title; 
         private string _key;
-        private ItemState _state = ItemState.READ;
+        private string _guid; // the story-guid.
+        private bool _state_tracked;
+        private ItemStyle _style = ItemStyle.NORMAL;
+        private ItemState _state = ItemState.UNKNOWN;
         private bool disposed = false;
 
         /// <summary>
@@ -41,14 +45,22 @@ namespace LibBlizzTV
         public string Title { get { return this._title; } }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public string GUID { get { return this._guid; } protected set { this._guid = value; } }
+
+        /// <summary>
         /// The key.
         /// </summary>
         public string Key { get { return this._key; } }
 
         /// <summary>
-        /// The state.
+        /// 
         /// </summary>
-        public ItemState State { get { return this._state; } }
+        public ItemStyle Style { 
+            get { return this._style; } 
+
+        }
 
         /// <summary>
         /// Context Menus for Item
@@ -60,15 +72,52 @@ namespace LibBlizzTV
         /// </summary>
         public Dictionary<string, ListItem> Childs = new Dictionary<string, ListItem>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ItemState State
+        {
+            get
+            {
+                if (this._state_tracked)
+                {
+                    if (this._state == ItemState.UNKNOWN)
+                    {
+                        if (PersistantStorage.Instance.EntryExists("state", this._guid))
+                        {
+                            ItemState state = (ItemState)PersistantStorage.Instance.GetByte("state", this._guid);
+                            if (state == ItemState.FRESH) return (this.State = ItemState.UNREAD);
+                            else return state;
+                        }
+                        else return (this.State = ItemState.FRESH);
+                    }
+                    else return this._state;
+                }
+                else return (this.State = ItemState.READ);
+            }
+            set
+            {
+                this._state = (ItemState)value;
+                if (this._state != ItemState.ERROR)
+                {
+                    if(this._state_tracked) PersistantStorage.Instance.PutByte("state", this._guid, (byte)value);
+                    if ((ItemState)value == ItemState.READ) this.SetStyle(ItemStyle.NORMAL);
+                    else if ((ItemState)value == ItemState.UNREAD) this.SetStyle(ItemStyle.BOLD);
+                }
+            }
+        }
+
+
         #endregion
 
         #region ctor
 
         /// <summary>
-        /// Constructs a new list item with given title.
+        /// 
         /// </summary>
-        /// <param name="Title">The title.</param>
-        public ListItem(string Title) { this._title = Title; this.generate_unique_random_key(); } // generate an unique-random key for the item.
+        /// <param name="Title"></param>
+        /// <param name="StateTracked"></param>
+        public ListItem(string Title, bool StateTracked = false) { this._title = Title; this._state_tracked=StateTracked; this.generate_unique_random_key(); } // generate an unique-random key for the item.
 
         #endregion
 
@@ -120,25 +169,23 @@ namespace LibBlizzTV
         }
 
         /// <summary>
-        /// State change event handler delegate.
+        /// 
         /// </summary>
-        /// <param name="sender">The sender object.</param>
-        public delegate void StateChangedEventHandler(object sender);
+        public delegate void StyleChangedEventHandler();
 
         /// <summary>
-        /// State change event handler.
+        /// 
         /// </summary>
-        public event StateChangedEventHandler OnStateChange;
+        public event StyleChangedEventHandler OnStyleChange;
 
         /// <summary>
-        /// Set's state of the item.
+        /// 
         /// </summary>
-        /// <remarks>Can be overridden though you should still call base.SetState().</remarks> 
-        /// <param name="State">The new state.</param>
-        public virtual void SetState(ItemState State)
+        /// <param name="Style"></param>
+        public void SetStyle(ItemStyle Style)
         {
-            this._state = State;
-            if (OnStateChange != null) OnStateChange(this); // notify observers.
+            this._style = Style;
+            if (OnStyleChange != null) OnStyleChange();
         }
 
         /// <summary>
@@ -197,7 +244,6 @@ namespace LibBlizzTV
                 if (disposing) // managed resources
                 {
                     this.OnTitleChange = null;
-                    this.OnStateChange = null;
                 }
                 disposed = true;
             }
@@ -206,32 +252,50 @@ namespace LibBlizzTV
     }
 
     #region item-state enum
-		
+
     /// <summary>
-    /// Available item states.
+    /// 
+    /// </summary>
+    public enum ItemStyle
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        NORMAL,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BOLD
+    }
+
+    /// <summary>
+    /// 
     /// </summary>
     public enum ItemState
     {
         /// <summary>
-        /// Unread or non-viewed item.
+        /// 
+        /// </summary>
+        UNKNOWN,
+        /// <summary>
+        /// 
+        /// </summary>
+        FRESH,
+        /// <summary>
+        /// 
         /// </summary>
         UNREAD,
-
         /// <summary>
-        /// Read or vieweed item.
+        /// 
         /// </summary>
         READ,
-
         /// <summary>
-        /// Marked item.
-        /// </summary>
-        MARKED,
-
-        /// <summary>
-        /// Error information.
+        /// 
         /// </summary>
         ERROR
-    } 
+    }
+
 
 	#endregion
 }

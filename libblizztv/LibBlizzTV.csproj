@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\Manager.cs" />
+    <Compile Include="Storage\PersistantStorage.cs" />
     <Compile Include="Utils\DebugConsole.cs" />
     <Compile Include="ListItem.cs" />
     <Compile Include="Utils\Log.cs" />
@@ -79,7 +80,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="KeyValueStorage.cs" />
     <Compile Include="Utils\JSON.cs" />
     <Compile Include="Utils\WebReader.cs" />
   </ItemGroup>

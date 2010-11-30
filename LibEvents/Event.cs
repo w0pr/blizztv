@@ -22,6 +22,7 @@ using System.Text;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 using LibBlizzTV.Notifications;
+using LibBlizzTV.Storage;
 
 namespace LibEvents
 {
@@ -152,7 +153,7 @@ namespace LibEvents
         {
             if (!this.AlarmExists())
             {
-                KeyValueStorage.Instance.Put("event", "alarm", this._event_id, minutesbefore);
+                PersistantStorage.Instance.PutByte("alarm", this._event_id, minutesbefore);
                 return true;
             }
             else return false;
@@ -160,19 +161,19 @@ namespace LibEvents
 
         public bool AlarmExists()
         {
-            if (KeyValueStorage.Instance.KeyExists("event", "alarm", this._event_id)) return true;
+            if (PersistantStorage.Instance.EntryExists("alarm", this._event_id)) return true;
             else return false;
         }
 
         public byte GetAlarmMinutes()
         {
-            if (this.AlarmExists()) return KeyValueStorage.Instance.Get("event", "alarm", this._event_id);
+            if (this.AlarmExists()) return PersistantStorage.Instance.GetByte("alarm", this._event_id);
             return 0;
         }
 
         public void DeleteAlarm()
         {
-            if (this.AlarmExists()) KeyValueStorage.Instance.Delete("event", "alarm", this._event_id);
+            if (this.AlarmExists()) PersistantStorage.Instance.Delete("alarm", this._event_id);
         }
 
         #endregion
