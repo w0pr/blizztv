@@ -86,6 +86,17 @@ namespace LibVideos
             }
         }
 
+        public override void BalloonClicked(object sender, EventArgs e)
+        {
+            if (Global.Instance.UseInternalViewers) // if internal-viewers method is selected
+            {
+                frmPlayer p = new frmPlayer(this); // render the video with our own video player
+                p.Show();
+            }
+            else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
+
+            this.State = ItemState.READ; // set the video state to READ.
+        }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
         {

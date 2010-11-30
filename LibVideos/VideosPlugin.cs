@@ -25,6 +25,7 @@ using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 using LibBlizzTV.Settings;
+using LibBlizzTV.Notifications;
 
 namespace LibVideos
 {
@@ -132,6 +133,18 @@ namespace LibVideos
                     }
 
                     this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
+
+                    foreach (KeyValuePair<string, Channel> pair in this._channels)
+                    {
+                        foreach (KeyValuePair<string, ListItem> child_pair in pair.Value.Childs)
+                        {
+                            if (child_pair.Value.State == ItemState.FRESH)
+                            {
+                                Notifications.Instance.Show(child_pair.Value, child_pair.Value.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info);
+                                break;
+                            }
+                        }
+                    }
                 }
                 NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
                 this._updating = false;
