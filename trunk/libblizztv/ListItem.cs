@@ -35,7 +35,6 @@ namespace LibBlizzTV
         private string _key;
         private string _guid; // the story-guid.
         private bool _state_tracked;
-        private ItemStyle _style = ItemStyle.NORMAL;
         private ItemState _state = ItemState.UNKNOWN;
         private bool disposed = false;
 
@@ -53,14 +52,6 @@ namespace LibBlizzTV
         /// The key.
         /// </summary>
         public string Key { get { return this._key; } }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ItemStyle Style { 
-            get { return this._style; } 
-
-        }
 
         /// <summary>
         /// Context Menus for Item
@@ -93,7 +84,7 @@ namespace LibBlizzTV
                     }
                     else return this._state;
                 }
-                else return (this.State = ItemState.READ);
+                else return this._state;
             }
             set
             {
@@ -101,8 +92,7 @@ namespace LibBlizzTV
                 if (this._state != ItemState.ERROR)
                 {
                     if(this._state_tracked) PersistantStorage.Instance.PutByte("state", this._guid, (byte)value);
-                    if ((ItemState)value == ItemState.READ) this.SetStyle(ItemStyle.NORMAL);
-                    else if ((ItemState)value == ItemState.UNREAD) this.SetStyle(ItemStyle.BOLD);
+                    if ((ItemState)value == ItemState.READ || (ItemState)value == ItemState.UNREAD) if (this.OnStateChange != null) this.OnStateChange((ItemState)value);
                 }
             }
         }
@@ -171,22 +161,12 @@ namespace LibBlizzTV
         /// <summary>
         /// 
         /// </summary>
-        public delegate void StyleChangedEventHandler();
+        public delegate void StateChangedEventHandler(ItemState State);
 
         /// <summary>
         /// 
         /// </summary>
-        public event StyleChangedEventHandler OnStyleChange;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Style"></param>
-        public void SetStyle(ItemStyle Style)
-        {
-            this._style = Style;
-            if (OnStyleChange != null) OnStyleChange();
-        }
+        public event StateChangedEventHandler OnStateChange;
 
         /// <summary>
         /// 
@@ -252,22 +232,6 @@ namespace LibBlizzTV
     }
 
     #region item-state enum
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public enum ItemStyle
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        NORMAL,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        BOLD
-    }
 
     /// <summary>
     /// 

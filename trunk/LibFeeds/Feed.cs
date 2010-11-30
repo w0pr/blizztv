@@ -108,7 +108,7 @@ namespace LibFeeds
                 if (unread > 0) // if there are unread feed stories
                 {
                     this.SetTitle(string.Format(" {0} ({1})", this.Title, unread.ToString()));
-                    this.SetStyle(ItemStyle.BOLD);
+                    this.State = ItemState.UNREAD;
                 }
             }
             else
@@ -122,13 +122,13 @@ namespace LibFeeds
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
             foreach (Story s in this.Stories) { s.State = ItemState.READ; } // marked all stories as read.
-            this.SetStyle(ItemStyle.BOLD);   
+            this.State = ItemState.UNREAD;
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
             foreach (Story s in this.Stories) { s.State = ItemState.UNREAD; } // marked all stories as unread.
-            this.SetStyle(ItemStyle.NORMAL);
+            this.State = ItemState.READ;
         }
 
         #endregion

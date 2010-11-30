@@ -44,9 +44,6 @@ namespace LibFeeds
             this._link = Link;
             this._description = Description;
 
-            if (this.State == ItemState.FRESH || this.State == ItemState.UNREAD) this.SetStyle(ItemStyle.BOLD);
-            else this.SetStyle(ItemStyle.NORMAL);
-
             // register context menus.
             this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.
