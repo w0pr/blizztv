@@ -17,14 +17,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using BlizzTV.Updates;
 using LibBlizzTV;
-using LibBlizzTV.Utils;
 using LibBlizzTV.Settings;
 using LibBlizzTV.Notifications;
 

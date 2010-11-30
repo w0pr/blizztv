@@ -17,7 +17,6 @@
 
 using System;
 using LibStreams.Handlers;
-using LibBlizzTV.Utils;
 
 namespace LibStreams
 {

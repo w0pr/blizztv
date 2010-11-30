@@ -16,11 +16,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using LibBlizzTV;
-using LibBlizzTV.Utils;
 using LibBlizzTV.Notifications;
 using LibBlizzTV.Storage;
 
