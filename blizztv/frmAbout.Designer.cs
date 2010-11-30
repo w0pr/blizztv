@@ -59,11 +59,15 @@
             this.columnAbout = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LinkFlattr = new System.Windows.Forms.PictureBox();
             this.LinkPaypal = new System.Windows.Forms.PictureBox();
+            this.Murloc = new System.Windows.Forms.PictureBox();
+            this.Player = new BlizzTV.Module.Players.FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LinkFlattr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LinkPaypal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Murloc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -213,12 +217,34 @@
             this.LinkPaypal.TabStop = false;
             this.LinkPaypal.Click += new System.EventHandler(this.LinkPaypal_Click);
             // 
+            // Murloc
+            // 
+            this.Murloc.Image = ((System.Drawing.Image)(resources.GetObject("Murloc.Image")));
+            this.Murloc.Location = new System.Drawing.Point(12, 5);
+            this.Murloc.Name = "Murloc";
+            this.Murloc.Size = new System.Drawing.Size(56, 50);
+            this.Murloc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Murloc.TabIndex = 15;
+            this.Murloc.TabStop = false;
+            this.Murloc.Click += new System.EventHandler(this.even_more_dots);
+            // 
+            // Player
+            // 
+            this.Player.Enabled = true;
+            this.Player.Location = new System.Drawing.Point(10, 359);
+            this.Player.Name = "Player";
+            this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Player.OcxState")));
+            this.Player.Size = new System.Drawing.Size(0, 0);
+            this.Player.TabIndex = 16;
+            // 
             // frmAbout
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 341);
+            this.ClientSize = new System.Drawing.Size(451, 343);
+            this.Controls.Add(this.Player);
+            this.Controls.Add(this.Murloc);
             this.Controls.Add(this.LinkPaypal);
             this.Controls.Add(this.LinkFlattr);
             this.Controls.Add(this.groupBox1);
@@ -235,11 +261,14 @@
             this.Name = "frmAbout";
             this.Text = "About BlizzTV";
             this.Load += new System.EventHandler(this.frmAbout_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.more_dots);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LinkFlattr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LinkPaypal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Murloc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Player)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,5 +291,7 @@
         private System.Windows.Forms.ColumnHeader columnAbout;
         private System.Windows.Forms.PictureBox LinkFlattr;
         private System.Windows.Forms.PictureBox LinkPaypal;
+        private System.Windows.Forms.PictureBox Murloc;
+        private Module.Players.FlashPlayer Player;
     }
 }
