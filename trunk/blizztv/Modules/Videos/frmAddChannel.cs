@@ -35,8 +35,7 @@ namespace BlizzTV.Modules.Videos
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
-        {
-            if (txtName.Text == "SaveTheMurlocs") { Video v = new Handlers.YoutubeVideo("Save the Murlocs!", "stm", "http://www.youtube.com/watch?v=bvwFcfQWOGY&feature=player_embedded", "Youtube"); frmPlayer p = new frmPlayer(v); p.Show(); this.Close(); return; }
+        {            
             if (txtName.Text.Trim() != "" && txtSlug.Text.Trim() != "")
             {
                 if (!VideosPlugin.Instance._channels.ContainsKey(txtName.Text))
