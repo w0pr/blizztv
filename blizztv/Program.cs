@@ -18,7 +18,6 @@
 using System;
 using System.Windows.Forms;
 using LibBlizzTV.Utils;
-using LibBlizzTV;
 using BlizzTV.Utils;
 
 namespace BlizzTV

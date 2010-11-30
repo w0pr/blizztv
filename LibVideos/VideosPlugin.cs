@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using System.Text;
 using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
