@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Reflection;
-using LibBlizzTV;
+using BlizzTV.Module;
 
 namespace BlizzTV
 {
@@ -42,7 +42,7 @@ namespace BlizzTV
 
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
             {
-                ListviewPlugins.Items.Add(new ListviewModulesItem(pair.Value.AssemblyName, pair.Value.AssemblyVersion, pair.Value.Attributes.Description));
+                ListviewPlugins.Items.Add(new ListviewModulesItem(pair.Value.Attributes.Name, pair.Value.Attributes.Name, pair.Value.Attributes.Description));
             }
 
             ListviewPlugins.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);

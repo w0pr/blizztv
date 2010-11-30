@@ -41,6 +41,7 @@
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blizzTVcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuFAQ = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.bugReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,6 @@
             this.TreeView = new System.Windows.Forms.TreeView();
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
             this.TreeviewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.MenuFAQ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
@@ -162,6 +162,14 @@
             this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.userGuideToolStripMenuItem.Text = "User Guide";
             this.userGuideToolStripMenuItem.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
+            // 
+            // MenuFAQ
+            // 
+            this.MenuFAQ.Image = ((System.Drawing.Image)(resources.GetObject("MenuFAQ.Image")));
+            this.MenuFAQ.Name = "MenuFAQ";
+            this.MenuFAQ.Size = new System.Drawing.Size(153, 22);
+            this.MenuFAQ.Text = "FAQ";
+            this.MenuFAQ.Click += new System.EventHandler(this.MenuFAQ_Click);
             // 
             // toolStripSeparator2
             // 
@@ -288,14 +296,6 @@
             // 
             this.TreeviewContextMenu.Name = "TreeviewContextMenu";
             this.TreeviewContextMenu.Size = new System.Drawing.Size(61, 4);
-            // 
-            // MenuFAQ
-            // 
-            this.MenuFAQ.Image = ((System.Drawing.Image)(resources.GetObject("MenuFAQ.Image")));
-            this.MenuFAQ.Name = "MenuFAQ";
-            this.MenuFAQ.Size = new System.Drawing.Size(153, 22);
-            this.MenuFAQ.Text = "FAQ";
-            this.MenuFAQ.Click += new System.EventHandler(this.MenuFAQ_Click);
             // 
             // frmMain
             // 

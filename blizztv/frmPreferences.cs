@@ -19,8 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using LibBlizzTV;
-using LibBlizzTV.Settings;
+using BlizzTV.Module;
+using BlizzTV.Module.Settings;
 
 namespace BlizzTV
 {
