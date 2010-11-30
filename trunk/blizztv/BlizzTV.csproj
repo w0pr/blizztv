@@ -41,9 +41,24 @@
     <ApplicationIcon>blizztv.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Esent.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\upstream\Esent.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Esent.Interop, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\upstream\Esent.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Nini, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\upstream\Nini.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms.Calendar">
+      <HintPath>..\upstream\System.Windows.Forms.Calendar.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +70,135 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InvokeExtensions.cs" />
+    <Compile Include="Modules\Events\Event.cs" />
+    <Compile Include="Modules\Events\EventsPlugin.cs" />
+    <Compile Include="Modules\Events\frmAlarm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Events\frmAlarm.Designer.cs">
+      <DependentUpon>frmAlarm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Events\frmCalendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Events\frmCalendar.Designer.cs">
+      <DependentUpon>frmCalendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Events\frmEventViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Events\frmEventViewer.Designer.cs">
+      <DependentUpon>frmEventViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Events\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Events\frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Events\frmSetupAlarm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Events\frmSetupAlarm.Designer.cs">
+      <DependentUpon>frmSetupAlarm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Events\Settings.cs" />
+    <Compile Include="Modules\Feeds\Feed.cs" />
+    <Compile Include="Modules\Feeds\FeedsPlugin.cs" />
+    <Compile Include="Modules\Feeds\frmAddFeed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Feeds\frmAddFeed.Designer.cs">
+      <DependentUpon>frmAddFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Feeds\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Feeds\frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Feeds\Settings.cs" />
+    <Compile Include="Modules\Feeds\Story.cs" />
+    <Compile Include="Modules\Streams\frmAddStream.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Streams\frmAddStream.Designer.cs">
+      <DependentUpon>frmAddStream.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Streams\frmChat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Streams\frmChat.Designer.cs">
+      <DependentUpon>frmChat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Streams\frmPlayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Streams\frmPlayer.Designer.cs">
+      <DependentUpon>frmPlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Streams\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Streams\frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Streams\Handlers\JustinTV.cs" />
+    <Compile Include="Modules\Streams\Handlers\LiveStream.cs" />
+    <Compile Include="Modules\Streams\Handlers\Own3DTV.cs" />
+    <Compile Include="Modules\Streams\Handlers\UStream.cs" />
+    <Compile Include="Modules\Streams\Providers.cs" />
+    <Compile Include="Modules\Streams\Settings.cs" />
+    <Compile Include="Modules\Streams\Stream.cs" />
+    <Compile Include="Modules\Streams\StreamFactory.cs" />
+    <Compile Include="Modules\Streams\StreamsPlugin.cs" />
+    <Compile Include="Modules\Videos\Channel.cs" />
+    <Compile Include="Modules\Videos\ChannelFactory.cs" />
+    <Compile Include="Modules\Videos\frmAddChannel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Videos\frmAddChannel.Designer.cs">
+      <DependentUpon>frmAddChannel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Videos\frmPlayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Videos\frmPlayer.Designer.cs">
+      <DependentUpon>frmPlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Videos\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Videos\frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Videos\Handlers\BlipTV.cs" />
+    <Compile Include="Modules\Videos\Handlers\BlipTVVideo.cs" />
+    <Compile Include="Modules\Videos\Handlers\Youtube.cs" />
+    <Compile Include="Modules\Videos\Handlers\YoutubeVideo.cs" />
+    <Compile Include="Modules\Videos\Providers.cs" />
+    <Compile Include="Modules\Videos\Settings.cs" />
+    <Compile Include="Modules\Videos\Video.cs" />
+    <Compile Include="Modules\Videos\VideosPlugin.cs" />
+    <Compile Include="Module\Common.cs" />
+    <Compile Include="Module\IPluginSettingsForm.cs" />
+    <Compile Include="Module\ListItem.cs" />
+    <Compile Include="Module\Notifications\Notifications.cs" />
+    <Compile Include="Module\Players\FlashPlayer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Module\Plugin.cs" />
+    <Compile Include="Module\PluginInfo.cs" />
+    <Compile Include="Module\PluginManager.cs" />
+    <Compile Include="Module\Settings\Global.cs" />
+    <Compile Include="Module\Settings\Manager.cs" />
+    <Compile Include="Module\Settings\PluginSettings.cs" />
+    <Compile Include="Module\Settings\Settings.cs" />
+    <Compile Include="Module\Storage\PersistantStorage.cs" />
+    <Compile Include="Module\Utils\DebugConsole.cs" />
+    <Compile Include="Module\Utils\JSON.cs" />
+    <Compile Include="Module\Utils\Log.cs" />
+    <Compile Include="Module\Utils\WebReader.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utils\DependencyChecker.cs" />
     <Compile Include="frmAbout.cs">
@@ -109,6 +253,48 @@
     <EmbeddedResource Include="frmPreferences.resx">
       <DependentUpon>frmPreferences.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Events\frmAlarm.resx">
+      <DependentUpon>frmAlarm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Events\frmCalendar.resx">
+      <DependentUpon>frmCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Events\frmEventViewer.resx">
+      <DependentUpon>frmEventViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Events\frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Events\frmSetupAlarm.resx">
+      <DependentUpon>frmSetupAlarm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Feeds\frmAddFeed.resx">
+      <DependentUpon>frmAddFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Feeds\frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Streams\frmAddStream.resx">
+      <DependentUpon>frmAddStream.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Streams\frmChat.resx">
+      <DependentUpon>frmChat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Streams\frmPlayer.resx">
+      <DependentUpon>frmPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Streams\frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Videos\frmAddChannel.resx">
+      <DependentUpon>frmAddChannel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Videos\frmPlayer.resx">
+      <DependentUpon>frmPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Videos\frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -130,17 +316,59 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibBlizzTV\LibBlizzTV.csproj">
-      <Project>{DA8078DC-8C8C-47D3-8D96-3DED56D0DDD9}</Project>
-      <Name>LibBlizzTV</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="blizztv.ico" />
+    <Content Include="Modules\Feeds\xml\feeds.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Streams\xml\providers.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Streams\xml\streams.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Videos\xml\channels.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Videos\xml\providers.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\video_16.png" />
+    <None Include="Resources\stream_16.png" />
+    <None Include="Resources\event_16.png" />
+    <None Include="Resources\feed_16.png" />
+    <None Include="Resources\blizztv_16.png" />
     <None Include="Resources\sleep_16.ico" />
     <None Include="Resources\blizztv_16.ico" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="AxShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="ShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
+using BlizzTV.Module;
+using BlizzTV.Module.Notifications;
+using BlizzTV.Module.Settings;
 using BlizzTV.Updates;
-using LibBlizzTV;
-using LibBlizzTV.Settings;
-using LibBlizzTV.Notifications;
 
 namespace BlizzTV
 {
@@ -323,7 +323,7 @@ namespace BlizzTV
                 this._sleep_mode = true;
                 this.MenuSleepMode.Checked = true;
                 this.ContextMenuSleepMode.Checked = true;
-                this.TrayIcon.Icon = Properties.Resources.sleep_16;
+                this.TrayIcon.Icon = Properties.Resources.ico_sleep_16;
                 this.TrayIcon.Text = "BlizzTV is in sleep mode.";
                 Global.Instance.InSleepMode = true;
             }
@@ -332,7 +332,7 @@ namespace BlizzTV
                 this._sleep_mode = false;
                 this.MenuSleepMode.Checked = false;
                 this.ContextMenuSleepMode.Checked = false;
-                this.TrayIcon.Icon = Properties.Resources.blizztv_16;
+                this.TrayIcon.Icon = Properties.Resources.ico_blizztv_16;
                 this.TrayIcon.Text = "BlizzTV";
                 Global.Instance.InSleepMode = false;
             }

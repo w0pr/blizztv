@@ -60,17 +60,52 @@ namespace BlizzTV.Properties {
             }
         }
         
-        internal static System.Drawing.Icon blizztv_16 {
+        internal static System.Drawing.Bitmap blizztv_16 {
             get {
                 object obj = ResourceManager.GetObject("blizztv_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap event_16 {
+            get {
+                object obj = ResourceManager.GetObject("event_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap feed_16 {
+            get {
+                object obj = ResourceManager.GetObject("feed_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon ico_blizztv_16 {
+            get {
+                object obj = ResourceManager.GetObject("ico_blizztv_16", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        internal static System.Drawing.Icon sleep_16 {
+        internal static System.Drawing.Icon ico_sleep_16 {
             get {
-                object obj = ResourceManager.GetObject("sleep_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ico_sleep_16", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap stream_16 {
+            get {
+                object obj = ResourceManager.GetObject("stream_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap video_16 {
+            get {
+                object obj = ResourceManager.GetObject("video_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

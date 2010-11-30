@@ -17,7 +17,7 @@
 
 using System;
 using System.Text.RegularExpressions;
-using LibBlizzTV.Utils;
+using BlizzTV.Module.Utils;
 
 namespace BlizzTV.Updates
 {
