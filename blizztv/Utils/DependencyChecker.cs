@@ -20,13 +20,16 @@ using BlizzTV.Module.Utils;
 
 namespace BlizzTV.Utils
 {
-    public class DependencyChecker:IDisposable
+    public class DependencyChecker
     {
-        private bool disposed = false;
+        private static DependencyChecker _instance = new DependencyChecker();
+        public static DependencyChecker Instance { get { return _instance; } }
 
-        public DependencyChecker()
+        private DependencyChecker() { }
+
+        public void Check()
         {
-            if (!this.CheckShockwaveFlash())
+            if (!CheckShockwaveFlash())
             {
                 System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("BlizzTV requires Abode Flash Player for internal video & stream playing and your system does not satisfy it. Do you want to install latest Adobe Flash Player now?", "Adobe Flash Player Missing!", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
                 if (result == System.Windows.Forms.DialogResult.Yes) System.Diagnostics.Process.Start("IExplore.exe", "http://get.adobe.com/flashplayer/");
@@ -51,23 +54,6 @@ namespace BlizzTV.Utils
                 flash_object = null;
             }
             return satisfied;
-        }
-
-        ~DependencyChecker() { Dispose(false); }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing) { }
-                disposed = true;
-            }
         }
     }       
 }
