@@ -25,6 +25,7 @@ using System.Timers;
 using LibBlizzTV;
 using LibBlizzTV.Utils;
 using LibBlizzTV.Settings;
+using LibBlizzTV.Notifications;
 
 namespace LibFeeds
 {
@@ -128,13 +129,26 @@ namespace LibFeeds
                             pair.Value.Update(); // update the feed.
                             this.RootListItem.Childs.Add(pair.Key, pair.Value);
                             foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
-                            if (pair.Value.State == ItemState.UNREAD) unread++;                            
+                            //if (pair.Value.State == ItemState.UNREAD) unread++;                            
                         }
                         catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
                         this.StepWorkload();
                     }
 
                     this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
+
+
+                    foreach (KeyValuePair<string, Feed> pair in this._feeds)
+                    {
+                        foreach(KeyValuePair<string,ListItem> child_pair in pair.Value.Childs)
+                        {
+                            if (child_pair.Value.State == ItemState.FRESH)
+                            {
+                                Notifications.Instance.Show(child_pair.Value, child_pair.Value.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info);
+                                break;
+                            }
+                        }
+                    }
                 }                
                 this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
                 this._updating = false;
@@ -197,8 +211,8 @@ namespace LibFeeds
         {
             foreach (KeyValuePair<string, Feed> pair in this._feeds)
             {
-                pair.Value.SetState(ItemState.READ);
-                foreach (Story s in pair.Value.Stories) { s.SetState(ItemState.READ); }
+                pair.Value.State = ItemState.READ;
+                foreach (Story s in pair.Value.Stories) { s.State = ItemState.READ; }
             }
         }
 
@@ -206,8 +220,8 @@ namespace LibFeeds
         {
             foreach (KeyValuePair<string, Feed> pair in this._feeds)
             {
-                pair.Value.SetState(ItemState.UNREAD);
-                foreach (Story s in pair.Value.Stories) { s.SetState(ItemState.UNREAD); }
+                pair.Value.State = ItemState.UNREAD;
+                foreach (Story s in pair.Value.Stories) { s.State = ItemState.UNREAD; }
             }
         }
 

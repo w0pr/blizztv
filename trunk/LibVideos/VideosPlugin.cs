@@ -203,8 +203,8 @@ namespace LibVideos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                pair.Value.SetState(ItemState.READ);
-                foreach (Video v in pair.Value.Videos) { v.SetState(ItemState.READ); }
+                pair.Value.State = ItemState.READ;
+                foreach (Video v in pair.Value.Videos) { v.State = ItemState.READ; }
             }
         }
 
@@ -212,8 +212,8 @@ namespace LibVideos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                pair.Value.SetState(ItemState.UNREAD);
-                foreach (Video v in pair.Value.Videos) { v.SetState(ItemState.UNREAD); }
+                pair.Value.State = ItemState.UNREAD;
+                foreach (Video v in pair.Value.Videos) { v.State = ItemState.UNREAD; }
             }
         }
 

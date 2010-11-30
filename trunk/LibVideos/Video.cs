@@ -27,14 +27,12 @@ namespace LibVideos
     {
         #region members
 
-        private string _guid; // the guid.
         private string _video_id; // the video id.
         private string _link; // the video link.
         private string _provider; // the video provider.
         private string _movie; // the movie template.
         private string _flash_vars; // the flash vars.
 
-        public string GUID { get { return this._guid; } internal set { this._guid = value; } }
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
@@ -46,15 +44,11 @@ namespace LibVideos
         #region ctor
 
         public Video(string Title, string Guid, string Link, string Provider)
-            : base(Title)
+            : base(Title,true)
         {            
             this.GUID = Guid;
             this.Link = Link;
             this.Provider = Provider;
-
-            // check the persistent storage for if the video is watched before.
-            if (KeyValueStorage.Instance.KeyExists("video", "state", this.GUID)) this.SetState((ItemState)KeyValueStorage.Instance.Get("video", "state", this.GUID));
-            else this.SetState(ItemState.UNREAD);
 
             // register context menus.
             this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
@@ -77,12 +71,6 @@ namespace LibVideos
             this._flash_vars = this._flash_vars.Replace("%auto_play%", (Global.Instance.AutoPlayVideos)?"1":"0");
         }
 
-        public override void SetState(ItemState State) // override setstate function so that we can commit our state to storage.
-        {
-            base.SetState(State); // let the base function also do it's own job.
-            KeyValueStorage.Instance.Put("video", "state", this.GUID, (byte)this.State); // commit it to persistent storage.
-        }
-
         public override void DoubleClicked(object sender, EventArgs e)
         {
             if (this.State != ItemState.ERROR)
@@ -94,8 +82,7 @@ namespace LibVideos
                 }
                 else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
 
-                this.SetState(ItemState.READ); // set the video state to READ.
-                KeyValueStorage.Instance.Put("video", "state", this.GUID, (byte)this.State); // commit it to persistent storage.
+                this.State = ItemState.READ; // set the video state to READ.
             }
         }
 
@@ -114,19 +101,17 @@ namespace LibVideos
                 case ItemState.READ:
                     this.ContextMenus["markasunwatched"].Visible = true; // make mark as unwatched menu visible.
                     break;
-                case ItemState.MARKED:
-                    break;
             }
         }
 
         private void MenuMarkAsWatchedClicked(object sender, EventArgs e)
         {
-            this.SetState(ItemState.READ); // set the video state as read.          
+            this.State = ItemState.READ; // set the video state as read.          
         }
 
         private void MenuMarkAsUnWatchedClicked(object sender, EventArgs e)
         {
-            this.SetState(ItemState.UNREAD); // set the video state as unread.          
+            this.State = ItemState.UNREAD;            
         }
 
         #endregion

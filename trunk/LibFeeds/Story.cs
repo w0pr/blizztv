@@ -27,11 +27,9 @@ namespace LibFeeds
     {
         #region members
 
-        private string _guid; // the story-guid.
         private string _link; // the story-link .
         private string _description; // the story-excerpt.
 
-        public string GUID { get { return this._guid; } }
         public string Link { get { return this._link; } }
         public string Description { get { return this._description; } }
 
@@ -40,38 +38,37 @@ namespace LibFeeds
         #region ctor
 
         public Story(string Title, string GUID, string Link, string Description)
-            : base(Title)
+            : base(Title,true)
         {
-            this._guid = GUID;
+            this.GUID = GUID;
             this._link = Link;
             this._description = Description;
 
-            // check the persistent storage for if the story is read before.
-            if (KeyValueStorage.Instance.KeyExists("story", "state", this.GUID)) this.SetState((ItemState)KeyValueStorage.Instance.Get("story", "state", this.GUID));  
-            else this.SetState(ItemState.UNREAD);
+            if (this.State == ItemState.FRESH || this.State == ItemState.UNREAD) this.SetStyle(ItemStyle.BOLD);
+            else this.SetStyle(ItemStyle.NORMAL);
 
             // register context menus.
             this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.
-        }
+        }        
 
         #endregion
 
         #region internal logic
-
-        public override void SetState(ItemState State) // override setstate function so that we can commit our state to storage.
-        {
-            base.SetState(State); // let the base function also do it's own job.
-            KeyValueStorage.Instance.Put("story", "state", this.GUID, (byte)this.State); // commit it to persistent storage.
-        }
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
             if (this.State != ItemState.ERROR)
             {
                 System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-                this.SetState(ItemState.READ); // set the story state as read.
+                this.State = ItemState.READ; // set the story state as read.
             }
+        }
+
+        public override void BalloonClicked(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
+            this.State = ItemState.READ; // set the story state as read.
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
@@ -83,24 +80,23 @@ namespace LibFeeds
             switch (this.State) // switch on the item state.
 	        {
 		        case ItemState.UNREAD:
+                case ItemState.FRESH:
                     this.ContextMenus["markasread"].Visible=true; // make mark as read menu visible.
                     break;
                 case ItemState.READ:
                     this.ContextMenus["markasunread"].Visible = true; // make mark as unread menu visible.
-                    break;
-                case ItemState.MARKED:
                     break;
             }
         }
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.SetState(ItemState.READ); // set the story state as read.          
+            this.State = ItemState.READ; // set the story state as read.
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.SetState(ItemState.UNREAD); // set the story state as unread.          
+            this.State = ItemState.UNREAD; // set the story state as unread.
         }
 
         #endregion
