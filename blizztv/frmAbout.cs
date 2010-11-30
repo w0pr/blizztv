@@ -36,16 +36,13 @@ namespace BlizzTV
         }
 
         private void frmAbout_Load(object sender, EventArgs e)
-        {            
-            ListviewPlugins.Items.Add(new ListviewModulesItem(Assembly.GetExecutingAssembly().GetName().Name, Assembly.GetExecutingAssembly().GetName().Version.ToString(), "The user-interface."));
-            ListviewPlugins.Items.Add(new ListviewModulesItem(PluginManager.Instance.AssemblyName, PluginManager.Instance.AssemblyVersion, "The core."));
-
+        {
+            this.LabelVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
             foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
             {
-                ListviewPlugins.Items.Add(new ListviewModulesItem(pair.Value.Attributes.Name, pair.Value.Attributes.Name, pair.Value.Attributes.Description));
+                this.imageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
+                ListviewModules.Items.Add(new ListviewModulesItem(pair.Value.Attributes.Name, pair.Value.Attributes.Description));
             }
-
-            ListviewPlugins.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
         private void LinkLabelBlizzTV_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -70,10 +67,10 @@ namespace BlizzTV
 
     class ListviewModulesItem : ListViewItem
     {
-        public ListviewModulesItem(string Name, string Version, string Description)
+        public ListviewModulesItem(string Name, string Description)
         {
+            this.ImageKey = Name;
             this.Text = Name;
-            this.SubItems.Add(new ListViewSubItem(this, Version));
             this.SubItems.Add(new ListViewSubItem(this, Description));
         }
     }

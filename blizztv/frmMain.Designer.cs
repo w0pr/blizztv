@@ -31,23 +31,23 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.blizzTVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuSleepMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSleepMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuPlugins = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPreferences = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuModules = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.blizzTVcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuFAQ = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuBlizztvcom = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuUserGuide = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFAQ = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.bugReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuBugReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuDonate = new System.Windows.Forms.ToolStripMenuItem();
-            this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuDonate = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -66,152 +66,152 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.blizzTVToolStripMenuItem,
-            this.HelpToolStripMenuItem});
+            this.menuFile,
+            this.menuHelp});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(256, 24);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
-            // blizzTVToolStripMenuItem
+            // menuFile
             // 
-            this.blizzTVToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuSleepMode,
+            this.menuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSleepMode,
             this.toolStripSeparator5,
-            this.preferencesToolStripMenuItem,
-            this.MenuPlugins,
+            this.menuPreferences,
+            this.menuModules,
             this.toolStripSeparator1,
-            this.MenuExit});
-            this.blizzTVToolStripMenuItem.Name = "blizzTVToolStripMenuItem";
-            this.blizzTVToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.blizzTVToolStripMenuItem.Text = "File";
+            this.menuExit});
+            this.menuFile.Name = "menuFile";
+            this.menuFile.Size = new System.Drawing.Size(37, 20);
+            this.menuFile.Text = "File";
             // 
-            // MenuSleepMode
+            // menuSleepMode
             // 
-            this.MenuSleepMode.Image = ((System.Drawing.Image)(resources.GetObject("MenuSleepMode.Image")));
-            this.MenuSleepMode.Name = "MenuSleepMode";
-            this.MenuSleepMode.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.MenuSleepMode.Size = new System.Drawing.Size(176, 22);
-            this.MenuSleepMode.Text = "Sleep Mode";
-            this.MenuSleepMode.Click += new System.EventHandler(this.MenuSleepMode_Click);
+            this.menuSleepMode.Image = ((System.Drawing.Image)(resources.GetObject("menuSleepMode.Image")));
+            this.menuSleepMode.Name = "menuSleepMode";
+            this.menuSleepMode.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.menuSleepMode.Size = new System.Drawing.Size(176, 22);
+            this.menuSleepMode.Text = "Sleep Mode";
+            this.menuSleepMode.Click += new System.EventHandler(this.MenuSleepMode_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(173, 6);
             // 
-            // preferencesToolStripMenuItem
+            // menuPreferences
             // 
-            this.preferencesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("preferencesToolStripMenuItem.Image")));
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
-            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
+            this.menuPreferences.Image = ((System.Drawing.Image)(resources.GetObject("menuPreferences.Image")));
+            this.menuPreferences.Name = "menuPreferences";
+            this.menuPreferences.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.menuPreferences.Size = new System.Drawing.Size(176, 22);
+            this.menuPreferences.Text = "Preferences";
+            this.menuPreferences.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
-            // MenuPlugins
+            // menuModules
             // 
-            this.MenuPlugins.Image = ((System.Drawing.Image)(resources.GetObject("MenuPlugins.Image")));
-            this.MenuPlugins.Name = "MenuPlugins";
-            this.MenuPlugins.Size = new System.Drawing.Size(176, 22);
-            this.MenuPlugins.Text = "Plugins";
-            this.MenuPlugins.Click += new System.EventHandler(this.MenuPlugins_Click);
+            this.menuModules.Image = ((System.Drawing.Image)(resources.GetObject("menuModules.Image")));
+            this.menuModules.Name = "menuModules";
+            this.menuModules.Size = new System.Drawing.Size(176, 22);
+            this.menuModules.Text = "Modules";
+            this.menuModules.Click += new System.EventHandler(this.MenuPlugins_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
             // 
-            // MenuExit
+            // menuExit
             // 
-            this.MenuExit.Image = ((System.Drawing.Image)(resources.GetObject("MenuExit.Image")));
-            this.MenuExit.Name = "MenuExit";
-            this.MenuExit.Size = new System.Drawing.Size(176, 22);
-            this.MenuExit.Text = "Exit";
-            this.MenuExit.Click += new System.EventHandler(this.MenuExit_Click);
+            this.menuExit.Image = ((System.Drawing.Image)(resources.GetObject("menuExit.Image")));
+            this.menuExit.Name = "menuExit";
+            this.menuExit.Size = new System.Drawing.Size(176, 22);
+            this.menuExit.Text = "Exit";
+            this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
             // 
-            // HelpToolStripMenuItem
+            // menuHelp
             // 
-            this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.blizzTVcomToolStripMenuItem,
-            this.userGuideToolStripMenuItem,
-            this.MenuFAQ,
+            this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuBlizztvcom,
+            this.menuUserGuide,
+            this.menuFAQ,
             this.toolStripSeparator2,
-            this.bugReportsToolStripMenuItem,
-            this.checkUpdatesToolStripMenuItem,
+            this.menuBugReports,
+            this.menuCheckUpdates,
             this.toolStripSeparator4,
-            this.MenuDonate,
-            this.AboutToolStripMenuItem});
-            this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.HelpToolStripMenuItem.Text = "Help";
+            this.menuDonate,
+            this.menuAbout});
+            this.menuHelp.Name = "menuHelp";
+            this.menuHelp.Size = new System.Drawing.Size(44, 20);
+            this.menuHelp.Text = "Help";
             // 
-            // blizzTVcomToolStripMenuItem
+            // menuBlizztvcom
             // 
-            this.blizzTVcomToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("blizzTVcomToolStripMenuItem.Image")));
-            this.blizzTVcomToolStripMenuItem.Name = "blizzTVcomToolStripMenuItem";
-            this.blizzTVcomToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.blizzTVcomToolStripMenuItem.Text = "BlizzTV.com";
-            this.blizzTVcomToolStripMenuItem.Click += new System.EventHandler(this.blizzTVcomToolStripMenuItem_Click);
+            this.menuBlizztvcom.Image = ((System.Drawing.Image)(resources.GetObject("menuBlizztvcom.Image")));
+            this.menuBlizztvcom.Name = "menuBlizztvcom";
+            this.menuBlizztvcom.Size = new System.Drawing.Size(153, 22);
+            this.menuBlizztvcom.Text = "BlizzTV.com";
+            this.menuBlizztvcom.Click += new System.EventHandler(this.blizzTVcomToolStripMenuItem_Click);
             // 
-            // userGuideToolStripMenuItem
+            // menuUserGuide
             // 
-            this.userGuideToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("userGuideToolStripMenuItem.Image")));
-            this.userGuideToolStripMenuItem.Name = "userGuideToolStripMenuItem";
-            this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.userGuideToolStripMenuItem.Text = "User Guide";
-            this.userGuideToolStripMenuItem.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
+            this.menuUserGuide.Image = ((System.Drawing.Image)(resources.GetObject("menuUserGuide.Image")));
+            this.menuUserGuide.Name = "menuUserGuide";
+            this.menuUserGuide.Size = new System.Drawing.Size(153, 22);
+            this.menuUserGuide.Text = "User Guide";
+            this.menuUserGuide.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
             // 
-            // MenuFAQ
+            // menuFAQ
             // 
-            this.MenuFAQ.Image = ((System.Drawing.Image)(resources.GetObject("MenuFAQ.Image")));
-            this.MenuFAQ.Name = "MenuFAQ";
-            this.MenuFAQ.Size = new System.Drawing.Size(153, 22);
-            this.MenuFAQ.Text = "FAQ";
-            this.MenuFAQ.Click += new System.EventHandler(this.MenuFAQ_Click);
+            this.menuFAQ.Image = ((System.Drawing.Image)(resources.GetObject("menuFAQ.Image")));
+            this.menuFAQ.Name = "menuFAQ";
+            this.menuFAQ.Size = new System.Drawing.Size(153, 22);
+            this.menuFAQ.Text = "FAQ";
+            this.menuFAQ.Click += new System.EventHandler(this.MenuFAQ_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(150, 6);
             // 
-            // bugReportsToolStripMenuItem
+            // menuBugReports
             // 
-            this.bugReportsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("bugReportsToolStripMenuItem.Image")));
-            this.bugReportsToolStripMenuItem.Name = "bugReportsToolStripMenuItem";
-            this.bugReportsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.bugReportsToolStripMenuItem.Text = "Bug Reports";
-            this.bugReportsToolStripMenuItem.Click += new System.EventHandler(this.bugReportsToolStripMenuItem_Click);
+            this.menuBugReports.Image = ((System.Drawing.Image)(resources.GetObject("menuBugReports.Image")));
+            this.menuBugReports.Name = "menuBugReports";
+            this.menuBugReports.Size = new System.Drawing.Size(153, 22);
+            this.menuBugReports.Text = "Bug Reports";
+            this.menuBugReports.Click += new System.EventHandler(this.bugReportsToolStripMenuItem_Click);
             // 
-            // checkUpdatesToolStripMenuItem
+            // menuCheckUpdates
             // 
-            this.checkUpdatesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("checkUpdatesToolStripMenuItem.Image")));
-            this.checkUpdatesToolStripMenuItem.Name = "checkUpdatesToolStripMenuItem";
-            this.checkUpdatesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.checkUpdatesToolStripMenuItem.Text = "Check Updates";
-            this.checkUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkUpdatesToolStripMenuItem_Click);
+            this.menuCheckUpdates.Image = ((System.Drawing.Image)(resources.GetObject("menuCheckUpdates.Image")));
+            this.menuCheckUpdates.Name = "menuCheckUpdates";
+            this.menuCheckUpdates.Size = new System.Drawing.Size(153, 22);
+            this.menuCheckUpdates.Text = "Check Updates";
+            this.menuCheckUpdates.Click += new System.EventHandler(this.checkUpdatesToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(150, 6);
             // 
-            // MenuDonate
+            // menuDonate
             // 
-            this.MenuDonate.Image = ((System.Drawing.Image)(resources.GetObject("MenuDonate.Image")));
-            this.MenuDonate.Name = "MenuDonate";
-            this.MenuDonate.Size = new System.Drawing.Size(153, 22);
-            this.MenuDonate.Text = "Donate";
-            this.MenuDonate.Click += new System.EventHandler(this.MenuDonate_Click);
+            this.menuDonate.Image = ((System.Drawing.Image)(resources.GetObject("menuDonate.Image")));
+            this.menuDonate.Name = "menuDonate";
+            this.menuDonate.Size = new System.Drawing.Size(153, 22);
+            this.menuDonate.Text = "Donate";
+            this.menuDonate.Click += new System.EventHandler(this.MenuDonate_Click);
             // 
-            // AboutToolStripMenuItem
+            // menuAbout
             // 
-            this.AboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AboutToolStripMenuItem.Image")));
-            this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.AboutToolStripMenuItem.Text = "About";
-            this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+            this.menuAbout.Image = ((System.Drawing.Image)(resources.GetObject("menuAbout.Image")));
+            this.menuAbout.Name = "menuAbout";
+            this.menuAbout.Size = new System.Drawing.Size(153, 22);
+            this.menuAbout.Text = "About";
+            this.menuAbout.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // StatusStrip
             // 
@@ -327,33 +327,33 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem blizzTVToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem HelpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuFile;
+        private System.Windows.Forms.ToolStripMenuItem menuHelp;
+        private System.Windows.Forms.ToolStripMenuItem menuAbout;
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripProgressBar ProgressBar;
         internal System.Windows.Forms.NotifyIcon TrayIcon;
         private System.Windows.Forms.ContextMenuStrip TrayContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bugReportsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem blizzTVcomToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuUserGuide;
+        private System.Windows.Forms.ToolStripMenuItem menuBugReports;
+        private System.Windows.Forms.ToolStripMenuItem menuBlizztvcom;
+        private System.Windows.Forms.ToolStripMenuItem menuPreferences;
         private System.Windows.Forms.TreeView TreeView;
         private System.Windows.Forms.ImageList NodeIcons;
-        private System.Windows.Forms.ToolStripMenuItem MenuPlugins;
-        private System.Windows.Forms.ToolStripMenuItem MenuDonate;
-        private System.Windows.Forms.ToolStripMenuItem MenuExit;
+        private System.Windows.Forms.ToolStripMenuItem menuModules;
+        private System.Windows.Forms.ToolStripMenuItem menuDonate;
+        private System.Windows.Forms.ToolStripMenuItem menuExit;
         private System.Windows.Forms.ToolStripMenuItem TrayIconMenuExit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem checkUpdatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuCheckUpdates;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ContextMenuStrip TreeviewContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem MenuSleepMode;
+        private System.Windows.Forms.ToolStripMenuItem menuSleepMode;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem ContextMenuSleepMode;
-        private System.Windows.Forms.ToolStripMenuItem MenuFAQ;
+        private System.Windows.Forms.ToolStripMenuItem menuFAQ;
     }
 }
 
