@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id: UStream.cs 158 2010-11-30 14:06:50Z shalafiraistlin@gmail.com $
+ * $Id$
  */
 
 using System;
