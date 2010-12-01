@@ -22,7 +22,7 @@ namespace BlizzTV.Wizard
 {
     public partial class frmWizardHost : Form
     {
-        private IWizardForm[] _steps = { new frmWizardWelcome(), new frmWizardPlugins() };
+        private IWizardForm[] _steps = { new frmWizardWelcome(), new frmWizardPlugins(), new frmComplete() };
         private int current_step = -1;
 
         public frmWizardHost()

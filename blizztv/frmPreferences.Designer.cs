@@ -38,7 +38,7 @@
             this.checkBoxEnableDebugConsole = new System.Windows.Forms.CheckBox();
             this.checkBoxEnableDebugLogging = new System.Windows.Forms.CheckBox();
             this.tabModules = new System.Windows.Forms.TabPage();
-            this.ListviewPlugins = new System.Windows.Forms.ListView();
+            this.listviewModules = new System.Windows.Forms.ListView();
             this.ColEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -149,7 +149,7 @@
             // 
             // tabModules
             // 
-            this.tabModules.Controls.Add(this.ListviewPlugins);
+            this.tabModules.Controls.Add(this.listviewModules);
             this.tabModules.ImageIndex = 3;
             this.tabModules.Location = new System.Drawing.Point(4, 23);
             this.tabModules.Name = "tabModules";
@@ -159,23 +159,23 @@
             this.tabModules.Text = "Modules";
             this.tabModules.UseVisualStyleBackColor = true;
             // 
-            // ListviewPlugins
+            // listviewModules
             // 
-            this.ListviewPlugins.CheckBoxes = true;
-            this.ListviewPlugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listviewModules.CheckBoxes = true;
+            this.listviewModules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColEnabled,
             this.ColName,
             this.ColDescription});
-            this.ListviewPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ListviewPlugins.FullRowSelect = true;
-            this.ListviewPlugins.Location = new System.Drawing.Point(3, 3);
-            this.ListviewPlugins.Name = "ListviewPlugins";
-            this.ListviewPlugins.ShowGroups = false;
-            this.ListviewPlugins.Size = new System.Drawing.Size(455, 270);
-            this.ListviewPlugins.SmallImageList = this.ImageList;
-            this.ListviewPlugins.TabIndex = 1;
-            this.ListviewPlugins.UseCompatibleStateImageBehavior = false;
-            this.ListviewPlugins.View = System.Windows.Forms.View.Details;
+            this.listviewModules.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listviewModules.FullRowSelect = true;
+            this.listviewModules.Location = new System.Drawing.Point(3, 3);
+            this.listviewModules.Name = "listviewModules";
+            this.listviewModules.ShowGroups = false;
+            this.listviewModules.Size = new System.Drawing.Size(455, 270);
+            this.listviewModules.SmallImageList = this.ImageList;
+            this.listviewModules.TabIndex = 1;
+            this.listviewModules.UseCompatibleStateImageBehavior = false;
+            this.listviewModules.View = System.Windows.Forms.View.Details;
             // 
             // ColEnabled
             // 
@@ -438,7 +438,7 @@
         private System.Windows.Forms.CheckBox checkBoxEnableDebugConsole;
         private System.Windows.Forms.CheckBox checkBoxEnableDebugLogging;
         private System.Windows.Forms.TabPage tabModules;
-        private System.Windows.Forms.ListView ListviewPlugins;
+        private System.Windows.Forms.ListView listviewModules;
         private System.Windows.Forms.ColumnHeader ColEnabled;
         private System.Windows.Forms.ColumnHeader ColName;
         private System.Windows.Forms.ColumnHeader ColDescription;

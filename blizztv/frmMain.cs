@@ -23,6 +23,7 @@ using System.Threading;
 using BlizzTV.ModuleLib;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.UILib;
 using BlizzTV.Updates;
 
 namespace BlizzTV

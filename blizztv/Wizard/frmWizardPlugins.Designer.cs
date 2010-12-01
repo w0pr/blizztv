@@ -28,13 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmWizardPlugins));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.CheckboxFeeds = new System.Windows.Forms.CheckBox();
-            this.CheckboxStreams = new System.Windows.Forms.CheckBox();
-            this.CheckboxVideos = new System.Windows.Forms.CheckBox();
-            this.CheckboxEvents = new System.Windows.Forms.CheckBox();
+            this.listviewModules = new System.Windows.Forms.ListView();
+            this.ColEnable = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,71 +60,50 @@
                 "le and use.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // CheckboxFeeds
+            // listviewModules
             // 
-            this.CheckboxFeeds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CheckboxFeeds.Image = ((System.Drawing.Image)(resources.GetObject("CheckboxFeeds.Image")));
-            this.CheckboxFeeds.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.CheckboxFeeds.Location = new System.Drawing.Point(52, 45);
-            this.CheckboxFeeds.Name = "CheckboxFeeds";
-            this.CheckboxFeeds.Size = new System.Drawing.Size(386, 19);
-            this.CheckboxFeeds.TabIndex = 12;
-            this.CheckboxFeeds.Text = "Feeds (Aggregates feeds from your favorite sources)";
-            this.CheckboxFeeds.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.CheckboxFeeds.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.CheckboxFeeds.UseVisualStyleBackColor = true;
+            this.listviewModules.CheckBoxes = true;
+            this.listviewModules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ColEnable,
+            this.ColName,
+            this.ColDescription});
+            this.listviewModules.FullRowSelect = true;
+            this.listviewModules.Location = new System.Drawing.Point(1, 53);
+            this.listviewModules.Name = "listviewModules";
+            this.listviewModules.ShowGroups = false;
+            this.listviewModules.Size = new System.Drawing.Size(449, 196);
+            this.listviewModules.SmallImageList = this.imageList;
+            this.listviewModules.TabIndex = 11;
+            this.listviewModules.UseCompatibleStateImageBehavior = false;
+            this.listviewModules.View = System.Windows.Forms.View.Details;
             // 
-            // CheckboxStreams
+            // ColEnable
             // 
-            this.CheckboxStreams.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CheckboxStreams.Image = ((System.Drawing.Image)(resources.GetObject("CheckboxStreams.Image")));
-            this.CheckboxStreams.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.CheckboxStreams.Location = new System.Drawing.Point(52, 70);
-            this.CheckboxStreams.Name = "CheckboxStreams";
-            this.CheckboxStreams.Size = new System.Drawing.Size(386, 19);
-            this.CheckboxStreams.TabIndex = 13;
-            this.CheckboxStreams.Text = "Streams (Let\'s you view your favorite streams.)";
-            this.CheckboxStreams.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.CheckboxStreams.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.CheckboxStreams.UseVisualStyleBackColor = true;
+            this.ColEnable.Text = "Enable";
+            this.ColEnable.Width = 56;
             // 
-            // CheckboxVideos
+            // ColName
             // 
-            this.CheckboxVideos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CheckboxVideos.Image = ((System.Drawing.Image)(resources.GetObject("CheckboxVideos.Image")));
-            this.CheckboxVideos.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.CheckboxVideos.Location = new System.Drawing.Point(52, 95);
-            this.CheckboxVideos.Name = "CheckboxVideos";
-            this.CheckboxVideos.Size = new System.Drawing.Size(386, 19);
-            this.CheckboxVideos.TabIndex = 14;
-            this.CheckboxVideos.Text = "Videos (Let\'s you view latest videos from your favorite channels)";
-            this.CheckboxVideos.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.CheckboxVideos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.CheckboxVideos.UseVisualStyleBackColor = true;
+            this.ColName.Text = "Name";
+            this.ColName.Width = 96;
             // 
-            // CheckboxEvents
+            // ColDescription
             // 
-            this.CheckboxEvents.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CheckboxEvents.Image = ((System.Drawing.Image)(resources.GetObject("CheckboxEvents.Image")));
-            this.CheckboxEvents.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.CheckboxEvents.Location = new System.Drawing.Point(52, 120);
-            this.CheckboxEvents.Name = "CheckboxEvents";
-            this.CheckboxEvents.Size = new System.Drawing.Size(386, 19);
-            this.CheckboxEvents.TabIndex = 15;
-            this.CheckboxEvents.Text = "Events (Notifies you about related events\r\n)";
-            this.CheckboxEvents.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.CheckboxEvents.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.CheckboxEvents.UseVisualStyleBackColor = true;
+            this.ColDescription.Text = "Description";
+            this.ColDescription.Width = 292;
+            // 
+            // imageList
+            // 
+            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // frmWizardPlugins
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(450, 250);
-            this.Controls.Add(this.CheckboxEvents);
-            this.Controls.Add(this.CheckboxVideos);
-            this.Controls.Add(this.CheckboxStreams);
-            this.Controls.Add(this.CheckboxFeeds);
+            this.Controls.Add(this.listviewModules);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -138,9 +119,10 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox CheckboxFeeds;
-        private System.Windows.Forms.CheckBox CheckboxStreams;
-        private System.Windows.Forms.CheckBox CheckboxVideos;
-        private System.Windows.Forms.CheckBox CheckboxEvents;
+        private System.Windows.Forms.ListView listviewModules;
+        private System.Windows.Forms.ColumnHeader ColEnable;
+        private System.Windows.Forms.ColumnHeader ColName;
+        private System.Windows.Forms.ColumnHeader ColDescription;
+        private System.Windows.Forms.ImageList imageList;
     }
 }
