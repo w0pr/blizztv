@@ -31,7 +31,6 @@ namespace BlizzTV
     {
         #region members
 
-        private bool _sleep_mode = false;
         private Workload _workload;
         private Dictionary<string, TreeItem> _plugin_root_items = new Dictionary<string, TreeItem>();
 
@@ -323,9 +322,8 @@ namespace BlizzTV
 
         private void MenuSleepMode_Click(object sender, EventArgs e)
         {
-            if (!this._sleep_mode)
+            if (!Global.Instance.InSleepMode)
             {
-                this._sleep_mode = true;
                 this.menuSleepMode.Checked = true;
                 this.ContextMenuSleepMode.Checked = true;
                 this.TrayIcon.Icon = Properties.Resources.ico_sleep_16;
@@ -333,8 +331,7 @@ namespace BlizzTV
                 Global.Instance.InSleepMode = true;
             }
             else
-            {
-                this._sleep_mode = false;
+            {                
                 this.menuSleepMode.Checked = false;
                 this.ContextMenuSleepMode.Checked = false;
                 this.TrayIcon.Icon = Properties.Resources.ico_blizztv_16;

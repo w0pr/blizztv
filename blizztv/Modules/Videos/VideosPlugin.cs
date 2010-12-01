@@ -133,6 +133,7 @@ namespace BlizzTV.Modules.Videos
 
                     this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
 
+                    // check for fresh videos
                     foreach (KeyValuePair<string, Channel> pair in this._channels)
                     {
                         foreach (KeyValuePair<string, ListItem> child_pair in pair.Value.Childs)

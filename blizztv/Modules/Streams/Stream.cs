@@ -91,6 +91,16 @@ namespace BlizzTV.Modules.Streams
             else System.Diagnostics.Process.Start(this.Link, null); // render the stream with default web-browser.
         }
 
+        public override void BalloonClicked(object sender, EventArgs e)
+        {
+            if (Global.Instance.UseInternalViewers) // if internal-viewers method is selected
+            {
+                frmPlayer p = new frmPlayer(this); // render the stream with our own video player
+                p.Show();
+            }
+            else System.Diagnostics.Process.Start(this.Link, null); // render the stream with default web-browser.
+        }
+
         public virtual void Update() { throw new NotImplementedException(); } // the stream updater. 
 
         #endregion
