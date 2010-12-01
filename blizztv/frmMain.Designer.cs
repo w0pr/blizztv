@@ -47,6 +47,7 @@
             this.menuCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuDonate = new System.Windows.Forms.ToolStripMenuItem();
+            this.spreadTheWordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
@@ -142,6 +143,7 @@
             this.menuCheckUpdates,
             this.toolStripSeparator4,
             this.menuDonate,
+            this.spreadTheWordToolStripMenuItem,
             this.menuAbout});
             this.menuHelp.Name = "menuHelp";
             this.menuHelp.Size = new System.Drawing.Size(44, 20);
@@ -151,7 +153,7 @@
             // 
             this.menuBlizztvcom.Image = ((System.Drawing.Image)(resources.GetObject("menuBlizztvcom.Image")));
             this.menuBlizztvcom.Name = "menuBlizztvcom";
-            this.menuBlizztvcom.Size = new System.Drawing.Size(153, 22);
+            this.menuBlizztvcom.Size = new System.Drawing.Size(163, 22);
             this.menuBlizztvcom.Text = "BlizzTV.com";
             this.menuBlizztvcom.Click += new System.EventHandler(this.blizzTVcomToolStripMenuItem_Click);
             // 
@@ -159,7 +161,7 @@
             // 
             this.menuUserGuide.Image = ((System.Drawing.Image)(resources.GetObject("menuUserGuide.Image")));
             this.menuUserGuide.Name = "menuUserGuide";
-            this.menuUserGuide.Size = new System.Drawing.Size(153, 22);
+            this.menuUserGuide.Size = new System.Drawing.Size(163, 22);
             this.menuUserGuide.Text = "User Guide";
             this.menuUserGuide.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
             // 
@@ -167,20 +169,20 @@
             // 
             this.menuFAQ.Image = ((System.Drawing.Image)(resources.GetObject("menuFAQ.Image")));
             this.menuFAQ.Name = "menuFAQ";
-            this.menuFAQ.Size = new System.Drawing.Size(153, 22);
+            this.menuFAQ.Size = new System.Drawing.Size(163, 22);
             this.menuFAQ.Text = "FAQ";
             this.menuFAQ.Click += new System.EventHandler(this.MenuFAQ_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(150, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
             // 
             // menuBugReports
             // 
             this.menuBugReports.Image = ((System.Drawing.Image)(resources.GetObject("menuBugReports.Image")));
             this.menuBugReports.Name = "menuBugReports";
-            this.menuBugReports.Size = new System.Drawing.Size(153, 22);
+            this.menuBugReports.Size = new System.Drawing.Size(163, 22);
             this.menuBugReports.Text = "Bug Reports";
             this.menuBugReports.Click += new System.EventHandler(this.bugReportsToolStripMenuItem_Click);
             // 
@@ -188,28 +190,36 @@
             // 
             this.menuCheckUpdates.Image = ((System.Drawing.Image)(resources.GetObject("menuCheckUpdates.Image")));
             this.menuCheckUpdates.Name = "menuCheckUpdates";
-            this.menuCheckUpdates.Size = new System.Drawing.Size(153, 22);
+            this.menuCheckUpdates.Size = new System.Drawing.Size(163, 22);
             this.menuCheckUpdates.Text = "Check Updates";
             this.menuCheckUpdates.Click += new System.EventHandler(this.checkUpdatesToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(150, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(160, 6);
             // 
             // menuDonate
             // 
             this.menuDonate.Image = ((System.Drawing.Image)(resources.GetObject("menuDonate.Image")));
             this.menuDonate.Name = "menuDonate";
-            this.menuDonate.Size = new System.Drawing.Size(153, 22);
+            this.menuDonate.Size = new System.Drawing.Size(163, 22);
             this.menuDonate.Text = "Donate";
             this.menuDonate.Click += new System.EventHandler(this.MenuDonate_Click);
+            // 
+            // spreadTheWordToolStripMenuItem
+            // 
+            this.spreadTheWordToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("spreadTheWordToolStripMenuItem.Image")));
+            this.spreadTheWordToolStripMenuItem.Name = "spreadTheWordToolStripMenuItem";
+            this.spreadTheWordToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.spreadTheWordToolStripMenuItem.Text = "Spread the word!";
+            this.spreadTheWordToolStripMenuItem.Click += new System.EventHandler(this.spreadTheWordToolStripMenuItem_Click);
             // 
             // menuAbout
             // 
             this.menuAbout.Image = ((System.Drawing.Image)(resources.GetObject("menuAbout.Image")));
             this.menuAbout.Name = "menuAbout";
-            this.menuAbout.Size = new System.Drawing.Size(153, 22);
+            this.menuAbout.Size = new System.Drawing.Size(163, 22);
             this.menuAbout.Text = "About";
             this.menuAbout.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -245,26 +255,26 @@
             this.toolStripSeparator3,
             this.TrayIconMenuExit});
             this.TrayContextMenu.Name = "TrayContextMenu";
-            this.TrayContextMenu.Size = new System.Drawing.Size(153, 76);
+            this.TrayContextMenu.Size = new System.Drawing.Size(137, 54);
             // 
             // ContextMenuSleepMode
             // 
             this.ContextMenuSleepMode.Image = ((System.Drawing.Image)(resources.GetObject("ContextMenuSleepMode.Image")));
             this.ContextMenuSleepMode.Name = "ContextMenuSleepMode";
-            this.ContextMenuSleepMode.Size = new System.Drawing.Size(152, 22);
+            this.ContextMenuSleepMode.Size = new System.Drawing.Size(136, 22);
             this.ContextMenuSleepMode.Text = "Sleep Mode";
             this.ContextMenuSleepMode.Click += new System.EventHandler(this.MenuSleepMode_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(133, 6);
             // 
             // TrayIconMenuExit
             // 
             this.TrayIconMenuExit.Image = ((System.Drawing.Image)(resources.GetObject("TrayIconMenuExit.Image")));
             this.TrayIconMenuExit.Name = "TrayIconMenuExit";
-            this.TrayIconMenuExit.Size = new System.Drawing.Size(152, 22);
+            this.TrayIconMenuExit.Size = new System.Drawing.Size(136, 22);
             this.TrayIconMenuExit.Text = "Exit";
             this.TrayIconMenuExit.Click += new System.EventHandler(this.TrayIconMenuExit_Click);
             // 
@@ -354,6 +364,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem ContextMenuSleepMode;
         private System.Windows.Forms.ToolStripMenuItem menuFAQ;
+        private System.Windows.Forms.ToolStripMenuItem spreadTheWordToolStripMenuItem;
     }
 }
 

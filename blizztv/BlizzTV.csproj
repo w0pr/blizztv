@@ -364,9 +364,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF NOT EXIST "$(TargetDir)Libs" mkdir "$(TargetDir)Libs"
-Move "$(TargetDir)*.dll" "$(TargetDir)Libs"
-Del "$(TargetDir)*.xml"
-attrib -R "$(TargetDir)*.*" /S</PostBuildEvent>
+Move "$(TargetDir)*.dll" "$(TargetDir)Libs"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

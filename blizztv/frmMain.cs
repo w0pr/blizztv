@@ -266,6 +266,11 @@ namespace BlizzTV
             System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null);            
         }
 
+        private void spreadTheWordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://twitter.com/?status=I%20like%20BlizzTV%20(http://bit.ly/eVkpwz)%20cause;", null);            
+        }
+
         private void checkUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateManualCheckResult;
@@ -410,8 +415,7 @@ namespace BlizzTV
             db_prop.SetValue(c, true, null);
         }
 
-        #endregion              
-        
+        #endregion                      
     }
 
     #region workload processor
