@@ -30,19 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "Hüseyin Uslu",
             "Developer."}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "TeamLiquid.net",
             "Thanks for calendar API and all suggestions from TL users."}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "Mark James",
             "The shiny icons. (http://www.famfamfam.com/)"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
             "Brent R. Matzelle",
             "Nini - http://nini.sourceforge.net"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
             "SaveTheMurlocs.org",
             "No murlocs were harmed during making of this program."}, -1);
             this.label1 = new System.Windows.Forms.Label();
@@ -63,6 +63,7 @@
             this.Murloc = new System.Windows.Forms.PictureBox();
             this.LabelVersion = new System.Windows.Forms.Label();
             this.Player = new BlizzTV.Module.Players.FlashPlayer();
+            this.buttonChangelog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -176,11 +177,11 @@
             this.ListviewCredits.FullRowSelect = true;
             this.ListviewCredits.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ListviewCredits.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5});
+            listViewItem6,
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10});
             this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
             this.ListviewCredits.Name = "ListviewCredits";
             this.ListviewCredits.ShowItemToolTips = true;
@@ -251,12 +252,23 @@
             this.Player.Size = new System.Drawing.Size(624, 347);
             this.Player.TabIndex = 16;
             // 
+            // buttonChangelog
+            // 
+            this.buttonChangelog.Location = new System.Drawing.Point(289, 312);
+            this.buttonChangelog.Name = "buttonChangelog";
+            this.buttonChangelog.Size = new System.Drawing.Size(75, 23);
+            this.buttonChangelog.TabIndex = 18;
+            this.buttonChangelog.Text = "Changelog";
+            this.buttonChangelog.UseVisualStyleBackColor = true;
+            this.buttonChangelog.Click += new System.EventHandler(this.buttonChangelog_Click);
+            // 
             // frmAbout
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(451, 343);
+            this.Controls.Add(this.buttonChangelog);
             this.Controls.Add(this.Player);
             this.Controls.Add(this.Murloc);
             this.Controls.Add(this.LinkPaypal);
@@ -309,5 +321,6 @@
         private Module.Players.FlashPlayer Player;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Label LabelVersion;
+        private System.Windows.Forms.Button buttonChangelog;
     }
 }

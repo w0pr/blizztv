@@ -62,7 +62,12 @@ namespace BlizzTV
         			
         private bool _enough_dots = false;		
         private void more_dots(object sender, KeyEventArgs e) { if (e.Alt && e.Control) this._enough_dots = true; }		
-        private void even_more_dots(object sender, EventArgs e) { if (this._enough_dots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } _enough_dots = false; }		
+        private void even_more_dots(object sender, EventArgs e) { if (this._enough_dots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } _enough_dots = false; }
+
+        private void buttonChangelog_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/Changelog", null);
+        }		
     }
 
     class ListviewModulesItem : ListViewItem
