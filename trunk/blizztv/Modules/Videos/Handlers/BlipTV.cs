@@ -18,7 +18,8 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
-using BlizzTV.ModuleLib.Utils;
+using BlizzTV.CommonLib.Web;
+using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.Modules.Videos.Handlers
 {

@@ -15,7 +15,7 @@
  * $Id: Global.cs 158 2010-11-30 14:06:50Z shalafiraistlin@gmail.com $
  */
 
-namespace BlizzTV.ModuleLib.Settings
+namespace BlizzTV.CommonLib.Settings
 {
     /// <summary>
     /// Global settings that is used by both the BlizzTV and it's plugins.

@@ -16,8 +16,8 @@
  */
 
 using System;
+using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Settings;
 
 namespace BlizzTV.Modules.Videos
 {

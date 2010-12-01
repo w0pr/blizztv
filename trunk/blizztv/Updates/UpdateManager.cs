@@ -21,7 +21,8 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Reflection;
 using System.Threading;
-using BlizzTV.ModuleLib.Utils;
+using BlizzTV.CommonLib.Logger;
+using BlizzTV.CommonLib.Web;
 
 namespace BlizzTV.Updates
 {

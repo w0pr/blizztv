@@ -17,7 +17,7 @@
 
 using System;
 using System.Collections.Generic;
-using BlizzTV.ModuleLib.Storage;
+using BlizzTV.CommonLib.Storage;
 
 namespace BlizzTV.ModuleLib
 {
