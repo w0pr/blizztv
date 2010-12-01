@@ -18,8 +18,9 @@
 using System;
 using System.Net;
 using System.IO;
+using BlizzTV.CommonLib.Logger;
 
-namespace BlizzTV.ModuleLib.Utils
+namespace BlizzTV.CommonLib.Web
 {
     /// <summary>
     /// Reads data from web and returns.

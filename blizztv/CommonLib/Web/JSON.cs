@@ -24,7 +24,7 @@ using System.Collections;
 using System.Globalization;
 using System.Text;
 
-namespace BlizzTV.ModuleLib.Utils
+namespace BlizzTV.CommonLib.Web
 {
     #pragma warning disable 1591 // ignore 'Missing XML comment for publicly visible type or member 'Type_or_Member' for JSON.cs
     // TODO: If we feel all okay with JSON.cs, let's XML-comment this file to and fix it's (if any?) problems.

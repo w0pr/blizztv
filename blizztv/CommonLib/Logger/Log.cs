@@ -18,7 +18,7 @@
 using System;
 using System.IO;
 
-namespace BlizzTV.ModuleLib.Utils
+namespace BlizzTV.CommonLib.Logger
 {
     #region log-message-types
 

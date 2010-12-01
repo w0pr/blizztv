@@ -14,13 +14,14 @@
  * 
  * $Id: PluginSettings.cs 158 2010-11-30 14:06:50Z shalafiraistlin@gmail.com $
  */
+using BlizzTV.CommonLib.Settings;
 
 namespace BlizzTV.ModuleLib.Settings
 {
     /// <summary>
     /// Plugin-spefic settings.
     /// </summary>
-    public class ModuleSettings : Settings
+    public class ModuleSettings : CommonLib.Settings.Settings
     {
         /// <summary>
         /// Plugin settings.

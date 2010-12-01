@@ -17,7 +17,7 @@
 
 using System;
 
-namespace BlizzTV.ModuleLib.Common
+namespace BlizzTV.CommonLib.Utils
 {
     #region Common stuff used by BlizzTV and it's plugins
  

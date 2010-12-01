@@ -178,7 +178,7 @@
     <Compile Include="Modules\Videos\Settings.cs" />
     <Compile Include="Modules\Videos\Video.cs" />
     <Compile Include="Modules\Videos\VideosPlugin.cs" />
-    <Compile Include="ModuleLib\Common\Utils.cs" />
+    <Compile Include="CommonLib\Utils\Utils.cs" />
     <Compile Include="ModuleLib\Settings\IModuleSettingsForm.cs" />
     <Compile Include="ModuleLib\ListItem.cs" />
     <Compile Include="ModuleLib\Notifications\Notifications.cs" />
@@ -188,17 +188,17 @@
     <Compile Include="ModuleLib\Module.cs" />
     <Compile Include="ModuleLib\ModuleInfo.cs" />
     <Compile Include="ModuleLib\ModuleManager.cs" />
-    <Compile Include="ModuleLib\Settings\GlobalSettings.cs" />
-    <Compile Include="ModuleLib\Settings\SettingsManager.cs" />
+    <Compile Include="CommonLib\Settings\GlobalSettings.cs" />
+    <Compile Include="CommonLib\Settings\SettingsManager.cs" />
     <Compile Include="ModuleLib\Settings\ModuleSettings.cs" />
-    <Compile Include="ModuleLib\Settings\Settings.cs" />
-    <Compile Include="ModuleLib\Storage\PersistantStorage.cs" />
-    <Compile Include="ModuleLib\Utils\DebugConsole.cs" />
-    <Compile Include="ModuleLib\Utils\JSON.cs" />
-    <Compile Include="ModuleLib\Utils\Log.cs" />
-    <Compile Include="ModuleLib\Utils\WebReader.cs" />
+    <Compile Include="CommonLib\Settings\Settings.cs" />
+    <Compile Include="CommonLib\Storage\PersistantStorage.cs" />
+    <Compile Include="CommonLib\Logger\DebugConsole.cs" />
+    <Compile Include="CommonLib\Web\JSON.cs" />
+    <Compile Include="CommonLib\Logger\Log.cs" />
+    <Compile Include="CommonLib\Web\WebReader.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Utils\DependencyChecker.cs" />
+    <Compile Include="CommonLib\Dependencies\DependencyChecker.cs" />
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>
     </Compile>

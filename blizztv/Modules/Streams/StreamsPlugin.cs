@@ -21,9 +21,9 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Timers;
+using BlizzTV.CommonLib.Logger;
+using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Settings;
-using BlizzTV.ModuleLib.Utils;
 using BlizzTV.ModuleLib.Notifications;
 
 namespace BlizzTV.Modules.Streams

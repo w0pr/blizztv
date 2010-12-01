@@ -21,8 +21,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using BlizzTV.ModuleLib;
+using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib.Notifications;
-using BlizzTV.ModuleLib.Settings;
 using BlizzTV.Updates;
 
 namespace BlizzTV

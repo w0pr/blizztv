@@ -16,10 +16,10 @@
  */
 
 using System;
-using BlizzTV.ModuleLib.Utils;
 using Nini.Config;
+using BlizzTV.CommonLib.Logger;
 
-namespace BlizzTV.ModuleLib.Settings
+namespace BlizzTV.CommonLib.Settings
 {
     /// <summary>
     /// The settings parser wrapper.

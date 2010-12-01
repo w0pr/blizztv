@@ -17,7 +17,7 @@
 
 using Nini.Config;
 
-namespace BlizzTV.ModuleLib.Settings
+namespace BlizzTV.CommonLib.Settings
 {
     /// <summary>
     /// Settings

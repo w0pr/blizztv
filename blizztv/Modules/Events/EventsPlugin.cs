@@ -20,10 +20,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Timers;
+using BlizzTV.CommonLib.Web;
+using BlizzTV.CommonLib.Settings;
+using BlizzTV.CommonLib.Logger;
+using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Settings;
-using BlizzTV.ModuleLib.Utils;
-using BlizzTV.ModuleLib.Common;
 
 namespace BlizzTV.Modules.Events
 {

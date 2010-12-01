@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using BlizzTV.ModuleLib.Utils;
+using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.ModuleLib
 {
