@@ -24,6 +24,7 @@ using System.Timers;
 using BlizzTV.Module;
 using BlizzTV.Module.Settings;
 using BlizzTV.Module.Utils;
+using BlizzTV.Module.Notifications;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -136,6 +137,18 @@ namespace BlizzTV.Modules.Streams
                     }
 
                     this.RootListItem.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
+
+                    // check for new streams
+                    Stream selection=null;
+                    foreach (KeyValuePair<string, Stream> pair in this._streams)
+                    {
+                        if (pair.Value.IsLive)
+                        {
+                            if (selection != null) { if (pair.Value.ViewerCount > selection.ViewerCount) selection = pair.Value; }
+                            else selection = pair.Value;
+                        }
+                    }
+                    if (selection != null) Notifications.Instance.Show(selection, selection.Title, "Stream is online. Click to watch.", System.Windows.Forms.ToolTipIcon.Info);
                 }
                 NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
                 this._updating = false;
