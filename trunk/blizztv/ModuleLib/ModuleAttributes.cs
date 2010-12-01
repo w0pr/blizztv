@@ -60,7 +60,7 @@ namespace BlizzTV.ModuleLib
         /// <summary>
         /// The plugin's attributes.
         /// </summary>
-        /// <param name="Name">The plugin name.</param>
+        /// <param name="ModuleName">The plugin name.</param>
         /// <param name="Description">The plugin description.</param>
         /// <param name="IconName">Pass null as value or do not supply a value if you don't want to specify an icon for your plugin.</param>
         /// <remarks>Pass null as value or do not supply a value if you don't want to specify an icon for your plugin.</remarks>

@@ -14,19 +14,31 @@
  * 
  * $Id$
  */
-using BlizzTV.CommonLib.Settings;
 
-namespace BlizzTV.ModuleLib.Settings
+using System.Windows.Forms;
+
+namespace BlizzTV.UILib
 {
-    /// <summary>
-    /// Plugin-spefic settings.
-    /// </summary>
-    public class ModuleSettings : CommonLib.Settings.Settings
+    public static class InvokeExtensions
     {
-        /// <summary>
-        /// Plugin settings.
-        /// </summary>
-        /// <param name="ModuleName"></param>
-        protected ModuleSettings(string Name) : base(string.Format("Plugin-{0}", Name)) { }
+        public static void InvokeHandler(this Control control, MethodInvoker del) // Extension method for sync. invokes.
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(del);
+                return; 
+            }
+            else del();
+        }
+
+        public static void AsyncInvokeHandler(this Control control, MethodInvoker del) // Extension method for asyc. invokes.
+        {
+            if (control.InvokeRequired)
+            {
+                control.BeginInvoke(del);
+                return; 
+            }
+            else del(); 
+        }
     }
 }

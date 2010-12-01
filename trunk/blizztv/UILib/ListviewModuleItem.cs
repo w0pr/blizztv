@@ -15,30 +15,24 @@
  * $Id$
  */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using BlizzTV.ModuleLib;
 
-namespace BlizzTV
+namespace BlizzTV.UILib
 {
-    public static class InvokeExtensions
+    public class ListviewModuleItem : ListViewItem
     {
-        public static void InvokeHandler(this Control control, MethodInvoker del) // Extension method for sync. invokes.
-        {
-            if (control.InvokeRequired)
-            {
-                control.Invoke(del);
-                return; 
-            }
-            else del();
-        }
+        public string ModuleName { get { return this.SubItems[1].Text; } }
 
-        public static void AsyncInvokeHandler(this Control control, MethodInvoker del) // Extension method for asyc. invokes.
+        public ListviewModuleItem(ModuleInfo p)
         {
-            if (control.InvokeRequired)
-            {
-                control.BeginInvoke(del);
-                return; 
-            }
-            else del(); 
+            this.ImageKey = p.Attributes.Name;
+            this.SubItems.Add(p.Attributes.Name);
+            this.SubItems.Add(p.Attributes.Description);
         }
     }
 }

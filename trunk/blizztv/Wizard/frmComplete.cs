@@ -14,19 +14,25 @@
  * 
  * $Id$
  */
-using BlizzTV.CommonLib.Settings;
 
-namespace BlizzTV.ModuleLib.Settings
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace BlizzTV.Wizard
 {
-    /// <summary>
-    /// Plugin-spefic settings.
-    /// </summary>
-    public class ModuleSettings : CommonLib.Settings.Settings
+    public partial class frmComplete : Form , IWizardForm
     {
-        /// <summary>
-        /// Plugin settings.
-        /// </summary>
-        /// <param name="ModuleName"></param>
-        protected ModuleSettings(string Name) : base(string.Format("Plugin-{0}", Name)) { }
+        public frmComplete()
+        {
+            InitializeComponent();
+        }
+
+        public void Finish() { }
     }
 }

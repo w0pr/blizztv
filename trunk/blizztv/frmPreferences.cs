@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
+using BlizzTV.UILib;
 
 namespace BlizzTV
 {
@@ -72,8 +73,9 @@ namespace BlizzTV
             // plugin settings.
             foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailablePlugins)
             {
-                ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
-                this.ListviewPlugins.Items.Add(item);
+                ListviewModuleItem item=new ListviewModuleItem(pair.Value);
+                this.listviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
+                this.listviewModules.Items.Add(item);
                 if (Settings.Instance.Plugins.Enabled(pair.Value.Attributes.Name)) item.Checked = true;
             }           
         }
@@ -93,7 +95,6 @@ namespace BlizzTV
                         plugin_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None; // it should not have borders too.
                         plugin_form.BackColor = Color.White;
                         plugin_form.Show(); // show the settings form.
-                        TabControl.ImageList.Images.Add(pair.Key, ModuleManager.Instance.InstantiatedPlugins[pair.Key].Attributes.Icon); // get the plugin icon.
                         t.ImageIndex = TabControl.ImageList.Images.IndexOfKey(pair.Key); // set the icon.
                         t.Controls.Add(plugin_form); // add the form to tabpage.                        
                         this._plugin_tabs.Add(t); // add tabpage to list so we can access it later.
@@ -122,10 +123,10 @@ namespace BlizzTV
             Settings.Instance.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
 
             // save plugin settings
-            foreach (ListviewPluginsItem item in ListviewPlugins.Items)
+            foreach (ListviewModuleItem item in listviewModules.Items)
             {
-                if (item.Checked) Settings.Instance.Plugins.Enable(item.PluginInfo.Attributes.Name);
-                else Settings.Instance.Plugins.Disable(item.PluginInfo.Attributes.Name);          
+                if (item.Checked) Settings.Instance.Plugins.Enable(item.ModuleName);
+                else Settings.Instance.Plugins.Disable(item.ModuleName);          
             }
 
             Settings.Instance.Save();
@@ -142,20 +143,6 @@ namespace BlizzTV
             foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IModuleSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
             if (this.OnApplySettings != null) this.OnApplySettings(); // notify observers.
             this.Close();
-        }
-    }
-
-    internal class ListviewPluginsItem : ListViewItem
-    {
-        private ModuleInfo _plugin_info;
-        public ModuleInfo PluginInfo { get { return this._plugin_info; } }
-
-        public ListviewPluginsItem(ModuleInfo p)
-        {
-            _plugin_info = p;
-            this.ImageKey = p.Attributes.Name;
-            this.SubItems.Add(p.Attributes.Name);
-            this.SubItems.Add(p.Attributes.Description);
         }
     }
 }

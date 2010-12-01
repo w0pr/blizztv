@@ -16,7 +16,11 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using BlizzTV.ModuleLib;
+using BlizzTV.UILib;
+using BlizzTV.CommonLib.Settings;
 
 namespace BlizzTV.Wizard
 {
@@ -27,14 +31,23 @@ namespace BlizzTV.Wizard
             InitializeComponent();
         }
 
-        private void frmWizardPlugins_Load(object sender, EventArgs e) { }
+        private void frmWizardPlugins_Load(object sender, EventArgs e) 
+        {
+            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailablePlugins)
+            {
+                ListviewModuleItem item = new ListviewModuleItem(pair.Value);
+                this.listviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
+                this.listviewModules.Items.Add(item);
+            }   
+        }
 
         public void Finish()
         {
-            if (CheckboxFeeds.Checked) Settings.Instance.Plugins.Enable("Feeds"); else Settings.Instance.Plugins.Disable("Feeds");
-            if (CheckboxStreams.Checked) Settings.Instance.Plugins.Enable("Streams"); else Settings.Instance.Plugins.Disable("Streams");
-            if (CheckboxVideos.Checked) Settings.Instance.Plugins.Enable("Videos"); else Settings.Instance.Plugins.Disable("Videos");
-            if (CheckboxEvents.Checked) Settings.Instance.Plugins.Enable("Events"); else Settings.Instance.Plugins.Disable("Events");
+            foreach (ListviewModuleItem item in this.listviewModules.Items)
+            {
+                if (item.Checked) Settings.Instance.Plugins.Enable(item.ModuleName);
+                else Settings.Instance.Plugins.Disable(item.ModuleName);
+            }
             Settings.Instance.NeedInitialConfig = false;
             Settings.Instance.Save();
         }

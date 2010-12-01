@@ -67,7 +67,7 @@ namespace BlizzTV.ModuleLib
 
         #endregion
 
-        #region PluginInfo API
+        #region ModuleInfo API
 
         /// <summary>
         /// Creates a instance

@@ -64,6 +64,7 @@
             this.LabelVersion = new System.Windows.Forms.Label();
             this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
             this.buttonChangelog = new System.Windows.Forms.Button();
+            this.colIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -106,6 +107,7 @@
             // ListviewModules
             // 
             this.ListviewModules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colIcon,
             this.ColName,
             this.ColDescription});
             this.ListviewModules.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -128,7 +130,7 @@
             // ColDescription
             // 
             this.ColDescription.Text = "Description";
-            this.ColDescription.Width = 310;
+            this.ColDescription.Width = 306;
             // 
             // imageList
             // 
@@ -262,6 +264,11 @@
             this.buttonChangelog.UseVisualStyleBackColor = true;
             this.buttonChangelog.Click += new System.EventHandler(this.buttonChangelog_Click);
             // 
+            // colIcon
+            // 
+            this.colIcon.Text = "";
+            this.colIcon.Width = 22;
+            // 
             // frmAbout
             // 
             this.AcceptButton = this.buttonOK;
@@ -322,5 +329,6 @@
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Label LabelVersion;
         private System.Windows.Forms.Button buttonChangelog;
+        private System.Windows.Forms.ColumnHeader colIcon;
     }
 }
