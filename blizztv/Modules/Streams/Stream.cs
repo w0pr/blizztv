@@ -16,8 +16,8 @@
  */
 
 using System;
-using BlizzTV.Module;
-using BlizzTV.Module.Settings;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -83,7 +83,7 @@ namespace BlizzTV.Modules.Streams
 
         public override void DoubleClicked(object sender, EventArgs e) // double-click handler
         {
-            if (Global.Instance.UseInternalViewers) // if internal-viewers method is selected
+            if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
             {
                 frmPlayer p = new frmPlayer(this); // render the stream with our own video player
                 p.Show();
@@ -93,7 +93,7 @@ namespace BlizzTV.Modules.Streams
 
         public override void BalloonClicked(object sender, EventArgs e)
         {
-            if (Global.Instance.UseInternalViewers) // if internal-viewers method is selected
+            if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
             {
                 frmPlayer p = new frmPlayer(this); // render the stream with our own video player
                 p.Show();

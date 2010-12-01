@@ -20,9 +20,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
-using BlizzTV.Module;
-using BlizzTV.Module.Notifications;
-using BlizzTV.Module.Settings;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.ModuleLib.Settings;
 using BlizzTV.Updates;
 
 namespace BlizzTV
@@ -69,7 +69,7 @@ namespace BlizzTV
 
         private void LoadPlugins() // Loads enabled plugins
         {
-            PluginManager pm = PluginManager.Instance; // Let the plugin-manager run..
+            ModuleManager pm = ModuleManager.Instance; // Let the plugin-manager run..
 
             foreach (KeyValuePair<string, bool> pair in Settings.Instance.Plugins.List) // loop through available plugins.
             {
@@ -87,14 +87,14 @@ namespace BlizzTV
         {
             foreach(KeyValuePair<string,bool> pair in Settings.Instance.Plugins.List)
             {
-                if (pair.Value && !PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.InstantiatePlugin(pair.Key); // instantiate the plugin.
-                else if (!pair.Value && PluginManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.KillPlugin(pair.Key); // kill the plugin.
+                if (pair.Value && !ModuleManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.InstantiatePlugin(pair.Key); // instantiate the plugin.
+                else if (!pair.Value && ModuleManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.KillPlugin(pair.Key); // kill the plugin.
             }
         }
 
         private void InstantiatePlugin(string key)
         {
-            Plugin plugin = PluginManager.Instance.Instantiate(key); // get the plugins instance.
+            Module plugin = ModuleManager.Instance.Instantiate(key); // get the plugins instance.
             ThreadStart plugin_thread = delegate { RunPlugin(plugin); }; // define plugin's own thread.
             Thread t = new Thread(plugin_thread) { IsBackground = true, Name = string.Format("plugin-{0}-{1}", plugin.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };  // let the thread a background-one.
             t.Start(); // nuclear-launch detected :)
@@ -109,10 +109,10 @@ namespace BlizzTV
                 this._plugin_root_items.Remove(key);
             }
             
-            PluginManager.Instance.Kill(key);
+            ModuleManager.Instance.Kill(key);
         }
 
-        private void RunPlugin(Plugin p) // Applies plugin settings and run the plugin.
+        private void RunPlugin(Module p) // Applies plugin settings and run the plugin.
         {
             // register plugin communication events.     
             p.OnPluginUpdateStarted += PluginUpdateStarted;
@@ -128,14 +128,14 @@ namespace BlizzTV
         {
             this.TreeView.InvokeHandler(() =>
                 {
-                    if (!this._plugin_root_items.ContainsKey((sender as Plugin).Attributes.Name))
+                    if (!this._plugin_root_items.ContainsKey((sender as Module).Attributes.Name))
                     {
-                        TreeItem t = new TreeItem((Plugin)sender, (sender as Plugin).RootListItem);
+                        TreeItem t = new TreeItem((Module)sender, (sender as Module).RootListItem);
                         TreeView.Nodes.Add(t);
-                        this._plugin_root_items.Add((sender as Plugin).Attributes.Name, t);
+                        this._plugin_root_items.Add((sender as Module).Attributes.Name, t);
                         t.Render();
                     }
-                    else this._plugin_root_items[(sender as Plugin).Attributes.Name].Nodes.Clear();
+                    else this._plugin_root_items[(sender as Module).Attributes.Name].Nodes.Clear();
                 });
         }
 
@@ -143,17 +143,17 @@ namespace BlizzTV
         {
             this.TreeView.InvokeHandler(() =>
                 {
-                    if (this._plugin_root_items.ContainsKey((sender as Plugin).Attributes.Name))
+                    if (this._plugin_root_items.ContainsKey((sender as Module).Attributes.Name))
                     {
                         this.TreeView.BeginUpdate();
-                        TreeItem _root_item = this._plugin_root_items[(sender as Plugin).Attributes.Name];
-                        foreach (KeyValuePair<string, ListItem> pair in _root_item.Item.Childs) { this.LoadPluginListItems((Plugin)sender, pair.Value, _root_item); }
+                        TreeItem _root_item = this._plugin_root_items[(sender as Module).Attributes.Name];
+                        foreach (KeyValuePair<string, ListItem> pair in _root_item.Item.Childs) { this.LoadPluginListItems((Module)sender, pair.Value, _root_item); }
                         this.TreeView.EndUpdate();
                     }
                 });
         }
 
-        private void LoadPluginListItems(Plugin Plugin,ListItem Item,TreeItem Parent)
+        private void LoadPluginListItems(Module Plugin,ListItem Item,TreeItem Parent)
         {
             TreeItem t = new TreeItem(Plugin, Item);
             Parent.Nodes.Add(t);
@@ -162,7 +162,7 @@ namespace BlizzTV
             if (Item.Childs.Count > 0) { foreach (KeyValuePair<string, ListItem> pair in Item.Childs) { this.LoadPluginListItems(Plugin, pair.Value, t); } }            
         }
 
-        private void RegisterPluginMenus(Plugin p) // Registers plugin's sub-menus.
+        private void RegisterPluginMenus(Module p) // Registers plugin's sub-menus.
         {
             this.AsyncInvokeHandler(() =>
                 {
@@ -322,13 +322,13 @@ namespace BlizzTV
 
         private void MenuSleepMode_Click(object sender, EventArgs e)
         {
-            if (!Global.Instance.InSleepMode)
+            if (!GlobalSettings.Instance.InSleepMode)
             {
                 this.menuSleepMode.Checked = true;
                 this.ContextMenuSleepMode.Checked = true;
                 this.TrayIcon.Icon = Properties.Resources.ico_sleep_16;
                 this.TrayIcon.Text = "BlizzTV is in sleep mode.";
-                Global.Instance.InSleepMode = true;
+                GlobalSettings.Instance.InSleepMode = true;
             }
             else
             {                
@@ -336,7 +336,7 @@ namespace BlizzTV
                 this.ContextMenuSleepMode.Checked = false;
                 this.TrayIcon.Icon = Properties.Resources.ico_blizztv_16;
                 this.TrayIcon.Text = "BlizzTV";
-                Global.Instance.InSleepMode = false;
+                GlobalSettings.Instance.InSleepMode = false;
             }
         }
 

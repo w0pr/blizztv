@@ -1,4 +1,4 @@
-﻿using BlizzTV.Module.Players;
+﻿using BlizzTV.ModuleLib.Players;
 
 namespace BlizzTV.Modules.Streams
 {

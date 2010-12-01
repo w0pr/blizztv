@@ -18,21 +18,21 @@
 using System;
 using System.IO;
 using System.Reflection;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib.Utils;
 
-namespace BlizzTV.Module
+namespace BlizzTV.ModuleLib
 {
     /// <summary>
     /// The plugin info and activator.
     /// </summary>
-    public class PluginInfo : IDisposable
+    public class ModuleInfo : IDisposable
     {
         #region members
 
         private bool _valid = false; // is it a valid BlizzTV plugin?
         private Type _plugin_entrance; // the plugin's entrance point (actual module's ctor).
-        private PluginAttributes _attributes; // the plugin's attributes
-        private Plugin _instance = null; // contains the plugin instance if initiated.
+        private ModuleAttributes _attributes; // the plugin's attributes
+        private Module _instance = null; // contains the plugin instance if initiated.
         private bool disposed = false;
 
         /// <summary>
@@ -43,13 +43,13 @@ namespace BlizzTV.Module
         /// <summary>
         /// The plugin's attributes
         /// </summary>
-        public PluginAttributes Attributes { get { return _attributes; } }
+        public ModuleAttributes Attributes { get { return _attributes; } }
 
         /// <summary>
         /// Returns the plugin instance.
         /// <remarks>If the plugin is not initiated before it will be so.</remarks>
         /// </summary>
-        public Plugin Instance { get { return this._instance; } }
+        public Module Instance { get { return this._instance; } }
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace BlizzTV.Module
         /// 
         /// </summary>
         /// <param name="Entrance"></param>
-        public PluginInfo(Type Entrance)
+        public ModuleInfo(Type Entrance)
         {
             this._plugin_entrance = Entrance;
             this.ReadPluginInfo(); // read the assemblies details.
@@ -73,14 +73,14 @@ namespace BlizzTV.Module
         /// Creates a instance
         /// </summary>
         /// <returns>Returns the instance of the plugin asked for.</returns>
-        public Plugin CreateInstance()
+        public Module CreateInstance()
         {
             if (this._instance == null) // just allow one instance.
             {
                 try
                 {
                     if (!this._valid) throw new NotSupportedException(); // If the plugin asked for is not a valid BlizzTV pluin, fire an exception.
-                    this._instance = (Plugin)Activator.CreateInstance(this._plugin_entrance); // Create the plugin instance using the ctor we stored as entrance point.
+                    this._instance = (Module)Activator.CreateInstance(this._plugin_entrance); // Create the plugin instance using the ctor we stored as entrance point.
                     this._instance.Attributes = this._attributes;
                 }
                 catch (Exception e)
@@ -108,12 +108,12 @@ namespace BlizzTV.Module
         {
             try
             {
-                object[] _attr = this._plugin_entrance.GetCustomAttributes(typeof(PluginAttributes), true); // get the attributes for the plugin
+                object[] _attr = this._plugin_entrance.GetCustomAttributes(typeof(ModuleAttributes), true); // get the attributes for the plugin
                 
                 if (_attr.Length > 0) // if plugin defines attributes, check them
                 {
-                    (_attr[0] as PluginAttributes).ResolveResources(); // resolve the attribute resources
-                    this._attributes = (PluginAttributes)_attr[0]; // store the attributes
+                    (_attr[0] as ModuleAttributes).ResolveResources(); // resolve the attribute resources
+                    this._attributes = (ModuleAttributes)_attr[0]; // store the attributes
                     this._valid = true; // yes we're valid ;)
                 }
                 else throw new LoadPluginInfoException("todo", "Plugin does not define the required attributes."); // all plugins should define the required atributes                
@@ -131,7 +131,7 @@ namespace BlizzTV.Module
         /// <summary>
         /// de-ctor.
         /// </summary>
-        ~PluginInfo() { Dispose(false); }
+        ~ModuleInfo() { Dispose(false); }
 
         /// <summary>
         /// Disposes the object.

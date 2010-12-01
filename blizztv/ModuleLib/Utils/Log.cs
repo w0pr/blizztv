@@ -18,7 +18,7 @@
 using System;
 using System.IO;
 
-namespace BlizzTV.Module.Utils
+namespace BlizzTV.ModuleLib.Utils
 {
     #region log-message-types
 
@@ -110,7 +110,7 @@ namespace BlizzTV.Module.Utils
             DebugConsole.Instance.Write(_type, _str); // also pass message to debug console
             if (this._logger_enabled)
             {
-                this._log_stream.WriteLine(string.Format("[{0} {1}] {2}", _type.ToString(), DateTime.Now.ToString("HH:mm:ss"), _str));
+                this._log_stream.WriteLine(string.Format("[{0}][{1}]: {2}", DateTime.Now.ToString("HH:mm:ss"), _type.ToString().PadLeft(5), _str));
                 this._log_stream.AutoFlush = true; // Auto-flush and write the data to the file immediatly.
             }
         }

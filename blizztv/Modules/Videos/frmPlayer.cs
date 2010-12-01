@@ -17,8 +17,8 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.Module.Settings;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Utils;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -30,10 +30,10 @@ namespace BlizzTV.Modules.Videos
         {
             InitializeComponent();
 
-            this.SwitchTopMostMode(Global.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
+            this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
             this._video = Video; // set the video.
-            this.Width = Global.Instance.VideoPlayerWidth; // get the default player width. 
-            this.Height = Global.Instance.VideoPlayerHeight; // get the default player height.
+            this.Width = GlobalSettings.Instance.VideoPlayerWidth; // get the default player width. 
+            this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
             this._video.Process(); // process the video so that it's template variables are replaced.
         }
 

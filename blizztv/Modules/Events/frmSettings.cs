@@ -17,11 +17,12 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.Module;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 
 namespace BlizzTV.Modules.Events
 {
-    public partial class frmSettings : Form, IPluginSettingsForm
+    public partial class frmSettings : Form, IModuleSettingsForm
     {
         public frmSettings()
         {

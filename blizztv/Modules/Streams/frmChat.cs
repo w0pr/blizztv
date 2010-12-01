@@ -17,8 +17,8 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.Module.Players;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib.Players;
+using BlizzTV.ModuleLib.Utils;
 
 namespace BlizzTV.Modules.Streams
 {

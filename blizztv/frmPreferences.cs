@@ -19,8 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using BlizzTV.Module;
-using BlizzTV.Module.Settings;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 
 namespace BlizzTV
 {
@@ -50,16 +50,16 @@ namespace BlizzTV
         private void LoadSettings()
         {
 
-            if (Global.Instance.UseInternalViewers) radioButtonUseInternalViewers.Checked = true;
+            if (GlobalSettings.Instance.UseInternalViewers) radioButtonUseInternalViewers.Checked = true;
             else radioButtonUseDefaultWebBrowser.Checked = true;
 
             checkBoxAllowAutomaticUpdateChecks.Checked = Settings.Instance.AllowAutomaticUpdateChecks;
             checkBoxAllowBetaVersionNotifications.Checked = Settings.Instance.AllowBetaVersionNotifications;
 
-            txtVideoPlayerWidth.Text = Global.Instance.VideoPlayerWidth.ToString();
-            txtVideoPlayerHeight.Text = Global.Instance.VideoPlayerHeight.ToString();
-            checkBoxVideoAutoPlay.Checked = Global.Instance.AutoPlayVideos;
-            CheckBoxPlayerAlwaysOnTop.Checked = Global.Instance.PlayerWindowsAlwaysOnTop;
+            txtVideoPlayerWidth.Text = GlobalSettings.Instance.VideoPlayerWidth.ToString();
+            txtVideoPlayerHeight.Text = GlobalSettings.Instance.VideoPlayerHeight.ToString();
+            checkBoxVideoAutoPlay.Checked = GlobalSettings.Instance.AutoPlayVideos;
+            CheckBoxPlayerAlwaysOnTop.Checked = GlobalSettings.Instance.PlayerWindowsAlwaysOnTop;
 
             checkBoxMinimimizeToSystemTray.Checked = Settings.Instance.MinimizeToSystemTray;
             checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
@@ -69,7 +69,7 @@ namespace BlizzTV
             this.LoadPluginTabs();
 
             // plugin settings.
-            foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
+            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailablePlugins)
             {
                 ListviewPluginsItem item=new ListviewPluginsItem(pair.Value);
                 this.ListviewPlugins.Items.Add(item);
@@ -83,7 +83,7 @@ namespace BlizzTV
             {
                 if (pair.Value) // if plugin is enabled
                 {
-                    Form plugin_form = PluginManager.Instance.InstantiatedPlugins[pair.Key].GetPreferencesForm(); // get plugin's preferences form.
+                    Form plugin_form = ModuleManager.Instance.InstantiatedPlugins[pair.Key].GetPreferencesForm(); // get plugin's preferences form.
                     if (plugin_form != null) // if plugin defined a preferences form in reality.
                     {
                         TabPage t = new TabPage(pair.Key); // create up a new tabpage for it.
@@ -92,7 +92,7 @@ namespace BlizzTV
                         plugin_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None; // it should not have borders too.
                         plugin_form.BackColor = Color.White;
                         plugin_form.Show(); // show the settings form.
-                        TabControl.ImageList.Images.Add(pair.Key, PluginManager.Instance.InstantiatedPlugins[pair.Key].Attributes.Icon); // get the plugin icon.
+                        TabControl.ImageList.Images.Add(pair.Key, ModuleManager.Instance.InstantiatedPlugins[pair.Key].Attributes.Icon); // get the plugin icon.
                         t.ImageIndex = TabControl.ImageList.Images.IndexOfKey(pair.Key); // set the icon.
                         t.Controls.Add(plugin_form); // add the form to tabpage.                        
                         this._plugin_tabs.Add(t); // add tabpage to list so we can access it later.
@@ -105,16 +105,16 @@ namespace BlizzTV
         private void SaveSettings()
         {
             // save global settings
-            if (radioButtonUseInternalViewers.Checked) Global.Instance.UseInternalViewers = true;
-            else Global.Instance.UseInternalViewers = false;
+            if (radioButtonUseInternalViewers.Checked) GlobalSettings.Instance.UseInternalViewers = true;
+            else GlobalSettings.Instance.UseInternalViewers = false;
 
             Settings.Instance.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
             Settings.Instance.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
 
-            Global.Instance.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
-            Global.Instance.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
-            Global.Instance.AutoPlayVideos = checkBoxVideoAutoPlay.Checked;
-            Global.Instance.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
+            GlobalSettings.Instance.VideoPlayerWidth = Int32.Parse(txtVideoPlayerWidth.Text);
+            GlobalSettings.Instance.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
+            GlobalSettings.Instance.AutoPlayVideos = checkBoxVideoAutoPlay.Checked;
+            GlobalSettings.Instance.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
 
             Settings.Instance.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
             Settings.Instance.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
@@ -138,7 +138,7 @@ namespace BlizzTV
         private void buttonOK_Click(object sender, EventArgs e)
         {            
             this.SaveSettings();  // save global settings
-            foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IPluginSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
+            foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IModuleSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
             if (this.OnApplySettings != null) this.OnApplySettings(); // notify observers.
             this.Close();
         }
@@ -146,10 +146,10 @@ namespace BlizzTV
 
     internal class ListviewPluginsItem : ListViewItem
     {
-        private PluginInfo _plugin_info;
-        public PluginInfo PluginInfo { get { return this._plugin_info; } }
+        private ModuleInfo _plugin_info;
+        public ModuleInfo PluginInfo { get { return this._plugin_info; } }
 
-        public ListviewPluginsItem(PluginInfo p)
+        public ListviewPluginsItem(ModuleInfo p)
         {
             _plugin_info = p;
             this.ImageKey = p.Attributes.Name;

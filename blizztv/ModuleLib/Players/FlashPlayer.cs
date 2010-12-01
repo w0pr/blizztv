@@ -18,7 +18,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace BlizzTV.Module.Players
+namespace BlizzTV.ModuleLib.Players
 {
     // latest flash player activex can be downloaded from: http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe
 

@@ -21,15 +21,15 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Timers;
-using BlizzTV.Module;
-using BlizzTV.Module.Utils;
-using BlizzTV.Module.Settings;
-using BlizzTV.Module.Notifications;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Utils;
+using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Notifications;
 
 namespace BlizzTV.Modules.Feeds
 {
-    [PluginAttributes("Feeds","Feed aggregator plugin.","feed_16")]
-    public class FeedsPlugin:Plugin
+    [ModuleAttributes("Feeds","Feed aggregator plugin.","feed_16")]
+    public class FeedsPlugin:Module
     {
         #region members
 
@@ -202,7 +202,7 @@ namespace BlizzTV.Modules.Feeds
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!Global.Instance.InSleepMode) this.UpdateFeeds();
+            if (!GlobalSettings.Instance.InSleepMode) this.UpdateFeeds();
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)

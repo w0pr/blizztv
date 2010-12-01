@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace BlizzTV
 {
-    public sealed class Settings : Module.Settings.Settings
+    public sealed class Settings : ModuleLib.Settings.Settings
     {
         private static Settings _instance = new Settings();        
         public static Settings Instance { get { return _instance; } }
@@ -35,7 +35,7 @@ namespace BlizzTV
         private Settings() : base("UI") { }       
     }
 
-    public class Plugins : Module.Settings.Settings
+    public class Plugins : ModuleLib.Settings.Settings
     {
         public Plugins() : base("Plugins") { }
 

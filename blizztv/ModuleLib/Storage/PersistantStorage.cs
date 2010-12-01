@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.Isam.Esent.Collections.Generic;
 
-namespace BlizzTV.Module.Storage
+namespace BlizzTV.ModuleLib.Storage
 {
     /// <summary>
     /// 

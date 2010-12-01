@@ -16,17 +16,17 @@
  */
 
 using System;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib.Utils;
 using Nini.Config;
 
-namespace BlizzTV.Module.Settings
+namespace BlizzTV.ModuleLib.Settings
 {
     /// <summary>
     /// The settings parser wrapper.
     /// </summary>
-    internal sealed class Manager
+    internal sealed class SettingsManager
     {        
-        private static Manager _instance = new Manager();
+        private static SettingsManager _instance = new SettingsManager();
         private IniConfigSource _parser;
         private bool _file_exists = true;
         private string _config_file = "blizztv.ini";
@@ -34,9 +34,9 @@ namespace BlizzTV.Module.Settings
         /// <summary>
         /// Returns instance of GlobalSettings.
         /// </summary>
-        public static Manager Instance { get { return _instance; } }             
+        public static SettingsManager Instance { get { return _instance; } }             
 
-        private Manager()
+        private SettingsManager()
         {
             try
             {

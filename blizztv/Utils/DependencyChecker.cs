@@ -16,7 +16,7 @@
  */
 
 using System;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib.Utils;
 
 namespace BlizzTV.Utils
 {

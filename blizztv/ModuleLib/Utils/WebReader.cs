@@ -19,7 +19,7 @@ using System;
 using System.Net;
 using System.IO;
 
-namespace BlizzTV.Module.Utils
+namespace BlizzTV.ModuleLib.Utils
 {
     /// <summary>
     /// Reads data from web and returns.

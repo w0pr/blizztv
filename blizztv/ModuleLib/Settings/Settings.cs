@@ -17,7 +17,7 @@
 
 using Nini.Config;
 
-namespace BlizzTV.Module.Settings
+namespace BlizzTV.ModuleLib.Settings
 {
     /// <summary>
     /// Settings
@@ -32,8 +32,8 @@ namespace BlizzTV.Module.Settings
         /// <param name="SectionName"></param>
         public Settings(string SectionName)
         {
-            this._section = Manager.Instance.Section(SectionName);
-            if (this._section == null) this._section = Manager.Instance.AddSection(SectionName);
+            this._section = SettingsManager.Instance.Section(SectionName);
+            if (this._section == null) this._section = SettingsManager.Instance.AddSection(SectionName);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace BlizzTV.Module.Settings
         /// </summary>
         public void Save()
         {
-            Manager.Instance.Save();     
+            SettingsManager.Instance.Save();     
         }
 
         /// <summary>

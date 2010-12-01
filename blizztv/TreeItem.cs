@@ -18,7 +18,7 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
-using BlizzTV.Module;
+using BlizzTV.ModuleLib;
 
 namespace BlizzTV
 {
@@ -27,20 +27,20 @@ namespace BlizzTV
         #region Members
 
         private ListItem _item; // the plugin-item bound to.
-        private Plugin _plugin; // the plugin itself.
+        private Module _plugin; // the plugin itself.
         private Font _bold = new Font("Tahoma", 9, FontStyle.Bold); // font for unread items.
         private Font _regular = new Font("Tahoma", 9, FontStyle.Regular); // font for read items.       
         private bool disposed = false;
 
         public ListItem Item { get { return this._item; } } // the item getter.
-        public Plugin Plugin { get { return this._plugin; } }
+        public Module Plugin { get { return this._plugin; } }
         
 
         #endregion
 
         #region ctor
 
-        public TreeItem(Plugin Plugin,ListItem Item)
+        public TreeItem(Module Plugin,ListItem Item)
         {
             this._plugin = Plugin;
             this._item = Item;

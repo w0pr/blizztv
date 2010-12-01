@@ -18,28 +18,26 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Drawing;
-using BlizzTV.Module.Utils;
-using BlizzTV.Properties;
+using BlizzTV.ModuleLib.Utils;
 
-namespace BlizzTV.Module
+namespace BlizzTV.ModuleLib
 {
     /// <summary>
     /// A dynamicly loadable plugin for BlizzTV application
     /// </summary>
-    public class Plugin : IDisposable
+    public class Module : IDisposable
     {
         #region members
 
         private Assembly _assembly; // the assembly 
-        private PluginAttributes _attributes;
+        private ModuleAttributes _attributes;
         private ListItem _root_list_item;
         private bool disposed = false;
 
         /// <summary>
         /// The plugins attributes.
         /// </summary>
-        public PluginAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } }
+        public ModuleAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } }
 
         /// <summary>
         /// Plugin sub-menus.
@@ -58,7 +56,7 @@ namespace BlizzTV.Module
         /// <summary>
         /// ctor
         /// </summary>
-        public Plugin()
+        public Module()
         {
             this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
         }
@@ -178,7 +176,7 @@ namespace BlizzTV.Module
         /// <summary>
         /// de-ctor.
         /// </summary>
-        ~Plugin() { Dispose(false); }
+        ~Module() { Dispose(false); }
 
         /// <summary>
         /// Disposes the object.
@@ -233,116 +231,6 @@ namespace BlizzTV.Module
         {
             this._success = Success;
         }
-    }
-
-    #endregion
-
-    #region plugin attributes 
-
-    /// <summary>
-    /// Defines plugin attributes.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
-    public class PluginAttributes : Attribute
-    {
-        #region members
-
-        private string _name;
-        private string _description;
-        private string _icon_name;
-        private Bitmap _icon = null;
-        private bool disposed = false;
-
-        /// <summary>
-        /// The plugin name.
-        /// </summary>
-        public string Name { get { return this._name; } }
-
-        /// <summary>
-        /// The plugin description.
-        /// </summary>
-        public string Description { get { return this._description; } }
-
-        /// <summary>
-        /// The plugin icon.
-        /// </summary>        
-        public Bitmap Icon { get { return this._icon; } }
-
-        #endregion
-
-        #region ctor
-
-        /// <summary>
-        /// The plugin's attributes.
-        /// </summary>
-        /// <param name="Name">The plugin name.</param>
-        /// <param name="Description">The plugin description.</param>
-        /// <param name="IconName">Pass null as value or do not supply a value if you don't want to specify an icon for your plugin.</param>
-        /// <remarks>Pass null as value or do not supply a value if you don't want to specify an icon for your plugin.</remarks>
-        public PluginAttributes(string Name, string Description, string IconName = null)
-        {
-            this._name = Name;
-            this._description = Description;
-            this._icon_name = IconName;
-        }
-
-        #endregion
-
-        #region internal logic
-
-        internal void ResolveResources() // resolves resources for the plugin and sets the icon if appliable.
-        {
-            if (this._icon_name != null) // if we've a supplied icon-file name.
-            {
-                using (var stream = (Bitmap)Resources.ResourceManager.GetObject(this._icon_name)) // get the resources stream
-                {
-                    if (stream != null) this._icon = new Bitmap(stream); // if the asked icon exists in resources set is as the plugin icon.
-                    else this._icon = Resources.blizztv_16; // if it does not exists use the default icon.                    
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns the plugin's name.
-        /// </summary>
-        /// <returns>The plugin's name.</returns>
-        public override string ToString()
-        {
-            return this._name;
-        }
-
-        #endregion
-
-        #region de-ctor
-
-        /// <summary>
-        /// de-ctor.
-        /// </summary>
-        ~PluginAttributes() { Dispose(false); }
-
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing) // managed resources
-                {
-                    this._icon.Dispose();
-                    this._icon = null;
-                }
-                disposed = true;
-            }
-        }
-
-        #endregion
     }
 
     #endregion

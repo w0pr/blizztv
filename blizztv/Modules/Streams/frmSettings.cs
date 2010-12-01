@@ -18,11 +18,12 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using BlizzTV.Module;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 
 namespace BlizzTV.Modules.Streams
 {
-    public partial class frmSettings : Form, IPluginSettingsForm
+    public partial class frmSettings : Form, IModuleSettingsForm
     {
         private bool _streams_list_updated = false;
 

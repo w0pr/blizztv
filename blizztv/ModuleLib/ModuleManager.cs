@@ -19,32 +19,32 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib.Utils;
 
-namespace BlizzTV.Module
+namespace BlizzTV.ModuleLib
 {
     /// <summary>
     /// The plugin manager responsible of organizing the plugins and stuff.
     /// </summary>
-    public sealed class PluginManager : IDisposable
+    public sealed class ModuleManager : IDisposable
     {
         #region members
 
-        private static readonly PluginManager _instance = new PluginManager();
+        private static readonly ModuleManager _instance = new ModuleManager();
         private bool disposed = false;
 
         /// <summary>
         /// The plugin manager instance.
         /// </summary>
-        public static PluginManager Instance { get { return _instance; } }
+        public static ModuleManager Instance { get { return _instance; } }
 
         // TODO: shoud be a readonly collection.
         /// <summary>
         /// The available valid plugin's list.
         /// </summary>
-        public Dictionary<string, PluginInfo> AvailablePlugins = new Dictionary<string, PluginInfo>();
+        public Dictionary<string, ModuleInfo> AvailablePlugins = new Dictionary<string, ModuleInfo>();
 
-        private Dictionary<string, Plugin> _instantiated_plugins = new Dictionary<string, Plugin>();
+        private Dictionary<string, Module> _instantiated_plugins = new Dictionary<string, Module>();
 
         /// <summary>
         /// The plugin-manager's so the LibBlizzTV's assembly name.
@@ -60,18 +60,18 @@ namespace BlizzTV.Module
         /// <summary>
         /// The instantiated plugins list.
         /// </summary>
-        public Dictionary<string, Plugin> InstantiatedPlugins { get { return this._instantiated_plugins; } }
+        public Dictionary<string, Module> InstantiatedPlugins { get { return this._instantiated_plugins; } }
 
         #endregion
 
         #region internal logic 
 
-        private PluginManager()
+        private ModuleManager()
         {
             Log.Instance.Write(LogMessageTypes.INFO, string.Format("Plugin manager - ({0}) initialized..", this.GetType().Module.Name)); // log the plugin-manager startup message.
             this.ScanModules();
             
-            foreach (KeyValuePair<string,PluginInfo> pi in this.AvailablePlugins) // print all avaiable plugin's list to log.
+            foreach (KeyValuePair<string,ModuleInfo> pi in this.AvailablePlugins) // print all avaiable plugin's list to log.
             {
                 Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found Plugin: {0}", pi.Value.Attributes.Name.ToString()));
             }                
@@ -81,9 +81,9 @@ namespace BlizzTV.Module
         {
             foreach (Type t in Assembly.GetEntryAssembly().GetTypes())
             {
-                if(t.IsSubclassOf(typeof(Plugin)))
+                if(t.IsSubclassOf(typeof(Module)))
                 {
-                    PluginInfo pi=new PluginInfo(t);
+                    ModuleInfo pi=new ModuleInfo(t);
                     if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi);
                 }
             }
@@ -94,13 +94,13 @@ namespace BlizzTV.Module
         /// </summary>
         /// <param name="key">The plugin to instantiate.</param>
         /// <returns>Plugin instance.</returns>
-        public Plugin Instantiate(string key)
+        public Module Instantiate(string key)
         {
-            PluginInfo pi = this.AvailablePlugins[key];
+            ModuleInfo pi = this.AvailablePlugins[key];
             if (this._instantiated_plugins.ContainsKey(key)) return pi.Instance;
             else
             {
-                Plugin p= pi.CreateInstance();
+                Module p= pi.CreateInstance();
                 this._instantiated_plugins.Add(key,p);
                 return p;
             }
@@ -112,7 +112,7 @@ namespace BlizzTV.Module
         /// <param name="key">The plugin to kill.</param>
         public void Kill(string key)
         {
-            PluginInfo pi = this.AvailablePlugins[key];
+            ModuleInfo pi = this.AvailablePlugins[key];
             this.InstantiatedPlugins.Remove(key);
             pi.Kill();
         }
@@ -124,7 +124,7 @@ namespace BlizzTV.Module
         /// <summary>
         /// de-ctor
         /// </summary>
-        ~PluginManager() { Dispose(false); }
+        ~ModuleManager() { Dispose(false); }
 
         /// <summary>
         /// Disposes the object.
@@ -141,7 +141,7 @@ namespace BlizzTV.Module
             {
                 if (disposing) // managed resources
                 {
-                    foreach (KeyValuePair<string, PluginInfo> pair in this.AvailablePlugins) { pair.Value.Dispose(); }
+                    foreach (KeyValuePair<string, ModuleInfo> pair in this.AvailablePlugins) { pair.Value.Dispose(); }
                     this.AvailablePlugins.Clear();
                     this.AvailablePlugins = null;
                 }

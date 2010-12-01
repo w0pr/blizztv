@@ -20,14 +20,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Timers;
-using BlizzTV.Module;
-using BlizzTV.Module.Settings;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Utils;
+using BlizzTV.ModuleLib.Common;
 
 namespace BlizzTV.Modules.Events
 {
-    [PluginAttributes("Events", "Events aggregator plugin.", "event_16")]
-    public class EventsPlugin : Plugin
+    [ModuleAttributes("Events", "Events aggregator plugin.", "event_16")]
+    public class EventsPlugin : Module
     {
         #region members
 
@@ -39,7 +40,7 @@ namespace BlizzTV.Modules.Events
         private Timer _event_timer = new Timer(60000); // runs every one minute and check events & alarms.
         private bool disposed = false;
 
-        public static Plugin Instance;
+        public static Module Instance;
 
         #endregion        
 
@@ -63,7 +64,7 @@ namespace BlizzTV.Modules.Events
             this.ParseEvents();
 
             // Go check for events.
-            if (!Global.Instance.InSleepMode) this.CheckEvents();
+            if (!GlobalSettings.Instance.InSleepMode) this.CheckEvents();
 
             // setup update timer for event checks
             _event_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
@@ -167,7 +168,7 @@ namespace BlizzTV.Modules.Events
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!Global.Instance.InSleepMode) this.CheckEvents();
+            if (!GlobalSettings.Instance.InSleepMode) this.CheckEvents();
         }
 
         private void CheckEvents()

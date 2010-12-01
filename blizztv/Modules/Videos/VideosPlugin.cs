@@ -21,15 +21,15 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Timers;
-using BlizzTV.Module;
-using BlizzTV.Module.Notifications;
-using BlizzTV.Module.Settings;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Utils;
 
 namespace BlizzTV.Modules.Videos
 {
-    [PluginAttributes("Videos", "Video aggregator plugin.","video_16")]
-    public class VideosPlugin:Plugin
+    [ModuleAttributes("Videos", "Video aggregator plugin.","video_16")]
+    public class VideosPlugin:Module
     {
         #region members
 
@@ -202,7 +202,7 @@ namespace BlizzTV.Modules.Videos
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!Global.Instance.InSleepMode) UpdateChannels();
+            if (!GlobalSettings.Instance.InSleepMode) UpdateChannels();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

@@ -17,9 +17,9 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.Module.Players;
-using BlizzTV.Module.Settings;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib.Players;
+using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Utils;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -32,9 +32,9 @@ namespace BlizzTV.Modules.Streams
             InitializeComponent();
 
             this._stream = Stream; // set the stream.
-            this.SwitchTopMostMode(Global.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
-            this.Width = Global.Instance.VideoPlayerWidth; // get the default player width.
-            this.Height = Global.Instance.VideoPlayerHeight; // get the default player height.
+            this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
+            this.Width = GlobalSettings.Instance.VideoPlayerWidth; // get the default player width.
+            this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
 
             if (!Providers.Instance.List[this._stream.Provider].ChatAvailable) this.MenuOpenChat.Enabled = false; 

@@ -15,12 +15,12 @@
  * $Id: IPluginSettingsForm.cs 158 2010-11-30 14:06:50Z shalafiraistlin@gmail.com $
  */
 
-namespace BlizzTV.Module
+namespace BlizzTV.ModuleLib.Settings
 {
     /// <summary>
     /// Implements a plugin settings form.
     /// </summary>
-    public interface IPluginSettingsForm
+    public interface IModuleSettingsForm
     {
         /// <summary>
         /// Notifies the form to save settings.

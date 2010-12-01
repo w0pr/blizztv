@@ -15,17 +15,17 @@
  * $Id: PluginSettings.cs 158 2010-11-30 14:06:50Z shalafiraistlin@gmail.com $
  */
 
-namespace BlizzTV.Module.Settings
+namespace BlizzTV.ModuleLib.Settings
 {
     /// <summary>
     /// Plugin-spefic settings.
     /// </summary>
-    public class PluginSettings : Settings
+    public class ModuleSettings : Settings
     {
         /// <summary>
         /// Plugin settings.
         /// </summary>
         /// <param name="Name"></param>
-        protected PluginSettings(string Name) : base(string.Format("Plugin-{0}", Name)) { }
+        protected ModuleSettings(string Name) : base(string.Format("Plugin-{0}", Name)) { }
     }
 }

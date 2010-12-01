@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InvokeExtensions.cs" />
+    <Compile Include="ModuleLib\ModuleAttributes.cs" />
     <Compile Include="Modules\Events\Event.cs" />
     <Compile Include="Modules\Events\EventsPlugin.cs" />
     <Compile Include="Modules\Events\frmAlarm.cs">
@@ -177,25 +178,25 @@
     <Compile Include="Modules\Videos\Settings.cs" />
     <Compile Include="Modules\Videos\Video.cs" />
     <Compile Include="Modules\Videos\VideosPlugin.cs" />
-    <Compile Include="Module\Common.cs" />
-    <Compile Include="Module\IPluginSettingsForm.cs" />
-    <Compile Include="Module\ListItem.cs" />
-    <Compile Include="Module\Notifications\Notifications.cs" />
-    <Compile Include="Module\Players\FlashPlayer.cs">
+    <Compile Include="ModuleLib\Common\Utils.cs" />
+    <Compile Include="ModuleLib\Settings\IModuleSettingsForm.cs" />
+    <Compile Include="ModuleLib\ListItem.cs" />
+    <Compile Include="ModuleLib\Notifications\Notifications.cs" />
+    <Compile Include="ModuleLib\Players\FlashPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Module\Plugin.cs" />
-    <Compile Include="Module\PluginInfo.cs" />
-    <Compile Include="Module\PluginManager.cs" />
-    <Compile Include="Module\Settings\Global.cs" />
-    <Compile Include="Module\Settings\Manager.cs" />
-    <Compile Include="Module\Settings\PluginSettings.cs" />
-    <Compile Include="Module\Settings\Settings.cs" />
-    <Compile Include="Module\Storage\PersistantStorage.cs" />
-    <Compile Include="Module\Utils\DebugConsole.cs" />
-    <Compile Include="Module\Utils\JSON.cs" />
-    <Compile Include="Module\Utils\Log.cs" />
-    <Compile Include="Module\Utils\WebReader.cs" />
+    <Compile Include="ModuleLib\Module.cs" />
+    <Compile Include="ModuleLib\ModuleInfo.cs" />
+    <Compile Include="ModuleLib\ModuleManager.cs" />
+    <Compile Include="ModuleLib\Settings\GlobalSettings.cs" />
+    <Compile Include="ModuleLib\Settings\SettingsManager.cs" />
+    <Compile Include="ModuleLib\Settings\ModuleSettings.cs" />
+    <Compile Include="ModuleLib\Settings\Settings.cs" />
+    <Compile Include="ModuleLib\Storage\PersistantStorage.cs" />
+    <Compile Include="ModuleLib\Utils\DebugConsole.cs" />
+    <Compile Include="ModuleLib\Utils\JSON.cs" />
+    <Compile Include="ModuleLib\Utils\Log.cs" />
+    <Compile Include="ModuleLib\Utils\WebReader.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utils\DependencyChecker.cs" />
     <Compile Include="frmAbout.cs">
