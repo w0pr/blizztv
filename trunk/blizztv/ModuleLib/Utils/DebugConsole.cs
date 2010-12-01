@@ -21,7 +21,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
-namespace BlizzTV.Module.Utils
+namespace BlizzTV.ModuleLib.Utils
 {
     /// <summary>
     /// Serves a debug-console.

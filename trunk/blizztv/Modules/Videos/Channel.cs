@@ -17,7 +17,7 @@
 
 using System;
 using System.Collections.Generic;
-using BlizzTV.Module;
+using BlizzTV.ModuleLib;
 
 namespace BlizzTV.Modules.Videos
 {

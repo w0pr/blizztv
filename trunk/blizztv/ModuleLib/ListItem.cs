@@ -17,9 +17,9 @@
 
 using System;
 using System.Collections.Generic;
-using BlizzTV.Module.Storage;
+using BlizzTV.ModuleLib.Storage;
 
-namespace BlizzTV.Module
+namespace BlizzTV.ModuleLib
 {
     /// <summary>
     /// A list item that can be rendered on main form's treeview.

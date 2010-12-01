@@ -16,7 +16,7 @@
  */
 
 using System;
-using BlizzTV.Module;
+using BlizzTV.ModuleLib;
 
 namespace BlizzTV.Modules.Feeds
 {

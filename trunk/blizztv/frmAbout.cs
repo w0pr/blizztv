@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Reflection;
-using BlizzTV.Module;
+using BlizzTV.ModuleLib;
 
 namespace BlizzTV
 {
@@ -38,7 +38,7 @@ namespace BlizzTV
         private void frmAbout_Load(object sender, EventArgs e)
         {
             this.LabelVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
-            foreach (KeyValuePair<string, PluginInfo> pair in PluginManager.Instance.AvailablePlugins)
+            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailablePlugins)
             {
                 this.imageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
                 ListviewModules.Items.Add(new ListviewModulesItem(pair.Value.Attributes.Name, pair.Value.Attributes.Description));

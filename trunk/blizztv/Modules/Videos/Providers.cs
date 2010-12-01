@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using BlizzTV.Module.Utils;
+using BlizzTV.ModuleLib.Utils;
 
 namespace BlizzTV.Modules.Videos
 {

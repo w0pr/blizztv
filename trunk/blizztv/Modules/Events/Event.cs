@@ -16,9 +16,10 @@
  */
 
 using System;
-using BlizzTV.Module;
-using BlizzTV.Module.Notifications;
-using BlizzTV.Module.Storage;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.ModuleLib.Storage;
+using BlizzTV.ModuleLib.Common;
 
 namespace BlizzTV.Modules.Events
 {

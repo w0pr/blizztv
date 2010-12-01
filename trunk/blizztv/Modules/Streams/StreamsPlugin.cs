@@ -21,15 +21,15 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Timers;
-using BlizzTV.Module;
-using BlizzTV.Module.Settings;
-using BlizzTV.Module.Utils;
-using BlizzTV.Module.Notifications;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Utils;
+using BlizzTV.ModuleLib.Notifications;
 
 namespace BlizzTV.Modules.Streams
 {
-    [PluginAttributes("Streams", "Live stream aggregator plugin.","stream_16")]
-    public class StreamsPlugin:Plugin
+    [ModuleAttributes("Streams", "Live stream aggregator plugin.","stream_16")]
+    public class StreamsPlugin:Module
     {
         #region members
 
@@ -206,7 +206,7 @@ namespace BlizzTV.Modules.Streams
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!Global.Instance.InSleepMode) UpdateStreams();
+            if (!GlobalSettings.Instance.InSleepMode) UpdateStreams();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

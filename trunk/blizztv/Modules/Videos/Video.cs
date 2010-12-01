@@ -16,8 +16,8 @@
  */
 
 using System;
-using BlizzTV.Module;
-using BlizzTV.Module.Settings;
+using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -63,17 +63,17 @@ namespace BlizzTV.Modules.Videos
             this._flash_vars = Providers.Instance.List[this.Provider].FlashVars; // provider supplied flashvars.
 
             this._movie = this._movie.Replace("%video_id%", this._video_id); // replace movie source variables
-            this._movie = this._movie.Replace("%auto_play%", (Global.Instance.AutoPlayVideos) ? "1" : "0");
+            this._movie = this._movie.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos) ? "1" : "0");
             
             this._flash_vars = this._flash_vars.Replace("%video_id%", this._video_id); // replace flashvars variables.
-            this._flash_vars = this._flash_vars.Replace("%auto_play%", (Global.Instance.AutoPlayVideos)?"1":"0");
+            this._flash_vars = this._flash_vars.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos)?"1":"0");
         }
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
             if (this.State != ItemState.ERROR)
             {
-                if (Global.Instance.UseInternalViewers) // if internal-viewers method is selected
+                if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
                 {
                     frmPlayer p = new frmPlayer(this); // render the video with our own video player
                     p.Show();
@@ -86,7 +86,7 @@ namespace BlizzTV.Modules.Videos
 
         public override void BalloonClicked(object sender, EventArgs e)
         {
-            if (Global.Instance.UseInternalViewers) // if internal-viewers method is selected
+            if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
             {
                 frmPlayer p = new frmPlayer(this); // render the video with our own video player
                 p.Show();

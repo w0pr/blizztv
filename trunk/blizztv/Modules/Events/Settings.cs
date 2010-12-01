@@ -15,11 +15,11 @@
  * $Id: Settings.cs 158 2010-11-30 14:06:50Z shalafiraistlin@gmail.com $
  */
 
-using BlizzTV.Module.Settings;
+using BlizzTV.ModuleLib.Settings;
 
 namespace BlizzTV.Modules.Events
 {
-    public class Settings:PluginSettings
+    public class Settings:ModuleSettings
     {
         private static Settings _instance = new Settings();
         public static Settings Instance { get { return _instance; } }

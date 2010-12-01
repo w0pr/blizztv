@@ -15,19 +15,19 @@
  * $Id: Global.cs 158 2010-11-30 14:06:50Z shalafiraistlin@gmail.com $
  */
 
-namespace BlizzTV.Module.Settings
+namespace BlizzTV.ModuleLib.Settings
 {
     /// <summary>
     /// Global settings that is used by both the BlizzTV and it's plugins.
     /// </summary>
-    public sealed class Global : Settings
+    public sealed class GlobalSettings : Settings
     {
-        private static Global _instance = new Global();
+        private static GlobalSettings _instance = new GlobalSettings();
 
         /// <summary>
         /// Returns instance of GlobalSettings.
         /// </summary>
-        public static Global Instance { get { return _instance; } }
+        public static GlobalSettings Instance { get { return _instance; } }
 
         /// <summary>
         /// The default video player width.
@@ -59,6 +59,6 @@ namespace BlizzTV.Module.Settings
         /// </summary>
         public bool InSleepMode = false;
 
-        private Global() : base("Global") { }
+        private GlobalSettings() : base("Global") { }
     }
 }

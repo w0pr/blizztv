@@ -62,7 +62,7 @@
             this.LinkPaypal = new System.Windows.Forms.PictureBox();
             this.Murloc = new System.Windows.Forms.PictureBox();
             this.LabelVersion = new System.Windows.Forms.Label();
-            this.Player = new BlizzTV.Module.Players.FlashPlayer();
+            this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
             this.buttonChangelog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -318,7 +318,7 @@
         private System.Windows.Forms.PictureBox LinkFlattr;
         private System.Windows.Forms.PictureBox LinkPaypal;
         private System.Windows.Forms.PictureBox Murloc;
-        private Module.Players.FlashPlayer Player;
+        private ModuleLib.Players.FlashPlayer Player;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Label LabelVersion;
         private System.Windows.Forms.Button buttonChangelog;

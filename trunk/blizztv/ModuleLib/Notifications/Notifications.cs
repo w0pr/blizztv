@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace BlizzTV.Module.Notifications
+namespace BlizzTV.ModuleLib.Notifications
 {
     /// <summary>
     /// 
