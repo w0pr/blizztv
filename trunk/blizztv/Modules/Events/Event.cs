@@ -16,9 +16,9 @@
  */
 
 using System;
-using BlizzTV.CommonLib.Storage;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
+using BlizzTV.CommonLib.Storage;
 using BlizzTV.ModuleLib.Notifications;
 
 namespace BlizzTV.Modules.Events
@@ -150,7 +150,7 @@ namespace BlizzTV.Modules.Events
         {
             if (!this.AlarmExists())
             {
-                PersistantStorage.Instance.PutByte("alarm", this._event_id, minutesbefore);
+                KeyValueStorage.Instance.SetByte(string.Format("alarm.{0}", this._event_id), minutesbefore);
                 return true;
             }
             else return false;
@@ -158,19 +158,19 @@ namespace BlizzTV.Modules.Events
 
         public bool AlarmExists()
         {
-            if (PersistantStorage.Instance.EntryExists("alarm", this._event_id)) return true;
+            if (KeyValueStorage.Instance.Exists(string.Format("alarm.{0}", this._event_id))) return true;
             else return false;
         }
 
         public byte GetAlarmMinutes()
         {
-            if (this.AlarmExists()) return PersistantStorage.Instance.GetByte("alarm", this._event_id);
+            if (this.AlarmExists()) return KeyValueStorage.Instance.GetByte(string.Format("alarm.{0}", this._event_id));
             return 0;
         }
 
         public void DeleteAlarm()
         {
-            if (this.AlarmExists()) PersistantStorage.Instance.Delete("alarm", this._event_id);
+            if (this.AlarmExists()) KeyValueStorage.Instance.Delete(string.Format("alarm.{0}", this._event_id));
         }
 
         #endregion

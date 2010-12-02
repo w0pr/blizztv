@@ -70,11 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
-    <Compile Include="ModuleLib\Subscriptions\ISubscription.cs" />
-    <Compile Include="ModuleLib\Subscriptions\Storage.cs" />
-    <Compile Include="ModuleLib\Subscriptions\Subscriptions.cs" />
-    <Compile Include="Modules\Feeds\FeedSubscriptions.cs" />
-    <Compile Include="Modules\Streams\StreamSubscription.cs" />
+    <Compile Include="ModuleLib\StatusStorage\StatusStorage.cs" />
+    <Compile Include="CommonLib\Storage\KeyValueStorage.cs" />
     <Compile Include="UILib\InvokeExtensions.cs" />
     <Compile Include="ModuleLib\ModuleAttributes.cs" />
     <Compile Include="Modules\Events\Event.cs" />
@@ -201,7 +198,6 @@
     <Compile Include="CommonLib\Settings\SettingsManager.cs" />
     <Compile Include="ModuleLib\Settings\ModuleSettings.cs" />
     <Compile Include="CommonLib\Settings\Settings.cs" />
-    <Compile Include="CommonLib\Storage\PersistantStorage.cs" />
     <Compile Include="CommonLib\Logger\DebugConsole.cs" />
     <Compile Include="CommonLib\Web\JSON.cs" />
     <Compile Include="CommonLib\Logger\Log.cs" />

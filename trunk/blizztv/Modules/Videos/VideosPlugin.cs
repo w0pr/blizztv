@@ -24,7 +24,6 @@ using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Notifications;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -127,24 +126,11 @@ namespace BlizzTV.Modules.Videos
                         pair.Value.Update(); // update the channel.
                         this.RootListItem.Childs.Add(pair.Key, pair.Value);
                         foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
-                        if (pair.Value.State == ItemState.UNREAD) unread++;
+                        if (pair.Value.Style == ItemStyle.BOLD) unread++;
                         this.StepWorkload();
                     }
 
                     this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
-
-                    // check for fresh videos
-                    foreach (KeyValuePair<string, Channel> pair in this._channels)
-                    {
-                        foreach (KeyValuePair<string, ListItem> child_pair in pair.Value.Childs)
-                        {
-                            if (child_pair.Value.State == ItemState.FRESH)
-                            {
-                                Notifications.Instance.Show(child_pair.Value, child_pair.Value.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info);
-                                break;
-                            }
-                        }
-                    }
                 }
                 NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
                 this._updating = false;
@@ -216,8 +202,8 @@ namespace BlizzTV.Modules.Videos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                pair.Value.State = ItemState.READ;
-                foreach (Video v in pair.Value.Videos) { v.State = ItemState.READ; }
+                pair.Value.Style = ItemStyle.REGULAR;
+                foreach (Video v in pair.Value.Videos) { v.Style = ItemStyle.REGULAR; }
             }
         }
 
@@ -225,8 +211,8 @@ namespace BlizzTV.Modules.Videos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                pair.Value.State = ItemState.UNREAD;
-                foreach (Video v in pair.Value.Videos) { v.State = ItemState.UNREAD; }
+                pair.Value.Style = ItemStyle.BOLD;
+                foreach (Video v in pair.Value.Videos) { v.Style = ItemStyle.BOLD; }
             }
         }
 

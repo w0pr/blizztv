@@ -101,33 +101,33 @@ namespace BlizzTV.Modules.Feeds
                 int unread = 0; // unread stories count
                 foreach (Story s in this.Stories) 
                 {
-                    if (s.State == ItemState.UNREAD || s.State == ItemState.FRESH) unread++;
+                    if (s.Style == ItemStyle.BOLD) unread++;
                 }
 
                 if (unread > 0) // if there are unread feed stories
                 {
                     this.SetTitle(string.Format(" {0} ({1})", this.Title, unread.ToString()));
-                    this.State = ItemState.UNREAD;
+                    this.Style = ItemStyle.BOLD;
                 }
             }
             else
             {
                 Story error = new Story("Error parsing feed.", "", "", "");
-                error.State = ItemState.ERROR;
+                //error.Style = ItemStyle.ERROR;
                 this.Stories.Add(error);
             }
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.State = ItemState.READ; } // marked all stories as read.
-            this.State = ItemState.UNREAD;
+            foreach (Story s in this.Stories) { s.Style = ItemStyle.REGULAR; } // marked all stories as read.
+            this.Style = ItemStyle.BOLD;
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.State = ItemState.UNREAD; } // marked all stories as unread.
-            this.State = ItemState.READ;
+            foreach (Story s in this.Stories) { s.Style = ItemStyle.BOLD; } // marked all stories as unread.
+            this.Style = ItemStyle.REGULAR;
         }
 
         #endregion
