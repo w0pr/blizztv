@@ -61,8 +61,7 @@ namespace BlizzTV.CommonLib.Storage
         public bool EntryExists(string category, string key)
         {
             key = string.Format("{0}.{1}.{2}", System.Reflection.Assembly.GetCallingAssembly().GetName().Name, category, key);
-            if (this._dictionary.ContainsKey(key)) return true;
-            else return false;
+            return this._dictionary.ContainsKey(key);
         }
 
         /// <summary>

@@ -69,6 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
+    <Compile Include="ModuleLib\Subscriptions\ISubscription.cs" />
+    <Compile Include="ModuleLib\Subscriptions\Storage.cs" />
+    <Compile Include="ModuleLib\Subscriptions\Subscriptions.cs" />
+    <Compile Include="Modules\Feeds\FeedSubscriptions.cs" />
+    <Compile Include="Modules\Streams\StreamSubscription.cs" />
     <Compile Include="UILib\InvokeExtensions.cs" />
     <Compile Include="ModuleLib\ModuleAttributes.cs" />
     <Compile Include="Modules\Events\Event.cs" />
