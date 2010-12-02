@@ -25,6 +25,7 @@ using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.ModuleLib.Subscriptions;
 
 namespace BlizzTV.Modules.Streams
 {
