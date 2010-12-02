@@ -69,32 +69,32 @@ namespace BlizzTV.Modules.Videos
             if (this.Valid)
             {
                 int unread = 0; // non-watched videos count.
-                foreach (Video v in this.Videos) { if (v.State == ItemState.UNREAD) unread++; }
+                foreach (Video v in this.Videos) { if (v.Style == ItemStyle.BOLD) unread++; }
 
                 if (unread > 0) // if there non-watched channel videos.
                 {
                     this.SetTitle(string.Format("{0} ({1})", this.Title, unread.ToString()));
-                    this.State = ItemState.UNREAD; // then mark the channel itself as unread also
+                    this.Style = ItemStyle.BOLD; // then mark the channel itself as unread also
                 }
             }
             else
             {
                 Video error = new Video("Error updating channel.", "", "", this.Provider);
-                error.State = ItemState.ERROR;
+                //error.Style = ItemStyle.ERROR;
                 this.Videos.Add(error);
             }
         }
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.State = ItemState.READ; } // marked all videos as watched.
-            this.State = ItemState.READ; // also mark self as read.            
+            foreach (Video v in this.Videos) { v.Style = ItemStyle.REGULAR; } // marked all videos as watched.
+            this.Style = ItemStyle.REGULAR; // also mark self as read.            
         }
 
         private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.State = ItemState.UNREAD; } // marked all videos as unread.
-            this.State = ItemState.UNREAD; // also mark self as unread.      
+            foreach (Video v in this.Videos) { v.Style = ItemStyle.BOLD; } // marked all videos as unread.
+            this.Style = ItemStyle.BOLD; // also mark self as unread.      
         }
 
         #endregion

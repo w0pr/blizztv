@@ -24,8 +24,6 @@ using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Notifications;
-using BlizzTV.ModuleLib.Subscriptions;
 
 namespace BlizzTV.Modules.Feeds
 {
@@ -129,25 +127,13 @@ namespace BlizzTV.Modules.Feeds
                             pair.Value.Update(); // update the feed.
                             this.RootListItem.Childs.Add(pair.Key, pair.Value);
                             foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
-                            if (pair.Value.State == ItemState.UNREAD) unread++;                            
+                            if (pair.Value.Style == ItemStyle.BOLD) unread++;                            
                         }
                         catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
                         this.StepWorkload();
                     }
 
                     this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
-
-                    foreach (KeyValuePair<string, Feed> pair in this._feeds)
-                    {
-                        foreach(KeyValuePair<string,ListItem> child_pair in pair.Value.Childs)
-                        {
-                            if (child_pair.Value.State == ItemState.FRESH)
-                            {
-                                Notifications.Instance.Show(child_pair.Value, child_pair.Value.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info);
-                                break;
-                            }
-                        }
-                    }
                 }                
                 this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
                 this._updating = false;
@@ -210,8 +196,8 @@ namespace BlizzTV.Modules.Feeds
         {
             foreach (KeyValuePair<string, Feed> pair in this._feeds)
             {
-                pair.Value.State = ItemState.READ;
-                foreach (Story s in pair.Value.Stories) { s.State = ItemState.READ; }
+                pair.Value.Style = ItemStyle.REGULAR;
+                foreach (Story s in pair.Value.Stories) { s.Style = ItemStyle.REGULAR; }
             }
         }
 
@@ -219,8 +205,8 @@ namespace BlizzTV.Modules.Feeds
         {
             foreach (KeyValuePair<string, Feed> pair in this._feeds)
             {
-                pair.Value.State = ItemState.UNREAD;
-                foreach (Story s in pair.Value.Stories) { s.State = ItemState.UNREAD; }
+                pair.Value.Style = ItemStyle.BOLD;
+                foreach (Story s in pair.Value.Stories) { s.Style = ItemStyle.BOLD; }
             }
         }
 

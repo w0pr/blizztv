@@ -18,6 +18,8 @@
 using System;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.ModuleLib.StatusStorage;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -26,23 +28,60 @@ namespace BlizzTV.Modules.Videos
         #region members
 
         private string _video_id; // the video id.
+        private string _guid; // the story-guid.
         private string _link; // the video link.
         private string _provider; // the video provider.
         private string _movie; // the movie template.
         private string _flash_vars; // the flash vars.
+        private Statutes _status = Statutes.UNKNOWN;
 
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
         public string Provider { get { return this._provider; } set { this._provider = value; } }
         public string Movie { get { return this._movie; } set { this._movie = value; } }
         public string FlashVars { get { return this._flash_vars; } set { this._flash_vars = value; } }
+        public string GUID { get { return this._guid; } protected set { this._guid = value; } }
+
+        public Statutes Status
+        {
+            get
+            {
+                if (this._status == Statutes.UNKNOWN)
+                {
+                    if (!StatusStorage.Instance.Exists(string.Format("video.{0}", this.GUID))) this.Status = Statutes.FRESH;
+                    else
+                    {
+                        this._status = (Statutes)StatusStorage.Instance[string.Format("video.{0}", this.GUID)];
+                        if (this._status == Statutes.FRESH) this.Status = Statutes.UNWATCHED;
+                    }
+                }
+                return this._status;
+            }
+            set
+            {
+                this._status = value;
+                StatusStorage.Instance[string.Format("video.{0}", this.GUID)] = (byte)this._status;
+                switch (this._status)
+                {
+                    case Statutes.FRESH:
+                    case Statutes.UNWATCHED:
+                        this.Style = ItemStyle.BOLD;
+                        break;
+                    case Statutes.WATCHED:
+                        this.Style = ItemStyle.REGULAR;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         #endregion
 
         #region ctor
 
         public Video(string Title, string Guid, string Link, string Provider)
-            : base(Title,true)
+            : base(Title)
         {            
             this.GUID = Guid;
             this.Link = Link;
@@ -51,6 +90,8 @@ namespace BlizzTV.Modules.Videos
             // register context menus.
             this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAsUnWatchedClicked))); // mark as unread menu.
+
+            if (this.Status == Statutes.FRESH) Notifications.Instance.Show(this, this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info);
         }
 
         #endregion
@@ -71,17 +112,14 @@ namespace BlizzTV.Modules.Videos
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
-            if (this.State != ItemState.ERROR)
+            if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
             {
-                if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
-                {
-                    frmPlayer p = new frmPlayer(this); // render the video with our own video player
-                    p.Show();
-                }
-                else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
-
-                this.State = ItemState.READ; // set the video state to READ.
+                frmPlayer p = new frmPlayer(this); // render the video with our own video player
+                p.Show();
             }
+            else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
+
+            this.Status = Statutes.WATCHED; // set the video state to REGULAR.
         }
 
         public override void BalloonClicked(object sender, EventArgs e)
@@ -93,7 +131,7 @@ namespace BlizzTV.Modules.Videos
             }
             else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
 
-            this.State = ItemState.READ; // set the video state to READ.
+            this.Status = Statutes.WATCHED;  // set the video state to REGULAR.
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
@@ -102,12 +140,13 @@ namespace BlizzTV.Modules.Videos
             this.ContextMenus["markaswatched"].Visible = false;
             this.ContextMenus["markasunwatched"].Visible = false;
 
-            switch (this.State) // switch on the item state.
+            switch (this.Status) // switch on the item state.
             {
-                case ItemState.UNREAD:
+                case Statutes.FRESH:
+                case Statutes.UNWATCHED:
                     this.ContextMenus["markaswatched"].Visible = true; // make mark as watched menu visible.
                     break;
-                case ItemState.READ:
+                case Statutes.WATCHED:
                     this.ContextMenus["markasunwatched"].Visible = true; // make mark as unwatched menu visible.
                     break;
             }
@@ -115,14 +154,22 @@ namespace BlizzTV.Modules.Videos
 
         private void MenuMarkAsWatchedClicked(object sender, EventArgs e)
         {
-            this.State = ItemState.READ; // set the video state as read.          
+            this.Style = ItemStyle.REGULAR; // set the video state as read.          
         }
 
         private void MenuMarkAsUnWatchedClicked(object sender, EventArgs e)
         {
-            this.State = ItemState.UNREAD;            
+            this.Style = ItemStyle.BOLD;            
         }
 
         #endregion
+
+        public enum Statutes
+        {
+            UNKNOWN,
+            FRESH,
+            UNWATCHED,
+            WATCHED
+        }
     }
 }

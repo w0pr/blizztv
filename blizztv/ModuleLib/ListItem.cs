@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using BlizzTV.CommonLib.Storage;
 
 namespace BlizzTV.ModuleLib
 {
@@ -30,21 +29,14 @@ namespace BlizzTV.ModuleLib
 
         private string _title; 
         private string _key;
-        private string _guid; // the story-guid.
-        private bool _state_tracked;
-        private ItemState _state = ItemState.UNKNOWN;
+        private ItemStyle _style = ItemStyle.REGULAR;
         private bool disposed = false;
 
         /// <summary>
         /// The title.
         /// </summary>
         public string Title { get { return this._title; } }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string GUID { get { return this._guid; } protected set { this._guid = value; } }
-
+        
         /// <summary>
         /// The key.
         /// </summary>
@@ -63,34 +55,16 @@ namespace BlizzTV.ModuleLib
         /// <summary>
         /// 
         /// </summary>
-        public ItemState State
+        public ItemStyle Style
         {
             get
             {
-                if (this._state_tracked)
-                {
-                    if (this._state == ItemState.UNKNOWN)
-                    {
-                        if (PersistantStorage.Instance.EntryExists("state", this._guid))
-                        {
-                            ItemState state = (ItemState)PersistantStorage.Instance.GetByte("state", this._guid);
-                            if (state == ItemState.FRESH) return (this.State = ItemState.UNREAD);
-                            else return state;
-                        }
-                        else return (this.State = ItemState.FRESH);
-                    }
-                    else return this._state;
-                }
-                else return this._state;
+                return this._style;
             }
             set
             {
-                this._state = (ItemState)value;
-                if (this._state != ItemState.ERROR)
-                {
-                    if(this._state_tracked) PersistantStorage.Instance.PutByte("state", this._guid, (byte)value);
-                    if ((ItemState)value == ItemState.READ || (ItemState)value == ItemState.UNREAD) if (this.OnStateChange != null) this.OnStateChange((ItemState)value);
-                }
+                this._style = value;
+                if (OnStyleChange != null) OnStyleChange(value);
             }
         }
 
@@ -104,7 +78,7 @@ namespace BlizzTV.ModuleLib
         /// </summary>
         /// <param name="Title"></param>
         /// <param name="StateTracked"></param>
-        public ListItem(string Title, bool StateTracked = false) { this._title = Title; this._state_tracked=StateTracked; this.generate_unique_random_key(); } // generate an unique-random key for the item.
+        public ListItem(string Title) { this._title = Title; this.generate_unique_random_key(); } // generate an unique-random key for the item.
 
         #endregion
 
@@ -158,12 +132,12 @@ namespace BlizzTV.ModuleLib
         /// <summary>
         /// 
         /// </summary>
-        public delegate void StateChangedEventHandler(ItemState State);
+        public delegate void StyleChangedEventHandler(ItemStyle State);
 
         /// <summary>
         /// 
         /// </summary>
-        public event StateChangedEventHandler OnStateChange;
+        public event StyleChangedEventHandler OnStyleChange;
 
         /// <summary>
         /// 
@@ -233,28 +207,10 @@ namespace BlizzTV.ModuleLib
     /// <summary>
     /// 
     /// </summary>
-    public enum ItemState
+    public enum ItemStyle
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        UNKNOWN,
-        /// <summary>
-        /// 
-        /// </summary>
-        FRESH,
-        /// <summary>
-        /// 
-        /// </summary>
-        UNREAD,
-        /// <summary>
-        /// 
-        /// </summary>
-        READ,
-        /// <summary>
-        /// 
-        /// </summary>
-        ERROR
+        BOLD,
+        REGULAR,
     }
 
 

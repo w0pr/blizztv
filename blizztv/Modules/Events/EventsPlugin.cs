@@ -157,7 +157,7 @@ namespace BlizzTV.Modules.Events
             else
             {
                 ListItem error = new ListItem("Error parsing TeamLiquid calendar feed.");
-                error.State = ItemState.ERROR;
+                //error.Style = ItemStyle.ERROR;
                 this.RootListItem.Childs.Add("error", error);
             }
 

@@ -18,6 +18,8 @@
 using System;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.StatusStorage;
+using BlizzTV.ModuleLib.Notifications;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -43,7 +45,6 @@ namespace BlizzTV.Modules.Streams
         public string Slug { get { return this._slug; } internal set { this._slug = value; } }
         public string Provider { get { return this._provider; } internal set { this._provider = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
-        public bool IsLive { get { return this._is_live; } internal set { this._is_live = value; } }
         public string Description { get { return this._description; } internal set { this._description = value; } }
         public Int32 ViewerCount { get { return this._viewer_count; } internal set { this._viewer_count = value; } }
         public string Movie { get { return this._movie; } internal set { this._movie = value; } }
@@ -52,6 +53,23 @@ namespace BlizzTV.Modules.Streams
         public bool ChatAvailable { get { return this._chat_available; } }
         public bool CommitOnSave { get { return this._commit_on_save; } set { this._commit_on_save = value; } }
         public bool DeleteOnSave { get { return this._delete_on_save; } set { this._delete_on_save = value; } }
+
+
+        public bool IsLive
+        {
+            get { return this._is_live; }
+            internal set 
+            {
+                bool wasOnline=false;
+                this._is_live = value; 
+
+                if (StatusStorage.Instance.Exists(string.Format("stream.{0}", this.Name))) wasOnline = Convert.ToBoolean(StatusStorage.Instance[string.Format("stream.{0}", this.Name)]);
+                if (!wasOnline && this._is_live) Notifications.Instance.Show(this, this.Title, "Stream is online. Click to watch.", System.Windows.Forms.ToolTipIcon.Info);
+                StatusStorage.Instance[string.Format("stream.{0}", this.Name)] = Convert.ToByte(this._is_live);
+
+                // TODO: when the application goes offline the stream should set to offline in status storage.
+            }
+        }
 
         #endregion
 
