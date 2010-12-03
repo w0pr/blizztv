@@ -349,6 +349,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Subscriptions.Default.xml" />
     <None Include="Resources\Providers.xml" />
     <None Include="Resources\video_16.png" />
     <None Include="Resources\stream_16.png" />
