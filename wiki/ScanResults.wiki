@@ -1,6 +1,18 @@
 #summary Scan results for of BlizzTV releases.
 #labels Featured,Documentation
 
-Before publishing any binary releases of BlizzTV, we scan them for any possible infections using [VirusTotal.com] with 43 well-known scanner engines (and in case there exists any kind of infection, that release never goes public). Here you can see the results for latest reports;
+Before publishing any binary releases of BlizzTV, we scan them for any possible infections using http://VirusTotal.com with 43 well-known scanner engines (and in case there exists any kind of infection, that release never goes public). Here you can see the results for latest reports;
 
- * *0.15-beta* - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=7cfed27e17a3419dd8300098fa79b9ba7810388f0ba1b6f519c417b1f112fdb3-1291389080# Report]
+ * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.15-beta.zip&can=1&q= 0.15-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=7cfed27e17a3419dd8300098fa79b9ba7810388f0ba1b6f519c417b1f112fdb3-1291389080# Report]
+
+ * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.14b-beta.zip&can=1&q= 0.14b-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=c6af69f193fda053c868a9999cde0cfd376c7fcc8c8a30acc8faf530536249e1-1291390047 Report]
+
+ * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.14-beta.zip&can=1&q= 0.14-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=838ce2ae819103340629b16dc433551852303c90016b7952967136706e272558-1291389883 Report]
+
+ * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.13-beta.zip&can=1&q= 0.13-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=393ed6fa2a576d6cadbf4dcf1b8c34b7c5742a695335804b76f30a4aa3f9c14b-1291390182 Report]
+
+ * [http://code.google.com/p/blizztv/downloads/detail?name=Blizztv-0.12-beta.zip&can=1&q= 0.12-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=286e62dfb343f036d71cd02a35f74301a212e1e6b7a18b0030ef5eea584e8e96-1291390397 Report]
+
+ * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv0.11.beta.zip&can=1&q= 0.11-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=6f5b4b1cd2a3a55c8c1e945b4a834558a4b90fe38be6b51ea307834678bd296b-1291390453 Report]
+
+ * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-alpha-0.1.zip&can=1&q= 0.1-alpha] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=67f0bfbf9b7907b4c964e9132b68d8889de82e62f346718ce386935eda79bbd5-1291390509 Report]
