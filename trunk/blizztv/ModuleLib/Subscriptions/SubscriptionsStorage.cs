@@ -41,6 +41,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
 
         private SubscriptionsStorage() 
         {
+            Log.Instance.Write(LogMessageTypes.INFO, "Loading subscriptions database..");
             this.RegisterKnownTypes();
             this.Load();
         }
@@ -68,7 +69,17 @@ namespace BlizzTV.ModuleLib.Subscriptions
                     this._subscriptions = (List<ISubscription>)xs.Deserialize(fileStream);
                 }
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("An error occured while loading subscriptions.db: {0}", e.ToString())); }
+            catch (Exception e) 
+            { 
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("An error occured while loading subscriptions.db: {0}", e.ToString()));
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Your subscriptions database is corrupted. Do you want it to be replaced with a default one?", "Subscriptions Database Corrupted", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+                if(result== System.Windows.Forms.DialogResult.Yes) 
+                {
+                    this.LoadDefaults();
+                    this.Load();
+                    System.Windows.Forms.MessageBox.Show("Replaced your subscriptions database, it should be all working now.", "Subscriptions Database Replaced", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                }
+            }
         }
 
         private void LoadDefaults()
