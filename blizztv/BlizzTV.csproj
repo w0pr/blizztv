@@ -72,6 +72,11 @@
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
     <Compile Include="ModuleLib\StatusStorage\StatusStorage.cs" />
     <Compile Include="CommonLib\Storage\KeyValueStorage.cs" />
+    <Compile Include="ModuleLib\Subscriptions\SubscriptionsHandler.cs" />
+    <Compile Include="ModuleLib\Subscriptions\SubscriptionsStorage.cs" />
+    <Compile Include="Modules\Feeds\Subscriptions.cs" />
+    <Compile Include="Modules\Streams\Subscriptions.cs" />
+    <Compile Include="Modules\Videos\Subscriptions.cs" />
     <Compile Include="UILib\InvokeExtensions.cs" />
     <Compile Include="ModuleLib\ModuleAttributes.cs" />
     <Compile Include="Modules\Events\Event.cs" />
