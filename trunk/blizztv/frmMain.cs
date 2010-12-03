@@ -317,7 +317,7 @@ namespace BlizzTV
         {
             frmPreferences p = new frmPreferences();
             p.OnApplySettings += OnPreferencesWindowApplySettings;
-            p.ShowTabPage("tabPlugins");
+            p.ShowTabPage("tabModules");
             p.ShowDialog();
         }
 
