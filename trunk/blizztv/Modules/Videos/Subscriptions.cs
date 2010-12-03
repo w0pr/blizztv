@@ -36,10 +36,11 @@ namespace BlizzTV.Modules.Videos
     [XmlType("Video")]
     public class VideoSubscription : ISubscription
     {
-        [XmlAttribute("Name")]
-        public string Name { get; set; }
         [XmlAttribute("Slug")]
         public string Slug { get; set; }
+
+        [XmlAttribute("Provider")]
+        public string Provider { get; set; }
 
         public VideoSubscription() { }
     }

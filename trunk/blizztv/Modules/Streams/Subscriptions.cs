@@ -36,10 +36,11 @@ namespace BlizzTV.Modules.Streams
     [XmlType("Stream")]
     public class StreamSubscription : ISubscription
     {
-        [XmlAttribute("Name")]
-        public string Name { get; set; }
         [XmlAttribute("Slug")]
         public string Slug { get; set; }
+
+        [XmlAttribute("Provider")]
+        public string Provider { get; set; }
 
         public StreamSubscription() { }
     }
