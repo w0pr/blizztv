@@ -38,6 +38,7 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
 
         private ProvidersStorage()
         {
+            Log.Instance.Write(LogMessageTypes.INFO, "Loading providers database..");
             this.RegisterKnownTypes();
             this.Load();
         }
@@ -65,7 +66,11 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
                 }
 
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("An error occured while loading providers database: {0}", e.ToString())); }
+            catch (Exception e) 
+            { 
+                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("An error occured while loading providers database: {0}", e.ToString()));
+                System.Windows.Forms.MessageBox.Show("Providers database is broken. Please re-install BlizzTV to fix.", "Providers Database Broken", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
 
         public Dictionary<string,IProvider> GetProviders(Type type)
