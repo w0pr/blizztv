@@ -44,9 +44,12 @@ namespace BlizzTV.ModuleLib.Subscriptions
             SubscriptionsStorage.Instance.Save();
         }
 
-        public List<ISubscription> List()
+        public List<ISubscription> List
         {
-            return SubscriptionsStorage.Instance.GetSubscriptions(this._type);
+            get
+            {
+                return SubscriptionsStorage.Instance.GetSubscriptions(this._type);
+            }
         }
     }
 

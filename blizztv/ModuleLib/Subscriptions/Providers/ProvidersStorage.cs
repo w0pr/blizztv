@@ -23,6 +23,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Reflection;
+using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.ModuleLib.Subscriptions.Providers
 {
@@ -62,9 +63,9 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
                     XmlSerializer xs = new XmlSerializer(typeof(List<IProvider>), new XmlAttributeOverrides(), this._known_types, new XmlRootAttribute("Providers"), "");
                     this._providers = (List<IProvider>)xs.Deserialize(memStream);
                 }
-                
+
             }
-            catch (Exception e) { }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("An error occured while loading providers database: {0}", e.ToString())); }
         }
 
         public Dictionary<string,IProvider> GetProviders(Type type)

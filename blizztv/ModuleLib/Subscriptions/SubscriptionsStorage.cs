@@ -25,13 +25,14 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Reflection;
+using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.ModuleLib.Subscriptions
 {
     public sealed class SubscriptionsStorage
     {
         private static SubscriptionsStorage _instance = new SubscriptionsStorage();
-        private readonly string _subscriptons_file = "subs.xml";
+        private readonly string _subscriptons_file = "subscriptions.db";
         private Type[] _known_types = new Type[] { typeof(ISubscription) };
         private List<ISubscription> _subscriptions = new List<ISubscription>();
                 
@@ -60,16 +61,22 @@ namespace BlizzTV.ModuleLib.Subscriptions
         {
             try
             {
-                if (File.Exists(this._subscriptons_file))
+                if (!File.Exists(this._subscriptons_file)) this.LoadDefaults();
+                using (FileStream fileStream = new FileStream(this._subscriptons_file, FileMode.Open))
                 {
-                    using (FileStream fileStream = new FileStream(this._subscriptons_file, FileMode.Open))
-                    {
-                        XmlSerializer xs = new XmlSerializer(typeof(List<ISubscription>), new XmlAttributeOverrides(), this._known_types, new XmlRootAttribute("Subscriptions"), "");
-                        this._subscriptions = (List<ISubscription>)xs.Deserialize(fileStream);
-                    }
+                    XmlSerializer xs = new XmlSerializer(typeof(List<ISubscription>), new XmlAttributeOverrides(), this._known_types, new XmlRootAttribute("Subscriptions"), "");
+                    this._subscriptions = (List<ISubscription>)xs.Deserialize(fileStream);
                 }
             }
-            catch (Exception e) { }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("An error occured while loading subscriptions.db: {0}", e.ToString())); }
+        }
+
+        private void LoadDefaults()
+        {
+            using (FileStream fileStream = new FileStream(this._subscriptons_file, FileMode.Create))
+            {
+                fileStream.Write(Encoding.UTF8.GetBytes(Properties.Resources.Subscriptions_Default), 0, Properties.Resources.Subscriptions_Default.Length);
+            }
         }
 
         public void Save()

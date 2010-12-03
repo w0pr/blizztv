@@ -114,6 +114,20 @@ namespace BlizzTV.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;Subscriptions xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;BlizzTV&quot; Url=&quot;http://www.blizztv.com/rss/ccs/1-blizztvcom/&quot; /&gt;
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;TeamLiquid&quot; Url=&quot;http://www.teamliquid.net/rss/news.xml&quot; /&gt;
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;GosuGamers&quot; Url=&quot;http://www.gosugamers.net/starcraft2/sc2.rss&quot; /&gt;
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;SCArmory&quot; Url=&quot;http://feeds.f [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Subscriptions_Default {
+            get {
+                return ResourceManager.GetString("Subscriptions_Default", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap video_16 {
             get {
                 object obj = ResourceManager.GetObject("video_16", resourceCulture);

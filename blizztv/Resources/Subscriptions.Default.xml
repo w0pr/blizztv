@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Subscriptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Subscription xsi:type="Feed" Name="BlizzTV" Url="http://www.blizztv.com/rss/ccs/1-blizztvcom/" />
+  <Subscription xsi:type="Feed" Name="TeamLiquid" Url="http://www.teamliquid.net/rss/news.xml" />
+  <Subscription xsi:type="Feed" Name="GosuGamers" Url="http://www.gosugamers.net/starcraft2/sc2.rss" />
+  <Subscription xsi:type="Feed" Name="SCArmory" Url="http://feeds.feedburner.com/starcraft" />
+  <Subscription xsi:type="Feed" Name="MMO-Champion" Url="http://www.mmo-champion.com/external.php?do=rss&amp;type=newcontent&amp;sectionid=1&amp;days=120&amp;count=10" />
+  <Subscription xsi:type="Feed" Name="BlizzPlanet" Url="http://feeds.feedburner.com/blizzplanetcom" />
+  <Subscription xsi:type="Feed" Name="Diablo Fans" Url="http://www.diablofans.com/rss/forums/1-diablo-fans-home-page-news/" />
+  <Subscription xsi:type="Video" Name="Day[9]" Slug="day9tv" Provider="BlipTV" />
+  <Subscription xsi:type="Video" Name="HD Starcraft" Slug="hdstarcraft" Provider="Youtube" />
+  <Subscription xsi:type="Video" Name="HuskyStarcraft" Slug="huskystarcraft" Provider="Youtube" />
+  <Subscription xsi:type="Video" Name="iCCupTV" Slug="iccuptv" Provider="Youtube" />
+  <Subscription xsi:type="Video" Name="ForceSC2Strategy" Slug="forcesc2strategy" Provider="Youtube" />
+  <Subscription xsi:type="Video" Name="xhydrax" Slug="xhydrax" Provider="Youtube" />
+  <Subscription xsi:type="Video" Name="SC2 Noob School" Slug="sc2noobschool" Provider="Youtube" />
+  <Subscription xsi:type="Stream" Name="Day[9]" Slug="day9tv" Provider="UStream" />
+  <Subscription xsi:type="Stream" Name="GosuGamers" Slug="gosugamers" Provider="UStream" />
+  <Subscription xsi:type="Stream" Name="GLHF.tv" Slug="TheGunrun" Provider="UStream" />
+  <Subscription xsi:type="Stream" Name="ICCupTV" Slug="iccup-tv" Provider="UStream" />
+  <Subscription xsi:type="Stream" Name="TeamLiquidTV" Slug="teamliquidtv" Provider="UStream" />
+  <Subscription xsi:type="Stream" Name="HomerJ" Slug="150" Provider="Own3DTV" />
+  <Subscription xsi:type="Stream" Name="HuK" Slug="HuKTV" Provider="LiveStream" />
+  <Subscription xsi:type="Stream" Name="IdRA" Slug="eg-idra1" Provider="UStream" />
+  <Subscription xsi:type="Stream" Name="CellaWerra" Slug="cellawerra" Provider="LiveStream" />
+</Subscriptions>
