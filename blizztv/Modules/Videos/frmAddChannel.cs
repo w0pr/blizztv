@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using BlizzTV.ModuleLib.Subscriptions.Providers;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -30,7 +31,7 @@ namespace BlizzTV.Modules.Videos
 
         private void frmAddChannel_Load(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, Provider> pair in Providers.Instance.List) { comboBoxProviders.Items.Add(pair.Value.Name); }
+            foreach (KeyValuePair<string, IProvider> pair in Providers.Instance.List) { comboBoxProviders.Items.Add(pair.Value.Name); }
             comboBoxProviders.SelectedIndex = 0;
         }
 

@@ -89,10 +89,10 @@ namespace BlizzTV.Modules.Streams
 
         public virtual void Process() // get the stream data by replacing provider variables. handler's can override this method to run their own routines, though base.Process() should be called also.
         {
-            this._movie = Providers.Instance.List[this.Provider].Movie; // provider supplied movie source. 
-            this._flash_vars = Providers.Instance.List[this.Provider].FlashVars; // provider supplied flashvars.
-            this._chat_available = Providers.Instance.List[this.Provider].ChatAvailable; // Is chat functionality available for the provider?
-            if (this._chat_available) this._chat_movie = Providers.Instance.List[this.Provider].ChatMovie; // the streams chat movie's source.
+            this._movie = (Providers.Instance.List[this.Provider] as Provider).Movie; // provider supplied movie source. 
+            this._flash_vars = (Providers.Instance.List[this.Provider] as Provider).FlashVars; // provider supplied flashvars.
+            this._chat_available = (Providers.Instance.List[this.Provider] as Provider).ChatAvailable; // Is chat functionality available for the provider?
+            if (this._chat_available) this._chat_movie = (Providers.Instance.List[this.Provider] as Provider).ChatMovie; // the streams chat movie's source.
 
             this._movie = this._movie.Replace("%slug%", this.Slug); // replace slug variable in movie source.
             this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
