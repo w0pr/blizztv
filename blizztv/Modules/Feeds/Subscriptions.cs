@@ -36,8 +36,6 @@ namespace BlizzTV.Modules.Feeds
     [XmlType("Feed")]
     public class FeedSubscription : ISubscription
     {
-        [XmlAttribute("Name")]
-        public string Name { get; set; }
         [XmlAttribute("Url")]
         public string URL { get; set; }
 

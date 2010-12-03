@@ -54,6 +54,9 @@ namespace BlizzTV.ModuleLib.Subscriptions
     [XmlType("Subscription")]
     public class ISubscription
     {
+        [XmlAttribute("Name")]
+        public string Name { get; set; }
+
         public ISubscription() { }
     }
 }
