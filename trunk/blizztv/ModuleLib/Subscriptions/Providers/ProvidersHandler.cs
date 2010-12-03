@@ -32,9 +32,12 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
             this._type = type;
         }
 
-        public Dictionary<string,IProvider> List()
+        public Dictionary<string, IProvider> List
         {
-            return ProvidersStorage.Instance.GetProviders(this._type);
+            get
+            {
+                return ProvidersStorage.Instance.GetProviders(this._type);
+            }
         }
     }
 
