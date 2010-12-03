@@ -1,0 +1,6 @@
+#summary Scan results for of BlizzTV releases.
+#labels Featured,Documentation
+
+Before publishing any binary releases of BlizzTV, we scan them for any possible infections using VirusTotal.com with 43 well-known scanner engines (and in case there exists any kind of infection, that release never goes public). Here you can see the results for latest reports;
+
+*0.15-beta* - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=7cfed27e17a3419dd8300098fa79b9ba7810388f0ba1b6f519c417b1f112fdb3-1291389080# Report]
