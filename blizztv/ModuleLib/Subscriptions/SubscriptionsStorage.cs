@@ -33,7 +33,6 @@ namespace BlizzTV.ModuleLib.Subscriptions
         private static SubscriptionsStorage _instance = new SubscriptionsStorage();
         private readonly string _subscriptons_file = "subs.xml";
         private Type[] _known_types = new Type[] { typeof(ISubscription) };
-
         private List<ISubscription> _subscriptions = new List<ISubscription>();
                 
         public static SubscriptionsStorage Instance { get { return _instance; } }
