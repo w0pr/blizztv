@@ -19,7 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using BlizzTV.CommonLib.Logger;
+using BlizzTV.ModuleLib.Subscriptions.Providers;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -109,6 +111,27 @@ namespace BlizzTV.Modules.Videos
             this._movie = Movie;
             this._flash_vars = FlashVars;
         }
+    }
+
+    [Serializable]
+    [XmlType("Video")]
+    public class VideoProvider : IProvider
+    {
+        [XmlAttribute("Movie")]
+        public string Movie { get; set; }
+
+        [XmlAttribute("FlashVars")]
+        public string FlashVars { get; set; }
+
+        public VideoProvider() { }
+    }
+
+    public sealed class VideoProviders : ProvidersHandler
+    {
+        private static VideoProviders _instance = new VideoProviders();
+        public static VideoProviders Instance { get { return _instance; } }
+
+        private VideoProviders() : base(typeof(VideoProvider)) { }
     }
 
     #endregion

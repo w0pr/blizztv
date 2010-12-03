@@ -72,6 +72,8 @@
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
     <Compile Include="ModuleLib\StatusStorage\StatusStorage.cs" />
     <Compile Include="CommonLib\Storage\KeyValueStorage.cs" />
+    <Compile Include="ModuleLib\Subscriptions\Providers\ProvidersHandler.cs" />
+    <Compile Include="ModuleLib\Subscriptions\Providers\ProvidersStorage.cs" />
     <Compile Include="ModuleLib\Subscriptions\SubscriptionsHandler.cs" />
     <Compile Include="ModuleLib\Subscriptions\SubscriptionsStorage.cs" />
     <Compile Include="Modules\Feeds\Subscriptions.cs" />
@@ -354,6 +356,7 @@
     <Content Include="Modules\Videos\xml\providers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Providers.xml" />
     <None Include="Resources\video_16.png" />
     <None Include="Resources\stream_16.png" />
     <None Include="Resources\event_16.png" />

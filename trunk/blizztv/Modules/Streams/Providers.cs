@@ -19,7 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using BlizzTV.CommonLib.Logger;
+using BlizzTV.ModuleLib.Subscriptions.Providers;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -119,6 +121,40 @@ namespace BlizzTV.Modules.Streams
                 this._chat_movie = ChatMovie;
             }
         }
+    }
+
+    [Serializable]
+    [XmlType("Stream")]
+    public class StreamProvider : IProvider
+    {
+        [XmlAttribute("Movie")]
+        public string Movie { get; set; }
+
+        [XmlAttribute("FlashVars")]
+        public string FlashVars { get; set; }
+
+        [XmlAttribute("ChatMovie")]
+        public string ChatMovie { get; set; }
+
+        [XmlIgnoreAttribute]
+        public bool ChatAvailable { get; private set; }
+
+        public StreamProvider() 
+        {
+            if (ChatMovie == null)
+            {
+                ChatMovie = "";
+                ChatAvailable = false;
+            }
+        }
+    }
+
+    public sealed class StreamProviders : ProvidersHandler
+    {
+        private static StreamProviders _instance = new StreamProviders();
+        public static StreamProviders Instance { get { return _instance; } }
+
+        private StreamProviders() : base(typeof(StreamProvider)) { }
     }
 
     #endregion
