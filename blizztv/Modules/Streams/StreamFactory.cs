@@ -22,29 +22,29 @@ namespace BlizzTV.Modules.Streams
 {
     public static class StreamFactory // streams factory
     {
-        public static Stream CreateStream(string Name,string Slug,string Provider) // creates a stream object based on it's provider
+        public static Stream CreateStream(StreamSubscription subscription) // creates a stream object based on it's provider
         {
             Stream _stream=null;
-            switch (Provider.ToLower()) // create the appr. stream object based on it's provider.
+            switch (subscription.Provider.ToLower()) // create the appr. stream object based on it's provider.
             {
-                case "livestream":                    
-                    _stream = new LiveStream(Name,Slug,Provider);
+                case "livestream":
+                    _stream = new LiveStream(subscription);
                     break;
                 case "justintv":
-                    _stream = new JustinTV(Name, Slug, Provider);
+                    _stream = new JustinTV(subscription);
                     break;
                 case "ustream":
-                    _stream = new UStream(Name, Slug, Provider);
+                    _stream = new UStream(subscription);
                     break;
                 case "own3dtv":
-                    _stream = new Own3DTV(Name, Slug, Provider);
+                    _stream = new Own3DTV(subscription);
                     break;
                 default:
                     break;
             }
 
             if (_stream != null) return _stream; // if we found a valid stream provider.
-            else throw new NotImplementedException(string.Format("Stream provider not implemented: '{0}'", Provider)); // throw an exception if stream was not associated with a valid provider.
+            else throw new NotImplementedException(string.Format("Stream provider not implemented: '{0}'", subscription.Provider)); // throw an exception if stream was not associated with a valid provider.
         }
     }
 }

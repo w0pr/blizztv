@@ -24,6 +24,8 @@ namespace BlizzTV.Modules.Streams
 {
     public partial class frmAddStream : Form
     {
+        public StreamSubscription Subscription = new StreamSubscription();
+
         public frmAddStream()
         {
             InitializeComponent();
@@ -37,29 +39,37 @@ namespace BlizzTV.Modules.Streams
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (txtName.Text.Trim() != "" && txtSlug.Text.Trim() != "")
+            if (txtName.Text.Trim() == "" || txtURL.Text.Trim() == "")
             {
-                if (!StreamsPlugin.Instance._streams.ContainsKey(txtName.Text))
-                {
-                    this.AddStream(txtName.Text, txtSlug.Text, comboBoxProviders.SelectedItem.ToString());
-                    this.Close();
-                }
-                else MessageBox.Show(string.Format("A stream already exists with name '{0}', please choose another name and retry.", txtName.Text), "Key exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please fill the stream name and url fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else MessageBox.Show("Please fill the stream name and slug fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            StreamProvider provider = (StreamProvider)Providers.Instance.Dictionary[comboBoxProviders.SelectedItem.ToString()];
+            if (!provider.LinkValid(txtURL.Text))
+            {
+                MessageBox.Show(string.Format("{0} is an invalid {1} url. Please correct the url and retry.", txtURL.Text, provider.Name), "Invalid URL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            String slug = provider.GetSlug(txtURL.Text);
+            if (Subscriptions.Instance.Dictionary.ContainsKey(slug))
+            {
+                MessageBox.Show(string.Format("The stream already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[slug].Name), "Subscription Exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            this.Subscription.Name = txtName.Text;
+            this.Subscription.Slug = slug;
+            this.Subscription.Provider = provider.Name;
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.Close();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Close();
-        }
-
-        public delegate void AddStreamEventHandler(string Name, string Slug, string Provider);
-        public event AddStreamEventHandler OnAddStream;
-
-        private void AddStream(string Name, string Slug, string Provider)
-        {
-            if (OnAddStream != null) OnAddStream(Name, Slug, Provider);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace BlizzTV.Modules.Streams.Handlers
     {
         #region ctor
 
-        public LiveStream(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
+        public LiveStream(StreamSubscription subscription) : base(subscription) { }
 
         #endregion 
 

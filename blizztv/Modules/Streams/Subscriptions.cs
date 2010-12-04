@@ -30,6 +30,19 @@ namespace BlizzTV.Modules.Streams
         public static Subscriptions Instance { get { return _instance; } }
 
         private Subscriptions() : base(typeof(StreamSubscription)) { }
+
+        public Dictionary<string, StreamSubscription> Dictionary
+        {
+            get
+            {
+                Dictionary<string, StreamSubscription> dictionary = new Dictionary<string, StreamSubscription>();
+                foreach (ISubscription subscription in this.List)
+                {
+                    dictionary.Add((subscription as StreamSubscription).Slug, (subscription as StreamSubscription));
+                }
+                return dictionary;
+            }
+        }
     }
 
     [Serializable]

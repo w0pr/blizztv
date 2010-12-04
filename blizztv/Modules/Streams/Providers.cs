@@ -17,17 +17,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Text.RegularExpressions;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
 
 namespace BlizzTV.Modules.Streams
 {
+    public sealed class Providers : ProvidersHandler
+    {
+        private static Providers _instance = new Providers();
+        public static Providers Instance { get { return _instance; } }
+
+        private Providers() : base(typeof(StreamProvider)) { }
+    }
+
     [Serializable]
     [XmlType("Stream")]
-    public class Provider : IProvider
+    public class StreamProvider : IProvider
     {
         [XmlAttribute("Movie")]
         public string Movie { get; set; }
@@ -38,17 +45,27 @@ namespace BlizzTV.Modules.Streams
         [XmlAttribute("ChatMovie")]
         public string ChatMovie { get; set; }
 
+        [XmlAttribute("RegEx")]
+        public string RegEx { get; set; }
+
         [XmlIgnoreAttribute]
         public bool ChatAvailable { get { if (ChatMovie == null) return false; else return true; } }
 
-        public Provider() { }
-    }
+        public bool LinkValid(string link)
+        {
+            Regex regex = new Regex(this.RegEx, RegexOptions.Compiled);
+            Match m = regex.Match(link);
+            return m.Success;
+        }
 
-    public sealed class Providers : ProvidersHandler
-    {
-        private static Providers _instance = new Providers();
-        public static Providers Instance { get { return _instance; } }
+        public string GetSlug(string link)
+        {
+            if (!this.LinkValid(link)) return null;
+            Regex regex = new Regex(this.RegEx, RegexOptions.Compiled);
+            Match m = regex.Match(link);
+            return m.Groups["Slug"].Value;
+        }
 
-        private Providers() : base(typeof(Provider)) { }
+        public StreamProvider() { }
     }
 }
