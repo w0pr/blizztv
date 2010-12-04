@@ -100,8 +100,8 @@ namespace BlizzTV.Modules.Videos
 
         public virtual void Process() // get the stream data by replacing provider variables. 
         {
-            this._movie = (Providers.Instance.List[this.Provider] as Provider).Movie; // provider supplied movie source. 
-            this._flash_vars = (Providers.Instance.List[this.Provider] as Provider).FlashVars; // provider supplied flashvars.
+            this._movie = (Providers.Instance.Dictionary[this.Provider] as VideoProvider).Movie; // provider supplied movie source. 
+            this._flash_vars = (Providers.Instance.Dictionary[this.Provider] as VideoProvider).FlashVars; // provider supplied flashvars.
 
             this._movie = this._movie.Replace("%video_id%", this._video_id); // replace movie source variables
             this._movie = this._movie.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos) ? "1" : "0");

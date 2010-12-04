@@ -37,7 +37,7 @@ namespace BlizzTV.Modules.Streams
             this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
 
-            if (!(Providers.Instance.List[this._stream.Provider] as Provider).ChatAvailable) this.MenuOpenChat.Enabled = false; 
+            if (!(Providers.Instance.Dictionary[this._stream.Provider] as Provider).ChatAvailable) this.MenuOpenChat.Enabled = false; 
         }
 
         private void Player_Load(object sender, EventArgs e) 

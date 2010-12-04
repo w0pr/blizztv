@@ -84,15 +84,6 @@ namespace BlizzTV
             }            
         }
 
-        private void OnPreferencesWindowApplySettings() // Insantiates or kills plugins based on new applied plugin settings.
-        {
-            foreach(KeyValuePair<string,bool> pair in Settings.Instance.Plugins.List)
-            {
-                if (pair.Value && !ModuleManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.InstantiatePlugin(pair.Key); // instantiate the plugin.
-                else if (!pair.Value && ModuleManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.KillPlugin(pair.Key); // kill the plugin.
-            }
-        }
-
         private void InstantiatePlugin(string key)
         {
             Module plugin = ModuleManager.Instance.Instantiate(key); // get the plugins instance.
@@ -251,8 +242,22 @@ namespace BlizzTV
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmPreferences p = new frmPreferences();
-            p.OnApplySettings += OnPreferencesWindowApplySettings;
-            p.ShowDialog();
+            if (p.ShowDialog() == System.Windows.Forms.DialogResult.OK) ApplySettings();
+        }
+
+        private void MenuPlugins_Click(object sender, EventArgs e)
+        {
+            frmPreferences p = new frmPreferences();
+            if (p.ShowDialog("tabModules") == System.Windows.Forms.DialogResult.OK) ApplySettings();
+        }
+
+        private void ApplySettings() // Insantiates or kills plugins based on new applied plugin settings.
+        {
+            foreach (KeyValuePair<string, bool> pair in Settings.Instance.Plugins.List)
+            {
+                if (pair.Value && !ModuleManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.InstantiatePlugin(pair.Key); // instantiate the plugin.
+                else if (!pair.Value && ModuleManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.KillPlugin(pair.Key); // kill the plugin.
+            }
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -311,14 +316,6 @@ namespace BlizzTV
             {
                 MessageBox.Show("You're already running the latest version.", "No available updates found", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private void MenuPlugins_Click(object sender, EventArgs e)
-        {
-            frmPreferences p = new frmPreferences();
-            p.OnApplySettings += OnPreferencesWindowApplySettings;
-            p.ShowTabPage("tabModules");
-            p.ShowDialog();
         }
 
         private void MenuSleepMode_Click(object sender, EventArgs e)

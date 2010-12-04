@@ -42,12 +42,12 @@ namespace BlizzTV.Modules.Videos
 
         #region ctor
 
-        public Channel(string Name, string Slug, String Provider)
-            : base(Name)
+        public Channel(VideoSubscription subscription)
+            : base(subscription.Name)
         {
-            this._name = Name;
-            this._slug = Slug;
-            this._provider = Provider;         
+            this._name = subscription.Name;
+            this._slug = subscription.Slug;
+            this._provider = subscription.Provider;         
 
              // register context menus.
             this.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.

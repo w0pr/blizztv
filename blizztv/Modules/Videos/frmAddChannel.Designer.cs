@@ -32,7 +32,7 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.comboBoxProviders = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtSlug = new System.Windows.Forms.TextBox();
+            this.txtURL = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -77,21 +77,21 @@
             this.label3.TabIndex = 15;
             this.label3.Text = "Provider:";
             // 
-            // txtSlug
+            // txtURL
             // 
-            this.txtSlug.Location = new System.Drawing.Point(62, 49);
-            this.txtSlug.Name = "txtSlug";
-            this.txtSlug.Size = new System.Drawing.Size(239, 20);
-            this.txtSlug.TabIndex = 14;
+            this.txtURL.Location = new System.Drawing.Point(62, 49);
+            this.txtURL.Name = "txtURL";
+            this.txtURL.Size = new System.Drawing.Size(239, 20);
+            this.txtURL.TabIndex = 14;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(5, 56);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 13);
+            this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 13;
-            this.label2.Text = "Slug:";
+            this.label2.Text = "URL:";
             // 
             // txtName
             // 
@@ -111,14 +111,16 @@
             // 
             // frmAddChannel
             // 
+            this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(306, 106);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.comboBoxProviders);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtSlug);
+            this.Controls.Add(this.txtURL);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
@@ -138,7 +140,7 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.ComboBox comboBoxProviders;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtSlug;
+        private System.Windows.Forms.TextBox txtURL;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label1;

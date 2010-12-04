@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,19 @@ namespace BlizzTV.Modules.Videos
         public static Subscriptions Instance { get { return _instance; } }
 
         private Subscriptions() : base(typeof(VideoSubscription)) { }
+
+        public Dictionary<string, VideoSubscription> Dictionary
+        {
+            get
+            {
+                Dictionary<string, VideoSubscription> dictionary = new Dictionary<string, VideoSubscription>();
+                foreach (ISubscription subscription in this.List)
+                {
+                    dictionary.Add((subscription as VideoSubscription).Slug, (subscription as VideoSubscription));
+                }
+                return dictionary;
+            }
+        }
     }
 
     [Serializable]

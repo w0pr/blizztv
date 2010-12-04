@@ -32,7 +32,7 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
             this._type = type;
         }
 
-        public Dictionary<string, IProvider> List
+        public Dictionary<string, IProvider> Dictionary
         {
             get
             {
