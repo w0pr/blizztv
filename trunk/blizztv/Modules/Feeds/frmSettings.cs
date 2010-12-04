@@ -57,8 +57,11 @@ namespace BlizzTV.Modules.Feeds
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             frmAddFeed f = new frmAddFeed();
-            f.OnAddFeed += OnAddFeed;
-            f.ShowDialog();
+            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Subscriptions.Instance.Add(f.Subscription);
+                this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription(f.Subscription));
+            }
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
@@ -69,15 +72,6 @@ namespace BlizzTV.Modules.Feeds
                 Subscriptions.Instance.Remove(selection.Subscription);        
                 selection.Remove();
             }
-        }
-
-        private void OnAddFeed(string Name, string URL)
-        {
-            FeedSubscription feedSubscription = new FeedSubscription();
-            feedSubscription.Name = Name;
-            feedSubscription.URL = URL;
-            Subscriptions.Instance.Add(feedSubscription);
-            this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription(feedSubscription));
         }
     }
 

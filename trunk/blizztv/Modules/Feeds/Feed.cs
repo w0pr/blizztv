@@ -30,13 +30,11 @@ namespace BlizzTV.Modules.Feeds
         #region members
         
         private string _url; // the feed url.
-        private string _name; // the feed name.
-        private bool _valid = true; // did the feed parsed all okay?        
+        private string _name; // the feed name.   
         private bool disposed = false;
 
         public string Name { get { return this._name; } }
         public string URL { get { return this._url; } }
-        public bool Valid { get { return this._valid; } }
 
         // TODO: should be a readonly collection.
         public List<Story> Stories = new List<Story>(); // the feed's stories
@@ -45,11 +43,11 @@ namespace BlizzTV.Modules.Feeds
 
         #region ctor
 
-        public Feed(string Name, string URL)
-            : base(Name)
+        public Feed(FeedSubscription subscription)
+            : base(subscription.Name)
         {
-            this._name = Name;
-            this._url = URL;
+            this._name = subscription.Name;
+            this._url = subscription.URL;
 
             // register context menus.
             this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
@@ -60,43 +58,19 @@ namespace BlizzTV.Modules.Feeds
 
         #region internal logic
 
-        public void Update() // Updates the feed data.
+        public bool IsValid()
         {
-            try
-            {
-                string response = WebReader.Read(this.URL); // read the feed xml
-                if (response != null)
-                {
-                    XDocument xdoc = XDocument.Parse(response); // parse the xml
+            return this.Parse();
+        }
 
-                    var entries = from item in xdoc.Descendants("item") // get the stories
-                                  select new
-                                  {
-                                      GUID = item.Element("guid").Value,
-                                      Title = item.Element("title").Value,
-                                      Link = item.Element("link").Value,
-                                      Description = item.Element("description").Value
-                                  };
-
-                    foreach (var entry in entries) // create the story-item's.
-                    {
-                        Story s = new Story(entry.Title, entry.GUID, entry.Link, entry.Description);
-                        this.Stories.Add(s);
-                    }
-                }
-                else this._valid = false;
-            }
-            catch (Exception e)
-            {
-                this._valid = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString()));
-            }
-
-            if (this._valid)
+        public bool Update() 
+        {
+            if (this.Parse())
             {
                 int unread = 0; // unread stories count
                 foreach (Story s in this.Stories) 
                 {
+                    s.CheckForNotifications();
                     if (s.Style == ItemStyle.BOLD) unread++;
                 }
 
@@ -105,13 +79,43 @@ namespace BlizzTV.Modules.Feeds
                     this.SetTitle(string.Format(" {0} ({1})", this.Title, unread.ToString()));
                     this.Style = ItemStyle.BOLD;
                 }
+                return true;
             }
             else
             {
                 Story error = new Story("Error parsing feed.", "", "", "");
                 //error.Style = ItemStyle.ERROR;
                 this.Stories.Add(error);
+                return false;
             }
+        }
+
+        private bool Parse()
+        {
+            try
+            {
+                string response = WebReader.Read(this.URL); // read the feed xml
+                if (response == null) return false;
+
+                XDocument xdoc = XDocument.Parse(response); // parse the xml
+
+                var entries = from item in xdoc.Descendants("item") // get the stories
+                              select new
+                              {
+                                  GUID = item.Element("guid").Value,
+                                  Title = item.Element("title").Value,
+                                  Link = item.Element("link").Value,
+                                  Description = item.Element("description").Value
+                              };
+
+                foreach (var entry in entries) // create the story-item's.
+                {
+                    Story s = new Story(entry.Title, entry.GUID, entry.Link, entry.Description);
+                    this.Stories.Add(s);
+                }
+                return true;
+            }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString())); return false; }
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)

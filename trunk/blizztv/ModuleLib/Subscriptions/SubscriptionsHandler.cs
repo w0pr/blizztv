@@ -35,7 +35,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
         public void Add(ISubscription subscription)
         {
             SubscriptionsStorage.Instance.Subscriptions.Add(subscription);
-            SubscriptionsStorage.Instance.Save();
+            SubscriptionsStorage.Instance.Save();            
         }
 
         public void Remove(ISubscription subscription)

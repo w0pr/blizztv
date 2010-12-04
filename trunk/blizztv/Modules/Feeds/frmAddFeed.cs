@@ -22,46 +22,45 @@ namespace BlizzTV.Modules.Feeds
 {
     public partial class frmAddFeed : Form
     {
+        public FeedSubscription Subscription = new FeedSubscription();
+
         public frmAddFeed()
         {
             InitializeComponent();
         }
 
-        private void frmAddEditFeed_Load(object sender, EventArgs e) { }
-
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (txtName.Text.Trim() != "" && txtURL.Text.Trim() != "")
+            if (txtName.Text.Trim() == "" || txtURL.Text.Trim() == "")
             {
-                if (!FeedsPlugin.Instance._feeds.ContainsKey(txtName.Text))
-                {
-                    using (Feed f = new Feed(txtName.Text, txtURL.Text))
-                    {
-                        f.Update();
-                        if (f.Valid)
-                        {
-                            this.AddFeed(txtName.Text, txtURL.Text);
-                            this.Close();
-                        }
-                        else MessageBox.Show("There was an error parsing the feed. Please check the feed URL and retry.", "Error parsing feed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else MessageBox.Show(string.Format("A feed already exists with name '{0}', please choose another name and retry.", txtName.Text), "Key exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please fill the feed name and URL fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else MessageBox.Show("Please fill the feed name and URL fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            if (FeedsPlugin.Instance._feeds.ContainsKey(txtName.Text))
+            {
+                MessageBox.Show(string.Format("A feed already exists with name '{0}', please choose another name and retry.", txtName.Text), "Key exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            this.Subscription.Name = txtName.Text;
+            this.Subscription.URL = txtURL.Text;
+
+            Feed feed = new Feed(this.Subscription);
+            if (!feed.IsValid())
+            {
+                MessageBox.Show("There was an error parsing the feed. Please check the feed URL and retry.", "Error parsing feed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.Close();  
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Close();
-        }
-
-        public delegate void AddFeedEventHandler(string Name, string URL);
-        public event AddFeedEventHandler OnAddFeed;
-
-        private void AddFeed(string Name, string URL)
-        {
-            if (OnAddFeed != null) OnAddFeed(Name, URL);
         }
     }
 }

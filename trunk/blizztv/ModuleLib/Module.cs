@@ -80,6 +80,11 @@ namespace BlizzTV.ModuleLib
             return null;
         }
 
+        public virtual bool TryDragDrop(string link)
+        {
+            return false;
+        }
+
         /// <summary>
         /// 
         /// </summary>

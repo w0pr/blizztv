@@ -32,6 +32,16 @@ namespace BlizzTV.Modules.Videos
 
         private Subscriptions() : base(typeof(VideoSubscription)) { }
 
+        public bool Add(VideoSubscription subscription)
+        {
+            if (!this.Dictionary.ContainsKey(subscription.Slug))
+            {
+                base.Add(subscription);
+                return true;
+            }
+            return false;
+        }
+
         public Dictionary<string, VideoSubscription> Dictionary
         {
             get

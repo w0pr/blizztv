@@ -5,7 +5,6 @@
   <Subscription xsi:type="Feed" Name="GosuGamers" Url="http://www.gosugamers.net/starcraft2/sc2.rss" />
   <Subscription xsi:type="Feed" Name="SCArmory" Url="http://feeds.feedburner.com/starcraft" />
   <Subscription xsi:type="Feed" Name="MMO-Champion" Url="http://www.mmo-champion.com/external.php?do=rss&amp;type=newcontent&amp;sectionid=1&amp;days=120&amp;count=10" />
-  <Subscription xsi:type="Feed" Name="BlizzPlanet" Url="http://feeds.feedburner.com/blizzplanetcom" />
   <Subscription xsi:type="Feed" Name="Diablo Fans" Url="http://www.diablofans.com/rss/forums/1-diablo-fans-home-page-news/" />
   <Subscription xsi:type="Video" Name="Day[9]" Slug="day9tv" Provider="BlipTV" />
   <Subscription xsi:type="Video" Name="HD Starcraft" Slug="hdstarcraft" Provider="Youtube" />

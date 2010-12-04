@@ -23,6 +23,7 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Notifications;
 using BlizzTV.ModuleLib.Subscriptions;
+using BlizzTV.ModuleLib.Subscriptions.Providers;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -64,6 +65,23 @@ namespace BlizzTV.Modules.Streams
         public override System.Windows.Forms.Form GetPreferencesForm()
         {
             return new frmSettings();
+        }
+
+        public override bool TryDragDrop(string link)
+        {
+            foreach (KeyValuePair<string, IProvider> pair in Providers.Instance.Dictionary)
+            {
+                if ((pair.Value as StreamProvider).LinkValid(link))
+                {
+                    StreamSubscription s = new StreamSubscription();
+                    s.Name = s.Slug = (pair.Value as StreamProvider).GetSlug(link);
+                    s.Provider = pair.Value.Name;
+                    if(Subscriptions.Instance.Add(s)) this.RunManualUpdate(this, new EventArgs());
+                    else System.Windows.Forms.MessageBox.Show(string.Format("The stream already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[s.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion

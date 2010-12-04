@@ -22,6 +22,7 @@ using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Subscriptions;
+using BlizzTV.ModuleLib.Subscriptions.Providers;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -65,6 +66,23 @@ namespace BlizzTV.Modules.Videos
         public override System.Windows.Forms.Form GetPreferencesForm()
         {
             return new frmSettings();
+        }
+
+        public override bool TryDragDrop(string link)
+        {
+            foreach (KeyValuePair<string, IProvider> pair in Providers.Instance.Dictionary)
+            {
+                if ((pair.Value as VideoProvider).LinkValid(link))
+                {
+                    VideoSubscription v = new VideoSubscription();
+                    v.Name = v.Slug = (pair.Value as VideoProvider).GetSlug(link);
+                    v.Provider = pair.Value.Name;
+                    if (Subscriptions.Instance.Add(v)) this.RunManualUpdate(this, new EventArgs());
+                    else System.Windows.Forms.MessageBox.Show(string.Format("The channel already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[v.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion

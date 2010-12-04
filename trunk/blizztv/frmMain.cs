@@ -396,6 +396,20 @@ namespace BlizzTV
             Application.ExitThread(); // Exit the application.
         }
 
+        private void TreeView_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void TreeView_DragDrop(object sender, DragEventArgs e)
+        {
+            string link = (string)e.Data.GetData(DataFormats.Text);
+            foreach(KeyValuePair<string,Module> pair in ModuleManager.Instance.InstantiatedPlugins)
+            {
+                if (pair.Value.TryDragDrop(link)) break;
+            }            
+        }
+
         private void MenuExit_Click(object sender, EventArgs e) { this.ExitApplication(); }
 
         private void TrayIconMenuExit_Click(object sender, EventArgs e) { this.ExitApplication(); }

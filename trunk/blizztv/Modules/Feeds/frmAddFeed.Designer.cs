@@ -106,7 +106,6 @@
             this.Name = "frmAddFeed";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add New Feed";
-            this.Load += new System.EventHandler(this.frmAddEditFeed_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
