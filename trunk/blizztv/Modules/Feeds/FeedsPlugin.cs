@@ -17,9 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
@@ -119,9 +116,8 @@ namespace BlizzTV.Modules.Feeds
             }
         }
 
-        public void SaveSettings()
+        public void OnSaveSettings()
         {
-            Settings.Instance.Save();
             this.SetupUpdateTimer();
         }
 

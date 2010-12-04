@@ -17,14 +17,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.ModuleLib.Subscriptions;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -33,7 +31,6 @@ namespace BlizzTV.Modules.Streams
     {
         #region members
 
-        private string _xml_file = @"modules\streams\xml\streams.xml";
         internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _update_timer;
         private bool _updating = false;
@@ -75,8 +72,6 @@ namespace BlizzTV.Modules.Streams
 
         internal void UpdateStreams()
         {
-            bool success = true;
-
             if (!this._updating)
             {
                 this._updating = true;
@@ -90,91 +85,41 @@ namespace BlizzTV.Modules.Streams
 
                 this.RootListItem.SetTitle("Updating streams..");
 
-                try
+                foreach (ISubscription subscription in Subscriptions.Instance.List)
                 {
-                    XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
-                    var entries = from stream in xdoc.Descendants("Stream") // get the streams.
-                                  select new
-                                  {
-                                      Name = stream.Attribute("Name").Value,
-                                      Slug = stream.Element("Slug").Value,
-                                      Provider = stream.Element("Provider").Value.ToLower(),
-                                  };
-
-                    foreach (var entry in entries) // create up the stream items.
-                    {
-                        Stream s = StreamFactory.CreateStream(entry.Name, entry.Slug, entry.Provider);
-                        this._streams.Add(entry.Name, s);
-                    }
-                }
-                catch (Exception e)
-                {
-                    success = false;
-                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString()));
-                    System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your streams.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    StreamSubscription feedSubscription = (StreamSubscription)subscription;
+                    Stream s = StreamFactory.CreateStream(feedSubscription.Name, feedSubscription.Slug, feedSubscription.Provider);
+                    this._streams.Add(s.Name, s);
                 }
 
-                if (success) // if parsing of streams.xml all okay
+                int available_count = 0; // available live streams count
+                this.AddWorkload(this._streams.Count);
+
+                foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
                 {
-                    int available_count = 0; // available live streams count
-
-                    this.AddWorkload(this._streams.Count);
-
-                    foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
+                    try
                     {
-                        try
+                        pair.Value.Update(); // update the stream
+                        if (pair.Value.IsLive) // if it's live
                         {
-                            pair.Value.Update(); // update the stream
-                            if (pair.Value.IsLive) // if it's live
-                            {
-                                pair.Value.SetTitle(string.Format("{0} ({1})", pair.Value.Title, pair.Value.ViewerCount)); // put stream viewers count on title.
-                                available_count++; // increment available live streams count.
-                                this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                            }
-                            this.StepWorkload();
+                            pair.Value.SetTitle(string.Format("{0} ({1})", pair.Value.Title, pair.Value.ViewerCount)); // put stream viewers count on title.
+                            available_count++; // increment available live streams count.
+                            this.RootListItem.Childs.Add(pair.Key, pair.Value);
                         }
-                        catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
+                        this.StepWorkload();
                     }
-
-                    this.RootListItem.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
+                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
                 }
-                NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+
+                this.RootListItem.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
+
+                NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
                 this._updating = false;
             }
         }
 
-        internal void SaveStreamsXML()
+        public void OnSaveSettings()
         {
-            try
-            {
-                foreach (KeyValuePair<string, Stream> pair in this._streams)
-                {
-                    if (pair.Value.CommitOnSave)
-                    {
-                        XDocument xdoc = XDocument.Load(this._xml_file);
-                        xdoc.Element("Streams").Add(new XElement("Stream", new XAttribute("Name", pair.Value.Name), new XElement("Slug", pair.Value.Slug), new XElement("Provider", pair.Value.Provider)));
-                        pair.Value.CommitOnSave = false;
-                        xdoc.Save(this._xml_file);
-                    }
-                    else if (pair.Value.DeleteOnSave)
-                    {
-                        XDocument xdoc = XDocument.Load(this._xml_file);
-                        xdoc.XPathSelectElement(string.Format("Streams/Stream[@Name='{0}']", pair.Value.Name)).Remove();
-                        pair.Value.DeleteOnSave = false;
-                        xdoc.Save(this._xml_file);
-                    }                    
-                }
-                this.RunManualUpdate(this, EventArgs.Empty);
-            }
-            catch (Exception e)
-            {
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin SaveFeedsXML() Error: \n {0}", e.ToString()));
-            }
-        }
-
-        public void SaveSettings()
-        {
-            Settings.Instance.Save();
             this.SetupUpdateTimer();
         }
 

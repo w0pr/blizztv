@@ -50,7 +50,8 @@ namespace BlizzTV.Modules.Feeds
         public void SaveSettings()
         {
             Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
-            FeedsPlugin.Instance.SaveSettings();
+            Settings.Instance.Save();
+            FeedsPlugin.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
