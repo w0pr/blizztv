@@ -17,13 +17,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Subscriptions;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -32,7 +30,6 @@ namespace BlizzTV.Modules.Videos
     {
         #region members
 
-        private string _xml_file = @"modules\videos\xml\channels.xml";
         internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private Timer _update_timer;
         private bool _updating = false;
@@ -76,8 +73,6 @@ namespace BlizzTV.Modules.Videos
 
         internal void UpdateChannels()
         {
-            bool success = true;
-
             if (!this._updating)
             {
                 this._updating = true;
@@ -91,84 +86,34 @@ namespace BlizzTV.Modules.Videos
 
                 this.RootListItem.SetTitle("Updating videos..");
 
-                try
+                foreach (ISubscription subscription in Subscriptions.Instance.List)
                 {
-                    XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
-                    var entries = from channel in xdoc.Descendants("Channel") // get the channels.
-                                  select new
-                                  {
-                                      Name = channel.Attribute("Name").Value,
-                                      Slug = channel.Element("Slug").Value,
-                                      Provider = channel.Element("Provider").Value,
-                                  };
-
-                    foreach (var entry in entries) // create up the channel items.
-                    {
-                        Channel c = ChannelFactory.CreateChannel(entry.Name, entry.Slug, entry.Provider);
-                        this._channels.Add(entry.Name, c);
-                    }
-                }
-                catch (Exception e)
-                {
-                    success = false;
-                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannelsPlugin ParseChannels() Error: \n {0}", e.ToString()));
-                    System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your channels.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    VideoSubscription videoSubscription = (VideoSubscription)subscription;
+                    Channel c = ChannelFactory.CreateChannel(videoSubscription.Name, videoSubscription.Slug, videoSubscription.Provider);
+                    this._channels.Add(c.Name, c);
                 }
 
-                if (success) // if parsing of videochannels.xml all okay.
+                int unread = 0; // channels with un-watched videos count.
+                this.AddWorkload(this._channels.Count);
+
+                foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
                 {
-                    int unread = 0; // channels with un-watched videos count.
-
-                    this.AddWorkload(this._channels.Count);
-
-                    foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
-                    {
-                        pair.Value.Update(); // update the channel.
-                        this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                        foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
-                        if (pair.Value.Style == ItemStyle.BOLD) unread++;
-                        this.StepWorkload();
-                    }
-
-                    this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
+                    pair.Value.Update(); // update the channel.
+                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                    foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
+                    if (pair.Value.Style == ItemStyle.BOLD) unread++;
+                    this.StepWorkload();
                 }
-                NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+
+                this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
+
+                NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
                 this._updating = false;
             }
         }
-
-        internal void SaveChannelsXML()
+        
+        public void OnSaveSettings()
         {
-            try
-            {
-                foreach (KeyValuePair<string, Channel> pair in this._channels)
-                {
-                    if (pair.Value.CommitOnSave)
-                    {
-                        XDocument xdoc = XDocument.Load(this._xml_file);
-                        xdoc.Element("Channels").Add(new XElement("Channel", new XAttribute("Name", pair.Value.Name), new XElement("Slug", pair.Value.Slug), new XElement("Provider", pair.Value.Provider)));
-                        pair.Value.CommitOnSave = false;
-                        xdoc.Save(this._xml_file);
-                    }
-                    else if (pair.Value.DeleteOnSave)
-                    {
-                        XDocument xdoc = XDocument.Load(this._xml_file);
-                        xdoc.XPathSelectElement(string.Format("Channels/Channel[@Name='{0}']", pair.Value.Name)).Remove();
-                        pair.Value.DeleteOnSave = false;
-                        xdoc.Save(this._xml_file);
-                    }
-                }
-                this.RunManualUpdate(this, EventArgs.Empty);
-            }
-            catch (Exception e)
-            {
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin SaveFeedsXML() Error: \n {0}", e.ToString()));
-            }
-        }
-
-        public void SaveSettings()
-        {
-            Settings.Instance.Save();
             this.SetupUpdateTimer();
         }
 

@@ -29,16 +29,12 @@ namespace BlizzTV.Modules.Videos
         private string _name; // the channel name.
         private string _slug; // the channel slug.
         private string _provider; // the channel provider.
-        private bool _commit_on_save = false; // add channel to xml file on save.
-        private bool _delete_on_save = false; // remove channel from xml file on save.
         private bool disposed = false;
 
         public bool Valid { get { return this._valid; } internal set { this._valid = value; } }
         public string Name { get { return this._name; } internal set { this._name = value; } }
         public string Slug { get { return this._slug; } internal set { this._slug = value; }  }
         public string Provider { get { return this._provider; } internal set { this._provider = value; } }
-        public bool CommitOnSave { get { return this._commit_on_save; } set { this._commit_on_save = value; } }
-        public bool DeleteOnSave { get { return this._delete_on_save; } set { this._delete_on_save = value; } }
                 
         public List<Video> Videos = new List<Video>();
 

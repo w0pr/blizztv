@@ -38,8 +38,6 @@ namespace BlizzTV.Modules.Streams
         private string _flash_vars; // the streams's flash vars.
         private bool _chat_available = false; // // Is chat functionality available for the provider?
         private string _chat_movie; // the streams chat movie's source.
-        private bool _commit_on_save = false; // add stream to xml file on save.
-        private bool _delete_on_save = false; // remove stream from xml file on save.
 
         public string Name { get { return this._name; } internal set { this._name = value; } }
         public string Slug { get { return this._slug; } internal set { this._slug = value; } }
@@ -51,9 +49,6 @@ namespace BlizzTV.Modules.Streams
         public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
         public string ChatMovie { get { return this._chat_movie; } internal set { this._chat_movie = value; } }
         public bool ChatAvailable { get { return this._chat_available; } }
-        public bool CommitOnSave { get { return this._commit_on_save; } set { this._commit_on_save = value; } }
-        public bool DeleteOnSave { get { return this._delete_on_save; } set { this._delete_on_save = value; } }
-
 
         public bool IsLive
         {

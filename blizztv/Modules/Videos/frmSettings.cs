@@ -20,13 +20,12 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Subscriptions;
 
 namespace BlizzTV.Modules.Videos
 {
     public partial class frmSettings : Form,IModuleSettingsForm
     {
-        private bool _video_channels_list_updated = false;
-
         public frmSettings()
         {
             InitializeComponent();
@@ -38,12 +37,9 @@ namespace BlizzTV.Modules.Videos
             this.LoadSettings();
         }
 
-        private void AddSubscriptionToListview(string Name, string Slug, string Provider)
+        private void LoadSubscriptions()
         {
-            ListViewItem item = new ListViewItem(Name);
-            item.SubItems.Add(Provider);
-            item.SubItems.Add(Slug);
-            this.ListviewSubscriptions.Items.Add(item);
+            foreach (ISubscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription((VideoSubscription)subscription));
         }
 
         private void LoadSettings()
@@ -52,18 +48,12 @@ namespace BlizzTV.Modules.Videos
             numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)Settings.Instance.UpdateEveryXMinutes;
         }
 
-        private void LoadSubscriptions()
-        {
-            foreach (KeyValuePair<string, Channel> pair in VideosPlugin.Instance._channels) { this.AddSubscriptionToListview(pair.Value.Name, pair.Value.Slug, pair.Value.Provider); }
-        }
-
         public void SaveSettings()
         {
             Settings.Instance.NumberOfVideosToQueryChannelFor = (int)numericUpDownNumberOfVideosToQueryChannelFor.Value;
             Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
-            VideosPlugin.Instance.SaveSettings();
-
-            if (this._video_channels_list_updated) { VideosPlugin.Instance.SaveChannelsXML(); }
+            Settings.Instance.Save();
+            VideosPlugin.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -77,20 +67,34 @@ namespace BlizzTV.Modules.Videos
         {
             if (ListviewSubscriptions.SelectedItems.Count > 0)
             {
-                this._video_channels_list_updated = true;
-                ListViewItem selection = ListviewSubscriptions.SelectedItems[0];
-                VideosPlugin.Instance._channels[selection.Text].DeleteOnSave = true;
+                ListviewVideoSubscription selection = (ListviewVideoSubscription)ListviewSubscriptions.SelectedItems[0];
+                Subscriptions.Instance.Remove(selection.Subscription);
                 selection.Remove();
             }
         }
 
         private void OnAddVideoChannel(string Name, string Slug, string Provider)
         {
-            this._video_channels_list_updated = true;
-            this.AddSubscriptionToListview(Name, Slug, Provider);
-            Channel c = ChannelFactory.CreateChannel(Name, Slug, Provider);
-            c.CommitOnSave = true;
-            VideosPlugin.Instance._channels.Add(Name, c);
+            VideoSubscription v = new VideoSubscription();
+            v.Name = Name;
+            v.Slug = Slug;
+            v.Provider = Provider;
+            Subscriptions.Instance.Add(v);
+            this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription(v));
+        }
+    }
+
+    public class ListviewVideoSubscription : ListViewItem
+    {
+        private VideoSubscription _videoSubscription;
+        public VideoSubscription Subscription { get { return this._videoSubscription; } }
+
+        public ListviewVideoSubscription(VideoSubscription videoSubscription)
+        {
+            this._videoSubscription = videoSubscription;
+            this.Text = videoSubscription.Name;
+            this.SubItems.Add(videoSubscription.Provider);
+            this.SubItems.Add(videoSubscription.Slug);
         }
     }
 }

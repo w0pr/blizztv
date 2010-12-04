@@ -20,13 +20,12 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Subscriptions;
 
 namespace BlizzTV.Modules.Streams
 {
     public partial class frmSettings : Form, IModuleSettingsForm
     {
-        private bool _streams_list_updated = false;
-
         public frmSettings()
         {
             InitializeComponent();
@@ -38,12 +37,9 @@ namespace BlizzTV.Modules.Streams
             this.LoadSettings();
         }
 
-        private void AddSubscriptionToListview(string Name, string Slug,string Provider)
+        private void LoadSubscriptions()
         {
-            ListViewItem item = new ListViewItem(Name);
-            item.SubItems.Add(Provider);
-            item.SubItems.Add(Slug);
-            this.ListviewSubscriptions.Items.Add(item);
+            foreach (ISubscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription((StreamSubscription)subscription));
         }
 
         private void LoadSettings()
@@ -54,20 +50,14 @@ namespace BlizzTV.Modules.Streams
             txtStreamChatWindowHeight.Text = Settings.Instance.StreamChatWindowHeight.ToString();
         }
 
-        private void LoadSubscriptions()
-        {
-            foreach (KeyValuePair<string, Stream> pair in StreamsPlugin.Instance._streams) { this.AddSubscriptionToListview(pair.Value.Name, pair.Value.Slug, pair.Value.Provider); }
-        }
-
         public void SaveSettings()
         {
             Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             Settings.Instance.AutomaticallyOpenChatForAvailableStreams = checkBoxAutomaticallyOpenChatForAvailableStreams.Checked;
             Settings.Instance.StreamChatWindowWidth = int.Parse(txtStreamChatWindowWidth.Text);
             Settings.Instance.StreamChatWindowHeight = int.Parse(txtStreamChatWindowHeight.Text);
-
-            StreamsPlugin.Instance.SaveSettings();
-            if (this._streams_list_updated) { StreamsPlugin.Instance.SaveStreamsXML(); }
+            Settings.Instance.Save();
+            StreamsPlugin.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -81,20 +71,34 @@ namespace BlizzTV.Modules.Streams
         {
             if (ListviewSubscriptions.SelectedItems.Count > 0)
             {
-                this._streams_list_updated = true;
-                ListViewItem selection = ListviewSubscriptions.SelectedItems[0];
-                StreamsPlugin.Instance._streams[selection.Text].DeleteOnSave = true;
+                ListviewStreamSubscription selection = (ListviewStreamSubscription)ListviewSubscriptions.SelectedItems[0];
+                Subscriptions.Instance.Remove(selection.Subscription);
                 selection.Remove();
             }
         }
 
         private void OnAddStream(string Name, string Slug, string Provider)
         {
-            this._streams_list_updated = true;
-            this.AddSubscriptionToListview(Name, Slug, Provider);
-            Stream s = StreamFactory.CreateStream(Name, Slug, Provider);
-            s.CommitOnSave = true;
-            StreamsPlugin.Instance._streams.Add(Name, s);
+            StreamSubscription s = new StreamSubscription();
+            s.Name = Name;
+            s.Slug = Slug;
+            s.Provider = Provider;
+            Subscriptions.Instance.Add(s);
+            this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription(s));
+        }
+    }
+
+    public class ListviewStreamSubscription : ListViewItem
+    {
+        private StreamSubscription _streamSubscription;
+        public StreamSubscription Subscription { get { return this._streamSubscription; } }
+
+        public ListviewStreamSubscription(StreamSubscription streamSubscription)
+        {
+            this._streamSubscription = streamSubscription;
+            this.Text = streamSubscription.Name;
+            this.SubItems.Add(streamSubscription.Provider);
+            this.SubItems.Add(streamSubscription.Slug);
         }
     }
 }

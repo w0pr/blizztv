@@ -39,16 +39,9 @@ namespace BlizzTV.Modules.Streams
         public string ChatMovie { get; set; }
 
         [XmlIgnoreAttribute]
-        public bool ChatAvailable { get; private set; }
+        public bool ChatAvailable { get { if (ChatMovie == null) return false; else return true; } }
 
-        public Provider() 
-        {
-            if (ChatMovie == null)
-            {
-                ChatMovie = "";
-                ChatAvailable = false;
-            }
-        }
+        public Provider() { }
     }
 
     public sealed class Providers : ProvidersHandler

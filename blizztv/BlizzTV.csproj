@@ -337,14 +337,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blizztv.ico" />
-    <Content Include="Modules\Streams\xml\streams.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Modules\Videos\xml\channels.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\Subscriptions.Default.xml" />
     <None Include="Resources\Providers.xml" />
     <None Include="Resources\video_16.png" />
