@@ -24,6 +24,7 @@ using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Subscriptions;
 
 namespace BlizzTV.Modules.Feeds
 {
@@ -32,7 +33,6 @@ namespace BlizzTV.Modules.Feeds
     {
         #region members
 
-        private string _xml_file = @"modules\feeds\xml\feeds.xml";
         internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 
         private Timer _update_timer;
         private bool _updating = false;
@@ -76,8 +76,6 @@ namespace BlizzTV.Modules.Feeds
 
         internal void UpdateFeeds()
         {
-            bool success = true;
-
             if (!this._updating)
             {
                 this._updating = true;
@@ -91,79 +89,33 @@ namespace BlizzTV.Modules.Feeds
 
                 this.RootListItem.SetTitle("Updating feeds..");
 
-                try
+                foreach (ISubscription subscription in Subscriptions.Instance.List)
                 {
-                    XDocument xdoc = XDocument.Load(this._xml_file); // load the xml.
-                    var entries = from feed in xdoc.Descendants("Feed") // get the feeds.
-                                  select new
-                                  {
-                                      Title = feed.Attribute("Name").Value,
-                                      URL = feed.Element("URL").Value,
-                                  };
-
-                    foreach (var entry in entries) // create up the feed items.
-                    {
-                        Feed f = new Feed(entry.Title, entry.URL);
-                        this._feeds.Add(f.Name, f);
-                    }
-                }
-                catch (Exception e)
-                {
-                    success = false;
-                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin ParseFeeds() Error: \n {0}", e.ToString()));
-                    System.Windows.Forms.MessageBox.Show(string.Format("An error occured while parsing your feeds.xml. Please correct the error and re-start the plugin. \n\n[Error Details: {0}]", e.Message), "Feeds Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    FeedSubscription feedSubscription = (FeedSubscription)subscription;
+                    Feed f = new Feed(feedSubscription.Name, feedSubscription.URL);
+                    this._feeds.Add(f.Name, f);
                 }
 
-                if (success) // if parsing of feeds.xml all okay.
+                int unread = 0; // feeds with unread stories count.
+                this.AddWorkload(this._feeds.Count);
+
+                foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
                 {
-                    int unread = 0; // feeds with unread stories count.
-
-                    this.AddWorkload(this._feeds.Count);
-
-                    foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
+                    try
                     {
-                        try
-                        {
-                            pair.Value.Update(); // update the feed.
-                            this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                            foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
-                            if (pair.Value.Style == ItemStyle.BOLD) unread++;                            
-                        }
-                        catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
-                        this.StepWorkload();
+                        pair.Value.Update(); // update the feed.
+                        this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                        foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
+                        if (pair.Value.Style == ItemStyle.BOLD) unread++;
                     }
+                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
+                    this.StepWorkload();
+                }
 
-                    this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
-                }                
-                this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+                this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
+
+                this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
                 this._updating = false;
-            }
-        }
-
-        internal void SaveFeedsXML()
-        {
-            try
-            {
-                foreach (KeyValuePair<string,Feed> pair in this._feeds)
-                {
-                    if (pair.Value.CommitOnSave)
-                    {
-                        XDocument xdoc = XDocument.Load(this._xml_file);
-                        xdoc.Element("Feeds").Add(new XElement("Feed", new XAttribute("Name", pair.Value.Name), new XElement("URL", pair.Value.URL)));
-                        xdoc.Save(this._xml_file);
-                    }
-                    else if (pair.Value.DeleteOnSave)
-                    {
-                        XDocument xdoc = XDocument.Load(this._xml_file);
-                        xdoc.XPathSelectElement(string.Format("Feeds/Feed[@Name='{0}']", pair.Value.Name)).Remove();
-                        xdoc.Save(this._xml_file);
-                    }
-                }
-                this.RunManualUpdate(this, EventArgs.Empty);
-            }
-            catch (Exception e)
-            {
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin SaveFeedsXML() Error: \n {0}", e.ToString()));
             }
         }
 

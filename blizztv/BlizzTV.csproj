@@ -337,10 +337,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blizztv.ico" />
-    <Content Include="Modules\Feeds\xml\feeds.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Modules\Streams\xml\streams.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
