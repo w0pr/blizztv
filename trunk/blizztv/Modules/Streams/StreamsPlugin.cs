@@ -85,11 +85,9 @@ namespace BlizzTV.Modules.Streams
 
                 this.RootListItem.SetTitle("Updating streams..");
 
-                foreach (ISubscription subscription in Subscriptions.Instance.List)
+                foreach (KeyValuePair<string, StreamSubscription> pair in Subscriptions.Instance.Dictionary)
                 {
-                    StreamSubscription feedSubscription = (StreamSubscription)subscription;
-                    Stream s = StreamFactory.CreateStream(feedSubscription.Name, feedSubscription.Slug, feedSubscription.Provider);
-                    this._streams.Add(s.Name, s);
+                    this._streams.Add(pair.Value.Slug, StreamFactory.CreateStream(pair.Value));
                 }
 
                 int available_count = 0; // available live streams count

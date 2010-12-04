@@ -31,7 +31,7 @@ namespace BlizzTV.Modules.Streams.Handlers
 
         #region ctor
 
-        public UStream(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
+        public UStream(StreamSubscription subscription) : base(subscription) { }
 
         #endregion
 

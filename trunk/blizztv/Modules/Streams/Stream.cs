@@ -70,12 +70,12 @@ namespace BlizzTV.Modules.Streams
 
         #region ctor
 
-        public Stream(string Name, string Slug, string Provider)
-            : base(Name)
+        public Stream(StreamSubscription subscription)
+            : base(subscription.Name)
         {
-            this._name = Name;
-            this._slug = Slug;
-            this._provider = Provider;
+            this._name = subscription.Name;
+            this._slug = subscription.Slug;
+            this._provider = subscription.Provider;
         }
 
         #endregion
@@ -84,10 +84,10 @@ namespace BlizzTV.Modules.Streams
 
         public virtual void Process() // get the stream data by replacing provider variables. handler's can override this method to run their own routines, though base.Process() should be called also.
         {
-            this._movie = (Providers.Instance.Dictionary[this.Provider] as Provider).Movie; // provider supplied movie source. 
-            this._flash_vars = (Providers.Instance.Dictionary[this.Provider] as Provider).FlashVars; // provider supplied flashvars.
-            this._chat_available = (Providers.Instance.Dictionary[this.Provider] as Provider).ChatAvailable; // Is chat functionality available for the provider?
-            if (this._chat_available) this._chat_movie = (Providers.Instance.Dictionary[this.Provider] as Provider).ChatMovie; // the streams chat movie's source.
+            this._movie = (Providers.Instance.Dictionary[this.Provider] as StreamProvider).Movie; // provider supplied movie source. 
+            this._flash_vars = (Providers.Instance.Dictionary[this.Provider] as StreamProvider).FlashVars; // provider supplied flashvars.
+            this._chat_available = (Providers.Instance.Dictionary[this.Provider] as StreamProvider).ChatAvailable; // Is chat functionality available for the provider?
+            if (this._chat_available) this._chat_movie = (Providers.Instance.Dictionary[this.Provider] as StreamProvider).ChatMovie; // the streams chat movie's source.
 
             this._movie = this._movie.Replace("%slug%", this.Slug); // replace slug variable in movie source.
             this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            

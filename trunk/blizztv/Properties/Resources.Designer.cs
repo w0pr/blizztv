@@ -98,8 +98,8 @@ namespace BlizzTV.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;Providers xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;Provider xsi:type=&quot;Stream&quot; Name=&quot;LiveStream&quot; Movie=&quot;http://cdn.livestream.com/grid/LSPlayer.swf&quot; FlashVars=&quot;channel=%slug%&amp;amp;autoPlay=true&quot; ChatMovie=&quot;http://cdn.livestream.com/chat/LivestreamChat.swf?&amp;amp;showTimestamp=true&amp;amp;channel=%slug%&quot; /&gt;
-        ///  &lt;Provider xsi:type=&quot;Stream&quot; Name=&quot;UStream&quot; Movie=&quot;http://www.ustream.tv/flash/live/1/%stream_id%?v3=1&quot; FlashVars=&quot;autopla [rest of string was truncated]&quot;;.
+        ///  &lt;StreamProvider xsi:type=&quot;Stream&quot; Name=&quot;LiveStream&quot; Movie=&quot;http://cdn.livestream.com/grid/LSPlayer.swf&quot; FlashVars=&quot;channel=%slug%&amp;amp;autoPlay=true&quot; ChatMovie=&quot;http://cdn.livestream.com/chat/LivestreamChat.swf?&amp;amp;showTimestamp=true&amp;amp;channel=%slug%&quot; /&gt;
+        ///  &lt;StreamProvider xsi:type=&quot;Stream&quot; Name=&quot;UStream&quot; Movie=&quot;http://www.ustream.tv/flash/live/1/%stream_id%?v3=1&quot; FlashVars=&quot;autopla [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Providers {
             get {

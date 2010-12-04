@@ -25,7 +25,7 @@ namespace BlizzTV.Modules.Streams.Handlers
     {
         private Regex _regex = new Regex("liveViewers=(.*)&liveStatus=(.*)&liveVerified=.*", RegexOptions.Compiled);
 
-        public Own3DTV(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
+        public Own3DTV(StreamSubscription subscription) : base(subscription) { }
 
         public override void Update()
         {

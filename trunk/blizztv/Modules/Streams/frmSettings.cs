@@ -63,8 +63,11 @@ namespace BlizzTV.Modules.Streams
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             frmAddStream f = new frmAddStream();
-            f.OnAddStream += OnAddStream;
-            f.ShowDialog();
+            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Subscriptions.Instance.Add(f.Subscription);
+                this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription(f.Subscription));
+            }
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
@@ -75,16 +78,6 @@ namespace BlizzTV.Modules.Streams
                 Subscriptions.Instance.Remove(selection.Subscription);
                 selection.Remove();
             }
-        }
-
-        private void OnAddStream(string Name, string Slug, string Provider)
-        {
-            StreamSubscription s = new StreamSubscription();
-            s.Name = Name;
-            s.Slug = Slug;
-            s.Provider = Provider;
-            Subscriptions.Instance.Add(s);
-            this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription(s));
         }
     }
 

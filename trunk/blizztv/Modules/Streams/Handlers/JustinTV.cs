@@ -25,7 +25,7 @@ namespace BlizzTV.Modules.Streams.Handlers
     {
         #region ctor
 
-        public JustinTV(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
+        public JustinTV(StreamSubscription subscription) : base(subscription) { }
 
         #endregion
 
