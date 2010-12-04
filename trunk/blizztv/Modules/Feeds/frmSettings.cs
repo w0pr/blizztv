@@ -20,13 +20,12 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
+using BlizzTV.ModuleLib.Subscriptions;
 
 namespace BlizzTV.Modules.Feeds
 {
     public partial class frmSettings : Form, IModuleSettingsForm
     {
-        private bool _feeds_list_updated = false;
-
         public frmSettings()
         {
             InitializeComponent();
@@ -38,16 +37,9 @@ namespace BlizzTV.Modules.Feeds
             this.LoadSettings();
         }
 
-        private void AddSubscriptionToListview(string Name, string URL)
-        {
-            ListViewItem item = new ListViewItem(Name);
-            item.SubItems.Add(URL);
-            this.ListviewSubscriptions.Items.Add(item);
-        }
-
         private void LoadSubscriptions()
         {
-            foreach (KeyValuePair<string,Feed> pair in FeedsPlugin.Instance._feeds) { this.AddSubscriptionToListview(pair.Value.Name, pair.Value.URL); }
+            foreach (ISubscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription((FeedSubscription)subscription));
         }
 
         private void LoadSettings()
@@ -59,7 +51,6 @@ namespace BlizzTV.Modules.Feeds
         {
             Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
             FeedsPlugin.Instance.SaveSettings();
-            if (this._feeds_list_updated) { FeedsPlugin.Instance.SaveFeedsXML(); }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -73,20 +64,32 @@ namespace BlizzTV.Modules.Feeds
         {
             if (ListviewSubscriptions.SelectedItems.Count > 0)
             {
-                this._feeds_list_updated = true;
-                ListViewItem selection = ListviewSubscriptions.SelectedItems[0];
-                FeedsPlugin.Instance._feeds[selection.Text].DeleteOnSave = true;                
+                ListviewFeedSubscription selection = (ListviewFeedSubscription)ListviewSubscriptions.SelectedItems[0];
+                Subscriptions.Instance.Remove(selection.Subscription);        
                 selection.Remove();
             }
         }
 
         private void OnAddFeed(string Name, string URL)
         {
-            this._feeds_list_updated=true;
-            this.AddSubscriptionToListview(Name, URL); // add to listview.
-            Feed f = new Feed(Name, URL);
-            f.CommitOnSave = true;
-            FeedsPlugin.Instance._feeds.Add(Name,f); // add to our feeds list.
+            FeedSubscription feedSubscription = new FeedSubscription();
+            feedSubscription.Name = Name;
+            feedSubscription.URL = URL;
+            Subscriptions.Instance.Add(feedSubscription);
+            this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription(feedSubscription));
+        }
+    }
+
+    public class ListviewFeedSubscription:ListViewItem
+    {
+        private FeedSubscription _feedSubscription;
+        public FeedSubscription Subscription { get { return this._feedSubscription; } }
+
+        public ListviewFeedSubscription(FeedSubscription feedSubscription)
+        {
+            this._feedSubscription = feedSubscription;
+            this.Text = feedSubscription.Name;
+            this.SubItems.Add(feedSubscription.URL);
         }
     }
 }
