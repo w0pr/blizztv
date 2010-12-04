@@ -25,7 +25,7 @@ namespace BlizzTV.Modules.Videos.Handlers
 {
     public class BlipTV : Channel
     {
-        public BlipTV(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
+        public BlipTV(VideoSubscription subscription) : base(subscription) { }
 
         public override void Update()
         {

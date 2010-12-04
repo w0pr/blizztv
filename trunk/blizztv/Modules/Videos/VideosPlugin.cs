@@ -86,11 +86,9 @@ namespace BlizzTV.Modules.Videos
 
                 this.RootListItem.SetTitle("Updating videos..");
 
-                foreach (ISubscription subscription in Subscriptions.Instance.List)
+                foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
                 {
-                    VideoSubscription videoSubscription = (VideoSubscription)subscription;
-                    Channel c = ChannelFactory.CreateChannel(videoSubscription.Name, videoSubscription.Slug, videoSubscription.Provider);
-                    this._channels.Add(c.Name, c);
+                    this._channels.Add(pair.Value.Slug, ChannelFactory.CreateChannel(pair.Value));
                 }
 
                 int unread = 0; // channels with un-watched videos count.

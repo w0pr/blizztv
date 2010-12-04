@@ -17,17 +17,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Text.RegularExpressions;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
 
 namespace BlizzTV.Modules.Videos
 {
+    public sealed class Providers : ProvidersHandler
+    {
+        private static Providers _instance = new Providers();
+        public static Providers Instance { get { return _instance; } }
+
+        private Providers() : base(typeof(VideoProvider)) { }
+    }
+
     [Serializable]
     [XmlType("Video")]
-    public class Provider : IProvider
+    public class VideoProvider : IProvider
     {
         [XmlAttribute("Movie")]
         public string Movie { get; set; }
@@ -35,14 +42,24 @@ namespace BlizzTV.Modules.Videos
         [XmlAttribute("FlashVars")]
         public string FlashVars { get; set; }
 
-        public Provider() { }
-    }
+        [XmlAttribute("RegEx")]
+        public string RegEx { get; set; }
 
-    public sealed class Providers : ProvidersHandler
-    {
-        private static Providers _instance = new Providers();
-        public static Providers Instance { get { return _instance; } }
+        public VideoProvider() { }
 
-        private Providers() : base(typeof(Provider)) { }
+        public bool LinkValid(string link)
+        {
+            Regex regex = new Regex(this.RegEx, RegexOptions.Compiled);
+            Match m = regex.Match(link);
+            return m.Success;
+        }
+
+        public string GetSlug(string link)
+        {
+            if (!this.LinkValid(link)) return null;
+            Regex regex = new Regex(this.RegEx, RegexOptions.Compiled);
+            Match m = regex.Match(link);
+            return m.Groups["Slug"].Value;
+        }
     }
 }

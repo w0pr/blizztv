@@ -25,7 +25,7 @@ namespace BlizzTV.Modules.Videos.Handlers
 {
     public class Youtube : Channel
     {
-        public Youtube(string Name, string Slug, string Provider) : base(Name, Slug, Provider) { }
+        public Youtube(VideoSubscription subscription) : base(subscription) { }
 
         public override void Update()
         {

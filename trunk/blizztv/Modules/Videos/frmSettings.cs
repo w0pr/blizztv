@@ -59,8 +59,11 @@ namespace BlizzTV.Modules.Videos
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             frmAddChannel f = new frmAddChannel();
-            f.OnAddVideoChannel += OnAddVideoChannel;
-            f.ShowDialog();
+            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Subscriptions.Instance.Add(f.Subscription);
+                this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription(f.Subscription));
+            }
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
@@ -71,16 +74,6 @@ namespace BlizzTV.Modules.Videos
                 Subscriptions.Instance.Remove(selection.Subscription);
                 selection.Remove();
             }
-        }
-
-        private void OnAddVideoChannel(string Name, string Slug, string Provider)
-        {
-            VideoSubscription v = new VideoSubscription();
-            v.Name = Name;
-            v.Slug = Slug;
-            v.Provider = Provider;
-            Subscriptions.Instance.Add(v);
-            this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription(v));
         }
     }
 

@@ -40,14 +40,11 @@ namespace BlizzTV
             this.LoadSettings();
         }
 
-        public void ShowTabPage(string PageName)
+        public DialogResult ShowDialog(string tabPageName)
         {
-            TabControl.SelectedTab = TabControl.TabPages[PageName];
+            TabControl.SelectedTab = TabControl.TabPages[tabPageName];
+            return this.ShowDialog();
         }
-
-
-        public delegate void ApplySettingsEventHandler();
-        public event ApplySettingsEventHandler OnApplySettings; 
 
         private void LoadSettings()
         {
@@ -134,14 +131,15 @@ namespace BlizzTV
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Close();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
-        {            
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.SaveSettings();  // save global settings
             foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IModuleSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
-            if (this.OnApplySettings != null) this.OnApplySettings(); // notify observers.
             this.Close();
         }
     }
