@@ -31,6 +31,16 @@ namespace BlizzTV.Modules.Streams
 
         private Subscriptions() : base(typeof(StreamSubscription)) { }
 
+        public bool Add(StreamSubscription subscription)
+        {
+            if (!this.Dictionary.ContainsKey(subscription.Slug))
+            {
+                base.Add(subscription);
+                return true;
+            }
+            return false;
+        }
+
         public Dictionary<string, StreamSubscription> Dictionary
         {
             get

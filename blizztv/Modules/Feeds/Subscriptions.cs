@@ -30,6 +30,29 @@ namespace BlizzTV.Modules.Feeds
         public static Subscriptions Instance { get { return _instance; } }
 
         private Subscriptions() : base(typeof(FeedSubscription)) { }
+
+        public bool Add(FeedSubscription subscription)
+        {
+            if (!this.Dictionary.ContainsKey(subscription.URL))
+            {
+                base.Add(subscription);
+                return true;
+            }
+            return false;
+        }
+
+        public Dictionary<string, FeedSubscription> Dictionary
+        {
+            get
+            {
+                Dictionary<string, FeedSubscription> dictionary = new Dictionary<string, FeedSubscription>();
+                foreach (ISubscription subscription in this.List)
+                {
+                    dictionary.Add((subscription as FeedSubscription).URL, (subscription as FeedSubscription));
+                }
+                return dictionary;
+            }
+        }
     }
 
     [Serializable]

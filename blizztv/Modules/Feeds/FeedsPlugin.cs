@@ -22,6 +22,7 @@ using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Subscriptions;
+using BlizzTV.UILib;
 
 namespace BlizzTV.Modules.Feeds
 {
@@ -67,6 +68,35 @@ namespace BlizzTV.Modules.Feeds
             return new frmSettings();
         }
 
+        public override bool TryDragDrop(string link)
+        {
+            if (Subscriptions.Instance.Dictionary.ContainsKey(link))
+            {
+                System.Windows.Forms.MessageBox.Show(string.Format("The feed already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[link].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return false;
+            }
+
+            FeedSubscription feedSubscription = new FeedSubscription();
+            feedSubscription.Name = "test-feed";
+            feedSubscription.URL = link;
+
+            Feed feed = new Feed(feedSubscription);
+            if (feed.IsValid())
+            {
+                FeedSubscription subscription = new FeedSubscription();
+                string feedName = "";
+                if (InputBox.Show("Add New Feed", "Please enter name for the new feed", ref feedName) == System.Windows.Forms.DialogResult.OK)
+                {
+                    subscription.Name = feedName;
+                    subscription.URL = link;
+                    if (Subscriptions.Instance.Add(subscription)) this.RunManualUpdate(this, new EventArgs()); else return false;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region internal logic
@@ -86,11 +116,9 @@ namespace BlizzTV.Modules.Feeds
 
                 this.RootListItem.SetTitle("Updating feeds..");
 
-                foreach (ISubscription subscription in Subscriptions.Instance.List)
+                foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
                 {
-                    FeedSubscription feedSubscription = (FeedSubscription)subscription;
-                    Feed f = new Feed(feedSubscription.Name, feedSubscription.URL);
-                    this._feeds.Add(f.Name, f);
+                    this._feeds.Add(pair.Value.URL, new Feed(pair.Value));
                 }
 
                 int unread = 0; // feeds with unread stories count.

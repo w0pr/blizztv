@@ -79,6 +79,7 @@
     <Compile Include="Modules\Feeds\Subscriptions.cs" />
     <Compile Include="Modules\Streams\Subscriptions.cs" />
     <Compile Include="Modules\Videos\Subscriptions.cs" />
+    <Compile Include="UILib\InputBox.cs" />
     <Compile Include="UILib\InvokeExtensions.cs" />
     <Compile Include="ModuleLib\ModuleAttributes.cs" />
     <Compile Include="Modules\Events\Event.cs" />

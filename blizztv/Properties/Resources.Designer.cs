@@ -120,7 +120,7 @@ namespace BlizzTV.Properties {
         ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;BlizzTV&quot; Url=&quot;http://www.blizztv.com/rss/ccs/1-blizztvcom/&quot; /&gt;
         ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;TeamLiquid&quot; Url=&quot;http://www.teamliquid.net/rss/news.xml&quot; /&gt;
         ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;GosuGamers&quot; Url=&quot;http://www.gosugamers.net/starcraft2/sc2.rss&quot; /&gt;
-        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;SCArmory&quot; Url=&quot;http://feeds.f [rest of string was truncated]&quot;;.
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;SCArmory&quot; Url=&quot;http://feeds.feed [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Subscriptions_Default {
             get {
