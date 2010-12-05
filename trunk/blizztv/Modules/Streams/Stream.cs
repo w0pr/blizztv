@@ -38,6 +38,7 @@ namespace BlizzTV.Modules.Streams
         private string _flash_vars; // the streams's flash vars.
         private bool _chat_available = false; // // Is chat functionality available for the provider?
         private string _chat_movie; // the streams chat movie's source.
+        private frmPlayer _player = null;
 
         public string Name { get { return this._name; } internal set { this._name = value; } }
         public string Slug { get { return this._slug; } internal set { this._slug = value; } }
@@ -96,22 +97,32 @@ namespace BlizzTV.Modules.Streams
 
         public override void DoubleClicked(object sender, EventArgs e) // double-click handler
         {
-            if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
-            {
-                frmPlayer p = new frmPlayer(this); // render the stream with our own video player
-                p.Show();
-            }
-            else System.Diagnostics.Process.Start(this.Link, null); // render the stream with default web-browser.
+            this.Play();
         }
 
         public override void BalloonClicked(object sender, EventArgs e)
         {
+            this.Play();
+        }
+
+        private void Play()
+        {
             if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
             {
-                frmPlayer p = new frmPlayer(this); // render the stream with our own video player
-                p.Show();
+                if (this._player == null)
+                {
+                    this._player = new frmPlayer(this); // render the stream with our own video player
+                    this._player.FormClosed += PlayerClosed;
+                    this._player.Show();
+                }
+                else this._player.Focus();
             }
             else System.Diagnostics.Process.Start(this.Link, null); // render the stream with default web-browser.
+        }
+
+        void PlayerClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        {
+            this._player = null;
         }
 
         public virtual void Update() { throw new NotImplementedException(); } // the stream updater. 

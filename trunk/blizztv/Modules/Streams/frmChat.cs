@@ -25,12 +25,19 @@ namespace BlizzTV.Modules.Streams
     public partial class frmChat : Form
     {
         private Stream _stream; // the stream.
+        private frmPlayer _parent;
+        private bool _snapParent = false;
 
-        public frmChat(Stream Stream)
+        public frmChat(frmPlayer Parent, Stream Stream)
         {
             InitializeComponent();
 
             this._stream = Stream; // set the stream.
+            this._parent = Parent;
+            this._parent.Move += OnParentMove;
+            this._parent.Resize += OnParentResize;
+            this._parent.FormClosed += OnParentClose;
+
             this.Width = Settings.Instance.StreamChatWindowWidth;
             this.Height = Settings.Instance.StreamChatWindowHeight;
         }
@@ -39,6 +46,9 @@ namespace BlizzTV.Modules.Streams
         {
             try
             {
+                this._snapParent = true;
+                this.SnapToParent();
+                this.Move += frmChat_Move;
                 this.Text = string.Format("Chat: {0}@{1}", this._stream.Name, this._stream.Provider); // set the window title.
                 this.Chat.LoadMovie(0, string.Format("{0}", this._stream.ChatMovie)); // load the movie.
             }
@@ -47,6 +57,39 @@ namespace BlizzTV.Modules.Streams
                 Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin Chat Window Error: \n {0}", exc.ToString()));
                 System.Windows.Forms.MessageBox.Show(string.Format("An error occured in stream chat window. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
+        }
+
+        void OnParentClose(object sender, FormClosedEventArgs e)
+        {
+            this.Close();
+        }
+
+        void OnParentResize(object sender, EventArgs e)
+        {
+            if(this._snapParent) this.SnapToParent();
+        }
+
+        private void OnParentMove(object sender, EventArgs e)
+        {
+            if (this._snapParent)  this.SnapToParent();
+        }
+
+        private void SnapToParent()
+        {
+            this.Left = this._parent.Left + this._parent.Width + 2;
+            this.Top = this._parent.Top;
+            if (this.Height != this._parent.Height) this.Height = this._parent.Height;
+        }
+
+        private void frmChat_Move(object sender, EventArgs e)
+        {
+            int margin = Math.Abs(this.Left - (this._parent.Left + this._parent.Width));
+            if (margin <= 15)
+            {
+                this._snapParent = true;
+                this.SnapToParent();
+            }
+            else this._snapParent = false;
         }
     }
 }

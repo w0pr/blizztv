@@ -27,7 +27,7 @@ namespace BlizzTV.Modules.Streams
 
         public int UpdateEveryXMinutes { get { return this.GetInt("UpdateEveryXMinutes", 60); } set { this.Set("UpdateEveryXMinutes", value); } }
         public bool AutomaticallyOpenChatForAvailableStreams { get { return this.GetBoolean("AutomaticallyOpenChatForAvailableStreams", false); } set { this.Set("AutomaticallyOpenChatForAvailableStreams", value); } }
-        public int StreamChatWindowWidth { get { return this.GetInt("StreamChatWindowWidth", 640); } set { this.Set("StreamChatWindowWidth", value); } }
+        public int StreamChatWindowWidth { get { return this.GetInt("StreamChatWindowWidth", 350); } set { this.Set("StreamChatWindowWidth", value); } }
         public int StreamChatWindowHeight { get { return this.GetInt("StreamChatWindowHeight", 385); } set { this.Set("StreamChatWindowHeight", value); } }
     }
 }
