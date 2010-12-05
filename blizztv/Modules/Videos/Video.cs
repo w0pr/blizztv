@@ -34,6 +34,7 @@ namespace BlizzTV.Modules.Videos
         private string _movie; // the movie template.
         private string _flash_vars; // the flash vars.
         private Statutes _status = Statutes.UNKNOWN;
+        private frmPlayer _player = null;
 
         public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
         public string Link { get { return this._link; } internal set { this._link = value; } }
@@ -112,26 +113,33 @@ namespace BlizzTV.Modules.Videos
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
-            if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
-            {
-                frmPlayer p = new frmPlayer(this); // render the video with our own video player
-                p.Show();
-            }
-            else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
-
-            this.Status = Statutes.WATCHED; // set the video state to REGULAR.
+            this.Play();
         }
 
         public override void BalloonClicked(object sender, EventArgs e)
         {
-            if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
+            this.Play();
+        }
+
+        private void Play()
+        {
+            if (GlobalSettings.Instance.UseInternalViewers)
             {
-                frmPlayer p = new frmPlayer(this); // render the video with our own video player
-                p.Show();
+                if (this._player == null)
+                {
+                    this._player = new frmPlayer(this); // render the video with our own video player
+                    this._player.FormClosed += PlayerClosed;
+                    this._player.Show();
+                }
+                else this._player.Focus();
             }
             else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
+            if (this.Status != Statutes.WATCHED) this.Status = Statutes.WATCHED;
+        }
 
-            this.Status = Statutes.WATCHED;  // set the video state to REGULAR.
+        void PlayerClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        {
+            this._player = null;
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.

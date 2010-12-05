@@ -31,7 +31,7 @@ namespace BlizzTV.Modules.Streams
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmChat));
-            this.Chat = new FlashPlayer();
+            this.Chat = new BlizzTV.ModuleLib.Players.FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.Chat)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,7 +42,7 @@ namespace BlizzTV.Modules.Streams
             this.Chat.Location = new System.Drawing.Point(0, 0);
             this.Chat.Name = "Chat";
             this.Chat.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Chat.OcxState")));
-            this.Chat.Size = new System.Drawing.Size(352, 184);
+            this.Chat.Size = new System.Drawing.Size(334, 351);
             this.Chat.TabIndex = 1;
             // 
             // frmChat
@@ -50,7 +50,7 @@ namespace BlizzTV.Modules.Streams
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(352, 184);
+            this.ClientSize = new System.Drawing.Size(334, 351);
             this.Controls.Add(this.Chat);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmChat";

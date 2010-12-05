@@ -26,6 +26,7 @@ namespace BlizzTV.Modules.Streams
     public partial class frmPlayer : Form // The stream player.
     {
         private Stream _stream; // the stream.
+        private frmChat _chat_window = null;
 
         public frmPlayer(Stream Stream)
         {            
@@ -62,11 +63,6 @@ namespace BlizzTV.Modules.Streams
             SwitchTopMostMode(!this.MenuAlwaysOnTop.Checked);
         }
 
-        private void MenuOpenChat_Click(object sender, EventArgs e)
-        {
-            this.OpenChatWindow();
-        }
-
         private void SwitchTopMostMode(bool TopMost)
         {
             if (TopMost)
@@ -81,10 +77,25 @@ namespace BlizzTV.Modules.Streams
             }
         }
 
+        private void MenuOpenChat_Click(object sender, EventArgs e)
+        {
+            this.OpenChatWindow();
+        }
+
         private void OpenChatWindow()
         {
-            frmChat f = new frmChat(this._stream);
-            f.Show();
+            if (this._chat_window == null)
+            {
+                this._chat_window = new frmChat(this,this._stream);
+                this._chat_window.FormClosed += ChatWindowClosed;
+                this._chat_window.Show();
+            }
+            else this._chat_window.Focus();
+        }
+
+        void ChatWindowClosed(object sender, FormClosedEventArgs e)
+        {
+            this._chat_window = null;
         }
     }
 }
