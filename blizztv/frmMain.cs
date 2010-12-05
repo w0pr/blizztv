@@ -22,7 +22,7 @@ using System.Windows.Forms;
 using System.Threading;
 using BlizzTV.ModuleLib;
 using BlizzTV.CommonLib.Settings;
-using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.CommonLib.Notifications;
 using BlizzTV.UILib;
 using BlizzTV.Updates;
 using BlizzTV.CommonLib.Workload;
@@ -44,29 +44,20 @@ namespace BlizzTV
             InitializeComponent();
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
             Workload.Instance.SetProgressBar(this.ProgressBar);
+            NotificationManager.Instance.AttachTrayIcon(this, this.TrayIcon);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
             if (Settings.Instance.NeedInitialConfig) { Wizard.frmWizardHost f = new Wizard.frmWizardHost(); f.ShowDialog(); } // run the configuration wizard
 
-            Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.            
-            Notifications.Instance.OnNotificationRequest += OnNotificationRequest;            
+            Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.                     
             this.LoadPlugins(); // Load the enabled plugins.     
         }
 
         #endregion        
 
         #region Plugins-specific code & handlers
-
-        private void OnNotificationRequest(object sender, string Title, string Text, System.Windows.Forms.ToolTipIcon Icon)
-        {
-            this.AsyncInvokeHandler(() =>
-            {
-                this.TrayIcon.Tag = sender;
-                this.TrayIcon.ShowBalloonTip(10000, Title, Text, Icon);
-            });
-        }
 
         private void LoadPlugins() // Loads enabled plugins
         {
@@ -376,11 +367,6 @@ namespace BlizzTV
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
-        }
-
-        private void TrayIcon_BalloonTipClicked(object sender, EventArgs e)
-        {
-            (this.TrayIcon.Tag as ListItem).BalloonClicked(sender, e);
         }
 
         private void ExitApplication() // Exits the application.

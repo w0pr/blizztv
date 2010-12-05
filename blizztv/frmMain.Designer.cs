@@ -245,7 +245,6 @@
             this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
             this.TrayIcon.Text = "BlizzTV";
             this.TrayIcon.Visible = true;
-            this.TrayIcon.BalloonTipClicked += new System.EventHandler(this.TrayIcon_BalloonTipClicked);
             this.TrayIcon.DoubleClick += new System.EventHandler(this.TrayIcon_DoubleClick);
             // 
             // TrayContextMenu

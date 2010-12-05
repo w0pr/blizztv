@@ -17,13 +17,14 @@
 
 using System;
 using System.Collections.Generic;
+using BlizzTV.CommonLib.Notifications;
 
 namespace BlizzTV.ModuleLib
 {
     /// <summary>
     /// A list item that can be rendered on main form's treeview.
     /// </summary>
-    public class ListItem : IDisposable
+    public class ListItem : INotificationRequester, IDisposable
     {
         #region members
 
@@ -99,13 +100,10 @@ namespace BlizzTV.ModuleLib
         /// <param name="e">The event parameters.</param>
         public virtual void RightClicked(object sender, EventArgs e) { }
 
-
         /// <summary>
         /// Fires when a notify balloon about the item is clicked.
         /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e">The event parameters.</param>
-        public virtual void BalloonClicked(object sender, EventArgs e) { }
+        public virtual void NotificationClicked() { }
 
         /// <summary>
         /// Title change event handler delegate.
