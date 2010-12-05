@@ -23,6 +23,8 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Subscriptions;
 using BlizzTV.UILib;
+using BlizzTV.CommonLib.Workload;
+
 
 namespace BlizzTV.Modules.Feeds
 {
@@ -122,7 +124,7 @@ namespace BlizzTV.Modules.Feeds
                 }
 
                 int unread = 0; // feeds with unread stories count.
-                this.AddWorkload(this._feeds.Count);
+                Workload.Instance.Add(this, this._feeds.Count);
 
                 foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
                 {
@@ -134,7 +136,7 @@ namespace BlizzTV.Modules.Feeds
                         if (pair.Value.Style == ItemStyle.BOLD) unread++;
                     }
                     catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
-                    this.StepWorkload();
+                    Workload.Instance.Step(this);
                 }
 
                 this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.

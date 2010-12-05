@@ -25,6 +25,7 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib.Notifications;
 using BlizzTV.UILib;
 using BlizzTV.Updates;
+using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV
 {
@@ -32,7 +33,6 @@ namespace BlizzTV
     {
         #region members
 
-        private Workload _workload;
         private Dictionary<string, TreeItem> _plugin_root_items = new Dictionary<string, TreeItem>();
 
         #endregion
@@ -43,7 +43,7 @@ namespace BlizzTV
         {
             InitializeComponent();
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
-            this._workload = new Workload(this.ProgressBar);
+            Workload.Instance.SetProgressBar(this.ProgressBar);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -109,8 +109,6 @@ namespace BlizzTV
             // register plugin communication events.     
             p.OnPluginUpdateStarted += PluginUpdateStarted;
             p.OnPluginUpdateComplete += PluginUpdateComplete;
-            p.OnWorkloadAdd += this._workload.Add;
-            p.OnWorkloadStep += this._workload.Step;
             this.RegisterPluginMenus(p); // register plugin sub-menu's.
             p.Run(); // run the plugin & apply it's stored settings.
         }
@@ -425,47 +423,5 @@ namespace BlizzTV
         }
 
         #endregion                      
-    }
-
-    #region workload processor
-
-    public class Workload // contains information about current workload progress of plugins so we can animate our progressbar on status strip
-    {
-        private ToolStripProgressBar _progress_bar;
-        private int _workload = 0;
-        private int _maximum_workload = 0;
-
-        public Workload(ToolStripProgressBar ProgressBar)
-        {
-            this._progress_bar = ProgressBar;
-        }
-
-        public void Add(object sender, int units)
-        {
-            this._progress_bar.Owner.AsyncInvokeHandler(() =>
-            {
-                this._maximum_workload += units;
-                this._workload += units;
-                this._progress_bar.Visible = true;
-                this._progress_bar.Maximum = this._maximum_workload += units;
-            });
-        }
-
-        public void Step(object sender)
-        {
-            this._progress_bar.Owner.AsyncInvokeHandler(() =>
-                {
-                    this._workload -= 1;
-                    this._progress_bar.Value = (this._maximum_workload - this._workload);
-                    if (this._workload == 0)
-                    {
-                        this._progress_bar.Visible = false;
-                        this._progress_bar.Value = 0;
-                        this._maximum_workload = 0;
-                    }
-                });
-        }
-    }
-
-    #endregion
+    }    
 }

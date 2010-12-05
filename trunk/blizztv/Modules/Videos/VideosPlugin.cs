@@ -23,6 +23,7 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Subscriptions;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
+using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -110,7 +111,7 @@ namespace BlizzTV.Modules.Videos
                 }
 
                 int unread = 0; // channels with un-watched videos count.
-                this.AddWorkload(this._channels.Count);
+                Workload.Instance.Add(this,this._channels.Count);
 
                 foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
                 {
@@ -118,7 +119,7 @@ namespace BlizzTV.Modules.Videos
                     this.RootListItem.Childs.Add(pair.Key, pair.Value);
                     foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
                     if (pair.Value.Style == ItemStyle.BOLD) unread++;
-                    this.StepWorkload();
+                    Workload.Instance.Step(this);                    
                 }
 
                 this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
