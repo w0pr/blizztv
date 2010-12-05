@@ -69,8 +69,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonLib\Notifications\frmQueuedNotifications.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommonLib\Notifications\frmQueuedNotifications.Designer.cs">
+      <DependentUpon>frmQueuedNotifications.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonLib\Notifications\INotificationRequester.cs" />
     <Compile Include="CommonLib\Notifications\NotificationManager.cs" />
+    <Compile Include="CommonLib\Notifications\QueuedNotifications.cs" />
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
     <Compile Include="CommonLib\Workload\Workload.cs" />
     <Compile Include="ModuleLib\StatusStorage\StatusStorage.cs" />
@@ -263,6 +270,9 @@
       <DependentUpon>frmWizardHost.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\IWizardForm.cs" />
+    <EmbeddedResource Include="CommonLib\Notifications\frmQueuedNotifications.resx">
+      <DependentUpon>frmQueuedNotifications.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
