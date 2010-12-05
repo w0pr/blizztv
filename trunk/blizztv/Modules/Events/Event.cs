@@ -19,7 +19,7 @@ using System;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 using BlizzTV.CommonLib.Storage;
-using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.CommonLib.Notifications;
 
 namespace BlizzTV.Modules.Events
 {
@@ -57,11 +57,15 @@ namespace BlizzTV.Modules.Events
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
-            frmEventViewer f = new frmEventViewer(this);
-            f.Show();
+            this.ShowEvent();
         }
 
-        public override void BalloonClicked(object sender, EventArgs e)
+        public override void NotificationClicked()
+        {
+            this.ShowEvent();
+        }
+
+        private void ShowEvent()
         {
             frmEventViewer f = new frmEventViewer(this);
             f.Show();
@@ -80,12 +84,12 @@ namespace BlizzTV.Modules.Events
                 if ((Settings.Instance.AllowNotificationOfInprogressEvents) && (this.Status == EventStatus.IN_PROGRESS)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this._notified = true; // don't notify about it more then once
-                    Notifications.Instance.Show(this, string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                    NotificationManager.Instance.Show(this, string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
                 }
                 else if (this.MinutesLeft > 0 && (this.MinutesLeft <= Settings.Instance.MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
                 {
                     this._notified = true; // don't notify about it more then once
-                    Notifications.Instance.Show(this, string.Format("Event starts in {0} minutes: {1}", (this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
+                    NotificationManager.Instance.Show(this, string.Format("Event starts in {0} minutes: {1}", (this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info);
                 }
             }
         }

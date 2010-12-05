@@ -18,7 +18,7 @@
 using System;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.StatusStorage;
-using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.CommonLib.Notifications;
 
 namespace BlizzTV.Modules.Feeds
 {
@@ -87,7 +87,7 @@ namespace BlizzTV.Modules.Feeds
 
         public void CheckForNotifications()
         {
-            if (this.Status == Statutes.FRESH) Notifications.Instance.Show(this, this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info);
+            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info);
         }
 
         #endregion
@@ -96,14 +96,18 @@ namespace BlizzTV.Modules.Feeds
 
         public override void DoubleClicked(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-            this.Status = Statutes.READ;
+            this.Navigate();
         }
 
-        public override void BalloonClicked(object sender, EventArgs e)
+        public override void NotificationClicked()
+        {
+            this.Navigate();
+        }
+
+        private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-            this.Status = Statutes.READ;
+            if(this.Status!= Statutes.READ) this.Status = Statutes.READ;            
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.

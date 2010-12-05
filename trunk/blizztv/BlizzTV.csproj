@@ -69,6 +69,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonLib\Notifications\INotificationRequester.cs" />
+    <Compile Include="CommonLib\Notifications\NotificationManager.cs" />
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
     <Compile Include="CommonLib\Workload\Workload.cs" />
     <Compile Include="ModuleLib\StatusStorage\StatusStorage.cs" />
@@ -196,7 +198,6 @@
     <Compile Include="CommonLib\Utils\Utils.cs" />
     <Compile Include="ModuleLib\Settings\IModuleSettingsForm.cs" />
     <Compile Include="ModuleLib\ListItem.cs" />
-    <Compile Include="ModuleLib\Notifications\Notifications.cs" />
     <Compile Include="ModuleLib\Players\FlashPlayer.cs">
       <SubType>Component</SubType>
     </Compile>

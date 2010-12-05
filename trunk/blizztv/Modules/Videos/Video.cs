@@ -18,7 +18,7 @@
 using System;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Notifications;
+using BlizzTV.CommonLib.Notifications;
 using BlizzTV.ModuleLib.StatusStorage;
 
 namespace BlizzTV.Modules.Videos
@@ -92,7 +92,7 @@ namespace BlizzTV.Modules.Videos
             this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAsUnWatchedClicked))); // mark as unread menu.
 
-            if (this.Status == Statutes.FRESH) Notifications.Instance.Show(this, this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info);
+            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info);
         }
 
         #endregion
@@ -116,11 +116,11 @@ namespace BlizzTV.Modules.Videos
             this.Play();
         }
 
-        public override void BalloonClicked(object sender, EventArgs e)
+        public override void NotificationClicked()
         {
             this.Play();
         }
-
+       
         private void Play()
         {
             if (GlobalSettings.Instance.UseInternalViewers)
