@@ -27,41 +27,44 @@ namespace BlizzTV.CommonLib.Workload
     public class Workload // contains information about current workload progress of plugins so we can animate our progressbar on status strip
     {
         private static Workload _intance = new Workload();
-        private ToolStripProgressBar _progress_bar;
-        private int _workload = 0;
-        private int _maximum_workload = 0;
-
         public static Workload Instance { get { return _intance; } }
+
+        private int _currentWorkload = 0;
+
+        private ToolStripProgressBar _progressBar;
+        private ToolStripLabel _progressIcon;
 
         private Workload() { }
 
-        public void SetProgressBar(ToolStripProgressBar ProgressBar)
+        public void AttachControls(ToolStripProgressBar progressBar,ToolStripLabel ProgressIcon)
         {
-            this._progress_bar = ProgressBar;
+            this._progressBar = progressBar;
+            this._progressIcon = ProgressIcon;
         }
 
         public void Add(object sender, int units)
         {
-            this._progress_bar.Owner.AsyncInvokeHandler(() =>
+            this._progressBar.Owner.AsyncInvokeHandler(() =>
             {
-                this._maximum_workload += units;
-                this._workload += units;
-                this._progress_bar.Visible = true;
-                this._progress_bar.Maximum = this._maximum_workload += units;
+                this._currentWorkload += units;
+                this._progressBar.Maximum += units;
+                if (!this._progressBar.Visible) this._progressBar.Visible = true;
+                if (!this._progressIcon.Visible) this._progressIcon.Visible = true;
             });
         }
 
         public void Step(object sender)
         {
-            this._progress_bar.Owner.AsyncInvokeHandler(() =>
+            this._progressBar.Owner.AsyncInvokeHandler(() =>
             {
-                this._workload -= 1;
-                this._progress_bar.Value = (this._maximum_workload - this._workload);
-                if (this._workload == 0)
+                this._currentWorkload -= 1;
+                if (this._currentWorkload > 0) this._progressBar.Value = this._progressBar.Maximum - this._currentWorkload;
+                else
                 {
-                    this._progress_bar.Visible = false;
-                    this._progress_bar.Value = 0;
-                    this._maximum_workload = 0;
+                    this._progressBar.Visible = false;
+                    this._progressIcon.Visible = false;
+                    this._progressBar.Value = 0;
+                    this._progressBar.Maximum = 0;
                 }
             });
         }

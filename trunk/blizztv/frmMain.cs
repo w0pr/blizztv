@@ -43,8 +43,8 @@ namespace BlizzTV
         {
             InitializeComponent();
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
-            Workload.Instance.SetProgressBar(this.ProgressBar);
-            NotificationManager.Instance.AttachTrayIcon(this, this.TrayIcon);
+            Workload.Instance.AttachControls(this.ProgressBar, this.ProgressIcon);
+            NotificationManager.Instance.AttachControls(this,this.TrayIcon,this.NotificationIcon);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
