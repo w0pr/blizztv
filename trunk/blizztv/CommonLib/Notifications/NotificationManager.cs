@@ -21,40 +21,75 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BlizzTV.UILib;
+using System.Timers;
 
 namespace BlizzTV.CommonLib.Notifications
 {
     public class NotificationManager
     {
+        private static NotificationManager _instance = new NotificationManager();
+        public static NotificationManager Instance { get { return _instance; } }
+
+        private bool _notificationActive = false;
         private frmMain _mainForm;
         private NotifyIcon _trayIcon;
+        private System.Timers.Timer _notificationTimer;
         private ToolStripStatusLabel _notificationIcon;
-
-        private static NotificationManager _instance = new NotificationManager();        
-        public static NotificationManager Instance { get { return _instance; } }
 
         private NotificationManager() { }
 
         public void AttachControls(frmMain mainForm,NotifyIcon trayIcon,ToolStripStatusLabel notificationIcon)
         {
             this._mainForm = mainForm;
-            this._notificationIcon = notificationIcon;
             this._trayIcon = trayIcon;
             this._trayIcon.BalloonTipClicked += NotificationClicked;
+            this._notificationIcon = notificationIcon;
+            this._notificationIcon.Click += NotificationIconClick;
         }
 
-        public void Show(INotificationRequester sender, string Title, string Text, ToolTipIcon Icon)
+        public void Show(INotificationRequester sender, NotificationEventArgs e)
         {
             this._mainForm.AsyncInvokeHandler(() =>
             {
-                this._trayIcon.Tag = sender;
-                this._trayIcon.ShowBalloonTip(10000, Title, Text, Icon);
+                if (!this._notificationActive)
+                {
+                    this._trayIcon.Tag = sender;
+                    this._trayIcon.ShowBalloonTip(10000, e.Title,e.Text,e.Icon);
+                    this._notificationActive = true;
+
+                    this._notificationTimer = new System.Timers.Timer(10000);
+                    this._notificationTimer.Elapsed += NotificationTimer;
+                    this._notificationTimer.Enabled = true;
+                }
+                else
+                {
+                    QueuedNotifications.Instance.Queue.Add(new QueuedNotification(sender, e));
+                    if(!this._notificationIcon.Visible) this._notificationIcon.Visible = true;
+                }
             });
         }
 
-        void NotificationClicked(object sender, EventArgs e)
+        private void NotificationTimer(object sender, ElapsedEventArgs e)
         {
+            this._notificationActive = false;
+        }
+
+        private void NotificationClicked(object sender, EventArgs e)
+        {
+            this._notificationActive = false;
             (this._trayIcon.Tag as INotificationRequester).NotificationClicked();
+        }
+
+        private void NotificationIconClick(object sender, EventArgs e)
+        {
+            frmQueuedNotifications f = new frmQueuedNotifications();
+            f.ShowDialog();        
+        }
+
+        public void ClearQueuedNotifications()
+        {
+            QueuedNotifications.Instance.Queue.Clear();
+            this._notificationIcon.Visible = false;
         }
     }
 }

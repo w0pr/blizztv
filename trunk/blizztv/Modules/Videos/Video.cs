@@ -92,7 +92,7 @@ namespace BlizzTV.Modules.Videos
             this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAsUnWatchedClicked))); // mark as unread menu.
 
-            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info);
+            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
         }
 
         #endregion

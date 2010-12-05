@@ -87,7 +87,7 @@ namespace BlizzTV.Modules.Feeds
 
         public void CheckForNotifications()
         {
-            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info);
+            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
         }
 
         #endregion
