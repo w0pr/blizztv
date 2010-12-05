@@ -130,46 +130,6 @@ namespace BlizzTV.ModuleLib
             if (OnPluginUpdateComplete != null) OnPluginUpdateComplete(this,e); // notify observers.
         }      
 
-        /// <summary>
-        /// Delegate for event handler that notifies about the plugins current workload.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="units">The units of current workload.</param>
-        public delegate void WorkloadAddEventHandler(object sender, int units);
-
-        /// <summary>
-        /// Event handler that notifies about the plugins current workload.
-        /// </summary>
-        public event WorkloadAddEventHandler OnWorkloadAdd;
-
-        /// <summary>
-        /// Notifies about current workload.
-        /// </summary>
-        /// <param name="units">The units of current workload.</param>
-        protected void AddWorkload(int units)
-        {
-            if (OnWorkloadAdd != null) OnWorkloadAdd(this, units);
-        }
-
-        /// <summary>
-        /// Delegate for event handler that notifies about the consuming a workload step.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        public delegate void WorkloadStepEventHandler(object sender);
-
-        /// <summary>
-        /// Event handler that notifies about the consuming a workload step.
-        /// </summary>
-        public event WorkloadStepEventHandler OnWorkloadStep;
-
-        /// <summary>
-        /// Consumes a workload unit.
-        /// </summary>
-        protected void StepWorkload()
-        {
-            if (OnWorkloadStep != null) OnWorkloadStep(this);
-        }
-
         #endregion
 
         #region internal-logic

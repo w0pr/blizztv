@@ -25,6 +25,7 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
+using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Events
 {
@@ -87,7 +88,7 @@ namespace BlizzTV.Modules.Events
 
             this.NotifyUpdateStarted();
 
-            this.AddWorkload(1);
+            Workload.Instance.Add(this, 1);
             this.RootListItem.SetTitle("Updating events..");
 
             try
@@ -162,7 +163,7 @@ namespace BlizzTV.Modules.Events
             }
 
             this.RootListItem.SetTitle("Events");  // add unread feeds count to root item's title.                               
-            this.StepWorkload();
+            Workload.Instance.Step(this);
 
             this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
         }
