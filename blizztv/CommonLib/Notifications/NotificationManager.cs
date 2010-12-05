@@ -26,17 +26,19 @@ namespace BlizzTV.CommonLib.Notifications
 {
     public class NotificationManager
     {
-        private NotifyIcon _trayIcon;
         private frmMain _mainForm;
+        private NotifyIcon _trayIcon;
+        private ToolStripStatusLabel _notificationIcon;
 
         private static NotificationManager _instance = new NotificationManager();        
         public static NotificationManager Instance { get { return _instance; } }
 
         private NotificationManager() { }
 
-        public void AttachTrayIcon(frmMain mainForm,NotifyIcon trayIcon)
+        public void AttachControls(frmMain mainForm,NotifyIcon trayIcon,ToolStripStatusLabel notificationIcon)
         {
             this._mainForm = mainForm;
+            this._notificationIcon = notificationIcon;
             this._trayIcon = trayIcon;
             this._trayIcon.BalloonTipClicked += NotificationClicked;
         }

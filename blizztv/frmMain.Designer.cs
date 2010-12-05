@@ -50,7 +50,9 @@
             this.spreadTheWordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
+            this.ProgressIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.NotificationIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextMenuSleepMode = new System.Windows.Forms.ToolStripMenuItem();
@@ -226,18 +228,35 @@
             // StatusStrip
             // 
             this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ProgressBar});
+            this.ProgressIcon,
+            this.ProgressBar,
+            this.NotificationIcon});
             this.StatusStrip.Location = new System.Drawing.Point(0, 293);
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Size = new System.Drawing.Size(256, 22);
             this.StatusStrip.TabIndex = 2;
             this.StatusStrip.Text = "statusStrip1";
             // 
+            // ProgressIcon
+            // 
+            this.ProgressIcon.Image = ((System.Drawing.Image)(resources.GetObject("ProgressIcon.Image")));
+            this.ProgressIcon.Name = "ProgressIcon";
+            this.ProgressIcon.Size = new System.Drawing.Size(16, 17);
+            this.ProgressIcon.Visible = false;
+            // 
             // ProgressBar
             // 
+            this.ProgressBar.Maximum = 0;
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(100, 16);
             this.ProgressBar.Visible = false;
+            // 
+            // NotificationIcon
+            // 
+            this.NotificationIcon.Image = ((System.Drawing.Image)(resources.GetObject("NotificationIcon.Image")));
+            this.NotificationIcon.Name = "NotificationIcon";
+            this.NotificationIcon.Size = new System.Drawing.Size(16, 17);
+            this.NotificationIcon.Visible = false;
             // 
             // TrayIcon
             // 
@@ -367,6 +386,8 @@
         private System.Windows.Forms.ToolStripMenuItem ContextMenuSleepMode;
         private System.Windows.Forms.ToolStripMenuItem menuFAQ;
         private System.Windows.Forms.ToolStripMenuItem spreadTheWordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel NotificationIcon;
+        private System.Windows.Forms.ToolStripStatusLabel ProgressIcon;
     }
 }
 
