@@ -20,6 +20,7 @@ using System.Linq;
 using System.Xml.Linq;
 using BlizzTV.CommonLib.Web;
 using BlizzTV.CommonLib.Logger;
+using BlizzTV.ModuleLib;
 
 namespace BlizzTV.Modules.Videos.Handlers
 {
@@ -27,45 +28,39 @@ namespace BlizzTV.Modules.Videos.Handlers
     {
         public BlipTV(VideoSubscription subscription) : base(subscription) { }
 
-        public override void Update()
+        public override bool Parse()
         {
             try
             {
                 string api_url = string.Format("http://{0}.blip.tv/rss", this.Slug); // the api url.
                 string response = WebReader.Read(api_url); // read the api response.
-                if (response != null)
+                if (response == null) return false;
+
+                XDocument xdoc = XDocument.Parse(response); // parse the api response.
+                XNamespace xmlns = "http://blip.tv/dtd/blip/1.0";
+                var entries = from item in xdoc.Descendants("item") // get the videos
+                              select new
+                              {
+                                  GUID = item.Element("guid").Value,
+                                  Title = item.Element("title").Value,
+                                  Link = item.Element("link").Value,
+                                  VideoID = item.Element(xmlns + "posts_id").Value
+                              };
+
+                int i = 0;
+
+                foreach (var entry in entries) // create the video items.
                 {
-                    XDocument xdoc = XDocument.Parse(response); // parse the api response.
-                    XNamespace xmlns = "http://blip.tv/dtd/blip/1.0";
-                    var entries = from item in xdoc.Descendants("item") // get the videos
-                                  select new
-                                  {
-                                      GUID = item.Element("guid").Value,
-                                      Title = item.Element("title").Value,
-                                      Link = item.Element("link").Value,
-                                      VideoID = item.Element(xmlns + "posts_id").Value
-                                  };
-
-                    int i = 0;
-
-                    foreach (var entry in entries) // create the video items.
-                    {
-                        BlipTVVideo v = new BlipTVVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
-                        v.VideoID = entry.VideoID;
-                        this.Videos.Add(v);
-                        i++;
-                        if (i >= Settings.Instance.NumberOfVideosToQueryChannelFor) break;
-                    }
+                    BlipTVVideo v = new BlipTVVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
+                    v.OnStyleChange += OnChildStyleChange;
+                    v.VideoID = entry.VideoID;
+                    this.Videos.Add(v);
+                    i++;
+                    if (i >= Settings.Instance.NumberOfVideosToQueryChannelFor) break;
                 }
-                else this.Valid = false;
+                return true;
             }
-            catch (Exception e)
-            {
-                this.Valid = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Blip.TV Channel - Update() Error: \n {0}", e.ToString()));
-            }
-
-            this.Process();  
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Blip.TV Channel - Update() Error: \n {0}", e.ToString())); return false; }
         }
     }
 }

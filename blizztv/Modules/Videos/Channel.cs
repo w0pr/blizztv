@@ -25,13 +25,11 @@ namespace BlizzTV.Modules.Videos
     {
         #region members
 
-        private bool _valid = true; // did the feed parsed all okay?
         private string _name; // the channel name.
         private string _slug; // the channel slug.
         private string _provider; // the channel provider.
         private bool disposed = false;
 
-        public bool Valid { get { return this._valid; } internal set { this._valid = value; } }
         public string Name { get { return this._name; } internal set { this._name = value; } }
         public string Slug { get { return this._slug; } internal set { this._slug = value; }  }
         public string Provider { get { return this._provider; } internal set { this._provider = value; } }
@@ -58,39 +56,41 @@ namespace BlizzTV.Modules.Videos
 
         #region internal logic
 
-        public virtual void Update() { throw new NotImplementedException(); } // the channel updater. 
-
-        public void Process()
+        public bool IsValid()
         {
-            if (this.Valid)
-            {
-                int unread = 0; // non-watched videos count.
-                foreach (Video v in this.Videos) { if (v.Style == ItemStyle.BOLD) unread++; }
-
-                if (unread > 0) // if there non-watched channel videos.
-                {
-                    this.SetTitle(string.Format("{0} ({1})", this.Title, unread.ToString()));
-                    this.Style = ItemStyle.BOLD; // then mark the channel itself as unread also
-                }
-            }
-            else
-            {
-                Video error = new Video("Error updating channel.", "", "", this.Provider);
-                //error.Style = ItemStyle.ERROR;
-                this.Videos.Add(error);
-            }
+            return this.Parse();
         }
+
+        public bool Update() 
+        {
+            if (this.Parse())
+            {
+                foreach (Video v in this.Videos) { v.CheckForNotifications(); }
+                return true;
+            }
+            else return false;
+        } 
+
+        public virtual bool Parse() { throw new NotImplementedException(); }
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.Style = ItemStyle.REGULAR; } // marked all videos as watched.
-            this.Style = ItemStyle.REGULAR; // also mark self as read.            
+            foreach (Video v in this.Videos) { v.Status = Video.Statutes.WATCHED; } // marked all videos as watched.
         }
 
         private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.Style = ItemStyle.BOLD; } // marked all videos as unread.
-            this.Style = ItemStyle.BOLD; // also mark self as unread.      
+            foreach (Video v in this.Videos) { v.Status = Video.Statutes.UNWATCHED; } // marked all videos as unread.
+        }
+
+        protected void OnChildStyleChange(ItemStyle Style)
+        {
+            if (this.Style == Style) return;
+
+            int unread = 0;
+            foreach (Video v in this.Videos) { if (v.Style == ItemStyle.BOLD) unread++; }
+            if (unread > 0) this.Style = ItemStyle.BOLD;
+            else this.Style = ItemStyle.REGULAR;
         }
 
         #endregion

@@ -82,17 +82,19 @@ namespace BlizzTV.Modules.Feeds
             feedSubscription.Name = "test-feed";
             feedSubscription.URL = link;
 
-            Feed feed = new Feed(feedSubscription);
-            if (feed.IsValid())
+            using (Feed feed = new Feed(feedSubscription))
             {
-                FeedSubscription subscription = new FeedSubscription();
-                string feedName = "";
-                if (InputBox.Show("Add New Feed", "Please enter name for the new feed", ref feedName) == System.Windows.Forms.DialogResult.OK)
+                if (feed.IsValid())
                 {
-                    subscription.Name = feedName;
-                    subscription.URL = link;
-                    if (Subscriptions.Instance.Add(subscription)) this.RunManualUpdate(this, new EventArgs()); else return false;
-                    return true;
+                    FeedSubscription subscription = new FeedSubscription();
+                    string feedName = "";
+                    if (InputBox.Show("Add New Feed", "Please enter name for the new feed", ref feedName) == System.Windows.Forms.DialogResult.OK)
+                    {
+                        subscription.Name = feedName;
+                        subscription.URL = link;
+                        if (Subscriptions.Instance.Add(subscription)) this.RunManualUpdate(this, new EventArgs()); else return false;
+                        return true;
+                    }
                 }
             }
 
@@ -115,7 +117,8 @@ namespace BlizzTV.Modules.Feeds
                     this._feeds.Clear();
                     this.RootListItem.Childs.Clear();
                 }
-
+                
+                this.RootListItem.Style = ItemStyle.REGULAR;
                 this.RootListItem.SetTitle("Updating feeds..");
 
                 foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
@@ -151,14 +154,8 @@ namespace BlizzTV.Modules.Feeds
 
             int unread = 0;
             foreach (KeyValuePair<string, Feed> pair in this._feeds) { if (pair.Value.Style == ItemStyle.BOLD) unread++; }
-            if (unread > 0)
-            {
-                this.RootListItem.Style = ItemStyle.BOLD;
-            }
-            else
-            {
-                this.RootListItem.Style = ItemStyle.REGULAR;
-            }
+            if (unread > 0) this.RootListItem.Style = ItemStyle.BOLD;
+            else this.RootListItem.Style = ItemStyle.REGULAR;
         }
 
         public void OnSaveSettings()
