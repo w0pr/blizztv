@@ -20,20 +20,25 @@ using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.CommonLib.Dependencies
 {
-    public class DependencyChecker
+    public class Dependencies
     {
-        private static DependencyChecker _instance = new DependencyChecker();
-        public static DependencyChecker Instance { get { return _instance; } }
+        private static Dependencies _instance = new Dependencies();
+        public static Dependencies Instance { get { return _instance; } }
 
-        private DependencyChecker() { }
+        private Dependencies() { }
 
-        public void Check()
+        public bool Satisfied()
         {
             if (!CheckShockwaveFlash())
             {
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("BlizzTV requires Abode Flash Player for internal video & stream playing and your system does not satisfy it. Do you want to install latest Adobe Flash Player now?", "Adobe Flash Player Missing!", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
-                if (result == System.Windows.Forms.DialogResult.Yes) System.Diagnostics.Process.Start("IExplore.exe", "http://get.adobe.com/flashplayer/");
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("BlizzTV requires Abode Flash Player for internal video & stream playing and your system does not satisfy it. Do you want to install latest Adobe Flash Player now (it's stronly recommended for best user-experience)?", "Adobe Flash Player Missing!", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("IExplore.exe", "http://get.adobe.com/flashplayer/");
+                    return false;
+                }
             }
+            return true;
         }
 
         private bool CheckShockwaveFlash()

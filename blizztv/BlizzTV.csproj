@@ -220,7 +220,7 @@
     <Compile Include="CommonLib\Logger\Log.cs" />
     <Compile Include="CommonLib\Web\WebReader.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="CommonLib\Dependencies\DependencyChecker.cs" />
+    <Compile Include="CommonLib\Dependencies\Dependencies.cs" />
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
