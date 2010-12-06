@@ -46,8 +46,8 @@ namespace BlizzTV
             // Check global settings and start logger and debug console if enabled
             if (Settings.Instance.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
- 
-            DependencyChecker.Instance.Check(); // Check if our dependencies are satisfied.
+
+            if (!Dependencies.Instance.Satisfied()) { Application.ExitThread(); return; } // Check if our dependencies are satisfied.
 
             Log.Instance.Write(LogMessageTypes.INFO, "Program startup.."); // the startup message so we can see sessions in log easier.
 
