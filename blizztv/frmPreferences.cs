@@ -125,10 +125,13 @@ namespace BlizzTV
                 if (item.Checked) Settings.Instance.Plugins.Enable(item.ModuleName);
                 else
                 {
-                    if (ModuleManager.Instance.InstantiatedPlugins[item.ModuleName].Updating)
+                    if (ModuleManager.Instance.InstantiatedPlugins.ContainsKey(item.ModuleName))
                     {
-                        MessageBox.Show("You can not de-activate modules that are currently updating. Please wait them finish and re-try.", string.Format("Module {0} is updating", item.ModuleName), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
+                        if (ModuleManager.Instance.InstantiatedPlugins[item.ModuleName].Updating)
+                        {
+                            MessageBox.Show("You can not de-activate modules that are currently updating. Please wait them finish and re-try.", string.Format("Module {0} is updating", item.ModuleName), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false;
+                        }
                     }
                     Settings.Instance.Plugins.Disable(item.ModuleName);                    
                 }
