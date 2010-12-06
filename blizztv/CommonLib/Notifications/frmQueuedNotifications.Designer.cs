@@ -56,6 +56,7 @@
             this.label1.Size = new System.Drawing.Size(451, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Here is the notifications you may be interested. ";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // listViewNotifications
             // 
@@ -68,7 +69,7 @@
             this.listViewNotifications.Location = new System.Drawing.Point(2, 25);
             this.listViewNotifications.MultiSelect = false;
             this.listViewNotifications.Name = "listViewNotifications";
-            this.listViewNotifications.Size = new System.Drawing.Size(481, 267);
+            this.listViewNotifications.Size = new System.Drawing.Size(481, 229);
             this.listViewNotifications.TabIndex = 2;
             this.listViewNotifications.UseCompatibleStateImageBehavior = false;
             this.listViewNotifications.View = System.Windows.Forms.View.Details;
@@ -82,24 +83,24 @@
             // ButtonClose
             // 
             this.ButtonClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonClose.Location = new System.Drawing.Point(398, 258);
+            this.ButtonClose.Location = new System.Drawing.Point(398, 221);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(75, 23);
             this.ButtonClose.TabIndex = 3;
             this.ButtonClose.Text = "Close";
             this.ButtonClose.UseVisualStyleBackColor = true;
-            this.ButtonClose.Visible = false;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
             // frmQueuedNotifications
             // 
+            this.AcceptButton = this.ButtonClose;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.ButtonClose;
-            this.ClientSize = new System.Drawing.Size(485, 293);
-            this.Controls.Add(this.listViewNotifications);
+            this.ClientSize = new System.Drawing.Size(485, 256);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.listViewNotifications);
             this.Controls.Add(this.ButtonClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;

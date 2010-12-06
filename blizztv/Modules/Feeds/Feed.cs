@@ -67,27 +67,10 @@ namespace BlizzTV.Modules.Feeds
         {
             if (this.Parse())
             {
-                int unread = 0; // unread stories count
-                foreach (Story s in this.Stories) 
-                {
-                    s.CheckForNotifications();
-                    if (s.Style == ItemStyle.BOLD) unread++;
-                }
-
-                if (unread > 0) // if there are unread feed stories
-                {
-                    this.SetTitle(string.Format(" {0} ({1})", this.Title, unread.ToString()));
-                    this.Style = ItemStyle.BOLD;
-                }
+                foreach (Story s in this.Stories) { s.CheckForNotifications(); }
                 return true;
             }
-            else
-            {
-                Story error = new Story("Error parsing feed.", "", "", "");
-                //error.Style = ItemStyle.ERROR;
-                this.Stories.Add(error);
-                return false;
-            }
+            else return false;
         }
 
         private bool Parse()
@@ -111,6 +94,7 @@ namespace BlizzTV.Modules.Feeds
                 foreach (var entry in entries) // create the story-item's.
                 {
                     Story s = new Story(entry.Title, entry.GUID, entry.Link, entry.Description);
+                    s.OnStyleChange += ChildStyleChange;
                     this.Stories.Add(s);
                 }
                 return true;
@@ -118,16 +102,30 @@ namespace BlizzTV.Modules.Feeds
             catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString())); return false; }
         }
 
+        void ChildStyleChange(ItemStyle Style)
+        {
+            if (this.Style == Style) return;
+
+            int unread = 0;
+            foreach (Story s in this.Stories) { if (s.Style == ItemStyle.BOLD) unread++; }
+            if (unread > 0)
+            {
+                this.Style = ItemStyle.BOLD;
+            }
+            else
+            {
+                this.Style = ItemStyle.REGULAR;
+            }
+        }
+
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.Style = ItemStyle.REGULAR; } // marked all stories as read.
-            this.Style = ItemStyle.BOLD;
+            foreach (Story s in this.Stories) { s.Status = Story.Statutes.READ; } // marked all stories as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.Style = ItemStyle.BOLD; } // marked all stories as unread.
-            this.Style = ItemStyle.REGULAR;
+            foreach (Story s in this.Stories) { s.Status = Story.Statutes.UNREAD; } // marked all stories as unread.
         }
 
         #endregion

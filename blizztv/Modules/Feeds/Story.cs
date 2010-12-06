@@ -48,6 +48,19 @@ namespace BlizzTV.Modules.Feeds
                         if (this._status == Statutes.FRESH) this.Status = Statutes.UNREAD;
                     }
                 }
+                else
+                {
+                    switch (this._status)
+                    {
+                        case Statutes.FRESH:
+                        case Statutes.UNREAD:
+                            if (this.Style != ItemStyle.BOLD) this.Style = ItemStyle.BOLD;
+                            break;                        
+                        case Statutes.READ:
+                            if (this.Style != ItemStyle.REGULAR) this.Style = ItemStyle.REGULAR;
+                            break;
+                    }
+                }
                 return this._status;
             }
             set
@@ -83,6 +96,8 @@ namespace BlizzTV.Modules.Feeds
             // register context menus.
             this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
+
+            Statutes s = this.Status;
         }
 
         public void CheckForNotifications()

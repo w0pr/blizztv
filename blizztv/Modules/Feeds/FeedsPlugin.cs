@@ -120,10 +120,11 @@ namespace BlizzTV.Modules.Feeds
 
                 foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
                 {
-                    this._feeds.Add(pair.Value.URL, new Feed(pair.Value));
+                    Feed feed = new Feed(pair.Value);
+                    this._feeds.Add(pair.Value.URL, feed);
+                    feed.OnStyleChange += ChildStyleChange;
                 }
 
-                int unread = 0; // feeds with unread stories count.
                 Workload.Instance.Add(this, this._feeds.Count);
 
                 foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
@@ -133,16 +134,30 @@ namespace BlizzTV.Modules.Feeds
                         pair.Value.Update(); // update the feed.
                         this.RootListItem.Childs.Add(pair.Key, pair.Value);
                         foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
-                        if (pair.Value.Style == ItemStyle.BOLD) unread++;
                     }
                     catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
                     Workload.Instance.Step(this);
                 }
 
-                this.RootListItem.SetTitle(string.Format("Feeds ({0})", unread.ToString()));  // add unread feeds count to root item's title.
-
+                this.RootListItem.SetTitle("Feeds");
                 this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
                 this._updating = false;
+            }
+        }
+
+        void ChildStyleChange(ItemStyle Style)
+        {
+            if (this.RootListItem.Style == Style) return;
+
+            int unread = 0;
+            foreach (KeyValuePair<string, Feed> pair in this._feeds) { if (pair.Value.Style == ItemStyle.BOLD) unread++; }
+            if (unread > 0)
+            {
+                this.RootListItem.Style = ItemStyle.BOLD;
+            }
+            else
+            {
+                this.RootListItem.Style = ItemStyle.REGULAR;
             }
         }
 
@@ -174,8 +189,7 @@ namespace BlizzTV.Modules.Feeds
         {
             foreach (KeyValuePair<string, Feed> pair in this._feeds)
             {
-                pair.Value.Style = ItemStyle.REGULAR;
-                foreach (Story s in pair.Value.Stories) { s.Style = ItemStyle.REGULAR; }
+                foreach (Story s in pair.Value.Stories) { s.Status = Story.Statutes.READ; }
             }
         }
 
@@ -183,8 +197,7 @@ namespace BlizzTV.Modules.Feeds
         {
             foreach (KeyValuePair<string, Feed> pair in this._feeds)
             {
-                pair.Value.Style = ItemStyle.BOLD;
-                foreach (Story s in pair.Value.Stories) { s.Style = ItemStyle.BOLD; }
+                foreach (Story s in pair.Value.Stories) { s.Status = Story.Statutes.UNREAD; }
             }
         }
 

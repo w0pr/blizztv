@@ -42,7 +42,7 @@
             this.label1.Size = new System.Drawing.Size(401, 32);
             this.label1.TabIndex = 0;
             this.label1.Text = "Thanks for using BlizzTV! We\'ll be guiding you through a few simple steps and con" +
-                "figuring the program based on your tastes.";
+                "figuring the program based on your preferences.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox1
@@ -64,7 +64,7 @@
             this.label2.Text = "Now click on Next button below to start configuration.";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // frmWelcome
+            // frmWizardWelcome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -73,7 +73,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmWelcome";
+            this.Name = "frmWizardWelcome";
             this.Text = "Welcome!";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
