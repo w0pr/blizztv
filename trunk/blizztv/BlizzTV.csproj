@@ -351,7 +351,9 @@
   <ItemGroup>
     <Content Include="blizztv.ico" />
     <None Include="Resources\Subscriptions.Default.xml" />
-    <None Include="Resources\Providers.xml" />
+    <None Include="Resources\Providers.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\video_16.png" />
     <None Include="Resources\stream_16.png" />
     <None Include="Resources\event_16.png" />

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmWizardHost));
             this.ButtonCancel = new System.Windows.Forms.Button();
             this.ButtonNext = new System.Windows.Forms.Button();
             this.ButtonBack = new System.Windows.Forms.Button();
@@ -84,6 +85,7 @@
             this.Controls.Add(this.ButtonNext);
             this.Controls.Add(this.ButtonCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmWizardHost";

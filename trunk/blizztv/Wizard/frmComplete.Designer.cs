@@ -42,7 +42,7 @@
             this.label2.Size = new System.Drawing.Size(401, 31);
             this.label2.TabIndex = 12;
             this.label2.Text = "Please click Finish to close the window and start using BlizzTV. Also don\'t forge" +
-                "t to check our user-guide.";
+                "t to check the user-guide.";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox1

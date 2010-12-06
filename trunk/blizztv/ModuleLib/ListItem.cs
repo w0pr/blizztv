@@ -130,7 +130,7 @@ namespace BlizzTV.ModuleLib
         /// <summary>
         /// 
         /// </summary>
-        public delegate void StyleChangedEventHandler(ItemStyle State);
+        public delegate void StyleChangedEventHandler(ItemStyle Style);
 
         /// <summary>
         /// 

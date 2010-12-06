@@ -56,7 +56,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(401, 32);
             this.label1.TabIndex = 9;
-            this.label1.Text = "BlizzTV comes with a bunch of plugins. Please select the plugins you want to enab" +
+            this.label1.Text = "BlizzTV comes with a bunch of modules. Please select the modules you want to enab" +
                 "le and use.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
