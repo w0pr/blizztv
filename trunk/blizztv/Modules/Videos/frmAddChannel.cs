@@ -62,6 +62,16 @@ namespace BlizzTV.Modules.Videos
             this.Subscription.Name = txtName.Text;
             this.Subscription.Slug = slug;
             this.Subscription.Provider = provider.Name;
+
+            using (Channel channel = ChannelFactory.CreateChannel(this.Subscription))
+            {
+                if (!channel.IsValid())
+                {
+                    MessageBox.Show("There was an error parsing the video channel. Please check the channel URL and retry.", "Error parsing video channel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+                        
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
         }

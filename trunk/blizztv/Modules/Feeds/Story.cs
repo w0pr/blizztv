@@ -46,6 +46,7 @@ namespace BlizzTV.Modules.Feeds
                     {
                         this._status = (Statutes)StatusStorage.Instance[string.Format("story.{0}", this.GUID)];
                         if (this._status == Statutes.FRESH) this.Status = Statutes.UNREAD;
+                        else if (this._status == Statutes.UNREAD) this.Style = ItemStyle.BOLD;
                     }
                 }
                 else
@@ -96,8 +97,6 @@ namespace BlizzTV.Modules.Feeds
             // register context menus.
             this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
-
-            Statutes s = this.Status;
         }
 
         public void CheckForNotifications()

@@ -78,11 +78,19 @@ namespace BlizzTV.Modules.Videos
                     VideoSubscription v = new VideoSubscription();
                     v.Name = v.Slug = (pair.Value as VideoProvider).GetSlug(link);
                     v.Provider = pair.Value.Name;
-                    if (Subscriptions.Instance.Add(v)) this.RunManualUpdate(this, new EventArgs());
-                    else System.Windows.Forms.MessageBox.Show(string.Format("The channel already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[v.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                    return true;
+
+                    using (Channel channel = ChannelFactory.CreateChannel(v))
+                    {
+                        if (channel.IsValid())
+                        {
+                            if (Subscriptions.Instance.Add(v)) this.RunManualUpdate(this, new EventArgs());
+                            else System.Windows.Forms.MessageBox.Show(string.Format("The channel already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[v.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            return true;
+                        }
+                    }
                 }
             }
+
             return false;
         }
 
@@ -103,14 +111,16 @@ namespace BlizzTV.Modules.Videos
                     this.RootListItem.Childs.Clear();
                 }
 
+                this.RootListItem.Style = ItemStyle.REGULAR;
                 this.RootListItem.SetTitle("Updating videos..");
 
                 foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
                 {
-                    this._channels.Add(pair.Value.Slug, ChannelFactory.CreateChannel(pair.Value));
+                    Channel c = ChannelFactory.CreateChannel(pair.Value);
+                    c.OnStyleChange += OnChildStyleChange;
+                    this._channels.Add(pair.Value.Slug, c);
                 }
 
-                int unread = 0; // channels with un-watched videos count.
                 Workload.Instance.Add(this,this._channels.Count);
 
                 foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
@@ -118,15 +128,23 @@ namespace BlizzTV.Modules.Videos
                     pair.Value.Update(); // update the channel.
                     this.RootListItem.Childs.Add(pair.Key, pair.Value);
                     foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
-                    if (pair.Value.Style == ItemStyle.BOLD) unread++;
                     Workload.Instance.Step(this);                    
                 }
 
-                this.RootListItem.SetTitle(string.Format("Videos ({0})", unread.ToString()));  // add non-watched channels count to root item's title.
-
+                this.RootListItem.SetTitle("Videos");
                 NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
                 this._updating = false;
             }
+        }
+
+        void OnChildStyleChange(ItemStyle Style)
+        {
+            if (this.RootListItem.Style == Style) return;
+
+            int unread = 0;
+            foreach (KeyValuePair<string, Channel> pair in this._channels) { if (pair.Value.Style == ItemStyle.BOLD) unread++; }
+            if (unread > 0) this.RootListItem.Style = ItemStyle.BOLD;
+            else this.RootListItem.Style = ItemStyle.REGULAR;
         }
         
         public void OnSaveSettings()
@@ -164,8 +182,7 @@ namespace BlizzTV.Modules.Videos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                pair.Value.Style = ItemStyle.REGULAR;
-                foreach (Video v in pair.Value.Videos) { v.Style = ItemStyle.REGULAR; }
+                foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.WATCHED; }
             }
         }
 
@@ -173,8 +190,7 @@ namespace BlizzTV.Modules.Videos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                pair.Value.Style = ItemStyle.BOLD;
-                foreach (Video v in pair.Value.Videos) { v.Style = ItemStyle.BOLD; }
+                foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.UNWATCHED; }
             }
         }
 

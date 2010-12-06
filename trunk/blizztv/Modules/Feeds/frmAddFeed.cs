@@ -37,20 +37,22 @@ namespace BlizzTV.Modules.Feeds
                 return;
             }
 
-            if (FeedsPlugin.Instance._feeds.ContainsKey(txtName.Text))
+            if (Subscriptions.Instance.Dictionary.ContainsKey(txtURL.Text))
             {
-                MessageBox.Show(string.Format("A feed already exists with name '{0}', please choose another name and retry.", txtName.Text), "Key exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("The feed already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[txtURL.Text].Name), "Subscription Exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             this.Subscription.Name = txtName.Text;
             this.Subscription.URL = txtURL.Text;
 
-            Feed feed = new Feed(this.Subscription);
-            if (!feed.IsValid())
+            using (Feed feed = new Feed(this.Subscription))
             {
-                MessageBox.Show("There was an error parsing the feed. Please check the feed URL and retry.", "Error parsing feed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                if (!feed.IsValid())
+                {
+                    MessageBox.Show("There was an error parsing the feed. Please check the feed URL and retry.", "Error parsing feed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             this.DialogResult = System.Windows.Forms.DialogResult.OK;

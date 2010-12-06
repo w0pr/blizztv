@@ -54,6 +54,20 @@ namespace BlizzTV.Modules.Videos
                     {
                         this._status = (Statutes)StatusStorage.Instance[string.Format("video.{0}", this.GUID)];
                         if (this._status == Statutes.FRESH) this.Status = Statutes.UNWATCHED;
+                        else if (this._status == Statutes.UNWATCHED) this.Style = ItemStyle.BOLD;
+                    }
+                }
+                else
+                {
+                    switch (this._status)
+                    {
+                        case Statutes.FRESH:
+                        case Statutes.UNWATCHED:
+                            if (this.Style != ItemStyle.BOLD) this.Style = ItemStyle.BOLD;
+                            break;
+                        case Statutes.WATCHED:
+                            if (this.Style != ItemStyle.REGULAR) this.Style = ItemStyle.REGULAR;
+                            break;
                     }
                 }
                 return this._status;
@@ -90,14 +104,17 @@ namespace BlizzTV.Modules.Videos
 
             // register context menus.
             this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
-            this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAsUnWatchedClicked))); // mark as unread menu.
-
-            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
+            this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAsUnWatchedClicked))); // mark as unread menu.            
         }
 
         #endregion
 
         #region internal logic
+
+        public void CheckForNotifications()
+        {
+            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
+        }
 
         public virtual void Process() // get the stream data by replacing provider variables. 
         {
@@ -162,12 +179,12 @@ namespace BlizzTV.Modules.Videos
 
         private void MenuMarkAsWatchedClicked(object sender, EventArgs e)
         {
-            this.Style = ItemStyle.REGULAR; // set the video state as read.          
+            this.Status = Statutes.WATCHED;
         }
 
         private void MenuMarkAsUnWatchedClicked(object sender, EventArgs e)
         {
-            this.Style = ItemStyle.BOLD;            
+            this.Status = Statutes.UNWATCHED;         
         }
 
         #endregion

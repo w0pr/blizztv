@@ -20,6 +20,7 @@ using System.Linq;
 using System.Xml.Linq;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Web;
+using BlizzTV.ModuleLib;
 
 namespace BlizzTV.Modules.Videos.Handlers
 {
@@ -27,38 +28,33 @@ namespace BlizzTV.Modules.Videos.Handlers
     {
         public Youtube(VideoSubscription subscription) : base(subscription) { }
 
-        public override void Update()
+        public override bool Parse()
         {
             try
             {
                 string api_url = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, Settings.Instance.NumberOfVideosToQueryChannelFor); // the api url.
                 string response = WebReader.Read(api_url); // read the api response.
-                if (response != null)
-                {
-                    XDocument xdoc = XDocument.Parse(response); // parse the api response.
-                    var entries = from item in xdoc.Descendants("item") // get the videos
-                                  select new
-                                  {
-                                      GUID = item.Element("guid").Value,
-                                      Title = item.Element("title").Value,
-                                      Link = item.Element("link").Value
-                                  };
+                if (response == null) return false;
 
-                    foreach (var entry in entries) // create the video items.
-                    {
-                        YoutubeVideo v = new YoutubeVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
-                        this.Videos.Add(v);
-                    }
+                XDocument xdoc = XDocument.Parse(response); // parse the api response.
+                var entries = from item in xdoc.Descendants("item") // get the videos
+                              select new
+                              {
+                                  GUID = item.Element("guid").Value,
+                                  Title = item.Element("title").Value,
+                                  Link = item.Element("link").Value
+                              };
+
+                foreach (var entry in entries) // create the video items.
+                {
+                    YoutubeVideo v = new YoutubeVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
+                    v.OnStyleChange += OnChildStyleChange;
+                    this.Videos.Add(v);
                 }
-                else this.Valid = false;
+
+                return true;
             }
-            catch (Exception e)
-            {
-                this.Valid = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e.ToString()));
-            }
-            
-            this.Process();            
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e.ToString())); return false; }
         }
     }
 }
