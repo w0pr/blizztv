@@ -101,7 +101,7 @@ namespace BlizzTV
             }
         }
 
-        private void SaveSettings()
+        private bool SaveSettings()
         {
             // save global settings
             if (radioButtonUseInternalViewers.Checked) GlobalSettings.Instance.UseInternalViewers = true;
@@ -123,10 +123,19 @@ namespace BlizzTV
             foreach (ListviewModuleItem item in listviewModules.Items)
             {
                 if (item.Checked) Settings.Instance.Plugins.Enable(item.ModuleName);
-                else Settings.Instance.Plugins.Disable(item.ModuleName);          
+                else
+                {
+                    if (ModuleManager.Instance.InstantiatedPlugins[item.ModuleName].Updating)
+                    {
+                        MessageBox.Show("You can not de-activate modules that are currently updating. Please wait them finish and re-try.", string.Format("Module {0} is updating", item.ModuleName), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    Settings.Instance.Plugins.Disable(item.ModuleName);                    
+                }
             }
 
             Settings.Instance.Save();
+            return true;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -137,10 +146,12 @@ namespace BlizzTV
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.SaveSettings();  // save global settings
-            foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IModuleSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
-            this.Close();
+            if (this.SaveSettings())
+            {
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                foreach (TabPage t in this._plugin_tabs) { (t.Controls[0] as IModuleSettingsForm).SaveSettings(); } // also notify plugin settings forms to save their data also
+                this.Close();
+            }
         }
     }
 }

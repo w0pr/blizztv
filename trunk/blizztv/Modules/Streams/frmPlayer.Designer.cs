@@ -32,7 +32,7 @@ namespace BlizzTV.Modules.Streams
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayer));
-            this.Player = new FlashPlayer();
+            this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuOpenChat = new System.Windows.Forms.ToolStripMenuItem();

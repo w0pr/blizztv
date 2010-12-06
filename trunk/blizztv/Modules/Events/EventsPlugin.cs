@@ -84,60 +84,58 @@ namespace BlizzTV.Modules.Events
 
         private void ParseEvents()
         {
-            bool success = true;
-
-            this.NotifyUpdateStarted();
-
-            Workload.Instance.Add(this, 1);
-            this.RootListItem.SetTitle("Updating events..");
-
-            try
+            if (!this.Updating)
             {
-                string xml = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml"); // read teamliquid calendar xml.
-                XDocument xdoc = XDocument.Parse(xml); // parse the xml.
+                this.Updating = true;
+                this.NotifyUpdateStarted();
 
-                var months = from month_entry in xdoc.Descendants("month") // get the events.
-                             select new
-                             {
-                                 year = month_entry.Attribute("year"),
-                                 month = month_entry.Attribute("num"),
-                                 days = from day_entry in month_entry.Descendants("day")
-                                        select new
-                                        {
-                                            day = day_entry.Attribute("num"),
-                                            events = from event_entry in day_entry.Descendants("event")
-                                                     select new
-                                                     {
-                                                         hour = event_entry.Attribute("hour"),
-                                                         minute = event_entry.Attribute("minute"),
-                                                         is_over = event_entry.Attribute("over"),
-                                                         title = event_entry.Element("title"),
-                                                         short_title = event_entry.Element("short-title"),
-                                                         description = event_entry.Element("description"),
-                                                         event_id = event_entry.Element("event-id")
-                                                     }
-                                        }
-                             };
+                Workload.Instance.Add(this, 1);
+                this.RootListItem.SetTitle("Updating events..");
 
-                foreach (var month_entry in months) // create up the event items.
-                    foreach (var day_entry in month_entry.days)
-                        foreach (var event_entry in day_entry.events)
-                        {
-                            Event e = new Event((string)event_entry.short_title, (string)event_entry.title, (string)event_entry.description, (string)event_entry.event_id, (bool)event_entry.is_over, new ZonedDateTime(new DateTime((int)month_entry.year, (int)month_entry.month, (int)day_entry.day, (int)event_entry.hour, (int)event_entry.minute, 0), KOREAN_TIME_ZONE)); // TL calendar flags events in Korean time.
-                            this._events.Add(e);
-                        }
-            }
-            catch (Exception e)
-            {
-                success = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("EventsPlugin ParseEvents() Error: \n {0}", e.ToString()));                
-            }
+                try
+                {
+                    string xml = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml"); // read teamliquid calendar xml.
+                    XDocument xdoc = XDocument.Parse(xml); // parse the xml.
 
-            if (success) // if parsing of calendar xml all okay.
-            {
+                    var months = from month_entry in xdoc.Descendants("month") // get the events.
+                                 select new
+                                 {
+                                     year = month_entry.Attribute("year"),
+                                     month = month_entry.Attribute("num"),
+                                     days = from day_entry in month_entry.Descendants("day")
+                                            select new
+                                            {
+                                                day = day_entry.Attribute("num"),
+                                                events = from event_entry in day_entry.Descendants("event")
+                                                         select new
+                                                         {
+                                                             hour = event_entry.Attribute("hour"),
+                                                             minute = event_entry.Attribute("minute"),
+                                                             is_over = event_entry.Attribute("over"),
+                                                             title = event_entry.Element("title"),
+                                                             short_title = event_entry.Element("short-title"),
+                                                             description = event_entry.Element("description"),
+                                                             event_id = event_entry.Element("event-id")
+                                                         }
+                                            }
+                                 };
+
+                    foreach (var month_entry in months) // create up the event items.
+                        foreach (var day_entry in month_entry.days)
+                            foreach (var event_entry in day_entry.events)
+                            {
+                                Event e = new Event((string)event_entry.short_title, (string)event_entry.title, (string)event_entry.description, (string)event_entry.event_id, (bool)event_entry.is_over, new ZonedDateTime(new DateTime((int)month_entry.year, (int)month_entry.month, (int)day_entry.day, (int)event_entry.hour, (int)event_entry.minute, 0), KOREAN_TIME_ZONE)); // TL calendar flags events in Korean time.
+                                this._events.Add(e);
+                            }
+                }
+                catch (Exception e)
+                {
+                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("EventsPlugin ParseEvents() Error: \n {0}", e.ToString()));
+                }
+
                 this.RootListItem.Childs.Add("events-today", _events_today);
                 this.RootListItem.Childs.Add("events-upcoming", _events_upcoming);
-                this.RootListItem.Childs.Add("events-over", _events_over);      
+                this.RootListItem.Childs.Add("events-over", _events_over);
 
                 foreach (Event e in this._events) // loop through events.
                 {
@@ -153,19 +151,14 @@ namespace BlizzTV.Modules.Events
                             else _events_upcoming.Childs.Add(e.EventID, e); // else register it in upcoming-events section.
                         }
                     }
-                }            
-            }
-            else
-            {
-                ListItem error = new ListItem("Error parsing TeamLiquid calendar feed.");
-                //error.Style = ItemStyle.ERROR;
-                this.RootListItem.Childs.Add("error", error);
-            }
+                }
 
-            this.RootListItem.SetTitle("Events");  // add unread feeds count to root item's title.                               
-            Workload.Instance.Step(this);
+                this.RootListItem.SetTitle("Events");  // add unread feeds count to root item's title.                               
+                Workload.Instance.Step(this);
 
-            this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(success));
+                this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
+                this.Updating = false;
+            }
         }
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
