@@ -34,7 +34,6 @@ namespace BlizzTV.Modules.Videos
 
         internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private Timer _update_timer;
-        private bool _updating = false;
         private bool disposed = false;
 
         public static VideosPlugin Instance;
@@ -100,9 +99,9 @@ namespace BlizzTV.Modules.Videos
 
         internal void UpdateChannels()
         {
-            if (!this._updating)
+            if (!this.Updating)
             {
-                this._updating = true;
+                this.Updating = true;
                 this.NotifyUpdateStarted();
 
                 if (this._channels.Count > 0)  // clear previous entries before doing an update.
@@ -133,7 +132,7 @@ namespace BlizzTV.Modules.Videos
 
                 this.RootListItem.SetTitle("Videos");
                 NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-                this._updating = false;
+                this.Updating = false;
             }
         }
 

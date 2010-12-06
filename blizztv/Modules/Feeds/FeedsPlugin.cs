@@ -35,7 +35,6 @@ namespace BlizzTV.Modules.Feeds
 
         internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 
         private Timer _update_timer;
-        private bool _updating = false;
         private bool disposed = false;
 
         public static FeedsPlugin Instance;
@@ -107,9 +106,9 @@ namespace BlizzTV.Modules.Feeds
 
         internal void UpdateFeeds()
         {
-            if (!this._updating)
+            if (!this.Updating)
             {
-                this._updating = true;
+                this.Updating = true;
                 this.NotifyUpdateStarted();
 
                 if (this._feeds.Count > 0) // clear previous entries before doing an update.
@@ -144,7 +143,7 @@ namespace BlizzTV.Modules.Feeds
 
                 this.RootListItem.SetTitle("Feeds");
                 this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-                this._updating = false;
+                this.Updating = false;
             }
         }
 

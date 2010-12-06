@@ -34,7 +34,6 @@ namespace BlizzTV.Modules.Streams
 
         internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _update_timer;
-        private bool _updating = false;
         private bool disposed = false;
 
         public static StreamsPlugin Instance;
@@ -90,9 +89,9 @@ namespace BlizzTV.Modules.Streams
 
         internal void UpdateStreams()
         {
-            if (!this._updating)
+            if (!this.Updating)
             {
-                this._updating = true;
+                this.Updating = true;
                 this.NotifyUpdateStarted();
 
                 if (this._streams.Count > 0)// clear previous entries before doing an update.
@@ -130,7 +129,7 @@ namespace BlizzTV.Modules.Streams
                 this.RootListItem.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
 
                 NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-                this._updating = false;
+                this.Updating = false;
             }
         }
 

@@ -32,6 +32,7 @@ namespace BlizzTV.ModuleLib
         private Assembly _assembly; // the assembly 
         private ModuleAttributes _attributes;
         private ListItem _root_list_item;
+        private bool _updating=false;
         private bool disposed = false;
 
         /// <summary>
@@ -48,6 +49,8 @@ namespace BlizzTV.ModuleLib
         /// 
         /// </summary>
         public ListItem RootListItem { get { return this._root_list_item; } protected set { this._root_list_item = value; } }
+
+        public bool Updating { get { return this._updating; } protected set { this._updating = value; } }
 
         #endregion
 
