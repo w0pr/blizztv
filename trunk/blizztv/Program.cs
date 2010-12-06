@@ -44,8 +44,6 @@ namespace BlizzTV
                 return; // exit
             }
 
-            AppDomain.CurrentDomain.AssemblyResolve += ResolveAssemblies;
-
             // Check global settings and start logger and debug console if enabled
             if (Settings.Instance.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
@@ -60,36 +58,6 @@ namespace BlizzTV
             Application.Run(new frmMain());
 
             GC.KeepAlive(single_instance_lock); // okay GC, single_instance_lock is an important variable for us, so never ever throw it to garbage!
-        }
-
-        static Assembly ResolveAssemblies(object sender, ResolveEventArgs args)
-        {
-            Assembly assembly = null;
-            string name = args.Name.Substring(0, args.Name.IndexOf(','));
-            if (name == "BlizzTV.resources") return null;
-            else name = string.Format("BlizzTV.Resources.Assemblies.{0}.dll", name);
-                
-            lock (_loadedAssemblies)
-            {
-                if (!_loadedAssemblies.TryGetValue(name, out assembly))
-                {
-                    using (Stream io = Assembly.GetExecutingAssembly().GetManifestResourceStream(name))
-                    {
-                        if (io == null)
-                        {
-                            MessageBox.Show("BlizzTV can not load one of it's dependencies. Please re-install the program", string.Format("Missing Assembly: {0}", name), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Environment.Exit(-1);
-                        }
-                        using (BinaryReader binaryReader = new BinaryReader(io))
-                        {
-                            assembly = Assembly.Load(binaryReader.ReadBytes((int)io.Length));
-                            _loadedAssemblies.Add(name, assembly);
-                        }
-                    }
-                }
-            }
-
-            return assembly;
         }
     }
 }

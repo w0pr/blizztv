@@ -367,12 +367,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blizztv_128.ico" />
-    <EmbeddedResource Include="Resources\Assemblies\AxInterop.ShockwaveFlashObjects.dll" />
-    <EmbeddedResource Include="Resources\Assemblies\Esent.Collections.dll" />
-    <EmbeddedResource Include="Resources\Assemblies\Esent.Interop.dll" />
-    <EmbeddedResource Include="Resources\Assemblies\Interop.ShockwaveFlashObjects.dll" />
-    <EmbeddedResource Include="Resources\Assemblies\System.Windows.Forms.Calendar.dll" />
-    <EmbeddedResource Include="Resources\Assemblies\Nini.dll" />
     <None Include="Resources\Subscriptions.Default.xml" />
     <None Include="Resources\Providers.xml">
       <SubType>Designer</SubType>
@@ -428,8 +422,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>IF NOT EXIST "$(TargetDir)Libs" mkdir "$(TargetDir)Libs"
-Move "$(TargetDir)*.dll" "$(TargetDir)Libs"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
