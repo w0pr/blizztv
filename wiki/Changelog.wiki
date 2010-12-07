@@ -1,6 +1,35 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
+*07.12.2010 - 0.16-beta (r203)*
+---
+
+ * Added drag/drop subscription support. You can now drop a channel link from youtube to BlizzTV main window and you'll be get subscribed to channel (works for streams & feeds to).
+ * Videos and streams modules now allow adding of a new subscription directly by the web-link.
+ * Major changes on code architecture, plugin's are no more dll's but embedded modules on main executable - which still get loaded dynamically. The best news is no more plugin dll's spread around.
+ * Feeds, streams and videos module will now notify about fresh content.
+ * Implemented an initial configuration wizard which will guide new users on modules to start with.
+ * Settings will be now stored in an ini file and will allow future version updates to preserve your settings.
+ * When modules spams new notifications (when there already exists an active notification in system tray) they'll be queued on and notification icon on main window status strip will appear. Clicking it will show you the notifications archived. 
+ * Improved item status tracking (the main-window treeview item's status).
+ * Implemented a new subscriptions & provider API for module's use (yes, no more *.xml config files spread around). If users machine lacks a subscriptions.db, a default one will be copied over and get used.
+ * Sleep Mode will now show an icon on main window's status strip.
+ * Improved dependency check routines.
+ * You'll be no more allowed to de-activate modules that are currently updating data.
+ * Added a FAQ menu for main window.
+ * Added a Spread the word menu for the main window.
+ * Minor updates on About window, it now will feature a main version number only. Also added a button for viewing the changelog.
+ * Grammatical fixes in main window's menu-name's.
+ * Cosmetic changes on presences window and some minor bug-fixes.
+ * You'll see an updating icon (near the progress bar) when some module update's it's data.
+ * Improved log & debug console's output format.
+ * Events plugin will now instantly check events for any valid notifications as soon as it gets loaded.
+ * Some cosmetic changes on event viewer window.
+ * Flash player / chat windows for a specific item will no more be allowed to open more than once. When you double-click a video that's already open, it's active window will get focus.
+ * Fixed a bug in streams plugin that was related about chat-availability of providers.
+ * Chat window's for stream module can snap to it's parent player window.
+ * Removed justin.tv provider until further update as their player's bugged-to-hell.
+
 *26.11.2010 - 0.15-beta (r137)*
 ----
  * Improved the user interface responsiveness a lot. It should freeze even during plugin updates.
