@@ -22,4 +22,5 @@
   <Subscription xsi:type="Stream" Name="HuK" Slug="HuKTV" Provider="LiveStream" />
   <Subscription xsi:type="Stream" Name="IdRA" Slug="eg-idra1" Provider="UStream" />
   <Subscription xsi:type="Stream" Name="CellaWerra" Slug="cellawerra" Provider="LiveStream" />
+  <Subscription xsi:type="Stream" Name="WoW Marathon - Race to world first!" Slug="1048" Provider="Own3DTV" />
 </Subscriptions>
