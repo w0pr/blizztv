@@ -2,8 +2,7 @@
 #labels Featured,Documentation,Development
 
 *07.12.2010 - 0.16-beta (r203)*
----
-
+----
  * Added drag/drop subscription support. You can now drop a channel link from youtube to BlizzTV main window and you'll be get subscribed to channel (works for streams & feeds to).
  * Videos and streams modules now allow adding of a new subscription directly by the web-link.
  * Major changes on code architecture, plugin's are no more dll's but embedded modules on main executable - which still get loaded dynamically. The best news is no more plugin dll's spread around.
