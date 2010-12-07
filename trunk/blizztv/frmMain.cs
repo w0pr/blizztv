@@ -313,6 +313,7 @@ namespace BlizzTV
             {
                 this.menuSleepMode.Checked = true;
                 this.ContextMenuSleepMode.Checked = true;
+                this.SleepIcon.Visible = true;
                 this.TrayIcon.Icon = Properties.Resources.ico_sleep_16;
                 this.TrayIcon.Text = "BlizzTV is in sleep mode.";
                 GlobalSettings.Instance.InSleepMode = true;
@@ -321,6 +322,7 @@ namespace BlizzTV
             {                
                 this.menuSleepMode.Checked = false;
                 this.ContextMenuSleepMode.Checked = false;
+                this.SleepIcon.Visible = false;
                 this.TrayIcon.Icon = Properties.Resources.ico_blizztv_16;
                 this.TrayIcon.Text = "BlizzTV";
                 GlobalSettings.Instance.InSleepMode = false;
