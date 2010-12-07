@@ -12,7 +12,7 @@
  * Settings will be now stored in an ini file and will allow future version updates to preserve your settings.
  * When modules spams new notifications (when there already exists an active notification in system tray) they'll be queued on and notification icon on main window status strip will appear. Clicking it will show you the notifications archived. 
  * Improved item status tracking (the main-window treeview item's status).
- * Implemented a new subscriptions & provider API for module's use (yes, no more *.xml config files spread around). If users machine lacks a subscriptions.db, a default one will be copied over and get used.
+ * Implemented a new subscriptions & provider API for module's use (yes, no more xml config files spread around). If users machine lacks a subscriptions.db, a default one will be copied over and get used.
  * Sleep Mode will now show an icon on main window's status strip.
  * Improved dependency check routines.
  * You'll be no more allowed to de-activate modules that are currently updating data.
