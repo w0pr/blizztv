@@ -62,6 +62,7 @@
             this.TreeView = new System.Windows.Forms.TreeView();
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
             this.TreeviewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.SleepIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
@@ -232,6 +233,7 @@
             this.ProgressIcon,
             this.ProgressBar,
             this.toolStripSpacer,
+            this.SleepIcon,
             this.NotificationIcon});
             this.StatusStrip.Location = new System.Drawing.Point(0, 293);
             this.StatusStrip.Name = "StatusStrip";
@@ -257,7 +259,7 @@
             // toolStripSpacer
             // 
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(241, 17);
+            this.toolStripSpacer.Size = new System.Drawing.Size(60, 17);
             this.toolStripSpacer.Spring = true;
             // 
             // NotificationIcon
@@ -338,6 +340,14 @@
             this.TreeviewContextMenu.Name = "TreeviewContextMenu";
             this.TreeviewContextMenu.Size = new System.Drawing.Size(61, 4);
             // 
+            // SleepIcon
+            // 
+            this.SleepIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SleepIcon.Image = ((System.Drawing.Image)(resources.GetObject("SleepIcon.Image")));
+            this.SleepIcon.Name = "SleepIcon";
+            this.SleepIcon.Size = new System.Drawing.Size(16, 17);
+            this.SleepIcon.Visible = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -399,6 +409,7 @@
         private System.Windows.Forms.ToolStripStatusLabel NotificationIcon;
         private System.Windows.Forms.ToolStripStatusLabel ProgressIcon;
         private System.Windows.Forms.ToolStripStatusLabel toolStripSpacer;
+        private System.Windows.Forms.ToolStripStatusLabel SleepIcon;
     }
 }
 
