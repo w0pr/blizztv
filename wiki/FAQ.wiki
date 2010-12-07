@@ -1,5 +1,5 @@
+#summary Frequently Asked Questions
 #labels Featured,Documentation
-
 = Introduction =
 
 You can find answers for the most frequently asked questions here.
