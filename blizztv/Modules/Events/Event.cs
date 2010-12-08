@@ -53,6 +53,8 @@ namespace BlizzTV.Modules.Events
             this._event_id = EventID;
             this._is_over = isOver;
             this._time = Time;
+
+            this.Icon = Properties.Resources.event_16;
         }
 
         public override void DoubleClicked(object sender, EventArgs e)

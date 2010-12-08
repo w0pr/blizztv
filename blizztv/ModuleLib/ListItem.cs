@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using BlizzTV.CommonLib.Notifications;
 
 namespace BlizzTV.ModuleLib
@@ -42,6 +43,8 @@ namespace BlizzTV.ModuleLib
         /// The key.
         /// </summary>
         public string Key { get { return this._key; } }
+
+        public Bitmap Icon { get; protected set; }
 
         /// <summary>
         /// Context Menus for Item

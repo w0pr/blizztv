@@ -63,7 +63,7 @@ namespace BlizzTV.CommonLib.Notifications
                 }
                 else
                 {
-                    QueuedNotifications.Instance.Queue.Add(new QueuedNotification(sender, e));
+                    ArchivedNotifications.Instance.Queue.Add(new ArchivedNotification(sender, e));
                     if(!this._notificationIcon.Visible) this._notificationIcon.Visible = true;
                 }
             });
@@ -82,14 +82,28 @@ namespace BlizzTV.CommonLib.Notifications
 
         private void NotificationIconClick(object sender, EventArgs e)
         {
-            frmQueuedNotifications f = new frmQueuedNotifications();
+            frmArchivedNotifications f = new frmArchivedNotifications(this._mainForm);
             f.ShowDialog();        
         }
 
         public void ClearQueuedNotifications()
         {
-            QueuedNotifications.Instance.Queue.Clear();
+            ArchivedNotifications.Instance.Queue.Clear();
             this._notificationIcon.Visible = false;
+        }
+    }
+
+        public class NotificationEventArgs : EventArgs
+    {
+        public string Title { get; private set; }
+        public string Text { get; private set; }
+        public ToolTipIcon Icon { get; private set; }
+
+        public NotificationEventArgs(string Title, string Text, ToolTipIcon Icon)
+        {
+            this.Title = Title;
+            this.Text = Text;
+            this.Icon = Icon;
         }
     }
 }
