@@ -23,40 +23,26 @@ using System.Windows.Forms;
 
 namespace BlizzTV.CommonLib.Notifications
 {
-    public class QueuedNotifications
+    public class ArchivedNotifications
     {
-        private static QueuedNotifications _instance = new QueuedNotifications();
-        public static QueuedNotifications Instance { get { return _instance; } }
+        private static ArchivedNotifications _instance = new ArchivedNotifications();
+        public static ArchivedNotifications Instance { get { return _instance; } }
 
-        private List<QueuedNotification> _queuedNotifications = new List<QueuedNotification>();
-        public List<QueuedNotification> Queue { get { return this._queuedNotifications; } }
+        private List<ArchivedNotification> _queuedNotifications = new List<ArchivedNotification>();
+        public List<ArchivedNotification> Queue { get { return this._queuedNotifications; } }
 
-        private QueuedNotifications() { }
+        private ArchivedNotifications() { }
     }
 
-    public class QueuedNotification
+    public class ArchivedNotification
     {
         public INotificationRequester Item { get; private set; }
         public NotificationEventArgs Args { get; private set; }
 
-        public QueuedNotification(INotificationRequester Item, NotificationEventArgs e)
+        public ArchivedNotification(INotificationRequester Item, NotificationEventArgs e)
         {
             this.Item = Item;
             this.Args = e;
-        }
-    }
-
-    public class NotificationEventArgs : EventArgs
-    {
-        public string Title { get; private set; }
-        public string Text { get; private set; }
-        public ToolTipIcon Icon { get; private set; }
-
-        public NotificationEventArgs(string Title, string Text, ToolTipIcon Icon)
-        {
-            this.Title = Title;
-            this.Text = Text;
-            this.Icon = Icon;
         }
     }
 }

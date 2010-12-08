@@ -97,6 +97,8 @@ namespace BlizzTV.Modules.Feeds
             // register context menus.
             this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
+
+            this.Icon = Properties.Resources.feed_16;
         }
 
         public void CheckForNotifications()

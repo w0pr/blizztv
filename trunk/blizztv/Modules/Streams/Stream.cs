@@ -77,6 +77,8 @@ namespace BlizzTV.Modules.Streams
             this._name = subscription.Name;
             this._slug = subscription.Slug;
             this._provider = subscription.Provider;
+
+            this.Icon = Properties.Resources.stream_16;
         }
 
         #endregion

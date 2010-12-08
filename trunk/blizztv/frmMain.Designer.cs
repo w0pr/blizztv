@@ -53,6 +53,7 @@
             this.ProgressIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSpacer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.SleepIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.NotificationIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -62,7 +63,6 @@
             this.TreeView = new System.Windows.Forms.TreeView();
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
             this.TreeviewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.SleepIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
@@ -259,8 +259,16 @@
             // toolStripSpacer
             // 
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(60, 17);
+            this.toolStripSpacer.Size = new System.Drawing.Size(241, 17);
             this.toolStripSpacer.Spring = true;
+            // 
+            // SleepIcon
+            // 
+            this.SleepIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SleepIcon.Image = ((System.Drawing.Image)(resources.GetObject("SleepIcon.Image")));
+            this.SleepIcon.Name = "SleepIcon";
+            this.SleepIcon.Size = new System.Drawing.Size(16, 17);
+            this.SleepIcon.Visible = false;
             // 
             // NotificationIcon
             // 
@@ -339,14 +347,6 @@
             // 
             this.TreeviewContextMenu.Name = "TreeviewContextMenu";
             this.TreeviewContextMenu.Size = new System.Drawing.Size(61, 4);
-            // 
-            // SleepIcon
-            // 
-            this.SleepIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SleepIcon.Image = ((System.Drawing.Image)(resources.GetObject("SleepIcon.Image")));
-            this.SleepIcon.Name = "SleepIcon";
-            this.SleepIcon.Size = new System.Drawing.Size(16, 17);
-            this.SleepIcon.Visible = false;
             // 
             // frmMain
             // 

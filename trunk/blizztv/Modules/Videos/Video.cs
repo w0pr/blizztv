@@ -105,6 +105,8 @@ namespace BlizzTV.Modules.Videos
             // register context menus.
             this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAsUnWatchedClicked))); // mark as unread menu.            
+
+            this.Icon = Properties.Resources.video_16;
         }
 
         #endregion
