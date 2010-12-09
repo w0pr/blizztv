@@ -16,48 +16,61 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Reflection;
-using System.IO;
+using System.Threading;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Dependencies;
 
 namespace BlizzTV
 {
     static class Program
-    {
-        private static Dictionary<string, Assembly> _loadedAssemblies = new Dictionary<string, Assembly>();
-
+    {        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            // don't allow more than one instances. (method explanation: http://www.ai.uga.edu/~mc/SingleInstance.html)
-            bool got_mutex = false; // states if got the mutex lock
-            System.Threading.Mutex single_instance_lock = new System.Threading.Mutex(true, System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, out got_mutex); // try to create a new mutex named after our app-name.
-            if (!got_mutex) // if we can't own the mutex, that means another instance was already owning it!
+            #region mutex-lock - don't allow more than once instance
+
+            //method: http://www.ai.uga.edu/~mc/SingleInstance.html)
+
+            bool gotMutex = false; 
+            Mutex singleInstanceLock = new Mutex(true, Assembly.GetExecutingAssembly().GetName().Name, out gotMutex); // mutex after our app. name.
+            
+            if (!gotMutex) 
             {
                 MessageBox.Show("Another instance of BlizzTV is already running!", "Startup Error!", MessageBoxButtons.OK, MessageBoxIcon.Error); // give a non-friendly error message :/
                 return; // exit
             }
 
-            // Check global settings and start logger and debug console if enabled
+            GC.KeepAlive(singleInstanceLock); // okay GC, single_instance_lock is an important variable for us, so never ever throw it to garbage!
+
+            #endregion
+
+            #region if enabled start logger & debug console
+
             if (Settings.Instance.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
 
-            if (!Dependencies.Instance.Satisfied()) { Application.ExitThread(); return; } // Check if our dependencies are satisfied.
+            #endregion
 
-            Log.Instance.Write(LogMessageTypes.INFO, "Program startup.."); // the startup message so we can see sessions in log easier.
+            #region check if our dependencies are satisfied 
 
-            // Startup the main form
+            if (!Dependencies.Instance.Satisfied()) { Application.ExitThread(); return; }
+
+            #endregion
+
+            #region actual startup 
+
+            Log.Instance.Write(LogMessageTypes.INFO, "BlizzTV Startup.."); 
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
 
-            GC.KeepAlive(single_instance_lock); // okay GC, single_instance_lock is an important variable for us, so never ever throw it to garbage!
+            #endregion             
         }
     }
 }
