@@ -80,8 +80,12 @@ namespace BlizzTV.Modules.Events
 
         private void ButtonSetupAlarm_Click(object sender, EventArgs e)
         {
-            frmSetupAlarm f = new frmSetupAlarm(this._event);
-            f.ShowDialog();
+            if (this._event.MinutesLeft >= 5)
+            {
+                frmSetupAlarm f = new frmSetupAlarm(this._event);
+                f.ShowDialog();
+            }
+            else MessageBox.Show("You can not setup an alarm for the event as it's just about to start", "Can not setup alarm", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -43,6 +43,7 @@ namespace BlizzTV.Modules.Events
         {
             frmEventViewer f = new frmEventViewer(this._event);
             f.Show();
+            this.Close();
         }
 
         private void ButtonOkay_Click(object sender, EventArgs e)
