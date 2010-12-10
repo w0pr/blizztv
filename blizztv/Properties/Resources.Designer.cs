@@ -60,6 +60,13 @@ namespace BlizzTV.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap blizzblues_16 {
+            get {
+                object obj = ResourceManager.GetObject("blizzblues_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap blizztv_16 {
             get {
                 object obj = ResourceManager.GetObject("blizztv_16", resourceCulture);
@@ -98,8 +105,8 @@ namespace BlizzTV.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;Providers xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;Provider xsi:type=&quot;Stream&quot; Name=&quot;LiveStream&quot; Movie=&quot;http://cdn.livestream.com/grid/LSPlayer.swf&quot; FlashVars=&quot;channel=%slug%&amp;amp;autoPlay=true&quot; ChatMovie=&quot;http://cdn.livestream.com/chat/LivestreamChat.swf?&amp;amp;showTimestamp=true&amp;amp;channel=%slug%&quot; RegEx=&quot;http://www.livestream.com/(?&amp;lt;Slug&amp;gt;.*)&quot; /&gt;
-        ///  &lt;Provider xsi:type=&quot;Stream&quot; Name=&quot;UStream&quot; Movie=&quot;http://www.ustream. [rest of string was truncated]&quot;;.
+        ///  &lt;Provider xsi:type=&quot;Stream&quot; Name=&quot;LiveStream&quot; Movie=&quot;http://cdn.livestream.com/grid/LSPlayer.swf&quot; FlashVars=&quot;channel=%slug%&amp;amp;autoPlay=true&quot; ChatMovie=&quot;http://cdn.livestream.com/chat/LivestreamChat.swf?&amp;amp;showTimestamp=true&amp;amp;channel=%slug%&quot; RegEx=&quot;http://www.livestream.com/(?&amp;lt;Slug&amp;gt;.*)&quot; FormatHint=&quot;http://www.livestream.com/&amp;lt;slug&amp;gt;&quot; /&gt;
+        ///  &lt;Provider xsi:typ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Providers {
             get {
@@ -117,10 +124,9 @@ namespace BlizzTV.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;Subscriptions xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;BlizzTV&quot; Url=&quot;http://www.blizztv.com/rss/ccs/1-blizztvcom/&quot; /&gt;
-        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;TeamLiquid&quot; Url=&quot;http://www.teamliquid.net/rss/news.xml&quot; /&gt;
-        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;GosuGamers&quot; Url=&quot;http://www.gosugamers.net/starcraft2/sc2.rss&quot; /&gt;
-        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;SCArmory&quot; Url=&quot;http://feeds.f [rest of string was truncated]&quot;;.
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;MMO-Champion&quot; Url=&quot;http://www.mmo-champion.com/external.php?do=rss&amp;amp;type=newcontent&amp;amp;sectionid=1&amp;amp;days=120&amp;amp;count=10&quot; /&gt;
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;TeamLiquid&quot; Url=&quot;http://www.teamliquid.net/rss/news.xml&quot; /&gt;    
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;BlizzTV&quot; Url=&quot;http://www.blizztv.com/rss/ccs/1-blizztvcom/&quot;  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Subscriptions_Default {
             get {
