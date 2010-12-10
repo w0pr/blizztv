@@ -81,5 +81,10 @@ namespace BlizzTV.Modules.Videos
             this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Close();
         }
+
+        private void comboBoxProviders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LabelHint.Text = (Providers.Instance.Dictionary[(string) comboBoxProviders.SelectedItem] as VideoProvider).Hint;
+        }
     }
 }

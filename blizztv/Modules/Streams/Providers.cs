@@ -48,6 +48,9 @@ namespace BlizzTV.Modules.Streams
         [XmlAttribute("RegEx")]
         public string RegEx { get; set; }
 
+        [XmlAttribute("FormatHint")]
+        public string Hint { get; set; }
+
         [XmlIgnoreAttribute]
         public bool ChatAvailable { get { if (ChatMovie == null) return false; else return true; } }
 

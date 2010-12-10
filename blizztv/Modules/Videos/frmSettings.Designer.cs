@@ -75,7 +75,7 @@
             // buttonRemove
             // 
             this.buttonRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRemove.Location = new System.Drawing.Point(355, 206);
+            this.buttonRemove.Location = new System.Drawing.Point(356, 205);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(75, 23);
             this.buttonRemove.TabIndex = 7;
@@ -86,9 +86,9 @@
             // buttonAdd
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.Location = new System.Drawing.Point(277, 206);
+            this.buttonAdd.Location = new System.Drawing.Point(278, 205);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(72, 23);
+            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 6;
             this.buttonAdd.Text = "Add";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -103,7 +103,7 @@
             this.colName,
             this.colProvider,
             this.colSlug});
-            this.ListviewSubscriptions.Location = new System.Drawing.Point(3, 8);
+            this.ListviewSubscriptions.Location = new System.Drawing.Point(4, 6);
             this.ListviewSubscriptions.Name = "ListviewSubscriptions";
             this.ListviewSubscriptions.Size = new System.Drawing.Size(432, 192);
             this.ListviewSubscriptions.TabIndex = 5;

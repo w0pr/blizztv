@@ -37,20 +37,20 @@
             this.colProvider = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colSlug = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams = new System.Windows.Forms.CheckBox();
-            this.numericUpDownUpdateFeedsEveryXMinutes = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtStreamChatWindowHeight = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtStreamChatWindowWidth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams = new System.Windows.Forms.CheckBox();
+            this.numericUpDownUpdateFeedsEveryXMinutes = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -80,7 +80,7 @@
             // buttonRemove
             // 
             this.buttonRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRemove.Location = new System.Drawing.Point(356, 204);
+            this.buttonRemove.Location = new System.Drawing.Point(356, 205);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(75, 23);
             this.buttonRemove.TabIndex = 4;
@@ -91,9 +91,9 @@
             // buttonAdd
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.Location = new System.Drawing.Point(278, 204);
+            this.buttonAdd.Location = new System.Drawing.Point(278, 205);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(72, 23);
+            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 3;
             this.buttonAdd.Text = "Add";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -142,47 +142,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxAutomaticallyOpenChatForAvailableStreams
-            // 
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.AutoSize = true;
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Name = "checkBoxAutomaticallyOpenChatForAvailableStreams";
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Size = new System.Drawing.Size(285, 17);
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.TabIndex = 4;
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Text = "Automatically open chat windows for available streams.";
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownUpdateFeedsEveryXMinutes
-            // 
-            this.numericUpDownUpdateFeedsEveryXMinutes.Location = new System.Drawing.Point(166, 12);
-            this.numericUpDownUpdateFeedsEveryXMinutes.Maximum = new decimal(new int[] {
-            1440,
-            0,
-            0,
-            0});
-            this.numericUpDownUpdateFeedsEveryXMinutes.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownUpdateFeedsEveryXMinutes.Name = "numericUpDownUpdateFeedsEveryXMinutes";
-            this.numericUpDownUpdateFeedsEveryXMinutes.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDownUpdateFeedsEveryXMinutes.TabIndex = 3;
-            this.numericUpDownUpdateFeedsEveryXMinutes.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Update streams every X minutes:";
             // 
             // groupBox1
             // 
@@ -242,6 +201,47 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "Size:";
             // 
+            // checkBoxAutomaticallyOpenChatForAvailableStreams
+            // 
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.AutoSize = true;
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Name = "checkBoxAutomaticallyOpenChatForAvailableStreams";
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Size = new System.Drawing.Size(285, 17);
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.TabIndex = 4;
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Text = "Automatically open chat windows for available streams.";
+            this.checkBoxAutomaticallyOpenChatForAvailableStreams.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDownUpdateFeedsEveryXMinutes
+            // 
+            this.numericUpDownUpdateFeedsEveryXMinutes.Location = new System.Drawing.Point(166, 12);
+            this.numericUpDownUpdateFeedsEveryXMinutes.Maximum = new decimal(new int[] {
+            1440,
+            0,
+            0,
+            0});
+            this.numericUpDownUpdateFeedsEveryXMinutes.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownUpdateFeedsEveryXMinutes.Name = "numericUpDownUpdateFeedsEveryXMinutes";
+            this.numericUpDownUpdateFeedsEveryXMinutes.Size = new System.Drawing.Size(54, 20);
+            this.numericUpDownUpdateFeedsEveryXMinutes.TabIndex = 3;
+            this.numericUpDownUpdateFeedsEveryXMinutes.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(162, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Update streams every X minutes:";
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,9 +255,9 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).EndInit();
             this.ResumeLayout(false);
 
         }
