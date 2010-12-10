@@ -45,6 +45,9 @@ namespace BlizzTV.Modules.Videos
         [XmlAttribute("RegEx")]
         public string RegEx { get; set; }
 
+        [XmlAttribute("FormatHint")]
+        public string Hint { get; set; }
+
         public VideoProvider() { }
 
         public bool LinkValid(string link)

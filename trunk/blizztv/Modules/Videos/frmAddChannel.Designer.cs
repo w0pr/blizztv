@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddChannel));
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.comboBoxProviders = new System.Windows.Forms.ComboBox();
@@ -36,12 +37,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.LabelHint = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(171, 79);
+            this.buttonCancel.Location = new System.Drawing.Point(170, 98);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(62, 23);
             this.buttonCancel.TabIndex = 18;
@@ -51,7 +55,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(239, 79);
+            this.buttonOK.Location = new System.Drawing.Point(239, 98);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(62, 23);
             this.buttonOK.TabIndex = 17;
@@ -67,6 +71,7 @@
             this.comboBoxProviders.Name = "comboBoxProviders";
             this.comboBoxProviders.Size = new System.Drawing.Size(239, 21);
             this.comboBoxProviders.TabIndex = 16;
+            this.comboBoxProviders.SelectedIndexChanged += new System.EventHandler(this.comboBoxProviders_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -79,7 +84,7 @@
             // 
             // txtURL
             // 
-            this.txtURL.Location = new System.Drawing.Point(62, 49);
+            this.txtURL.Location = new System.Drawing.Point(62, 53);
             this.txtURL.Name = "txtURL";
             this.txtURL.Size = new System.Drawing.Size(239, 20);
             this.txtURL.TabIndex = 14;
@@ -109,13 +114,33 @@
             this.label1.TabIndex = 11;
             this.label1.Text = "Name:";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(40, 81);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(14, 14);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 19;
+            this.pictureBox1.TabStop = false;
+            // 
+            // LabelHint
+            // 
+            this.LabelHint.Location = new System.Drawing.Point(60, 79);
+            this.LabelHint.Name = "LabelHint";
+            this.LabelHint.Size = new System.Drawing.Size(241, 16);
+            this.LabelHint.TabIndex = 20;
+            this.LabelHint.Text = "url hint";
+            // 
             // frmAddChannel
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(306, 106);
+            this.ClientSize = new System.Drawing.Size(306, 126);
+            this.Controls.Add(this.LabelHint);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.comboBoxProviders);
@@ -129,6 +154,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add New Video Channel";
             this.Load += new System.EventHandler(this.frmAddChannel_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -144,6 +170,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label LabelHint;
 
 
     }
