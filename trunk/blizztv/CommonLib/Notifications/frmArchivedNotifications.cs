@@ -23,13 +23,20 @@ namespace BlizzTV.CommonLib.Notifications
 {
     public partial class frmArchivedNotifications : Form
     {
-        private Form _parent;
+        private readonly Form _parent;
 
-        public frmArchivedNotifications(Form Parent)
+        public frmArchivedNotifications(Form parent)
         {
             InitializeComponent();
-            this._parent = Parent;
+            this._parent = parent;
             this.SnapToParent();
+        }
+
+        private void SnapToParent()
+        {
+            this.Left = this._parent.Left + this._parent.Width + 2;
+            this.Top = this._parent.Top;
+            if (this.Height != this._parent.Height) this.Height = this._parent.Height;
         }
         
         private void frmQueuedNotifications_Load(object sender, EventArgs e)
@@ -39,25 +46,6 @@ namespace BlizzTV.CommonLib.Notifications
                 ArchivedNotificationListItemWrapper itemWrapper = new ArchivedNotificationListItemWrapper(notification);
                 this.listViewNotifications.Items.Add(itemWrapper);
                 this.SetIcon(itemWrapper);
-            }
-        }
-
-        private void frmQueuedNotifications_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            NotificationManager.Instance.ClearQueuedNotifications();
-        }
-
-        private void ButtonClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void listViewNotifications_DoubleClick(object sender, EventArgs e)
-        {
-            if(listViewNotifications.SelectedItems.Count>0)
-            {
-                ArchivedNotificationListItemWrapper selection = (ArchivedNotificationListItemWrapper)listViewNotifications.SelectedItems[0];
-                selection.Notification.Item.NotificationClicked();
             }
         }
 
@@ -74,22 +62,33 @@ namespace BlizzTV.CommonLib.Notifications
             }
         }
 
-        private void SnapToParent()
+        private void listViewNotifications_DoubleClick(object sender, EventArgs e)
         {
-            this.Left = this._parent.Left + this._parent.Width + 2;
-            this.Top = this._parent.Top;
-            if (this.Height != this._parent.Height) this.Height = this._parent.Height;
+            if (listViewNotifications.SelectedItems.Count > 0)
+            {
+                ArchivedNotificationListItemWrapper selection = (ArchivedNotificationListItemWrapper)listViewNotifications.SelectedItems[0];
+                selection.Notification.Item.NotificationClicked();
+            }
         }
 
+        private void ButtonClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void frmQueuedNotifications_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            NotificationManager.Instance.ClearQueuedNotifications();
+        }
 
         private class ArchivedNotificationListItemWrapper : ListViewItem
         {
             public ArchivedNotification Notification { get; private set; }
 
-            public ArchivedNotificationListItemWrapper(ArchivedNotification Notification)
+            public ArchivedNotificationListItemWrapper(ArchivedNotification notification)
             {
-                this.Notification = Notification;          
-                this.SubItems.Add(Notification.Args.Title);
+                this.Notification = notification;          
+                this.SubItems.Add(notification.Args.Title);
             }
         }
     }

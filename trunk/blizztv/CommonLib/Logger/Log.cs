@@ -20,113 +20,50 @@ using System.IO;
 
 namespace BlizzTV.CommonLib.Logger
 {
-    #region log-message-types
-
-    /// <summary>
-    /// The log-message type.
-    /// </summary>
-    public enum LogMessageTypes
+    public sealed class Log : IDisposable // Enables logging of messages to a log-file.
     {
-        /// <summary>
-        /// Debug message.
-        /// </summary>
-        DEBUG,
-        /// <summary>
-        /// Informational message.
-        /// </summary>
-        INFO,
-        /// <summary>
-        /// Error message.
-        /// </summary>
-        ERROR,
-        /// <summary>
-        /// Fatal error messsage.
-        /// </summary>
-        FATAL,
-    }
-
-    #endregion
-
-    /// <summary>
-    /// Enables logging of messages to a log file.
-    /// </summary>
-    public sealed class Log : IDisposable
-    {
-        #region members
+        #region Instance
 
         private static Log _instance = new Log();
-        /// <summary>
-        /// The log instance.
-        /// </summary>
         public static Log Instance { get { return _instance; } }
-
-        private bool _logger_enabled = false;
-        private FileStream _file_stream;
-        private StreamWriter _log_stream;
-        private string _log_file = "debug.log";
-        private bool disposed = false;
 
         #endregion
 
-        #region ctor
+        private bool _loggerEnabled = false;
+        private FileStream _fileStream;
+        private StreamWriter _logStream;
+        private string _logFile = "debug.log";
+        private bool _disposed = false;
 
         private Log() { }
 
-        #endregion
-
-        #region public functions
-        /// <summary>
-        /// Enables the logger.
-        /// </summary>
-        public void EnableLogger()
+        public void EnableLogger() // Enables the logger.
         {
-            if (!this._logger_enabled) // make sure the log is not enabled before
-            {
-                this._file_stream = new FileStream(this._log_file, FileMode.Append, FileAccess.Write);
-                this._log_stream = new StreamWriter(this._file_stream);
-                this._logger_enabled = true;
-            }
+            if (this._loggerEnabled) return; // make sure the logger is enabled.
+            this._fileStream = new FileStream(this._logFile, FileMode.Append, FileAccess.Write);
+            this._logStream = new StreamWriter(this._fileStream);
+            this._loggerEnabled = true;
         }
 
-        /// <summary>
-        /// Disables the logger
-        /// </summary>
-        public void DisableLogger()
+        public void DisableLogger() // Disables the logger.
         {
-            if (this._logger_enabled)
-            {
-                this._logger_enabled = false;
-                this._file_stream.Close();
-            }
+            if (!this._loggerEnabled) return;
+            this._loggerEnabled = false;
+            this._fileStream.Close();
         }
 
-        /// <summary>
-        /// Writes supplied message to a log file with given message type. Also forwards the message to DebugConsole.
-        /// </summary>
-        /// <param name="_type">The message type.</param>
-        /// <param name="_str">The message</param>
-        public void Write(LogMessageTypes _type, string _str)
+        public void Write(LogMessageTypes type, string str) // Writes a supplied log message to the log-file and also forwards it to DebugConsole.
         {
-            DebugConsole.Instance.Write(_type, _str); // also pass message to debug console
-            if (this._logger_enabled)
-            {
-                this._log_stream.WriteLine(string.Format("[{0}][{1}]: {2}", DateTime.Now.ToString("HH:mm:ss"), _type.ToString().PadLeft(5), _str));
-                this._log_stream.AutoFlush = true; // Auto-flush and write the data to the file immediatly.
-            }
+            DebugConsole.Instance.Write(type, str); // also pass message to debug console
+            if (!this._loggerEnabled) return;
+            this._logStream.WriteLine(string.Format("[{0}][{1}]: {2}", DateTime.Now.ToString("HH:mm:ss"), type.ToString().PadLeft(5), str));
+            this._logStream.AutoFlush = true; // Auto-flush and write the data to the file immediatly.
         }
-
-        #endregion
 
         #region de-ctor
 
-        /// <summary>
-        /// de-constructor
-        /// </summary>
         ~Log() { Dispose(false); }
 
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -135,18 +72,24 @@ namespace BlizzTV.CommonLib.Logger
 
         private void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (this._loggerEnabled)
             {
-                if (this._logger_enabled)
-                {
-                    this._file_stream.Close();
-                    this._file_stream.Dispose();
-                }
-                this._file_stream = null;
-                disposed = true;
+                this._fileStream.Close();
+                this._fileStream.Dispose();
             }
+            this._fileStream = null;
+            _disposed = true;
         }
 
         #endregion
+    }
+
+    public enum LogMessageTypes
+    {
+        Debug,
+        Info,
+        Error,
+        Fatal,
     }
 }

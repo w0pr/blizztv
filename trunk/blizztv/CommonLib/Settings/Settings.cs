@@ -19,91 +19,28 @@ using Nini.Config;
 
 namespace BlizzTV.CommonLib.Settings
 {
-    /// <summary>
-    /// Settings
-    /// </summary>
     public class Settings
     {
-        private IConfig _section;
+        private readonly IConfig _section;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="SectionName"></param>
-        public Settings(string SectionName)
+        public Settings(string sectionName)
         {
-            this._section = SettingsManager.Instance.Section(SectionName);
-            if (this._section == null) this._section = SettingsManager.Instance.AddSection(SectionName);
+            this._section = SettingsManager.Instance.Section(sectionName);
+            if (this._section == null) this._section = SettingsManager.Instance.AddSection(sectionName);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Save()
         {
             SettingsManager.Instance.Save();     
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="default_value"></param>
-        /// <returns></returns>
-        protected bool GetBoolean(string key, bool default_value) { return this._section.GetBoolean(key, default_value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="default_value"></param>
-        /// <returns></returns>
-        protected double GetDouble(string key, double default_value) { return this._section.GetDouble(key, default_value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="default_value"></param>
-        /// <returns></returns>
-        protected float GetFloat(string key, float default_value) { return this._section.GetFloat(key, default_value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="default_value"></param>
-        /// <returns></returns>
-        protected int GetInt(string key, int default_value) { return this._section.GetInt(key, default_value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        /// 
+        protected bool GetBoolean(string key, bool defaultValue) { return this._section.GetBoolean(key, defaultValue); }
+        protected double GetDouble(string key, double defaultValue) { return this._section.GetDouble(key, defaultValue); }
+        protected float GetFloat(string key, float defaultValue) { return this._section.GetFloat(key, defaultValue); }
+        protected int GetInt(string key, int defaultValue) { return this._section.GetInt(key, defaultValue); }        
+        protected long GetLong(string key, long defaultValue) { return this._section.GetLong(key, defaultValue); }
+        protected string GetString(string key, string defaultValue) { return this._section.Get(key, defaultValue); }
         protected string[] GetEntryKeys() { return this._section.GetKeys(); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="default_value"></param>
-        /// <returns></returns>
-        protected long GetLong(string key, long default_value) { return this._section.GetLong(key, default_value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="default_value"></param>
-        /// <returns></returns>
-        protected string GetString(string key, string default_value) { return this._section.Get(key, default_value); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
         protected void Set(string key, object value) { this._section.Set(key, value); }
     }
 }

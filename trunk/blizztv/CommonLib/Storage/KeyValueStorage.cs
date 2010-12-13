@@ -22,22 +22,25 @@ namespace BlizzTV.CommonLib.Storage
 {
     public sealed class KeyValueStorage
     {
-        private string _storage_folder = "Storage";
-        private PersistentDictionary<string, byte> _dictionary;
+        #region instance
 
         private static KeyValueStorage _instance = new KeyValueStorage();
         public static KeyValueStorage Instance { get { return _instance; } }
 
+        #endregion
+
+        private const string StorageFolder = "Storage";
+        private readonly PersistentDictionary<string, byte> _dictionary;        
+
         private KeyValueStorage()
         {
-            if (!this.StorageExists()) Directory.CreateDirectory(this._storage_folder);
-            this._dictionary = new PersistentDictionary<string, byte>(this._storage_folder);
+            if (!this.StorageExists()) Directory.CreateDirectory(StorageFolder);
+            this._dictionary = new PersistentDictionary<string, byte>(StorageFolder);
         }
 
         public byte GetByte(string key)
         {
-            if (!this.Exists(key)) return 0;
-            else return this._dictionary[key];
+            return this.Exists(key) ? this._dictionary[key] : (byte)0;
         }
 
         public void SetByte(string key, byte value)
@@ -58,8 +61,7 @@ namespace BlizzTV.CommonLib.Storage
 
         internal bool StorageExists()
         {
-            if (!Directory.Exists(this._storage_folder)) return false;
-            else return true;
+            return Directory.Exists(StorageFolder);
         }
     }
 }

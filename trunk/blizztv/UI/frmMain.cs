@@ -212,11 +212,11 @@ namespace BlizzTV.UI
 
                 switch (UpdateManager.Instance.FoundUpdate.UpdateType) // switch on found update-type
                 {
-                    case UpdateTypes.STABLE:
+                    case UpdateTypes.Stable:
                         updateQuestion = "Found a new available update. Do you want to update now?";
                         updateTitle = "New Update Found!";
                         break;
-                    case UpdateTypes.BETA:
+                    case UpdateTypes.Beta:
                         updateQuestion = "Found a new available BETA update. Do you want to update to this BETA version now?";
                         updateTitle = "New Beta Update Found!";
                         break;

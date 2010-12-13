@@ -65,7 +65,7 @@ namespace BlizzTV
 
             #region actual startup 
 
-            Log.Instance.Write(LogMessageTypes.INFO, "BlizzTV Startup.."); 
+            Log.Instance.Write(LogMessageTypes.Info, "BlizzTV Startup.."); 
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

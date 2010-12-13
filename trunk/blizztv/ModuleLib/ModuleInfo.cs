@@ -83,7 +83,7 @@ namespace BlizzTV.ModuleLib
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("PluginInfo:CreateInstance() exception: {0}", e.ToString()));
+                    Log.Instance.Write(LogMessageTypes.Error, string.Format("PluginInfo:CreateInstance() exception: {0}", e.ToString()));
                 }
             }
             return this._instance;
@@ -118,7 +118,7 @@ namespace BlizzTV.ModuleLib
             }
             catch (Exception e) 
             {
-                Log.Instance.Write(LogMessageTypes.ERROR,string.Format("ReadPluginInfo() exception: {0}",e.ToString()));
+                Log.Instance.Write(LogMessageTypes.Error,string.Format("ReadPluginInfo() exception: {0}",e.ToString()));
             }
         }
 

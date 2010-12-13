@@ -21,32 +21,30 @@ using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.CommonLib.Settings
 {
-    /// <summary>
-    /// The settings parser wrapper.
-    /// </summary>
     internal sealed class SettingsManager
-    {        
+    {
+        #region instance
+
         private static SettingsManager _instance = new SettingsManager();
-        private IniConfigSource _parser;
-        private bool _file_exists = true;
-        private string _config_file = "blizztv.ini";
+        public static SettingsManager Instance { get { return _instance; } }
 
-        /// <summary>
-        /// Returns instance of GlobalSettings.
-        /// </summary>
-        public static SettingsManager Instance { get { return _instance; } }             
+        #endregion
 
+        private readonly IniConfigSource _parser;
+        private bool _fileExists = true;
+        private const string ConfigFile = "blizztv.ini";
+      
         private SettingsManager()
         {
             try
             {
-                this._parser = new IniConfigSource(this._config_file);
+                this._parser = new IniConfigSource(ConfigFile);
             }
             catch (Exception e)
             {
-                this._file_exists = false;
+                this._fileExists = false;
                 this._parser = new IniConfigSource();
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("SettingsParser load exception: {0}", e.ToString()));
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("SettingsParser load exception: {0}", e));
             }
             finally
             {
@@ -55,36 +53,23 @@ namespace BlizzTV.CommonLib.Settings
             }
         }
 
-        /// <summary>
-        /// Returns the askes config section.
-        /// </summary>
-        /// <param name="Section">The asked section name.</param>
-        /// <returns>The asked config section.</returns>
-        internal IConfig Section(string Section)
+        internal IConfig Section(string section) // Returns the asked config section.
         {
-            return this._parser.Configs[Section];
+            return this._parser.Configs[section];
         }
 
-        /// <summary>
-        /// Ads a config section.
-        /// </summary>
-        /// <param name="Section">The config section name.</param>
-        /// <returns>Returns added config section.</returns>
-        internal IConfig AddSection(string Section)
+        internal IConfig AddSection(string section) // Adds a config section.
         {
-            return this._parser.AddConfig(Section);
+            return this._parser.AddConfig(section);
         }
 
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        internal void Save()
+        internal void Save() //  Saves the settings.
         {
-            if (this._file_exists) this._parser.Save();
+            if (this._fileExists) this._parser.Save();
             else
             {
-                this._parser.Save(this._config_file);
-                this._file_exists = true;
+                this._parser.Save(ConfigFile);
+                this._fileExists = true;
             }
         }
     }

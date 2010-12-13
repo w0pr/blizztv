@@ -135,7 +135,7 @@ namespace BlizzTV.Modules.Feeds
                         this.RootListItem.Childs.Add(pair.Key, pair.Value);
                         foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
                     }
-                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
+                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
                     Workload.Instance.Step(this);
                 }
 

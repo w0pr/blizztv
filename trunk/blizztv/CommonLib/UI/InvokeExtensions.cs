@@ -19,39 +19,26 @@ using System.Windows.Forms;
 
 namespace BlizzTV.CommonLib.UI
 {
-    /// <summary>
-    /// Provides control-invoke extensions
-    /// </summary>
     public static class InvokeExtensions
     {
-        /// <summary>
-        /// Sync. control-invoke extension.
-        /// </summary>
-        /// <param name="control">The control that will invoke.</param>
-        /// <param name="del">The delegate to be run.</param>
-        public static void InvokeHandler(this Control control, MethodInvoker del) 
+        public static void InvokeHandler(this Control control, MethodInvoker del) // Sync. control-invoke extension.
         {
             if (control.InvokeRequired)
             {
                 control.Invoke(del);
                 return; 
             }
-            else del(); // run the actual code.
+            del(); // run the actual code.
         }
 
-        /// <summary>
-        /// Async. control-invoke extension.
-        /// </summary>
-        /// <param name="control">The control that will invoke.</param>
-        /// <param name="del">The delegate to be run.</param>
-        public static void AsyncInvokeHandler(this Control control, MethodInvoker del)
+        public static void AsyncInvokeHandler(this Control control, MethodInvoker del) // Async. control-invoke extension.
         {
             if (control.InvokeRequired)
             {
                 control.BeginInvoke(del);
                 return; 
             }
-            else del(); // run the actual code.
+            del(); // run the actual code.
         }
     }
 }

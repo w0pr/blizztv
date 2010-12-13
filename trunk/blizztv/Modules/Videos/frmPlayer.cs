@@ -47,7 +47,7 @@ namespace BlizzTV.Modules.Videos
             }
             catch (Exception exc)
             {
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannelsPlugin Player Error: \n {0}", exc.ToString()));
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannelsPlugin Player Error: \n {0}", exc.ToString()));
                 System.Windows.Forms.MessageBox.Show(string.Format("An error occured in video player. \n\n[Error Details: {0}]", exc.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }

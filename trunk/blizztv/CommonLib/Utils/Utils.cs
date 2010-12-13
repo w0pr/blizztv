@@ -21,44 +21,24 @@ namespace BlizzTV.CommonLib.Utils
 {
     #region Common stuff used by BlizzTV and it's plugins
  
-    /// <summary>
-    /// Stores DateTime with zone information and allows to get store DateTime in original, UTC and local-time zone.
-    /// </summary>
-    public class ZonedDateTime
+    public class ZonedDateTime // Stores DateTime with zone information and allows to get store DateTime in original, UTC and local-time zone.
     {
         private readonly DateTime _original;
         private readonly DateTime _utc;
         private readonly DateTime _local;
-        private readonly TimeZoneInfo _time_zone_info;
+        private readonly TimeZoneInfo _timeZoneInfo;
 
-        /// <summary>
-        /// Constructs a new DateTime with zone information
-        /// </summary>
-        /// <param name="DateTime">The datetime.</param>
-        /// <param name="TimeZoneInfo">The supplied datetime's zone information.</param>
-        public ZonedDateTime(DateTime DateTime, TimeZoneInfo TimeZoneInfo)
+        public ZonedDateTime(DateTime dateTime, TimeZoneInfo timeZoneInfo)
         {
-            this._original = DateTime;
-            this._utc = TimeZoneInfo.ConvertTimeToUtc(DateTime, TimeZoneInfo);
+            this._original = dateTime;
+            this._utc = TimeZoneInfo.ConvertTimeToUtc(dateTime, timeZoneInfo);
             this._local = TimeZoneInfo.ConvertTime(this._utc, TimeZoneInfo.Local);
-            this._time_zone_info = TimeZoneInfo;
+            this._timeZoneInfo = timeZoneInfo;
         }
 
-        /// <summary>
-        /// TimeZoneInfo of the DateTime.
-        /// </summary>
-        public TimeZoneInfo TimeZoneInfo { get { return this._time_zone_info; } }
-        /// <summary>
-        /// DateTime in original time-zone.
-        /// </summary>
+        public TimeZoneInfo TimeZoneInfo { get { return this._timeZoneInfo; } }
         public DateTime OriginalTime { get { return this._original; } }
-        /// <summary>
-        /// DateTime in UTC.
-        /// </summary>
         public DateTime UniversalTime { get { return this._utc; } }
-        /// <summary>
-        /// DateTime in computer's local time-zone.
-        /// </summary>
         public DateTime LocalTime { get { return this._local; } }
     }
 

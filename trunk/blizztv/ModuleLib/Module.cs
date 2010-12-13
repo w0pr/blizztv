@@ -104,7 +104,7 @@ namespace BlizzTV.ModuleLib
         /// </summary>
         protected void NotifyUpdateStarted()
         {
-            Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin update started: '{0}'.", this.Attributes.Name));
+            Log.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update started: '{0}'.", this.Attributes.Name));
             if (OnPluginUpdateStarted != null) OnPluginUpdateStarted(this);
         }
 
@@ -128,8 +128,8 @@ namespace BlizzTV.ModuleLib
         /// <remarks>Plugins can use this method to notify observers about it's loading results.</remarks>
         protected void NotifyUpdateComplete(PluginUpdateCompleteEventArgs e)
         {
-            if (e.Success) Log.Instance.Write(LogMessageTypes.DEBUG, string.Format("Plugin update completed with success: '{0}'.", this.Attributes.Name));
-            else Log.Instance.Write(LogMessageTypes.ERROR, string.Format("Plugin update failed: '{0}'.", this.Attributes.Name));
+            if (e.Success) Log.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update completed with success: '{0}'.", this.Attributes.Name));
+            else Log.Instance.Write(LogMessageTypes.Error, string.Format("Plugin update failed: '{0}'.", this.Attributes.Name));
             if (OnPluginUpdateComplete != null) OnPluginUpdateComplete(this,e); // notify observers.
         }      
 

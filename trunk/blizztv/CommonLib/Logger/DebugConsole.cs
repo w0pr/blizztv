@@ -23,21 +23,16 @@ using Microsoft.Win32.SafeHandles;
 
 namespace BlizzTV.CommonLib.Logger
 {
-    /// <summary>
-    /// Serves a debug-console.
-    /// </summary>
-    public class DebugConsole : IDisposable
+    public class DebugConsole
     {
-        #region members
+        #region Instance
 
         private static DebugConsole _instance = new DebugConsole();
-        /// <summary>
-        /// DebugConsole instance.
-        /// </summary>
         public static DebugConsole Instance { get { return _instance; } }
 
-        private bool _debug_console_enabled = false;
-        private bool disposed = false;
+        #endregion
+
+        private bool _debugConsoleEnabled = false;
 
         // The GetStdHandle() and AllocConsole() functions to bind a console window to a windowed application.
         [DllImport("kernel32.dll", EntryPoint = "GetStdHandle", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
@@ -46,110 +41,53 @@ namespace BlizzTV.CommonLib.Logger
         private static extern int AllocConsole();
 
         // API constants.
-        private const int STD_OUTPUT_HANDLE = -11;
-        private const int MY_CODE_PAGE = 437;
-
-        #endregion
-
-        #region ctor
+        private const int StdOutputHandle = -11;
+        private const int MyCodePage = 437;
 
         private DebugConsole() { }
 
-        #endregion
-
-        #region public functions 
-
-        /// <summary>
-        /// Enables the debug-console.
-        /// </summary>
-        public void EnableDebugConsole()
+        public void EnableDebugConsole() // Enables the debug console.
         {
-            if (!this._debug_console_enabled) // make sure it's not already inited.
-            {
-                this.init();
-                this._debug_console_enabled = true;
-            }
+            if (this._debugConsoleEnabled) return; // make sure it's not initialized before.
+            this.Init();
+            this._debugConsoleEnabled = true;
         }
 
-        /// <summary>
-        /// Disables the debug-console.
-        /// </summary>
-        public void DisableDebugConsole()
+        public void DisableDebugConsole() // Disables the debug console.
         {
-            if (this._debug_console_enabled)
-            {
-                this._debug_console_enabled = false;
-            }
+            if (this._debugConsoleEnabled) this._debugConsoleEnabled = false;
         }
 
-        /// <summary>
-        /// Writes a given message to console with given message-type.
-        /// </summary>
-        /// <param name="_type">The message type.</param>
-        /// <param name="_str">The message.</param>
-        public void Write(LogMessageTypes _type, string _str)
+        public void Write(LogMessageTypes type, string str) // Write's a supplied message to console
         {
-            if (this._debug_console_enabled) // make sure that the console is enable
-            {
-                Console.ForegroundColor = GetMessageColor(_type); // the foreground color.
-                Console.WriteLine(string.Format("[{0}][{1}]: {2}", DateTime.Now.ToString("HH:mm:ss"), _type.ToString().PadLeft(5), _str));
-                Console.ResetColor(); // reset color back.
-            }
+            if (!this._debugConsoleEnabled) return; // make sure console is enabled.
+            Console.ForegroundColor = GetMessageColor(type); // the foreground color.
+            Console.WriteLine(string.Format("[{0}][{1}]: {2}", DateTime.Now.ToString("HH:mm:ss"), type.ToString().PadLeft(5), str));
+            Console.ResetColor(); // reset color back.
         }
 
-        #endregion
-
-        #region internal logic
-
-        private  void init() // binds a new console window to a windowed application
+        private void Init() // binds a new console window to a windowed application.
         {
             AllocConsole(); // allocate a console.
-            IntPtr stdHandle = GetStdHandle(STD_OUTPUT_HANDLE); // the console handle.
+            IntPtr stdHandle = GetStdHandle(StdOutputHandle); // the console handle.
             SafeFileHandle safeFileHandle = new SafeFileHandle(stdHandle, true);
             FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write); // filestream.
-            Encoding encoding = System.Text.Encoding.GetEncoding(MY_CODE_PAGE); // encoding.
+            Encoding encoding = System.Text.Encoding.GetEncoding(MyCodePage); // encoding.
             StreamWriter standardOutput = new StreamWriter(fileStream, encoding); // streamwriter.
             standardOutput.AutoFlush = true; // auto-flush ON.
-            Console.SetOut(standardOutput); 
+            Console.SetOut(standardOutput); // set the output.
         }
 
-        private ConsoleColor GetMessageColor(LogMessageTypes _type) // Allows coloring of message-type's.
+        private ConsoleColor GetMessageColor(LogMessageTypes type) // Allows coloring of message-type's.
         {
-            switch (_type)
+            switch (type)
             {
-                case LogMessageTypes.DEBUG: return ConsoleColor.Green;
-                case LogMessageTypes.INFO: return ConsoleColor.Yellow;
-                case LogMessageTypes.ERROR: return ConsoleColor.Red;
-                case LogMessageTypes.FATAL: return ConsoleColor.DarkRed;
+                case LogMessageTypes.Debug: return ConsoleColor.Green;
+                case LogMessageTypes.Info: return ConsoleColor.Yellow;
+                case LogMessageTypes.Error: return ConsoleColor.Red;
+                case LogMessageTypes.Fatal: return ConsoleColor.DarkRed;
                 default: return ConsoleColor.White;
             }
         }
-
-        #endregion
-
-        #region de-ctor
-
-        /// <summary>
-        /// De-constructor.
-        /// </summary>
-        ~DebugConsole() { Dispose(false); }
-
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-            }
-        }
-
-    #endregion
     }
 }

@@ -53,7 +53,7 @@ namespace BlizzTV.Modules.Videos.Handlers
 
                 return true;
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e.ToString())); return false; }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e.ToString())); return false; }
         }
     }
 }

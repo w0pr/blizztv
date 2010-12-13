@@ -25,8 +25,12 @@ namespace BlizzTV.CommonLib.Notifications
 {
     public class NotificationManager
     {
+        #region instance
+
         private static NotificationManager _instance = new NotificationManager();
         public static NotificationManager Instance { get { return _instance; } }
+
+        #endregion
 
         private bool _notificationActive = false;
         private frmMain _mainForm;
@@ -75,7 +79,7 @@ namespace BlizzTV.CommonLib.Notifications
         private void NotificationClicked(object sender, EventArgs e)
         {
             this._notificationActive = false;
-            (this._trayIcon.Tag as INotificationRequester).NotificationClicked();
+            ((INotificationRequester) this._trayIcon.Tag).NotificationClicked();
         }
 
         private void NotificationIconClick(object sender, EventArgs e)
@@ -91,17 +95,17 @@ namespace BlizzTV.CommonLib.Notifications
         }
     }
 
-        public class NotificationEventArgs : EventArgs
+    public class NotificationEventArgs : EventArgs
     {
         public string Title { get; private set; }
         public string Text { get; private set; }
         public ToolTipIcon Icon { get; private set; }
 
-        public NotificationEventArgs(string Title, string Text, ToolTipIcon Icon)
+        public NotificationEventArgs(string title, string text, ToolTipIcon icon)
         {
-            this.Title = Title;
-            this.Text = Text;
-            this.Icon = Icon;
+            this.Title = title;
+            this.Text = text;
+            this.Icon = icon;
         }
     }
 }

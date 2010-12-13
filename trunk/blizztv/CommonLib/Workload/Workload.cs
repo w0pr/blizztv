@@ -22,20 +22,23 @@ namespace BlizzTV.CommonLib.Workload
 {
     public class Workload // contains information about current workload progress of plugins so we can animate our progressbar on status strip
     {
+        #region Instance
+
         private static Workload _intance = new Workload();
         public static Workload Instance { get { return _intance; } }
 
-        private int _currentWorkload = 0;
+        #endregion
 
+        private int _currentWorkload = 0;
         private ToolStripProgressBar _progressBar;
         private ToolStripLabel _progressIcon;
 
         private Workload() { }
 
-        public void AttachControls(ToolStripProgressBar progressBar,ToolStripLabel ProgressIcon)
+        public void AttachControls(ToolStripProgressBar progressBar,ToolStripLabel progressIcon)
         {
             this._progressBar = progressBar;
-            this._progressIcon = ProgressIcon;
+            this._progressIcon = progressIcon;
         }
 
         public void Add(object sender, int units)
