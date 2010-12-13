@@ -62,19 +62,19 @@ namespace BlizzTV.Modules.Streams
             this.Subscription.Name = txtName.Text;
             this.Subscription.Slug = slug;
             this.Subscription.Provider = provider.Name;
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
         private void comboBoxProviders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LabelHint.Text = (Providers.Instance.Dictionary[(string)comboBoxProviders.SelectedItem] as StreamProvider).Hint;
+            LabelHint.Text = ((StreamProvider) Providers.Instance.Dictionary[(string)comboBoxProviders.SelectedItem]).Hint;
         }
     }
 }

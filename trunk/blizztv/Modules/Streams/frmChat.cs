@@ -23,16 +23,16 @@ namespace BlizzTV.Modules.Streams
 {
     public partial class frmChat : Form
     {
-        private Stream _stream; // the stream.
-        private frmPlayer _parent;
+        private readonly Stream _stream; // the stream.
+        private readonly frmPlayer _parent;
         private bool _snapParent = false;
 
-        public frmChat(frmPlayer Parent, Stream Stream)
+        public frmChat(frmPlayer parent, Stream stream)
         {
             InitializeComponent();
 
-            this._stream = Stream; // set the stream.
-            this._parent = Parent;
+            this._stream = stream; // set the stream.
+            this._parent = parent;
             this._parent.Move += OnParentMove;
             this._parent.Resize += OnParentResize;
             this._parent.FormClosed += OnParentClose;
@@ -53,8 +53,8 @@ namespace BlizzTV.Modules.Streams
             }
             catch (Exception exc)
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Chat Window Error: \n {0}", exc.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured in stream chat window. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Chat Window Error: \n {0}", exc));
+                MessageBox.Show(string.Format("An error occured in stream chat window. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

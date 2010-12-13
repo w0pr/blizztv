@@ -57,7 +57,7 @@ namespace BlizzTV.Modules.Videos
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             frmAddChannel f = new frmAddChannel();
-            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (f.ShowDialog() == DialogResult.OK)
             {
                 Subscriptions.Instance.Add(f.Subscription);
                 this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription(f.Subscription));
@@ -77,7 +77,7 @@ namespace BlizzTV.Modules.Videos
 
     public class ListviewVideoSubscription : ListViewItem
     {
-        private VideoSubscription _videoSubscription;
+        private readonly VideoSubscription _videoSubscription;
         public VideoSubscription Subscription { get { return this._videoSubscription; } }
 
         public ListviewVideoSubscription(VideoSubscription videoSubscription)

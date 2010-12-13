@@ -21,11 +21,11 @@ using BlizzTV.CommonLib.Web;
 
 namespace BlizzTV.Modules.Streams.Handlers
 {
-    public class Own3DTV:Stream
+    public class Own3Dtv:Stream
     {
         private Regex _regex = new Regex("liveViewers=(.*)&liveStatus=(.*)&liveVerified=.*", RegexOptions.Compiled);
 
-        public Own3DTV(StreamSubscription subscription) : base(subscription) { }
+        public Own3Dtv(StreamSubscription subscription) : base(subscription) { }
 
         public override void Update()
         {
@@ -34,8 +34,8 @@ namespace BlizzTV.Modules.Streams.Handlers
 
             try
             {
-                string api_url = string.Format("http://static.ec.own3d.tv/live_tmp/{0}.txt?{1}", this.Slug, rnd.Next(99999));
-                string response = WebReader.Read(api_url);
+                string apiUrl = string.Format("http://static.ec.own3d.tv/live_tmp/{0}.txt?{1}", this.Slug, rnd.Next(99999));
+                string response = WebReader.Read(apiUrl);
 
                 Match m = _regex.Match(response);
                 if (m.Success)

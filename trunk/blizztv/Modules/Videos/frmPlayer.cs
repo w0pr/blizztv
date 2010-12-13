@@ -24,14 +24,14 @@ namespace BlizzTV.Modules.Videos
 {
     public partial class frmPlayer : Form // The video player.
     {
-        private Video _video; // The video. 
+        private readonly Video _video; // The video. 
 
-        public frmPlayer(Video Video)
+        public frmPlayer(Video video)
         {
             InitializeComponent();
 
             this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
-            this._video = Video; // set the video.
+            this._video = video; // set the video.
             this.Width = GlobalSettings.Instance.VideoPlayerWidth; // get the default player width. 
             this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
             this._video.Process(); // process the video so that it's template variables are replaced.
@@ -48,7 +48,7 @@ namespace BlizzTV.Modules.Videos
             catch (Exception exc)
             {
                 Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannelsPlugin Player Error: \n {0}", exc.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured in video player. \n\n[Error Details: {0}]", exc.Message), "Video Channels Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("An error occured in video player. \n\n[Error Details: {0}]", exc.Message), "Video Channels Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -57,9 +57,9 @@ namespace BlizzTV.Modules.Videos
             SwitchTopMostMode(!this.MenuAlwaysOnTop.Checked);
         }
 
-        private void SwitchTopMostMode(bool TopMost)
+        private void SwitchTopMostMode(bool topMost)
         {
-            if (TopMost)
+            if (topMost)
             {
                 this.TopMost = true;
                 this.MenuAlwaysOnTop.Checked = true;

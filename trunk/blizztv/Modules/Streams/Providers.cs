@@ -24,8 +24,12 @@ namespace BlizzTV.Modules.Streams
 {
     public sealed class Providers : ProvidersHandler
     {
+        #region instance
+
         private static Providers _instance = new Providers();
         public static Providers Instance { get { return _instance; } }
+
+        #endregion
 
         private Providers() : base(typeof(StreamProvider)) { }
     }
@@ -50,7 +54,8 @@ namespace BlizzTV.Modules.Streams
         public string Hint { get; set; }
 
         [XmlIgnoreAttribute]
-        public bool ChatAvailable { get { if (ChatMovie == null) return false; else return true; } }
+        public bool ChatAvailable { get { return ChatMovie != null; }
+        }
 
         public bool LinkValid(string link)
         {
@@ -66,7 +71,5 @@ namespace BlizzTV.Modules.Streams
             Match m = regex.Match(link);
             return m.Groups["Slug"].Value;
         }
-
-        public StreamProvider() { }
     }
 }

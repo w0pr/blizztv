@@ -21,8 +21,13 @@ namespace BlizzTV.Modules.Events
 {
     public class Settings:ModuleSettings
     {
+        #region instance
+
         private static Settings _instance = new Settings();
         public static Settings Instance { get { return _instance; } }
+
+        #endregion
+
         private Settings() : base("Events") { }
 
         public bool AllowEventNotifications { get { return this.GetBoolean("AllowEventNotifications", true); } set { this.Set("AllowEventNotifications", value); } }

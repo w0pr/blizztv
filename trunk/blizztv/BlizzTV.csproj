@@ -185,9 +185,9 @@
     <Compile Include="Modules\Streams\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Streams\Handlers\JustinTV.cs" />
+    <Compile Include="Modules\Streams\Handlers\JustinTv.cs" />
     <Compile Include="Modules\Streams\Handlers\LiveStream.cs" />
-    <Compile Include="Modules\Streams\Handlers\Own3DTV.cs" />
+    <Compile Include="Modules\Streams\Handlers\Own3Dtv.cs" />
     <Compile Include="Modules\Streams\Handlers\UStream.cs" />
     <Compile Include="Modules\Streams\Providers.cs" />
     <Compile Include="Modules\Streams\Settings.cs" />
@@ -214,8 +214,8 @@
     <Compile Include="Modules\Videos\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Videos\Handlers\BlipTV.cs" />
-    <Compile Include="Modules\Videos\Handlers\BlipTVVideo.cs" />
+    <Compile Include="Modules\Videos\Handlers\BlipTv.cs" />
+    <Compile Include="Modules\Videos\Handlers\BlipTvVideo.cs" />
     <Compile Include="Modules\Videos\Handlers\Youtube.cs" />
     <Compile Include="Modules\Videos\Handlers\YoutubeVideo.cs" />
     <Compile Include="Modules\Videos\Providers.cs" />

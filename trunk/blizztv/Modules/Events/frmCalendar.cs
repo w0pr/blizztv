@@ -25,12 +25,12 @@ namespace BlizzTV.Modules.Events
 {
     public partial class frmCalendar : Form
     {
-        private List<Event> _events = new List<Event>(); // the events list.
+        private readonly List<Event> _events = new List<Event>(); // the events list.
 
-        public frmCalendar(List<Event> Events)
+        public frmCalendar(List<Event> events)
         {
             InitializeComponent();
-            this._events = Events; // set the events list.
+            this._events = events; // set the events list.
         }
 
         private void frmCalendar_Load(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace BlizzTV.Modules.Events
             MonthView.DaySelectedTextColor = MonthView.ForeColor;
         }
 
-        private void Calendar_LoadItems(object sender, System.Windows.Forms.Calendar.CalendarLoadEventArgs e) // load the events to calendar.
+        private void Calendar_LoadItems(object sender, CalendarLoadEventArgs e) // load the events to calendar.
         {
             foreach (Event _event in this._events) // loop through events.
             {
@@ -63,7 +63,7 @@ namespace BlizzTV.Modules.Events
             }
         }
 
-        private void MonthView_SelectionChanged(object sender, System.Windows.Forms.Calendar.DateRangeChangedEventArgs e) // months view range change.
+        private void MonthView_SelectionChanged(object sender, DateRangeChangedEventArgs e) // months view range change.
         {
             this.Calendar.SetViewRange(MonthView.SelectionStart, MonthView.SelectionEnd); // update calendar's view range based on the change.
         }
@@ -75,7 +75,7 @@ namespace BlizzTV.Modules.Events
 
         private void Calendar_ItemClick(object sender, CalendarItemEventArgs e)
         {
-            (e.Item.Tag as Event).DoubleClicked(sender, e);
+            ((Event) e.Item.Tag).DoubleClicked(sender, e);
         }
     }
 }

@@ -22,13 +22,13 @@ namespace BlizzTV.Modules.Events
 {
     public partial class frmAlarm : Form
     {
-        private Event _event;
+        private readonly Event _event;
 
-        public frmAlarm(Event Event)
+        public frmAlarm(Event @event)
         {
             InitializeComponent();
 
-            this._event = Event;
+            this._event = @event;
         }
 
         private void frmAlarm_Load(object sender, EventArgs e)

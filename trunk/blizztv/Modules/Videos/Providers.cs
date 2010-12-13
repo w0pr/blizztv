@@ -24,8 +24,12 @@ namespace BlizzTV.Modules.Videos
 {
     public sealed class Providers : ProvidersHandler
     {
+        #region instance
+
         private static Providers _instance = new Providers();
         public static Providers Instance { get { return _instance; } }
+
+        #endregion
 
         private Providers() : base(typeof(VideoProvider)) { }
     }
@@ -45,8 +49,6 @@ namespace BlizzTV.Modules.Videos
 
         [XmlAttribute("FormatHint")]
         public string Hint { get; set; }
-
-        public VideoProvider() { }
 
         public bool LinkValid(string link)
         {

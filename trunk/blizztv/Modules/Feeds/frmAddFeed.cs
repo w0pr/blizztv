@@ -44,7 +44,7 @@ namespace BlizzTV.Modules.Feeds
             }
 
             this.Subscription.Name = txtName.Text;
-            this.Subscription.URL = txtURL.Text;
+            this.Subscription.Url = txtURL.Text;
 
             using (Feed feed = new Feed(this.Subscription))
             {
@@ -55,13 +55,13 @@ namespace BlizzTV.Modules.Feeds
                 }
             }
 
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.DialogResult = DialogResult.OK;
             this.Close();  
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }

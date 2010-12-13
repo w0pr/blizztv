@@ -17,9 +17,9 @@
 
 namespace BlizzTV.Modules.Videos.Handlers
 {
-    public class BlipTVVideo:Video
+    public class BlipTvVideo:Video
     {
-        public BlipTVVideo(string Title, string Guid, string Link, string Provider)
-            : base(Title, Guid, Link, Provider) { }
+        public BlipTvVideo(string title, string guid, string link, string provider)
+            : base(title, guid, link, provider) { }
     }
 }

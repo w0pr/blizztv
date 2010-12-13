@@ -23,19 +23,9 @@ namespace BlizzTV.Modules.Streams.Handlers
 {
     public class UStream:Stream // ustream wrapper
     {
-        #region members
-
-        private UInt32 _stream_id;
-
-        #endregion 
-
-        #region ctor
+        private UInt32 _streamId;
 
         public UStream(StreamSubscription subscription) : base(subscription) { }
-
-        #endregion
-
-        #region internal logic
 
         public override void Update()
         {
@@ -43,8 +33,8 @@ namespace BlizzTV.Modules.Streams.Handlers
 
             try
             {
-                string api_url = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "F7DE9C9A56F4ABB48D170A9881E5AF66"); // the api url
-                string response = WebReader.Read(api_url); // read the api response.
+                string apiUrl = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "F7DE9C9A56F4ABB48D170A9881E5AF66"); // the api url
+                string response = WebReader.Read(apiUrl); // read the api response.
 
                 Hashtable data = (Hashtable)Json.JsonDecode(response); // start parsing json.
                 ArrayList results = (ArrayList)data["results"]; // the results object.
@@ -54,7 +44,7 @@ namespace BlizzTV.Modules.Streams.Handlers
                     if ((string)table["status"].ToString() == "live") // if the stream is live.
                     {
                         this.IsLive = true;
-                        this._stream_id = UInt32.Parse(table["id"].ToString()); // the stream id.
+                        this._streamId = UInt32.Parse(table["id"].ToString()); // the stream id.
                         this.ViewerCount = Int32.Parse(table["viewersNow"].ToString()); // viewers count.
                         this.Description = (string)table["title"].ToString(); // stream description.
                     }
@@ -66,11 +56,9 @@ namespace BlizzTV.Modules.Streams.Handlers
         public override void Process() // for ustream we also need to replace stream_id variable in movie and flash vars templates.
         {
             base.Process(); // base processor should also work (to let it replace the slug variable).
-            this.Movie = this.Movie.Replace("%stream_id%", this._stream_id.ToString()); // replace stream_id in movie template.
-            this.FlashVars = this.FlashVars.Replace("%stream_id%", this._stream_id.ToString()); // replace stream_id in flashvars template.
-            if (this.ChatAvailable) this.ChatMovie = this.ChatMovie.Replace("%stream_id%", this._stream_id.ToString());
+            this.Movie = this.Movie.Replace("%stream_id%", this._streamId.ToString()); // replace stream_id in movie template.
+            this.FlashVars = this.FlashVars.Replace("%stream_id%", this._streamId.ToString()); // replace stream_id in flashvars template.
+            if (this.ChatAvailable) this.ChatMovie = this.ChatMovie.Replace("%stream_id%", this._streamId.ToString());
         }
-
-        #endregion
     }
 }

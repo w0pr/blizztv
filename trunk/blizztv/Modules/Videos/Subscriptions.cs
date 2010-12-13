@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 using BlizzTV.ModuleLib.Subscriptions;
 
@@ -24,8 +25,12 @@ namespace BlizzTV.Modules.Videos
 {
     public sealed class Subscriptions : SubscriptionsHandler
     {
+        #region instance
+
         private static Subscriptions _instance = new Subscriptions();
         public static Subscriptions Instance { get { return _instance; } }
+
+        #endregion
 
         private Subscriptions() : base(typeof(VideoSubscription)) { }
 
@@ -43,12 +48,7 @@ namespace BlizzTV.Modules.Videos
         {
             get
             {
-                Dictionary<string, VideoSubscription> dictionary = new Dictionary<string, VideoSubscription>();
-                foreach (ISubscription subscription in this.List)
-                {
-                    dictionary.Add((subscription as VideoSubscription).Slug, (subscription as VideoSubscription));
-                }
-                return dictionary;
+                return this.List.ToDictionary(subscription => ((VideoSubscription) subscription).Slug, subscription => (subscription as VideoSubscription));
             }
         }
     }
@@ -62,7 +62,5 @@ namespace BlizzTV.Modules.Videos
 
         [XmlAttribute("Provider")]
         public string Provider { get; set; }
-
-        public VideoSubscription() { }
     }
 }

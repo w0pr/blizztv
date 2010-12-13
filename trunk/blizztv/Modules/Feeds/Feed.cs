@@ -27,57 +27,44 @@ namespace BlizzTV.Modules.Feeds
 {
     public class Feed : ListItem
     {
-        #region members
-        
-        private string _url; // the feed url.
-        private string _name; // the feed name.   
-        private bool disposed = false;
+        private bool _disposed = false;
 
-        public string Name { get { return this._name; } }
-        public string URL { get { return this._url; } }
+        public string Name { get; private set; }
+        public string Url { get; private set; }
 
-        // TODO: should be a readonly collection.
-        public List<Story> Stories = new List<Story>(); // the feed's stories
-       
-        #endregion
-
-        #region ctor
+        public List<Story> Stories = new List<Story>(); // the feed's stories -- TODO: should be a readonly collection.
 
         public Feed(FeedSubscription subscription)
             : base(subscription.Name)
         {
-            this._name = subscription.Name;
-            this._url = subscription.URL;
+            this.Name = subscription.Name;
+            this.Url = subscription.Url;
 
             // register context menus.
             this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
         }
 
-        #endregion
-
-        #region internal logic
-
         public bool IsValid()
         {
             return this.Parse();
         }
 
-        public bool Update() 
+        public bool Update()
         {
             if (this.Parse())
             {
                 foreach (Story s in this.Stories) { s.CheckForNotifications(); }
                 return true;
             }
-            else return false;
+            return false;
         }
 
         private bool Parse()
         {
             try
             {
-                string response = WebReader.Read(this.URL); // read the feed xml
+                string response = WebReader.Read(this.Url); // read the feed xml
                 if (response == null) return false;
 
                 XDocument xdoc = XDocument.Parse(response); // parse the xml
@@ -99,30 +86,26 @@ namespace BlizzTV.Modules.Feeds
                 }
                 return true;
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString())); return false; }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e)); return false; }
         }
 
-        void ChildStyleChange(ItemStyle Style)
+        void ChildStyleChange(ItemStyle style)
         {
-            if (this.Style == Style) return;
+            if (this.Style == style) return;
 
-            int unread = 0;
-            foreach (Story s in this.Stories) { if (s.Style == ItemStyle.Bold) unread++; }
-            if (unread > 0) this.Style = ItemStyle.Bold;
-            else this.Style = ItemStyle.Regular;
+            int unread = this.Stories.Count(s => s.Style == ItemStyle.Bold);
+            this.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.Status = Story.Statutes.READ; } // marked all stories as read.
+            foreach (Story s in this.Stories) { s.Status = Story.Statutes.Read; } // marked all stories as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.Status = Story.Statutes.UNREAD; } // marked all stories as unread.
+            foreach (Story s in this.Stories) { s.Status = Story.Statutes.Unread; } // marked all stories as unread.
         }
-
-        #endregion
 
         #region de-ctor
 
@@ -130,16 +113,14 @@ namespace BlizzTV.Modules.Feeds
 
         protected override void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
-                {
-                    foreach (Story s in this.Stories) { s.Dispose(); }
-                    this.Stories.Clear();
-                    this.Stories = null;
-                }
-                base.Dispose(disposing);
+                foreach (Story s in this.Stories) { s.Dispose(); }
+                this.Stories.Clear();
+                this.Stories = null;
             }
+            base.Dispose(disposing);
         }
 
         #endregion

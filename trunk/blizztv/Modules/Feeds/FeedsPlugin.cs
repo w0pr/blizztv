@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
@@ -29,17 +30,11 @@ namespace BlizzTV.Modules.Feeds
     [ModuleAttributes("Feeds","Feed aggregator plugin.","feed_16")]
     public class FeedsPlugin:Module
     {
-        #region members
-
         internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 
-        private Timer _update_timer;
-        private bool disposed = false;
+        private Timer _updateTimer;
+        private bool _disposed = false;
 
         public static FeedsPlugin Instance;
-
-        #endregion
-
-        #region ctor
 
         public FeedsPlugin(): base()
         {
@@ -51,10 +46,6 @@ namespace BlizzTV.Modules.Feeds
             this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
             this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
         }
-
-        #endregion
-
-        #region API handlers
 
         public override void Run()
         {
@@ -77,7 +68,7 @@ namespace BlizzTV.Modules.Feeds
 
             FeedSubscription feedSubscription = new FeedSubscription();
             feedSubscription.Name = "test-feed";
-            feedSubscription.URL = link;
+            feedSubscription.Url = link;
 
             using (Feed feed = new Feed(feedSubscription))
             {
@@ -88,7 +79,7 @@ namespace BlizzTV.Modules.Feeds
                     if (InputBox.Show("Add New Feed", "Please enter name for the new feed", ref feedName) == System.Windows.Forms.DialogResult.OK)
                     {
                         subscription.Name = feedName;
-                        subscription.URL = link;
+                        subscription.Url = link;
                         if (Subscriptions.Instance.Add(subscription)) this.RunManualUpdate(this, new EventArgs()); else return false;
                         return true;
                     }
@@ -98,61 +89,54 @@ namespace BlizzTV.Modules.Feeds
             return false;
         }
 
-        #endregion
-
-        #region internal logic
-
         internal void UpdateFeeds()
         {
-            if (!this.Updating)
+            if (this.Updating) return;
+
+            this.Updating = true;
+            this.NotifyUpdateStarted();
+
+            if (this._feeds.Count > 0) // clear previous entries before doing an update.
             {
-                this.Updating = true;
-                this.NotifyUpdateStarted();
-
-                if (this._feeds.Count > 0) // clear previous entries before doing an update.
-                {
-                    this._feeds.Clear();
-                    this.RootListItem.Childs.Clear();
-                }
-                
-                this.RootListItem.Style = ItemStyle.Regular;
-                this.RootListItem.SetTitle("Updating feeds..");
-
-                foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
-                {
-                    Feed feed = new Feed(pair.Value);
-                    this._feeds.Add(pair.Value.URL, feed);
-                    feed.OnStyleChange += ChildStyleChange;
-                }
-
-                Workload.Instance.Add(this, this._feeds.Count);
-
-                foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
-                {
-                    try
-                    {
-                        pair.Value.Update(); // update the feed.
-                        this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                        foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.GUID, story); } // register the story items.
-                    }
-                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e.ToString())); }
-                    Workload.Instance.Step(this);
-                }
-
-                this.RootListItem.SetTitle("Feeds");
-                this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-                this.Updating = false;
+                this._feeds.Clear();
+                this.RootListItem.Childs.Clear();
             }
+                
+            this.RootListItem.Style = ItemStyle.Regular;
+            this.RootListItem.SetTitle("Updating feeds..");
+
+            foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
+            {
+                Feed feed = new Feed(pair.Value);
+                this._feeds.Add(pair.Value.Url, feed);
+                feed.OnStyleChange += ChildStyleChange;
+            }
+
+            Workload.Instance.Add(this, this._feeds.Count);
+
+            foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
+            {
+                try
+                {
+                    pair.Value.Update(); // update the feed.
+                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                    foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.Guid, story); } // register the story items.
+                }
+                catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e)); }
+                Workload.Instance.Step(this);
+            }
+
+            this.RootListItem.SetTitle("Feeds");
+            this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
+            this.Updating = false;
         }
 
-        void ChildStyleChange(ItemStyle Style)
+        void ChildStyleChange(ItemStyle style)
         {
-            if (this.RootListItem.Style == Style) return;
+            if (this.RootListItem.Style == style) return;
 
-            int unread = 0;
-            foreach (KeyValuePair<string, Feed> pair in this._feeds) { if (pair.Value.Style == ItemStyle.Bold) unread++; }
-            if (unread > 0) this.RootListItem.Style = ItemStyle.Bold;
-            else this.RootListItem.Style = ItemStyle.Regular;
+            int unread = this._feeds.Count(pair => pair.Value.Style == ItemStyle.Bold);
+            this.RootListItem.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
         }
 
         public void OnSaveSettings()
@@ -162,16 +146,16 @@ namespace BlizzTV.Modules.Feeds
 
         private void SetupUpdateTimer()
         {
-            if (this._update_timer != null)
+            if (this._updateTimer != null)
             {
-                this._update_timer.Enabled = false;
-                this._update_timer.Elapsed -= OnTimerHit;
-                this._update_timer = null;
+                this._updateTimer.Enabled = false;
+                this._updateTimer.Elapsed -= OnTimerHit;
+                this._updateTimer = null;
             }
 
-            _update_timer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
-            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            _update_timer.Enabled = true;
+            _updateTimer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
+            _updateTimer.Elapsed += OnTimerHit;
+            _updateTimer.Enabled = true;
         }
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
@@ -181,47 +165,42 @@ namespace BlizzTV.Modules.Feeds
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, Feed> pair in this._feeds)
+            foreach (Story s in this._feeds.SelectMany(pair => pair.Value.Stories))
             {
-                foreach (Story s in pair.Value.Stories) { s.Status = Story.Statutes.READ; }
+                s.Status = Story.Statutes.Read;
             }
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, Feed> pair in this._feeds)
+            foreach (Story s in this._feeds.SelectMany(pair => pair.Value.Stories))
             {
-                foreach (Story s in pair.Value.Stories) { s.Status = Story.Statutes.UNREAD; }
+                s.Status = Story.Statutes.Unread;
             }
         }
 
         private void RunManualUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread t = new System.Threading.Thread(delegate() { this.UpdateFeeds(); }) 
-            { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
-            t.Start();                 
+            System.Threading.Thread thread = new System.Threading.Thread(this.UpdateFeeds) {IsBackground = true};
+            thread.Start();                 
         }
-
-        #endregion
 
         #region de-ctor
 
         protected override void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
-                {
-                    this._update_timer.Enabled = false;
-                    this._update_timer.Elapsed -= OnTimerHit;
-                    this._update_timer.Dispose();
-                    this._update_timer = null;
-                    foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Dispose(); }
-                    this._feeds.Clear();
-                    this._feeds = null;
-                }
-                base.Dispose(disposing);
-            }            
+                this._updateTimer.Enabled = false;
+                this._updateTimer.Elapsed -= OnTimerHit;
+                this._updateTimer.Dispose();
+                this._updateTimer = null;
+                foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Dispose(); }
+                this._feeds.Clear();
+                this._feeds = null;
+            }
+            base.Dispose(disposing);
         }
 
         #endregion

@@ -25,34 +25,63 @@ namespace BlizzTV.Modules.Events
 {
     public class Event:ListItem
     {
-        #region members
+        public string FullTitle { get; private set; }
+        public string Description { get; private set; }
+        public string EventId { get; private set; }
+        public bool IsOver { get; private set; }
+        public bool Notified { get; private set; }
+        public ZonedDateTime Time { get; private set; }
 
-        private string _full_title; // the full title of the event.
-        private string _description; // the event description.
-        private string _event_id; // the event id.
-        private bool _is_over = false; // is the event over?
-        private bool _notified = false; // was user notified about the event?
-        private ZonedDateTime _time; // zoned event time info. 
-
-        public string FullTitle { get { return this._full_title; } }
-        public string Description { get { return this._description; } }
-        public string EventID { get { return this._event_id; } }
-        public bool IsOver { get { return this._is_over; } }
-        public bool Notified { get { return this._notified; } }
-        public ZonedDateTime Time { get { return this._time; } }
-
-        #endregion
-
-        #region ctor
-
-        public Event(string Title, string FullTitle, string Description, string EventID,bool isOver, ZonedDateTime Time)
-            : base(Title)
+        public EventStatus Status // returns event status. 
         {
-            this._full_title = FullTitle;
-            this._description = Description;
-            this._event_id = EventID;
-            this._is_over = isOver;
-            this._time = Time;
+            get
+            {
+                if (this.IsOver || DateTime.Now > this.Time.LocalTime.AddHours(1)) return EventStatus.Over; // is it over?
+                if (this.Time.LocalTime <= DateTime.Now && DateTime.Now <= this.Time.LocalTime.AddHours(1)) return EventStatus.InProgress; // is it in progress?
+                return EventStatus.Upcoming; // or is it upcoming?
+            }
+        }
+
+        public double MinutesLeft
+        {
+            get
+            {
+                if (this.Status == EventStatus.Upcoming)
+                {
+                    TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
+                    return timeleft.TotalMinutes;
+                }
+                return 0;
+            }
+        }
+
+        public string TimeLeft // returns event status text.
+        {
+            get
+            {
+                string status = "";
+                switch (this.Status)
+                {
+                    case EventStatus.Upcoming:
+                        TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
+                        if (timeleft.Days > 0) status += string.Format("{0} days, ", timeleft.Days);
+                        if (timeleft.Hours > 0) status += string.Format("{0} hours, ", timeleft.Hours);
+                        if (timeleft.Minutes > 0) status += string.Format("{0} minutes", timeleft.Minutes);
+                        break;
+                }
+                return status;
+            }
+        }
+
+        public Event(string title, string fullTitle, string description, string eventId,bool isOver, ZonedDateTime time)
+            : base(title)
+        {
+            Notified = false;
+            this.FullTitle = fullTitle;
+            this.Description = description;
+            this.EventId = eventId;
+            this.IsOver = isOver;
+            this.Time = time;
 
             this.Icon = Properties.Resources.event_16;
         }
@@ -83,14 +112,14 @@ namespace BlizzTV.Modules.Events
         {
             if (Settings.Instance.AllowEventNotifications && !this.Notified) // if notifications are enabled & we haven't notified before.
             {
-                if ((Settings.Instance.AllowNotificationOfInprogressEvents) && (this.Status == EventStatus.IN_PROGRESS)) // if in-progress event notifications are enabled, check for it the event has started.
+                if ((Settings.Instance.AllowNotificationOfInprogressEvents) && (this.Status == EventStatus.InProgress)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
-                    this._notified = true; // don't notify about it more then once
+                    this.Notified = true; // don't notify about it more then once
                     NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
                 }
                 else if (this.MinutesLeft > 0 && (this.MinutesLeft <= Settings.Instance.MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
                 {
-                    this._notified = true; // don't notify about it more then once
+                    this.Notified = true; // don't notify about it more then once
                     NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("Event starts in {0} minutes: {1}", (this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
                 }
             }
@@ -98,94 +127,48 @@ namespace BlizzTV.Modules.Events
 
         private void CheckForAlarms()
         {
-            if (this.AlarmExists())
-            {
-                if (this.Status == EventStatus.UPCOMING)
-                {
-                    if ((int)this.GetAlarmMinutes() == (int)this.MinutesLeft)
-                    {
-                        this.ShowForm(new frmAlarm(this));
-                    }
-                }
-                else this.DeleteAlarm();
-            }
-        }
+            if (!this.AlarmExists()) return;
 
-        public EventStatus Status // returns event status. 
-        {
-            get
+            if (this.Status == EventStatus.Upcoming)
             {
-                if (this.IsOver || DateTime.Now > this.Time.LocalTime.AddHours(1)) return EventStatus.OVER; // is it over?
-                else if (this.Time.LocalTime <= DateTime.Now && DateTime.Now <= this.Time.LocalTime.AddHours(1)) return EventStatus.IN_PROGRESS; // is it in progress?
-                else return EventStatus.UPCOMING; // or is it upcoming?
-            }
-        }
-
-        public string TimeLeft // returns event status text.
-        {            
-            get
-            {
-                string status = "";
-                switch (this.Status)
+                if ((int)this.GetAlarmMinutes() == (int)this.MinutesLeft)
                 {
-                    case EventStatus.UPCOMING:
-                        TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
-                        if (timeleft.Days > 0) status += string.Format("{0} days, ", timeleft.Days);
-                        if (timeleft.Hours > 0) status += string.Format("{0} hours, ", timeleft.Hours);
-                        if (timeleft.Minutes > 0) status += string.Format("{0} minutes", timeleft.Minutes);
-                        break;
+                    this.ShowForm(new frmAlarm(this));
                 }
-                return status;     
             }
-        }
-
-        public double MinutesLeft
-        {
-            get
-            {
-                if (this.Status == EventStatus.UPCOMING)
-                {
-                    TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
-                    return timeleft.TotalMinutes;
-                }
-                else return 0;
-            }
+            else this.DeleteAlarm();
         }
 
         public bool SetupAlarm(byte minutesbefore)
         {
             if (!this.AlarmExists())
             {
-                KeyValueStorage.Instance.SetByte(string.Format("alarm.{0}", this._event_id), minutesbefore);
+                KeyValueStorage.Instance.SetByte(string.Format("alarm.{0}", this.EventId), minutesbefore);
                 return true;
             }
-            else return false;
+            return false;
         }
 
         public bool AlarmExists()
         {
-            if (KeyValueStorage.Instance.Exists(string.Format("alarm.{0}", this._event_id))) return true;
-            else return false;
+            return KeyValueStorage.Instance.Exists(string.Format("alarm.{0}", this.EventId));
         }
 
         public byte GetAlarmMinutes()
         {
-            if (this.AlarmExists()) return KeyValueStorage.Instance.GetByte(string.Format("alarm.{0}", this._event_id));
-            return 0;
+            return this.AlarmExists() ? KeyValueStorage.Instance.GetByte(string.Format("alarm.{0}", this.EventId)) : (byte)0;
         }
 
         public void DeleteAlarm()
         {
-            if (this.AlarmExists()) KeyValueStorage.Instance.Delete(string.Format("alarm.{0}", this._event_id));
+            if (this.AlarmExists()) KeyValueStorage.Instance.Delete(string.Format("alarm.{0}", this.EventId));
         }
-
-        #endregion
     }
 
     public enum EventStatus
     {
-        OVER,
-        IN_PROGRESS,
-        UPCOMING
+        Over,
+        InProgress,
+        Upcoming
     }
 }

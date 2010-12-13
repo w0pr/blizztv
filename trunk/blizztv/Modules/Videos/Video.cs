@@ -25,47 +25,39 @@ namespace BlizzTV.Modules.Videos
 {
     public class Video:ListItem
     {
-        #region members
-
-        private string _video_id; // the video id.
-        private string _guid; // the story-guid.
-        private string _link; // the video link.
-        private string _provider; // the video provider.
-        private string _movie; // the movie template.
-        private string _flash_vars; // the flash vars.
-        private Statutes _status = Statutes.UNKNOWN;
+        private Statutes _status = Statutes.Unknown;
         private frmPlayer _player = null;
 
-        public string VideoID { get { return this._video_id; } internal set { this._video_id = value; } }
-        public string Link { get { return this._link; } internal set { this._link = value; } }
-        public string Provider { get { return this._provider; } set { this._provider = value; } }
-        public string Movie { get { return this._movie; } set { this._movie = value; } }
-        public string FlashVars { get { return this._flash_vars; } set { this._flash_vars = value; } }
-        public string GUID { get { return this._guid; } protected set { this._guid = value; } }
+        public string VideoId { get; internal set; }
+        public string Link { get; internal set; }
+        public string Provider { get; set; }
+        public string Movie { get; set; }
+        public string FlashVars { get; set; }
+        public string Guid { get; protected set; }
 
         public Statutes Status
         {
             get
             {
-                if (this._status == Statutes.UNKNOWN)
+                if (this._status == Statutes.Unknown)
                 {
-                    if (!StatusStorage.Instance.Exists(string.Format("video.{0}", this.GUID))) this.Status = Statutes.FRESH;
+                    if (!StatusStorage.Instance.Exists(string.Format("video.{0}", this.Guid))) this.Status = Statutes.Fresh;
                     else
                     {
-                        this._status = (Statutes)StatusStorage.Instance[string.Format("video.{0}", this.GUID)];
-                        if (this._status == Statutes.FRESH) this.Status = Statutes.UNWATCHED;
-                        else if (this._status == Statutes.UNWATCHED) this.Style = ItemStyle.Bold;
+                        this._status = (Statutes)StatusStorage.Instance[string.Format("video.{0}", this.Guid)];
+                        if (this._status == Statutes.Fresh) this.Status = Statutes.Unwatched;
+                        else if (this._status == Statutes.Unwatched) this.Style = ItemStyle.Bold;
                     }
                 }
                 else
                 {
                     switch (this._status)
                     {
-                        case Statutes.FRESH:
-                        case Statutes.UNWATCHED:
+                        case Statutes.Fresh:
+                        case Statutes.Unwatched:
                             if (this.Style != ItemStyle.Bold) this.Style = ItemStyle.Bold;
                             break;
-                        case Statutes.WATCHED:
+                        case Statutes.Watched:
                             if (this.Style != ItemStyle.Regular) this.Style = ItemStyle.Regular;
                             break;
                     }
@@ -75,14 +67,14 @@ namespace BlizzTV.Modules.Videos
             set
             {
                 this._status = value;
-                StatusStorage.Instance[string.Format("video.{0}", this.GUID)] = (byte)this._status;
+                StatusStorage.Instance[string.Format("video.{0}", this.Guid)] = (byte)this._status;
                 switch (this._status)
                 {
-                    case Statutes.FRESH:
-                    case Statutes.UNWATCHED:
+                    case Statutes.Fresh:
+                    case Statutes.Unwatched:
                         this.Style = ItemStyle.Bold;
                         break;
-                    case Statutes.WATCHED:
+                    case Statutes.Watched:
                         this.Style = ItemStyle.Regular;
                         break;
                     default:
@@ -91,16 +83,12 @@ namespace BlizzTV.Modules.Videos
             }
         }
 
-        #endregion
-
-        #region ctor
-
-        public Video(string Title, string Guid, string Link, string Provider)
-            : base(Title)
+        public Video(string title, string guid, string link, string provider)
+            : base(title)
         {            
-            this.GUID = Guid;
-            this.Link = Link;
-            this.Provider = Provider;
+            this.Guid = guid;
+            this.Link = link;
+            this.Provider = provider;
 
             // register context menus.
             this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
@@ -109,25 +97,21 @@ namespace BlizzTV.Modules.Videos
             this.Icon = Properties.Resources.video_16;
         }
 
-        #endregion
-
-        #region internal logic
-
         public void CheckForNotifications()
         {
-            if (this.Status == Statutes.FRESH) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
+            if (this.Status == Statutes.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public virtual void Process() // get the stream data by replacing provider variables. 
         {
-            this._movie = (Providers.Instance.Dictionary[this.Provider] as VideoProvider).Movie; // provider supplied movie source. 
-            this._flash_vars = (Providers.Instance.Dictionary[this.Provider] as VideoProvider).FlashVars; // provider supplied flashvars.
+            this.Movie = ((VideoProvider) Providers.Instance.Dictionary[this.Provider]).Movie; // provider supplied movie source. 
+            this.FlashVars = ((VideoProvider) Providers.Instance.Dictionary[this.Provider]).FlashVars; // provider supplied flashvars.
 
-            this._movie = this._movie.Replace("%video_id%", this._video_id); // replace movie source variables
-            this._movie = this._movie.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos) ? "1" : "0");
+            this.Movie = this.Movie.Replace("%video_id%", this.VideoId); // replace movie source variables
+            this.Movie = this.Movie.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos) ? "1" : "0");
             
-            this._flash_vars = this._flash_vars.Replace("%video_id%", this._video_id); // replace flashvars variables.
-            this._flash_vars = this._flash_vars.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos)?"1":"0");
+            this.FlashVars = this.FlashVars.Replace("%video_id%", this.VideoId); // replace flashvars variables.
+            this.FlashVars = this.FlashVars.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos)?"1":"0");
         }
 
         public override void DoubleClicked(object sender, EventArgs e)
@@ -153,7 +137,7 @@ namespace BlizzTV.Modules.Videos
                 else this._player.Focus();
             }
             else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
-            if (this.Status != Statutes.WATCHED) this.Status = Statutes.WATCHED;
+            if (this.Status != Statutes.Watched) this.Status = Statutes.Watched;
         }
 
         void PlayerClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
@@ -169,11 +153,11 @@ namespace BlizzTV.Modules.Videos
 
             switch (this.Status) // switch on the item state.
             {
-                case Statutes.FRESH:
-                case Statutes.UNWATCHED:
+                case Statutes.Fresh:
+                case Statutes.Unwatched:
                     this.ContextMenus["markaswatched"].Visible = true; // make mark as watched menu visible.
                     break;
-                case Statutes.WATCHED:
+                case Statutes.Watched:
                     this.ContextMenus["markasunwatched"].Visible = true; // make mark as unwatched menu visible.
                     break;
             }
@@ -181,22 +165,20 @@ namespace BlizzTV.Modules.Videos
 
         private void MenuMarkAsWatchedClicked(object sender, EventArgs e)
         {
-            this.Status = Statutes.WATCHED;
+            this.Status = Statutes.Watched;
         }
 
         private void MenuMarkAsUnWatchedClicked(object sender, EventArgs e)
         {
-            this.Status = Statutes.UNWATCHED;         
+            this.Status = Statutes.Unwatched;         
         }
-
-        #endregion
 
         public enum Statutes
         {
-            UNKNOWN,
-            FRESH,
-            UNWATCHED,
-            WATCHED
+            Unknown,
+            Fresh,
+            Unwatched,
+            Watched
         }
     }
 }

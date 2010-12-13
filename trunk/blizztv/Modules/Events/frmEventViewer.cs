@@ -23,14 +23,14 @@ namespace BlizzTV.Modules.Events
 {
     public partial class frmEventViewer : Form
     {
-        private Event _event;
-        private Color EventOverColor = Color.Red;
-        private Color EventInProgressColor = Color.Green;
-        private Color FutureEventColor = Color.Black;
+        private readonly Event _event;
+        private readonly Color _eventOverColor = Color.Red;
+        private readonly Color _eventInProgressColor = Color.Green;
+        private readonly Color _futureEventColor = Color.Black;
 
-        public frmEventViewer(Event Event)
+        public frmEventViewer(Event _event)
         {
-            this._event = Event;
+            this._event = _event;
             InitializeComponent();
         }
 
@@ -38,23 +38,23 @@ namespace BlizzTV.Modules.Events
         {
             this.Text = string.Format("Event: {0}", this._event.FullTitle);
             this.LabelFullTitle.Text = this._event.FullTitle;
-            this.LabelLocalTime.Text = string.Format("({0})", this._event.Time.LocalTime.ToString());
+            this.LabelLocalTime.Text = string.Format("({0})", this._event.Time.LocalTime);
             this.RichTextboxDescription.Text = this._event.Description;
 
             switch (this._event.Status) // Colorize LabelStatus based on event status
             {
-                case EventStatus.OVER:
-                    this.LabelStatus.ForeColor = EventOverColor;
+                case EventStatus.Over:
+                    this.LabelStatus.ForeColor = _eventOverColor;
                     this.ButtonSetupAlarm.Enabled = false;
                     this.LabelStatus.Text = "Over.";
                     break;
-                case EventStatus.IN_PROGRESS:
-                    this.LabelStatus.ForeColor = EventInProgressColor;
+                case EventStatus.InProgress:
+                    this.LabelStatus.ForeColor = _eventInProgressColor;
                     this.ButtonSetupAlarm.Enabled = false;
                     this.LabelStatus.Text = "In progress.";
                     break;
-                case EventStatus.UPCOMING:
-                    this.LabelStatus.ForeColor = FutureEventColor;
+                case EventStatus.Upcoming:
+                    this.LabelStatus.ForeColor = _futureEventColor;
                     this.ButtonSetupAlarm.Enabled = true;
                     this.LabelAlarm.Visible = true;
                     this.LabelStatus.Text = string.Format("{0} to go.", this._event.TimeLeft);
@@ -63,7 +63,7 @@ namespace BlizzTV.Modules.Events
 
             if (this._event.AlarmExists())
             {
-                this.LabelAlarm.Text = string.Format("An alarm is set for event {0} minutes before.", this._event.GetAlarmMinutes().ToString());
+                this.LabelAlarm.Text = string.Format("An alarm is set for event {0} minutes before.", this._event.GetAlarmMinutes());
                 this.ButtonSetupAlarm.Enabled = false;
             }
         }

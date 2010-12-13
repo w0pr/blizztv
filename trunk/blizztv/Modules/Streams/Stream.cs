@@ -25,76 +25,58 @@ namespace BlizzTV.Modules.Streams
 {
     public class Stream:ListItem
     {
-        #region members
-
-        private string _name; // the stream name.
-        private string _slug; // the stream slug.
-        private string _provider; // the stream provider.
-        private string _link; // the stream link.
-        private bool _is_live = false; // is the stream live?
-        private string _description; // the stream description.
-        private Int32 _viewer_count = 0; // stream viewers count.
-        private string _movie; // the stream's movie source.
-        private string _flash_vars; // the streams's flash vars.
-        private bool _chat_available = false; // // Is chat functionality available for the provider?
-        private string _chat_movie; // the streams chat movie's source.
+        private bool _isLive = false; // is the stream live?
         private frmPlayer _player = null;
 
-        public string Name { get { return this._name; } internal set { this._name = value; } }
-        public string Slug { get { return this._slug; } internal set { this._slug = value; } }
-        public string Provider { get { return this._provider; } internal set { this._provider = value; } }
-        public string Link { get { return this._link; } internal set { this._link = value; } }
-        public string Description { get { return this._description; } internal set { this._description = value; } }
-        public Int32 ViewerCount { get { return this._viewer_count; } internal set { this._viewer_count = value; } }
-        public string Movie { get { return this._movie; } internal set { this._movie = value; } }
-        public string FlashVars { get { return this._flash_vars; } internal set { this._flash_vars = value; } }
-        public string ChatMovie { get { return this._chat_movie; } internal set { this._chat_movie = value; } }
-        public bool ChatAvailable { get { return this._chat_available; } }
+        public string Name { get; internal set; }
+        public string Slug { get; internal set; }
+        public string Provider { get; internal set; }
+        public string Link { get; internal set; }
+        public string Description { get; internal set; }
+        public int ViewerCount { get; internal set; }
+        public string Movie { get; internal set; }
+        public string FlashVars { get; internal set; }
+        public string ChatMovie { get; internal set; }
+        public bool ChatAvailable { get; private set; }
 
         public bool IsLive
         {
-            get { return this._is_live; }
+            get { return this._isLive; }
             internal set 
             {
                 bool wasOnline=false;
-                this._is_live = value; 
+                this._isLive = value; 
 
                 if (StatusStorage.Instance.Exists(string.Format("stream.{0}", this.Name))) wasOnline = Convert.ToBoolean(StatusStorage.Instance[string.Format("stream.{0}", this.Name)]);
-                if (!wasOnline && this._is_live) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Stream is online. Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
-                StatusStorage.Instance[string.Format("stream.{0}", this.Name)] = Convert.ToByte(this._is_live);
+                if (!wasOnline && this._isLive) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Stream is online. Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
+                StatusStorage.Instance[string.Format("stream.{0}", this.Name)] = Convert.ToByte(this._isLive);
 
                 // TODO: when the application goes offline the stream should set to offline in status storage.
             }
         }
 
-        #endregion
-
-        #region ctor
-
         public Stream(StreamSubscription subscription)
             : base(subscription.Name)
         {
-            this._name = subscription.Name;
-            this._slug = subscription.Slug;
-            this._provider = subscription.Provider;
+            ChatAvailable = false;
+            ViewerCount = 0;
+            this.Name = subscription.Name;
+            this.Slug = subscription.Slug;
+            this.Provider = subscription.Provider;
 
             this.Icon = Properties.Resources.stream_16;
         }
 
-        #endregion
-
-        #region internal logic 
-
         public virtual void Process() // get the stream data by replacing provider variables. handler's can override this method to run their own routines, though base.Process() should be called also.
         {
-            this._movie = (Providers.Instance.Dictionary[this.Provider] as StreamProvider).Movie; // provider supplied movie source. 
-            this._flash_vars = (Providers.Instance.Dictionary[this.Provider] as StreamProvider).FlashVars; // provider supplied flashvars.
-            this._chat_available = (Providers.Instance.Dictionary[this.Provider] as StreamProvider).ChatAvailable; // Is chat functionality available for the provider?
-            if (this._chat_available) this._chat_movie = (Providers.Instance.Dictionary[this.Provider] as StreamProvider).ChatMovie; // the streams chat movie's source.
+            this.Movie = ((StreamProvider) Providers.Instance.Dictionary[this.Provider]).Movie; // provider supplied movie source. 
+            this.FlashVars = ((StreamProvider) Providers.Instance.Dictionary[this.Provider]).FlashVars; // provider supplied flashvars.
+            this.ChatAvailable = ((StreamProvider) Providers.Instance.Dictionary[this.Provider]).ChatAvailable; // Is chat functionality available for the provider?
+            if (this.ChatAvailable) this.ChatMovie = ((StreamProvider) Providers.Instance.Dictionary[this.Provider]).ChatMovie; // the streams chat movie's source.
 
-            this._movie = this._movie.Replace("%slug%", this.Slug); // replace slug variable in movie source.
-            this._flash_vars = this._flash_vars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
-            if(this._chat_available) this._chat_movie = this._chat_movie.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
+            this.Movie = this.Movie.Replace("%slug%", this.Slug); // replace slug variable in movie source.
+            this.FlashVars = this.FlashVars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
+            if(this.ChatAvailable) this.ChatMovie = this.ChatMovie.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
         }
 
         public override void DoubleClicked(object sender, EventArgs e) // double-click handler
@@ -128,7 +110,5 @@ namespace BlizzTV.Modules.Streams
         }
 
         public virtual void Update() { throw new NotImplementedException(); } // the stream updater. 
-
-        #endregion
     }
 }
