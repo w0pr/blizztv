@@ -1,12 +1,9 @@
 #summary List of donors aiding development of BlizzTV.
-
-= Donors =
+#labels Featured
 
 Here's list of the people donated to project (sorted by date of donation). We'd like to thank them all.
 
  * Eduardo Sollet 
  * Jonas Molander (http://esportbetting.eu)
-
-
 
 
