@@ -1,4 +1,4 @@
-﻿namespace BlizzTV
+﻿namespace BlizzTV.UI
 {
     partial class frmAbout
     {
@@ -49,11 +49,12 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ListviewModules = new System.Windows.Forms.ListView();
+            this.colIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.buttonOK = new System.Windows.Forms.Button();
-            this.LinkLabelBlizzTV = new System.Windows.Forms.LinkLabel();
+            this.LinkBlizzTV = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ListviewCredits = new System.Windows.Forms.ListView();
             this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -64,7 +65,6 @@
             this.LabelVersion = new System.Windows.Forms.Label();
             this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
             this.buttonChangelog = new System.Windows.Forms.Button();
-            this.colIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -122,6 +122,11 @@
             this.ListviewModules.UseCompatibleStateImageBehavior = false;
             this.ListviewModules.View = System.Windows.Forms.View.Details;
             // 
+            // colIcon
+            // 
+            this.colIcon.Text = "";
+            this.colIcon.Width = 22;
+            // 
             // ColName
             // 
             this.ColName.Text = "Name";
@@ -148,17 +153,17 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // LinkLabelBlizzTV
+            // LinkBlizzTV
             // 
-            this.LinkLabelBlizzTV.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LinkLabelBlizzTV.Location = new System.Drawing.Point(320, 61);
-            this.LinkLabelBlizzTV.Name = "LinkLabelBlizzTV";
-            this.LinkLabelBlizzTV.Size = new System.Drawing.Size(125, 13);
-            this.LinkLabelBlizzTV.TabIndex = 11;
-            this.LinkLabelBlizzTV.TabStop = true;
-            this.LinkLabelBlizzTV.Text = "http://www.blizztv.com";
-            this.LinkLabelBlizzTV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.LinkLabelBlizzTV.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelBlizzTV_LinkClicked);
+            this.LinkBlizzTV.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.LinkBlizzTV.Location = new System.Drawing.Point(320, 61);
+            this.LinkBlizzTV.Name = "LinkBlizzTV";
+            this.LinkBlizzTV.Size = new System.Drawing.Size(125, 13);
+            this.LinkBlizzTV.TabIndex = 11;
+            this.LinkBlizzTV.TabStop = true;
+            this.LinkBlizzTV.Text = "http://www.blizztv.com";
+            this.LinkBlizzTV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LinkBlizzTV.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkBlizzTV_Clicked);
             // 
             // groupBox1
             // 
@@ -233,7 +238,7 @@
             this.Murloc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Murloc.TabIndex = 15;
             this.Murloc.TabStop = false;
-            this.Murloc.Click += new System.EventHandler(this.even_more_dots);
+            this.Murloc.Click += new System.EventHandler(this.EvenMoreDots);
             // 
             // LabelVersion
             // 
@@ -264,11 +269,6 @@
             this.buttonChangelog.UseVisualStyleBackColor = true;
             this.buttonChangelog.Click += new System.EventHandler(this.buttonChangelog_Click);
             // 
-            // colIcon
-            // 
-            this.colIcon.Text = "";
-            this.colIcon.Width = 22;
-            // 
             // frmAbout
             // 
             this.AcceptButton = this.buttonOK;
@@ -280,7 +280,7 @@
             this.Controls.Add(this.LinkPaypal);
             this.Controls.Add(this.LinkFlattr);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.LinkLabelBlizzTV);
+            this.Controls.Add(this.LinkBlizzTV);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox1);
@@ -295,7 +295,7 @@
             this.Name = "frmAbout";
             this.Text = "About BlizzTV";
             this.Load += new System.EventHandler(this.frmAbout_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.more_dots);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MoreDots);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -317,7 +317,7 @@
         private System.Windows.Forms.ColumnHeader ColName;
         private System.Windows.Forms.ColumnHeader ColDescription;
         private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.LinkLabel LinkLabelBlizzTV;
+        private System.Windows.Forms.LinkLabel LinkBlizzTV;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListView ListviewCredits;
         private System.Windows.Forms.ColumnHeader columnName;

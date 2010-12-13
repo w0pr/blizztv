@@ -15,24 +15,16 @@
  * $Id$
  */
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
-namespace BlizzTV.Wizard
+namespace BlizzTV.UI.Wizard
 {
-    public partial class frmComplete : Form , IWizardForm
+    /// <summary>
+    /// Wizard form interface.
+    /// </summary>
+    public interface IWizardForm
     {
-        public frmComplete()
-        {
-            InitializeComponent();
-        }
-
-        public void Finish() { }
+        /// <summary>
+        /// Fires when wizard steps through form.
+        /// </summary>
+        void Finish();
     }
 }

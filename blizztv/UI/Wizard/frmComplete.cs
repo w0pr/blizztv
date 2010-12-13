@@ -15,24 +15,17 @@
  * $Id$
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using BlizzTV.ModuleLib;
 
-namespace BlizzTV.UILib
+namespace BlizzTV.UI.Wizard
 {
-    public class ListviewModuleItem : ListViewItem
+    public partial class frmComplete : Form , IWizardForm
     {
-        public string ModuleName { get { return this.SubItems[1].Text; } }
-
-        public ListviewModuleItem(ModuleInfo p)
+        public frmComplete()
         {
-            this.ImageKey = p.Attributes.Name;
-            this.SubItems.Add(p.Attributes.Name);
-            this.SubItems.Add(p.Attributes.Description);
+            InitializeComponent();
         }
+
+        public void Finish() { }
     }
 }

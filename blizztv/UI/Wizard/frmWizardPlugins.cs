@@ -19,10 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using BlizzTV.ModuleLib;
-using BlizzTV.UILib;
-using BlizzTV.CommonLib.Settings;
+using BlizzTV.UI.Lib;
 
-namespace BlizzTV.Wizard
+namespace BlizzTV.UI.Wizard
 {
     public partial class frmWizardPlugins : Form , IWizardForm
     {
@@ -33,7 +32,7 @@ namespace BlizzTV.Wizard
 
         private void frmWizardPlugins_Load(object sender, EventArgs e) 
         {
-            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailablePlugins)
+            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailablePlugins) // load the available plugins list
             {
                 ListviewModuleItem item = new ListviewModuleItem(pair.Value);
                 this.listviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
@@ -43,12 +42,13 @@ namespace BlizzTV.Wizard
 
         public void Finish()
         {
-            foreach (ListviewModuleItem item in this.listviewModules.Items)
+            foreach (ListviewModuleItem item in this.listviewModules.Items) // enable or disable the plugins based on selections.
             {
-                if (item.Checked) Settings.Instance.Plugins.Enable(item.ModuleName);
-                else Settings.Instance.Plugins.Disable(item.ModuleName);
+                if (item.Checked) Settings.Instance.Modules.Enable(item.ModuleName);
+                else Settings.Instance.Modules.Disable(item.ModuleName);
             }
-            Settings.Instance.NeedInitialConfig = false;
+
+            Settings.Instance.NeedInitialConfig = false; // no more run the initial configuration wizard.
             Settings.Instance.Save();
         }
     }

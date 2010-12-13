@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Threading;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Dependencies;
+using BlizzTV.UI;
 
 namespace BlizzTV
 {

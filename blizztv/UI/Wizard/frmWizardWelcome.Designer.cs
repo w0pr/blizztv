@@ -1,4 +1,4 @@
-﻿namespace BlizzTV.Wizard
+﻿namespace BlizzTV.UI.Wizard
 {
     partial class frmWizardWelcome
     {

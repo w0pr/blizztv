@@ -1,4 +1,4 @@
-﻿namespace BlizzTV
+﻿namespace BlizzTV.UI
 {
     partial class frmMain
     {
@@ -113,7 +113,7 @@
             this.menuPreferences.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.menuPreferences.Size = new System.Drawing.Size(176, 22);
             this.menuPreferences.Text = "Preferences";
-            this.menuPreferences.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
+            this.menuPreferences.Click += new System.EventHandler(this.MenuPreferences_Click);
             // 
             // menuModules
             // 
@@ -159,7 +159,7 @@
             this.menuBlizztvcom.Name = "menuBlizztvcom";
             this.menuBlizztvcom.Size = new System.Drawing.Size(163, 22);
             this.menuBlizztvcom.Text = "BlizzTV.com";
-            this.menuBlizztvcom.Click += new System.EventHandler(this.blizzTVcomToolStripMenuItem_Click);
+            this.menuBlizztvcom.Click += new System.EventHandler(this.MenuBlizzTVCom_Click);
             // 
             // menuUserGuide
             // 
@@ -167,7 +167,7 @@
             this.menuUserGuide.Name = "menuUserGuide";
             this.menuUserGuide.Size = new System.Drawing.Size(163, 22);
             this.menuUserGuide.Text = "User Guide";
-            this.menuUserGuide.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
+            this.menuUserGuide.Click += new System.EventHandler(this.MenuUserGuide_Click);
             // 
             // menuFAQ
             // 
@@ -188,7 +188,7 @@
             this.menuBugReports.Name = "menuBugReports";
             this.menuBugReports.Size = new System.Drawing.Size(163, 22);
             this.menuBugReports.Text = "Bug Reports";
-            this.menuBugReports.Click += new System.EventHandler(this.bugReportsToolStripMenuItem_Click);
+            this.menuBugReports.Click += new System.EventHandler(this.MenuBugReports_Click);
             // 
             // menuCheckUpdates
             // 
@@ -196,7 +196,7 @@
             this.menuCheckUpdates.Name = "menuCheckUpdates";
             this.menuCheckUpdates.Size = new System.Drawing.Size(163, 22);
             this.menuCheckUpdates.Text = "Check Updates";
-            this.menuCheckUpdates.Click += new System.EventHandler(this.checkUpdatesToolStripMenuItem_Click);
+            this.menuCheckUpdates.Click += new System.EventHandler(this.MenuCheckUpdates);
             // 
             // toolStripSeparator4
             // 
@@ -217,7 +217,7 @@
             this.spreadTheWordToolStripMenuItem.Name = "spreadTheWordToolStripMenuItem";
             this.spreadTheWordToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.spreadTheWordToolStripMenuItem.Text = "Spread the word!";
-            this.spreadTheWordToolStripMenuItem.Click += new System.EventHandler(this.spreadTheWordToolStripMenuItem_Click);
+            this.spreadTheWordToolStripMenuItem.Click += new System.EventHandler(this.MenuSpreadTheWord_Click);
             // 
             // menuAbout
             // 
@@ -225,7 +225,7 @@
             this.menuAbout.Name = "menuAbout";
             this.menuAbout.Size = new System.Drawing.Size(163, 22);
             this.menuAbout.Text = "About";
-            this.menuAbout.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+            this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // 
             // StatusStrip
             // 
@@ -331,7 +331,6 @@
             this.TreeView.ShowRootLines = false;
             this.TreeView.Size = new System.Drawing.Size(256, 269);
             this.TreeView.TabIndex = 3;
-            this.TreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseClick);
             this.TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseDoubleClick);
             this.TreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeView_DragDrop);
             this.TreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeView_DragEnter);

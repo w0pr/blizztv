@@ -23,6 +23,7 @@ using System.Reflection;
 using System.Threading;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Web;
+using BlizzTV.UI;
 
 namespace BlizzTV.Updates
 {
