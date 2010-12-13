@@ -15,10 +15,20 @@
  * $Id$
  */
 
-namespace BlizzTV.Wizard
+using System.Windows.Forms;
+using BlizzTV.ModuleLib;
+
+namespace BlizzTV.UI.Lib
 {
-    public interface IWizardForm
+    public class ListviewModuleItem : ListViewItem
     {
-        void Finish();
+        public string ModuleName { get { return this.SubItems[1].Text; } }
+
+        public ListviewModuleItem(ModuleInfo p)
+        {
+            this.ImageKey = p.Attributes.Name;
+            this.SubItems.Add(p.Attributes.Name);
+            this.SubItems.Add(p.Attributes.Description);
+        }
     }
 }

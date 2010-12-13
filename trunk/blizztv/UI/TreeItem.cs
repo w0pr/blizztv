@@ -19,43 +19,32 @@ using System;
 using System.Windows.Forms;
 using System.Drawing;
 using BlizzTV.ModuleLib;
-using BlizzTV.UILib;
+using BlizzTV.UI.Lib;
 
-namespace BlizzTV
+namespace BlizzTV.UI
 {
     public class TreeItem:TreeNode
     {
-        #region Members
+        private static readonly Font Bold = new Font("Tahoma", 9, FontStyle.Bold); // font for unread items.
+        private static readonly Font Regular = new Font("Tahoma", 9, FontStyle.Regular); // font for read items.       
 
-        private ListItem _item; // the plugin-item bound to.
-        private Module _plugin; // the plugin itself.
-        private Font _bold = new Font("Tahoma", 9, FontStyle.Bold); // font for unread items.
-        private Font _regular = new Font("Tahoma", 9, FontStyle.Regular); // font for read items.       
-        private bool disposed = false;
+        private ListItem _item; // the module-item bound to.
+        private Module _plugin; // the module itself.        
+        private bool _disposed = false;
 
-        public ListItem Item { get { return this._item; } } // the item getter.
+        public ListItem Item { get { return this._item; } }
         public Module Plugin { get { return this._plugin; } }
-        
 
-        #endregion
-
-        #region ctor
-
-        public TreeItem(Module Plugin,ListItem Item)
+        public TreeItem(Module plugin, ListItem item)
         {
-            this._plugin = Plugin;
-            this._item = Item;
+            this._plugin = plugin;
+            this._item = item;
             this.Name = _item.Key;
 
-            // register communication events
             this._item.OnTitleChange += OnTitleChange; // the title-change event.
-            this._item.OnStyleChange += OnStyleChange;
-            this._item.OnShowForm += OnShowForm;
+            this._item.OnStyleChange += OnStyleChange; // the style-change event.
+            this._item.OnShowForm += OnShowForm; // the show-form request.
         }
-
-        #endregion
-
-        #region Logic
 
         public void Render() // renders the item with title, state and icon information
         {
@@ -65,6 +54,16 @@ namespace BlizzTV
             // set the node icon
             if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.Attributes.Name)) this.TreeView.ImageList.Images.Add(this._plugin.Attributes.Name, this._plugin.Attributes.Icon); // add the plugin icon to image list in it doesn't exists yet.
             this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.Attributes.Name); // use the item's plugin icon.
+        }
+
+        public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            this._item.DoubleClicked(sender, e); // notify the item about the double-click event.
+        }
+
+        public void RightClicked(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            this._item.RightClicked(sender, e); // notify the item about the click event.
         }
 
         private void OnTitleChange(object sender)
@@ -82,35 +81,23 @@ namespace BlizzTV
                     switch (style)
                     {
                         case ItemStyle.BOLD:
-                            this.NodeFont = _bold;                            
+                            this.NodeFont = TreeItem.Bold;                            
                             break;
-                        case ItemStyle.REGULAR:   
-                            this.NodeFont = _regular;
+                        case ItemStyle.REGULAR:
+                            this.NodeFont = TreeItem.Regular;
                             break;
                     }
                 });
         }
 
-        private void OnShowForm(Form Form, bool IsModal)
+        private void OnShowForm(Form form, bool isModal)
         {
             this.TreeView.AsyncInvokeHandler(() =>
             {
-                if (IsModal) Form.ShowDialog();
-                else Form.Show();
+                if (isModal) form.ShowDialog();
+                else form.Show();
             });
         }
-
-        public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e) 
-        {
-            this._item.DoubleClicked(sender,e); // notify the item about the double-click event.
-        }
-
-        public void RightClicked(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            this._item.RightClicked(sender, e); // notify the item about the click event.
-        }
-
-        #endregion
 
         #region de-ctor
 
@@ -124,7 +111,7 @@ namespace BlizzTV
 
         private void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!this._disposed)
             {
                 if (disposing) // managed resources
                 {
@@ -132,12 +119,8 @@ namespace BlizzTV
                     this._item.OnStyleChange -= OnStyleChange;
                     this._item = null;
                     this._plugin = null;
-                    this._bold.Dispose();
-                    this._bold = null;
-                    this._regular.Dispose();
-                    this._regular = null;
                 }
-                disposed = true;
+                _disposed = true;
             }
         }
 

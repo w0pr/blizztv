@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using BlizzTV.UILib;
+using BlizzTV.UI.Lib;
 
 namespace BlizzTV.CommonLib.Workload
 {

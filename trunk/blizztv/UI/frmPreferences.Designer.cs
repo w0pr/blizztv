@@ -1,4 +1,4 @@
-﻿namespace BlizzTV
+﻿namespace BlizzTV.UI
 {
     partial class frmPreferences
     {

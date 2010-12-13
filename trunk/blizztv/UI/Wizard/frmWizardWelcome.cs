@@ -17,7 +17,7 @@
 
 using System.Windows.Forms;
 
-namespace BlizzTV.Wizard
+namespace BlizzTV.UI.Wizard
 {
     public partial class frmWizardWelcome : Form , IWizardForm
     {

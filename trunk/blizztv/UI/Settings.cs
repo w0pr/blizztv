@@ -18,7 +18,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BlizzTV
+namespace BlizzTV.UI
 {
     public sealed class Settings : CommonLib.Settings.Settings // The UI settings.
     {
@@ -48,7 +48,7 @@ namespace BlizzTV
         public bool EnableDebugConsole { get { return this.GetBoolean("EnableDebugConsole", false); } set { this.Set("EnableDebugConsole", value); } }
 
         // the plugin settings wrapper.
-        public Plugins Plugins = new Plugins(); 
+        public Plugins Modules = new Plugins(); 
 
         private Settings() : base("UI") { }              
     }
