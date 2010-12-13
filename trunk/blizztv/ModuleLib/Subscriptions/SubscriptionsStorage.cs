@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Serialization;
@@ -29,12 +30,17 @@ namespace BlizzTV.ModuleLib.Subscriptions
 {
     public sealed class SubscriptionsStorage
     {
+        #region instance
+
         private static SubscriptionsStorage _instance = new SubscriptionsStorage();
-        private readonly string _subscriptons_file = "subscriptions.db";
-        private Type[] _known_types = new Type[] { typeof(ISubscription) };
-        private List<ISubscription> _subscriptions = new List<ISubscription>();
-                
         public static SubscriptionsStorage Instance { get { return _instance; } }
+
+        #endregion
+
+        private const string SubscriptonsFile = "subscriptions.db";
+        private Type[] _knownTypes = new[] { typeof(ISubscription) };
+        
+        private List<ISubscription> _subscriptions = new List<ISubscription>();                        
         public List<ISubscription> Subscriptions { get { return this._subscriptions; } }
 
         private SubscriptionsStorage() 
@@ -50,8 +56,8 @@ namespace BlizzTV.ModuleLib.Subscriptions
             {
                 if (t.IsSubclassOf(typeof(ISubscription)))
                 {
-                    Array.Resize(ref this._known_types, this._known_types.Length + 1);
-                    this._known_types[this._known_types.Length - 1] = t;
+                    Array.Resize(ref this._knownTypes, this._knownTypes.Length + 1);
+                    this._knownTypes[this._knownTypes.Length - 1] = t;
                 }
             }
         }
@@ -60,10 +66,10 @@ namespace BlizzTV.ModuleLib.Subscriptions
         {
             try
             {
-                if (!File.Exists(this._subscriptons_file)) this.LoadDefaults();
-                using (FileStream fileStream = new FileStream(this._subscriptons_file, FileMode.Open))
+                if (!File.Exists(SubscriptonsFile)) this.LoadDefaults();
+                using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Open))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(List<ISubscription>), new XmlAttributeOverrides(), this._known_types, new XmlRootAttribute("Subscriptions"), "");
+                    XmlSerializer xs = new XmlSerializer(typeof(List<ISubscription>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Subscriptions"), "");
                     this._subscriptions = (List<ISubscription>)xs.Deserialize(fileStream);
                 }
             }
@@ -82,7 +88,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
 
         private void LoadDefaults()
         {
-            using (FileStream fileStream = new FileStream(this._subscriptons_file, FileMode.Create))
+            using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Create))
             {
                 fileStream.Write(Encoding.UTF8.GetBytes(Properties.Resources.Subscriptions_Default), 0, Properties.Resources.Subscriptions_Default.Length);
             }
@@ -90,21 +96,16 @@ namespace BlizzTV.ModuleLib.Subscriptions
 
         public void Save()
         {
-            using (FileStream fileStream = new FileStream(this._subscriptons_file, FileMode.Create))
+            using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Create))
             {
-                XmlSerializer xs = new XmlSerializer(typeof(List<ISubscription>), new XmlAttributeOverrides(), this._known_types, new XmlRootAttribute("Subscriptions"), "");
+                XmlSerializer xs = new XmlSerializer(typeof(List<ISubscription>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Subscriptions"), "");
                 xs.Serialize(fileStream, this._subscriptions);
             }
         }
 
         public List<ISubscription> GetSubscriptions(Type type)
         {
-            List<ISubscription> results = new List<ISubscription>();
-            foreach (ISubscription subscription in this._subscriptions)
-            {
-                if (subscription.GetType() == type) results.Add(subscription);
-            }
-            return results;
+            return this._subscriptions.Where(subscription => subscription.GetType() == type).ToList();
         }
     }
 }

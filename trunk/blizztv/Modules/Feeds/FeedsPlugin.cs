@@ -115,7 +115,7 @@ namespace BlizzTV.Modules.Feeds
                     this.RootListItem.Childs.Clear();
                 }
                 
-                this.RootListItem.Style = ItemStyle.REGULAR;
+                this.RootListItem.Style = ItemStyle.Regular;
                 this.RootListItem.SetTitle("Updating feeds..");
 
                 foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
@@ -150,9 +150,9 @@ namespace BlizzTV.Modules.Feeds
             if (this.RootListItem.Style == Style) return;
 
             int unread = 0;
-            foreach (KeyValuePair<string, Feed> pair in this._feeds) { if (pair.Value.Style == ItemStyle.BOLD) unread++; }
-            if (unread > 0) this.RootListItem.Style = ItemStyle.BOLD;
-            else this.RootListItem.Style = ItemStyle.REGULAR;
+            foreach (KeyValuePair<string, Feed> pair in this._feeds) { if (pair.Value.Style == ItemStyle.Bold) unread++; }
+            if (unread > 0) this.RootListItem.Style = ItemStyle.Bold;
+            else this.RootListItem.Style = ItemStyle.Regular;
         }
 
         public void OnSaveSettings()

@@ -20,120 +20,67 @@ using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.ModuleLib
 {
-    /// <summary>
-    /// The plugin info and activator.
-    /// </summary>
-    public class ModuleInfo : IDisposable
+    public class ModuleInfo : IDisposable // The module info and activator.
     {
-        #region members
+        private Type _pluginEntrance; // the modules's entrance point (actual module's ctor).
+        private bool _disposed = false;
 
-        private bool _valid = false; // is it a valid BlizzTV plugin?
-        private Type _plugin_entrance; // the plugin's entrance point (actual module's ctor).
-        private ModuleAttributes _attributes; // the plugin's attributes
-        private Module _instance = null; // contains the plugin instance if initiated.
-        private bool disposed = false;
+        public bool Valid { get; private set; } // is it a valid BlizzTV module?
+        public ModuleAttributes Attributes { get; private set; } // the modules attributes.
+        public Module ModuleInstance { get; private set; } // returns the module instance -- if not initiated before it will be so.
 
-        /// <summary>
-        /// Is it a valid BlizzTV plugin?
-        /// </summary>
-        public bool Valid { get { return this._valid; } }
-
-        /// <summary>
-        /// The plugin's attributes
-        /// </summary>
-        public ModuleAttributes Attributes { get { return _attributes; } }
-
-        /// <summary>
-        /// Returns the plugin instance.
-        /// <remarks>If the plugin is not initiated before it will be so.</remarks>
-        /// </summary>
-        public Module Instance { get { return this._instance; } }
-
-        #endregion
-
-        #region ctor
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Entrance"></param>
-        public ModuleInfo(Type Entrance)
+        public ModuleInfo(Type entrance)
         {
-            this._plugin_entrance = Entrance;
-            this.ReadPluginInfo(); // read the assemblies details.
+            this.ModuleInstance = null;
+            this.Valid = false;
+            this._pluginEntrance = entrance;
+            this.ReadModuleInfo(); // read the assemblies details.
         }
 
-        #endregion
-
-        #region ModuleInfo API
-
-        /// <summary>
-        /// Creates a instance
-        /// </summary>
-        /// <returns>Returns the instance of the plugin asked for.</returns>
-        public Module CreateInstance()
+        public Module CreateInstance() // Creates & returns the instance of module.
         {
-            if (this._instance == null) // just allow one instance.
+            if (this.ModuleInstance == null) // just allow one instance.
             {
                 try
                 {
-                    if (!this._valid) throw new NotSupportedException(); // If the plugin asked for is not a valid BlizzTV pluin, fire an exception.
-                    this._instance = (Module)Activator.CreateInstance(this._plugin_entrance); // Create the plugin instance using the ctor we stored as entrance point.
-                    this._instance.Attributes = this._attributes;
+                    if (!this.Valid) throw new NotSupportedException(); // If the module asked for is not a valid BlizzTV module, fire an exception.
+                    this.ModuleInstance = (Module)Activator.CreateInstance(this._pluginEntrance); // Create the module instance using the ctor we stored as entrance point.
+                    this.ModuleInstance.Attributes = this.Attributes;
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Write(LogMessageTypes.Error, string.Format("PluginInfo:CreateInstance() exception: {0}", e.ToString()));
+                    Log.Instance.Write(LogMessageTypes.Error, string.Format("PluginInfo:CreateInstance() exception: {0}", e));
                 }
             }
-            return this._instance;
+            return this.ModuleInstance;
         }
 
-        /// <summary>
-        /// Kills the plugin instance.
-        /// </summary>
-        public void Kill()
+        public void Kill() // Kills the plugin instance.
         {
-            this._instance.Dispose();
-            this._instance = null;
+            this.ModuleInstance.Dispose();
+            this.ModuleInstance = null;
         }
 
-        #endregion
-
-        #region internal logic
-
-        private void ReadPluginInfo() // reads a supplied assemblies details
+        private void ReadModuleInfo() // reads a modules details.
         {
             try
             {
-                object[] _attr = this._plugin_entrance.GetCustomAttributes(typeof(ModuleAttributes), true); // get the attributes for the plugin
-                
-                if (_attr.Length > 0) // if plugin defines attributes, check them
+                object[] attr = this._pluginEntrance.GetCustomAttributes(typeof(ModuleAttributes), true); // get the attributes for the module.
+                if (attr.Length > 0) // if it has required attributes defined.
                 {
-                    (_attr[0] as ModuleAttributes).ResolveResources(); // resolve the attribute resources
-                    this._attributes = (ModuleAttributes)_attr[0]; // store the attributes
-                    this._valid = true; // yes we're valid ;)
+                    ((ModuleAttributes) attr[0]).ResolveResources(); // resolve the attribute resources.
+                    this.Attributes = (ModuleAttributes)attr[0]; // store the attributes.
+                    this.Valid = true; // yes we're valid ;)
                 }
-                else throw new LoadPluginInfoException("todo", "Plugin does not define the required attributes."); // all plugins should define the required atributes                
+                else throw new LoadModuleInfoException("todo", "Plugin does not define the required attributes."); // all module should define the required atributes.              
             }
-            catch (Exception e) 
-            {
-                Log.Instance.Write(LogMessageTypes.Error,string.Format("ReadPluginInfo() exception: {0}",e.ToString()));
-            }
+            catch (Exception e)  { Log.Instance.Write(LogMessageTypes.Error,string.Format("ReadPluginInfo() exception: {0}",e)); }
         }
-
-        #endregion
 
         #region de-ctor
 
-        /// <summary>
-        /// de-ctor.
-        /// </summary>
         ~ModuleInfo() { Dispose(false); }
 
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -142,37 +89,22 @@ namespace BlizzTV.ModuleLib
 
         private void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
-                {
-                    //this._assembly = null;
-                    this._plugin_entrance = null;
-                    this._attributes = null;
-                }
-                disposed = true;
+                this._pluginEntrance = null;
+                this.Attributes = null;
             }
+            _disposed = true;
         }
 
         #endregion
     }
 
-    #region exceptions 
-
-    /// <summary>
-    /// Load PlugiInfo Exception
-    /// </summary>
-    public class LoadPluginInfoException : Exception
+    public class LoadModuleInfoException : Exception // Load PlugiInfo Exception
     {
-        /// <summary>
-        /// Contains information about a plugin load exception.
-        /// </summary>
-        /// <param name="PluginFile">The plugin assembly.</param>
-        /// <param name="Message">The exception message.</param>
-        public LoadPluginInfoException(string PluginFile, string Message)
-            : base(string.Format("{0} - {1}", PluginFile, Message))
+        public LoadModuleInfoException(string pluginFile, string message) // Contains information about a plugin load exception.
+            : base(string.Format("{0} - {1}", pluginFile, message))
         { }
     }
-
-    #endregion
 }

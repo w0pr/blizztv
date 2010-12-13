@@ -21,90 +21,40 @@ using BlizzTV.Properties;
 
 namespace BlizzTV.ModuleLib
 {
-    /// <summary>
-    /// Defines plugin attributes.
-    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class ModuleAttributes : Attribute
+    public class ModuleAttributes : Attribute // Defines module attributes.
     {
-        #region members
+        private readonly string _iconName;
+        private bool _disposed = false;
 
-        private string _name;
-        private string _description;
-        private string _icon_name;
-        private Bitmap _icon = null;
-        private bool disposed = false;
+        public string Name { get; private set; } // The module name.
+        public string Description { get; private set; } // The module description.
+        public Bitmap Icon { get; private set; } // The module icon.
 
-        /// <summary>
-        /// The plugin name.
-        /// </summary>
-        public string Name { get { return this._name; } }
-
-        /// <summary>
-        /// The plugin description.
-        /// </summary>
-        public string Description { get { return this._description; } }
-
-        /// <summary>
-        /// The plugin icon.
-        /// </summary>        
-        public Bitmap Icon { get { return this._icon; } }
-
-        #endregion
-
-        #region ctor
-
-        /// <summary>
-        /// The plugin's attributes.
-        /// </summary>
-        /// <param name="ModuleName">The plugin name.</param>
-        /// <param name="Description">The plugin description.</param>
-        /// <param name="IconName">Pass null as value or do not supply a value if you don't want to specify an icon for your plugin.</param>
-        /// <remarks>Pass null as value or do not supply a value if you don't want to specify an icon for your plugin.</remarks>
-        public ModuleAttributes(string Name, string Description, string IconName = null)
+        public ModuleAttributes(string name, string description, string iconName = null)
         {
-            this._name = Name;
-            this._description = Description;
-            this._icon_name = IconName;
+            Icon = null;
+            this.Name = name;
+            this.Description = description;
+            this._iconName = iconName;
         }
-
-        #endregion
-
-        #region internal logic
 
         internal void ResolveResources() // resolves resources for the plugin and sets the icon if appliable.
         {
-            if (this._icon_name != null) // if we've a supplied icon-file name.
+            if (this._iconName == null) return; // if we've a supplied icon-file name.
+
+            using (var stream = (Bitmap)Resources.ResourceManager.GetObject(this._iconName)) // get the resource stream.
             {
-                using (var stream = (Bitmap)Resources.ResourceManager.GetObject(this._icon_name)) // get the resources stream
-                {
-                    if (stream != null) this._icon = new Bitmap(stream); // if the asked icon exists in resources set is as the plugin icon.
-                    else this._icon = Resources.blizztv_16; // if it does not exists use the default icon.                    
-                }
+                this.Icon = stream != null ? new Bitmap(stream) : Resources.blizztv_16; // if asked icon does not exists use the default icon.                                   
             }
         }
 
-        /// <summary>
-        /// Returns the plugin's name.
-        /// </summary>
-        /// <returns>The plugin's name.</returns>
-        public override string ToString()
-        {
-            return this._name;
-        }
-
-        #endregion
+        public override string ToString() { return this.Name; }
 
         #region de-ctor
 
-        /// <summary>
-        /// de-ctor.
-        /// </summary>
         ~ModuleAttributes() { Dispose(false); }
 
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -113,15 +63,13 @@ namespace BlizzTV.ModuleLib
 
         private void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
-                {
-                    this._icon.Dispose();
-                    this._icon = null;
-                }
-                disposed = true;
+                this.Icon.Dispose();
+                this.Icon = null;
             }
+            _disposed = true;
         }
 
         #endregion

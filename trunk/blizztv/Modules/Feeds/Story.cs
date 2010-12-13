@@ -46,7 +46,7 @@ namespace BlizzTV.Modules.Feeds
                     {
                         this._status = (Statutes)StatusStorage.Instance[string.Format("story.{0}", this.GUID)];
                         if (this._status == Statutes.FRESH) this.Status = Statutes.UNREAD;
-                        else if (this._status == Statutes.UNREAD) this.Style = ItemStyle.BOLD;
+                        else if (this._status == Statutes.UNREAD) this.Style = ItemStyle.Bold;
                     }
                 }
                 else
@@ -55,10 +55,10 @@ namespace BlizzTV.Modules.Feeds
                     {
                         case Statutes.FRESH:
                         case Statutes.UNREAD:
-                            if (this.Style != ItemStyle.BOLD) this.Style = ItemStyle.BOLD;
+                            if (this.Style != ItemStyle.Bold) this.Style = ItemStyle.Bold;
                             break;                        
                         case Statutes.READ:
-                            if (this.Style != ItemStyle.REGULAR) this.Style = ItemStyle.REGULAR;
+                            if (this.Style != ItemStyle.Regular) this.Style = ItemStyle.Regular;
                             break;
                     }
                 }
@@ -72,10 +72,10 @@ namespace BlizzTV.Modules.Feeds
                 {
                     case Statutes.FRESH:
                     case Statutes.UNREAD:
-                        this.Style = ItemStyle.BOLD;
+                        this.Style = ItemStyle.Bold;
                         break;
                     case Statutes.READ:
-                        this.Style = ItemStyle.REGULAR;
+                        this.Style = ItemStyle.Regular;
                         break;
                     default:
                         break;

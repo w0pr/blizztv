@@ -15,18 +15,18 @@
  * $Id$
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using BlizzTV.CommonLib.Storage;
 
 namespace BlizzTV.ModuleLib.StatusStorage
 {   
     public class StatusStorage
     {
+        #region instance
+
         private static StatusStorage _instance = new StatusStorage();
         public static StatusStorage Instance { get { return _instance; } }
+
+        #endregion
 
         private StatusStorage() { }
 

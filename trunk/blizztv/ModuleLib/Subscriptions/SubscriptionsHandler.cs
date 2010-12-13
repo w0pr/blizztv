@@ -23,7 +23,9 @@ namespace BlizzTV.ModuleLib.Subscriptions
 {
     public class SubscriptionsHandler
     {
-        private Type _type;
+        private readonly Type _type;
+
+        public List<ISubscription> List { get { return SubscriptionsStorage.Instance.GetSubscriptions(this._type); } }
 
         public SubscriptionsHandler(Type type)
         {
@@ -40,15 +42,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
         {
             SubscriptionsStorage.Instance.Subscriptions.Remove(subscription);
             SubscriptionsStorage.Instance.Save();
-        }
-
-        public List<ISubscription> List
-        {
-            get
-            {
-                return SubscriptionsStorage.Instance.GetSubscriptions(this._type);
-            }
-        }
+        }        
     }
 
     [Serializable]
@@ -57,7 +51,5 @@ namespace BlizzTV.ModuleLib.Subscriptions
     {
         [XmlAttribute("Name")]
         public string Name { get; set; }
-
-        public ISubscription() { }
     }
 }

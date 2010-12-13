@@ -14,17 +14,11 @@
  * 
  * $Id$
  */
+
 namespace BlizzTV.ModuleLib.Settings
 {
-    /// <summary>
-    /// Plugin-spefic settings.
-    /// </summary>
-    public class ModuleSettings : CommonLib.Settings.Settings
+    public class ModuleSettings : CommonLib.Settings.Settings // Plugin-spefic settings.
     {
-        /// <summary>
-        /// Plugin settings.
-        /// </summary>
-        /// <param name="ModuleName"></param>
-        protected ModuleSettings(string Name) : base(string.Format("Plugin-{0}", Name)) { }
+        protected ModuleSettings(string name) : base(string.Format("Plugin-{0}", name)) { }
     }
 }

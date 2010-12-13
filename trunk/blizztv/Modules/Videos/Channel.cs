@@ -88,9 +88,9 @@ namespace BlizzTV.Modules.Videos
             if (this.Style == Style) return;
 
             int unread = 0;
-            foreach (Video v in this.Videos) { if (v.Style == ItemStyle.BOLD) unread++; }
-            if (unread > 0) this.Style = ItemStyle.BOLD;
-            else this.Style = ItemStyle.REGULAR;
+            foreach (Video v in this.Videos) { if (v.Style == ItemStyle.Bold) unread++; }
+            if (unread > 0) this.Style = ItemStyle.Bold;
+            else this.Style = ItemStyle.Regular;
         }
 
         #endregion

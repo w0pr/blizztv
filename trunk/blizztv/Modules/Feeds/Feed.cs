@@ -107,9 +107,9 @@ namespace BlizzTV.Modules.Feeds
             if (this.Style == Style) return;
 
             int unread = 0;
-            foreach (Story s in this.Stories) { if (s.Style == ItemStyle.BOLD) unread++; }
-            if (unread > 0) this.Style = ItemStyle.BOLD;
-            else this.Style = ItemStyle.REGULAR;
+            foreach (Story s in this.Stories) { if (s.Style == ItemStyle.Bold) unread++; }
+            if (unread > 0) this.Style = ItemStyle.Bold;
+            else this.Style = ItemStyle.Regular;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)

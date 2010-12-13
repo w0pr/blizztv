@@ -17,14 +17,8 @@
 
 namespace BlizzTV.ModuleLib.Settings
 {
-    /// <summary>
-    /// Implements a plugin settings form.
-    /// </summary>
-    public interface IModuleSettingsForm
+    public interface IModuleSettingsForm // Implements a plugin settings form.
     {
-        /// <summary>
-        /// Notifies the form to save settings.
-        /// </summary>
-        void SaveSettings();
+        void SaveSettings(); // Notifies the form to save settings.
     }
 }

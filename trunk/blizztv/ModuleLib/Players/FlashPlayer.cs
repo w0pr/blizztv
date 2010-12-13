@@ -15,27 +15,20 @@
  * $Id$
  */
 
+// latest flash player activex can be downloaded from: http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe
+
 using System;
 using System.Windows.Forms;
 
 namespace BlizzTV.ModuleLib.Players
-{
-    // latest flash player activex can be downloaded from: http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe
-
-    /// <summary>
-    /// Customized Flash Player.
-    /// </summary>
-    public class FlashPlayer : AxShockwaveFlashObjects.AxShockwaveFlash
+{    
+    public class FlashPlayer : AxShockwaveFlashObjects.AxShockwaveFlash // Customized Flash Player.
     {
         private const int WM_RBUTTONDOWN = 0x0204;
 
-        /// <summary>
-        /// Initiates a new Flash Player object.
-        /// </summary>
-        public FlashPlayer()
-            : base()
+        public FlashPlayer():base()
         {
-            this.HandleCreated += new EventHandler(FlashPlayer_HandleCreated);
+            this.HandleCreated += FlashPlayer_HandleCreated;
         }
 
         void FlashPlayer_HandleCreated(object sender, EventArgs e)
@@ -45,15 +38,11 @@ namespace BlizzTV.ModuleLib.Players
             this.AllowScriptAccess = "always";
         }
 
-        /// <summary>
-        /// Override's the WndProc and disables Flash activex's default right-click menu and if exists shows the attached ContextMenuStrip.
-        /// </summary>
-        /// <param name="m"></param>
-        protected override void WndProc(ref Message m)
+        protected override void WndProc(ref Message m) // Override's the WndProc and disables Flash activex's default right-click menu and if exists shows the attached ContextMenuStrip.
         {
             if (m.Msg == WM_RBUTTONDOWN)
             {
-                if (this.ContextMenuStrip != null) this.ContextMenuStrip.Show(System.Windows.Forms.Cursor.Position.X, System.Windows.Forms.Cursor.Position.Y);
+                if (this.ContextMenuStrip != null) this.ContextMenuStrip.Show(Cursor.Position.X, Cursor.Position.Y);
                 m.Result = IntPtr.Zero;
                 return;
             }

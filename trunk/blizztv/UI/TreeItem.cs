@@ -80,10 +80,10 @@ namespace BlizzTV.UI
                 {
                     switch (style)
                     {
-                        case ItemStyle.BOLD:
+                        case ItemStyle.Bold:
                             this.NodeFont = TreeItem.Bold;                            
                             break;
-                        case ItemStyle.REGULAR:
+                        case ItemStyle.Regular:
                             this.NodeFont = TreeItem.Regular;
                             break;
                     }
