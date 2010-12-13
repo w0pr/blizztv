@@ -21,7 +21,6 @@ using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Subscriptions;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
 using BlizzTV.CommonLib.Workload;
 

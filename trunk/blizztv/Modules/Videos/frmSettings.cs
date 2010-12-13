@@ -16,9 +16,7 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions;
 
