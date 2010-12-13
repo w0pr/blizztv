@@ -21,15 +21,9 @@ using BlizzTV.CommonLib.Web;
 
 namespace BlizzTV.Modules.Streams.Handlers
 {
-    public class JustinTV:Stream // justintv wrapper
+    public class JustinTv:Stream // justintv wrapper
     {
-        #region ctor
-
-        public JustinTV(StreamSubscription subscription) : base(subscription) { }
-
-        #endregion
-
-        #region internal logic 
+        public JustinTv(StreamSubscription subscription) : base(subscription) { }
 
         public override void Update()
         {
@@ -37,8 +31,8 @@ namespace BlizzTV.Modules.Streams.Handlers
 
             try
             {
-                string api_url = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug); // the api url.
-                string response = WebReader.Read(api_url); // read the api response.
+                string apiUrl = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug); // the api url.
+                string response = WebReader.Read(apiUrl); // read the api response.
 
                 ArrayList data = (ArrayList)Json.JsonDecode(response); // start parsing the json.
                 if (data.Count > 0)
@@ -51,7 +45,5 @@ namespace BlizzTV.Modules.Streams.Handlers
             }
             catch (Exception e) { throw new Exception("JustinTV Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
         }
-
-        #endregion
     }
 }

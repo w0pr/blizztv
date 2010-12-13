@@ -24,21 +24,16 @@ namespace BlizzTV.Modules.Videos
     {
         public static Channel CreateChannel(VideoSubscription subscription)
         {
-            Channel _channel = null;
+            Channel channel = null;
             switch (subscription.Provider.ToLower())
             {
-                case "youtube":
-                    _channel = new Youtube(subscription);
-                    break;
-                case "bliptv":
-                    _channel = new BlipTV(subscription);
-                    break;
-                default:
-                    break;
+                case "youtube": channel = new Youtube(subscription); break;
+                case "bliptv": channel = new BlipTv(subscription); break;
+                default: break;
             }
 
-            if (_channel != null) return _channel;
-            else throw new NotImplementedException(string.Format("Video channel provider not implemented: '{0}'", subscription.Provider)); // throw an exception if video channel was not associated with a valid provider.
+            if(channel==null) throw new NotImplementedException(string.Format("Video channel provider not implemented: '{0}'", subscription.Provider)); // throw an exception if video channel was not associated with a valid provider.
+            return channel;
         }
     }
 }

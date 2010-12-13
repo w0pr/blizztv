@@ -31,8 +31,8 @@ namespace BlizzTV.Modules.Videos.Handlers
         {
             try
             {
-                string api_url = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, Settings.Instance.NumberOfVideosToQueryChannelFor); // the api url.
-                string response = WebReader.Read(api_url); // read the api response.
+                string apiUrl = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, Settings.Instance.NumberOfVideosToQueryChannelFor); // the api url.
+                string response = WebReader.Read(apiUrl); // read the api response.
                 if (response == null) return false;
 
                 XDocument xdoc = XDocument.Parse(response); // parse the api response.
@@ -53,7 +53,7 @@ namespace BlizzTV.Modules.Videos.Handlers
 
                 return true;
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e.ToString())); return false; }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e)); return false; }
         }
     }
 }

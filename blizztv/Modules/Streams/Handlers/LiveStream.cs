@@ -23,13 +23,7 @@ namespace BlizzTV.Modules.Streams.Handlers
 {
     public class LiveStream:Stream // livestream wrapper
     {
-        #region ctor
-
         public LiveStream(StreamSubscription subscription) : base(subscription) { }
-
-        #endregion 
-
-        #region internal logic 
 
         public override void Update()
         {
@@ -37,8 +31,8 @@ namespace BlizzTV.Modules.Streams.Handlers
 
             try
             {
-                string api_url = string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json", this.Slug); // the api url.
-                string response = WebReader.Read(api_url); // read the api response
+                string apiUrl = string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json", this.Slug); // the api url.
+                string response = WebReader.Read(apiUrl); // read the api response
                 if (response != null) // start parsing json.
                 {
                     Hashtable data = (Hashtable)Json.JsonDecode(response);
@@ -51,7 +45,5 @@ namespace BlizzTV.Modules.Streams.Handlers
             }
             catch (Exception e) { throw new Exception("LiveStream Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
         }
-
-        #endregion
     }
 }

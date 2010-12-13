@@ -21,8 +21,13 @@ namespace BlizzTV.Modules.Videos
 {   
     public class Settings:ModuleSettings
     {
+        #region instance
+
         private static Settings _instance = new Settings();
         public static Settings Instance { get { return _instance; } }
+
+        #endregion 
+
         private Settings() : base("Videos") { }
 
         public int NumberOfVideosToQueryChannelFor { get { return this.GetInt("NumberOfVideosToQueryChannelFor", 10); } set { this.Set("NumberOfVideosToQueryChannelFor", value); } }

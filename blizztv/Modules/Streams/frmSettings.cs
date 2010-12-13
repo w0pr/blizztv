@@ -61,7 +61,7 @@ namespace BlizzTV.Modules.Streams
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             frmAddStream f = new frmAddStream();
-            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (f.ShowDialog() == DialogResult.OK)
             {
                 Subscriptions.Instance.Add(f.Subscription);
                 this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription(f.Subscription));
@@ -81,7 +81,7 @@ namespace BlizzTV.Modules.Streams
 
     public class ListviewStreamSubscription : ListViewItem
     {
-        private StreamSubscription _streamSubscription;
+        private readonly StreamSubscription _streamSubscription;
         public StreamSubscription Subscription { get { return this._streamSubscription; } }
 
         public ListviewStreamSubscription(StreamSubscription streamSubscription)

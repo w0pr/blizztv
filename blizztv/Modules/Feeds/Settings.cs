@@ -21,8 +21,13 @@ namespace BlizzTV.Modules.Feeds
 {
     public class Settings : ModuleSettings
     {
+        #region instance
+
         private static Settings _instance = new Settings();
         public static Settings Instance { get { return _instance; } }
+
+        #endregion 
+
         private Settings() : base("Feeds") { }
 
         public int UpdateEveryXMinutes { get { return this.GetInt("UpdateEveryXMinutes", 60); } set { this.Set("UpdateEveryXMinutes", value); } }

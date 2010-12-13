@@ -23,16 +23,16 @@ using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.Modules.Videos.Handlers
 {
-    public class BlipTV : Channel
+    public class BlipTv : Channel
     {
-        public BlipTV(VideoSubscription subscription) : base(subscription) { }
+        public BlipTv(VideoSubscription subscription) : base(subscription) { }
 
         public override bool Parse()
         {
             try
             {
-                string api_url = string.Format("http://{0}.blip.tv/rss", this.Slug); // the api url.
-                string response = WebReader.Read(api_url); // read the api response.
+                string apiUrl = string.Format("http://{0}.blip.tv/rss", this.Slug); // the api url.
+                string response = WebReader.Read(apiUrl); // read the api response.
                 if (response == null) return false;
 
                 XDocument xdoc = XDocument.Parse(response); // parse the api response.
@@ -50,16 +50,16 @@ namespace BlizzTV.Modules.Videos.Handlers
 
                 foreach (var entry in entries) // create the video items.
                 {
-                    BlipTVVideo v = new BlipTVVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
+                    BlipTvVideo v = new BlipTvVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
                     v.OnStyleChange += OnChildStyleChange;
-                    v.VideoID = entry.VideoID;
+                    v.VideoId = entry.VideoID;
                     this.Videos.Add(v);
                     i++;
                     if (i >= Settings.Instance.NumberOfVideosToQueryChannelFor) break;
                 }
                 return true;
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannels Plugin - Blip.TV Channel - Update() Error: \n {0}", e.ToString())); return false; }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannels Plugin - Blip.TV Channel - Update() Error: \n {0}", e)); return false; }
         }
     }
 }

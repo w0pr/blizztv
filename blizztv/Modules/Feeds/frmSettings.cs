@@ -55,7 +55,7 @@ namespace BlizzTV.Modules.Feeds
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             frmAddFeed f = new frmAddFeed();
-            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (f.ShowDialog() == DialogResult.OK)
             {
                 Subscriptions.Instance.Add(f.Subscription);
                 this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription(f.Subscription));
@@ -75,14 +75,14 @@ namespace BlizzTV.Modules.Feeds
 
     public class ListviewFeedSubscription:ListViewItem
     {
-        private FeedSubscription _feedSubscription;
+        private readonly FeedSubscription _feedSubscription;
         public FeedSubscription Subscription { get { return this._feedSubscription; } }
 
         public ListviewFeedSubscription(FeedSubscription feedSubscription)
         {
             this._feedSubscription = feedSubscription;
             this.Text = feedSubscription.Name;
-            this.SubItems.Add(feedSubscription.URL);
+            this.SubItems.Add(feedSubscription.Url);
         }
     }
 }

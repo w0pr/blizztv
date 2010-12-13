@@ -72,19 +72,19 @@ namespace BlizzTV.Modules.Videos
                 }
             }
                         
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
         private void comboBoxProviders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LabelHint.Text = (Providers.Instance.Dictionary[(string) comboBoxProviders.SelectedItem] as VideoProvider).Hint;
+            LabelHint.Text = ((VideoProvider) Providers.Instance.Dictionary[(string) comboBoxProviders.SelectedItem]).Hint;
         }
     }
 }

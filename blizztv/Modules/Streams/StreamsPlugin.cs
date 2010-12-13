@@ -29,19 +29,13 @@ namespace BlizzTV.Modules.Streams
     [ModuleAttributes("Streams", "Live stream aggregator plugin.","stream_16")]
     public class StreamsPlugin:Module
     {
-        #region members
-
         internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
-        private Timer _update_timer;
-        private bool disposed = false;
+        private Timer _updateTimer;
+        private bool _disposed = false;
 
         public static StreamsPlugin Instance;
 
-        #endregion
-
-        #region ctor
-
-        public StreamsPlugin():base()
+        public StreamsPlugin()
         {
             StreamsPlugin.Instance = this;
             this.RootListItem = new ListItem("Streams");
@@ -49,10 +43,6 @@ namespace BlizzTV.Modules.Streams
             // register context-menu's.
             this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
         }
-
-        #endregion
-
-        #region API handlers
 
         public override void Run()
         {
@@ -69,7 +59,7 @@ namespace BlizzTV.Modules.Streams
         {
             foreach (KeyValuePair<string, IProvider> pair in Providers.Instance.Dictionary)
             {
-                if ((pair.Value as StreamProvider).LinkValid(link))
+                if (((StreamProvider) pair.Value).LinkValid(link))
                 {
                     StreamSubscription s = new StreamSubscription();
                     s.Name = s.Slug = (pair.Value as StreamProvider).GetSlug(link);
@@ -82,54 +72,49 @@ namespace BlizzTV.Modules.Streams
             return false;
         }
 
-        #endregion
-
-        #region internal logic
-
         internal void UpdateStreams()
         {
-            if (!this.Updating)
+            if (this.Updating) return;
+
+            this.Updating = true;
+            this.NotifyUpdateStarted();
+
+            if (this._streams.Count > 0)// clear previous entries before doing an update.
             {
-                this.Updating = true;
-                this.NotifyUpdateStarted();
-
-                if (this._streams.Count > 0)// clear previous entries before doing an update.
-                {
-                    this._streams.Clear();
-                    this.RootListItem.Childs.Clear();
-                }
-
-                this.RootListItem.SetTitle("Updating streams..");
-
-                foreach (KeyValuePair<string, StreamSubscription> pair in Subscriptions.Instance.Dictionary)
-                {
-                    this._streams.Add(pair.Value.Slug, StreamFactory.CreateStream(pair.Value));
-                }
-
-                int available_count = 0; // available live streams count
-                Workload.Instance.Add(this, this._streams.Count);
-
-                foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
-                {
-                    try
-                    {
-                        pair.Value.Update(); // update the stream
-                        if (pair.Value.IsLive) // if it's live
-                        {
-                            pair.Value.SetTitle(string.Format("{0} ({1})", pair.Value.Title, pair.Value.ViewerCount)); // put stream viewers count on title.
-                            available_count++; // increment available live streams count.
-                            this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                        }
-                        Workload.Instance.Step(this);
-                    }
-                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e.ToString())); } // catch errors for inner stream-handlers.
-                }
-
-                this.RootListItem.SetTitle(string.Format("Streams ({0})", available_count));  // put available streams count on root object's title.
-
-                NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-                this.Updating = false;
+                this._streams.Clear();
+                this.RootListItem.Childs.Clear();
             }
+
+            this.RootListItem.SetTitle("Updating streams..");
+
+            foreach (KeyValuePair<string, StreamSubscription> pair in Subscriptions.Instance.Dictionary)
+            {
+                this._streams.Add(pair.Value.Slug, StreamFactory.CreateStream(pair.Value));
+            }
+
+            int availableCount = 0; // available live streams count
+            Workload.Instance.Add(this, this._streams.Count);
+
+            foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
+            {
+                try
+                {
+                    pair.Value.Update(); // update the stream
+                    if (pair.Value.IsLive) // if it's live
+                    {
+                        pair.Value.SetTitle(string.Format("{0} ({1})", pair.Value.Title, pair.Value.ViewerCount)); // put stream viewers count on title.
+                        availableCount++; // increment available live streams count.
+                        this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                    }
+                    Workload.Instance.Step(this);
+                }
+                catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e)); } // catch errors for inner stream-handlers.
+            }
+
+            this.RootListItem.SetTitle(string.Format("Streams ({0})", availableCount));  // put available streams count on root object's title.
+
+            NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
+            this.Updating = false;
         }
 
         public void OnSaveSettings()
@@ -139,16 +124,16 @@ namespace BlizzTV.Modules.Streams
 
         private void SetupUpdateTimer()
         {
-            if (this._update_timer != null)
+            if (this._updateTimer != null)
             {
-                this._update_timer.Enabled = false;
-                this._update_timer.Elapsed -= OnTimerHit;
-                this._update_timer = null;
+                this._updateTimer.Enabled = false;
+                this._updateTimer.Elapsed -= OnTimerHit;
+                this._updateTimer = null;
             }
 
-            _update_timer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
-            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            _update_timer.Enabled = true;
+            _updateTimer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
+            _updateTimer.Elapsed += OnTimerHit;
+            _updateTimer.Enabled = true;
         }
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
@@ -158,31 +143,26 @@ namespace BlizzTV.Modules.Streams
 
         private void RunManualUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread t = new System.Threading.Thread(delegate() { UpdateStreams(); }) 
-            { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
-            t.Start();            
+            System.Threading.Thread thread = new System.Threading.Thread(UpdateStreams) {IsBackground = true};
+            thread.Start();
         }
-
-        #endregion
 
         #region de-ctor
 
         protected override void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
-                {
-                    this._update_timer.Enabled = false;
-                    this._update_timer.Elapsed -= OnTimerHit;
-                    this._update_timer.Dispose();
-                    this._update_timer = null;
-                    foreach (KeyValuePair<string,Stream> pair in this._streams) { pair.Value.Dispose(); }
-                    this._streams.Clear();
-                    this._streams = null;
-                }
-                base.Dispose(disposing);
+                this._updateTimer.Enabled = false;
+                this._updateTimer.Elapsed -= OnTimerHit;
+                this._updateTimer.Dispose();
+                this._updateTimer = null;
+                foreach (KeyValuePair<string,Stream> pair in this._streams) { pair.Value.Dispose(); }
+                this._streams.Clear();
+                this._streams = null;
             }
+            base.Dispose(disposing);
         }
 
         #endregion

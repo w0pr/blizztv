@@ -17,98 +17,80 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BlizzTV.ModuleLib;
 
 namespace BlizzTV.Modules.Videos
 {
     public class Channel:ListItem
     {
-        #region members
+        private bool _disposed = false;
 
-        private string _name; // the channel name.
-        private string _slug; // the channel slug.
-        private string _provider; // the channel provider.
-        private bool disposed = false;
+        public string Name { get; internal set; }
+        public string Slug { get; internal set; }
+        public string Provider { get; internal set; }
 
-        public string Name { get { return this._name; } internal set { this._name = value; } }
-        public string Slug { get { return this._slug; } internal set { this._slug = value; }  }
-        public string Provider { get { return this._provider; } internal set { this._provider = value; } }
-                
         public List<Video> Videos = new List<Video>();
-
-        #endregion
-
-        #region ctor
 
         public Channel(VideoSubscription subscription)
             : base(subscription.Name)
         {
-            this._name = subscription.Name;
-            this._slug = subscription.Slug;
-            this._provider = subscription.Provider;         
+            this.Name = subscription.Name;
+            this.Slug = subscription.Slug;
+            this.Provider = subscription.Provider;         
 
              // register context menus.
             this.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
             this.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
         }
 
-        #endregion
-
-        #region internal logic
-
         public bool IsValid()
         {
             return this.Parse();
         }
 
-        public bool Update() 
+        public bool Update()
         {
             if (this.Parse())
             {
                 foreach (Video v in this.Videos) { v.CheckForNotifications(); }
                 return true;
             }
-            else return false;
-        } 
+            return false;
+        }
 
         public virtual bool Parse() { throw new NotImplementedException(); }
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.Status = Video.Statutes.WATCHED; } // marked all videos as watched.
+            foreach (Video v in this.Videos) { v.Status = Video.Statutes.Watched; } // marked all videos as watched.
         }
 
         private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.Status = Video.Statutes.UNWATCHED; } // marked all videos as unread.
+            foreach (Video v in this.Videos) { v.Status = Video.Statutes.Unwatched; } // marked all videos as unread.
         }
 
-        protected void OnChildStyleChange(ItemStyle Style)
+        protected void OnChildStyleChange(ItemStyle style)
         {
-            if (this.Style == Style) return;
+            if (this.Style == style) return;
 
-            int unread = 0;
-            foreach (Video v in this.Videos) { if (v.Style == ItemStyle.Bold) unread++; }
-            if (unread > 0) this.Style = ItemStyle.Bold;
-            else this.Style = ItemStyle.Regular;
+            int unread = this.Videos.Count(v => v.Style == ItemStyle.Bold);
+            this.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
         }
-
-        #endregion
 
         #region de-ctor
 
         protected override void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
-                {
-                    foreach (Video v in this.Videos) { v.Dispose(); }
-                    this.Videos.Clear();
-                    this.Videos = null;
-                }
-                base.Dispose(disposing);
+                foreach (Video v in this.Videos) { v.Dispose(); }
+                this.Videos.Clear();
+                this.Videos = null;
             }
+            base.Dispose(disposing);
         }
 
         #endregion

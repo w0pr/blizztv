@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
@@ -28,17 +29,11 @@ namespace BlizzTV.Modules.Videos
     [ModuleAttributes("Videos", "Video aggregator plugin.","video_16")]
     public class VideosPlugin:Module
     {
-        #region members
-
         internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
-        private Timer _update_timer;
-        private bool disposed = false;
+        private Timer _updateTimer;
+        private bool _disposed = false;
 
         public static VideosPlugin Instance;
-
-        #endregion
-
-        #region ctor
 
         public VideosPlugin() : base()
         {
@@ -50,10 +45,6 @@ namespace BlizzTV.Modules.Videos
             this.RootListItem.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
             this.RootListItem.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
         }
-
-        #endregion
-
-        #region API handlers
 
         public override void Run()
         {
@@ -70,7 +61,7 @@ namespace BlizzTV.Modules.Videos
         {
             foreach (KeyValuePair<string, IProvider> pair in Providers.Instance.Dictionary)
             {
-                if ((pair.Value as VideoProvider).LinkValid(link))
+                if (((VideoProvider) pair.Value).LinkValid(link))
                 {
                     VideoSubscription v = new VideoSubscription();
                     v.Name = v.Slug = (pair.Value as VideoProvider).GetSlug(link);
@@ -91,57 +82,49 @@ namespace BlizzTV.Modules.Videos
             return false;
         }
 
-        #endregion
-
-        #region internal logic
-
         internal void UpdateChannels()
         {
-            if (!this.Updating)
+            if (this.Updating) return;
+            this.Updating = true;
+            this.NotifyUpdateStarted();
+
+            if (this._channels.Count > 0)  // clear previous entries before doing an update.
             {
-                this.Updating = true;
-                this.NotifyUpdateStarted();
-
-                if (this._channels.Count > 0)  // clear previous entries before doing an update.
-                {
-                    this._channels.Clear();
-                    this.RootListItem.Childs.Clear();
-                }
-
-                this.RootListItem.Style = ItemStyle.Regular;
-                this.RootListItem.SetTitle("Updating videos..");
-
-                foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
-                {
-                    Channel c = ChannelFactory.CreateChannel(pair.Value);
-                    c.OnStyleChange += OnChildStyleChange;
-                    this._channels.Add(pair.Value.Slug, c);
-                }
-
-                Workload.Instance.Add(this,this._channels.Count);
-
-                foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
-                {
-                    pair.Value.Update(); // update the channel.
-                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                    foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.GUID, v); } // register the video items.
-                    Workload.Instance.Step(this);                    
-                }
-
-                this.RootListItem.SetTitle("Videos");
-                NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-                this.Updating = false;
+                this._channels.Clear();
+                this.RootListItem.Childs.Clear();
             }
+
+            this.RootListItem.Style = ItemStyle.Regular;
+            this.RootListItem.SetTitle("Updating videos..");
+
+            foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
+            {
+                Channel c = ChannelFactory.CreateChannel(pair.Value);
+                c.OnStyleChange += OnChildStyleChange;
+                this._channels.Add(pair.Value.Slug, c);
+            }
+
+            Workload.Instance.Add(this,this._channels.Count);
+
+            foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
+            {
+                pair.Value.Update(); // update the channel.
+                this.RootListItem.Childs.Add(pair.Key, pair.Value);
+                foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.Guid, v); } // register the video items.
+                Workload.Instance.Step(this);                    
+            }
+
+            this.RootListItem.SetTitle("Videos");
+            NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
+            this.Updating = false;
         }
 
-        void OnChildStyleChange(ItemStyle Style)
+        void OnChildStyleChange(ItemStyle style)
         {
-            if (this.RootListItem.Style == Style) return;
+            if (this.RootListItem.Style == style) return;
 
-            int unread = 0;
-            foreach (KeyValuePair<string, Channel> pair in this._channels) { if (pair.Value.Style == ItemStyle.Bold) unread++; }
-            if (unread > 0) this.RootListItem.Style = ItemStyle.Bold;
-            else this.RootListItem.Style = ItemStyle.Regular;
+            int unread = this._channels.Count(pair => pair.Value.Style == ItemStyle.Bold);
+            this.RootListItem.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
         }
         
         public void OnSaveSettings()
@@ -151,16 +134,16 @@ namespace BlizzTV.Modules.Videos
 
         private void SetupUpdateTimer()
         {
-            if (this._update_timer != null)
+            if (this._updateTimer != null)
             {
-                this._update_timer.Enabled = false;
-                this._update_timer.Elapsed -= OnTimerHit;                
-                this._update_timer = null;
+                this._updateTimer.Enabled = false;
+                this._updateTimer.Elapsed -= OnTimerHit;                
+                this._updateTimer = null;
             }
 
-            _update_timer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
-            _update_timer.Elapsed += new ElapsedEventHandler(OnTimerHit);
-            _update_timer.Enabled = true;
+            _updateTimer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
+            _updateTimer.Elapsed += OnTimerHit;
+            _updateTimer.Enabled = true;
         }
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
@@ -170,16 +153,15 @@ namespace BlizzTV.Modules.Videos
 
         private void RunManualUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread t = new System.Threading.Thread(delegate() { UpdateChannels(); }) 
-            { IsBackground = true, Name = string.Format("plugin-{0}-{1}", this.Attributes.Name, DateTime.Now.TimeOfDay.ToString()) };
-            t.Start();
+            System.Threading.Thread thread = new System.Threading.Thread(UpdateChannels) {IsBackground = true};
+            thread.Start();
         }
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.WATCHED; }
+                foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.Watched; }
             }
         }
 
@@ -187,33 +169,29 @@ namespace BlizzTV.Modules.Videos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.UNWATCHED; }
+                foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.Unwatched; }
             }
         }
-
-        #endregion
 
         #region de-ctor
 
         protected override void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
+                if (this._updateTimer != null)
                 {
-                    if (this._update_timer != null)
-                    {
-                        this._update_timer.Enabled = false;
-                        this._update_timer.Elapsed -= OnTimerHit;
-                        this._update_timer.Dispose();
-                        this._update_timer = null;
-                    }
-                    foreach (KeyValuePair<string,Channel> pair in this._channels) { pair.Value.Dispose(); }
-                    this._channels.Clear();
-                    this._channels = null;
+                    this._updateTimer.Enabled = false;
+                    this._updateTimer.Elapsed -= OnTimerHit;
+                    this._updateTimer.Dispose();
+                    this._updateTimer = null;
                 }
-                base.Dispose(disposing);
+                foreach (KeyValuePair<string,Channel> pair in this._channels) { pair.Value.Dispose(); }
+                this._channels.Clear();
+                this._channels = null;
             }
+            base.Dispose(disposing);
         }
 
         #endregion

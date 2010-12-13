@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 using BlizzTV.ModuleLib.Subscriptions;
 
@@ -24,14 +25,18 @@ namespace BlizzTV.Modules.Feeds
 {
     public sealed class Subscriptions : SubscriptionsHandler
     {
+        #region instance
+
         private static Subscriptions _instance = new Subscriptions();
         public static Subscriptions Instance { get { return _instance; } }
+
+        #endregion
 
         private Subscriptions() : base(typeof(FeedSubscription)) { }
 
         public bool Add(FeedSubscription subscription)
         {
-            if (!this.Dictionary.ContainsKey(subscription.URL))
+            if (!this.Dictionary.ContainsKey(subscription.Url))
             {
                 base.Add(subscription);
                 return true;
@@ -43,12 +48,7 @@ namespace BlizzTV.Modules.Feeds
         {
             get
             {
-                Dictionary<string, FeedSubscription> dictionary = new Dictionary<string, FeedSubscription>();
-                foreach (ISubscription subscription in this.List)
-                {
-                    dictionary.Add((subscription as FeedSubscription).URL, (subscription as FeedSubscription));
-                }
-                return dictionary;
+                return this.List.ToDictionary(subscription => ((FeedSubscription) subscription).Url, subscription => (subscription as FeedSubscription));
             }
         }
     }
@@ -58,8 +58,6 @@ namespace BlizzTV.Modules.Feeds
     public class FeedSubscription : ISubscription
     {
         [XmlAttribute("Url")]
-        public string URL { get; set; }
-
-        public FeedSubscription() { }
+        public string Url { get; set; }
     }
 }

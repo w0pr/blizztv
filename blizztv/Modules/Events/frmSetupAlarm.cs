@@ -24,13 +24,13 @@ namespace BlizzTV.Modules.Events
     {
         private Event _event;
 
-        public frmSetupAlarm(Event Event)
+        public frmSetupAlarm(Event _event)
         {
             InitializeComponent();
 
             byte[] minutes={5,10,15,30,60,90,120};
 
-            this._event = Event;
+            this._event = _event;
             this.Text = string.Format("Setup alarm for event: {0}", this._event.FullTitle);
             this.LabelEventName.Text = this._event.FullTitle;
             this.LabelEventTime.Text = this._event.Time.LocalTime.ToString();

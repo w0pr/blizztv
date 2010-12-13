@@ -21,13 +21,13 @@ namespace BlizzTV.Modules.Videos.Handlers
 {
     public class YoutubeVideo:Video
     {
-        private static Regex _regex = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled); // compiled regex for reading video id's.
+        private static readonly Regex Regex = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled); // compiled regex for reading video id's.
 
-        public YoutubeVideo(string Title, string Guid, string Link, string Provider)
-            : base(Title, Guid, Link, Provider)
+        public YoutubeVideo(string title, string guid, string link, string provider)
+            : base(title, guid, link, provider)
         {
-            Match m = _regex.Match(this.Link);
-            if (m.Success) this.VideoID = m.Groups[1].Value;
+            Match m = Regex.Match(this.Link);
+            if (m.Success) this.VideoId = m.Groups[1].Value;
         }
     }
 }

@@ -24,20 +24,20 @@ namespace BlizzTV.Modules.Streams
 {
     public partial class frmPlayer : Form // The stream player.
     {
-        private Stream _stream; // the stream.
-        private frmChat _chat_window = null;
+        private readonly Stream _stream; // the stream.
+        private frmChat _chatWindow = null;
 
-        public frmPlayer(Stream Stream)
+        public frmPlayer(Stream stream)
         {            
             InitializeComponent();
 
-            this._stream = Stream; // set the stream.
+            this._stream = stream; // set the stream.
             this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
             this.Width = GlobalSettings.Instance.VideoPlayerWidth; // get the default player width.
             this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
 
-            if (!(Providers.Instance.Dictionary[this._stream.Provider] as StreamProvider).ChatAvailable) this.MenuOpenChat.Enabled = false; 
+            if (!((StreamProvider) Providers.Instance.Dictionary[this._stream.Provider]).ChatAvailable) this.MenuOpenChat.Enabled = false; 
         }
 
         private void Player_Load(object sender, EventArgs e) 
@@ -52,8 +52,8 @@ namespace BlizzTV.Modules.Streams
             }
             catch (Exception exc)
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Player Error: \n {0}", exc.ToString()));
-                System.Windows.Forms.MessageBox.Show(string.Format("An error occured in stream player. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Player Error: \n {0}", exc));
+                MessageBox.Show(string.Format("An error occured in stream player. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -83,18 +83,18 @@ namespace BlizzTV.Modules.Streams
 
         private void OpenChatWindow()
         {
-            if (this._chat_window == null)
+            if (this._chatWindow == null)
             {
-                this._chat_window = new frmChat(this,this._stream);
-                this._chat_window.FormClosed += ChatWindowClosed;
-                this._chat_window.Show();
+                this._chatWindow = new frmChat(this,this._stream);
+                this._chatWindow.FormClosed += ChatWindowClosed;
+                this._chatWindow.Show();
             }
-            else this._chat_window.Focus();
+            else this._chatWindow.Focus();
         }
 
         void ChatWindowClosed(object sender, FormClosedEventArgs e)
         {
-            this._chat_window = null;
+            this._chatWindow = null;
         }
     }
 }
