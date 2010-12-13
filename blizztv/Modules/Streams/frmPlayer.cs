@@ -19,7 +19,6 @@ using System;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
-using BlizzTV.ModuleLib.Players;
 
 namespace BlizzTV.Modules.Streams
 {

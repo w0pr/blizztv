@@ -20,7 +20,6 @@ using System.Linq;
 using System.Xml.Linq;
 using BlizzTV.CommonLib.Web;
 using BlizzTV.CommonLib.Logger;
-using BlizzTV.ModuleLib;
 
 namespace BlizzTV.Modules.Videos.Handlers
 {

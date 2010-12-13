@@ -14,8 +14,6 @@
  * 
  * $Id$
  */
-using BlizzTV.CommonLib.Settings;
-
 namespace BlizzTV.ModuleLib.Settings
 {
     /// <summary>

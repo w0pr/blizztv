@@ -16,10 +16,8 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Text.RegularExpressions;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
 
 namespace BlizzTV.Modules.Streams

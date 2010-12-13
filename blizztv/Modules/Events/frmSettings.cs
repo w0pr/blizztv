@@ -17,7 +17,6 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 
 namespace BlizzTV.Modules.Events
