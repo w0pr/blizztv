@@ -20,8 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using BlizzTV.CommonLib.UI;
 using BlizzTV.UI;
-using BlizzTV.UI.Lib;
 using System.Timers;
 
 namespace BlizzTV.CommonLib.Notifications

@@ -18,8 +18,8 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
+using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
-using BlizzTV.UI.Lib;
 
 namespace BlizzTV.UI
 {

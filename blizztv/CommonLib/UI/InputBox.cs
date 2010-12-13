@@ -19,7 +19,7 @@ using System;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace BlizzTV.UI.Lib
+namespace BlizzTV.CommonLib.UI
 {
     /// <summary>
     /// InputBox provider.

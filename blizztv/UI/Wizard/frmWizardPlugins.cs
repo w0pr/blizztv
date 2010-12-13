@@ -18,8 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
-using BlizzTV.UI.Lib;
 
 namespace BlizzTV.UI.Wizard
 {

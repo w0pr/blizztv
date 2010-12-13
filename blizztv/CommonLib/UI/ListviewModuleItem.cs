@@ -18,7 +18,7 @@
 using System.Windows.Forms;
 using BlizzTV.ModuleLib;
 
-namespace BlizzTV.UI.Lib
+namespace BlizzTV.CommonLib.UI
 {
     public class ListviewModuleItem : ListViewItem
     {

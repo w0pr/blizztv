@@ -22,10 +22,10 @@ using System.Windows.Forms;
 using System.Threading;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Notifications;
+using BlizzTV.CommonLib.UI;
 using BlizzTV.CommonLib.Workload;
 using BlizzTV.ModuleLib;
 using BlizzTV.Updates;
-using BlizzTV.UI.Lib;
 
 namespace BlizzTV.UI
 {

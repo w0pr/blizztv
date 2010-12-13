@@ -20,9 +20,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.Settings;
+using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
-using BlizzTV.UI.Lib;
 
 namespace BlizzTV.UI
 {
