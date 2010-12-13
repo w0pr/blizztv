@@ -130,7 +130,7 @@ namespace BlizzTV.Modules.Events
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Write(LogMessageTypes.ERROR, string.Format("EventsPlugin ParseEvents() Error: \n {0}", e.ToString()));
+                    Log.Instance.Write(LogMessageTypes.Error, string.Format("EventsPlugin ParseEvents() Error: \n {0}", e.ToString()));
                 }
 
                 this.RootListItem.Childs.Add("events-today", _events_today);

@@ -22,24 +22,16 @@ using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.CommonLib.Web
 {
-    /// <summary>
-    /// Reads data from web and returns.
-    /// </summary>
     public static class WebReader
     {
-        /// <summary>
-        /// Returns content's of a given http url.
-        /// </summary>
-        /// <param name="url">The web-page's address.</param>
-        /// <returns>Returns contents of the given wep-page.</returns>
-        public static string Read(string url)
+        public static string Read(string url) // Returns content's of a given http url.
         {
             string buffer;
             using (WebClient client = new WebClient())
             {
                 try
                 {
-                    client.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)");
+                    client.Headers.Add(HttpRequestHeader.UserAgent, "BlizzTV (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 4.0)");
                     using (StreamReader reader = new StreamReader(client.OpenRead(url)))
                     {
                         buffer = reader.ReadToEnd();
@@ -47,7 +39,7 @@ namespace BlizzTV.CommonLib.Web
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Write(LogMessageTypes.ERROR,string.Format("WebReader:Read() Exception: {0}",e.ToString()));
+                    Log.Instance.Write(LogMessageTypes.Error,string.Format("WebReader:Read() Exception: {0}",e));
                     return null;
                 }
             }

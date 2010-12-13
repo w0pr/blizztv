@@ -26,8 +26,6 @@ using System.Text;
 
 namespace BlizzTV.CommonLib.Web
 {
-    #pragma warning disable 1591 // ignore 'Missing XML comment for publicly visible type or member 'Type_or_Member' for JSON.cs
-    // TODO: If we feel all okay with JSON.cs, let's XML-comment this file to and fix it's (if any?) problems.
 
     /// <summary>
     /// This class encodes and decodes JSON strings.
@@ -36,7 +34,7 @@ namespace BlizzTV.CommonLib.Web
     /// JSON uses Arrays and Objects. These correspond here to the datatypes ArrayList and Hashtable.
     /// All numbers are parsed to doubles.
     /// </summary>
-    public class JSON
+    public class Json
     {
         public const int TOKEN_NONE = 0;
         public const int TOKEN_CURLY_OPEN = 1;
@@ -111,16 +109,16 @@ namespace BlizzTV.CommonLib.Web
             while (!done)
             {
                 token = LookAhead(json, index);
-                if (token == JSON.TOKEN_NONE)
+                if (token == Json.TOKEN_NONE)
                 {
                     success = false;
                     return null;
                 }
-                else if (token == JSON.TOKEN_COMMA)
+                else if (token == Json.TOKEN_COMMA)
                 {
                     NextToken(json, ref index);
                 }
-                else if (token == JSON.TOKEN_CURLY_CLOSE)
+                else if (token == Json.TOKEN_CURLY_CLOSE)
                 {
                     NextToken(json, ref index);
                     return table;
@@ -138,7 +136,7 @@ namespace BlizzTV.CommonLib.Web
 
                     // :
                     token = NextToken(json, ref index);
-                    if (token != JSON.TOKEN_COLON)
+                    if (token != Json.TOKEN_COLON)
                     {
                         success = false;
                         return null;
@@ -170,16 +168,16 @@ namespace BlizzTV.CommonLib.Web
             while (!done)
             {
                 int token = LookAhead(json, index);
-                if (token == JSON.TOKEN_NONE)
+                if (token == Json.TOKEN_NONE)
                 {
                     success = false;
                     return null;
                 }
-                else if (token == JSON.TOKEN_COMMA)
+                else if (token == Json.TOKEN_COMMA)
                 {
                     NextToken(json, ref index);
                 }
-                else if (token == JSON.TOKEN_SQUARED_CLOSE)
+                else if (token == Json.TOKEN_SQUARED_CLOSE)
                 {
                     NextToken(json, ref index);
                     break;
@@ -203,24 +201,24 @@ namespace BlizzTV.CommonLib.Web
         {
             switch (LookAhead(json, index))
             {
-                case JSON.TOKEN_STRING:
+                case Json.TOKEN_STRING:
                     return ParseString(json, ref index, ref success);
-                case JSON.TOKEN_NUMBER:
+                case Json.TOKEN_NUMBER:
                     return ParseNumber(json, ref index);
-                case JSON.TOKEN_CURLY_OPEN:
+                case Json.TOKEN_CURLY_OPEN:
                     return ParseObject(json, ref index, ref success);
-                case JSON.TOKEN_SQUARED_OPEN:
+                case Json.TOKEN_SQUARED_OPEN:
                     return ParseArray(json, ref index, ref success);
-                case JSON.TOKEN_TRUE:
+                case Json.TOKEN_TRUE:
                     NextToken(json, ref index);
                     return Boolean.Parse("TRUE");
-                case JSON.TOKEN_FALSE:
+                case Json.TOKEN_FALSE:
                     NextToken(json, ref index);
                     return Boolean.Parse("FALSE");
-                case JSON.TOKEN_NULL:
+                case Json.TOKEN_NULL:
                     NextToken(json, ref index);
                     return null;
-                case JSON.TOKEN_NONE:
+                case Json.TOKEN_NONE:
                     break;
             }
 
@@ -381,7 +379,7 @@ namespace BlizzTV.CommonLib.Web
 
             if (index == json.Length)
             {
-                return JSON.TOKEN_NONE;
+                return Json.TOKEN_NONE;
             }
 
             char c = json[index];
@@ -389,17 +387,17 @@ namespace BlizzTV.CommonLib.Web
             switch (c)
             {
                 case '{':
-                    return JSON.TOKEN_CURLY_OPEN;
+                    return Json.TOKEN_CURLY_OPEN;
                 case '}':
-                    return JSON.TOKEN_CURLY_CLOSE;
+                    return Json.TOKEN_CURLY_CLOSE;
                 case '[':
-                    return JSON.TOKEN_SQUARED_OPEN;
+                    return Json.TOKEN_SQUARED_OPEN;
                 case ']':
-                    return JSON.TOKEN_SQUARED_CLOSE;
+                    return Json.TOKEN_SQUARED_CLOSE;
                 case ',':
-                    return JSON.TOKEN_COMMA;
+                    return Json.TOKEN_COMMA;
                 case '"':
-                    return JSON.TOKEN_STRING;
+                    return Json.TOKEN_STRING;
                 case '0':
                 case '1':
                 case '2':
@@ -411,9 +409,9 @@ namespace BlizzTV.CommonLib.Web
                 case '8':
                 case '9':
                 case '-':
-                    return JSON.TOKEN_NUMBER;
+                    return Json.TOKEN_NUMBER;
                 case ':':
-                    return JSON.TOKEN_COLON;
+                    return Json.TOKEN_COLON;
             }
             index--;
 
@@ -429,7 +427,7 @@ namespace BlizzTV.CommonLib.Web
                     json[index + 4] == 'e')
                 {
                     index += 5;
-                    return JSON.TOKEN_FALSE;
+                    return Json.TOKEN_FALSE;
                 }
             }
 
@@ -442,7 +440,7 @@ namespace BlizzTV.CommonLib.Web
                     json[index + 3] == 'e')
                 {
                     index += 4;
-                    return JSON.TOKEN_TRUE;
+                    return Json.TOKEN_TRUE;
                 }
             }
 
@@ -455,11 +453,11 @@ namespace BlizzTV.CommonLib.Web
                     json[index + 3] == 'l')
                 {
                     index += 4;
-                    return JSON.TOKEN_NULL;
+                    return Json.TOKEN_NULL;
                 }
             }
 
-            return JSON.TOKEN_NONE;
+            return Json.TOKEN_NONE;
         }
 
         protected static bool SerializeValue(object value, StringBuilder builder)

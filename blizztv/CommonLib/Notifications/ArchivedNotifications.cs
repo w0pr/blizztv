@@ -21,10 +21,14 @@ namespace BlizzTV.CommonLib.Notifications
 {
     public class ArchivedNotifications
     {
+        #region instance
+
         private static ArchivedNotifications _instance = new ArchivedNotifications();
         public static ArchivedNotifications Instance { get { return _instance; } }
 
-        private List<ArchivedNotification> _queuedNotifications = new List<ArchivedNotification>();
+        #endregion
+
+        private readonly List<ArchivedNotification> _queuedNotifications = new List<ArchivedNotification>();
         public List<ArchivedNotification> Queue { get { return this._queuedNotifications; } }
 
         private ArchivedNotifications() { }
@@ -35,9 +39,9 @@ namespace BlizzTV.CommonLib.Notifications
         public INotificationRequester Item { get; private set; }
         public NotificationEventArgs Args { get; private set; }
 
-        public ArchivedNotification(INotificationRequester Item, NotificationEventArgs e)
+        public ArchivedNotification(INotificationRequester item, NotificationEventArgs e)
         {
-            this.Item = Item;
+            this.Item = item;
             this.Args = e;
         }
     }

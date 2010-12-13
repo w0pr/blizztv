@@ -99,7 +99,7 @@ namespace BlizzTV.Modules.Feeds
                 }
                 return true;
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.ERROR, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString())); return false; }
+            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e.ToString())); return false; }
         }
 
         void ChildStyleChange(ItemStyle Style)

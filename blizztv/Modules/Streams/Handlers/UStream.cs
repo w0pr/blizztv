@@ -46,7 +46,7 @@ namespace BlizzTV.Modules.Streams.Handlers
                 string api_url = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "F7DE9C9A56F4ABB48D170A9881E5AF66"); // the api url
                 string response = WebReader.Read(api_url); // read the api response.
 
-                Hashtable data = (Hashtable)JSON.JsonDecode(response); // start parsing json.
+                Hashtable data = (Hashtable)Json.JsonDecode(response); // start parsing json.
                 ArrayList results = (ArrayList)data["results"]; // the results object.
                 if (results.Count > 0)
                 {

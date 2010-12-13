@@ -41,7 +41,7 @@ namespace BlizzTV.Modules.Streams.Handlers
                 string response = WebReader.Read(api_url); // read the api response
                 if (response != null) // start parsing json.
                 {
-                    Hashtable data = (Hashtable)JSON.JsonDecode(response);
+                    Hashtable data = (Hashtable)Json.JsonDecode(response);
                     data = (Hashtable)data["rss"]; 
                     data = (Hashtable)data["channel"];
                     this.IsLive = (bool)data["isLive"]; // is the stream live?

@@ -67,12 +67,12 @@ namespace BlizzTV.ModuleLib
 
         private ModuleManager()
         {
-            Log.Instance.Write(LogMessageTypes.INFO, string.Format("Plugin manager - ({0}) initialized..", this.GetType().Module.Name)); // log the plugin-manager startup message.
+            Log.Instance.Write(LogMessageTypes.Info, string.Format("Plugin manager - ({0}) initialized..", this.GetType().Module.Name)); // log the plugin-manager startup message.
             this.ScanModules();
             
             foreach (KeyValuePair<string,ModuleInfo> pi in this.AvailablePlugins) // print all avaiable plugin's list to log.
             {
-                Log.Instance.Write(LogMessageTypes.INFO, string.Format("Found Plugin: {0}", pi.Value.Attributes.Name.ToString()));
+                Log.Instance.Write(LogMessageTypes.Info, string.Format("Found Plugin: {0}", pi.Value.Attributes.Name.ToString()));
             }                
         }
 

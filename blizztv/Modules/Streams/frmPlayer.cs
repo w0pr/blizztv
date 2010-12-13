@@ -52,7 +52,7 @@ namespace BlizzTV.Modules.Streams
             }
             catch (Exception exc)
             {
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("StreamsPlugin Player Error: \n {0}", exc.ToString()));
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Player Error: \n {0}", exc.ToString()));
                 System.Windows.Forms.MessageBox.Show(string.Format("An error occured in stream player. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }

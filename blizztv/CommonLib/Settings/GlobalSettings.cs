@@ -22,12 +22,12 @@ namespace BlizzTV.CommonLib.Settings
     /// </summary>
     public sealed class GlobalSettings : Settings
     {
-        private static GlobalSettings _instance = new GlobalSettings();
+        #region instance
 
-        /// <summary>
-        /// Returns instance of GlobalSettings.
-        /// </summary>
+        private static GlobalSettings _instance = new GlobalSettings();
         public static GlobalSettings Instance { get { return _instance; } }
+
+        #endregion
 
         /// <summary>
         /// The default video player width.

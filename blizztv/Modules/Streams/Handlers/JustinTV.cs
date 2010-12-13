@@ -40,7 +40,7 @@ namespace BlizzTV.Modules.Streams.Handlers
                 string api_url = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug); // the api url.
                 string response = WebReader.Read(api_url); // read the api response.
 
-                ArrayList data = (ArrayList)JSON.JsonDecode(response); // start parsing the json.
+                ArrayList data = (ArrayList)Json.JsonDecode(response); // start parsing the json.
                 if (data.Count > 0)
                 {
                     this.IsLive = true; // is the stream live?

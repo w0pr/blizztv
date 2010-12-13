@@ -39,7 +39,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
 
         private SubscriptionsStorage() 
         {
-            Log.Instance.Write(LogMessageTypes.INFO, "Loading subscriptions database..");
+            Log.Instance.Write(LogMessageTypes.Info, "Loading subscriptions database..");
             this.RegisterKnownTypes();
             this.Load();
         }
@@ -69,7 +69,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
             }
             catch (Exception e) 
             { 
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("An error occured while loading subscriptions.db: {0}", e.ToString()));
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("An error occured while loading subscriptions.db: {0}", e.ToString()));
                 System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Your subscriptions database is corrupted. Do you want it to be replaced with a default one?", "Subscriptions Database Corrupted", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
                 if(result== System.Windows.Forms.DialogResult.Yes) 
                 {

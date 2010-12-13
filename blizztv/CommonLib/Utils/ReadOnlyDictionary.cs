@@ -5,7 +5,7 @@ namespace BlizzTV.CommonLib.Utils
 {
     public class ReadOnlyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
-        IDictionary<TKey, TValue> _dict;
+        readonly IDictionary<TKey, TValue> _dict;
 
         public ReadOnlyDictionary(IDictionary<TKey, TValue> backingDict)
         {

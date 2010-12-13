@@ -22,8 +22,12 @@ namespace BlizzTV.CommonLib.Dependencies
 {
     public class Dependencies
     {
+        #region Instance
+        
         private static Dependencies _instance = new Dependencies();
         public static Dependencies Instance { get { return _instance; } }
+        
+        #endregion
 
         private Dependencies() { }
 
@@ -43,20 +47,15 @@ namespace BlizzTV.CommonLib.Dependencies
 
         private bool CheckShockwaveFlash()
         {
-            object flash_object;
             bool satisfied = true;            
             try
             {
-                flash_object = Activator.CreateInstance(Type.GetTypeFromProgID("ShockwaveFlash.ShockwaveFlash"));
+                Activator.CreateInstance(Type.GetTypeFromProgID("ShockwaveFlash.ShockwaveFlash"));
             }
             catch (Exception e)
             {
                 satisfied = false;
-                Log.Instance.Write(LogMessageTypes.ERROR, string.Format("CheckShockwaveFlash Exception: {0}", e.ToString()));
-            }
-            finally
-            {
-                flash_object = null;
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("CheckShockwaveFlash Exception: {0}", e));
             }
             return satisfied;
         }
