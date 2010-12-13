@@ -108,7 +108,7 @@ namespace BlizzTV.Modules.Videos
                     this.RootListItem.Childs.Clear();
                 }
 
-                this.RootListItem.Style = ItemStyle.REGULAR;
+                this.RootListItem.Style = ItemStyle.Regular;
                 this.RootListItem.SetTitle("Updating videos..");
 
                 foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
@@ -139,9 +139,9 @@ namespace BlizzTV.Modules.Videos
             if (this.RootListItem.Style == Style) return;
 
             int unread = 0;
-            foreach (KeyValuePair<string, Channel> pair in this._channels) { if (pair.Value.Style == ItemStyle.BOLD) unread++; }
-            if (unread > 0) this.RootListItem.Style = ItemStyle.BOLD;
-            else this.RootListItem.Style = ItemStyle.REGULAR;
+            foreach (KeyValuePair<string, Channel> pair in this._channels) { if (pair.Value.Style == ItemStyle.Bold) unread++; }
+            if (unread > 0) this.RootListItem.Style = ItemStyle.Bold;
+            else this.RootListItem.Style = ItemStyle.Regular;
         }
         
         public void OnSaveSettings()

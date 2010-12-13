@@ -17,189 +17,79 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.ModuleLib
 {
-    /// <summary>
-    /// A dynamicly loadable plugin for BlizzTV application
-    /// </summary>
-    public class Module : IDisposable
+    public class Module : IDisposable // A dynamicly loadable module for BlizzTV application
     {
-        #region members
-
-        private Assembly _assembly; // the assembly 
         private ModuleAttributes _attributes;
-        private ListItem _root_list_item;
-        private bool _updating=false;
-        private bool disposed = false;
+        private bool _disposed = false;
 
-        /// <summary>
-        /// The plugins attributes.
-        /// </summary>
-        public ModuleAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } }
+        public ListItem RootListItem { get; protected set; }
+        public bool Updating { get; protected set; }
 
-        /// <summary>
-        /// Plugin sub-menus.
-        /// </summary>
-        public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> Menus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
+        public ModuleAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } } // The module attributes.
+        public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> Menus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>(); // The module sub-menus.
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public ListItem RootListItem { get { return this._root_list_item; } protected set { this._root_list_item = value; } }
-
-        public bool Updating { get { return this._updating; } protected set { this._updating = value; } }
-
-        #endregion
-
-        #region ctor
-
-        /// <summary>
-        /// ctor
-        /// </summary>
         public Module()
         {
-            this._assembly = Assembly.GetCallingAssembly(); // As this will be called by actual modules ctor, get calling assemby (the actual module's assembly).
+            Updating = false;
         }
 
-        #endregion
+        public virtual void Run() { throw new NotImplementedException(); } // Notifies the module to start running -- all of them should override this method.
+        public virtual System.Windows.Forms.Form GetPreferencesForm() { return null; } // Modules shoud override this method and return the preferences form.
+        public virtual bool TryDragDrop(string link) { return false; } // Modules can override this to supply drag & drop support.
 
-        #region plugin API & events.
-
-        /// <summary>
-        /// Notifies the plugin to start running.
-        /// </summary>
-        /// <remarks>All plugin's should override this method.</remarks>
-        public virtual void Run() { throw new NotImplementedException(); }
-
-        /// <summary>
-        /// Plugins shoud override this method and return the preferences form.
-        /// </summary>
-        /// <returns>The preferences form.</returns>
-        public virtual System.Windows.Forms.Form GetPreferencesForm()
-        {
-            return null;
-        }
-
-        public virtual bool TryDragDrop(string link)
-        {
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
         public delegate void PluginUpdateStartedEventHandler(object sender);
-
-        /// <summary>
-        /// 
-        /// </summary>
         public event PluginUpdateStartedEventHandler OnPluginUpdateStarted;
-
-        /// <summary>
-        /// 
-        /// </summary>
         protected void NotifyUpdateStarted()
         {
             Log.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update started: '{0}'.", this.Attributes.Name));
             if (OnPluginUpdateStarted != null) OnPluginUpdateStarted(this);
         }
 
-
-        /// <summary>
-        /// PluginLoadComplete event handler delegate.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e"><see cref="PluginUpdateCompleteEventArgs"/></param>
         public delegate void PluginUpdateCompleteEventHandler(object sender,PluginUpdateCompleteEventArgs e);
-
-        /// <summary>
-        /// PluginLoadComplete event handler.
-        /// </summary>
         public event PluginUpdateCompleteEventHandler OnPluginUpdateComplete;
-
-        /// <summary>
-        /// Notifies about the plugin load process supplying a success code.
-        /// </summary>
-        /// <param name="e"><see cref="PluginUpdateCompleteEventArgs"/></param>
-        /// <remarks>Plugins can use this method to notify observers about it's loading results.</remarks>
         protected void NotifyUpdateComplete(PluginUpdateCompleteEventArgs e)
         {
             if (e.Success) Log.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update completed with success: '{0}'.", this.Attributes.Name));
             else Log.Instance.Write(LogMessageTypes.Error, string.Format("Plugin update failed: '{0}'.", this.Attributes.Name));
-            if (OnPluginUpdateComplete != null) OnPluginUpdateComplete(this,e); // notify observers.
-        }      
-
-        #endregion
-
-        #region internal-logic
-
-        #endregion
+            if (OnPluginUpdateComplete != null) OnPluginUpdateComplete(this,e); 
+        }
 
         #region de-ctor
 
-        /// <summary>
-        /// de-ctor.
-        /// </summary>
         ~Module() { Dispose(false); }
 
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
-                {
-                    this._assembly = null;
-                    this._attributes = null;
-                    this.RootListItem.Childs.Clear();
-                    this.RootListItem = null;
-                }
-                disposed = true;
+                this._attributes = null;
+                this.RootListItem.Childs.Clear();
+                this.RootListItem = null;
             }
+            _disposed = true;
         }
 
         #endregion
     }
 
-    #region event handler arguments 
-
-    /// <summary>
-    /// Notifies information about plugin's loading results.
-    /// </summary>
-    public class PluginUpdateCompleteEventArgs : EventArgs
+    public class PluginUpdateCompleteEventArgs : EventArgs // Notifies information about plugin's loading results.
     {
-        private bool _success;
+        public bool Success { get; private set; }
 
-        /// <summary>
-        /// Returns true if plugin load was succesfull.
-        /// </summary>
-        public bool Success { get { return this._success; } }
-
-        /// <summary>
-        /// Constructs a new PluginUpdateCompleteEventArgs.
-        /// </summary>
-        /// <param name="Success">Did plugin loaded with success?</param>
-        public PluginUpdateCompleteEventArgs(bool Success)
+        public PluginUpdateCompleteEventArgs(bool success)
         {
-            this._success = Success;
+            this.Success = success;
         }
     }
-
-    #endregion
 }

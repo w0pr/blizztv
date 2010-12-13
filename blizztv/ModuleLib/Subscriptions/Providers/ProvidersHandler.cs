@@ -23,20 +23,14 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
 {
     public class ProvidersHandler
     {
-        private Type _type;
+        private readonly Type _type;
+
+        public Dictionary<string, IProvider> Dictionary { get { return ProvidersStorage.Instance.GetProviders(this._type); } }
 
         public ProvidersHandler(Type type)
         {
             this._type = type;
-        }
-
-        public Dictionary<string, IProvider> Dictionary
-        {
-            get
-            {
-                return ProvidersStorage.Instance.GetProviders(this._type);
-            }
-        }
+        }        
     }
 
     [Serializable]
@@ -45,7 +39,5 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
     {
         [XmlAttribute("Name")]
         public string Name { get; set; }
-
-        public IProvider() { }
     }
 }

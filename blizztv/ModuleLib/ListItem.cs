@@ -22,43 +22,20 @@ using BlizzTV.CommonLib.Notifications;
 
 namespace BlizzTV.ModuleLib
 {
-    /// <summary>
-    /// A list item that can be rendered on main form's treeview.
-    /// </summary>
     public class ListItem : INotificationRequester, IDisposable
     {
-        #region members
-
         private string _title; 
         private string _key;
-        private ItemStyle _style = ItemStyle.REGULAR;
-        private bool disposed = false;
+        private ItemStyle _style = ItemStyle.Regular;
+        private bool _disposed = false;
 
-        /// <summary>
-        /// The title.
-        /// </summary>
-        public string Title { get { return this._title; } }
-        
-        /// <summary>
-        /// The key.
-        /// </summary>
+        public string Title { get { return this._title; } }        
         public string Key { get { return this._key; } }
-
         public Bitmap Icon { get; protected set; }
 
-        /// <summary>
-        /// Context Menus for Item
-        /// </summary>
         public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> ContextMenus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
-
-        /// <summary>
-        /// The visible list childs.
-        /// </summary>
         public Dictionary<string, ListItem> Childs = new Dictionary<string, ListItem>();
 
-        /// <summary>
-        /// 
-        /// </summary>
         public ItemStyle Style
         {
             get
@@ -72,148 +49,60 @@ namespace BlizzTV.ModuleLib
             }
         }
 
+        public ListItem(string title) { this._title = title; this.GenerateUniqueRandomKey(); } // generate an unique-random key for the item.
 
-        #endregion
-
-        #region ctor
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Title"></param>
-        /// <param name="StateTracked"></param>
-        public ListItem(string Title) { this._title = Title; this.generate_unique_random_key(); } // generate an unique-random key for the item.
-
-        #endregion
-
-        #region The list-item API & events
-
-        /// <summary>
-        /// The double-click event handler.
-        /// </summary>
-        /// <remarks>Should be implemented if the item wants to be notified of double-click's.</remarks>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e">The event parameters.</param>
         public virtual void DoubleClicked(object sender, EventArgs e) { }
-
-        /// <summary>
-        /// Fires when an item's right clicked.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e">The event parameters.</param>
         public virtual void RightClicked(object sender, EventArgs e) { }
-
-        /// <summary>
-        /// Fires when a notify balloon about the item is clicked.
-        /// </summary>
         public virtual void NotificationClicked() { }
 
-        /// <summary>
-        /// Title change event handler delegate.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
         public delegate void TitleChangedEventHandler(object sender);
-
-        /// <summary>
-        /// Title change event handler
-        /// </summary>
         public event TitleChangedEventHandler OnTitleChange;
-
-        /// <summary>
-        /// Set's title of the item.
-        /// </summary>
-        /// <remarks>Can be overridden though you should still call base.SetTitle().</remarks>  
-        /// <param name="Title">The new title.</param>
-        public virtual void SetTitle(string Title)
+        public virtual void SetTitle(string title)
         {
-            this._title = Title;
+            this._title = title;
             if (OnTitleChange != null) OnTitleChange(this); // notify observers.
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public delegate void StyleChangedEventHandler(ItemStyle Style);
-
-        /// <summary>
-        /// 
-        /// </summary>
+        public delegate void StyleChangedEventHandler(ItemStyle style);
         public event StyleChangedEventHandler OnStyleChange;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public delegate void ShowFormEventHandler(System.Windows.Forms.Form Form, bool IsModal);
-
-        /// <summary>
-        /// 
-        /// </summary>
+        public delegate void ShowFormEventHandler(System.Windows.Forms.Form form, bool isModal);
         public event ShowFormEventHandler OnShowForm;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Form"></param>
-        /// <param name="IsModal"></param>
-        public void ShowForm(System.Windows.Forms.Form Form,bool IsModal=false)
+        public void ShowForm(System.Windows.Forms.Form form,bool isModal=false)
         {
-            if (OnShowForm != null) OnShowForm(Form,IsModal);
+            if (OnShowForm != null) OnShowForm(form,isModal);
         }
 
 
-        #endregion
-
-        #region internal logic
-
-        private void generate_unique_random_key() { this._key = System.Convert.ToBase64String(Guid.NewGuid().ToByteArray()); } // generates an unique-random key for the item.
+        private void GenerateUniqueRandomKey() { this._key = Convert.ToBase64String(Guid.NewGuid().ToByteArray()); } // generates an unique-random key for the item.
         
-        #endregion
-
         #region de-ctor
 
-        /// <summary>
-        /// De-constructor.
-        /// </summary>
         ~ListItem() { Dispose(false); }
 
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Actual dispose function, can be overriden.
-        /// </summary>
-        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (this._disposed) return;
+            if (disposing) // managed resources
             {
-                if (disposing) // managed resources
-                {
-                    this.OnTitleChange = null;
-                }
-                disposed = true;
+                this.OnTitleChange = null;
+                this.OnStyleChange = null;
+                this.OnShowForm = null;
             }
+            _disposed = true;
         } 
         #endregion
     }
 
-    #region item-state enum
-
-    /// <summary>
-    /// 
-    /// </summary>
     public enum ItemStyle
     {
-        BOLD,
-        REGULAR,
+        Bold,
+        Regular,
     }
-
-
-	#endregion
 }

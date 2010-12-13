@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Serialization;
@@ -27,11 +28,16 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
 {
     public sealed class ProvidersStorage
     {
-        private static ProvidersStorage _instance = new ProvidersStorage();
-        private Type[] _known_types = new Type[] { typeof(IProvider) };
-        private List<IProvider> _providers = new List<IProvider>();
+        #region instance
 
+        private static ProvidersStorage _instance = new ProvidersStorage();
         public static ProvidersStorage Instance { get { return _instance; } }
+
+        #endregion
+
+        private Type[] _knownTypes = new[] { typeof(IProvider) };
+        
+        private List<IProvider> _providers = new List<IProvider>();        
         public List<IProvider> Providers { get { return this._providers; } }
 
         private ProvidersStorage()
@@ -47,8 +53,8 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
             {
                 if (t.IsSubclassOf(typeof(IProvider)))
                 {
-                    Array.Resize(ref this._known_types, this._known_types.Length + 1);
-                    this._known_types[this._known_types.Length - 1] = t;
+                    Array.Resize(ref this._knownTypes, this._knownTypes.Length + 1);
+                    this._knownTypes[this._knownTypes.Length - 1] = t;
                 }
             }
         }
@@ -59,7 +65,7 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
             {
                 using (MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.Providers)))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(List<IProvider>), new XmlAttributeOverrides(), this._known_types, new XmlRootAttribute("Providers"), "");
+                    XmlSerializer xs = new XmlSerializer(typeof(List<IProvider>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Providers"), "");
                     this._providers = (List<IProvider>)xs.Deserialize(memStream);
                 }
 
@@ -73,12 +79,7 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
 
         public Dictionary<string,IProvider> GetProviders(Type type)
         {
-            Dictionary<string,IProvider> results = new Dictionary<string,IProvider>();
-            foreach (IProvider provider in this._providers)
-            {
-                if (provider.GetType() == type) results.Add(provider.Name,provider);
-            }
-            return results;
+            return this._providers.Where(provider => provider.GetType() == type).ToDictionary(provider => provider.Name);
         }
     }
 }
