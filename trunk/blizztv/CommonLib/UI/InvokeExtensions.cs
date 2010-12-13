@@ -17,7 +17,7 @@
 
 using System.Windows.Forms;
 
-namespace BlizzTV.UI.Lib
+namespace BlizzTV.CommonLib.UI
 {
     /// <summary>
     /// Provides control-invoke extensions

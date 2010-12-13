@@ -20,11 +20,9 @@ using System.Collections.Generic;
 using System.Timers;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
+using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Subscriptions;
-using BlizzTV.UI.Lib;
 using BlizzTV.CommonLib.Workload;
-
 
 namespace BlizzTV.Modules.Feeds
 {
