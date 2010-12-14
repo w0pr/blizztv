@@ -55,7 +55,7 @@
     <StartupObject>BlizzTV.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>blizztv_128.ico</ApplicationIcon>
+    <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
@@ -385,7 +385,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="blizztv_128.ico" />
+    <Content Include="app.ico" />
     <None Include="Resources\us_16.png" />
     <None Include="Resources\eu_16.png" />
     <None Include="Resources\sc2_16.png" />
