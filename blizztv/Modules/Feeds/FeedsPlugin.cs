@@ -36,7 +36,7 @@ namespace BlizzTV.Modules.Feeds
 
         public static FeedsPlugin Instance;
 
-        public FeedsPlugin(): base()
+        public FeedsPlugin()
         {
             FeedsPlugin.Instance = this;
             this.RootListItem = new ListItem("Feeds");
