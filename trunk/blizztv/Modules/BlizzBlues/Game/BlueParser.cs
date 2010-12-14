@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Text;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
@@ -18,19 +17,21 @@ namespace BlizzTV.Modules.BlizzBlues.Game
         protected BlueSource[] Sources;
         public Dictionary<string,BlueStory> Stories = new Dictionary<string,BlueStory>();
 
-        public BlueParser(string game) : base(game) { }
-
-        public bool Update()
+        public BlueParser(string game)
+            : base(game)
         {
-            if (this.Parse())
-            {
-                foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.CheckForNotifications(); }
-                return true;
-            }
-            return false;
+            // register context menus.
+            this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            this.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
         }
 
-        internal bool Parse()
+        public void Update()
+        {
+            this.Parse();
+            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.CheckForNotifications(); }                
+        }
+
+        internal void Parse()
         {
             foreach(BlueSource source in this.Sources)
             {
@@ -59,18 +60,29 @@ namespace BlizzTV.Modules.BlizzBlues.Game
                             b.OnStyleChange += ChildStyleChange;
 
                             if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, b);
-                            else this.Stories[topicId].More.Add(postId, b);                            
+                            else this.Stories[topicId].AddPost(b);                       
                         }
                     }                    
                 }
-                catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("BlueParser error: {0}", e)); return false; }
+                catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("BlueParser error: {0}", e)); }
             }
-            return true;
         }
 
         void ChildStyleChange(ItemStyle style)
         {
-            throw new NotImplementedException();
+            if (this.Style == style) return;
+            int unread = this.Stories.Count(pair => pair.Value.Style == ItemStyle.Bold);
+            this.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+        }
+
+        private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.Status = BlueStory.Statutes.Read; } // marked all stories as read.
+        }
+
+        private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.Status = BlueStory.Statutes.Unread; } // marked all stories as unread.
         }
     }
 
