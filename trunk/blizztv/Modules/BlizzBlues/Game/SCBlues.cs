@@ -11,7 +11,6 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             : base("Starcraft")
         {
             this.Sources = new BlueSource[2] { new BlueSource(Region.Us, "http://us.battle.net/sc2/en/forum/blizztracker/"), new BlueSource(Region.Eu, "http://eu.battle.net/sc2/en/forum/blizztracker/") };
-            this.Parse();
         }
     }
 }

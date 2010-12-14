@@ -236,7 +236,7 @@ namespace BlizzTV.UI
         {
             TreeItem selection = (TreeItem)TreeView.SelectedNode; // get the selected node
             if (selection.Nodes.Count > 0) if (selection.IsExpanded) selection.Expand(); else selection.Collapse(); // if it's a parent node, let it expand() or collapse().
-            else selection.DoubleClicked(sender, e);  // notify the item about the double-click event.
+            selection.DoubleClicked(sender, e);  // notify the item about the double-click event.
         }
 
         private void TreeView_MouseUp(object sender, MouseEventArgs e) 
