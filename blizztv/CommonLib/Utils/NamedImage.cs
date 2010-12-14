@@ -15,17 +15,19 @@
  * $Id$
  */
 
-using BlizzTV.CommonLib.Utils;
+using System.Drawing;
 
-namespace BlizzTV.Modules.BlizzBlues.Game
+namespace BlizzTV.CommonLib.Utils
 {
-    class SCBlues:BlueParser
+    public class NamedImage
     {
-        public SCBlues()
-            : base("Starcraft")
+        public Bitmap Image { get; private set; }
+        public string Name { get; private set; }
+
+        public NamedImage(string name,Bitmap image)
         {
-            this.Sources = new BlueSource[2] { new BlueSource(Region.Us, "http://us.battle.net/sc2/en/forum/blizztracker/"), new BlueSource(Region.Eu, "http://eu.battle.net/sc2/en/forum/blizztracker/") };
-            this.Icon = new NamedImage("sc2_16", Properties.Resources.sc2_16);
+            this.Image = image;
+            this.Name = name;
         }
     }
 }

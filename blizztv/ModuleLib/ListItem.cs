@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using BlizzTV.CommonLib.Notifications;
+using BlizzTV.CommonLib.Utils;
 
 namespace BlizzTV.ModuleLib
 {
@@ -31,7 +32,7 @@ namespace BlizzTV.ModuleLib
 
         public string Title { get { return this._title; } }        
         public string Key { get { return this._key; } }
-        public Bitmap Icon { get; protected set; }
+        public NamedImage Icon { get; internal set; }
 
         public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> ContextMenus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
         public Dictionary<string, ListItem> Childs = new Dictionary<string, ListItem>();

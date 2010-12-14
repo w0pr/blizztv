@@ -19,8 +19,6 @@ using System;
 
 namespace BlizzTV.CommonLib.Utils
 {
-    #region Common stuff used by BlizzTV and it's plugins
- 
     public class ZonedDateTime // Stores DateTime with zone information and allows to get store DateTime in original, UTC and local-time zone.
     {
         private readonly DateTime _original;
@@ -41,6 +39,4 @@ namespace BlizzTV.CommonLib.Utils
         public DateTime UniversalTime { get { return this._utc; } }
         public DateTime LocalTime { get { return this._local; } }
     }
-
-    #endregion
 }

@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
+using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
@@ -40,6 +41,7 @@ namespace BlizzTV.Modules.Feeds
         {
             FeedsPlugin.Instance = this;
             this.RootListItem = new ListItem("Feeds");
+            this.RootListItem.Icon = new NamedImage("feed_16", Properties.Resources.feed_16);
 
             // register context menu's.
             this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(RunManualUpdate))); // mark as unread menu.

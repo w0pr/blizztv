@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 
 namespace BlizzTV.Modules.Videos
@@ -42,6 +43,8 @@ namespace BlizzTV.Modules.Videos
              // register context menus.
             this.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
             this.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
+
+            this.Icon = new NamedImage("video_16", Properties.Resources.video_16);
         }
 
         public bool IsValid()

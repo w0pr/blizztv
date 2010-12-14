@@ -51,9 +51,11 @@ namespace BlizzTV.UI
             this.Text = this._item.Title; // set the inital title
             this.OnStyleChange(this._item.Style);
 
-            // set the node icon
-            if (!this.TreeView.ImageList.Images.ContainsKey(this._plugin.Attributes.Name)) this.TreeView.ImageList.Images.Add(this._plugin.Attributes.Name, this._plugin.Attributes.Icon); // add the plugin icon to image list in it doesn't exists yet.
-            this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._plugin.Attributes.Name); // use the item's plugin icon.
+            if (this._item.Icon != null)
+            {
+                if (!this.TreeView.ImageList.Images.ContainsKey(this._item.Icon.Name)) this.TreeView.ImageList.Images.Add(this._item.Icon.Name, this._item.Icon.Image); // add the item image to imagelist if not exists already.         
+                this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._item.Icon.Name); // use the item's plugin icon.
+            }
         }
 
         public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e)

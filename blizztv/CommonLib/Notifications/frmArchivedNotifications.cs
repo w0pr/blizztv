@@ -56,8 +56,8 @@ namespace BlizzTV.CommonLib.Notifications
                 ListItem item = (ListItem)listItem.Notification.Item;
                 if (item.Icon != null)
                 {
-                    if (!this.ImageList.Images.ContainsKey(item.GetType().ToString())) this.ImageList.Images.Add(item.GetType().ToString(), item.Icon);
-                    listItem.ImageKey = item.GetType().ToString();
+                    if (!this.ImageList.Images.ContainsKey(item.Icon.Name)) this.ImageList.Images.Add(item.Icon.Name, item.Icon.Image);
+                    listItem.ImageKey = item.Icon.Name;
                 }
             }
         }
