@@ -74,6 +74,13 @@ namespace BlizzTV.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap eu_16 {
+            get {
+                object obj = ResourceManager.GetObject("eu_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap event_16 {
             get {
                 object obj = ResourceManager.GetObject("event_16", resourceCulture);
@@ -114,6 +121,13 @@ namespace BlizzTV.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap sc2_16 {
+            get {
+                object obj = ResourceManager.GetObject("sc2_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap stream_16 {
             get {
                 object obj = ResourceManager.GetObject("stream_16", resourceCulture);
@@ -134,9 +148,23 @@ namespace BlizzTV.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap us_16 {
+            get {
+                object obj = ResourceManager.GetObject("us_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap video_16 {
             get {
                 object obj = ResourceManager.GetObject("video_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap wow_16 {
+            get {
+                object obj = ResourceManager.GetObject("wow_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

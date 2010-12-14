@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
+using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
@@ -39,6 +40,7 @@ namespace BlizzTV.Modules.Videos
         {
             VideosPlugin.Instance = this;
             this.RootListItem = new ListItem("Videos");
+            this.RootListItem.Icon = new NamedImage("video_16", Properties.Resources.video_16);
 
             // register context menu's.
             this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", null, new EventHandler(RunManualUpdate))); // mark as unread menu.

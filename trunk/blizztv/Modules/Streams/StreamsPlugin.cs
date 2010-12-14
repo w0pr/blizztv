@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Timers;
+using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
@@ -39,6 +40,7 @@ namespace BlizzTV.Modules.Streams
         {
             StreamsPlugin.Instance = this;
             this.RootListItem = new ListItem("Streams");
+            this.RootListItem.Icon = new NamedImage("stream_16", Properties.Resources.stream_16);
 
             // register context-menu's.
             this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", null, new EventHandler(RunManualUpdate))); // mark as unread menu.

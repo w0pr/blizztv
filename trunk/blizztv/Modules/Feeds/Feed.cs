@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Web;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.ModuleLib;
@@ -43,6 +44,8 @@ namespace BlizzTV.Modules.Feeds
             // register context menus.
             this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
+
+            this.Icon = new NamedImage("feed_16", Properties.Resources.feed_16);
         }
 
         public bool IsValid()

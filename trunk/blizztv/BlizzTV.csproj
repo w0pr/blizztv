@@ -98,6 +98,7 @@
     <Compile Include="CommonLib\Notifications\INotificationRequester.cs" />
     <Compile Include="CommonLib\Notifications\NotificationManager.cs" />
     <Compile Include="CommonLib\Notifications\ArchivedNotifications.cs" />
+    <Compile Include="CommonLib\Utils\NamedImage.cs" />
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
     <Compile Include="CommonLib\Workload\Workload.cs" />
     <Compile Include="ModuleLib\StatusStorage\StatusStorage.cs" />
@@ -385,6 +386,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blizztv_128.ico" />
+    <None Include="Resources\sc2_16.png" />
+    <None Include="Resources\wow_16.png" />
+    <None Include="Resources\us_16.png" />
+    <None Include="Resources\eu_16.png" />
     <None Include="Resources\blizzblues_16.png" />
     <None Include="Resources\Subscriptions.Default.xml">
       <SubType>Designer</SubType>
