@@ -21,6 +21,7 @@ using System.Timers;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
+using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
 using BlizzTV.CommonLib.Workload;
@@ -64,8 +65,17 @@ namespace BlizzTV.Modules.Streams
                 if (((StreamProvider) pair.Value).LinkValid(link))
                 {
                     StreamSubscription s = new StreamSubscription();
-                    s.Name = s.Slug = (pair.Value as StreamProvider).GetSlug(link);
+                    s.Slug = (pair.Value as StreamProvider).GetSlug(link);                    
                     s.Provider = pair.Value.Name;
+                    s.Name = (pair.Value as StreamProvider).GetSlug(link);
+                    
+                    if(s.Provider.ToLower()=="own3dtv")
+                    {
+                        string name = "";
+                        if (InputBox.Show("Add New Stream", "Please enter name for the new stream", ref name) == System.Windows.Forms.DialogResult.OK) s.Name = name;
+                        else return false;
+                    }
+
                     if(Subscriptions.Instance.Add(s)) this.RunManualUpdate(this, new EventArgs());
                     else System.Windows.Forms.MessageBox.Show(string.Format("The stream already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[s.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                     return true;
