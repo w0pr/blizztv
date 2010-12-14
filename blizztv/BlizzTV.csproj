@@ -386,10 +386,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blizztv_128.ico" />
-    <None Include="Resources\sc2_16.png" />
-    <None Include="Resources\wow_16.png" />
     <None Include="Resources\us_16.png" />
     <None Include="Resources\eu_16.png" />
+    <None Include="Resources\sc2_16.png" />
+    <None Include="Resources\wow_16.png" />
     <None Include="Resources\blizzblues_16.png" />
     <None Include="Resources\Subscriptions.Default.xml">
       <SubType>Designer</SubType>
