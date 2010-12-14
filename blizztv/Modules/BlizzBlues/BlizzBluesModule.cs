@@ -11,11 +11,18 @@ namespace BlizzTV.Modules.BlizzBlues
     [ModuleAttributes("BlizzBlues", "Blizzard GM Blue post aggregator.", "blizzblues_16")]
     class BlizzBluesModule:Module
     {
-        internal Dictionary<string, BlueParser> _parsers = new Dictionary<string, BlueParser>(); 
+        internal List<BlueParser> _parsers = new List<BlueParser>();
+
+        public static BlizzBluesModule Instance;
 
         public BlizzBluesModule()
         {
+            BlizzBluesModule.Instance = this;
             this.RootListItem=new ListItem("BlizzBlues");
+
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
         }
 
         public override void Run()
@@ -41,22 +48,22 @@ namespace BlizzTV.Modules.BlizzBlues
             this.RootListItem.SetTitle("Updating BlizzBlues..");
 
             WOWBlues wow = new WOWBlues();
-            this._parsers.Add("wow", wow);
+            this._parsers.Add(wow);
             wow.OnStyleChange += ChildStyleChange;
 
             SCBlues sc = new SCBlues();
-            this._parsers.Add("sc", sc);
+            this._parsers.Add(sc);
             sc.OnStyleChange += ChildStyleChange;
 
             Workload.Instance.Add(this, this._parsers.Count);
 
-            foreach (KeyValuePair<string, BlueParser> pair in this._parsers)
+            foreach (BlueParser parser in this._parsers)
             {
-                pair.Value.Update();
-                this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                foreach (KeyValuePair<string, BlueStory> storyPair in pair.Value.Stories)
+                parser.Update();
+                this.RootListItem.Childs.Add(parser.Title, parser);
+                foreach (KeyValuePair<string, BlueStory> storyPair in parser.Stories)
                 {
-                    pair.Value.Childs.Add(storyPair.Key, storyPair.Value);
+                    parser.Childs.Add(storyPair.Key, storyPair.Value);
                     if (storyPair.Value.More.Count > 0)
                     {
                         foreach (KeyValuePair<string, BlueStory> postPair in storyPair.Value.More)
@@ -75,7 +82,39 @@ namespace BlizzTV.Modules.BlizzBlues
 
         void ChildStyleChange(ItemStyle style)
         {
-            throw new NotImplementedException();
+            if (this.RootListItem.Style == style) return;
+
+            int unread = this._parsers.Count(parser => parser.Style == ItemStyle.Bold);
+            this.RootListItem.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+        }
+
+
+        private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
+        {
+            foreach (BlueParser parser in this._parsers)
+            {
+                foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
+                {
+                    pair.Value.Status = BlueStory.Statutes.Read;
+                }
+            }
+        }
+
+        private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
+        {
+            foreach (BlueParser parser in this._parsers)
+            {
+                foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
+                {
+                    pair.Value.Status = BlueStory.Statutes.Unread;
+                }
+            }
+        }
+
+        private void RunManualUpdate(object sender, EventArgs e)
+        {
+            System.Threading.Thread thread = new System.Threading.Thread(this.UpdateBlues) { IsBackground = true };
+            thread.Start();
         }
     }
 }
