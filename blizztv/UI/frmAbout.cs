@@ -48,6 +48,20 @@ namespace BlizzTV.UI
             this.Close();
         }
 
+        private void ListviewCredits_DoubleClick(object sender, EventArgs e)
+        {
+           if(ListviewCredits.SelectedItems.Count==0) return;
+
+           switch (ListviewCredits.SelectedIndices[0])
+           {
+               case 1: System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/Donors"); break;
+               case 2: System.Diagnostics.Process.Start("http://www.teamliquid.net"); break;
+               case 3: System.Diagnostics.Process.Start("http://www.famfamfam.com"); break;
+               case 4: System.Diagnostics.Process.Start("http://nini.sourceforge.net"); break;
+               case 5: System.Diagnostics.Process.Start("http://www.savethemurlocs.org"); break;
+           }           
+        }	
+
         private void buttonChangelog_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/Changelog", null); }	
         private void LinkBlizzTV_Clicked(object sender, LinkLabelLinkClickedEventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com", null); }
         private void LinkFlattr_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://flattr.com/thing/86300/BlizzTV", null); }
@@ -55,6 +69,6 @@ namespace BlizzTV.UI
         			
         private bool _enoughDots = false;		
         private void MoreDots(object sender, KeyEventArgs e) { if (e.Alt && e.Control) this._enoughDots = true; }		
-        private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } _enoughDots = false; }	
+        private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } _enoughDots = false; }
     }
 }
