@@ -34,15 +34,18 @@
             "Hüseyin Uslu",
             "Developer."}, -1);
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Donors",
+            "Thanks for supporting the project by donations!"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "TeamLiquid.net",
             "Thanks for calendar API and all suggestions from TL users."}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Mark James",
-            "The shiny icons. (http://www.famfamfam.com/)"}, -1);
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Brent R. Matzelle",
-            "Nini - http://nini.sourceforge.net"}, -1);
+            "Mark James",
+            "The shiny icons."}, -1);
             System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Brent R. Matzelle",
+            "Lovely Nini."}, -1);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "SaveTheMurlocs.org",
             "No murlocs were harmed during making of this program."}, -1);
             this.label1 = new System.Windows.Forms.Label();
@@ -63,8 +66,8 @@
             this.LinkPaypal = new System.Windows.Forms.PictureBox();
             this.Murloc = new System.Windows.Forms.PictureBox();
             this.LabelVersion = new System.Windows.Forms.Label();
-            this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
             this.buttonChangelog = new System.Windows.Forms.Button();
+            this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -188,7 +191,8 @@
             listViewItem2,
             listViewItem3,
             listViewItem4,
-            listViewItem5});
+            listViewItem5,
+            listViewItem6});
             this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
             this.ListviewCredits.Name = "ListviewCredits";
             this.ListviewCredits.ShowItemToolTips = true;
@@ -196,6 +200,7 @@
             this.ListviewCredits.TabIndex = 1;
             this.ListviewCredits.UseCompatibleStateImageBehavior = false;
             this.ListviewCredits.View = System.Windows.Forms.View.Details;
+            this.ListviewCredits.DoubleClick += new System.EventHandler(this.ListviewCredits_DoubleClick);
             // 
             // columnName
             // 
@@ -250,15 +255,6 @@
             this.LabelVersion.Text = "version";
             this.LabelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // Player
-            // 
-            this.Player.Enabled = true;
-            this.Player.Location = new System.Drawing.Point(10, 359);
-            this.Player.Name = "Player";
-            this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Player.OcxState")));
-            this.Player.Size = new System.Drawing.Size(624, 347);
-            this.Player.TabIndex = 16;
-            // 
             // buttonChangelog
             // 
             this.buttonChangelog.Location = new System.Drawing.Point(289, 312);
@@ -268,6 +264,15 @@
             this.buttonChangelog.Text = "Changelog";
             this.buttonChangelog.UseVisualStyleBackColor = true;
             this.buttonChangelog.Click += new System.EventHandler(this.buttonChangelog_Click);
+            // 
+            // Player
+            // 
+            this.Player.Enabled = true;
+            this.Player.Location = new System.Drawing.Point(10, 359);
+            this.Player.Name = "Player";
+            this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Player.OcxState")));
+            this.Player.Size = new System.Drawing.Size(624, 347);
+            this.Player.TabIndex = 16;
             // 
             // frmAbout
             // 
