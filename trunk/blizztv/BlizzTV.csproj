@@ -119,6 +119,10 @@
     <Compile Include="Modules\BlizzBlues\Game\SCBlues.cs" />
     <Compile Include="Modules\BlizzBlues\Game\WOWBlues.cs" />
     <Compile Include="Modules\BlizzBlues\Settings.cs" />
+    <Compile Include="Modules\Feeds\FeedParser.cs" />
+    <Compile Include="Modules\Feeds\Parsers\Atom1.cs" />
+    <Compile Include="Modules\Feeds\Parsers\IFeedParser.cs" />
+    <Compile Include="Modules\Feeds\Parsers\Rss2.cs" />
     <Compile Include="Modules\Feeds\Subscriptions.cs" />
     <Compile Include="Modules\Streams\Subscriptions.cs" />
     <Compile Include="Modules\Videos\Subscriptions.cs" />
