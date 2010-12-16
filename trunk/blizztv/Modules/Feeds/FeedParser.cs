@@ -15,13 +15,10 @@
  * $Id$
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using BlizzTV.Modules.Feeds.Parsers;
 using BlizzTV.CommonLib.Web;
+using BlizzTV.Modules.Feeds.Parsers;
 
 namespace BlizzTV.Modules.Feeds
 {
@@ -41,6 +38,7 @@ namespace BlizzTV.Modules.Feeds
         public bool Parse(string url,ref List<FeedItem> items)
         {
             if (items == null) items = new List<FeedItem>();
+            if (items.Count > 0) items.Clear();
 
             string xml = WebReader.Read(url);
             if (xml == null) return false;
