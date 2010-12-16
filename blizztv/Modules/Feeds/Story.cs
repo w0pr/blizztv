@@ -28,7 +28,6 @@ namespace BlizzTV.Modules.Feeds
         private Statutes _status = Statutes.Unknown;
 
         public string Link { get; private set; }
-        public string Description { get; private set; }
         public string Guid { get; protected set; }
 
         public Statutes Status
@@ -79,12 +78,11 @@ namespace BlizzTV.Modules.Feeds
             }
         }
 
-        public Story(string title, string guid, string link, string description)
-            : base(title)
+        public Story(FeedItem item)
+            : base(item.Title)
         {
-            this.Guid = guid;
-            this.Link = link;
-            this.Description = description;
+            this.Guid = item.Title;
+            this.Link = item.Link;
 
             // register context menus.
             this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.

@@ -65,31 +65,22 @@ namespace BlizzTV.Modules.Feeds
 
         private bool Parse()
         {
-            try
+            List<FeedItem> items=null;
+            if (FeedParser.Instance.Parse(this.Url, ref items))
             {
-                string response = WebReader.Read(this.Url); // read the feed xml
-                if (response == null) return false;
-
-                XDocument xdoc = XDocument.Parse(response); // parse the xml
-
-                var entries = from item in xdoc.Descendants("item") // get the stories
-                              select new
-                              {
-                                  GUID = item.Element("guid").Value,
-                                  Title = item.Element("title").Value,
-                                  Link = item.Element("link").Value,
-                                  Description = item.Element("description").Value
-                              };
-
-                foreach (var entry in entries) // create the story-item's.
+                foreach (FeedItem item in items)
                 {
-                    Story s = new Story(entry.Title, entry.GUID, entry.Link, entry.Description);
-                    s.OnStyleChange += ChildStyleChange;
-                    this.Stories.Add(s);
+                    try
+                    {
+                        Story story = new Story(item);
+                        story.OnStyleChange += ChildStyleChange;
+                        this.Stories.Add(story);
+                    }
+                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed-Parse Error: {0}", e)); }
                 }
                 return true;
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("FeedsPlugin - Feed - Update() Error: \n {0}", e)); return false; }
+            return false;     
         }
 
         void ChildStyleChange(ItemStyle style)
