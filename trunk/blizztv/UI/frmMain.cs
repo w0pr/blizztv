@@ -53,7 +53,7 @@ namespace BlizzTV.UI
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Settings.Instance.MinimizeToSystemTray)
+            if (e.CloseReason == CloseReason.UserClosing && Settings.Instance.MinimizeToSystemTray) // only hook when user is closing the main form.
             {
                 e.Cancel = true; // live in system-tray even if form is closed
                 this.HideForm();
