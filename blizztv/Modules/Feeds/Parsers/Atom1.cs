@@ -40,7 +40,7 @@ namespace BlizzTV.Modules.Feeds.Parsers
 
             foreach (var entry in entries) // create the story-item's.
             {
-                items.Add(new FeedItem(entry.Title, entry.Id, !String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)));
+                items.Add(new FeedItem(entry.Title, entry.Id, String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)));
             }
 
             if (items.Count > 0) return true;
