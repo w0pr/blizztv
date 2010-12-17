@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Day[9]" Description="High level Starcraft 2 commentary from an 11 year top player and veteran." Slug="day9tv" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="GosuGamers" Description="The official GosuGamers.net stream, broadcasting Starcraft 2, HoN, DotA and Warcraft 3." Slug="gosugamers" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="GLHF.tv" Description="GLHF.tv is an independently-run livestreaming production forged by a love of video games and the gaming community's desire to have quality tournament coverage." Slug="TheGunrun" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="GLHF.tv #2" Description="GLHF.tv's alternative channel." Slug="glhf2" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="ICCupTV" Description="The international Cyber Cup official channel where we are going to stream tournaments, live shows, and more to become the first and best dedicated E-Sports Station!" Slug="iccup-tv" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="ICCupTV #2" Description="ICCupTV's alternative channel." Slug="iccup-tv-2" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="TeamLiquidTV" Description="TeamLiquid.net's official live stream." Slug="teamliquidtv" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="HDStarcraft" Description="HDStarcraft's own stream." Slug="hdstarcraft" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="HuskyStarcraft" Description="HuskyStarcraft's own stream." Slug="huskystarcraft" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="State of the Game podcast" Description="State of the Game features four of the most well-known personalities from the Starcraft 2 eSports scene: JP 'itmeJP' McDaniel, Sean 'Day[9]' Plott, Geoff 'iNcontrol' Robinson, and Tyler 'TLAF-LiquidTyler' Wasieleski." Slug="state-of-the-game" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="DJWheat" Description="High-left commentary stream." Slug="djwheat" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="HomerJ" Description="Starcraft 2 Commentary from all the big tournaments, including GO4SC2 Cup, CraftCup US, EU and INSC Cups" Slug="150" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="SHOUTStarcraft" Description="SHOUTcraft is a weekly event hosting all-platinum games with commentator TotalBiscuit, winner of Blizzard's Shoutcasting contest 2009 and occassional guest commentators. He presents in a format that's appealing to new players and those not into the eSports scene and intend to act as a gateway to other more advanced commentators such as Day[9]. You can expect high-octane commentary in the style of a sports broadcast, think professional wrestling or boxing, avoiding the technical jargon in favour of the exciting and the dramatic." Slug="shoutcraft" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="HuK" Description="Popular top-notch protoss player's stream." Slug="HuKTV" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="IdRA" Description="Popular top-notch zerg player's stream." Slug="eg-idra1" Provider="UStream" />  
+  <Entry xsi:type="Stream" Category="Starcraft" Name="MorroW" Description="Top-notch zerg player stream." Slug="morrow" Provider="LiveStream" />  
+  <Entry xsi:type="Stream" Category="Starcraft" Name="LZGamer" Description="Top-notch SC:BW / SC2 player stream." Slug="lzgamer" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="SjoW" Description="Popular top-notch terran player's stream." Slug="8002" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="PhoenixWerra" Description="Stream of Korean top-notch player." Slug="phoenixwerra" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="CellaWerra" Description="Korean gamer Cella streaming high level Starcraft 2 zerg games." Slug="cellawerra" Provider="LiveStream" />   
+  <Entry xsi:type="Stream" Category="Starcraft" Name="DarkFoRcE" Description="3200+ diamond european zerg player's stream." Slug="330" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="DecemberTV" Description="Yet another Starcrft II stream." Slug="8001" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Orb" Description="World famous combination of nerd rage, sentries, and templar!" Slug="5953" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Antimage" Description="Top diamond NA protoss player streaming ladder, tournaments, and occasional commentaries." Slug="1561" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Chill" Description="Zerg player from TeamLiquid.net streaming." Slug="tlchill" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Goatrope" Description="Protoss Starcraft II player streaming." Slug="goatrope" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Gretorp" Description="Analysis and humor from high level terran Starcraft 2 player." Slug="217" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Liquid'Tyler" Description="Stream of TeamLiquid's Tyler." Slug="tylersc" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="MrBitter" Description="Stream of 2700+ zerg player on an (almost) daily basis." Slug="mrbitter" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="NYD" Description="Stream of 3200+ diamond protoss player." Slug="nydstarcraft" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="PainUser" Description="Stream of top diamond terran player." Slug="painuser" Provider="LiveStream" /> 
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Rigid" Description="Stream of 2700+ zerg player." Slug="rigid54" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Responce" Description="High level terran player streaming." Slug="neoresponse" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Spades" Description="High level 3000+ terran player streaming." Slug="spades" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="oGsTheWind" Description="High level zerg player streaming." Slug="oGsTheWind" Provider="LiveStream" />
+</Catalog>
