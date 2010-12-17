@@ -1,6 +1,24 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
+*17.12.2010 - 0.16-beta (r237)*
+----
+ * Implemented a brand new module: BlizzBlues - which will aggregate latest Blizzard GM blue posts from forums.
+ * Improved feed modules feed handling capabilities. It can now also parse Atom 1.0 feeds and so the Blizzard ones. Added WorldofWarcraft.com and Starcraft2.com feeds to default subscriptions.
+ * Improved main icon's resolution, it will look better on your desktop now.
+ * Implemented borderless-window support for video & stream modules players (including the chat window). You can also drag the window in borderless-mode.
+ * Item's in treeview now implements their own icon.
+ * Main form will now pay attention who's requesting to close the form (so that you don't have to explicitly exit BlizzTV when you're rebooting or shutting down).
+ * Double-clicking a credit item on About window will now open corresponding url.
+ * Archived notifications window now snaps to main window and shows item icons.
+ * Alarm window will now close when user clicks on view event button.
+ * If an event is just about to start (in <5 mins) the user is warned about so and
+not allowed to create an alarm.
+ * Added URL format hints for streams & videos modules add subscription window.
+ * When a new Own3D.TV stream is added using drag & drop, user will now be asked for the stream's name.
+ * Re-factored code.
+ * Started writing unit-tests as maintaining the code without them became quite pain in the ass.
+
 *07.12.2010 - 0.16-beta (r203)*
 ----
  * Added drag/drop subscription support. You can now drop a channel link from youtube to BlizzTV main window and you'll be get subscribed to channel (works for streams & feeds to).
