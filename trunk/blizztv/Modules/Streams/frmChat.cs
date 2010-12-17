@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.Logger;
 
@@ -26,10 +27,18 @@ namespace BlizzTV.Modules.Streams
         private readonly Stream _stream; // the stream.
         private readonly frmPlayer _parent;
         private bool _snapParent = false;
+        private bool _borderless = false;
+        private bool _dragging = false;
+        private Point _drag_offset;
 
         public frmChat(frmPlayer parent, Stream stream)
         {
             InitializeComponent();
+
+            this.Chat.DoubleClick += ChatDoubleClick; // setup mouse handlers.
+            this.Chat.MouseDown += ChatMouseDown;
+            this.Chat.MouseUp += ChatMouseUp;
+            this.Chat.MouseMove += ChatMouseMove;
 
             this._stream = stream; // set the stream.
             this._parent = parent;
@@ -56,6 +65,33 @@ namespace BlizzTV.Modules.Streams
                 Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Chat Window Error: \n {0}", exc));
                 MessageBox.Show(string.Format("An error occured in stream chat window. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void ChatDoubleClick(object sender, MouseEventArgs e)
+        {
+            this._dragging = false;
+            if (this._borderless) { this.FormBorderStyle = FormBorderStyle.Sizable; this._borderless = false; }
+            else { this.FormBorderStyle = FormBorderStyle.None; this._borderless = true; }
+            if (this._snapParent) this.SnapToParent();
+        }
+
+        private void ChatMouseDown(object sender, MouseEventArgs e)
+        {
+            if (this._borderless)
+            {
+                this._drag_offset = new Point(e.X - this.Location.X, e.Y - this.Location.Y);
+                this._dragging = true;
+            }
+        }
+
+        private void ChatMouseUp(object sender, MouseEventArgs e)
+        {
+            this._dragging = false;
+        }
+
+        private void ChatMouseMove(object sender, MouseEventArgs e)
+        {
+            if (this._borderless && this._dragging) this.Location = new System.Drawing.Point(e.X - this._drag_offset.X, e.Y - this._drag_offset.Y);
         }
 
         void OnParentClose(object sender, FormClosedEventArgs e)

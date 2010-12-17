@@ -17,6 +17,7 @@
 
 using System;
 using System.Windows.Forms;
+using System.Drawing;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 
@@ -26,10 +27,18 @@ namespace BlizzTV.Modules.Streams
     {
         private readonly Stream _stream; // the stream.
         private frmChat _chatWindow = null;
+        private bool _borderless = false;
+        private bool _dragging = false;
+        private Point _drag_offset;
 
         public frmPlayer(Stream stream)
         {            
             InitializeComponent();
+
+            this.Player.DoubleClick += PlayerDoubleClick; // setup mouse handlers.
+            this.Player.MouseDown += PlayerMouseDown;
+            this.Player.MouseUp += PlayerMouseUp;
+            this.Player.MouseMove += PlayerMouseMove;
 
             this._stream = stream; // set the stream.
             this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
@@ -55,6 +64,32 @@ namespace BlizzTV.Modules.Streams
                 Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Player Error: \n {0}", exc));
                 MessageBox.Show(string.Format("An error occured in stream player. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void PlayerDoubleClick(object sender, MouseEventArgs e)
+        {
+            this._dragging = false;
+            if (this._borderless) { this.FormBorderStyle = FormBorderStyle.Sizable; this._borderless = false; }
+            else { this.FormBorderStyle = FormBorderStyle.None; this._borderless = true; }
+        }
+
+        private void PlayerMouseDown(object sender, MouseEventArgs e)
+        {
+            if (this._borderless)
+            {
+                this._drag_offset = new Point(e.X - this.Location.X, e.Y - this.Location.Y);
+                this._dragging = true;
+            }
+        }
+
+        private void PlayerMouseUp(object sender, MouseEventArgs e)
+        {
+            this._dragging = false;
+        }
+
+        private void PlayerMouseMove(object sender, MouseEventArgs e)
+        {
+            if (this._borderless && this._dragging) this.Location = new System.Drawing.Point(e.X - this._drag_offset.X, e.Y - this._drag_offset.Y);
         }
 
         private void MenuAlwaysOnTop_Click(object sender, EventArgs e)

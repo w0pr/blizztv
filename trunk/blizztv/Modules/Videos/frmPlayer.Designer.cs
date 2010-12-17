@@ -32,30 +32,19 @@ namespace BlizzTV.Modules.Videos
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayer));
-            this.Player = new FlashPlayer();
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
+            this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
             this.PlayerContextMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Stage
-            // 
-            this.Player.ContextMenuStrip = this.PlayerContextMenu;
-            this.Player.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Player.Enabled = true;
-            this.Player.Location = new System.Drawing.Point(0, 0);
-            this.Player.Name = "Stage";
-            this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Stage.OcxState")));
-            this.Player.Size = new System.Drawing.Size(624, 347);
-            this.Player.TabIndex = 0;
             // 
             // PlayerContextMenu
             // 
             this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuAlwaysOnTop});
             this.PlayerContextMenu.Name = "PlayerContextMenu";
-            this.PlayerContextMenu.Size = new System.Drawing.Size(155, 48);
+            this.PlayerContextMenu.Size = new System.Drawing.Size(155, 26);
             // 
             // MenuAlwaysOnTop
             // 
@@ -66,17 +55,28 @@ namespace BlizzTV.Modules.Videos
             // 
             // Player
             // 
+            this.Player.ContextMenuStrip = this.PlayerContextMenu;
+            this.Player.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Player.Enabled = true;
+            this.Player.Location = new System.Drawing.Point(0, 0);
+            this.Player.Name = "Player";
+            this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Player.OcxState")));
+            this.Player.Size = new System.Drawing.Size(624, 347);
+            this.Player.TabIndex = 0;
+            // 
+            // frmPlayer
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(624, 347);
             this.Controls.Add(this.Player);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Player";
+            this.Name = "frmPlayer";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.Player_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.Player)).EndInit();
             this.PlayerContextMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Player)).EndInit();
             this.ResumeLayout(false);
 
         }
