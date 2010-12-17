@@ -1,7 +1,7 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
-*17.12.2010 - 0.16-beta (r237)*
+*17.12.2010 - 0.17-beta (r237)*
 ----
  * Implemented a brand new module: BlizzBlues - which will aggregate latest Blizzard GM blue posts from forums.
  * Improved feed modules feed handling capabilities. It can now also parse Atom 1.0 feeds and so the Blizzard ones. Added WorldofWarcraft.com and Starcraft2.com feeds to default subscriptions.
@@ -12,8 +12,7 @@
  * Double-clicking a credit item on About window will now open corresponding url.
  * Archived notifications window now snaps to main window and shows item icons.
  * Alarm window will now close when user clicks on view event button.
- * If an event is just about to start (in <5 mins) the user is warned about so and
-not allowed to create an alarm.
+ * If an event is just about to start (in <5 mins) the user is warned about so and not allowed to create an alarm.
  * Added URL format hints for streams & videos modules add subscription window.
  * When a new Own3D.TV stream is added using drag & drop, user will now be asked for the stream's name.
  * Re-factored code.
