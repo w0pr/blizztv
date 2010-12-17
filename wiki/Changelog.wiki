@@ -1,6 +1,10 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
+*17.12.2010 - 0.17b-beta (r241)*
+----
+ * Applied hotfix for a bug that was preventing opening worldofwarcraft.com and starcraft2.com atom feed stories.
+
 *17.12.2010 - 0.17-beta (r237)*
 ----
  * Implemented a brand new module: BlizzBlues - which will aggregate latest Blizzard GM blue posts from forums.
