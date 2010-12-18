@@ -73,6 +73,7 @@ namespace BlizzTV.Modules.Videos
             if (this._borderless)
             {
                 this._drag_offset = new Point(e.X - this.Location.X, e.Y - this.Location.Y);
+                this.Cursor = Cursors.SizeAll;
                 this._dragging = true;
             }
         }
@@ -80,6 +81,7 @@ namespace BlizzTV.Modules.Videos
         private void PlayerMouseUp(object sender, MouseEventArgs e)
         {
             this._dragging = false;
+            this.Cursor = Cursors.Default;
         }
 
         private void PlayerMouseMove(object sender, MouseEventArgs e)

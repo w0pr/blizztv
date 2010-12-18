@@ -80,6 +80,7 @@ namespace BlizzTV.Modules.Streams
             if (this._borderless)
             {
                 this._drag_offset = new Point(e.X - this.Location.X, e.Y - this.Location.Y);
+                this.Cursor = Cursors.SizeAll;
                 this._dragging = true;
             }
         }
@@ -87,6 +88,7 @@ namespace BlizzTV.Modules.Streams
         private void ChatMouseUp(object sender, MouseEventArgs e)
         {
             this._dragging = false;
+            this.Cursor = Cursors.Default;
         }
 
         private void ChatMouseMove(object sender, MouseEventArgs e)
