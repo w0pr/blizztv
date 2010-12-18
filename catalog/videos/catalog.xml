@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Entry xsi:type="Video" Category="Starcraft" Name="Starcraft" Description="Starcraft's official youtube channel." Slug="starcraft" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="Day[9]" Description="High level Starcraft 2 commentary from an 11 year top player and veteran." Slug="day9tv" Provider="BlipTV" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="HD Starcraft" Description="Features commentary over professional Starcraft 2 games." Slug="hdstarcraft" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="HuskyStarcraft" Description="High level Starcraft 2 commentaries by Husky." Slug="huskystarcraft" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="PsyStarcraft" Description="Starcraft 2 commentaries that intend to teach, inform, and entertain the community." Slug="psystarcraft" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="ForceSC2Strategy" Description="Number one location for StarCraft 2 strategies and tactics." Slug="forcesc2strategy" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="xhydrax" Description="Yet another high level Starcraft 2 commentary channel." Slug="xhydrax" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="SC2 Noob School" Description="Dedicated to players of all skill levels can come to learn about, and engage in competitive SC2 discussion." Slug="sc2noobschool" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="iCCupTV" Description="International Cyber Cup's channel." Slug="iccuptv" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="TeamLiquid" Description="TeamLiquid's official VOD channel." Slug="teamliquidnet" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="BlizShouter" Description="Focuses on Blizzard event coverage, StarCraft 2 gameplay videos and WarCraft 3." Slug="BlizShouter" Provider="Youtube" />  
+  <Entry xsi:type="Video" Category="Starcraft" Name="AskJoshy" Description="Replays, commentaries, and just fun gameplay footage from Starcraft 2." Slug="AskJoshy" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="SCLegacy" Description="SCLegacy.com's VOD channel" Slug="SCLegacy" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="HunterStarcraft" Description="Starcraft 2 commentaries that analyze strategies used by professional players. These shoutcasts focus primarily on the tactics of top Korean pro gamers." Slug="HunterStarcraft" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="ArtosisTV" Description="High level Starcraft II commentaries." Slug="ArtosisTV" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="WarlionProductions" Description="Yet another Starcraft II commentary channel." Slug="WarlionProductions" Provider="Youtube" />    
+  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="WorldofWarcraft" Description="World of Warcraft's official youtube channel." Slug="worldofwarcraft" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="TankSpot" Description="Zam networks official VOD channel." Slug="ZAMOfficial" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="MMO-Champion" Description="MMO-Champion.com's official channel." Slug="MMOChampionWoW" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="Oxhorn" Description="Highly entertaining machinima channel." Slug="Oxhorn" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="OMFGcata" Description="Features World of Warcraft: Cataclysm." Slug="OMFGcata" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="Belligerent" Description="Wrathful Gladiator Holy Paladin's arena VOD's channel." Slug="Belligerent23" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Diablo" Name="Diablo" Description="Diablo's official youtube channel." Slug="diablo" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Diablo" Name="ForceD3strategy" Description="Number one location for Diablo 3 strategies and tactics" Slug="ForceD3strategy" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Blizzard" Name="Blizzard" Description="Blizzard Entertainment's official youtube channel." Slug="blizzard" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Blizzard" Name="TotalBiscuit" Description="Hosts World of Warcraft and Starcraft II VOD's." Slug="TotalHalibut" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Blizzard" Name="The Craft Dude" Description="Hosts Starcraft 2, World of Warcraft HD videos." Slug="TheStarcraft2Dude" Provider="Youtube" />
+</Catalog>
