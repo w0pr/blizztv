@@ -48,7 +48,7 @@ namespace BlizzTV.Modules.Streams
         }
 
         public override void Run()
-        {
+        {            
             this.UpdateStreams();
             this.SetupUpdateTimer();
         }

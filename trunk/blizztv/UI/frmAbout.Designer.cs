@@ -118,6 +118,7 @@
             this.ListviewModules.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ListviewModules.Location = new System.Drawing.Point(3, 16);
             this.ListviewModules.Name = "ListviewModules";
+            this.ListviewModules.ShowGroups = false;
             this.ListviewModules.ShowItemToolTips = true;
             this.ListviewModules.Size = new System.Drawing.Size(432, 98);
             this.ListviewModules.SmallImageList = this.imageList;
@@ -138,7 +139,7 @@
             // ColDescription
             // 
             this.ColDescription.Text = "Description";
-            this.ColDescription.Width = 306;
+            this.ColDescription.Width = 289;
             // 
             // imageList
             // 
@@ -195,6 +196,7 @@
             listViewItem6});
             this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
             this.ListviewCredits.Name = "ListviewCredits";
+            this.ListviewCredits.ShowGroups = false;
             this.ListviewCredits.ShowItemToolTips = true;
             this.ListviewCredits.Size = new System.Drawing.Size(432, 90);
             this.ListviewCredits.TabIndex = 1;

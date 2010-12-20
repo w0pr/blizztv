@@ -37,6 +37,7 @@ namespace BlizzTV.Modules.Feeds
 
         private void LoadSubscriptions()
         {
+            this.ListviewSubscriptions.Items.Clear();
             foreach (ISubscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription((FeedSubscription)subscription));
         }
 
@@ -70,6 +71,11 @@ namespace BlizzTV.Modules.Feeds
                 Subscriptions.Instance.Remove(selection.Subscription);        
                 selection.Remove();
             }
+        }
+
+        private void buttonCatalog_Click(object sender, EventArgs e)
+        {
+            if (Catalog.Instance.ShowDialog()) this.LoadSubscriptions();
         }
     }
 

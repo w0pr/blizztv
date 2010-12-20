@@ -41,6 +41,7 @@
             this.numericUpDownNumberOfVideosToQueryChannelFor = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonCatalog = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -61,6 +62,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.buttonCatalog);
             this.tabPage2.Controls.Add(this.buttonRemove);
             this.tabPage2.Controls.Add(this.buttonAdd);
             this.tabPage2.Controls.Add(this.ListviewSubscriptions);
@@ -186,6 +188,17 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Number of latest videos to query channel for:";
             // 
+            // buttonCatalog
+            // 
+            this.buttonCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCatalog.Location = new System.Drawing.Point(8, 205);
+            this.buttonCatalog.Name = "buttonCatalog";
+            this.buttonCatalog.Size = new System.Drawing.Size(75, 23);
+            this.buttonCatalog.TabIndex = 6;
+            this.buttonCatalog.Text = "Catalog";
+            this.buttonCatalog.UseVisualStyleBackColor = true;
+            this.buttonCatalog.Click += new System.EventHandler(this.buttonCatalog_Click);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -220,5 +233,6 @@
         private System.Windows.Forms.ColumnHeader colName;
         private System.Windows.Forms.ColumnHeader colProvider;
         private System.Windows.Forms.ColumnHeader colSlug;
+        private System.Windows.Forms.Button buttonCatalog;
     }
 }
