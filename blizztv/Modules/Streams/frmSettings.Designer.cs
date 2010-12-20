@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonCatalog = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.ListviewSubscriptions = new System.Windows.Forms.ListView();
@@ -66,6 +67,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.buttonCatalog);
             this.tabPage2.Controls.Add(this.buttonRemove);
             this.tabPage2.Controls.Add(this.buttonAdd);
             this.tabPage2.Controls.Add(this.ListviewSubscriptions);
@@ -76,6 +78,17 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Subscriptions";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonCatalog
+            // 
+            this.buttonCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCatalog.Location = new System.Drawing.Point(6, 204);
+            this.buttonCatalog.Name = "buttonCatalog";
+            this.buttonCatalog.Size = new System.Drawing.Size(75, 23);
+            this.buttonCatalog.TabIndex = 5;
+            this.buttonCatalog.Text = "Catalog";
+            this.buttonCatalog.UseVisualStyleBackColor = true;
+            this.buttonCatalog.Click += new System.EventHandler(this.buttonCatalog_Click);
             // 
             // buttonRemove
             // 
@@ -282,5 +295,6 @@
         private System.Windows.Forms.TextBox txtStreamChatWindowWidth;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button buttonCatalog;
     }
 }
