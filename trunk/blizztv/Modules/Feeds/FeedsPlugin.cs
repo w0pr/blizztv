@@ -24,6 +24,7 @@ using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Feeds
@@ -44,9 +45,10 @@ namespace BlizzTV.Modules.Feeds
             this.RootListItem.Icon = new NamedImage("feed_16", Properties.Resources.feed_16);
 
             // register context menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", Properties.Resources.update_16, new EventHandler(RunManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", Properties.Resources.read_16, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", Properties.Resources.unread_16, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
+            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Properties.Resources.settings_16, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()
@@ -179,6 +181,12 @@ namespace BlizzTV.Modules.Feeds
             {
                 s.Status = Story.Statutes.Unread;
             }
+        }
+
+        private void MenuSettingsClicked(object sender, EventArgs e)
+        {
+            frmModuleSettingsHost f = new frmModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
+            f.ShowDialog();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

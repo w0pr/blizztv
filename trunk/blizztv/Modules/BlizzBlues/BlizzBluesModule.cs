@@ -24,6 +24,7 @@ using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Workload;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 using BlizzTV.Modules.BlizzBlues.Game;
 
 namespace BlizzTV.Modules.BlizzBlues
@@ -42,9 +43,10 @@ namespace BlizzTV.Modules.BlizzBlues
             this.RootListItem=new ListItem("BlizzBlues");
             this.RootListItem.Icon = new NamedImage("blizzblues_16", Properties.Resources.blizzblues_16);
 
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Blues", Properties.Resources.update_16, new EventHandler(RunManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", Properties.Resources.read_16, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", Properties.Resources.unread_16, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
+            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Properties.Resources.settings_16 , new EventHandler(MenuSettingsClicked)));
         }
 
         public override System.Windows.Forms.Form GetPreferencesForm()
@@ -152,6 +154,12 @@ namespace BlizzTV.Modules.BlizzBlues
         {
             System.Threading.Thread thread = new System.Threading.Thread(this.UpdateBlues) { IsBackground = true };
             thread.Start();
+        }
+
+        private void MenuSettingsClicked(object sender, EventArgs e)
+        {
+            frmModuleSettingsHost f = new frmModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
+            f.ShowDialog();
         }
 
         public void OnSaveSettings()

@@ -117,62 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="blizztv_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\blizztv_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="event_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\event_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="feed_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\feed_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_blizztv_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\blizztv_16.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_sleep_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sleep_16.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Providers" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Providers.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
-  </data>
-  <data name="stream_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\stream_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="video_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\video_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Subscriptions_Default" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Subscriptions.Default.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1254</value>
-  </data>
-  <data name="blizzblues_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\blizzblues_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sc2_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sc2_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="wow_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wow_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="eu_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\eu_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="us_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\us_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="settings_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\settings_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="read_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\read_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="unread_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\unread_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="update_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\update_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="calendar_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\calendar_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  <metadata name="Panel.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="buttonCancel.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="buttonOK.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

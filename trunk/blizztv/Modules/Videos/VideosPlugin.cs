@@ -22,6 +22,7 @@ using System.Timers;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
 using BlizzTV.CommonLib.Workload;
 
@@ -43,9 +44,10 @@ namespace BlizzTV.Modules.Videos
             this.RootListItem.Icon = new NamedImage("video_16", Properties.Resources.video_16);
 
             // register context menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
-            this.RootListItem.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", Properties.Resources.update_16, new EventHandler(RunManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", Properties.Resources.read_16, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
+            this.RootListItem.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", Properties.Resources.unread_16, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Properties.Resources.settings_16, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()
@@ -173,6 +175,12 @@ namespace BlizzTV.Modules.Videos
             {
                 foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.Unwatched; }
             }
+        }
+
+        private void MenuSettingsClicked(object sender, EventArgs e)
+        {
+            frmModuleSettingsHost f = new frmModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
+            f.ShowDialog();
         }
 
         #region de-ctor

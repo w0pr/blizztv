@@ -25,6 +25,7 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Events
@@ -51,8 +52,9 @@ namespace BlizzTV.Modules.Events
             this._eventsUpcoming.Icon = new NamedImage("event_16", Properties.Resources.event_16);
             this._eventsOver.Icon = new NamedImage("event_16", Properties.Resources.event_16); 
 
-            this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // register calender menu.
-            this.RootListItem.ContextMenus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", null, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
+            this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", Properties.Resources.calendar_16, new EventHandler(MenuCalendarClicked))); // register calender menu.
+            this.RootListItem.ContextMenus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", Properties.Resources.calendar_16, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
+            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Properties.Resources.settings_16, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()
@@ -174,6 +176,12 @@ namespace BlizzTV.Modules.Events
         {
             frmCalendar c = new frmCalendar(this._events);
             c.Show();
+        }
+
+        private void MenuSettingsClicked(object sender, EventArgs e)
+        {
+            frmModuleSettingsHost f = new frmModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
+            f.ShowDialog();
         }
 
         #region de-ctor

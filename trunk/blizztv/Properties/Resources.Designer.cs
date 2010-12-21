@@ -74,6 +74,13 @@ namespace BlizzTV.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap calendar_16 {
+            get {
+                object obj = ResourceManager.GetObject("calendar_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap eu_16 {
             get {
                 object obj = ResourceManager.GetObject("eu_16", resourceCulture);
@@ -121,9 +128,23 @@ namespace BlizzTV.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap read_16 {
+            get {
+                object obj = ResourceManager.GetObject("read_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap sc2_16 {
             get {
                 object obj = ResourceManager.GetObject("sc2_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap settings_16 {
+            get {
+                object obj = ResourceManager.GetObject("settings_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -138,13 +159,27 @@ namespace BlizzTV.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;Subscriptions xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;MMO-Champion&quot; Url=&quot;http://www.mmo-champion.com/external.php?do=rss&amp;amp;type=newcontent&amp;amp;sectionid=1&amp;amp;days=120&amp;amp;count=10&quot; /&gt;
-        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;TeamLiquid&quot; Url=&quot;http://www.teamliquid.net/rss/news.xml&quot; /&gt;    
-        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;BlizzTV&quot; Url=&quot;http://www.blizztv.com/rss/ccs/1-blizztvcom/&quot;  [rest of string was truncated]&quot;;.
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;WorldofWarcraft.com&quot; Url=&quot;http://us.battle.net/wow/en/feed/news&quot; /&gt;
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;Starcraft2.com&quot; Url=&quot;http://us.battle.net/sc2/en/feed/news&quot; /&gt;
+        ///  &lt;Subscription xsi:type=&quot;Feed&quot; Name=&quot;MMO-Champion&quot; Url=&quot;http://www.mmo-champion.com/external.php?do=rss&amp;amp;type=newcontent&amp;amp;sectionid=1&amp;amp;days=120&amp;amp;count= [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Subscriptions_Default {
             get {
                 return ResourceManager.GetString("Subscriptions_Default", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap unread_16 {
+            get {
+                object obj = ResourceManager.GetObject("unread_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap update_16 {
+            get {
+                object obj = ResourceManager.GetObject("update_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

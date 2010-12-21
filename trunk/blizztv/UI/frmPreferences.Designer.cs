@@ -85,7 +85,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(397, 312);
+            this.buttonOK.Location = new System.Drawing.Point(458, 312);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 1;
@@ -96,7 +96,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(316, 312);
+            this.buttonCancel.Location = new System.Drawing.Point(377, 312);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
@@ -200,7 +200,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 23);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(461, 276);
+            this.tabGeneral.Size = new System.Drawing.Size(531, 276);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -211,7 +211,7 @@
             this.groupBox4.Controls.Add(this.checkBoxAllowAutomaticUpdateChecks);
             this.groupBox4.Location = new System.Drawing.Point(9, 79);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(446, 68);
+            this.groupBox4.Size = new System.Drawing.Size(511, 68);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Updates";
@@ -242,7 +242,7 @@
             this.groupBox2.Controls.Add(this.radioButtonUseInternalViewers);
             this.groupBox2.Location = new System.Drawing.Point(9, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(446, 67);
+            this.groupBox2.Size = new System.Drawing.Size(511, 67);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "For viewing content:";
@@ -278,7 +278,7 @@
             this.TabControl.Location = new System.Drawing.Point(3, 3);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(469, 303);
+            this.TabControl.Size = new System.Drawing.Size(539, 303);
             this.TabControl.TabIndex = 0;
             // 
             // tabUI
@@ -398,7 +398,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(474, 340);
+            this.ClientSize = new System.Drawing.Size(544, 342);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.TabControl);
