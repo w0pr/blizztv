@@ -70,6 +70,9 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\upstream\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="irrKlang.NET4">
+      <HintPath>..\upstream\irrKlang.NET4.dll</HintPath>
+    </Reference>
     <Reference Include="Nini">
       <HintPath>..\upstream\Nini.dll</HintPath>
     </Reference>
@@ -89,6 +92,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonLib\Audio\AudioPlayer.cs" />
+    <Compile Include="CommonLib\Audio\AudioStream.cs" />
+    <Compile Include="CommonLib\Audio\Engines\AudioEngine.cs" />
+    <Compile Include="CommonLib\Audio\Engines\IAudioTrack.cs" />
+    <Compile Include="CommonLib\Audio\Engines\IrrKlang\FileFactory.cs" />
+    <Compile Include="CommonLib\Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="CommonLib\Dependencies\OperatingSystem.cs" />
     <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
@@ -481,8 +490,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy "$(SolutionDir)upstream\ikpMP3.dll" $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
