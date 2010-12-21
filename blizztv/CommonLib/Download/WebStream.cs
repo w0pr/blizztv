@@ -15,6 +15,8 @@
  * $Id$
  */
 
+ /* Implemented using: http://msdn.microsoft.com/en-us/library/86wf6409(v=vs.71).aspx */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
