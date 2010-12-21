@@ -23,6 +23,7 @@ using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
+using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
 using BlizzTV.CommonLib.Workload;
 
@@ -44,7 +45,8 @@ namespace BlizzTV.Modules.Streams
             this.RootListItem.Icon = new NamedImage("stream_16", Properties.Resources.stream_16);
 
             // register context-menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", null, new EventHandler(RunManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", Properties.Resources.update_16, new EventHandler(RunManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Properties.Resources.settings_16, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()
@@ -157,6 +159,12 @@ namespace BlizzTV.Modules.Streams
         {
             System.Threading.Thread thread = new System.Threading.Thread(UpdateStreams) {IsBackground = true};
             thread.Start();
+        }
+
+        private void MenuSettingsClicked(object sender, EventArgs e)
+        {
+            frmModuleSettingsHost f = new frmModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
+            f.ShowDialog();
         }
 
         #region de-ctor
