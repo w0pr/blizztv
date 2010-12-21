@@ -99,6 +99,9 @@
     <Compile Include="CommonLib\Audio\Engines\IrrKlang\FileFactory.cs" />
     <Compile Include="CommonLib\Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="CommonLib\Dependencies\OperatingSystem.cs" />
+    <Compile Include="CommonLib\Download\Download.cs" />
+    <Compile Include="CommonLib\Download\DownloadManager.cs" />
+    <Compile Include="CommonLib\Download\WebStream.cs" />
     <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
     </Compile>

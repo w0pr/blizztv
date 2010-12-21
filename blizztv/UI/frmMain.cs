@@ -26,7 +26,6 @@ using BlizzTV.CommonLib.UI;
 using BlizzTV.CommonLib.Workload;
 using BlizzTV.ModuleLib;
 using BlizzTV.Updates;
-using BlizzTV.CommonLib.Audio;
 
 namespace BlizzTV.UI
 {
@@ -42,10 +41,12 @@ namespace BlizzTV.UI
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
             Workload.Instance.AttachControls(this.ProgressBar, this.ProgressIcon); // init. workload-manager.
             NotificationManager.Instance.AttachControls(this, this.TrayIcon, this.NotificationIcon); // init. notification-manager.
-            
-            
+
+            BlizzTV.CommonLib.Download.Download d = BlizzTV.CommonLib.Download.DownloadManager.Instance.Add(CommonLib.Download.DownloadType.DownloadToFile, "http://www.brothersoft.com/d.php?soft_id=71682&downloader=no&url=http%3A%2F%2Fdownload.speedbit.com%2Fdap95_brosp.exe");
+            d.Start();
+
             //AudioPlayer.Instance.Play(@"C:\Users\shalafi\Desktop\notification_murloc.mp3");
-            AudioPlayer.Instance.PlayStream("http://www.looptvandfilm.com/blog/Radiohead%20-%20In%20Rainbows/01%20-%20Radiohead%20-%2015%20Step.MP3");
+            //AudioPlayer.Instance.PlayStream("http://ff123.net/samples/BlueEyesTrimmed.mp3");
         }
 
         private void frmMain_Load(object sender, EventArgs e)
