@@ -25,7 +25,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             : base("Starcraft")
         {
             this.Sources = new BlueSource[2] { new BlueSource(Region.Us, "http://us.battle.net/sc2/en/forum/blizztracker/"), new BlueSource(Region.Eu, "http://eu.battle.net/sc2/en/forum/blizztracker/") };
-            this.Icon = new NamedImage("sc2_16", Properties.Resources.sc2_16);
+            this.Icon = new NamedImage("sc2_16", Assets.Images.Icons.Png._16.sc2);
         }
     }
 }

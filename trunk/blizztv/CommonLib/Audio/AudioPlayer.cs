@@ -52,7 +52,7 @@ namespace BlizzTV.CommonLib.Audio
             new Thread(() => { this._engine.PlayInternetStream(url); }) { IsBackground = true }.Start();
         }
 
-        public void PlayerFromMemory(string name, byte[] data)
+        public void PlayFromMemory(string name, byte[] data)
         {
             if (!this._engine.CanPlayFromMemory) throw new NotFiniteNumberException();
 

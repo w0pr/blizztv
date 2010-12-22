@@ -41,13 +41,13 @@ namespace BlizzTV.Modules.Videos
         {
             VideosPlugin.Instance = this;
             this.RootListItem = new ListItem("Videos");
-            this.RootListItem.Icon = new NamedImage("video_16", Properties.Resources.video_16);
+            this.RootListItem.Icon = new NamedImage("video_16", Assets.Images.Icons.Png._16.video);
 
             // register context menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", Properties.Resources.update_16, new EventHandler(RunManualUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", Properties.Resources.read_16, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
-            this.RootListItem.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", Properties.Resources.unread_16, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Properties.Resources.settings_16, new EventHandler(MenuSettingsClicked)));
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Watched", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
+            this.RootListItem.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unwatched", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()

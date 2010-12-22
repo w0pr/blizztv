@@ -44,7 +44,7 @@ namespace BlizzTV.Modules.Videos
             this.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
             this.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
 
-            this.Icon = new NamedImage("video_16", Properties.Resources.video_16);
+            this.Icon = new NamedImage("video_16", Assets.Images.Icons.Png._16.video);
         }
 
         public bool IsValid()

@@ -25,7 +25,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             : base("World of Warcraft")
         {
             this.Sources = new BlueSource[2] { new BlueSource(Region.Us, "http://us.battle.net/wow/en/forum/blizztracker/"), new BlueSource(Region.Eu, "http://eu.battle.net/wow/en/forum/blizztracker/"), };
-            this.Icon = new NamedImage("wow_16", Properties.Resources.wow_16);
+            this.Icon = new NamedImage("wow_16", Assets.Images.Icons.Png._16.wow);
         }
     }
 }
