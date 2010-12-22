@@ -499,7 +499,6 @@
     <None Include="Resources\chat.ico" />
     <None Include="Resources\catalog.ico" />
     <None Include="Resources\calendar.ico" />
-    <None Include="Resources\blizztv_128.ico" />
     <None Include="Resources\blizztv_16.ico" />
     <None Include="Resources\app.ico" />
     <None Include="Resources\alarm.ico" />
