@@ -34,6 +34,7 @@ namespace BlizzTV.CommonLib.Audio.Engines.IrrKlang
         }
 
         public override bool CanPlayStreams { get { return true; } }
+        public override bool CanPlayFromMemory { get { return true; } }
 
         public override void Play(string file)
         {
@@ -41,10 +42,17 @@ namespace BlizzTV.CommonLib.Audio.Engines.IrrKlang
             this.CurrentTrack = new IrrKlangTrack(sound, file);
         }
 
-        public override void PlayStream(string url)
+        public override void PlayInternetStream(string url)
         {
             ISound sound = this._engine.Play2D(url);
             this.CurrentTrack = new IrrKlangTrack(sound, url);
+        }
+
+        public override void PlayFromMemory(string name, byte[] data)
+        {
+            ISoundSource source = this._engine.AddSoundSourceFromMemory(data, name);
+            ISound sound = this._engine.Play2D(name);
+            this.CurrentTrack = new IrrKlangTrack(sound, name);
         }
 
         public override void Pause()

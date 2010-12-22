@@ -424,6 +424,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\notification_murloc.mp3" />
     <None Include="Resources\calendar_16.png" />
     <None Include="Resources\unread_16.png" />
     <None Include="Resources\read_16.png" />

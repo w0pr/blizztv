@@ -116,6 +116,13 @@ namespace BlizzTV.Properties {
             }
         }
         
+        internal static byte[] notification_murloc {
+            get {
+                object obj = ResourceManager.GetObject("notification_murloc", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;Providers xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;

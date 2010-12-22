@@ -25,11 +25,14 @@ namespace BlizzTV.CommonLib.Audio.Engines
     public abstract class AudioEngine
     {
         public abstract bool CanPlayStreams { get; }
+        public abstract bool CanPlayFromMemory { get; }
+
         public bool IsPlaying { get { if (this.CurrentTrack != null) return this.CurrentTrack.IsPlaying; else return false; } }
         public IAudioTrack CurrentTrack { get; protected set; }
 
         public abstract void Play(string filename);
-        public abstract void PlayStream(string url);
+        public abstract void PlayInternetStream(string url);
+        public abstract void PlayFromMemory(string name, byte[] data);
         public abstract void Pause();
         public abstract void Resume();
         public abstract void Stop();

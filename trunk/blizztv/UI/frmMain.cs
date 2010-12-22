@@ -41,14 +41,6 @@ namespace BlizzTV.UI
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
             Workload.Instance.AttachControls(this.ProgressBar, this.ProgressIcon); // init. workload-manager.
             NotificationManager.Instance.AttachControls(this, this.TrayIcon, this.NotificationIcon); // init. notification-manager.
-
-            //BlizzTV.CommonLib.Downloads.Download d = BlizzTV.CommonLib.Downloads.DownloadManager.Instance.Add("http://arctica.nw.ru/toolband_update_12-12/Mp3/TOOL/00_00_00--Miscellaneous--pushit_(oops).mp3");
-            //d.Start();
-
-            //BlizzTV.CommonLib.Downloads.DownloadStream ds = BlizzTV.CommonLib.Downloads.DownloadManager.Instance.Stream("http://ff123.net/samples/BlueEyesTrimmed.mp3");
-
-            //BlizzTV.CommonLib.Audio.AudioPlayer.Instance.Play(@"C:\Users\shalafi\Desktop\notification_murloc.mp3");
-            BlizzTV.CommonLib.Audio.AudioPlayer.Instance.PlayStream("http://mobtownskasounds.podomatic.com/enclosure/2009-05-06T19_24_10-07_00.mp3");
         }
 
         private void frmMain_Load(object sender, EventArgs e)
