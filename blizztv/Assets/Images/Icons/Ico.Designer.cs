@@ -88,13 +88,6 @@ namespace BlizzTV.Assets.Images.Icons {
             }
         }
         
-        internal static System.Drawing.Icon blizztv_128 {
-            get {
-                object obj = ResourceManager.GetObject("blizztv_128", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
         internal static System.Drawing.Icon blizztv_16 {
             get {
                 object obj = ResourceManager.GetObject("blizztv_16", resourceCulture);
