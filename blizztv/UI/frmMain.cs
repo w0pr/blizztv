@@ -36,7 +36,7 @@ namespace BlizzTV.UI
         #region ctor & form handlers
 
         public frmMain()
-        {
+        {            
             InitializeComponent();
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
             Workload.Instance.AttachControls(this.ProgressBar, this.ProgressIcon); // init. workload-manager.
@@ -319,7 +319,7 @@ namespace BlizzTV.UI
                 this.menuSleepMode.Checked = true;
                 this.ContextMenuSleepMode.Checked = true;
                 this.SleepIcon.Visible = true;
-                this.TrayIcon.Icon = Properties.Resources.ico_sleep_16;
+                this.TrayIcon.Icon = Assets.Images.Icons.Ico.sleep;
                 this.TrayIcon.Text = "BlizzTV is in sleep mode.";
                 GlobalSettings.Instance.InSleepMode = true;
             }
@@ -328,7 +328,7 @@ namespace BlizzTV.UI
                 this.menuSleepMode.Checked = false;
                 this.ContextMenuSleepMode.Checked = false;
                 this.SleepIcon.Visible = false;
-                this.TrayIcon.Icon = Properties.Resources.ico_blizztv_16;
+                this.TrayIcon.Icon = Assets.Images.Icons.Ico.blizztv_16;
                 this.TrayIcon.Text = "BlizzTV";
                 GlobalSettings.Instance.InSleepMode = false;
             }

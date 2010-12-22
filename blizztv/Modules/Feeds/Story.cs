@@ -88,7 +88,7 @@ namespace BlizzTV.Modules.Feeds
             this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
 
-            this.Icon = new NamedImage("story_16",Properties.Resources.feed_16);
+            this.Icon = new NamedImage("story_16", Assets.Images.Icons.Png._16.feed);
         }
 
         public void CheckForNotifications()

@@ -95,10 +95,10 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
 
-            if (this.Region == Game.Region.Eu) 
-                this.Icon = new NamedImage("eu_16",Properties.Resources.eu_16);
-            else if (this.Region == Game.Region.Us) 
-                this.Icon = new NamedImage("us_16",Properties.Resources.us_16);
+            if (this.Region == Game.Region.Eu)
+                this.Icon = new NamedImage("eu_16", Assets.Images.Icons.Png._16.eu);
+            else if (this.Region == Game.Region.Us)
+                this.Icon = new NamedImage("us_16", Assets.Images.Icons.Png._16.us);
         }
 
         public void AddPost(BlueStory blueStory)

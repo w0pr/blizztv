@@ -63,7 +63,7 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
         {
             try
             {
-                using (MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.Providers)))
+                using (MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(Assets.XML.Subscriptions.Providers)))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(List<IProvider>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Providers"), "");
                     this._providers = (List<IProvider>)xs.Deserialize(memStream);

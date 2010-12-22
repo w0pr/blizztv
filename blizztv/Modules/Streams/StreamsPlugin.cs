@@ -42,11 +42,11 @@ namespace BlizzTV.Modules.Streams
         {
             StreamsPlugin.Instance = this;
             this.RootListItem = new ListItem("Streams");
-            this.RootListItem.Icon = new NamedImage("stream_16", Properties.Resources.stream_16);
+            this.RootListItem.Icon = new NamedImage("stream_16", Assets.Images.Icons.Png._16.stream);
 
             // register context-menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", Properties.Resources.update_16, new EventHandler(RunManualUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Properties.Resources.settings_16, new EventHandler(MenuSettingsClicked)));
+            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()

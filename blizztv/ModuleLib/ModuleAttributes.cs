@@ -45,7 +45,7 @@ namespace BlizzTV.ModuleLib
 
             using (var stream = (Bitmap)Resources.ResourceManager.GetObject(this._iconName)) // get the resource stream.
             {
-                this.Icon = stream != null ? new Bitmap(stream) : Resources.blizztv_16; // if asked icon does not exists use the default icon.                                   
+                this.Icon = stream != null ? new Bitmap(stream) : Assets.Images.Icons.Png._16.blizztv; // if asked icon does not exists use the default icon.                                   
             }
         }
 

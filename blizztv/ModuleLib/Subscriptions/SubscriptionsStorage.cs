@@ -90,7 +90,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
         {
             using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Create))
             {
-                fileStream.Write(Encoding.UTF8.GetBytes(Properties.Resources.Subscriptions_Default), 0, Properties.Resources.Subscriptions_Default.Length);
+                fileStream.Write(Encoding.UTF8.GetBytes(Assets.XML.Subscriptions.Default), 0, Assets.XML.Subscriptions.Default.Length);
             }
         }
 
