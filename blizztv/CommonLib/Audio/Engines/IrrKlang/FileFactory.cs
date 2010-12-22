@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using IrrKlang;
+using BlizzTV.CommonLib.Downloads;
 
 namespace BlizzTV.CommonLib.Audio.Engines.IrrKlang
 {
@@ -29,7 +30,7 @@ namespace BlizzTV.CommonLib.Audio.Engines.IrrKlang
         public Stream openFile(string filename)
         {
             if (!filename.StartsWith("http://")) return File.OpenRead(filename);
-            return new AudioStream(filename);
+            return DownloadManager.Instance.Stream(filename);
         }
     }
 }

@@ -93,15 +93,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonLib\Audio\AudioPlayer.cs" />
-    <Compile Include="CommonLib\Audio\AudioStream.cs" />
     <Compile Include="CommonLib\Audio\Engines\AudioEngine.cs" />
     <Compile Include="CommonLib\Audio\Engines\IAudioTrack.cs" />
     <Compile Include="CommonLib\Audio\Engines\IrrKlang\FileFactory.cs" />
     <Compile Include="CommonLib\Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="CommonLib\Dependencies\OperatingSystem.cs" />
-    <Compile Include="CommonLib\Download\Download.cs" />
-    <Compile Include="CommonLib\Download\DownloadManager.cs" />
-    <Compile Include="CommonLib\Download\WebStream.cs" />
+    <Compile Include="CommonLib\Downloads\Download.cs" />
+    <Compile Include="CommonLib\Downloads\DownloadManager.cs" />
+    <Compile Include="CommonLib\Downloads\DownloadStream.cs" />
     <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
     </Compile>

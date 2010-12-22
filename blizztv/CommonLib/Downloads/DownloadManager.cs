@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BlizzTV.CommonLib.Download
+namespace BlizzTV.CommonLib.Downloads
 {
     public sealed class DownloadManager
     {
@@ -33,17 +33,16 @@ namespace BlizzTV.CommonLib.Download
 
         public List<Download> Downloads = new List<Download>();
 
-        public Download Add(DownloadType type, string uri)
+        public Download Add(string uri)
         {
-            Download download = new Download(uri, type);
+            Download download = new Download(uri);
             this.Downloads.Add(download);
             return download;
         }
-    }
-
-    public enum DownloadType
-    {
-        DownloadToMemory,
-        DownloadToFile
+        
+        public DownloadStream Stream(string uri)
+        {
+            return new DownloadStream(uri);
+        }
     }
 }
