@@ -43,19 +43,20 @@ namespace BlizzTV.CommonLib.Audio
 
         public void Play(string filename)
         {
-            this._engine.Play(filename);
+            new Thread(() => { this._engine.Play(filename); }) { IsBackground = true }.Start();          
         }
 
-        public void PlayStream(string url)
+        public void PlayInternetStream(string url)
         {
-            if (this._engine.CanPlayStreams)
-            {
-                Thread thread = new Thread(() =>
-                    {
-                        this._engine.PlayStream(url);
-                    });
-                thread.Start();
-            }
+            if (!this._engine.CanPlayStreams) throw new NotSupportedException();
+            new Thread(() => { this._engine.PlayInternetStream(url); }) { IsBackground = true }.Start();
+        }
+
+        public void PlayerFromMemory(string name, byte[] data)
+        {
+            if (!this._engine.CanPlayFromMemory) throw new NotFiniteNumberException();
+
+            new Thread(() => { this._engine.PlayFromMemory(name, data); }) { IsBackground = true }.Start();
         }
     }
 }

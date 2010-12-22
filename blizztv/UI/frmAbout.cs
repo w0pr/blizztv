@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
+using BlizzTV.CommonLib.Audio;
 
 namespace BlizzTV.UI
 {
@@ -68,7 +69,7 @@ namespace BlizzTV.UI
         private void LinkPaypal_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null); }
         			
         private bool _enoughDots = false;		
-        private void MoreDots(object sender, KeyEventArgs e) { if (e.Alt && e.Control) this._enoughDots = true; }		
-        private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } _enoughDots = false; }
+        private void MoreDots(object sender, KeyEventArgs e) { if (e.Alt && e.Control) this._enoughDots = true; }
+        private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } AudioPlayer.Instance.PlayerFromMemory("murloc", Properties.Resources.notification_murloc); _enoughDots = false; }
     }
 }

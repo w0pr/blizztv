@@ -33,10 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxInterop.ShockwaveFlashObjects">
-      <HintPath>..\blizztv\obj\x86\Release\AxInterop.ShockwaveFlashObjects.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Esent.Collections">
       <HintPath>..\upstream\Esent.Collections.dll</HintPath>
     </Reference>
@@ -45,11 +41,6 @@
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\upstream\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="Interop.ShockwaveFlashObjects">
-      <HintPath>..\blizztv\obj\x86\Release\Interop.ShockwaveFlashObjects.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
