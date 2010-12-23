@@ -110,9 +110,9 @@ namespace BlizzTV.Modules.Events
 
         private void CheckForNotifications()
         {
-            if (Settings.Instance.AllowEventNotifications && !this.Notified) // if notifications are enabled & we haven't notified before.
+            if (Settings.Instance.EventNotificationsEnabled && !this.Notified) // if notifications are enabled & we haven't notified before.
             {
-                if ((Settings.Instance.AllowNotificationOfInprogressEvents) && (this.Status == EventStatus.InProgress)) // if in-progress event notifications are enabled, check for it the event has started.
+                if ((Settings.Instance.InProgressEventNotificationsEnabled) && (this.Status == EventStatus.InProgress)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this.Notified = true; // don't notify about it more then once
                     NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info));

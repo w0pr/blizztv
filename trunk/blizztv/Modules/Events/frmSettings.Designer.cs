@@ -33,16 +33,16 @@
             this.numericUpDownNumberOfDaysToShowEventsOnMainWindow = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBoxAllowEventNotifications = new System.Windows.Forms.CheckBox();
-            this.checkBoxAllowNotificationOfEventsInProgress = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnableNotifications = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnableInProgressEventNotifications = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDownMinutesBefore = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMinutesToNotifyBeforeEvent = new System.Windows.Forms.NumericUpDown();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumberOfDaysToShowEventsOnMainWindow)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesBefore)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesToNotifyBeforeEvent)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +55,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(439, 236);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "General";
+            this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -67,7 +67,7 @@
             this.groupBox2.Location = new System.Drawing.Point(8, 6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(423, 44);
-            this.groupBox2.TabIndex = 9;
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Events";
             // 
@@ -106,63 +106,64 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.checkBoxAllowEventNotifications);
-            this.groupBox1.Controls.Add(this.checkBoxAllowNotificationOfEventsInProgress);
+            this.groupBox1.Controls.Add(this.checkBoxEnableNotifications);
+            this.groupBox1.Controls.Add(this.checkBoxEnableInProgressEventNotifications);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.numericUpDownMinutesBefore);
+            this.groupBox1.Controls.Add(this.numericUpDownMinutesToNotifyBeforeEvent);
             this.groupBox1.Location = new System.Drawing.Point(8, 56);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(423, 88);
-            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Notifications";
             // 
-            // checkBoxAllowEventNotifications
+            // checkBoxEnableNotifications
             // 
-            this.checkBoxAllowEventNotifications.AutoSize = true;
-            this.checkBoxAllowEventNotifications.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxAllowEventNotifications.Name = "checkBoxAllowEventNotifications";
-            this.checkBoxAllowEventNotifications.Size = new System.Drawing.Size(143, 17);
-            this.checkBoxAllowEventNotifications.TabIndex = 4;
-            this.checkBoxAllowEventNotifications.Text = "Allow event notifications.";
-            this.checkBoxAllowEventNotifications.UseVisualStyleBackColor = true;
+            this.checkBoxEnableNotifications.AutoSize = true;
+            this.checkBoxEnableNotifications.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxEnableNotifications.Name = "checkBoxEnableNotifications";
+            this.checkBoxEnableNotifications.Size = new System.Drawing.Size(186, 17);
+            this.checkBoxEnableNotifications.TabIndex = 2;
+            this.checkBoxEnableNotifications.Text = "Enable notification of new events.";
+            this.checkBoxEnableNotifications.UseVisualStyleBackColor = true;
+            this.checkBoxEnableNotifications.CheckedChanged += new System.EventHandler(this.checkBoxEnableNotifications_CheckedChanged);
             // 
-            // checkBoxAllowNotificationOfEventsInProgress
+            // checkBoxEnableInProgressEventNotifications
             // 
-            this.checkBoxAllowNotificationOfEventsInProgress.AutoSize = true;
-            this.checkBoxAllowNotificationOfEventsInProgress.Location = new System.Drawing.Point(6, 42);
-            this.checkBoxAllowNotificationOfEventsInProgress.Name = "checkBoxAllowNotificationOfEventsInProgress";
-            this.checkBoxAllowNotificationOfEventsInProgress.Size = new System.Drawing.Size(209, 17);
-            this.checkBoxAllowNotificationOfEventsInProgress.TabIndex = 7;
-            this.checkBoxAllowNotificationOfEventsInProgress.Text = "Allow notification of events in-progress.";
-            this.checkBoxAllowNotificationOfEventsInProgress.UseVisualStyleBackColor = true;
+            this.checkBoxEnableInProgressEventNotifications.AutoSize = true;
+            this.checkBoxEnableInProgressEventNotifications.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxEnableInProgressEventNotifications.Name = "checkBoxEnableInProgressEventNotifications";
+            this.checkBoxEnableInProgressEventNotifications.Size = new System.Drawing.Size(240, 17);
+            this.checkBoxEnableInProgressEventNotifications.TabIndex = 3;
+            this.checkBoxEnableInProgressEventNotifications.Text = "Enable notification for In-Progress events too.";
+            this.checkBoxEnableInProgressEventNotifications.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 62);
+            this.label1.Location = new System.Drawing.Point(3, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(165, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Minutes to notify before an event:";
             // 
-            // numericUpDownMinutesBefore
+            // numericUpDownMinutesToNotifyBeforeEvent
             // 
-            this.numericUpDownMinutesBefore.Location = new System.Drawing.Point(177, 60);
-            this.numericUpDownMinutesBefore.Maximum = new decimal(new int[] {
+            this.numericUpDownMinutesToNotifyBeforeEvent.Location = new System.Drawing.Point(174, 60);
+            this.numericUpDownMinutesToNotifyBeforeEvent.Maximum = new decimal(new int[] {
             1440,
             0,
             0,
             0});
-            this.numericUpDownMinutesBefore.Minimum = new decimal(new int[] {
+            this.numericUpDownMinutesToNotifyBeforeEvent.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDownMinutesBefore.Name = "numericUpDownMinutesBefore";
-            this.numericUpDownMinutesBefore.Size = new System.Drawing.Size(50, 20);
-            this.numericUpDownMinutesBefore.TabIndex = 6;
-            this.numericUpDownMinutesBefore.Value = new decimal(new int[] {
+            this.numericUpDownMinutesToNotifyBeforeEvent.Name = "numericUpDownMinutesToNotifyBeforeEvent";
+            this.numericUpDownMinutesToNotifyBeforeEvent.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDownMinutesToNotifyBeforeEvent.TabIndex = 4;
+            this.numericUpDownMinutesToNotifyBeforeEvent.Value = new decimal(new int[] {
             15,
             0,
             0,
@@ -193,7 +194,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumberOfDaysToShowEventsOnMainWindow)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesBefore)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesToNotifyBeforeEvent)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -203,10 +204,10 @@
 
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBoxAllowEventNotifications;
-        private System.Windows.Forms.CheckBox checkBoxAllowNotificationOfEventsInProgress;
+        private System.Windows.Forms.CheckBox checkBoxEnableNotifications;
+        private System.Windows.Forms.CheckBox checkBoxEnableInProgressEventNotifications;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDownMinutesBefore;
+        private System.Windows.Forms.NumericUpDown numericUpDownMinutesToNotifyBeforeEvent;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
