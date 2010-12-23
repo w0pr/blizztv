@@ -118,15 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BabyMurloc" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\BabyMurloc.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BattleCruisor" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\BattleCruisor.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CreepTumor" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\CreepTumor.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="DefaultNotification" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\DefaultNotification.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -163,17 +154,8 @@
   <data name="Polymorph" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\Polymorph.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ProtossAdvistor" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\ProtossAdvistor.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="PVPQueue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\PVPQueue.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="SuperMario" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SuperMario.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TerranAdvisor" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\TerranAdvisor.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Tetris" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\Tetris.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -183,9 +165,6 @@
   </data>
   <data name="Whisper" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\Whisper.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ZergEvolution" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\ZergEvolution.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Tina" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\Tina.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
