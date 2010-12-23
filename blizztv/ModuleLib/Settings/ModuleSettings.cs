@@ -19,6 +19,6 @@ namespace BlizzTV.ModuleLib.Settings
 {
     public class ModuleSettings : CommonLib.Settings.Settings // Plugin-spefic settings.
     {
-        protected ModuleSettings(string name) : base(string.Format("Plugin-{0}", name)) { }
+        protected ModuleSettings(string name) : base(string.Format("Module-{0}", name)) { }
     }
 }
