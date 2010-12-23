@@ -74,6 +74,6 @@ namespace BlizzTV.UI
         // Disables a plugin.
         public void Disable(string name) { this.Set(name, "Off"); } 
         
-        public Plugins() : base("Plugins") { }
+        public Plugins() : base("Modules") { }
     }
 }
