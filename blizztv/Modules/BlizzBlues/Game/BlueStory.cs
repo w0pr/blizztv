@@ -116,7 +116,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
 
         public void CheckForNotifications()
         {
-            if (this.Status == Statutes.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("BlizzBlue: {0}",this.Title), "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled && this.Status == Statutes.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("BlizzBlue: {0}",this.Title), "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void DoubleClicked(object sender, System.EventArgs e)
