@@ -17,9 +17,11 @@
 
 using System;
 using System.Windows.Forms;
+using System.Timers;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.UI;
-using System.Timers;
+using BlizzTV.CommonLib.Settings;
+
 
 namespace BlizzTV.CommonLib.Notifications
 {
@@ -51,6 +53,7 @@ namespace BlizzTV.CommonLib.Notifications
 
         public void Show(INotificationRequester sender, NotificationEventArgs e)
         {
+            if (!GlobalSettings.Instance.NotificationsEnabled) return;
             this._mainForm.AsyncInvokeHandler(() =>
             {
                 if (!this._notificationActive)
@@ -58,6 +61,8 @@ namespace BlizzTV.CommonLib.Notifications
                     this._trayIcon.Tag = sender;
                     this._trayIcon.ShowBalloonTip(10000, e.Title,e.Text,e.Icon);
                     this._notificationActive = true;
+
+                    if(GlobalSettings.Instance.NotificationSoundsEnabled) NotificationSound.Instance.Play();
 
                     this._notificationTimer = new System.Timers.Timer(10000);
                     this._notificationTimer.Elapsed += NotificationTimer;
@@ -88,7 +93,7 @@ namespace BlizzTV.CommonLib.Notifications
             f.ShowDialog();        
         }
 
-        public void ClearQueuedNotifications()
+        public void ClearArchivedNotifications()
         {
             ArchivedNotifications.Instance.Queue.Clear();
             this._notificationIcon.Visible = false;

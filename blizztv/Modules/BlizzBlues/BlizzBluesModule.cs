@@ -29,7 +29,7 @@ using BlizzTV.Modules.BlizzBlues.Game;
 
 namespace BlizzTV.Modules.BlizzBlues
 {
-    [ModuleAttributes("BlizzBlues", "Blizzard GM Blue post aggregator.", "blizzblues_16")]
+    [ModuleAttributes("BlizzBlues", "Blizzard GM Blue post aggregator.", "blizzblues")]
     class BlizzBluesModule:Module
     {
         internal List<BlueParser> _parsers = new List<BlueParser>();

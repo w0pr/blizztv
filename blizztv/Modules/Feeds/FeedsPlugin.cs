@@ -29,7 +29,7 @@ using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Feeds
 {
-    [ModuleAttributes("Feeds","Feed aggregator plugin.","feed_16")]
+    [ModuleAttributes("Feeds","Feed aggregator plugin.","feed")]
     public class FeedsPlugin:Module
     {
         internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 

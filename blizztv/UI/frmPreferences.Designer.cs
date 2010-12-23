@@ -61,6 +61,11 @@
             this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabNotifications = new System.Windows.Forms.TabPage();
+            this.checkBoxNotificationsEnabled = new System.Windows.Forms.CheckBox();
+            this.groupBoxNotificationSounds = new System.Windows.Forms.GroupBox();
+            this.comboBoxNotificationSound = new System.Windows.Forms.ComboBox();
+            this.checkBoxNotificationSoundsEnabled = new System.Windows.Forms.CheckBox();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabModules.SuspendLayout();
@@ -71,17 +76,20 @@
             this.tabUI.SuspendLayout();
             this.tabPlayer.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabNotifications.SuspendLayout();
+            this.groupBoxNotificationSounds.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageList
             // 
             this.ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList.ImageStream")));
             this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.ImageList.Images.SetKeyName(0, "settings_16.png");
-            this.ImageList.Images.SetKeyName(1, "userinterface_16.png");
-            this.ImageList.Images.SetKeyName(2, "player_16.png");
-            this.ImageList.Images.SetKeyName(3, "plugin_16.png");
-            this.ImageList.Images.SetKeyName(4, "bug_16.png");
+            this.ImageList.Images.SetKeyName(0, "settings.png");
+            this.ImageList.Images.SetKeyName(1, "userinterface.png");
+            this.ImageList.Images.SetKeyName(2, "notification.png");
+            this.ImageList.Images.SetKeyName(3, "player.png");
+            this.ImageList.Images.SetKeyName(4, "plugin.png");
+            this.ImageList.Images.SetKeyName(5, "bug.png");
             // 
             // buttonOK
             // 
@@ -107,11 +115,11 @@
             // tabDebug
             // 
             this.tabDebug.Controls.Add(this.groupBox3);
-            this.tabDebug.ImageIndex = 4;
+            this.tabDebug.ImageIndex = 5;
             this.tabDebug.Location = new System.Drawing.Point(4, 23);
             this.tabDebug.Name = "tabDebug";
             this.tabDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebug.Size = new System.Drawing.Size(461, 276);
+            this.tabDebug.Size = new System.Drawing.Size(531, 276);
             this.tabDebug.TabIndex = 2;
             this.tabDebug.Text = "Debug";
             this.tabDebug.UseVisualStyleBackColor = true;
@@ -150,11 +158,11 @@
             // tabModules
             // 
             this.tabModules.Controls.Add(this.listviewModules);
-            this.tabModules.ImageIndex = 3;
+            this.tabModules.ImageIndex = 4;
             this.tabModules.Location = new System.Drawing.Point(4, 23);
             this.tabModules.Name = "tabModules";
             this.tabModules.Padding = new System.Windows.Forms.Padding(3);
-            this.tabModules.Size = new System.Drawing.Size(461, 276);
+            this.tabModules.Size = new System.Drawing.Size(531, 276);
             this.tabModules.TabIndex = 1;
             this.tabModules.Text = "Modules";
             this.tabModules.UseVisualStyleBackColor = true;
@@ -171,7 +179,7 @@
             this.listviewModules.Location = new System.Drawing.Point(3, 3);
             this.listviewModules.Name = "listviewModules";
             this.listviewModules.ShowGroups = false;
-            this.listviewModules.Size = new System.Drawing.Size(455, 270);
+            this.listviewModules.Size = new System.Drawing.Size(525, 270);
             this.listviewModules.SmallImageList = this.ImageList;
             this.listviewModules.TabIndex = 1;
             this.listviewModules.UseCompatibleStateImageBehavior = false;
@@ -271,6 +279,7 @@
             // 
             this.TabControl.Controls.Add(this.tabGeneral);
             this.TabControl.Controls.Add(this.tabUI);
+            this.TabControl.Controls.Add(this.tabNotifications);
             this.TabControl.Controls.Add(this.tabPlayer);
             this.TabControl.Controls.Add(this.tabModules);
             this.TabControl.Controls.Add(this.tabDebug);
@@ -288,7 +297,7 @@
             this.tabUI.Location = new System.Drawing.Point(4, 23);
             this.tabUI.Name = "tabUI";
             this.tabUI.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUI.Size = new System.Drawing.Size(461, 276);
+            this.tabUI.Size = new System.Drawing.Size(531, 276);
             this.tabUI.TabIndex = 3;
             this.tabUI.Text = "User Interface";
             this.tabUI.UseVisualStyleBackColor = true;
@@ -306,11 +315,11 @@
             // tabPlayer
             // 
             this.tabPlayer.Controls.Add(this.groupBox1);
-            this.tabPlayer.ImageIndex = 2;
+            this.tabPlayer.ImageIndex = 3;
             this.tabPlayer.Location = new System.Drawing.Point(4, 23);
             this.tabPlayer.Name = "tabPlayer";
             this.tabPlayer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPlayer.Size = new System.Drawing.Size(461, 276);
+            this.tabPlayer.Size = new System.Drawing.Size(531, 276);
             this.tabPlayer.TabIndex = 4;
             this.tabPlayer.Text = "Player";
             this.tabPlayer.UseVisualStyleBackColor = true;
@@ -392,6 +401,64 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Player Size:";
             // 
+            // tabNotifications
+            // 
+            this.tabNotifications.Controls.Add(this.groupBoxNotificationSounds);
+            this.tabNotifications.Controls.Add(this.checkBoxNotificationsEnabled);
+            this.tabNotifications.ImageIndex = 2;
+            this.tabNotifications.Location = new System.Drawing.Point(4, 23);
+            this.tabNotifications.Name = "tabNotifications";
+            this.tabNotifications.Size = new System.Drawing.Size(531, 276);
+            this.tabNotifications.TabIndex = 5;
+            this.tabNotifications.Text = "Notifications";
+            this.tabNotifications.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxNotificationsEnabled
+            // 
+            this.checkBoxNotificationsEnabled.AutoSize = true;
+            this.checkBoxNotificationsEnabled.Location = new System.Drawing.Point(15, 14);
+            this.checkBoxNotificationsEnabled.Name = "checkBoxNotificationsEnabled";
+            this.checkBoxNotificationsEnabled.Size = new System.Drawing.Size(118, 17);
+            this.checkBoxNotificationsEnabled.TabIndex = 0;
+            this.checkBoxNotificationsEnabled.Text = "Enable notifications";
+            this.checkBoxNotificationsEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxNotificationsEnabled.CheckedChanged += new System.EventHandler(this.checkBoxNotificationsEnabled_CheckedChanged);
+            // 
+            // groupBoxNotificationSounds
+            // 
+            this.groupBoxNotificationSounds.Controls.Add(this.checkBoxNotificationSoundsEnabled);
+            this.groupBoxNotificationSounds.Controls.Add(this.comboBoxNotificationSound);
+            this.groupBoxNotificationSounds.Location = new System.Drawing.Point(15, 37);
+            this.groupBoxNotificationSounds.Name = "groupBoxNotificationSounds";
+            this.groupBoxNotificationSounds.Size = new System.Drawing.Size(240, 72);
+            this.groupBoxNotificationSounds.TabIndex = 2;
+            this.groupBoxNotificationSounds.TabStop = false;
+            this.groupBoxNotificationSounds.Text = "Notification Sounds";
+            // 
+            // comboBoxNotificationSound
+            // 
+            this.comboBoxNotificationSound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxNotificationSound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxNotificationSound.FormattingEnabled = true;
+            this.comboBoxNotificationSound.Location = new System.Drawing.Point(6, 42);
+            this.comboBoxNotificationSound.Name = "comboBoxNotificationSound";
+            this.comboBoxNotificationSound.Size = new System.Drawing.Size(228, 21);
+            this.comboBoxNotificationSound.TabIndex = 0;
+            this.comboBoxNotificationSound.SelectedIndexChanged += new System.EventHandler(this.comboBoxNotificationSound_SelectedIndexChanged);
+            // 
+            // checkBoxNotificationSoundsEnabled
+            // 
+            this.checkBoxNotificationSoundsEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxNotificationSoundsEnabled.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxNotificationSoundsEnabled.Name = "checkBoxNotificationSoundsEnabled";
+            this.checkBoxNotificationSoundsEnabled.Size = new System.Drawing.Size(228, 17);
+            this.checkBoxNotificationSoundsEnabled.TabIndex = 2;
+            this.checkBoxNotificationSoundsEnabled.Text = "Enable notification sounds";
+            this.checkBoxNotificationSoundsEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxNotificationSoundsEnabled.CheckedChanged += new System.EventHandler(this.checkBoxNotificationSoundsEnabled_CheckedChanged);
+            // 
             // frmPreferences
             // 
             this.AcceptButton = this.buttonOK;
@@ -424,6 +491,9 @@
             this.tabPlayer.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabNotifications.ResumeLayout(false);
+            this.tabNotifications.PerformLayout();
+            this.groupBoxNotificationSounds.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -461,5 +531,10 @@
         private System.Windows.Forms.CheckBox checkBoxAllowBetaVersionNotifications;
         private System.Windows.Forms.CheckBox checkBoxAllowAutomaticUpdateChecks;
         private System.Windows.Forms.CheckBox CheckBoxPlayerAlwaysOnTop;
+        private System.Windows.Forms.TabPage tabNotifications;
+        private System.Windows.Forms.CheckBox checkBoxNotificationsEnabled;
+        private System.Windows.Forms.GroupBox groupBoxNotificationSounds;
+        private System.Windows.Forms.ComboBox comboBoxNotificationSound;
+        private System.Windows.Forms.CheckBox checkBoxNotificationSoundsEnabled;
     }
 }

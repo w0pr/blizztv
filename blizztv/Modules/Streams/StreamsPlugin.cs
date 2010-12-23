@@ -29,7 +29,7 @@ using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Streams
 {
-    [ModuleAttributes("Streams", "Live stream aggregator plugin.","stream_16")]
+    [ModuleAttributes("Streams", "Live stream aggregator plugin.","stream")]
     public class StreamsPlugin:Module
     {
         internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
