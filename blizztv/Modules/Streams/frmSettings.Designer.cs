@@ -38,20 +38,26 @@
             this.colProvider = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colSlug = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtStreamChatWindowHeight = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtStreamChatWindowWidth = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams = new System.Windows.Forms.CheckBox();
-            this.numericUpDownUpdateFeedsEveryXMinutes = new System.Windows.Forms.NumericUpDown();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxEnableNotifications = new System.Windows.Forms.CheckBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownUpdatePeriod = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownChatWindowHeight = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownChatWindowWidth = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkBoxAutomaticallyOpenChat = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdatePeriod)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChatWindowHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChatWindowWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -145,115 +151,151 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox3);
+            this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.numericUpDownUpdateFeedsEveryXMinutes);
-            this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(439, 236);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "General";
+            this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.checkBoxEnableNotifications);
+            this.groupBox3.Location = new System.Drawing.Point(8, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(423, 41);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Notifications";
+            // 
+            // checkBoxEnableNotifications
+            // 
+            this.checkBoxEnableNotifications.AutoSize = true;
+            this.checkBoxEnableNotifications.Location = new System.Drawing.Point(11, 18);
+            this.checkBoxEnableNotifications.Name = "checkBoxEnableNotifications";
+            this.checkBoxEnableNotifications.Size = new System.Drawing.Size(198, 17);
+            this.checkBoxEnableNotifications.TabIndex = 0;
+            this.checkBoxEnableNotifications.Text = "Enable notification of online streams.";
+            this.checkBoxEnableNotifications.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.numericUpDownUpdatePeriod);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Location = new System.Drawing.Point(8, 53);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(423, 41);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Automatic Updates";
+            // 
+            // numericUpDownUpdatePeriod
+            // 
+            this.numericUpDownUpdatePeriod.Location = new System.Drawing.Point(140, 15);
+            this.numericUpDownUpdatePeriod.Maximum = new decimal(new int[] {
+            1440,
+            0,
+            0,
+            0});
+            this.numericUpDownUpdatePeriod.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownUpdatePeriod.Name = "numericUpDownUpdatePeriod";
+            this.numericUpDownUpdatePeriod.Size = new System.Drawing.Size(54, 20);
+            this.numericUpDownUpdatePeriod.TabIndex = 3;
+            this.numericUpDownUpdatePeriod.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownUpdatePeriod.ValueChanged += new System.EventHandler(this.numericUpDownUpdateFeedsEveryXMinutes_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(127, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Update period in minutes:";
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.txtStreamChatWindowHeight);
+            this.groupBox1.Controls.Add(this.numericUpDownChatWindowHeight);
+            this.groupBox1.Controls.Add(this.numericUpDownChatWindowWidth);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtStreamChatWindowWidth);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.checkBoxAutomaticallyOpenChatForAvailableStreams);
-            this.groupBox1.Location = new System.Drawing.Point(6, 38);
+            this.groupBox1.Controls.Add(this.checkBoxAutomaticallyOpenChat);
+            this.groupBox1.Location = new System.Drawing.Point(8, 96);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(430, 100);
-            this.groupBox1.TabIndex = 5;
+            this.groupBox1.Size = new System.Drawing.Size(423, 64);
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Chat Windows";
+            this.groupBox1.Text = "Chat Window";
             // 
-            // txtStreamChatWindowHeight
+            // numericUpDownChatWindowHeight
             // 
-            this.txtStreamChatWindowHeight.Location = new System.Drawing.Point(185, 36);
-            this.txtStreamChatWindowHeight.Name = "txtStreamChatWindowHeight";
-            this.txtStreamChatWindowHeight.Size = new System.Drawing.Size(49, 20);
-            this.txtStreamChatWindowHeight.TabIndex = 8;
+            this.numericUpDownChatWindowHeight.Location = new System.Drawing.Point(163, 38);
+            this.numericUpDownChatWindowHeight.Maximum = new decimal(new int[] {
+            1080,
+            0,
+            0,
+            0});
+            this.numericUpDownChatWindowHeight.Name = "numericUpDownChatWindowHeight";
+            this.numericUpDownChatWindowHeight.Size = new System.Drawing.Size(55, 20);
+            this.numericUpDownChatWindowHeight.TabIndex = 4;
+            // 
+            // numericUpDownChatWindowWidth
+            // 
+            this.numericUpDownChatWindowWidth.Location = new System.Drawing.Point(52, 38);
+            this.numericUpDownChatWindowWidth.Maximum = new decimal(new int[] {
+            1920,
+            0,
+            0,
+            0});
+            this.numericUpDownChatWindowWidth.Name = "numericUpDownChatWindowWidth";
+            this.numericUpDownChatWindowWidth.Size = new System.Drawing.Size(58, 20);
+            this.numericUpDownChatWindowWidth.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(138, 39);
+            this.label3.Location = new System.Drawing.Point(116, 40);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "Height:";
             // 
-            // txtStreamChatWindowWidth
-            // 
-            this.txtStreamChatWindowWidth.Location = new System.Drawing.Point(83, 36);
-            this.txtStreamChatWindowWidth.Name = "txtStreamChatWindowWidth";
-            this.txtStreamChatWindowWidth.Size = new System.Drawing.Size(49, 20);
-            this.txtStreamChatWindowWidth.TabIndex = 7;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 39);
+            this.label2.Location = new System.Drawing.Point(8, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Width:";
             // 
-            // label4
+            // checkBoxAutomaticallyOpenChat
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 39);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(30, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Size:";
-            // 
-            // checkBoxAutomaticallyOpenChatForAvailableStreams
-            // 
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.AutoSize = true;
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Name = "checkBoxAutomaticallyOpenChatForAvailableStreams";
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Size = new System.Drawing.Size(285, 17);
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.TabIndex = 4;
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.Text = "Automatically open chat windows for available streams.";
-            this.checkBoxAutomaticallyOpenChatForAvailableStreams.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownUpdateFeedsEveryXMinutes
-            // 
-            this.numericUpDownUpdateFeedsEveryXMinutes.Location = new System.Drawing.Point(166, 12);
-            this.numericUpDownUpdateFeedsEveryXMinutes.Maximum = new decimal(new int[] {
-            1440,
-            0,
-            0,
-            0});
-            this.numericUpDownUpdateFeedsEveryXMinutes.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownUpdateFeedsEveryXMinutes.Name = "numericUpDownUpdateFeedsEveryXMinutes";
-            this.numericUpDownUpdateFeedsEveryXMinutes.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDownUpdateFeedsEveryXMinutes.TabIndex = 3;
-            this.numericUpDownUpdateFeedsEveryXMinutes.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Update streams every X minutes:";
+            this.checkBoxAutomaticallyOpenChat.AutoSize = true;
+            this.checkBoxAutomaticallyOpenChat.Location = new System.Drawing.Point(11, 19);
+            this.checkBoxAutomaticallyOpenChat.Name = "checkBoxAutomaticallyOpenChat";
+            this.checkBoxAutomaticallyOpenChat.Size = new System.Drawing.Size(285, 17);
+            this.checkBoxAutomaticallyOpenChat.TabIndex = 0;
+            this.checkBoxAutomaticallyOpenChat.Text = "Automatically open chat windows for available streams.";
+            this.checkBoxAutomaticallyOpenChat.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 
@@ -267,10 +309,15 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdatePeriod)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChatWindowHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChatWindowWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -279,7 +326,7 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.NumericUpDown numericUpDownUpdateFeedsEveryXMinutes;
+        private System.Windows.Forms.NumericUpDown numericUpDownUpdatePeriod;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListView ListviewSubscriptions;
@@ -288,13 +335,15 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.ColumnHeader colProvider;
         private System.Windows.Forms.ColumnHeader colSlug;
-        private System.Windows.Forms.CheckBox checkBoxAutomaticallyOpenChatForAvailableStreams;
+        private System.Windows.Forms.CheckBox checkBoxAutomaticallyOpenChat;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtStreamChatWindowHeight;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtStreamChatWindowWidth;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button buttonCatalog;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBoxEnableNotifications;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.NumericUpDown numericUpDownChatWindowHeight;
+        private System.Windows.Forms.NumericUpDown numericUpDownChatWindowWidth;
     }
 }

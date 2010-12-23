@@ -46,8 +46,8 @@ namespace BlizzTV.Modules.Streams
             this._parent.Resize += OnParentResize;
             this._parent.FormClosed += OnParentClose;
 
-            this.Width = Settings.Instance.StreamChatWindowWidth;
-            this.Height = Settings.Instance.StreamChatWindowHeight;
+            this.Width = Settings.Instance.ChatWindowWidth;
+            this.Height = Settings.Instance.ChatWindowHeight;
         }
 
         private void frmChat_Load(object sender, EventArgs e)

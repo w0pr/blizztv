@@ -43,18 +43,20 @@ namespace BlizzTV.Modules.Streams
 
         private void LoadSettings()
         {
-            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)Settings.Instance.UpdateEveryXMinutes;
-            checkBoxAutomaticallyOpenChatForAvailableStreams.Checked = Settings.Instance.AutomaticallyOpenChatForAvailableStreams;
-            txtStreamChatWindowWidth.Text = Settings.Instance.StreamChatWindowWidth.ToString();
-            txtStreamChatWindowHeight.Text = Settings.Instance.StreamChatWindowHeight.ToString();
+            checkBoxEnableNotifications.Checked = Settings.Instance.NotificationsEnabled;
+            numericUpDownUpdatePeriod.Value = (decimal)Settings.Instance.UpdatePeriod;
+            checkBoxAutomaticallyOpenChat.Checked = Settings.Instance.AutomaticallyOpenChat;
+            numericUpDownChatWindowWidth.Value = (decimal)Settings.Instance.ChatWindowWidth;
+            numericUpDownChatWindowHeight.Value = (decimal)Settings.Instance.ChatWindowHeight;
         }
 
         public void SaveSettings()
         {
-            Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
-            Settings.Instance.AutomaticallyOpenChatForAvailableStreams = checkBoxAutomaticallyOpenChatForAvailableStreams.Checked;
-            Settings.Instance.StreamChatWindowWidth = int.Parse(txtStreamChatWindowWidth.Text);
-            Settings.Instance.StreamChatWindowHeight = int.Parse(txtStreamChatWindowHeight.Text);
+            Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
+            Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
+            Settings.Instance.AutomaticallyOpenChat = checkBoxAutomaticallyOpenChat.Checked;
+            Settings.Instance.ChatWindowWidth = (int)numericUpDownChatWindowWidth.Value;
+            Settings.Instance.ChatWindowHeight = (int)numericUpDownChatWindowHeight.Value;
             Settings.Instance.Save();
             StreamsPlugin.Instance.OnSaveSettings();
         }
@@ -82,6 +84,11 @@ namespace BlizzTV.Modules.Streams
         private void buttonCatalog_Click(object sender, EventArgs e)
         {
             if (Catalog.Instance.ShowDialog()) this.LoadSubscriptions();
+        }
+
+        private void numericUpDownUpdateFeedsEveryXMinutes_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

@@ -49,9 +49,8 @@ namespace BlizzTV.Modules.Streams
                 this._isLive = value; 
 
                 if (StatusStorage.Instance.Exists(string.Format("stream.{0}", this.Name))) wasOnline = Convert.ToBoolean(StatusStorage.Instance[string.Format("stream.{0}", this.Name)]);
-                if (!wasOnline && this._isLive) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Stream is online. Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
+                if (Settings.Instance.NotificationsEnabled && !wasOnline && this._isLive) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Stream is online. Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
                 StatusStorage.Instance[string.Format("stream.{0}", this.Name)] = Convert.ToByte(this._isLive);
-
                 // TODO: when the application goes offline the stream should set to offline in status storage.
             }
         }
