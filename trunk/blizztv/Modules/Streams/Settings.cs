@@ -30,9 +30,10 @@ namespace BlizzTV.Modules.Streams
 
         private Settings() : base("Streams") { }
 
-        public int UpdateEveryXMinutes { get { return this.GetInt("UpdateEveryXMinutes", 60); } set { this.Set("UpdateEveryXMinutes", value); } }
-        public bool AutomaticallyOpenChatForAvailableStreams { get { return this.GetBoolean("AutomaticallyOpenChatForAvailableStreams", false); } set { this.Set("AutomaticallyOpenChatForAvailableStreams", value); } }
-        public int StreamChatWindowWidth { get { return this.GetInt("StreamChatWindowWidth", 350); } set { this.Set("StreamChatWindowWidth", value); } }
-        public int StreamChatWindowHeight { get { return this.GetInt("StreamChatWindowHeight", 385); } set { this.Set("StreamChatWindowHeight", value); } }
+        public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
+        public int UpdatePeriod { get { return this.GetInt("UpdatePeriod", 60); } set { this.Set("UpdatePeriod", value); } }
+        public bool AutomaticallyOpenChat { get { return this.GetBoolean("AutomaticallyOpenChat", false); } set { this.Set("AutomaticallyOpenChat", value); } }
+        public int ChatWindowWidth { get { return this.GetInt("ChatWindowWidth", 350); } set { this.Set("ChatWindowWidth", value); } }
+        public int ChatWindowHeight { get { return this.GetInt("ChatWindowHeight", 385); } set { this.Set("ChatWindowHeight", value); } }
     }
 }
