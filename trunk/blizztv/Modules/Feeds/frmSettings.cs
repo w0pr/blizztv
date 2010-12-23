@@ -43,12 +43,14 @@ namespace BlizzTV.Modules.Feeds
 
         private void LoadSettings()
         {
-            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)Settings.Instance.UpdateEveryXMinutes;
+            checkBoxEnableNotifications.Checked = Settings.Instance.NotificationsEnabled;
+            numericUpDownUpdatePeriod.Value = (decimal)Settings.Instance.UpdatePeriod;
         }
 
         public void SaveSettings()
         {
-            Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
+            Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
+            Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
             Settings.Instance.Save();
             FeedsPlugin.Instance.OnSaveSettings();
         }
