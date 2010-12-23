@@ -463,14 +463,10 @@
     <Content Include="app.ico" />
     <None Include="Resources\event.png" />
     <None Include="Resources\Tina.mp3" />
-    <None Include="Resources\ZergEvolution.mp3" />
     <None Include="Resources\Whisper.mp3" />
     <None Include="Resources\TinyBells.mp3" />
     <None Include="Resources\Tetris.mp3" />
-    <None Include="Resources\TerranAdvisor.mp3" />
     <None Include="Resources\SuperMario.mp3" />
-    <None Include="Resources\PVPQueue.mp3" />
-    <None Include="Resources\ProtossAdvistor.mp3" />
     <None Include="Resources\Polymorph.mp3" />
     <None Include="Resources\Ping.mp3" />
     <None Include="Resources\Notice4.mp3" />
@@ -483,9 +479,6 @@
     <None Include="Resources\FastBells.mp3" />
     <None Include="Resources\DoorBell.mp3" />
     <None Include="Resources\DefaultNotification.mp3" />
-    <None Include="Resources\CreepTumor.mp3" />
-    <None Include="Resources\BattleCruisor.mp3" />
-    <None Include="Resources\BabyMurloc.mp3" />
     <None Include="Resources\wow.png" />
     <None Include="Resources\video.png" />
     <None Include="Resources\userinterface.png" />

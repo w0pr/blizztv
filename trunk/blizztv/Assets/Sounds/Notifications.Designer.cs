@@ -60,27 +60,6 @@ namespace BlizzTV.Assets.Sounds {
             }
         }
         
-        internal static byte[] BabyMurloc {
-            get {
-                object obj = ResourceManager.GetObject("BabyMurloc", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BattleCruisor {
-            get {
-                object obj = ResourceManager.GetObject("BattleCruisor", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] CreepTumor {
-            get {
-                object obj = ResourceManager.GetObject("CreepTumor", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
         internal static byte[] DefaultNotification {
             get {
                 object obj = ResourceManager.GetObject("DefaultNotification", resourceCulture);
@@ -165,30 +144,9 @@ namespace BlizzTV.Assets.Sounds {
             }
         }
         
-        internal static byte[] ProtossAdvistor {
-            get {
-                object obj = ResourceManager.GetObject("ProtossAdvistor", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] PVPQueue {
-            get {
-                object obj = ResourceManager.GetObject("PVPQueue", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
         internal static byte[] SuperMario {
             get {
                 object obj = ResourceManager.GetObject("SuperMario", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] TerranAdvisor {
-            get {
-                object obj = ResourceManager.GetObject("TerranAdvisor", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -217,13 +175,6 @@ namespace BlizzTV.Assets.Sounds {
         internal static byte[] Whisper {
             get {
                 object obj = ResourceManager.GetObject("Whisper", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] ZergEvolution {
-            get {
-                object obj = ResourceManager.GetObject("ZergEvolution", resourceCulture);
                 return ((byte[])(obj));
             }
         }
