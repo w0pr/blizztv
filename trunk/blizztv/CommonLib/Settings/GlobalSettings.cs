@@ -55,6 +55,21 @@ namespace BlizzTV.CommonLib.Settings
         public bool UseInternalViewers { get { return this.GetBoolean("UseInternalViewers", true); } set { this.Set("UseInternalViewers", value); } }
 
         /// <summary>
+        /// Enables notifications.
+        /// </summary>
+        public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
+
+        /// <summary>
+        /// Enables notification sounds.
+        /// </summary>
+        public bool NotificationSoundsEnabled { get { return this.GetBoolean("NotificationSoundsEnabled", true); } set { this.Set("NotificationSoundsEnabled", value); } }
+
+        /// <summary>
+        /// Holds the selected notification sound.
+        /// </summary>
+        public string NotificationSound { get { return this.GetString("NotificationSound", "DefaultNotification"); } set { this.Set("NotificationSound", value); } }
+
+        /// <summary>
         /// States the sleep mode in which plugin's should not automaticly refresh it's data.
         /// </summary>
         public bool InSleepMode = false;

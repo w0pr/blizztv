@@ -78,7 +78,7 @@ namespace BlizzTV.CommonLib.Notifications
 
         private void frmQueuedNotifications_FormClosing(object sender, FormClosingEventArgs e)
         {
-            NotificationManager.Instance.ClearQueuedNotifications();
+            NotificationManager.Instance.ClearArchivedNotifications();
         }
 
         private class ArchivedNotificationListItemWrapper : ListViewItem

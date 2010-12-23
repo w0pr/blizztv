@@ -28,7 +28,7 @@ using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Videos
 {
-    [ModuleAttributes("Videos", "Video aggregator plugin.","video_16")]
+    [ModuleAttributes("Videos", "Video aggregator plugin.","video")]
     public class VideosPlugin:Module
     {
         internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.

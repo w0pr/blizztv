@@ -30,7 +30,7 @@ using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Events
 {
-    [ModuleAttributes("Events", "Events aggregator plugin.", "event_16")]
+    [ModuleAttributes("Events", "Events aggregator plugin.", "_event")]
     public class EventsPlugin : Module
     {
         private List<Event> _events = new List<Event>(); // the items list.

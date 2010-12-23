@@ -23,12 +23,14 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
+using BlizzTV.CommonLib.Notifications;
 
 namespace BlizzTV.UI
 {
     public partial class frmPreferences : Form
     {
         private readonly List<TabPage> _pluginTabs = new List<TabPage>();
+        private bool _loadComplete = false;
 
         public frmPreferences() { InitializeComponent(); }
 
@@ -36,6 +38,7 @@ namespace BlizzTV.UI
         {
             this.LoadSettings(); // load settings.
             this.LoadModuleTabs(); // load module setting-tabs.
+            this._loadComplete = true;
         }
 
         public DialogResult ShowDialog(string tabPageName) // show dialog overrider that accepts a tab-name.
@@ -67,6 +70,10 @@ namespace BlizzTV.UI
             txtVideoPlayerHeight.Text = GlobalSettings.Instance.VideoPlayerHeight.ToString();
             checkBoxVideoAutoPlay.Checked = GlobalSettings.Instance.AutoPlayVideos;
             CheckBoxPlayerAlwaysOnTop.Checked = GlobalSettings.Instance.PlayerWindowsAlwaysOnTop;
+            checkBoxNotificationsEnabled.Checked = GlobalSettings.Instance.NotificationsEnabled;
+            checkBoxNotificationSoundsEnabled.Checked = GlobalSettings.Instance.NotificationSoundsEnabled;
+            foreach (string sound in NotificationSound.Instance.Names) this.comboBoxNotificationSound.Items.Add(sound);
+            this.comboBoxNotificationSound.SelectedIndex = this.NotificationSoundGetSelectedIndex();
 
             // UI settings.
             checkBoxAllowAutomaticUpdateChecks.Checked = Settings.Instance.AllowAutomaticUpdateChecks;
@@ -118,6 +125,9 @@ namespace BlizzTV.UI
             GlobalSettings.Instance.VideoPlayerHeight = Int32.Parse(txtVideoPlayerHeight.Text);
             GlobalSettings.Instance.AutoPlayVideos = checkBoxVideoAutoPlay.Checked;
             GlobalSettings.Instance.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
+            GlobalSettings.Instance.NotificationsEnabled = checkBoxNotificationsEnabled.Checked;
+            GlobalSettings.Instance.NotificationSoundsEnabled = checkBoxNotificationSoundsEnabled.Checked;
+            GlobalSettings.Instance.NotificationSound = comboBoxNotificationSound.SelectedItem.ToString();
 
             // UI settings.
             Settings.Instance.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
@@ -147,5 +157,35 @@ namespace BlizzTV.UI
             Settings.Instance.Save(); // save the settings.
             return true;
         }
+
+        #region notifications-tab specific
+
+        public int NotificationSoundGetSelectedIndex()
+        {
+            string selection=GlobalSettings.Instance.NotificationSound;
+            if (!comboBoxNotificationSound.Items.Contains(selection)) selection = "DefaultNotification";
+            return comboBoxNotificationSound.Items.IndexOf(selection);
+        }        
+
+        private void checkBoxNotificationsEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBoxNotificationSounds.Enabled = checkBoxNotificationsEnabled.Checked;
+        }
+
+        private void checkBoxNotificationSoundsEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxNotificationSound.Enabled = checkBoxNotificationSoundsEnabled.Checked;
+        }
+
+        private void comboBoxNotificationSound_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this._loadComplete)
+            {
+                string selection = this.comboBoxNotificationSound.SelectedItem.ToString();
+                NotificationSound.Instance.Play(selection);
+            }
+        }
+
+        #endregion
     }
 }

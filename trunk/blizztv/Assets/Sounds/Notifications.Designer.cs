@@ -60,9 +60,170 @@ namespace BlizzTV.Assets.Sounds {
             }
         }
         
-        internal static byte[] murloc {
+        internal static byte[] BabyMurloc {
             get {
-                object obj = ResourceManager.GetObject("murloc", resourceCulture);
+                object obj = ResourceManager.GetObject("BabyMurloc", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] BattleCruisor {
+            get {
+                object obj = ResourceManager.GetObject("BattleCruisor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] CreepTumor {
+            get {
+                object obj = ResourceManager.GetObject("CreepTumor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] DefaultNotification {
+            get {
+                object obj = ResourceManager.GetObject("DefaultNotification", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] DoorBell {
+            get {
+                object obj = ResourceManager.GetObject("DoorBell", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] FastBells {
+            get {
+                object obj = ResourceManager.GetObject("FastBells", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Incomiiing {
+            get {
+                object obj = ResourceManager.GetObject("Incomiiing", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] MasterYoda {
+            get {
+                object obj = ResourceManager.GetObject("MasterYoda", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Murloc {
+            get {
+                object obj = ResourceManager.GetObject("Murloc", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Notice1 {
+            get {
+                object obj = ResourceManager.GetObject("Notice1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Notice2 {
+            get {
+                object obj = ResourceManager.GetObject("Notice2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Notice3 {
+            get {
+                object obj = ResourceManager.GetObject("Notice3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Notice4 {
+            get {
+                object obj = ResourceManager.GetObject("Notice4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Ping {
+            get {
+                object obj = ResourceManager.GetObject("Ping", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Polymorph {
+            get {
+                object obj = ResourceManager.GetObject("Polymorph", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] ProtossAdvistor {
+            get {
+                object obj = ResourceManager.GetObject("ProtossAdvistor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] PVPQueue {
+            get {
+                object obj = ResourceManager.GetObject("PVPQueue", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] SuperMario {
+            get {
+                object obj = ResourceManager.GetObject("SuperMario", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] TerranAdvisor {
+            get {
+                object obj = ResourceManager.GetObject("TerranAdvisor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Tetris {
+            get {
+                object obj = ResourceManager.GetObject("Tetris", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Tina {
+            get {
+                object obj = ResourceManager.GetObject("Tina", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] TinyBells {
+            get {
+                object obj = ResourceManager.GetObject("TinyBells", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Whisper {
+            get {
+                object obj = ResourceManager.GetObject("Whisper", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] ZergEvolution {
+            get {
+                object obj = ResourceManager.GetObject("ZergEvolution", resourceCulture);
                 return ((byte[])(obj));
             }
         }
