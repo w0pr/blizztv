@@ -30,19 +30,24 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonCatalog = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.ListviewSubscriptions = new System.Windows.Forms.ListView();
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.numericUpDownUpdateFeedsEveryXMinutes = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownUpdatePeriod = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonCatalog = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxEnableNotifications = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdatePeriod)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -69,6 +74,17 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Subscriptions";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonCatalog
+            // 
+            this.buttonCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCatalog.Location = new System.Drawing.Point(8, 205);
+            this.buttonCatalog.Name = "buttonCatalog";
+            this.buttonCatalog.Size = new System.Drawing.Size(75, 23);
+            this.buttonCatalog.TabIndex = 7;
+            this.buttonCatalog.Text = "Catalog";
+            this.buttonCatalog.UseVisualStyleBackColor = true;
+            this.buttonCatalog.Click += new System.EventHandler(this.buttonCatalog_Click);
             // 
             // buttonRemove
             // 
@@ -119,33 +135,33 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.numericUpDownUpdateFeedsEveryXMinutes);
-            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.groupBox3);
+            this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(439, 236);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Updates";
+            this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // numericUpDownUpdateFeedsEveryXMinutes
+            // numericUpDownUpdatePeriod
             // 
-            this.numericUpDownUpdateFeedsEveryXMinutes.Location = new System.Drawing.Point(166, 10);
-            this.numericUpDownUpdateFeedsEveryXMinutes.Maximum = new decimal(new int[] {
+            this.numericUpDownUpdatePeriod.Location = new System.Drawing.Point(139, 14);
+            this.numericUpDownUpdatePeriod.Maximum = new decimal(new int[] {
             1440,
             0,
             0,
             0});
-            this.numericUpDownUpdateFeedsEveryXMinutes.Minimum = new decimal(new int[] {
+            this.numericUpDownUpdatePeriod.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDownUpdateFeedsEveryXMinutes.Name = "numericUpDownUpdateFeedsEveryXMinutes";
-            this.numericUpDownUpdateFeedsEveryXMinutes.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDownUpdateFeedsEveryXMinutes.TabIndex = 1;
-            this.numericUpDownUpdateFeedsEveryXMinutes.Value = new decimal(new int[] {
+            this.numericUpDownUpdatePeriod.Name = "numericUpDownUpdatePeriod";
+            this.numericUpDownUpdatePeriod.Size = new System.Drawing.Size(54, 20);
+            this.numericUpDownUpdatePeriod.TabIndex = 1;
+            this.numericUpDownUpdatePeriod.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -154,22 +170,46 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 12);
+            this.label1.Location = new System.Drawing.Point(6, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(152, 13);
+            this.label1.Size = new System.Drawing.Size(127, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Update feeds every X minutes:";
+            this.label1.Text = "Update period in minutes:";
             // 
-            // buttonCatalog
+            // groupBox1
             // 
-            this.buttonCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonCatalog.Location = new System.Drawing.Point(8, 205);
-            this.buttonCatalog.Name = "buttonCatalog";
-            this.buttonCatalog.Size = new System.Drawing.Size(75, 23);
-            this.buttonCatalog.TabIndex = 7;
-            this.buttonCatalog.Text = "Catalog";
-            this.buttonCatalog.UseVisualStyleBackColor = true;
-            this.buttonCatalog.Click += new System.EventHandler(this.buttonCatalog_Click);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.numericUpDownUpdatePeriod);
+            this.groupBox1.Location = new System.Drawing.Point(6, 53);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(423, 43);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Automatic Updates";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.checkBoxEnableNotifications);
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(423, 41);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Notifications";
+            // 
+            // checkBoxEnableNotifications
+            // 
+            this.checkBoxEnableNotifications.AutoSize = true;
+            this.checkBoxEnableNotifications.Location = new System.Drawing.Point(11, 18);
+            this.checkBoxEnableNotifications.Name = "checkBoxEnableNotifications";
+            this.checkBoxEnableNotifications.Size = new System.Drawing.Size(208, 17);
+            this.checkBoxEnableNotifications.TabIndex = 0;
+            this.checkBoxEnableNotifications.Text = "Enable notification of new feed stories.";
+            this.checkBoxEnableNotifications.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 
@@ -183,8 +223,11 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdateFeedsEveryXMinutes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdatePeriod)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -193,7 +236,7 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.NumericUpDown numericUpDownUpdateFeedsEveryXMinutes;
+        private System.Windows.Forms.NumericUpDown numericUpDownUpdatePeriod;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListView ListviewSubscriptions;
@@ -202,5 +245,8 @@
         private System.Windows.Forms.ColumnHeader colName;
         private System.Windows.Forms.ColumnHeader colURL;
         private System.Windows.Forms.Button buttonCatalog;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBoxEnableNotifications;
     }
 }

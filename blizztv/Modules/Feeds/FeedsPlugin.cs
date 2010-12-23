@@ -157,7 +157,7 @@ namespace BlizzTV.Modules.Feeds
                 this._updateTimer = null;
             }
 
-            _updateTimer = new Timer(Settings.Instance.UpdateEveryXMinutes * 60000);
+            _updateTimer = new Timer(Settings.Instance.UpdatePeriod * 60000);
             _updateTimer.Elapsed += OnTimerHit;
             _updateTimer.Enabled = true;
         }

@@ -93,7 +93,7 @@ namespace BlizzTV.Modules.Feeds
 
         public void CheckForNotifications()
         {
-            if (this.Status == Statutes.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled &&  this.Status == Statutes.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void DoubleClicked(object sender, EventArgs e)
