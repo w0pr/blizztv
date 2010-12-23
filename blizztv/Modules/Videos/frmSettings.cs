@@ -43,14 +43,16 @@ namespace BlizzTV.Modules.Videos
 
         private void LoadSettings()
         {
+            checkBoxEnableNotifications.Checked = Settings.Instance.NotificationsEnabled;
             numericUpDownNumberOfVideosToQueryChannelFor.Value = (decimal)Settings.Instance.NumberOfVideosToQueryChannelFor;
-            numericUpDownUpdateFeedsEveryXMinutes.Value = (decimal)Settings.Instance.UpdateEveryXMinutes;
+            numericUpDownUpdatePeriod.Value = (decimal)Settings.Instance.UpdatePeriod;
         }
 
         public void SaveSettings()
         {
+            Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
             Settings.Instance.NumberOfVideosToQueryChannelFor = (int)numericUpDownNumberOfVideosToQueryChannelFor.Value;
-            Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateFeedsEveryXMinutes.Value;
+            Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
             Settings.Instance.Save();
             VideosPlugin.Instance.OnSaveSettings();
         }
