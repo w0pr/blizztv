@@ -35,16 +35,18 @@ namespace BlizzTV.Modules.BlizzBlues
 
         private void LoadSettings()
         {
-            numericUpDownUpdateBlizzBluesEveryXMinutes.Value = (decimal)Settings.Instance.UpdateEveryXMinutes;
+            numericUpDownUpdatePeriod.Value = (decimal)Settings.Instance.UpdatePeriod;
             checkBoxTrackWorldofWarcraft.Checked = Settings.Instance.TrackWorldofWarcraft;
             checkBoxTrackStarcraft.Checked = Settings.Instance.TrackStarcraft;
+            checkBoxEnableNotifications.Checked = Settings.Instance.NotificationsEnabled;
         }
 
         public void SaveSettings()
         {
-            Settings.Instance.UpdateEveryXMinutes = (int)numericUpDownUpdateBlizzBluesEveryXMinutes.Value;
+            Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
             Settings.Instance.TrackWorldofWarcraft = checkBoxTrackWorldofWarcraft.Checked;
             Settings.Instance.TrackStarcraft = checkBoxTrackStarcraft.Checked;
+            Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
             Settings.Instance.Save();
             BlizzBluesModule.Instance.OnSaveSettings();
         }

@@ -29,9 +29,10 @@ namespace BlizzTV.Modules.BlizzBlues
         #endregion
 
         private Settings() : base("BlizzBlues") { }
-
-        public int UpdateEveryXMinutes { get { return this.GetInt("UpdateEveryXMinutes", 60); } set { this.Set("UpdateEveryXMinutes", value); } }
+        
         public bool TrackWorldofWarcraft { get { return this.GetBoolean("TrackWorldofWarcraft", true); } set { this.Set("TrackWorldofWarcraft", value); } }
         public bool TrackStarcraft { get { return this.GetBoolean("TrackStarcraft", true); } set { this.Set("TrackStarcraft", value); } }
+        public int UpdatePeriod { get { return this.GetInt("UpdatePeriod", 60); } set { this.Set("UpdatePeriod", value); } }
+        public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
     }
 }
