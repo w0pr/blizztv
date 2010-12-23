@@ -24,6 +24,7 @@ using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.CommonLib.Notifications;
+using BlizzTV.CommonLib.Helpers;
 
 namespace BlizzTV.UI
 {
@@ -78,6 +79,7 @@ namespace BlizzTV.UI
             // UI settings.
             checkBoxAllowAutomaticUpdateChecks.Checked = Settings.Instance.AllowAutomaticUpdateChecks;
             checkBoxAllowBetaVersionNotifications.Checked = Settings.Instance.AllowBetaVersionNotifications;
+            checkBoxStartOnSystemStartup.Checked = SystemStartup.Enabled;
             checkBoxMinimimizeToSystemTray.Checked = Settings.Instance.MinimizeToSystemTray;
             checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
             checkBoxEnableDebugConsole.Checked = Settings.Instance.EnableDebugConsole;
@@ -132,6 +134,7 @@ namespace BlizzTV.UI
             // UI settings.
             Settings.Instance.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
             Settings.Instance.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
+            SystemStartup.Enabled = checkBoxStartOnSystemStartup.Checked;
             Settings.Instance.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
             Settings.Instance.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
             Settings.Instance.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
@@ -187,5 +190,6 @@ namespace BlizzTV.UI
         }
 
         #endregion
+
     }
 }

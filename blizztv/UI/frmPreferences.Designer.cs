@@ -66,6 +66,8 @@
             this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.checkBoxStartOnSystemStartup = new System.Windows.Forms.CheckBox();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabModules.SuspendLayout();
@@ -78,6 +80,7 @@
             this.groupBoxNotificationSounds.SuspendLayout();
             this.tabPlayer.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageList
@@ -202,6 +205,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.groupBox5);
             this.tabGeneral.Controls.Add(this.groupBox4);
             this.tabGeneral.Controls.Add(this.groupBox2);
             this.tabGeneral.ImageIndex = 0;
@@ -461,6 +465,26 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Player Size:";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.checkBoxStartOnSystemStartup);
+            this.groupBox5.Location = new System.Drawing.Point(9, 153);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(511, 48);
+            this.groupBox5.TabIndex = 3;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Windows Integration";
+            // 
+            // checkBoxStartOnSystemStartup
+            // 
+            this.checkBoxStartOnSystemStartup.AutoSize = true;
+            this.checkBoxStartOnSystemStartup.Location = new System.Drawing.Point(9, 19);
+            this.checkBoxStartOnSystemStartup.Name = "checkBoxStartOnSystemStartup";
+            this.checkBoxStartOnSystemStartup.Size = new System.Drawing.Size(174, 17);
+            this.checkBoxStartOnSystemStartup.TabIndex = 0;
+            this.checkBoxStartOnSystemStartup.Text = "Start BlizzTV on system startup.";
+            this.checkBoxStartOnSystemStartup.UseVisualStyleBackColor = true;
+            // 
             // frmPreferences
             // 
             this.AcceptButton = this.buttonOK;
@@ -497,6 +521,8 @@
             this.tabPlayer.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -539,5 +565,7 @@
         private System.Windows.Forms.GroupBox groupBoxNotificationSounds;
         private System.Windows.Forms.ComboBox comboBoxNotificationSound;
         private System.Windows.Forms.CheckBox checkBoxNotificationSoundsEnabled;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox checkBoxStartOnSystemStartup;
     }
 }

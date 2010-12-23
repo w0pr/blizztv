@@ -133,6 +133,8 @@
     <Compile Include="CommonLib\Notifications\NotificationSound.cs" />
     <Compile Include="CommonLib\Utils\NamedImage.cs" />
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
+    <Compile Include="CommonLib\Helpers\Registry.cs" />
+    <Compile Include="CommonLib\Helpers\SystemStartup.cs" />
     <Compile Include="CommonLib\Workload\Workload.cs" />
     <Compile Include="ModuleLib\Settings\frmModuleSettingsHost.cs">
       <SubType>Form</SubType>
