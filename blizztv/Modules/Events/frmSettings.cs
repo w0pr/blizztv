@@ -30,19 +30,25 @@ namespace BlizzTV.Modules.Events
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
-            checkBoxAllowEventNotifications.Checked = Settings.Instance.AllowEventNotifications;
-            checkBoxAllowNotificationOfEventsInProgress.Checked = Settings.Instance.AllowNotificationOfInprogressEvents;
-            numericUpDownMinutesBefore.Value = (decimal)Settings.Instance.MinutesToNotifyBeforeEvent;
+            checkBoxEnableNotifications.Checked = Settings.Instance.EventNotificationsEnabled;
+            checkBoxEnableInProgressEventNotifications.Checked = Settings.Instance.InProgressEventNotificationsEnabled;
+            numericUpDownMinutesToNotifyBeforeEvent.Value = (decimal)Settings.Instance.MinutesToNotifyBeforeEvent;
             numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value = (decimal)Settings.Instance.NumberOfDaysToShowEventsOnMainWindow;
         }
 
         public void SaveSettings()
         {
-            Settings.Instance.AllowEventNotifications = checkBoxAllowEventNotifications.Checked;
-            Settings.Instance.AllowNotificationOfInprogressEvents = checkBoxAllowNotificationOfEventsInProgress.Checked;
-            Settings.Instance.MinutesToNotifyBeforeEvent = (int)numericUpDownMinutesBefore.Value;
+            Settings.Instance.EventNotificationsEnabled = checkBoxEnableNotifications.Checked;
+            Settings.Instance.InProgressEventNotificationsEnabled = checkBoxEnableInProgressEventNotifications.Checked;
+            Settings.Instance.MinutesToNotifyBeforeEvent = (int)numericUpDownMinutesToNotifyBeforeEvent.Value;
             Settings.Instance.NumberOfDaysToShowEventsOnMainWindow = (int)numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value;
             Settings.Instance.Save();
+        }
+
+        private void checkBoxEnableNotifications_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxEnableInProgressEventNotifications.Enabled = checkBoxEnableNotifications.Checked;
+            numericUpDownMinutesToNotifyBeforeEvent.Enabled = checkBoxEnableNotifications.Checked;
         }
     }
 }

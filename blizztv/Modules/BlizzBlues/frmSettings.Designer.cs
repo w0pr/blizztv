@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxEnableNotifications = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDownUpdatePeriod = new System.Windows.Forms.NumericUpDown();
@@ -37,14 +39,12 @@
             this.checkBoxTrackStarcraft = new System.Windows.Forms.CheckBox();
             this.checkBoxTrackWorldofWarcraft = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBoxEnableNotifications = new System.Windows.Forms.CheckBox();
             this.tabPage1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdatePeriod)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage1
@@ -60,6 +60,28 @@
             this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.checkBoxEnableNotifications);
+            this.groupBox3.Location = new System.Drawing.Point(6, 62);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(423, 41);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Notifications";
+            // 
+            // checkBoxEnableNotifications
+            // 
+            this.checkBoxEnableNotifications.AutoSize = true;
+            this.checkBoxEnableNotifications.Location = new System.Drawing.Point(11, 18);
+            this.checkBoxEnableNotifications.Name = "checkBoxEnableNotifications";
+            this.checkBoxEnableNotifications.Size = new System.Drawing.Size(229, 17);
+            this.checkBoxEnableNotifications.TabIndex = 0;
+            this.checkBoxEnableNotifications.Text = "Enable notification of new BlizzBlue stories.";
+            this.checkBoxEnableNotifications.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -69,7 +91,7 @@
             this.groupBox2.Location = new System.Drawing.Point(8, 109);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(423, 41);
-            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Automatic Updates";
             // 
@@ -84,7 +106,7 @@
             // 
             // numericUpDownUpdatePeriod
             // 
-            this.numericUpDownUpdatePeriod.Location = new System.Drawing.Point(139, 14);
+            this.numericUpDownUpdatePeriod.Location = new System.Drawing.Point(138, 14);
             this.numericUpDownUpdatePeriod.Maximum = new decimal(new int[] {
             1440,
             0,
@@ -113,7 +135,7 @@
             this.groupBox1.Location = new System.Drawing.Point(8, 7);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(423, 49);
-            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Games to track";
             // 
@@ -151,28 +173,6 @@
             this.tabControl1.Size = new System.Drawing.Size(447, 262);
             this.tabControl1.TabIndex = 1;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.checkBoxEnableNotifications);
-            this.groupBox3.Location = new System.Drawing.Point(6, 62);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(423, 41);
-            this.groupBox3.TabIndex = 4;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Notifications";
-            // 
-            // checkBoxEnableNotifications
-            // 
-            this.checkBoxEnableNotifications.AutoSize = true;
-            this.checkBoxEnableNotifications.Location = new System.Drawing.Point(11, 18);
-            this.checkBoxEnableNotifications.Name = "checkBoxEnableNotifications";
-            this.checkBoxEnableNotifications.Size = new System.Drawing.Size(226, 17);
-            this.checkBoxEnableNotifications.TabIndex = 0;
-            this.checkBoxEnableNotifications.Text = "Enable notification of new BlizzBlue stories";
-            this.checkBoxEnableNotifications.UseVisualStyleBackColor = true;
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -183,13 +183,13 @@
             this.Text = "frmSettings";
             this.Load += new System.EventHandler(this.frmSettings_Load);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdatePeriod)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }

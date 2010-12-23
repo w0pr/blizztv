@@ -30,8 +30,8 @@ namespace BlizzTV.Modules.Events
 
         private Settings() : base("Events") { }
 
-        public bool AllowEventNotifications { get { return this.GetBoolean("AllowEventNotifications", true); } set { this.Set("AllowEventNotifications", value); } }
-        public bool AllowNotificationOfInprogressEvents { get { return this.GetBoolean("AllowNotificationOfInprogressEvents", true); } set { this.Set("AllowNotificationOfInprogressEvents", value); } }
+        public bool EventNotificationsEnabled { get { return this.GetBoolean("EventNotificationsEnabled", true); } set { this.Set("EventNotificationsEnabled", value); } }
+        public bool InProgressEventNotificationsEnabled { get { return this.GetBoolean("InProgressEventNotificationsEnabled", true); } set { this.Set("InProgressEventNotificationsEnabled", value); } }
         public int MinutesToNotifyBeforeEvent { get { return this.GetInt("MinutesToNotifyBeforeEvent", 15); } set { this.Set("MinutesToNotifyBeforeEvent", value); } }
         public int NumberOfDaysToShowEventsOnMainWindow { get { return this.GetInt("NumberOfDaysToShowEventsOnMainWindow", 7); } set { this.Set("NumberOfDaysToShowEventsOnMainWindow", value); } }
     }
