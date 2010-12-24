@@ -21,6 +21,7 @@ using System.Linq;
 using System.Timers;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Settings;
+using BlizzTV.CommonLib.Config;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
@@ -152,7 +153,7 @@ namespace BlizzTV.Modules.Videos
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!GlobalSettings.Instance.InSleepMode) UpdateChannels();
+            if (!RuntimeConfiguration.Instance.InSleepMode) UpdateChannels();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

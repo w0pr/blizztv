@@ -22,6 +22,7 @@ using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
+using BlizzTV.CommonLib.Config;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
@@ -152,7 +153,7 @@ namespace BlizzTV.Modules.Streams
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!GlobalSettings.Instance.InSleepMode) UpdateStreams();
+            if (!RuntimeConfiguration.Instance.InSleepMode) UpdateStreams();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)

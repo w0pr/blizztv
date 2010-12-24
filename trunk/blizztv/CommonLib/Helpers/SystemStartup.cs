@@ -39,7 +39,7 @@ namespace BlizzTV.CommonLib.Helpers
             {
                 if (value == true) // if the system startup value does not exist or is path is incorrect, reset the registry value.
                 {
-                    string pathValue = string.Format("\"{0}\"", Assembly.GetExecutingAssembly().Location);
+                    string pathValue = string.Format("\"{0}\" /silent", Assembly.GetExecutingAssembly().Location);
                     if (!Registry.ValueExists(RootKey.HKEY_LOCAL_MACHINE, _startupKey, "BlizzTV") || (string)Registry.GetValue(RootKey.HKEY_LOCAL_MACHINE, _startupKey, "BlizzTV") != pathValue) Registry.SetValue(RootKey.HKEY_LOCAL_MACHINE, _startupKey, "BlizzTV", pathValue);
                 }
                 else // if the system startup value exists, delete it.

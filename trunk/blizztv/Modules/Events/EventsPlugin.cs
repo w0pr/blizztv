@@ -24,6 +24,7 @@ using BlizzTV.CommonLib.Web;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Utils;
+using BlizzTV.CommonLib.Config;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.CommonLib.Workload;
@@ -61,7 +62,7 @@ namespace BlizzTV.Modules.Events
         {
             this.ParseEvents();
 
-            if (!GlobalSettings.Instance.InSleepMode) this.CheckEvents(); // Go check for events.
+            if (!RuntimeConfiguration.Instance.InSleepMode) this.CheckEvents(); // Go check for events.
 
             // setup update timer for event checks
             _eventTimer.Elapsed += OnTimerHit;
@@ -155,7 +156,7 @@ namespace BlizzTV.Modules.Events
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!GlobalSettings.Instance.InSleepMode) this.CheckEvents();
+            if (!RuntimeConfiguration.Instance.InSleepMode) this.CheckEvents();
         }
 
         private void CheckEvents()

@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Threading;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Dependencies;
+using BlizzTV.CommonLib.Config;
 using BlizzTV.UI;
 
 namespace BlizzTV
@@ -48,7 +49,15 @@ namespace BlizzTV
 
             GC.KeepAlive(singleInstanceLock); // okay GC, single_instance_lock is an important variable for us, so never ever throw it to garbage!
 
-            #endregion
+            #endregion            
+
+            #region command-line-args
+
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1 && args[1].ToLower() == "/silent") RuntimeConfiguration.Instance.StartedOnSystemStartup = true;
+            else RuntimeConfiguration.Instance.StartedOnSystemStartup = false;
+
+            #endregion 
 
             #region if enabled start logger & debug console
 
