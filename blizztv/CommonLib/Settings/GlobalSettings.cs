@@ -69,11 +69,6 @@ namespace BlizzTV.CommonLib.Settings
         /// </summary>
         public string NotificationSound { get { return this.GetString("NotificationSound", "DefaultNotification"); } set { this.Set("NotificationSound", value); } }
 
-        /// <summary>
-        /// States the sleep mode in which plugin's should not automaticly refresh it's data.
-        /// </summary>
-        public bool InSleepMode = false;
-
         private GlobalSettings() : base("Global") { }
     }
 }

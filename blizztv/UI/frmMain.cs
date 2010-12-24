@@ -24,6 +24,7 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Notifications;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.CommonLib.Workload;
+using BlizzTV.CommonLib.Config;
 using BlizzTV.ModuleLib;
 using BlizzTV.Updates;
 
@@ -36,7 +37,7 @@ namespace BlizzTV.UI
         #region ctor & form handlers
 
         public frmMain()
-        {            
+        {
             InitializeComponent();
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
             Workload.Instance.AttachControls(this.ProgressBar, this.ProgressIcon); // init. workload-manager.
@@ -44,8 +45,9 @@ namespace BlizzTV.UI
         }
 
         private void frmMain_Load(object sender, EventArgs e)
-        {
+        {            
             if (Settings.Instance.NeedInitialConfig) { Wizard.frmWizardHost f = new Wizard.frmWizardHost(); f.ShowDialog(); } // if required run the configuration wizard.
+            if (RuntimeConfiguration.Instance.StartedOnSystemStartup) this.HideForm(); // if the app started on system startup, don't show the main form.
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.                     
             this.LoadModules(); // Load the enabled plugins.     
             this.AutomaticUpdateCheck(); // Automatically check for updates.
@@ -71,13 +73,15 @@ namespace BlizzTV.UI
             this.WindowState = FormWindowState.Minimized; // go minimized
             this.ShowInTaskbar = false; // hide ourself from taskbar
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow; // hide from alt-tab.
+            this.Visible = false;
         }
 
         private void ShowForm()
         {
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.WindowState = FormWindowState.Normal;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;            
             this.ShowInTaskbar = true;
+            this.Visible = true;
         }
 
         private void ExitApplication() // Exits the application.
@@ -314,14 +318,14 @@ namespace BlizzTV.UI
 
         private void MenuSleepMode_Click(object sender, EventArgs e) // puts the program in sleep mode or wakes it from it.
         {
-            if (!GlobalSettings.Instance.InSleepMode)
+            if (!RuntimeConfiguration.Instance.InSleepMode)
             {
                 this.menuSleepMode.Checked = true;
                 this.ContextMenuSleepMode.Checked = true;
                 this.SleepIcon.Visible = true;
                 this.TrayIcon.Icon = Assets.Images.Icons.Ico.sleep;
                 this.TrayIcon.Text = "BlizzTV is in sleep mode.";
-                GlobalSettings.Instance.InSleepMode = true;
+                RuntimeConfiguration.Instance.InSleepMode = true;
             }
             else
             {
@@ -330,7 +334,7 @@ namespace BlizzTV.UI
                 this.SleepIcon.Visible = false;
                 this.TrayIcon.Icon = Assets.Images.Icons.Ico.blizztv_16;
                 this.TrayIcon.Text = "BlizzTV";
-                GlobalSettings.Instance.InSleepMode = false;
+                RuntimeConfiguration.Instance.InSleepMode = false;
             }
         }
 

@@ -23,6 +23,7 @@ using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
+using BlizzTV.CommonLib.Config;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.CommonLib.Workload;
@@ -164,7 +165,7 @@ namespace BlizzTV.Modules.Feeds
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!GlobalSettings.Instance.InSleepMode) this.UpdateFeeds();
+            if (!RuntimeConfiguration.Instance.InSleepMode) this.UpdateFeeds();
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)

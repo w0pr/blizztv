@@ -23,6 +23,7 @@ using System.Timers;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Workload;
+using BlizzTV.CommonLib.Config;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.Modules.BlizzBlues.Game;
@@ -183,7 +184,7 @@ namespace BlizzTV.Modules.BlizzBlues
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
-            if (!GlobalSettings.Instance.InSleepMode) this.UpdateBlues();
+            if (!RuntimeConfiguration.Instance.InSleepMode) this.UpdateBlues();
         }
     }
 }

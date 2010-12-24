@@ -117,6 +117,7 @@
     <Compile Include="CommonLib\Audio\Engines\IAudioTrack.cs" />
     <Compile Include="CommonLib\Audio\Engines\IrrKlang\FileFactory.cs" />
     <Compile Include="CommonLib\Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
+    <Compile Include="CommonLib\Config\RuntimeConfiguration.cs" />
     <Compile Include="CommonLib\Dependencies\OperatingSystem.cs" />
     <Compile Include="CommonLib\Downloads\Download.cs" />
     <Compile Include="CommonLib\Downloads\DownloadManager.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
     <Compile Include="CommonLib\Helpers\Registry.cs" />
     <Compile Include="CommonLib\Helpers\SystemStartup.cs" />
+    <Compile Include="CommonLib\Utils\ZonedDateTime.cs" />
     <Compile Include="CommonLib\Workload\Workload.cs" />
     <Compile Include="ModuleLib\Settings\frmModuleSettingsHost.cs">
       <SubType>Form</SubType>
@@ -290,7 +292,6 @@
     <Compile Include="Modules\Videos\Settings.cs" />
     <Compile Include="Modules\Videos\Video.cs" />
     <Compile Include="Modules\Videos\VideosPlugin.cs" />
-    <Compile Include="CommonLib\Utils\Utils.cs" />
     <Compile Include="ModuleLib\Settings\IModuleSettingsForm.cs" />
     <Compile Include="ModuleLib\ListItem.cs" />
     <Compile Include="ModuleLib\Players\FlashPlayer.cs">
