@@ -30,37 +30,63 @@ namespace BlizzTV.CommonLib.Downloads
     {
         private FileStream _filestream;
 
-        public string FileName { get; private set; }
+        public string FilePath { get; private set; }
         public string Uri { get; private set; }
+        public long Lenght { get; private set; }
+        public bool Success { get; private set; }
+
+        public EventHandler Complete;
+
+        public delegate void DownloadProgressEventHandler(int progress);
+        public event DownloadProgressEventHandler Progress;
 
         public Download(string uri)
         {
             this.Uri = uri;
         }
 
-        public void Start()
+        public void Start(string filename = "")
         {
-            Log.Instance.Write(LogMessageTypes.Info, string.Format("Download started: {0}.", this.Uri));
+            new Thread(() => { this.DownloadFile(filename); }) { IsBackground = true }.Start();
+        }
 
-            this._filestream = new FileStream("putty.exe", FileMode.Create);
-
-            Log.Instance.Write(LogMessageTypes.Info, "GetResponse()");
-            WebRequest request = WebRequest.Create(this.Uri);
-            WebResponse response = request.GetResponse();
-            Log.Instance.Write(LogMessageTypes.Info, "GotResponse()");
-
-            int bufferSize = 4096;
-            byte[] buffer = new byte[bufferSize];
-            int readBytes = 0;
-
-            while ((readBytes = response.GetResponseStream().Read(buffer, 0, bufferSize)) > 0)
+        private void DownloadFile(string filename="")
+        {
+            try
             {
-                this._filestream.Write(buffer, 0, readBytes);
-                Log.Instance.Write(LogMessageTypes.Info, string.Format("[RECV] - {0} bytes", readBytes.ToString()));
-            }
+                Log.Instance.Write(LogMessageTypes.Info, string.Format("Download started: {0}.", this.Uri));
 
-            response.GetResponseStream().Close();
-            this._filestream.Close();
+                this.FilePath = filename;
+                this._filestream = new FileStream(this.FilePath, FileMode.Create);
+
+                WebRequest request = WebRequest.Create(this.Uri);
+                WebResponse response = request.GetResponse();
+                this.Lenght = response.ContentLength;
+
+                int bufferSize = 4096;
+                byte[] buffer = new byte[bufferSize];
+                int readBytes = 0;
+
+                while ((readBytes = response.GetResponseStream().Read(buffer, 0, bufferSize)) > 0)
+                {
+                    this._filestream.Write(buffer, 0, readBytes);
+                    if (this.Progress != null) this.Progress((int)((this._filestream.Length * 100) / this.Lenght));
+                }
+
+                response.GetResponseStream().Close();                
+                this.Success = true;
+                Log.Instance.Write(LogMessageTypes.Info, string.Format("Download finished: {0} and saved as {1}.", this.Uri, this.FilePath));
+            }
+            catch (Exception e)
+            {
+                this.Success = false;
+                Log.Instance.Write(LogMessageTypes.Info, string.Format("Download failed with exception: {0}", e));
+            }
+            finally
+            {
+                this._filestream.Close();
+                if (this.Complete != null) this.Complete(this, EventArgs.Empty);
+            }
         }
     }
 }

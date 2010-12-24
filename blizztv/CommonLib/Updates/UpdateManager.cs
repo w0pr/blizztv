@@ -21,6 +21,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Windows.Forms;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Web;
@@ -37,69 +38,66 @@ namespace BlizzTV.CommonLib.Updates
 
         #endregion
 
-        public Update FoundUpdate { get; private set; }
-        public bool UpdateAvailable { get; private set; }
-
         private UpdateManager() { }
 
-        public delegate void NewAvailableUpdateFoundEventHandler(bool foundUpdate);
-        public event NewAvailableUpdateFoundEventHandler OnFoundNewAvailableUpdate;
-
-        public void Check()
+        public void Check(bool verbose = false)
         {
             Log.Instance.Write(LogMessageTypes.Info, "UpdateManager thread running..");
-            ThreadStart updateThread = CheckUpdates;
-            Thread thread = new Thread(updateThread) {IsBackground = true};
-            thread.Start();
+
+            Update foundUpdate = null;
+            Thread updateThread = new Thread(() => { foundUpdate = CheckUpdates(); });
+            updateThread.Start();
+            updateThread.Join();
+            if (foundUpdate != null)
+            {
+                DialogResult result = MessageBox.Show(string.Format("Found a new available {0} version update. Do you want to update now?", foundUpdate.UpdateType), string.Format("New {0} update found!", foundUpdate.UpdateType), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    frmUpdater f = new frmUpdater(foundUpdate);
+                    f.ShowDialog();
+                }
+            }
+            else if (verbose) MessageBox.Show("You're already running the latest version.", "No available updates found", MessageBoxButtons.OK, MessageBoxIcon.Information); // if we're in verbose-mode, notify also when no update is found.            
         }
 
-        private void CheckUpdates()
+        private Update CheckUpdates()
         {
-            if (this.UpdateAvailable) return;
-
+            Update availableUpdate = null;
             List<Update> updates = new List<Update>();
             Version latestVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
             string response = WebReader.Read("http://code.google.com/feeds/p/blizztv/downloads/basic/");
 
-            if (response != null)
+            if (response == null) return null;
+
+            XDocument xdoc = XDocument.Parse(response); // parse the xml
+            XNamespace xmlns = "http://www.w3.org/2005/Atom";
+
+            var entries = from entry in xdoc.Descendants(xmlns + "entry")
+                          select new
+                                     {
+                                         date = entry.Element(xmlns + "updated").Value,
+                                         id = entry.Element(xmlns + "id").Value,
+                                         link = entry.Element(xmlns + "link").Attribute("href").Value,
+                                         title = entry.Element(xmlns + "title").Value.Replace('\n', ' ').Trim(),
+                                         details = entry.Element(xmlns + "content").Value
+                                     };
+
+
+            foreach (var e in entries) { updates.Add(new Update(e.id, e.date, e.link, e.title, e.details)); } // parse update details.
+
+            foreach (Update u in updates)
             {
-                XDocument xdoc = XDocument.Parse(response); // parse the xml
-                XNamespace xmlns = "http://www.w3.org/2005/Atom";
-
-                var entries = from entry in xdoc.Descendants(xmlns + "entry")
-                              select new
-                                         {
-                                             date = entry.Element(xmlns + "updated").Value,
-                                             id = entry.Element(xmlns + "id").Value,
-                                             link = entry.Element(xmlns + "link").Attribute("href").Value,
-                                             filename = entry.Element(xmlns + "title").Value.Replace('\n', ' ').Trim(),
-                                             details = entry.Element(xmlns + "content").Value
-                                         };
-
-
-                foreach (var e in entries) { updates.Add(new Update(e.id, e.date, e.link, e.filename, e.details)); } // parse update details.
-
-                foreach (Update u in updates)
+                if ((u.Valid) && ((u.UpdateType == UpdateTypes.Stable) || (u.UpdateType == UpdateTypes.Beta && GlobalSettings.Instance.AllowBetaVersionNotifications)) && (u.Version > latestVersion))
                 {
-                    if ((u.Valid) && ((u.UpdateType == UpdateTypes.Stable) || (u.UpdateType == UpdateTypes.Beta && GlobalSettings.Instance.AllowBetaVersionNotifications)) && (u.Version > latestVersion))
-                    {
-                        this.FoundUpdate = u;
-                        this.UpdateAvailable = true;
-                        latestVersion = u.Version;
-                    }
+                    availableUpdate = u;
+                    latestVersion = u.Version;
                 }
-
-                if (this.UpdateAvailable) Log.Instance.Write(LogMessageTypes.Info, string.Format("Found update: {0} - {1}", this.FoundUpdate.UpdateType, this.FoundUpdate.Version));
-            }
-            else
-            {
-                this.UpdateAvailable = false;
-                this.FoundUpdate = null;
             }
 
-            if (this.OnFoundNewAvailableUpdate == null) return;
-            this.OnFoundNewAvailableUpdate(this.UpdateAvailable);
+            if (availableUpdate!=null) Log.Instance.Write(LogMessageTypes.Info, string.Format("Found update: {0} - {1}", availableUpdate.UpdateType, availableUpdate.Version));
+            
+            return availableUpdate;
         }
     }
 }

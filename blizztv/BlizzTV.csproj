@@ -70,6 +70,10 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\upstream\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\upstream\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
     <Reference Include="irrKlang.NET4">
       <HintPath>..\upstream\irrKlang.NET4.dll</HintPath>
     </Reference>
@@ -122,6 +126,7 @@
     <Compile Include="CommonLib\Downloads\Download.cs" />
     <Compile Include="CommonLib\Downloads\DownloadManager.cs" />
     <Compile Include="CommonLib\Downloads\DownloadStream.cs" />
+    <Compile Include="CommonLib\Helpers\Zip.cs" />
     <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +137,12 @@
     <Compile Include="CommonLib\Notifications\NotificationManager.cs" />
     <Compile Include="CommonLib\Notifications\ArchivedNotifications.cs" />
     <Compile Include="CommonLib\Notifications\NotificationSound.cs" />
+    <Compile Include="CommonLib\Updates\frmUpdater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommonLib\Updates\frmUpdater.Designer.cs">
+      <DependentUpon>frmUpdater.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonLib\Utils\NamedImage.cs" />
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
     <Compile Include="CommonLib\Helpers\Registry.cs" />
@@ -377,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommonLib\Notifications\frmArchivedNotifications.resx">
       <DependentUpon>frmArchivedNotifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommonLib\Updates\frmUpdater.resx">
+      <DependentUpon>frmUpdater.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModuleLib\Settings\frmModuleSettingsHost.resx">
       <DependentUpon>frmModuleSettingsHost.cs</DependentUpon>
