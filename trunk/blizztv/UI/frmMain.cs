@@ -195,42 +195,8 @@ namespace BlizzTV.UI
 
         private void AutomaticUpdateCheck() // Checks for if an update is available
         {
-            if (GlobalSettings.Instance.AllowAutomaticUpdateChecks)
-            {
-                UpdateManager.Instance.OnFoundNewAvailableUpdate += OnAutoUpdateCheckResult;
-                UpdateManager.Instance.Check();
-            }
-        }
-
-        private void OnAutoUpdateCheckResult(bool foundUpdate)
-        {
-            this.ProcessUpdateCheckResult(foundUpdate);
-        }
-
-        private void ProcessUpdateCheckResult(bool foundUpdate, bool completelyVerbose = false)
-        {
-            if (foundUpdate)
-            {
-                string updateQuestion = "";
-                string updateTitle = "";
-
-                switch (UpdateManager.Instance.FoundUpdate.UpdateType) // switch on found update-type
-                {
-                    case UpdateTypes.Stable:
-                        updateQuestion = "Found a new available update. Do you want to update now?";
-                        updateTitle = "New Update Found!";
-                        break;
-                    case UpdateTypes.Beta:
-                        updateQuestion = "Found a new available BETA update. Do you want to update to this BETA version now?";
-                        updateTitle = "New Beta Update Found!";
-                        break;
-                }
-
-                DialogResult result = MessageBox.Show(updateQuestion, updateTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes) System.Diagnostics.Process.Start(UpdateManager.Instance.FoundUpdate.Link);
-            }
-            else if (completelyVerbose) MessageBox.Show("You're already running the latest version.", "No available updates found", MessageBoxButtons.OK, MessageBoxIcon.Information); // if we're in verbose-mode, notify also when no update is found.            
-        }
+            if (GlobalSettings.Instance.AllowAutomaticUpdateChecks) { UpdateManager.Instance.Check(); }
+        }        
 
         #endregion
 
@@ -340,13 +306,7 @@ namespace BlizzTV.UI
 
         private void MenuCheckUpdates(object sender, EventArgs e) // manually checks for updates.
         {
-            UpdateManager.Instance.OnFoundNewAvailableUpdate += OnUpdateManualCheckResult;
-            UpdateManager.Instance.Check(); 
-        }
-
-        private void OnUpdateManualCheckResult(bool updateFound)
-        {
-            this.ProcessUpdateCheckResult(updateFound, true);
+            UpdateManager.Instance.Check(true); 
         }
 
         private void MenuAbout_Click(object sender, EventArgs e)

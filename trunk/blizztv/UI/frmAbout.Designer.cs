@@ -46,6 +46,9 @@
             "Brent R. Matzelle",
             "Lovely Nini."}, -1);
             System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            "DotNetZip",
+            "http://dotnetzip.codeplex.com"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "SaveTheMurlocs.org",
             "No murlocs were harmed during making of this program."}, -1);
             this.label1 = new System.Windows.Forms.Label();
@@ -193,7 +196,8 @@
             listViewItem3,
             listViewItem4,
             listViewItem5,
-            listViewItem6});
+            listViewItem6,
+            listViewItem7});
             this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
             this.ListviewCredits.Name = "ListviewCredits";
             this.ListviewCredits.ShowGroups = false;

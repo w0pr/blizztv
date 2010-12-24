@@ -17,68 +17,103 @@
 
 using System;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Windows.Forms;
 using BlizzTV.CommonLib.Logger;
+using BlizzTV.CommonLib.Helpers;
 
 namespace BlizzTV.CommonLib.Updates
 {
     public class Update
     {
-        private readonly bool _valid = true;
-        private readonly string _id;
-        private readonly string _date;
-        private readonly string _link;
-        private readonly string _filename;
-        private readonly string _details;
-        private readonly Version _version;
-        private readonly UpdateTypes _updateType = UpdateTypes.Invalid;
-        private static readonly Regex RegexUpdateType = new Regex(@"\[r\:(.*)-v\:(.*)\]", RegexOptions.Compiled);
+        private static readonly Regex RegexUpdateTypeAndVersion = new Regex(@"\[r\:(.*)-v\:(.*)\]", RegexOptions.Compiled);
+        private static readonly Regex RegexUpdateLink=new Regex(@"http\://code.google.com/p/blizztv/downloads/detail\?name\=(.*)", RegexOptions.Compiled);
 
-        public bool Valid { get { return this._valid; } }
-        public string Id { get { return this._id; } }
-        public string Date { get { return this._date; } }
-        public string Link { get { return this._link; } }
-        public string Filename { get { return this._filename; } }
-        public string Details { get { return this._details; } }
-        public Version Version { get { return this._version; } }
-        public UpdateTypes UpdateType { get { return this._updateType; } }
+        public bool Valid { get; private set; }
+        public string Id { get; private set; }
+        public string Date { get; private set; }
+        public string Title { get; private set; }
+        public string Link { get; private set; }
+        public string FileName { get; private set; }
+        public string DownloadLink { get; private set; }
+        public string Details { get; private set; }
+        public Version Version { get; private set; }
+        public UpdateTypes UpdateType { get; private set; }
 
-        public Update(string id, string date, string link, string filename,string details)
+        public Update(string id, string date, string link, string title,string details)
         {
             try
             {
-                this._id = id;
-                this._date = date;
-                this._link = link;
-                this._filename = filename;
-                this._details = details;
+                this.Valid = true;
+                this.Id = id;
+                this.Date = date;
+                this.Title = title;
+                this.Link = link;
+                this.DownloadLink = string.Format("http://blizztv.googlecode.com/files/{0}", this.Title);
+                this.Details = details;
 
-                Match m = RegexUpdateType.Match(this._details);
+                Match matchTypeAndVersion = RegexUpdateTypeAndVersion.Match(this.Details);
+                if (!matchTypeAndVersion.Success) { this.Valid = false; return; }
 
-                if (m.Success)
+                switch (matchTypeAndVersion.Groups[1].Value.ToLower())
                 {
-                    string release = m.Groups[1].Value.ToLower();
-                    this._version = Version.Parse(m.Groups[2].Value);
-
-                    switch (release)
-                    {
-                        case "beta": this._updateType = UpdateTypes.Beta; break;
-                        case "stable": this._updateType = UpdateTypes.Stable; break;
-                        default: this._updateType = UpdateTypes.Invalid; break;
-                    }
+                    case "beta": this.UpdateType = UpdateTypes.Beta; break;
+                    case "stable": this.UpdateType = UpdateTypes.Stable; break;
+                    default: this.UpdateType = UpdateTypes.Invalid; this.Valid = false; return;
                 }
+
+                this.Version = Version.Parse(matchTypeAndVersion.Groups[2].Value);
+
+                Match matchLink = RegexUpdateLink.Match(this.Link);
+                if (!matchLink.Success) { this.Valid = false; return; }
+
+                this.FileName = matchLink.Groups[1].Value;
+                this.DownloadLink = string.Format("http://blizztv.googlecode.com/files/{0}", matchLink.Groups[1].Value);
             }
             catch (Exception e)
             {
-                this._valid = false;
-                Log.Instance.Write(LogMessageTypes.Error,string.Format("Error parsing update data! Exception details: {0}",e));
+                this.Valid = false;
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("Error parsing update data! Exception details: {0}", e));
             }
+        }
+
+        public void Install()
+        {
+            string fileExtension = Path.GetExtension(this.FileName).ToLower();
+            
+            if (!(fileExtension == ".exe" || fileExtension == ".zip"))
+            {
+                MessageBox.Show("Downloaded file is not a valid update. Please re-try downloading the update", "Update Not Valid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show("The application will exit to continue installation of update.", "Installing Update", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+
+            if (fileExtension == ".exe")
+            {
+                System.Diagnostics.Process.Start(this.FileName, null);
+            }
+            else if (fileExtension == ".zip")
+            {
+                Zip.Extract(this.FileName, "update");
+                StreamWriter writer = new StreamWriter("update.bat", false);
+                writer.WriteLine(@"ping 127.0.0.1");
+                writer.WriteLine(@"move /Y update\*.* .");
+                writer.WriteLine(@"del /F /Q update");
+                writer.WriteLine(@"del /F /Q update.bat");
+                writer.Flush();
+                writer.Close();
+                System.Diagnostics.Process.Start("update.bat", null);
+            }
+
+            Application.ExitThread();
         }
     }
 
     public enum UpdateTypes
     {
         Invalid,
-        Stable,
-        Beta
+        Beta,
+        Stable
     }
 }

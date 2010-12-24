@@ -59,7 +59,8 @@ namespace BlizzTV.UI
                case 2: System.Diagnostics.Process.Start("http://www.teamliquid.net"); break;
                case 3: System.Diagnostics.Process.Start("http://www.famfamfam.com"); break;
                case 4: System.Diagnostics.Process.Start("http://nini.sourceforge.net"); break;
-               case 5: System.Diagnostics.Process.Start("http://www.savethemurlocs.org"); break;
+               case 5: System.Diagnostics.Process.Start("http://dotnetzip.codeplex.com"); break;
+               case 6: System.Diagnostics.Process.Start("http://www.savethemurlocs.org"); break;
            }           
         }	
 
