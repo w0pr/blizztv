@@ -332,8 +332,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommonLib\UI\ListviewModuleItem.cs" />
-    <Compile Include="Updates\Update.cs" />
-    <Compile Include="Updates\UpdateManager.cs" />
+    <Compile Include="CommonLib\Updates\Update.cs" />
+    <Compile Include="CommonLib\Updates\UpdateManager.cs" />
     <Compile Include="UI\Wizard\frmComplete.cs">
       <SubType>Form</SubType>
     </Compile>

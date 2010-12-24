@@ -35,12 +35,6 @@ namespace BlizzTV.UI
         // should the main window minimize to system tray instead of closing when close button is clicked?
         public bool MinimizeToSystemTray { get { return this.GetBoolean("MinimizeToSystemTray", true); } set { this.Set("MinimizeToSystemTray", value); } }
 
-        // allow automatic update checks?
-        public bool AllowAutomaticUpdateChecks { get { return this.GetBoolean("AllowAutomaticUpdateChecks", true); } set { this.Set("AllowAutomaticUpdateChecks", value); } }
-
-        // allow beta version notifications?
-        public bool AllowBetaVersionNotifications { get { return this.GetBoolean("AllowBetaVersionNotifications", true); } set { this.Set("AllowBetaVersionNotifications", value); } }
-
         // enable debug logger?
         public bool EnableDebugLogging { get { return this.GetBoolean("EnableDebugLogging", true); } set { this.Set("EnableDebugLogging", value); } }
 

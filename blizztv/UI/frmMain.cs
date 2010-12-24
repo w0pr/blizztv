@@ -25,8 +25,8 @@ using BlizzTV.CommonLib.Notifications;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.CommonLib.Workload;
 using BlizzTV.CommonLib.Config;
+using BlizzTV.CommonLib.Updates;
 using BlizzTV.ModuleLib;
-using BlizzTV.Updates;
 
 namespace BlizzTV.UI
 {
@@ -195,7 +195,7 @@ namespace BlizzTV.UI
 
         private void AutomaticUpdateCheck() // Checks for if an update is available
         {
-            if (Settings.Instance.AllowAutomaticUpdateChecks)
+            if (GlobalSettings.Instance.AllowAutomaticUpdateChecks)
             {
                 UpdateManager.Instance.OnFoundNewAvailableUpdate += OnAutoUpdateCheckResult;
                 UpdateManager.Instance.Check();

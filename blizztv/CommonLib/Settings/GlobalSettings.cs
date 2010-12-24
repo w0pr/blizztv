@@ -29,45 +29,35 @@ namespace BlizzTV.CommonLib.Settings
 
         #endregion
 
-        /// <summary>
-        /// The default video player width.
-        /// </summary>
+        // The default video player width.
         public int VideoPlayerWidth { get { return this.GetInt("VideoPlayerWidth", 640); } set { this.Set("VideoPlayerWidth", value); } }
 
-        /// <summary>
-        /// The default video player height.
-        /// </summary>
+        // The default video player height.
         public int VideoPlayerHeight { get { return this.GetInt("VideoPlayerHeight", 385); } set { this.Set("VideoPlayerHeight", value); } }
 
-        /// <summary>
-        /// States if video's should be played automatically.
-        /// </summary>
+        // States if video's should be played automatically.
         public bool AutoPlayVideos { get { return this.GetBoolean("AutoPlayVideos", true); } set { this.Set("AutoPlayVideos", value); } }
 
-        /// <summary>
-        /// Always on top setting for player windows.
-        /// </summary>
+        // Always on top setting for player windows.
         public bool PlayerWindowsAlwaysOnTop { get { return this.GetBoolean("PlayerWindowsAlwaysOnTop", true); } set { this.Set("PlayerWindowsAlwaysOnTop", value); } }
 
-        /// <summary>
-        /// The default content viewing-method.
-        /// </summary>
+        // The default content viewing-method.
         public bool UseInternalViewers { get { return this.GetBoolean("UseInternalViewers", true); } set { this.Set("UseInternalViewers", value); } }
 
-        /// <summary>
-        /// Enables notifications.
-        /// </summary>
+        // Enables notifications.
         public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
 
-        /// <summary>
-        /// Enables notification sounds.
-        /// </summary>
+        // Enables notification sounds.
         public bool NotificationSoundsEnabled { get { return this.GetBoolean("NotificationSoundsEnabled", true); } set { this.Set("NotificationSoundsEnabled", value); } }
 
-        /// <summary>
-        /// Holds the selected notification sound.
-        /// </summary>
+        // Holds the selected notification sound.
         public string NotificationSound { get { return this.GetString("NotificationSound", "DefaultNotification"); } set { this.Set("NotificationSound", value); } }
+
+        // allow automatic update checks?
+        public bool AllowAutomaticUpdateChecks { get { return this.GetBoolean("AllowAutomaticUpdateChecks", true); } set { this.Set("AllowAutomaticUpdateChecks", value); } }
+
+        // allow beta version notifications?
+        public bool AllowBetaVersionNotifications { get { return this.GetBoolean("AllowBetaVersionNotifications", true); } set { this.Set("AllowBetaVersionNotifications", value); } }
 
         private GlobalSettings() : base("Global") { }
     }
