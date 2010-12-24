@@ -21,11 +21,12 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Reflection;
 using System.Threading;
+using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Web;
 using BlizzTV.UI;
 
-namespace BlizzTV.Updates
+namespace BlizzTV.CommonLib.Updates
 {
     internal sealed class UpdateManager
     {
@@ -81,7 +82,7 @@ namespace BlizzTV.Updates
 
                 foreach (Update u in updates)
                 {
-                    if ((u.Valid) && ((u.UpdateType == UpdateTypes.Stable) || (u.UpdateType == UpdateTypes.Beta && Settings.Instance.AllowBetaVersionNotifications)) && (u.Version > latestVersion))
+                    if ((u.Valid) && ((u.UpdateType == UpdateTypes.Stable) || (u.UpdateType == UpdateTypes.Beta && GlobalSettings.Instance.AllowBetaVersionNotifications)) && (u.Version > latestVersion))
                     {
                         this.FoundUpdate = u;
                         this.UpdateAvailable = true;

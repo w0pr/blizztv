@@ -19,7 +19,7 @@ using System;
 using System.Text.RegularExpressions;
 using BlizzTV.CommonLib.Logger;
 
-namespace BlizzTV.Updates
+namespace BlizzTV.CommonLib.Updates
 {
     public class Update
     {

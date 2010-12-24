@@ -73,12 +73,12 @@ namespace BlizzTV.UI
             CheckBoxPlayerAlwaysOnTop.Checked = GlobalSettings.Instance.PlayerWindowsAlwaysOnTop;
             checkBoxNotificationsEnabled.Checked = GlobalSettings.Instance.NotificationsEnabled;
             checkBoxNotificationSoundsEnabled.Checked = GlobalSettings.Instance.NotificationSoundsEnabled;
+            checkBoxAllowAutomaticUpdateChecks.Checked = GlobalSettings.Instance.AllowAutomaticUpdateChecks;
+            checkBoxAllowBetaVersionNotifications.Checked = GlobalSettings.Instance.AllowBetaVersionNotifications;
             foreach (string sound in NotificationSound.Instance.Names) this.comboBoxNotificationSound.Items.Add(sound);
             this.comboBoxNotificationSound.SelectedIndex = this.NotificationSoundGetSelectedIndex();
 
             // UI settings.
-            checkBoxAllowAutomaticUpdateChecks.Checked = Settings.Instance.AllowAutomaticUpdateChecks;
-            checkBoxAllowBetaVersionNotifications.Checked = Settings.Instance.AllowBetaVersionNotifications;
             checkBoxStartOnSystemStartup.Checked = SystemStartup.Enabled;
             checkBoxMinimimizeToSystemTray.Checked = Settings.Instance.MinimizeToSystemTray;
             checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
@@ -130,10 +130,10 @@ namespace BlizzTV.UI
             GlobalSettings.Instance.NotificationsEnabled = checkBoxNotificationsEnabled.Checked;
             GlobalSettings.Instance.NotificationSoundsEnabled = checkBoxNotificationSoundsEnabled.Checked;
             GlobalSettings.Instance.NotificationSound = comboBoxNotificationSound.SelectedItem.ToString();
+            GlobalSettings.Instance.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
+            GlobalSettings.Instance.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
 
             // UI settings.
-            Settings.Instance.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
-            Settings.Instance.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
             SystemStartup.Enabled = checkBoxStartOnSystemStartup.Checked;
             Settings.Instance.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
             Settings.Instance.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
