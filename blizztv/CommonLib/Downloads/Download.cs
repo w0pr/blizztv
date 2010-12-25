@@ -116,6 +116,7 @@ namespace BlizzTV.CommonLib.Downloads
             }
             finally
             {
+                if (this._filestream != null) this._filestream.Close();
                 if (this.Complete != null) this.Complete(this, EventArgs.Empty);
             }
         }
