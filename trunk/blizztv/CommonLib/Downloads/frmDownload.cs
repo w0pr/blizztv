@@ -52,7 +52,11 @@ namespace BlizzTV.CommonLib.Downloads
 
         private void OnDownloadProgress(int progress)
         {
-            this.progressBar.AsyncInvokeHandler(() => { this.progressBar.Value = progress; });
+            this.progressBar.AsyncInvokeHandler(() =>
+            {
+                this.progressBar.Value = progress;
+                this.labelStatistics.Text = string.Format("{0} of {1}. (%{2})", this._download.DownloadedSize, this._download.TotalSize, this._download.DownlodadedPercent);
+            });            
         }
 
         protected virtual void OnDownloadComplete(object sender, EventArgs e) 

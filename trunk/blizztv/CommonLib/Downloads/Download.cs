@@ -32,8 +32,39 @@ namespace BlizzTV.CommonLib.Downloads
 
         public string FilePath { get; private set; }
         public string Uri { get; private set; }
-        public long Lenght { get; private set; }
         public bool Success { get; private set; }
+                              
+        public long DownloadedBytes { get { if (this._filestream != null) return this._filestream.Length; else return 0; } }
+
+        public string DownloadedSize
+        {
+            get
+            {
+                string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
+                int i;
+                long totalBytes = this.DownloadedBytes;
+                double dblSByte = 0;
+                for (i = 0; (int)(totalBytes / 1024) > 0; i++, totalBytes /= 1024) dblSByte = totalBytes / 1024.0;
+                return String.Format("{0:0.00} {1}", dblSByte, suffixes[i]);
+            }
+        }
+
+        public long TotalBytes { get; private set; }
+
+        public string TotalSize
+        {
+            get
+            {
+                string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
+                int i;
+                long totalBytes = this.TotalBytes;
+                double dblSByte = 0;
+                for (i = 0; (int)(totalBytes / 1024) > 0; i++, totalBytes /= 1024) dblSByte = totalBytes / 1024.0;
+                return String.Format("{0:0.00} {1}", dblSByte, suffixes[i]);
+            }
+        }
+        
+        public int DownlodadedPercent { get { if (this._filestream != null) return (int)((this._filestream.Length * 100) / this.TotalBytes); else return 0; } }
 
         public EventHandler Complete;
 
@@ -62,7 +93,7 @@ namespace BlizzTV.CommonLib.Downloads
 
                 WebRequest request = WebRequest.Create(this.Uri);
                 WebResponse response = request.GetResponse();
-                this.Lenght = response.ContentLength;
+                this.TotalBytes = response.ContentLength;
 
                 int bufferSize = 4096;
                 byte[] buffer = new byte[bufferSize];
@@ -71,7 +102,7 @@ namespace BlizzTV.CommonLib.Downloads
                 while ((readBytes = response.GetResponseStream().Read(buffer, 0, bufferSize)) > 0)
                 {
                     this._filestream.Write(buffer, 0, readBytes);
-                    if (this.Progress != null) this.Progress((int)((this._filestream.Length * 100) / this.Lenght));
+                    if (this.Progress != null) this.Progress(this.DownlodadedPercent);
                 }
 
                 response.GetResponseStream().Close();                
@@ -85,7 +116,6 @@ namespace BlizzTV.CommonLib.Downloads
             }
             finally
             {
-                if(this._filestream!=null) this._filestream.Close();
                 if (this.Complete != null) this.Complete(this, EventArgs.Empty);
             }
         }
