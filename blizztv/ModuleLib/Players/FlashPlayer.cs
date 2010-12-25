@@ -15,8 +15,6 @@
  * $Id$
  */
 
-// latest flash player activex can be downloaded from: http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe
-
 using System;
 using System.Windows.Forms;
 

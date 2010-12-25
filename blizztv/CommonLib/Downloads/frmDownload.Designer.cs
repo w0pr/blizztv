@@ -28,25 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.progressBarUpdater = new System.Windows.Forms.ProgressBar();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDownload));
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
-            // progressBarUpdater
+            // progressBar
             // 
-            this.progressBarUpdater.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBarUpdater.Location = new System.Drawing.Point(5, 9);
-            this.progressBarUpdater.Name = "progressBarUpdater";
-            this.progressBarUpdater.Size = new System.Drawing.Size(367, 23);
-            this.progressBarUpdater.TabIndex = 3;
+            this.progressBar.Location = new System.Drawing.Point(5, 9);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(367, 23);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar.TabIndex = 3;
             // 
             // frmDownload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(381, 46);
-            this.Controls.Add(this.progressBarUpdater);
+            this.Controls.Add(this.progressBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDownload";
@@ -58,6 +61,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar progressBarUpdater;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }

@@ -298,7 +298,7 @@ namespace BlizzTV.UI
                 this.menuSleepMode.Checked = false;
                 this.ContextMenuSleepMode.Checked = false;
                 this.SleepIcon.Visible = false;
-                this.TrayIcon.Icon = Assets.Images.Icons.Ico.blizztv_16;
+                this.TrayIcon.Icon = Assets.Images.Icons.Ico.blizztv;
                 this.TrayIcon.Text = "BlizzTV";
                 RuntimeConfiguration.Instance.InSleepMode = false;
             }

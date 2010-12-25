@@ -487,6 +487,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\sleep.ico" />
+    <None Include="Resources\blizztv.ico" />
     <None Include="Resources\event.png" />
     <None Include="Resources\Tina.mp3" />
     <None Include="Resources\Whisper.mp3" />
@@ -535,18 +537,6 @@
     <None Include="Resources\blizzblues.png" />
     <None Include="Resources\alarm.png" />
     <None Include="Resources\about.png" />
-    <None Include="Resources\video.ico" />
-    <None Include="Resources\stream.ico" />
-    <None Include="Resources\sleep.ico" />
-    <None Include="Resources\settings.ico" />
-    <None Include="Resources\event.ico" />
-    <None Include="Resources\chat.ico" />
-    <None Include="Resources\catalog.ico" />
-    <None Include="Resources\calendar.ico" />
-    <None Include="Resources\blizztv_16.ico" />
-    <None Include="Resources\app.ico" />
-    <None Include="Resources\alarm.ico" />
-    <None Include="Resources\about.ico" />
     <None Include="Resources\Default.xml" />
     <None Include="Resources\Providers.xml" />
   </ItemGroup>

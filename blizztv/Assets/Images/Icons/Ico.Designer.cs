@@ -60,65 +60,9 @@ namespace BlizzTV.Assets.Images.Icons {
             }
         }
         
-        internal static System.Drawing.Icon _event {
+        internal static System.Drawing.Icon blizztv {
             get {
-                object obj = ResourceManager.GetObject("_event", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon about {
-            get {
-                object obj = ResourceManager.GetObject("about", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon alarm {
-            get {
-                object obj = ResourceManager.GetObject("alarm", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon app {
-            get {
-                object obj = ResourceManager.GetObject("app", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon blizztv_16 {
-            get {
-                object obj = ResourceManager.GetObject("blizztv_16", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon calendar {
-            get {
-                object obj = ResourceManager.GetObject("calendar", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon catalog {
-            get {
-                object obj = ResourceManager.GetObject("catalog", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon chat {
-            get {
-                object obj = ResourceManager.GetObject("chat", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon settings {
-            get {
-                object obj = ResourceManager.GetObject("settings", resourceCulture);
+                object obj = ResourceManager.GetObject("blizztv", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -126,20 +70,6 @@ namespace BlizzTV.Assets.Images.Icons {
         internal static System.Drawing.Icon sleep {
             get {
                 object obj = ResourceManager.GetObject("sleep", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon stream {
-            get {
-                object obj = ResourceManager.GetObject("stream", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon video {
-            get {
-                object obj = ResourceManager.GetObject("video", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
