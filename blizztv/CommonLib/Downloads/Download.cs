@@ -40,14 +40,15 @@ namespace BlizzTV.CommonLib.Downloads
         public delegate void DownloadProgressEventHandler(int progress);
         public event DownloadProgressEventHandler Progress;
 
-        public Download(string uri)
+        public Download(string uri, string filename="")
         {
             this.Uri = uri;
+            this.FilePath = filename;
         }
 
-        public void Start(string filename = "")
+        public void Start()
         {
-            new Thread(() => { this.DownloadFile(filename); }) { IsBackground = true }.Start();
+            new Thread(() => { this.DownloadFile(this.FilePath); }) { IsBackground = true }.Start();
         }
 
         private void DownloadFile(string filename="")
@@ -84,7 +85,7 @@ namespace BlizzTV.CommonLib.Downloads
             }
             finally
             {
-                this._filestream.Close();
+                if(this._filestream!=null) this._filestream.Close();
                 if (this.Complete != null) this.Complete(this, EventArgs.Empty);
             }
         }

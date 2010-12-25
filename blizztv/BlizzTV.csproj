@@ -126,6 +126,12 @@
     <Compile Include="CommonLib\Downloads\Download.cs" />
     <Compile Include="CommonLib\Downloads\DownloadManager.cs" />
     <Compile Include="CommonLib\Downloads\DownloadStream.cs" />
+    <Compile Include="CommonLib\Downloads\frmDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommonLib\Downloads\frmDownload.Designer.cs">
+      <DependentUpon>frmDownload.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonLib\Helpers\Zip.cs" />
     <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
@@ -385,6 +391,9 @@
     <EmbeddedResource Include="Assets\XML\Subscriptions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Subscriptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommonLib\Downloads\frmDownload.resx">
+      <DependentUpon>frmDownload.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommonLib\Notifications\frmArchivedNotifications.resx">
       <DependentUpon>frmArchivedNotifications.cs</DependentUpon>

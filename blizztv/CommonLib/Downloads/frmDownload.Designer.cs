@@ -1,6 +1,6 @@
-﻿namespace BlizzTV.CommonLib.Updates
+﻿namespace BlizzTV.CommonLib.Downloads
 {
-    partial class frmUpdater
+    partial class frmDownload
     {
         /// <summary>
         /// Required designer variable.
@@ -28,36 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelStatus = new System.Windows.Forms.Label();
+            this.progressBarUpdater = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
-            // labelStatus
+            // progressBarUpdater
             // 
-            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.progressBarUpdater.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelStatus.Location = new System.Drawing.Point(5, 47);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(364, 13);
-            this.labelStatus.TabIndex = 4;
-            this.labelStatus.Text = "Please wait while the update is being downloaded..";
-            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.progressBarUpdater.Location = new System.Drawing.Point(5, 9);
+            this.progressBarUpdater.Name = "progressBarUpdater";
+            this.progressBarUpdater.Size = new System.Drawing.Size(367, 23);
+            this.progressBarUpdater.TabIndex = 3;
             // 
-            // frmUpdater
+            // frmDownload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 69);
-            this.Controls.Add(this.labelStatus);
-            this.Name = "frmUpdater";
-            this.Text = "Updater";
-            this.Load += new System.EventHandler(this.frmUpdater_Load);
-            this.Controls.SetChildIndex(this.labelStatus, 0);
+            this.ClientSize = new System.Drawing.Size(381, 46);
+            this.Controls.Add(this.progressBarUpdater);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "frmDownload";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Download";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.ProgressBar progressBarUpdater;
     }
 }
