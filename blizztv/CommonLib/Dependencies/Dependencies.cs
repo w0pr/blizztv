@@ -36,7 +36,7 @@ namespace BlizzTV.CommonLib.Dependencies
 
         public bool Satisfied()
         {
-            if (CheckShockwaveFlash())
+            if (!CheckShockwaveFlash())
             {
                 System.Windows.Forms.DialogResult result = MessageBox.Show("BlizzTV requires Abode Flash Player for best user-experience. Do you want to install latest Adobe Flash Player now?", "Missing component: Adobe Flash Player", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Exclamation);
                 if (result == System.Windows.Forms.DialogResult.Yes)
