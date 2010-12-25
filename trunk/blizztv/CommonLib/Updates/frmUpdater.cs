@@ -21,7 +21,6 @@ namespace BlizzTV.CommonLib.Updates
             this._update = update;
         }
 
-
         private void frmUpdater_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("Updating to BlizzTV {0}", this._update.Version.ToString());

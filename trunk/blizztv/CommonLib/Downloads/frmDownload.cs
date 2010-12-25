@@ -29,23 +29,40 @@ namespace BlizzTV.CommonLib.Downloads
 {
     public partial class frmDownload : Form
     {
+        private Download _download;
+
         public frmDownload()
         {
             InitializeComponent();
         }
 
+        public frmDownload(string title)
+        {
+            InitializeComponent();
+            if (title != string.Empty) this.Text = title;
+        }
+
         public void StartDownload(Download download)
         {
-            download.Progress += OnDownloadProgress;
-            download.Complete += OnDownloadComplete;
-            download.Start();
+            this._download = download;
+            this._download.Progress += OnDownloadProgress;
+            this._download.Complete += OnDownloadComplete;
+            this._download.Start();
         }
 
         private void OnDownloadProgress(int progress)
         {
-            this.progressBarUpdater.AsyncInvokeHandler(() => { this.progressBarUpdater.Value = progress; });
+            this.progressBar.AsyncInvokeHandler(() => { this.progressBar.Value = progress; });
         }
 
-        protected virtual void OnDownloadComplete(object sender, EventArgs e) { }
+        protected virtual void OnDownloadComplete(object sender, EventArgs e) 
+        {
+            this.progressBar.AsyncInvokeHandler(() =>
+            {
+                if (this._download.Success) this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                else this.DialogResult = System.Windows.Forms.DialogResult.Abort;
+                this.Close();
+            });
+        }
     }
 }

@@ -16,7 +16,10 @@
  */
 
 using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 using BlizzTV.CommonLib.Logger;
+using BlizzTV.CommonLib.Downloads;
 
 namespace BlizzTV.CommonLib.Dependencies
 {
@@ -33,12 +36,23 @@ namespace BlizzTV.CommonLib.Dependencies
 
         public bool Satisfied()
         {
-            if (!CheckShockwaveFlash())
+            if (CheckShockwaveFlash())
             {
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("BlizzTV requires Abode Flash Player for internal video & stream playing and your system does not satisfy it. Do you want to install latest Adobe Flash Player now (it's stronly recommended for best user-experience)?", "Adobe Flash Player Missing!", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+                System.Windows.Forms.DialogResult result = MessageBox.Show("BlizzTV requires Abode Flash Player for best user-experience. Do you want to install latest Adobe Flash Player now?", "Missing component: Adobe Flash Player", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Exclamation);
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    System.Diagnostics.Process.Start("IExplore.exe", "http://get.adobe.com/flashplayer/");
+                    frmDownload f = new frmDownload("Downloading latest Adobe Flash player");
+                    f.StartDownload(new Download("http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe", "install_flash_player_ax.exe"));
+                    if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        MessageBox.Show("The application will now exit to continue installation of Adobe Flash Player. Please restart BlizzTV after installation finishes.", "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Process.Start("install_flash_player_ax.exe");                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Adobe Flash Player download failed. Please install it manually.", "Download Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Process.Start("IExplore.exe", "http://get.adobe.com/flashplayer/");
+                    }
                     return false;
                 }
             }
