@@ -6,7 +6,10 @@
   <Entry xsi:type="Stream" Category="Starcraft" Name="GLHF.tv #2" Description="GLHF.tv's alternative channel." Slug="glhf2" Provider="UStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="ICCupTV" Description="The international Cyber Cup official channel where we are going to stream tournaments, live shows, and more to become the first and best dedicated E-Sports Station!" Slug="iccup-tv" Provider="UStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="ICCupTV #2" Description="ICCupTV's alternative channel." Slug="iccup-tv-2" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="RageQuit.TV" Description="Popular SCII commentary stream." Slug="1166" Provider="Own3DTV" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="TeamLiquidTV" Description="TeamLiquid.net's official live stream." Slug="teamliquidtv" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="ImbaTV" Description="Yet another SCII commentary stream." Slug="9952" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="FragFortune" Description="Yet another SCII commentary stream." Slug="fragfortune" Provider="UStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="HDStarcraft" Description="HDStarcraft's own stream." Slug="hdstarcraft" Provider="UStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="HuskyStarcraft" Description="HuskyStarcraft's own stream." Slug="huskystarcraft" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="State of the Game podcast" Description="State of the Game features four of the most well-known personalities from the Starcraft 2 eSports scene: JP 'itmeJP' McDaniel, Sean 'Day[9]' Plott, Geoff 'iNcontrol' Robinson, and Tyler 'TLAF-LiquidTyler' Wasieleski." Slug="state-of-the-game" Provider="UStream" />
@@ -34,4 +37,20 @@
   <Entry xsi:type="Stream" Category="Starcraft" Name="Responce" Description="High level terran player streaming." Slug="neoresponse" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="Spades" Description="High level 3000+ terran player streaming." Slug="spades" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="oGsTheWind" Description="High level zerg player streaming." Slug="oGsTheWind" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="FnaticMSISen" Description="Sen of FnaticMSI's Starcraft II stream." Slug="sen-s-channel" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="RootCatZ" Description="RootCatZ Starcraft II stream." Slug="root-catz" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="WorldOfWarcraft" Name="WOWInsider" Description="Audio only WOWInsider show." Slug="wow-insider-show" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="WorldOfWarcraft" Name="Tankz" Description="A popular PvE and PvP stream with warrior POV." Slug="xfire_tankz4321" Provider="LiveStream" /> 
+  <Entry xsi:type="Stream" Category="LeagueOfLegends" Name="CLGaming" Description="Popular League of Legends stream." Slug="214" Provider="Own3DTV" /> 
+  <Entry xsi:type="Stream" Category="StreetFighter" Name="Gods Garden" Description="Popular Street Fighter community." Slug="godsgarden" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="StreetFighter" Name="TeamSpooky" Description="TeamSpooky travels all over the world bringing you cool Street Fighter tournament footage and insight into the gamer life." Slug="teamspooky" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="StreetFighter" Name="iplaywinner" Description="Broadcasts Super Street Fighter 4, Tekken 6, BlazBlue." Slug="iplaywinner" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Quake" Name="QuakeLiveTV" Description="Competitive QuakeLive coverage." Slug="quakelivetv" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="CallOfDuty" Name="PureOwnage" Description="Call of Duty streaming community." Slug="halo-dream-legend" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="BattleField" Name="RushTV" Description="BattleField II streaming community." Slug="TeamRush" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="DawnOfWar" Name="DOW2Live" Description="A Dawn of War 2 community which specialises in dow2 live streaming." Slug="dow2live" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="GuitarHero" Name="Guitar Hero Phenom" Description="Popular Guitar Hero stream." Slug="Guitar-Hero-Phenom" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="ESports" Name="TheSpeedGamers" Description="TheSpeedGamers have been streaming video game marathons for over a year to raise money for various charities." Slug="TheSpeedGamers" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="ESports" Name="Level|Up" Description="A quite popular E-Sports stream." Slug="leveluplive" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Show" Name="WiiPlay" Description="A nintendo oriented gaming show." Slug="tombobblender" Provider="UStream" />
 </Catalog>
