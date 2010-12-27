@@ -44,6 +44,7 @@ namespace BlizzTV.CommonLib.Downloads
 
         public void StartDownload(Download download)
         {
+            this.labelStatistics.Text = "Connecting to download server..";
             this._download = download;
             this._download.Progress += OnDownloadProgress;
             this._download.Complete += OnDownloadComplete;
@@ -55,7 +56,7 @@ namespace BlizzTV.CommonLib.Downloads
             this.progressBar.AsyncInvokeHandler(() =>
             {
                 this.progressBar.Value = progress;
-                this.labelStatistics.Text = string.Format("{0} of {1}. (%{2})", this._download.DownloadedSize, this._download.TotalSize, this._download.DownlodadedPercent);
+                this.labelStatistics.Text = string.Format("{0} of {1} with {2}. (%{3})", this._download.Downloaded, this._download.Size, this._download.Speed, this._download.DownlodadedPercent);
             });            
         }
 
