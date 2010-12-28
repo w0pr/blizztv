@@ -18,6 +18,7 @@
 using System;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Diagnostics;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Helpers;
@@ -103,7 +104,11 @@ namespace BlizzTV.CommonLib.Updates
                 writer.WriteLine(@"del /F /Q update.bat");
                 writer.Flush();
                 writer.Close();
-                System.Diagnostics.Process.Start("update.bat", null);
+                Process cmd = new Process();
+                cmd.StartInfo.FileName = "cmd.exe";
+                cmd.StartInfo.Arguments = "/q /c update.bat";
+                cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                cmd.Start();
             }
 
             Application.ExitThread();
