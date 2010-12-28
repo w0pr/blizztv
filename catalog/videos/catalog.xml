@@ -2,6 +2,7 @@
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Entry xsi:type="Video" Category="Starcraft" Name="Starcraft" Description="Starcraft's official youtube channel." Slug="starcraft" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Starcraft" Name="Day[9]" Description="High level Starcraft 2 commentary from an 11 year top player and veteran." Slug="day9tv" Provider="BlipTV" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="Day[9]-youtube" Description="High level Starcraft 2 commentary from an 11 year top player and veteran on YouTube." Slug="day9tv" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Starcraft" Name="HD Starcraft" Description="Features commentary over professional Starcraft 2 games." Slug="hdstarcraft" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Starcraft" Name="HuskyStarcraft" Description="High level Starcraft 2 commentaries by Husky." Slug="huskystarcraft" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Starcraft" Name="PsyStarcraft" Description="Starcraft 2 commentaries that intend to teach, inform, and entertain the community." Slug="psystarcraft" Provider="Youtube" />
@@ -15,16 +16,33 @@
   <Entry xsi:type="Video" Category="Starcraft" Name="SCLegacy" Description="SCLegacy.com's VOD channel" Slug="SCLegacy" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Starcraft" Name="HunterStarcraft" Description="Starcraft 2 commentaries that analyze strategies used by professional players. These shoutcasts focus primarily on the tactics of top Korean pro gamers." Slug="HunterStarcraft" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Starcraft" Name="ArtosisTV" Description="High level Starcraft II commentaries." Slug="ArtosisTV" Provider="Youtube" />
-  <Entry xsi:type="Video" Category="Starcraft" Name="WarlionProductions" Description="Yet another Starcraft II commentary channel." Slug="WarlionProductions" Provider="Youtube" />    
-  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="WorldofWarcraft" Description="World of Warcraft's official youtube channel." Slug="worldofwarcraft" Provider="Youtube" />
-  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="TankSpot" Description="Zam networks official VOD channel." Slug="ZAMOfficial" Provider="Youtube" />
-  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="MMO-Champion" Description="MMO-Champion.com's official channel." Slug="MMOChampionWoW" Provider="Youtube" />
-  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="Oxhorn" Description="Highly entertaining machinima channel." Slug="Oxhorn" Provider="Youtube" />
-  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="OMFGcata" Description="Features World of Warcraft: Cataclysm." Slug="OMFGcata" Provider="Youtube" />
-  <Entry xsi:type="Video" Category="WorldofWarcraft" Name="Belligerent" Description="Wrathful Gladiator Holy Paladin's arena VOD's channel." Slug="Belligerent23" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="WarlionProductions" Description="Yet another Starcraft II commentary channel." Slug="WarlionProductions" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="diggitySC" Description="Yet another Starcraft II commentary channel." Slug="diggitySC" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Starcraft" Name="FragFortune" Description="FragFortune's Starcraft II commentary channel." Slug="FragFortune" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="World Of Warcraft" Name="WorldofWarcraft" Description="World of Warcraft's official youtube channel." Slug="worldofwarcraft" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="World Of Warcraft" Name="TankSpot" Description="Zam networks official VOD channel." Slug="ZAMOfficial" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="World Of Warcraft" Name="MMO-Champion" Description="MMO-Champion.com's official channel." Slug="MMOChampionWoW" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="World Of Warcraft" Name="Oxhorn" Description="Highly entertaining machinima channel." Slug="Oxhorn" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="World Of Warcraft" Name="OMFGcata" Description="Features World of Warcraft: Cataclysm." Slug="OMFGcata" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="World Of Warcraft" Name="tgnWorldOfWarcraft" Description="TGN.tv's World of Warcraft channel." Slug="tgnWorldOfWarcraft" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="World Of Warcraft" Name="YogsCast" Description="Comedic coverage of Cataclysm with Lewis and Simon, two inept Brits who get into all sorts of zany scrapes." Slug="BlueXephos" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Diablo" Name="Diablo" Description="Diablo's official youtube channel." Slug="diablo" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Diablo" Name="ForceD3strategy" Description="Number one location for Diablo 3 strategies and tactics" Slug="ForceD3strategy" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Blizzard" Name="Blizzard" Description="Blizzard Entertainment's official youtube channel." Slug="blizzard" Provider="Youtube" />
-  <Entry xsi:type="Video" Category="Blizzard" Name="TotalBiscuit" Description="Hosts World of Warcraft and Starcraft II VOD's." Slug="TotalHalibut" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Blizzard" Name="TotalHalibut" Description="Hosts World of Warcraft and Starcraft II VOD's." Slug="TotalHalibut" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Blizzard" Name="The Craft Dude" Description="Hosts Starcraft 2, World of Warcraft HD videos." Slug="TheStarcraft2Dude" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="ESports" Name="Major League Gaming" Description="MLGPro's youtube channel." Slug="MajorLeagueGaming" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="ESports" Name="World Cyber Games" Description="WCG's youtube channel." Slug="WorldCyberGames" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="ESports" Name="Intel Extreme Masters" Description="Intel Extreme Masters is a computer gaming tournament now hitting its fifth season." Slug="IntelExtremeMasters" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="ESports" Name="ESLtv" Description="Electronic Sports League's youtube channel." Slug="esltv" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="ESports" Name="GameReplays.org" Description="GameReplays.org's official youtube channel." Slug="GameReplaysVideos" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Heroes Of Newerth" Name="HoNReplays.org" Description="GameReplays.org's brand new Heroes of Newerth channel." Slug="HonReplaysOrg" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Heroes Of Newerth" Name="HONLeague" Description="HONCast.com's official youtube channel." Slug="HoNLeague" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="League Of Legends" Name="Riot Games" Description="The official Riot Games channel -- creator's of the League of Legends." Slug="RiotGamesInc" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="League Of Legends" Name="LOL-Europe" Description="LOL-Europe.com's youtube channel." Slug="loleurope" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="League Of Legends" Name="LOL-Top10" Description="The League Top Ten channel aims to provide viewers with the best of the best League of Legends highlights, commentaries and guides." Slug="leaguetopten" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="League Of Legends" Name="LegendCommentaries" Description="Stephan commentating on League of Legends." Slug="LegendCommentaries" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="League Of Legends" Name="LOL Outtakes" Description="Funny, Epic, and Fail moments in League of Legends." Slug="Grasshyren" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Machinima" Name="Machinima.com" Description="Machinima.com's premier trailers, gameplay, montages and original series created in video games." Slug="machinima" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="Machinima" Name="Machinima Realm" Description="Machinima.com's newest channel brings together all your favorite worlds from MMOs to RPGs and more." Slug="MachinimaRealm" Provider="Youtube" />
 </Catalog>

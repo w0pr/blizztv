@@ -39,18 +39,18 @@
   <Entry xsi:type="Stream" Category="Starcraft" Name="oGsTheWind" Description="High level zerg player streaming." Slug="oGsTheWind" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="FnaticMSISen" Description="Sen of FnaticMSI's Starcraft II stream." Slug="sen-s-channel" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="RootCatZ" Description="RootCatZ Starcraft II stream." Slug="root-catz" Provider="LiveStream" />
-  <Entry xsi:type="Stream" Category="WorldOfWarcraft" Name="WOWInsider" Description="Audio only WOWInsider show." Slug="wow-insider-show" Provider="LiveStream" />
-  <Entry xsi:type="Stream" Category="WorldOfWarcraft" Name="Tankz" Description="A popular PvE and PvP stream with warrior POV." Slug="xfire_tankz4321" Provider="LiveStream" /> 
-  <Entry xsi:type="Stream" Category="LeagueOfLegends" Name="CLGaming" Description="Popular League of Legends stream." Slug="214" Provider="Own3DTV" /> 
-  <Entry xsi:type="Stream" Category="StreetFighter" Name="Gods Garden" Description="Popular Street Fighter community." Slug="godsgarden" Provider="UStream" />
-  <Entry xsi:type="Stream" Category="StreetFighter" Name="TeamSpooky" Description="TeamSpooky travels all over the world bringing you cool Street Fighter tournament footage and insight into the gamer life." Slug="teamspooky" Provider="UStream" />
-  <Entry xsi:type="Stream" Category="StreetFighter" Name="iplaywinner" Description="Broadcasts Super Street Fighter 4, Tekken 6, BlazBlue." Slug="iplaywinner" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="World Of Warcraft" Name="WOWInsider" Description="Audio only WOWInsider show." Slug="wow-insider-show" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="World Of Warcraft" Name="Tankz" Description="A popular PvE and PvP stream with warrior POV." Slug="xfire_tankz4321" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="League Of Legends" Name="SOLAR1S" Description="SOLAR1S is the Senior Strategy Specialist for League of Legends on Gamereplays.org. This channel will broadcast gamereplays staff team play, tournaments and other competive level events." Slug="solar1slol" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="League Of Legends" Name="CLGaming" Description="Popular League of Legends stream." Slug="214" Provider="Own3DTV" /> 
+  <Entry xsi:type="Stream" Category="Street Fighter" Name="Gods Garden" Description="Popular Street Fighter community." Slug="godsgarden" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Street Fighter" Name="TeamSpooky" Description="TeamSpooky travels all over the world bringing you cool Street Fighter tournament footage and insight into the gamer life." Slug="teamspooky" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Street Fighter" Name="iplaywinner" Description="Broadcasts Super Street Fighter 4, Tekken 6, BlazBlue." Slug="iplaywinner" Provider="UStream" />
   <Entry xsi:type="Stream" Category="Quake" Name="QuakeLiveTV" Description="Competitive QuakeLive coverage." Slug="quakelivetv" Provider="UStream" />
-  <Entry xsi:type="Stream" Category="CallOfDuty" Name="PureOwnage" Description="Call of Duty streaming community." Slug="halo-dream-legend" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Call Of Duty" Name="PureOwnage" Description="Call of Duty streaming community." Slug="halo-dream-legend" Provider="UStream" />
   <Entry xsi:type="Stream" Category="BattleField" Name="RushTV" Description="BattleField II streaming community." Slug="TeamRush" Provider="UStream" />
-  <Entry xsi:type="Stream" Category="DawnOfWar" Name="DOW2Live" Description="A Dawn of War 2 community which specialises in dow2 live streaming." Slug="dow2live" Provider="UStream" />
-  <Entry xsi:type="Stream" Category="GuitarHero" Name="Guitar Hero Phenom" Description="Popular Guitar Hero stream." Slug="Guitar-Hero-Phenom" Provider="UStream" />
-  <Entry xsi:type="Stream" Category="ESports" Name="TheSpeedGamers" Description="TheSpeedGamers have been streaming video game marathons for over a year to raise money for various charities." Slug="TheSpeedGamers" Provider="UStream" />
-  <Entry xsi:type="Stream" Category="ESports" Name="Level|Up" Description="A quite popular E-Sports stream." Slug="leveluplive" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="Dawn Of War" Name="DOW2Live" Description="A Dawn of War 2 community which specialises in dow2 live streaming." Slug="dow2live" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="E-Sports" Name="TheSpeedGamers" Description="TheSpeedGamers have been streaming video game marathons for over a year to raise money for various charities." Slug="TheSpeedGamers" Provider="UStream" />
+  <Entry xsi:type="Stream" Category="E-Sports" Name="Level|Up" Description="A quite popular E-Sports stream." Slug="leveluplive" Provider="UStream" />
   <Entry xsi:type="Stream" Category="Show" Name="WiiPlay" Description="A nintendo oriented gaming show." Slug="tombobblender" Provider="UStream" />
 </Catalog>
