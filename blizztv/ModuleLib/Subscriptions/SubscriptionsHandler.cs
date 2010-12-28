@@ -42,7 +42,13 @@ namespace BlizzTV.ModuleLib.Subscriptions
         {
             SubscriptionsStorage.Instance.Subscriptions.Remove(subscription);
             SubscriptionsStorage.Instance.Save();
-        }        
+        }
+
+        public void Rename(ISubscription subscription, string name)
+        {
+            subscription.Name = name;
+            SubscriptionsStorage.Instance.Save();
+        }
     }
 
     [Serializable]

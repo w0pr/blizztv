@@ -27,6 +27,7 @@ namespace BlizzTV.Modules.Videos
         public frmSettings()
         {
             InitializeComponent();
+            this.ListviewSubscriptions.AfterLabelEdit += OnItemEdit;
         }
 
         private void frmSettings_Load(object sender, EventArgs e)
@@ -57,6 +58,11 @@ namespace BlizzTV.Modules.Videos
             VideosPlugin.Instance.OnSaveSettings();
         }
 
+        private void buttonCatalog_Click(object sender, EventArgs e)
+        {
+            if (Catalog.Instance.ShowDialog()) this.LoadSubscriptions();
+        }
+
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             frmAddChannel f = new frmAddChannel();
@@ -77,9 +83,19 @@ namespace BlizzTV.Modules.Videos
             }
         }
 
-        private void buttonCatalog_Click(object sender, EventArgs e)
+        private void buttonEdit_Click(object sender, EventArgs e)
         {
-            if (Catalog.Instance.ShowDialog()) this.LoadSubscriptions();
+            if (ListviewSubscriptions.SelectedItems.Count > 0) ListviewSubscriptions.SelectedItems[0].BeginEdit();
+        }
+
+        private void ListviewSubscriptions_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 && ListviewSubscriptions.SelectedItems.Count > 0) ListviewSubscriptions.SelectedItems[0].BeginEdit();
+        }
+
+        void OnItemEdit(object sender, LabelEditEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Label)) Subscriptions.Instance.Rename((ListviewSubscriptions.Items[e.Item] as ListviewVideoSubscription).Subscription, e.Label);
         }
     }
 

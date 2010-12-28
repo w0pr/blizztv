@@ -27,6 +27,7 @@ namespace BlizzTV.Modules.Streams
         public frmSettings()
         {
             InitializeComponent();
+            ListviewSubscriptions.AfterLabelEdit += OnItemEdit;
         }
 
         private void frmSettings_Load(object sender, EventArgs e)
@@ -86,9 +87,19 @@ namespace BlizzTV.Modules.Streams
             if (Catalog.Instance.ShowDialog()) this.LoadSubscriptions();
         }
 
-        private void numericUpDownUpdateFeedsEveryXMinutes_ValueChanged(object sender, EventArgs e)
+        private void buttonEdit_Click(object sender, EventArgs e)
         {
+            if (ListviewSubscriptions.SelectedItems.Count > 0) ListviewSubscriptions.SelectedItems[0].BeginEdit();
+        }
 
+        private void ListviewSubscriptions_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 && ListviewSubscriptions.SelectedItems.Count > 0) ListviewSubscriptions.SelectedItems[0].BeginEdit();
+        }
+
+        void OnItemEdit(object sender, LabelEditEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Label)) Subscriptions.Instance.Rename((ListviewSubscriptions.Items[e.Item] as ListviewStreamSubscription).Subscription, e.Label);
         }
     }
 
