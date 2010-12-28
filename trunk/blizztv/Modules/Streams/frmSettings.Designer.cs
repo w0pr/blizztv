@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonCatalog = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
@@ -73,6 +74,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.buttonEdit);
             this.tabPage2.Controls.Add(this.buttonCatalog);
             this.tabPage2.Controls.Add(this.buttonRemove);
             this.tabPage2.Controls.Add(this.buttonAdd);
@@ -84,6 +86,17 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Subscriptions";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonEdit
+            // 
+            this.buttonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonEdit.Location = new System.Drawing.Point(275, 205);
+            this.buttonEdit.Name = "buttonEdit";
+            this.buttonEdit.Size = new System.Drawing.Size(75, 23);
+            this.buttonEdit.TabIndex = 9;
+            this.buttonEdit.Text = "Edit";
+            this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonCatalog
             // 
@@ -110,7 +123,7 @@
             // buttonAdd
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.Location = new System.Drawing.Point(278, 205);
+            this.buttonAdd.Location = new System.Drawing.Point(194, 205);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 3;
@@ -127,12 +140,15 @@
             this.colName,
             this.colProvider,
             this.colSlug});
+            this.ListviewSubscriptions.FullRowSelect = true;
+            this.ListviewSubscriptions.LabelEdit = true;
             this.ListviewSubscriptions.Location = new System.Drawing.Point(4, 6);
             this.ListviewSubscriptions.Name = "ListviewSubscriptions";
             this.ListviewSubscriptions.Size = new System.Drawing.Size(432, 192);
             this.ListviewSubscriptions.TabIndex = 1;
             this.ListviewSubscriptions.UseCompatibleStateImageBehavior = false;
             this.ListviewSubscriptions.View = System.Windows.Forms.View.Details;
+            this.ListviewSubscriptions.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ListviewSubscriptions_KeyUp);
             // 
             // colName
             // 
@@ -218,7 +234,6 @@
             0,
             0,
             0});
-            this.numericUpDownUpdatePeriod.ValueChanged += new System.EventHandler(this.numericUpDownUpdateFeedsEveryXMinutes_ValueChanged);
             // 
             // label1
             // 
@@ -345,5 +360,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.NumericUpDown numericUpDownChatWindowHeight;
         private System.Windows.Forms.NumericUpDown numericUpDownChatWindowWidth;
+        private System.Windows.Forms.Button buttonEdit;
     }
 }
