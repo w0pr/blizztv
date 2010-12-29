@@ -487,6 +487,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\blizzblues_gray.png" />
+    <None Include="Resources\video_gray.png" />
+    <None Include="Resources\feed_gray.png" />
+    <None Include="Resources\stream.png" />
+    <None Include="Resources\video.png" />
     <None Include="Resources\sleep.ico" />
     <None Include="Resources\blizztv.ico" />
     <None Include="Resources\event.png" />
@@ -508,13 +513,11 @@
     <None Include="Resources\DoorBell.mp3" />
     <None Include="Resources\DefaultNotification.mp3" />
     <None Include="Resources\wow.png" />
-    <None Include="Resources\video.png" />
     <None Include="Resources\userinterface.png" />
     <None Include="Resources\userguide.png" />
     <None Include="Resources\us.png" />
     <None Include="Resources\update.png" />
     <None Include="Resources\unread.png" />
-    <None Include="Resources\stream.png" />
     <None Include="Resources\spreadtheword.png" />
     <None Include="Resources\sleep.png" />
     <None Include="Resources\settings.png" />

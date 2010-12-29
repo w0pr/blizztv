@@ -184,9 +184,6 @@
   <data name="spreadtheword" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\Resources\spreadtheword.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stream" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\Resources\stream.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="unread" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\Resources\unread.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -202,13 +199,25 @@
   <data name="userinterface" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\Resources\userinterface.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="video" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\Resources\video.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="wow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\Resources\wow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="_event" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\Resources\event.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="blizzblues_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\Resources\blizzblues_gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="feed_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\Resources\feed_gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stream" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\Resources\stream.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\Resources\video.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="video_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\Resources\video_gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

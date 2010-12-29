@@ -27,15 +27,28 @@ namespace BlizzTV.ModuleLib
     {
         private string _title; 
         private string _key;
+        private NamedImage _icon = null;
         private ItemStyle _style = ItemStyle.Regular;
         private bool _disposed = false;
 
         public string Title { get { return this._title; } }        
         public string Key { get { return this._key; } }
-        public NamedImage Icon { get; internal set; }
 
         public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> ContextMenus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
         public Dictionary<string, ListItem> Childs = new Dictionary<string, ListItem>();
+
+        public NamedImage Icon
+        {
+            get
+            {
+                return this._icon;
+            }
+            set
+            {
+                this._icon = value;
+            }
+        }
+
 
         public ItemStyle Style
         {
