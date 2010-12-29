@@ -27,62 +27,12 @@ namespace BlizzTV.Modules.BlizzBlues.Game
 {
     public class BlueStory:ListItem
     {
-        private Statutes _status = Statutes.Unknown;
-
         public Region Region { get; private set; }
         public string Link { get; private set; }
         public string TopicId { get; private set; }
         public string PostId { get; private set; }
         public Dictionary<string, BlueStory> More = new Dictionary<string, BlueStory>();
-
-        public Statutes Status
-        {
-            get
-            {
-                if (this._status == Statutes.Unknown)
-                {
-                    if (!StatusStorage.Instance.Exists(string.Format("bluestory.{0}-{1}", this.TopicId,this.PostId))) this.Status = Statutes.Fresh;
-                    else
-                    {
-                        this._status = (Statutes)StatusStorage.Instance[string.Format("bluestory.{0}-{1}", this.TopicId, this.PostId)];
-                        if (this._status == Statutes.Fresh) this.Status = Statutes.Unread;
-                        else if (this._status == Statutes.Unread) this.Style = ItemStyle.Bold;
-                    }
-                }
-                else
-                {
-                    switch (this._status)
-                    {
-                        case Statutes.Fresh:
-                        case Statutes.Unread:
-                            if (this.Style != ItemStyle.Bold) this.Style = ItemStyle.Bold;
-                            break;
-                        case Statutes.Read:
-                            if (this.Style != ItemStyle.Regular) this.Style = ItemStyle.Regular;
-                            break;
-                    }
-                }
-                return this._status;
-            }
-            set
-            {
-                this._status = value;
-                StatusStorage.Instance[string.Format("bluestory.{0}-{1}", this.TopicId, this.PostId)] = (byte)this._status;
-                switch (this._status)
-                {
-                    case Statutes.Fresh:
-                    case Statutes.Unread:
-                        this.Style = ItemStyle.Bold;
-                        break;
-                    case Statutes.Read:
-                        this.Style = ItemStyle.Regular;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
+    
         public BlueStory(string title, Region region, string link, string topicId, string postId)
             : base(title)
         {
@@ -96,27 +46,27 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
 
             if (this.Region == Game.Region.Eu)
-                this.Icon = new NamedImage("eu_16", Assets.Images.Icons.Png._16.eu);
+                this.Icon = new NamedImage("eu", Assets.Images.Icons.Png._16.eu);
             else if (this.Region == Game.Region.Us)
-                this.Icon = new NamedImage("us_16", Assets.Images.Icons.Png._16.us);
+                this.Icon = new NamedImage("us", Assets.Images.Icons.Png._16.us);
         }
 
         public void AddPost(BlueStory blueStory)
         {
             this.More.Add(blueStory.PostId,blueStory);
-            blueStory.OnStyleChange+=ChildStyleChange;
+            blueStory.OnStateChange += OnChildStateChange;
         }
 
-        void  ChildStyleChange(ItemStyle style)
+        private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.Style == style) return;           
-            int unread = this.More.Count(pair => pair.Value.Style == ItemStyle.Bold);
-            this.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+            if (this.State == (sender as BlueStory).State) return;
+            int unread = this.More.Count(pair => pair.Value.State == ModuleLib.State.Fresh || pair.Value.State == ModuleLib.State.Unread);
+            this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public void CheckForNotifications()
         {
-            if (Settings.Instance.NotificationsEnabled && this.Status == Statutes.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("BlizzBlue: {0}",this.Title), "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled && this.State ==  ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("BlizzBlue: {0}",this.Title), "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void DoubleClicked(object sender, System.EventArgs e)
@@ -132,25 +82,17 @@ namespace BlizzTV.Modules.BlizzBlues.Game
         private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null);
-            if (this.Status != Statutes.Read) this.Status = Statutes.Read;
+            if (this.State != ModuleLib.State.Read) this.State = ModuleLib.State.Read;
         }
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.Status = Statutes.Read; // set the story state as read.
+            this.State = ModuleLib.State.Read;
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.Status = Statutes.Unread; // set the story state as unread.
-        }
-
-        public enum Statutes
-        {
-            Unknown,
-            Fresh,
-            Unread,
-            Read
+            this.State = ModuleLib.State.Unread;
         }
     }
 }

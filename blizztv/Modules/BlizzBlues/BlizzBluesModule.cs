@@ -42,7 +42,7 @@ namespace BlizzTV.Modules.BlizzBlues
         {
             BlizzBluesModule.Instance = this;
             this.RootListItem=new ListItem("BlizzBlues");
-            this.RootListItem.Icon = new NamedImage("blizzblues_16", Assets.Images.Icons.Png._16.blizzblues);
+            this.RootListItem.Icon = new NamedImage("blizzblues", Assets.Images.Icons.Png._16.blizzblues);
 
             this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Blues", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.
             this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
@@ -75,21 +75,20 @@ namespace BlizzTV.Modules.BlizzBlues
                 this.RootListItem.Childs.Clear();
             }
 
-            this.RootListItem.Style = ItemStyle.Regular;
             this.RootListItem.SetTitle("Updating BlizzBlues..");
 
             if (Settings.Instance.TrackWorldofWarcraft)
             {
                 WOWBlues wow = new WOWBlues();
                 this._parsers.Add(wow);
-                wow.OnStyleChange += ChildStyleChange;
+                wow.OnStateChange += OnChildStateChange;
             }
 
             if (Settings.Instance.TrackStarcraft)
             {
                 SCBlues sc = new SCBlues();
                 this._parsers.Add(sc);
-                sc.OnStyleChange += ChildStyleChange;
+                sc.OnStateChange += OnChildStateChange;
             }
 
             if (this._parsers.Count > 0)
@@ -120,14 +119,12 @@ namespace BlizzTV.Modules.BlizzBlues
             this.Updating = false;
         }
 
-        void ChildStyleChange(ItemStyle style)
+        private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.Style == style) return;
-
-            int unread = this._parsers.Count(parser => parser.Style == ItemStyle.Bold);
-            this.RootListItem.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+            if (this.RootListItem.State == (sender as BlueParser).State) return;
+            int unread = this._parsers.Count(parser => parser.State == State.Unread);
+            this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
         }
-
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
@@ -135,7 +132,7 @@ namespace BlizzTV.Modules.BlizzBlues
             {
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
-                    pair.Value.Status = BlueStory.Statutes.Read;
+                    pair.Value.State = State.Read;
                 }
             }
         }
@@ -146,7 +143,7 @@ namespace BlizzTV.Modules.BlizzBlues
             {
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
-                    pair.Value.Status = BlueStory.Statutes.Unread;
+                    pair.Value.State = State.Unread;
                 }
             }
         }

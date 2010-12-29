@@ -44,7 +44,7 @@ namespace BlizzTV.Modules.Videos
             this.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
             this.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
 
-            this.Icon = new NamedImage("video_16", Assets.Images.Icons.Png._16.video);
+            this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
         }
 
         public bool IsValid()
@@ -66,20 +66,19 @@ namespace BlizzTV.Modules.Videos
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.Status = Video.Statutes.Watched; } // marked all videos as watched.
+            foreach (Video v in this.Videos) { v.State = ModuleLib.State.Read; } // marked all videos as watched.
         }
 
         private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.Status = Video.Statutes.Unwatched; } // marked all videos as unread.
+            foreach (Video v in this.Videos) { v.State = ModuleLib.State.Unread; } // marked all videos as unread.
         }
 
-        protected void OnChildStyleChange(ItemStyle style)
+        protected void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.Style == style) return;
-
-            int unread = this.Videos.Count(v => v.Style == ItemStyle.Bold);
-            this.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+            if (this.State == (sender as Video).State) return;
+            int unread = this.Videos.Count(s => s.State == ModuleLib.State.Fresh || s.State == ModuleLib.State.Unread);
+            this.State = unread > 0 ? ModuleLib.State.Unread : ModuleLib.State.Read;
         }
 
         #region de-ctor

@@ -88,13 +88,6 @@ namespace BlizzTV.Assets.Images.Icons.Png {
             }
         }
         
-        internal static System.Drawing.Bitmap blizzblues_gray {
-            get {
-                object obj = ResourceManager.GetObject("blizzblues_gray", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap blizztv {
             get {
                 object obj = ResourceManager.GetObject("blizztv", resourceCulture);
@@ -161,13 +154,6 @@ namespace BlizzTV.Assets.Images.Icons.Png {
         internal static System.Drawing.Bitmap feed {
             get {
                 object obj = ResourceManager.GetObject("feed", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap feed_gray {
-            get {
-                object obj = ResourceManager.GetObject("feed_gray", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -280,13 +266,6 @@ namespace BlizzTV.Assets.Images.Icons.Png {
         internal static System.Drawing.Bitmap video {
             get {
                 object obj = ResourceManager.GetObject("video", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap video_gray {
-            get {
-                object obj = ResourceManager.GetObject("video_gray", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

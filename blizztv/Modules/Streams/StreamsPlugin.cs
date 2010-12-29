@@ -43,7 +43,7 @@ namespace BlizzTV.Modules.Streams
         {
             StreamsPlugin.Instance = this;
             this.RootListItem = new ListItem("Streams");
-            this.RootListItem.Icon = new NamedImage("stream_16", Assets.Images.Icons.Png._16.stream);
+            this.RootListItem.Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream);
 
             // register context-menu's.
             this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.

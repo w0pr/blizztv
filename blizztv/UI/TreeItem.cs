@@ -19,15 +19,13 @@ using System;
 using System.Windows.Forms;
 using System.Drawing;
 using BlizzTV.CommonLib.UI;
+using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 
 namespace BlizzTV.UI
 {
     public class TreeItem:TreeNode
     {
-        private static readonly Font Bold = new Font("Tahoma", 9, FontStyle.Bold); // font for unread items.
-        private static readonly Font Regular = new Font("Tahoma", 9, FontStyle.Regular); // font for read items.       
-
         private ListItem _item; // the module-item bound to.
         private Module _plugin; // the module itself.        
         private bool _disposed = false;
@@ -39,23 +37,17 @@ namespace BlizzTV.UI
         {
             this._plugin = plugin;
             this._item = item;
-            this.Name = _item.Key;
+            this.Name = _item.Guid;
 
             this._item.OnTitleChange += OnTitleChange; // the title-change event.
-            this._item.OnStyleChange += OnStyleChange; // the style-change event.
+            this._item.OnStateChange += OnStateChange;
             this._item.OnShowForm += OnShowForm; // the show-form request.
         }
 
         public void Render() // renders the item with title, state and icon information
         {
             this.Text = this._item.Title; // set the inital title
-            this.OnStyleChange(this._item.Style);
-
-            if (this._item.Icon != null)
-            {
-                if (!this.TreeView.ImageList.Images.ContainsKey(this._item.Icon.Name)) this.TreeView.ImageList.Images.Add(this._item.Icon.Name, this._item.Icon.Image); // add the item image to imagelist if not exists already.         
-                this.ImageIndex = this.TreeView.ImageList.Images.IndexOfKey(this._item.Icon.Name); // use the item's plugin icon.
-            }
+            this.OnStateChange(this, EventArgs.Empty);
         }
 
         public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e)
@@ -76,20 +68,25 @@ namespace BlizzTV.UI
             });
         }
 
-        private void OnStyleChange(ItemStyle style)
+        private void OnStateChange(object sender, EventArgs e)
         {
-            this.TreeView.AsyncInvokeHandler(() =>
+            if (this._item.Icon != null)
+            {
+                this.TreeView.AsyncInvokeHandler(() =>
                 {
-                    switch (style)
+                    string imageKey = this.Item.Icon.Name;
+                    Bitmap image = this.Item.Icon.Image;
+
+                    if (this.Item.State == State.Read)
                     {
-                        case ItemStyle.Bold:
-                            this.NodeFont = TreeItem.Bold;                            
-                            break;
-                        case ItemStyle.Regular:
-                            this.NodeFont = TreeItem.Regular;
-                            break;
+                        imageKey += "GrayScale";
+                        image = image.GrayScale();
                     }
+    
+                    if (!this.TreeView.ImageList.Images.ContainsKey(imageKey)) this.TreeView.ImageList.Images.Add(imageKey, image); // add the item image to imagelist if not exists already.         
+                    this.ImageIndex = this.SelectedImageIndex = this.TreeView.ImageList.Images.IndexOfKey(imageKey); // use the item icon.
                 });
+            }
         }
 
         private void OnShowForm(Form form, bool isModal)
@@ -118,7 +115,6 @@ namespace BlizzTV.UI
                 if (disposing) // managed resources
                 {
                     this._item.OnTitleChange -= OnTitleChange;
-                    this._item.OnStyleChange -= OnStyleChange;
                     this._item = null;
                     this._plugin = null;
                 }

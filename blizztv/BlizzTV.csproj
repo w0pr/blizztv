@@ -149,6 +149,7 @@
     <Compile Include="CommonLib\Updates\frmUpdater.Designer.cs">
       <DependentUpon>frmUpdater.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonLib\Utils\BitmapExtensions.cs" />
     <Compile Include="CommonLib\Utils\NamedImage.cs" />
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
     <Compile Include="CommonLib\Helpers\Registry.cs" />
@@ -383,6 +384,7 @@
     <EmbeddedResource Include="Assets\Images\Icons\Png\16.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>16.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Sounds\Notifications.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -487,11 +489,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
-    <None Include="Resources\blizzblues_gray.png" />
-    <None Include="Resources\video_gray.png" />
-    <None Include="Resources\feed_gray.png" />
-    <None Include="Resources\stream.png" />
     <None Include="Resources\video.png" />
+    <None Include="Resources\stream.png" />
     <None Include="Resources\sleep.ico" />
     <None Include="Resources\blizztv.ico" />
     <None Include="Resources\event.png" />

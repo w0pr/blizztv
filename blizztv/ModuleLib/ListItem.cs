@@ -20,50 +20,70 @@ using System.Collections.Generic;
 using System.Drawing;
 using BlizzTV.CommonLib.Notifications;
 using BlizzTV.CommonLib.Utils;
+using BlizzTV.ModuleLib.StatusStorage;
 
 namespace BlizzTV.ModuleLib
 {
     public class ListItem : INotificationRequester, IDisposable
     {
         private string _title; 
-        private string _key;
+        private string _guid = string.Empty;
+        private State _state = State.Unknown;
         private NamedImage _icon = null;
-        private ItemStyle _style = ItemStyle.Regular;
         private bool _disposed = false;
 
-        public string Title { get { return this._title; } }        
-        public string Key { get { return this._key; } }
+        public string Title { get { return this._title; } }                
 
-        public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> ContextMenus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>();
-        public Dictionary<string, ListItem> Childs = new Dictionary<string, ListItem>();
+        public string Guid {
+            get
+            {
+                if (this._guid == string.Empty) this._guid = this.GetType().ToString();
+                return this._guid;
+            }
+            protected set
+            {
+                this._guid = value;
+            }        
+        }
 
+        public State State
+        {
+            get
+            {
+                if (this._state == ModuleLib.State.Unknown)
+                {
+                    string key=string.Format("{0}.{1}", this.GetType().ToString(), this.Guid);
+                    if (!StatusStorage.StatusStorage.Instance.Exists(key)) this.State = ModuleLib.State.Fresh;
+                    else
+                    {
+                        this._state = (State)StatusStorage.StatusStorage.Instance[key];
+                        if (this._state == ModuleLib.State.Fresh) this.State = ModuleLib.State.Unread;
+                    }
+                }
+                return this._state;
+            }
+            set
+            {
+                this._state = value;
+                string key = string.Format("{0}.{1}", this.GetType().ToString(), this.Guid);
+                StatusStorage.StatusStorage.Instance[key] = (byte)this._state;
+                if (this.OnStateChange != null) this.OnStateChange(this,EventArgs.Empty);
+            }
+        }
+        
         public NamedImage Icon
         {
-            get
-            {
-                return this._icon;
-            }
-            set
-            {
-                this._icon = value;
-            }
-        }
+            get { return this._icon; }
+            set { if (this._icon != value) this._icon = value; }
+        }    
 
+        public Dictionary<string, System.Windows.Forms.ToolStripMenuItem> ContextMenus = new Dictionary<string, System.Windows.Forms.ToolStripMenuItem>();
+        public Dictionary<string, ListItem> Childs = new Dictionary<string, ListItem>();
 
-        public ItemStyle Style
+        public ListItem(string title)
         {
-            get
-            {
-                return this._style;
-            }
-            set
-            {
-                this._style = value;
-                if (OnStyleChange != null) OnStyleChange(value);
-            }
+            this._title = title;
         }
-
-        public ListItem(string title) { this._title = title; this.GenerateUniqueRandomKey(); } // generate an unique-random key for the item.
 
         public virtual void DoubleClicked(object sender, EventArgs e) { }
         public virtual void RightClicked(object sender, EventArgs e) { }
@@ -77,8 +97,7 @@ namespace BlizzTV.ModuleLib
             if (OnTitleChange != null) OnTitleChange(this); // notify observers.
         }
 
-        public delegate void StyleChangedEventHandler(ItemStyle style);
-        public event StyleChangedEventHandler OnStyleChange;
+        public EventHandler OnStateChange;
 
         public delegate void ShowFormEventHandler(System.Windows.Forms.Form form, bool isModal);
         public event ShowFormEventHandler OnShowForm;
@@ -86,9 +105,6 @@ namespace BlizzTV.ModuleLib
         {
             if (OnShowForm != null) OnShowForm(form,isModal);
         }
-
-
-        private void GenerateUniqueRandomKey() { this._key = Convert.ToBase64String(Guid.NewGuid().ToByteArray()); } // generates an unique-random key for the item.
         
         #region de-ctor
 
@@ -106,7 +122,6 @@ namespace BlizzTV.ModuleLib
             if (disposing) // managed resources
             {
                 this.OnTitleChange = null;
-                this.OnStyleChange = null;
                 this.OnShowForm = null;
             }
             _disposed = true;
@@ -114,9 +129,12 @@ namespace BlizzTV.ModuleLib
         #endregion
     }
 
-    public enum ItemStyle
+    public enum State
     {
-        Bold,
-        Regular,
+        Unknown,
+        Fresh,
+        Unread,
+        Read,
+        Error
     }
 }
