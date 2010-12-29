@@ -42,7 +42,7 @@ namespace BlizzTV.Modules.Videos
         {
             VideosPlugin.Instance = this;
             this.RootListItem = new ListItem("Videos");
-            this.RootListItem.Icon = new NamedImage("video_16", Assets.Images.Icons.Png._16.video);
+            this.RootListItem.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
 
             // register context menu's.
             this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Channels", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.
@@ -99,13 +99,12 @@ namespace BlizzTV.Modules.Videos
                 this.RootListItem.Childs.Clear();
             }
 
-            this.RootListItem.Style = ItemStyle.Regular;
             this.RootListItem.SetTitle("Updating videos..");
 
             foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
             {
                 Channel c = ChannelFactory.CreateChannel(pair.Value);
-                c.OnStyleChange += OnChildStyleChange;
+                c.OnStateChange += OnChildStateChange;
                 this._channels.Add(pair.Value.Slug, c);
             }
 
@@ -123,13 +122,12 @@ namespace BlizzTV.Modules.Videos
             NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
             this.Updating = false;
         }
-
-        void OnChildStyleChange(ItemStyle style)
+        
+        private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.Style == style) return;
-
-            int unread = this._channels.Count(pair => pair.Value.Style == ItemStyle.Bold);
-            this.RootListItem.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+            if (this.RootListItem.State == (sender as Channel).State) return;
+            int unread = this._channels.Count(pair => pair.Value.State == State.Unread);
+            this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
         }
         
         public void OnSaveSettings()
@@ -166,7 +164,7 @@ namespace BlizzTV.Modules.Videos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.Watched; }
+                foreach (Video v in pair.Value.Videos) { v.State = State.Read; }
             }
         }
 
@@ -174,7 +172,7 @@ namespace BlizzTV.Modules.Videos
         {
             foreach (KeyValuePair<string, Channel> pair in this._channels)
             {
-                foreach (Video v in pair.Value.Videos) { v.Status = Video.Statutes.Unwatched; }
+                foreach (Video v in pair.Value.Videos) { v.State = State.Unread; }
             }
         }
 

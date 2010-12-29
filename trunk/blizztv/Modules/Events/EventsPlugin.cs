@@ -48,10 +48,11 @@ namespace BlizzTV.Modules.Events
         {
             EventsPlugin.Instance = this;
             this.RootListItem = new ListItem("Events");
-            this.RootListItem.Icon = new NamedImage("event_16", Assets.Images.Icons.Png._16._event);
-            this._eventsToday.Icon = new NamedImage("event_16", Assets.Images.Icons.Png._16._event);
-            this._eventsUpcoming.Icon = new NamedImage("event_16", Assets.Images.Icons.Png._16._event);
-            this._eventsOver.Icon = new NamedImage("event_16", Assets.Images.Icons.Png._16._event);
+            NamedImage eventIcon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
+            this.RootListItem.Icon = eventIcon;
+            this._eventsToday.Icon = eventIcon;
+            this._eventsUpcoming.Icon = eventIcon;
+            this._eventsOver.Icon = eventIcon;
 
             this.Menus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // register calender menu.
             this.RootListItem.ContextMenus.Add("calendar", new System.Windows.Forms.ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.

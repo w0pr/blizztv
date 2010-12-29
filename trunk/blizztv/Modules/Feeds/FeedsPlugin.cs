@@ -43,7 +43,7 @@ namespace BlizzTV.Modules.Feeds
         {
             FeedsPlugin.Instance = this;
             this.RootListItem = new ListItem("Feeds");
-            this.RootListItem.Icon = new NamedImage("feed_16", Assets.Images.Icons.Png._16.feed);
+            this.RootListItem.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
 
             // register context menu's.
             this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.
@@ -107,14 +107,13 @@ namespace BlizzTV.Modules.Feeds
                 this.RootListItem.Childs.Clear();
             }
                 
-            this.RootListItem.Style = ItemStyle.Regular;
             this.RootListItem.SetTitle("Updating feeds..");
 
             foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
             {
                 Feed feed = new Feed(pair.Value);
                 this._feeds.Add(pair.Value.Url, feed);
-                feed.OnStyleChange += ChildStyleChange;
+                feed.OnStateChange += OnChildStateChange;
             }
 
             Workload.Instance.Add(this, this._feeds.Count);
@@ -136,12 +135,11 @@ namespace BlizzTV.Modules.Feeds
             this.Updating = false;
         }
 
-        void ChildStyleChange(ItemStyle style)
+        private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.Style == style) return;
-
-            int unread = this._feeds.Count(pair => pair.Value.Style == ItemStyle.Bold);
-            this.RootListItem.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+            if (this.RootListItem.State == (sender as Feed).State) return;
+            int unread = this._feeds.Count(pair => pair.Value.State == State.Unread);
+            this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public void OnSaveSettings()
@@ -172,7 +170,7 @@ namespace BlizzTV.Modules.Feeds
         {
             foreach (Story s in this._feeds.SelectMany(pair => pair.Value.Stories))
             {
-                s.Status = Story.Statutes.Read;
+                s.State = State.Read;
             }
         }
 
@@ -180,7 +178,7 @@ namespace BlizzTV.Modules.Feeds
         {
             foreach (Story s in this._feeds.SelectMany(pair => pair.Value.Stories))
             {
-                s.Status = Story.Statutes.Unread;
+                s.State = State.Unread;
             }
         }
 

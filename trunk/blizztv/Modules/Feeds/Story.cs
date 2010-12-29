@@ -25,59 +25,8 @@ namespace BlizzTV.Modules.Feeds
 {
     public class Story : ListItem
     {
-        private Statutes _status = Statutes.Unknown;
-
         public string Link { get; private set; }
-        public string Guid { get; protected set; }
-
-        public Statutes Status
-        {
-            get
-            {
-                if (this._status == Statutes.Unknown)
-                {
-                    if (!StatusStorage.Instance.Exists(string.Format("story.{0}", this.Guid))) this.Status = Statutes.Fresh;
-                    else
-                    {
-                        this._status = (Statutes)StatusStorage.Instance[string.Format("story.{0}", this.Guid)];
-                        if (this._status == Statutes.Fresh) this.Status = Statutes.Unread;
-                        else if (this._status == Statutes.Unread) this.Style = ItemStyle.Bold;
-                    }
-                }
-                else
-                {
-                    switch (this._status)
-                    {
-                        case Statutes.Fresh:
-                        case Statutes.Unread:
-                            if (this.Style != ItemStyle.Bold) this.Style = ItemStyle.Bold;
-                            break;                        
-                        case Statutes.Read:
-                            if (this.Style != ItemStyle.Regular) this.Style = ItemStyle.Regular;
-                            break;
-                    }
-                }
-                return this._status;
-            }
-            set
-            {
-                this._status = value;
-                StatusStorage.Instance[string.Format("story.{0}", this.Guid)] = (byte)this._status;
-                switch (this._status)
-                {
-                    case Statutes.Fresh:
-                    case Statutes.Unread:
-                        this.Style = ItemStyle.Bold;
-                        break;
-                    case Statutes.Read:
-                        this.Style = ItemStyle.Regular;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
+        
         public Story(FeedItem item)
             : base(item.Title)
         {
@@ -88,12 +37,12 @@ namespace BlizzTV.Modules.Feeds
             this.ContextMenus.Add("markasread",new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
 
-            this.Icon = new NamedImage("story_16", Assets.Images.Icons.Png._16.feed);
+            this.Icon = new NamedImage("story", Assets.Images.Icons.Png._16.feed);
         }
 
         public void CheckForNotifications()
         {
-            if (Settings.Instance.NotificationsEnabled &&  this.Status == Statutes.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled &&  this.State == ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void DoubleClicked(object sender, EventArgs e)
@@ -109,7 +58,7 @@ namespace BlizzTV.Modules.Feeds
         private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-            if(this.Status!= Statutes.Read) this.Status = Statutes.Read;            
+            if (this.State != ModuleLib.State.Read) this.State = ModuleLib.State.Read;  
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
@@ -118,13 +67,13 @@ namespace BlizzTV.Modules.Feeds
             this.ContextMenus["markasread"].Visible=false;
             this.ContextMenus["markasunread"].Visible=false;
 
-            switch (this.Status) // switch on the item state.
-	        {
-		        case Statutes.Fresh:
-                case Statutes.Unread:
-                    this.ContextMenus["markasread"].Visible=true; // make mark as read menu visible.
+            switch (this.State)
+            {
+                case ModuleLib.State.Fresh:
+                case ModuleLib.State.Unread:
+                    this.ContextMenus["markasread"].Visible = true; // make mark as read menu visible.
                     break;
-                case Statutes.Read:
+                case ModuleLib.State.Read:
                     this.ContextMenus["markasunread"].Visible = true; // make mark as unread menu visible.
                     break;
             }
@@ -132,20 +81,12 @@ namespace BlizzTV.Modules.Feeds
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.Status = Statutes.Read; // set the story state as read.
+            this.State = ModuleLib.State.Read;            
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.Status = Statutes.Unread; // set the story state as unread.
-        }
-
-        public enum Statutes
-        {
-            Unknown,
-            Fresh,
-            Unread,
-            Read
+            this.State = ModuleLib.State.Unread;
         }
     }
 }

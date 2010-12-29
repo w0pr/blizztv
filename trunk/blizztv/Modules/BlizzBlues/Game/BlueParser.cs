@@ -74,7 +74,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
                             postId = m.Groups["PostID"].Value;
 
                             BlueStory b = new BlueStory(postTitle, source.Region, postLink, topicId, postId);
-                            b.OnStyleChange += ChildStyleChange;
+                            b.OnStateChange += OnChildStateChange;
 
                             if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, b);
                             else this.Stories[topicId].AddPost(b);                       
@@ -85,21 +85,21 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             }
         }
 
-        void ChildStyleChange(ItemStyle style)
+        private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.Style == style) return;
-            int unread = this.Stories.Count(pair => pair.Value.Style == ItemStyle.Bold);
-            this.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+            if (this.State == (sender as BlueStory).State) return;
+            int unread = this.Stories.Count(pair => pair.Value.State == ModuleLib.State.Fresh || pair.Value.State == ModuleLib.State.Unread);
+            this.State = unread > 0 ? ModuleLib.State.Unread : ModuleLib.State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.Status = BlueStory.Statutes.Read; } // marked all stories as read.
+            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.State = ModuleLib.State.Read; } // marked all stories as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.Status = BlueStory.Statutes.Unread; } // marked all stories as unread.
+            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.State = ModuleLib.State.Unread; } // marked all stories as unread.
         }
     }
 

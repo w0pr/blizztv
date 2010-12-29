@@ -64,7 +64,7 @@ namespace BlizzTV.Modules.Streams
             this.Slug = subscription.Slug;
             this.Provider = subscription.Provider;
 
-            this.Icon = new NamedImage("stream_16", Assets.Images.Icons.Png._16.stream);
+            this.Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream);
         }
 
         public virtual void Process() // get the stream data by replacing provider variables. handler's can override this method to run their own routines, though base.Process() should be called also.

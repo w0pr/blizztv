@@ -83,7 +83,7 @@ namespace BlizzTV.Modules.Events
             this.IsOver = isOver;
             this.Time = time;
 
-            this.Icon = new NamedImage("event_16", Assets.Images.Icons.Png._16._event);
+            this.Icon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
         }
 
         public override void DoubleClicked(object sender, EventArgs e)

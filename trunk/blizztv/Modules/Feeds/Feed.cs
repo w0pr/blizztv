@@ -33,7 +33,7 @@ namespace BlizzTV.Modules.Feeds
         public string Name { get; private set; }
         public string Url { get; private set; }
 
-        public List<Story> Stories = new List<Story>(); // the feed's stories -- TODO: should be a readonly collection.
+        public List<Story> Stories = new List<Story>(); 
 
         public Feed(FeedSubscription subscription)
             : base(subscription.Name)
@@ -45,7 +45,7 @@ namespace BlizzTV.Modules.Feeds
             this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
 
-            this.Icon = new NamedImage("feed_16", Assets.Images.Icons.Png._16.feed);
+            this.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
         }
 
         public bool IsValid()
@@ -73,7 +73,7 @@ namespace BlizzTV.Modules.Feeds
                     try
                     {
                         Story story = new Story(item);
-                        story.OnStyleChange += ChildStyleChange;
+                        story.OnStateChange += OnChildStateChange;
                         this.Stories.Add(story);
                     }
                     catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed-Parse Error: {0}", e)); }
@@ -83,22 +83,21 @@ namespace BlizzTV.Modules.Feeds
             return false;     
         }
 
-        void ChildStyleChange(ItemStyle style)
+        private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.Style == style) return;
-
-            int unread = this.Stories.Count(s => s.Style == ItemStyle.Bold);
-            this.Style = unread > 0 ? ItemStyle.Bold : ItemStyle.Regular;
+            if (this.State == (sender as Story).State) return;
+            int unread = this.Stories.Count(s => s.State == ModuleLib.State.Fresh || s.State == ModuleLib.State.Unread);
+            this.State = unread > 0 ? ModuleLib.State.Unread : ModuleLib.State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.Status = Story.Statutes.Read; } // marked all stories as read.
+            foreach (Story s in this.Stories) { s.State = ModuleLib.State.Read; } // marked all stories as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.Status = Story.Statutes.Unread; } // marked all stories as unread.
+            foreach (Story s in this.Stories) { s.State = ModuleLib.State.Unread; } // marked all stories as unread.
         }
 
         #region de-ctor
