@@ -1,6 +1,29 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
+*30.12.2010 - 0.18-beta (r279)*
+----
+ * Improved the item-state tracking routines. 
+ * Read items icons are now grayscaled, instead of differentiation using bold-regular text styles.
+ * Updated the icon-set.
+ * Implemented stream, video and feed catalogs which now you can add subscriptions from these hand-pick resources.
+ * Implemented audio & streaming engine.
+ * Implemented audio support for notifications.
+ * Implemented download manager API.
+ * Updater can now download the update file on it's own and execute the update process.
+ * Dependency checker can now download the Adobe Flash Player runtime and start installing if it's missing from  the user's system.
+ * Implemented subscription renaming support for modules.
+ * Implemented stand-alone settings window for module (which can be accessed through context-menu).
+ * Added icons to module & item context-menu's.
+ * Player window in borderless-mode will now show a moving-cursor while dragging.
+ * Updated the default subscriptions file which will now include a basic subset.
+ * Implemented a start on system-startup option.
+ * Settings window tab-control is now set to multi-line mode.
+ * Improved module's settings window layouts.
+ * Added a global notification switch.
+ * Added notification switches for modules.
+ * Most of the appropriate child windows are now set parent-center.
+
 *17.12.2010 - 0.17b-beta (r241)*
 ----
  * Applied hotfix for a bug that was preventing opening worldofwarcraft.com and starcraft2.com atom feed stories.
