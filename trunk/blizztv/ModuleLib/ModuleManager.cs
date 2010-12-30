@@ -47,12 +47,22 @@ namespace BlizzTV.ModuleLib
 
         private void ScanModules()
         {
-            foreach (Type t in Assembly.GetEntryAssembly().GetTypes())
+            try
             {
-                if(t.IsSubclassOf(typeof(Module)))
+                foreach (Type t in Assembly.GetEntryAssembly().GetTypes())
                 {
-                    ModuleInfo pi=new ModuleInfo(t);
-                    if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi);
+                    if (t.IsSubclassOf(typeof(Module)))
+                    {
+                        ModuleInfo pi = new ModuleInfo(t);
+                        if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi);
+                    }
+                }
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                foreach (Exception exc in e.LoaderExceptions)
+                {
+                    Log.Instance.Write(LogMessageTypes.Fatal, string.Format("Exception thrown during scanning available modules: {0}", exc.ToString()));
                 }
             }
         }
