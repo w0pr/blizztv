@@ -65,9 +65,9 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.checkBoxEnableNotifications);
-            this.groupBox3.Location = new System.Drawing.Point(6, 62);
+            this.groupBox3.Location = new System.Drawing.Point(8, 55);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(423, 41);
+            this.groupBox3.Size = new System.Drawing.Size(421, 41);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Notifications";
@@ -88,7 +88,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.numericUpDownUpdatePeriod);
-            this.groupBox2.Location = new System.Drawing.Point(8, 109);
+            this.groupBox2.Location = new System.Drawing.Point(8, 102);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(423, 41);
             this.groupBox2.TabIndex = 2;
@@ -134,7 +134,7 @@
             this.groupBox1.Controls.Add(this.checkBoxTrackWorldofWarcraft);
             this.groupBox1.Location = new System.Drawing.Point(8, 7);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(423, 49);
+            this.groupBox1.Size = new System.Drawing.Size(423, 42);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Games to track";
@@ -143,7 +143,7 @@
             // 
             this.checkBoxTrackStarcraft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBoxTrackStarcraft.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxTrackStarcraft.Image")));
-            this.checkBoxTrackStarcraft.Location = new System.Drawing.Point(138, 19);
+            this.checkBoxTrackStarcraft.Location = new System.Drawing.Point(138, 15);
             this.checkBoxTrackStarcraft.Name = "checkBoxTrackStarcraft";
             this.checkBoxTrackStarcraft.Size = new System.Drawing.Size(79, 23);
             this.checkBoxTrackStarcraft.TabIndex = 1;
@@ -155,7 +155,7 @@
             // 
             this.checkBoxTrackWorldofWarcraft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBoxTrackWorldofWarcraft.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxTrackWorldofWarcraft.Image")));
-            this.checkBoxTrackWorldofWarcraft.Location = new System.Drawing.Point(9, 19);
+            this.checkBoxTrackWorldofWarcraft.Location = new System.Drawing.Point(6, 13);
             this.checkBoxTrackWorldofWarcraft.Name = "checkBoxTrackWorldofWarcraft";
             this.checkBoxTrackWorldofWarcraft.Size = new System.Drawing.Size(123, 25);
             this.checkBoxTrackWorldofWarcraft.TabIndex = 0;

@@ -40,15 +40,14 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             this.Link = link;
             this.TopicId = topicId;
             this.PostId = postId;
+            this.Guid = string.Format("{0}.{1}#{2}", this.Region, this.TopicId, this.PostId);
 
             // register context menus.
             this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", null, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", null, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
 
-            if (this.Region == Game.Region.Eu)
-                this.Icon = new NamedImage("eu", Assets.Images.Icons.Png._16.eu);
-            else if (this.Region == Game.Region.Us)
-                this.Icon = new NamedImage("us", Assets.Images.Icons.Png._16.us);
+            if (this.Region == Game.Region.Eu) this.Icon = new NamedImage("eu", Assets.Images.Icons.Png._16.eu);
+            else if (this.Region == Game.Region.Us) this.Icon = new NamedImage("us", Assets.Images.Icons.Png._16.us);
         }
 
         public void AddPost(BlueStory blueStory)
@@ -88,11 +87,13 @@ namespace BlizzTV.Modules.BlizzBlues.Game
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
             this.State = ModuleLib.State.Read;
+            foreach (KeyValuePair<string, BlueStory> post in this.More) { post.Value.State = State.Read; }
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
             this.State = ModuleLib.State.Unread;
+            foreach (KeyValuePair<string, BlueStory> post in this.More) { post.Value.State = State.Unread; }
         }
     }
 }

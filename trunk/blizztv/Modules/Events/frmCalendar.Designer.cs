@@ -120,6 +120,7 @@
             this.Controls.Add(this.Calendar);
             this.Controls.Add(this.MonthView);
             this.Name = "frmCalendar";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Calendar";
             this.Load += new System.EventHandler(this.frmCalendar_Load);
             this.StatusStrip.ResumeLayout(false);

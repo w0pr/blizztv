@@ -87,7 +87,7 @@
             this.Controls.Add(this.LabelEvent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmAlarm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Alarm:";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.frmAlarm_Load);

@@ -94,12 +94,20 @@ namespace BlizzTV.Modules.BlizzBlues.Game
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.State = ModuleLib.State.Read; } // marked all stories as read.
+            foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
+            {
+                pair.Value.State = ModuleLib.State.Read;
+                foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Read; }
+            }
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.State = ModuleLib.State.Unread; } // marked all stories as unread.
+            foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
+            {
+                pair.Value.State = ModuleLib.State.Unread;
+                foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Unread; }
+            }
         }
     }
 

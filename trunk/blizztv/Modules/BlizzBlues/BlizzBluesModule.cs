@@ -133,6 +133,7 @@ namespace BlizzTV.Modules.BlizzBlues
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
                     pair.Value.State = State.Read;
+                    foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Read; }
                 }
             }
         }
@@ -144,6 +145,7 @@ namespace BlizzTV.Modules.BlizzBlues
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
                     pair.Value.State = State.Unread;
+                    foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Unread; }
                 }
             }
         }
