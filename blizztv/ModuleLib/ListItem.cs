@@ -27,24 +27,13 @@ namespace BlizzTV.ModuleLib
     public class ListItem : INotificationRequester, IDisposable
     {
         private string _title; 
-        private string _guid = string.Empty;
         private State _state = State.Unknown;
         private NamedImage _icon = null;
         private bool _disposed = false;
 
-        public string Title { get { return this._title; } }                
+        public string Title { get { return this._title; } }
 
-        public string Guid {
-            get
-            {
-                if (this._guid == string.Empty) this._guid = this.GetType().ToString();
-                return this._guid;
-            }
-            protected set
-            {
-                this._guid = value;
-            }        
-        }
+        public string Guid { get; protected set; }
 
         public State State
         {
@@ -52,12 +41,13 @@ namespace BlizzTV.ModuleLib
             {
                 if (this._state == ModuleLib.State.Unknown)
                 {
-                    string key=string.Format("{0}.{1}", this.GetType().ToString(), this.Guid);
-                    if (!StatusStorage.StatusStorage.Instance.Exists(key)) this.State = ModuleLib.State.Fresh;
+                    string key = string.Format("{0}.{1}", this.GetType().ToString(), this.Guid);
+                    if (string.IsNullOrEmpty(this.Guid) || !StatusStorage.StatusStorage.Instance.Exists(key)) this.State = ModuleLib.State.Fresh;
                     else
                     {
                         this._state = (State)StatusStorage.StatusStorage.Instance[key];
                         if (this._state == ModuleLib.State.Fresh) this.State = ModuleLib.State.Unread;
+                        else { if (this.OnStateChange != null) this.OnStateChange(this, EventArgs.Empty); }
                     }
                 }
                 return this._state;
@@ -66,7 +56,7 @@ namespace BlizzTV.ModuleLib
             {
                 this._state = value;
                 string key = string.Format("{0}.{1}", this.GetType().ToString(), this.Guid);
-                StatusStorage.StatusStorage.Instance[key] = (byte)this._state;
+                if (!string.IsNullOrEmpty(this.Guid)) StatusStorage.StatusStorage.Instance[key] = (byte)this._state;
                 if (this.OnStateChange != null) this.OnStateChange(this,EventArgs.Empty);
             }
         }

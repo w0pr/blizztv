@@ -65,7 +65,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDownload";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Download";
             this.ResumeLayout(false);
 

@@ -51,6 +51,7 @@
             this.Controls.Add(this.labelStatus);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmUpdater";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Updater";
             this.Load += new System.EventHandler(this.frmUpdater_Load);
             this.Controls.SetChildIndex(this.labelStatus, 0);

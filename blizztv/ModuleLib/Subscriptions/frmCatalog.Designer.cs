@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCatalog));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listViewCatalog = new System.Windows.Forms.ListView();
-            this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colCategory = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -50,7 +50,7 @@
             this.groupBox1.Controls.Add(this.listViewCatalog);
             this.groupBox1.Location = new System.Drawing.Point(3, 19);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(580, 336);
+            this.groupBox1.Size = new System.Drawing.Size(746, 425);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Catalog Entries";
@@ -69,21 +69,21 @@
             this.listViewCatalog.Name = "listViewCatalog";
             this.listViewCatalog.ShowGroups = false;
             this.listViewCatalog.ShowItemToolTips = true;
-            this.listViewCatalog.Size = new System.Drawing.Size(574, 317);
+            this.listViewCatalog.Size = new System.Drawing.Size(740, 406);
             this.listViewCatalog.TabIndex = 0;
             this.listViewCatalog.UseCompatibleStateImageBehavior = false;
             this.listViewCatalog.View = System.Windows.Forms.View.Details;
             this.listViewCatalog.DoubleClick += new System.EventHandler(this.listViewCatalog_DoubleClick);
             // 
-            // colName
-            // 
-            this.colName.Text = "Name";
-            this.colName.Width = 120;
-            // 
             // colCategory
             // 
             this.colCategory.Text = "Category";
             this.colCategory.Width = 126;
+            // 
+            // colName
+            // 
+            this.colName.Text = "Name";
+            this.colName.Width = 120;
             // 
             // colDescription
             // 
@@ -96,7 +96,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.Label1.Location = new System.Drawing.Point(23, 2);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(557, 16);
+            this.Label1.Size = new System.Drawing.Size(723, 16);
             this.Label1.TabIndex = 24;
             this.Label1.Text = "You can add subscriptions using the catalog below by just double-clicking an entr" +
                 "y.";
@@ -115,7 +115,7 @@
             // 
             this.linkLabelSuggest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkLabelSuggest.AutoSize = true;
-            this.linkLabelSuggest.Location = new System.Drawing.Point(3, 366);
+            this.linkLabelSuggest.Location = new System.Drawing.Point(3, 455);
             this.linkLabelSuggest.Name = "linkLabelSuggest";
             this.linkLabelSuggest.Size = new System.Drawing.Size(104, 13);
             this.linkLabelSuggest.TabIndex = 25;
@@ -127,7 +127,7 @@
             // 
             this.ButtonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonClose.Location = new System.Drawing.Point(505, 361);
+            this.ButtonClose.Location = new System.Drawing.Point(671, 450);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(75, 23);
             this.ButtonClose.TabIndex = 26;
@@ -141,7 +141,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.ButtonClose;
-            this.ClientSize = new System.Drawing.Size(585, 390);
+            this.ClientSize = new System.Drawing.Size(751, 479);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.linkLabelSuggest);
             this.Controls.Add(this.Label1);
@@ -149,6 +149,7 @@
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCatalog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Catalog";
             this.Load += new System.EventHandler(this.frmCatalog_Load);
             this.ResizeEnd += new System.EventHandler(this.frmCatalog_ResizeEnd);

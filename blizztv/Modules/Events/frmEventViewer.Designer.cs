@@ -144,7 +144,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmEventViewer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Event Viewer";
             this.Load += new System.EventHandler(this.frmEventViewer_Load);
             this.groupBox1.ResumeLayout(false);

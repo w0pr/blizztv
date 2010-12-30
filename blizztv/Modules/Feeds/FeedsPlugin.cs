@@ -112,8 +112,8 @@ namespace BlizzTV.Modules.Feeds
             foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
             {
                 Feed feed = new Feed(pair.Value);
-                this._feeds.Add(pair.Value.Url, feed);
                 feed.OnStateChange += OnChildStateChange;
+                this._feeds.Add(pair.Value.Url, feed);                
             }
 
             Workload.Instance.Add(this, this._feeds.Count);

@@ -304,6 +304,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmAbout";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About BlizzTV";
             this.Load += new System.EventHandler(this.frmAbout_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MoreDots);
