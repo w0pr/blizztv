@@ -1,7 +1,7 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
-*30.12.2010 - 0.18-beta (r279)*
+*30.12.2010 - 0.18-beta (r281)*
 ----
  * Improved the item-state tracking routines. 
  * Read items icons are now grayscaled, instead of differentiation using bold-regular text styles.
