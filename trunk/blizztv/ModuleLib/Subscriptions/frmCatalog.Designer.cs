@@ -38,6 +38,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.linkLabelSuggest = new System.Windows.Forms.LinkLabel();
             this.ButtonClose = new System.Windows.Forms.Button();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -48,9 +49,9 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.listViewCatalog);
-            this.groupBox1.Location = new System.Drawing.Point(3, 19);
+            this.groupBox1.Location = new System.Drawing.Point(3, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(746, 425);
+            this.groupBox1.Size = new System.Drawing.Size(746, 443);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Catalog Entries";
@@ -69,7 +70,7 @@
             this.listViewCatalog.Name = "listViewCatalog";
             this.listViewCatalog.ShowGroups = false;
             this.listViewCatalog.ShowItemToolTips = true;
-            this.listViewCatalog.Size = new System.Drawing.Size(740, 406);
+            this.listViewCatalog.Size = new System.Drawing.Size(740, 424);
             this.listViewCatalog.TabIndex = 0;
             this.listViewCatalog.UseCompatibleStateImageBehavior = false;
             this.listViewCatalog.View = System.Windows.Forms.View.Details;
@@ -94,17 +95,16 @@
             // 
             this.Label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label1.Location = new System.Drawing.Point(23, 2);
+            this.Label1.Location = new System.Drawing.Point(297, 455);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(723, 16);
+            this.Label1.Size = new System.Drawing.Size(287, 13);
             this.Label1.TabIndex = 24;
-            this.Label1.Text = "You can add subscriptions using the catalog below by just double-clicking an entr" +
-                "y.";
+            this.Label1.Text = "You can also add subscriptions by double-clicking an entry.";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(283, 455);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(14, 14);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -135,6 +135,16 @@
             this.ButtonClose.UseVisualStyleBackColor = true;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Location = new System.Drawing.Point(590, 450);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
+            this.buttonAdd.TabIndex = 28;
+            this.buttonAdd.Text = "Add";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
             // frmCatalog
             // 
             this.AcceptButton = this.ButtonClose;
@@ -142,6 +152,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.ButtonClose;
             this.ClientSize = new System.Drawing.Size(751, 479);
+            this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.linkLabelSuggest);
             this.Controls.Add(this.Label1);
@@ -171,5 +182,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.LinkLabel linkLabelSuggest;
         private System.Windows.Forms.Button ButtonClose;
+        private System.Windows.Forms.Button buttonAdd;
     }
 }

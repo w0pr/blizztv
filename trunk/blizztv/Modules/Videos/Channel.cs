@@ -41,8 +41,8 @@ namespace BlizzTV.Modules.Videos
             this.Provider = subscription.Provider;         
 
              // register context menus.
-            this.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", null, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
-            this.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", null, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
+            this.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked))); // mark as read menu.
+            this.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked))); // mark as unread menu.
 
             this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
         }
