@@ -64,13 +64,23 @@ namespace BlizzTV.ModuleLib.Subscriptions
             this.Close();
         }
 
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            this.AddSubscription();
+        }
+
         private void listViewCatalog_DoubleClick(object sender, EventArgs e)
+        {
+            this.AddSubscription();
+        }
+
+        private void AddSubscription()
         {
             if (listViewCatalog.SelectedItems.Count > 0)
             {
                 this.AddedNewSubscriptions = true;
                 CatalogEntryItem selection = (CatalogEntryItem)listViewCatalog.SelectedItems[0];
-                selection.Entry.AddAsSubscription();                
+                selection.Entry.AddAsSubscription();
             }
         }
 
