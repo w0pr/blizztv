@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WorldofWarcraft.com" Description="World of Warcraft's official site." Url="http://us.battle.net/wow/en/feed/news" />
-  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="MMO-Champion" Description="The most popular World of Warcraft fansite." Url="http://www.mmo-champion.com/external.php?do=rss&amp;type=newcontent&amp;sectionid=1&amp;days=120&amp;count=10" />
   <Entry xsi:type="Feed" Category="Starcraft" Name="Starcraft2.com" Description="Starcraft2's official site." Url="http://us.battle.net/sc2/en/feed/news" />  
   <Entry xsi:type="Feed" Category="Starcraft" Name="TeamLiquid" Description="The most popular Starcraft II fansite." Url="http://www.teamliquid.net/rss/news.xml" />
   <Entry xsi:type="Feed" Category="Starcraft" Name="GosuGamers" Description="Yet another popular Starcraft II fansite." Url="http://www.gosugamers.net/starcraft2/sc2.rss" />
+  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WorldofWarcraft.com" Description="World of Warcraft's official site." Url="http://us.battle.net/wow/en/feed/news" />
+  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="MMO-Champion" Description="The most popular World of Warcraft news source." Url="http://www.mmo-champion.com/external.php?do=rss&amp;type=newcontent&amp;sectionid=1&amp;days=120&amp;count=10" />
+  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WorldOfRaids" Description="Yet another popular World of Warcraft news site." Url="http://www.worldofraids.com/rss/forums/1-world-of-raids-news/" />
+  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WOWInsider" Description="#1 World of warcraft blog on the planet." Url="http://wow.joystiq.com/rss.xml" />
+  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WOWHead" Description="The #1 World of warcraft database's blog." Url="http://www.wowhead.com/blog&amp;rss" />
+  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="TenTonHammer" Description="TenTonHammer's WOW portal." Url="http://www.tentonhammer.com/wow/all/feed" />
   <Entry xsi:type="Feed" Category="Blizzard" Name="BlizzTV" Description="The BlizzTV's home." Url="http://www.blizztv.com/rss/ccs/1-blizztvcom/" />
+  <Entry xsi:type="Feed" Category="Blizzard" Name="BlizzPlanet" Description="Everything Blizzard Entertainment!" Url="http://feeds.feedburner.com/blizzplanetcom" />
+  <Entry xsi:type="Feed" Category="MMO" Name="Massively.com" Description="Massive covarage of massive multiplayer online games!" Url="http://massively.joystiq.com/rss.xml" />  
 </Catalog>
