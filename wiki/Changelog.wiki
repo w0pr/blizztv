@@ -1,6 +1,13 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
+*31.12.2010 - 0.18b-beta (r291)*
+----
+ * Implemented a dependency-checker rule for installing Microsoft Visual C++ 2010 Redistributable Package (x86) on missing systems (which is required by audio engine). It solves the crashes while loading the modules.
+ * Latest version seems to introduce a bug on restoring window from system tray not focusing the window. Fixed it.
+ * Fixed a nasty UI-layout bug in catalog window.
+ * Improved updater routines.
+
 *30.12.2010 - 0.18-beta (r283)*
 ----
  * Improved the item-state tracking routines. 
