@@ -70,7 +70,6 @@ namespace BlizzTV.UI
 
         private void HideForm()
         {
-            this.WindowState = FormWindowState.Minimized; // go minimized
             this.ShowInTaskbar = false; // hide ourself from taskbar
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow; // hide from alt-tab.
             this.Visible = false;
@@ -79,8 +78,8 @@ namespace BlizzTV.UI
         private void ShowForm()
         {
             this.WindowState = FormWindowState.Normal;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;            
             this.ShowInTaskbar = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;            
             this.Visible = true;
         }
 
@@ -278,7 +277,7 @@ namespace BlizzTV.UI
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized && this.ShowInTaskbar == false) this.ShowForm(); // if we're just living in system-tray, remake the main form visible again            
+            if (this.ShowInTaskbar == false) this.ShowForm(); // if we're just living in system-tray, remake the main form visible again            
         }
 
         #endregion
