@@ -90,7 +90,7 @@ namespace BlizzTV.CommonLib.Dependencies
             catch (Exception e)
             {
                 satisfied = false;
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("Dependency VisualCPP2010 Runtime not satisfied: {0}", e));
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("Dependency Visual C++ 2010 Runtime not satisfied: {0}", e));
             }
             return satisfied;
         }

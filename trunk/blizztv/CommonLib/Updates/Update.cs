@@ -88,7 +88,7 @@ namespace BlizzTV.CommonLib.Updates
                 return;
             }
 
-            MessageBox.Show("The application will exit to continue installation of update.", "Installing Update", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+            MessageBox.Show("The application will exit to continue installation of update. Please restart the application after.", "Installing Update", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
 
             if (fileExtension == ".exe")
             {
@@ -99,9 +99,12 @@ namespace BlizzTV.CommonLib.Updates
                 Zip.Extract(this.FileName, "update");
                 StreamWriter writer = new StreamWriter("update.bat", false);
                 writer.WriteLine(@"ping 127.0.0.1");
+                writer.WriteLine(@"del /F /Q *.exe");
+                writer.WriteLine(@"del /F /Q *.dll");
                 writer.WriteLine(@"move /Y update\*.* .");
-                writer.WriteLine(@"del /F /Q update");
-                writer.WriteLine(@"del /F /Q update.bat");
+                writer.WriteLine(string.Format("del /F /Q {0}", this.FileName));
+                writer.WriteLine(@"rmdir /S /Q update");
+                writer.WriteLine(@"del /F /Q update.bat");                
                 writer.Flush();
                 writer.Close();
                 Process cmd = new Process();
