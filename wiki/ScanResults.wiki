@@ -3,7 +3,7 @@
 
 Before publishing any binary releases of BlizzTV, we make sure they contain no infections using http://www.virustotal.com with 43 well-known scanner engines. Here you can see the results for latest reports;
 
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.18b-beta.zip&can=2&q= 0.18-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=4d75b78ce4afabc51dbd1e6922da566fbbccd759c06553db0104b27521c9ce5c-1293881336 Report] (note: there's 1 false-positive)
+ * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.18b-beta.zip&can=2&q= 0.18b-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=4d75b78ce4afabc51dbd1e6922da566fbbccd759c06553db0104b27521c9ce5c-1293881336 Report] (note: there's 1 false-positive)
 
  * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.18-beta.zip&can=2&q= 0.18-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=c0b60b13974fafd234487e4c1aa2a947a6cbd48800faba6f14b803a3bee5a69a-1293715300 Report] (note: there's 1 false-positive)
 
