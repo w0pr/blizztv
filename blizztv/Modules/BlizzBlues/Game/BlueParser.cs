@@ -30,12 +30,13 @@ namespace BlizzTV.Modules.BlizzBlues.Game
     public class BlueParser:ListItem
     {
         private static Regex RegexBlueId = new Regex(@"\.\./topic/(?<TopicID>.*?)(\?page\=.*?)?#(?<PostID>.*)", RegexOptions.Compiled);
-
         protected BlueSource[] Sources;
+
+        public BlueType Type;
         public Dictionary<string,BlueStory> Stories = new Dictionary<string,BlueStory>();
 
-        public BlueParser(string game)
-            : base(game)
+        public BlueParser(BlueType type)
+            : base(type.ToString())
         {
             // register context menus.
             this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
@@ -73,7 +74,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
                             topicId = m.Groups["TopicID"].Value;
                             postId = m.Groups["PostID"].Value;
 
-                            BlueStory b = new BlueStory(postTitle, source.Region, postLink, topicId, postId);
+                            BlueStory b = new BlueStory(this.Type, postTitle, source.Region, postLink, topicId, postId);
                             b.OnStateChange += OnChildStateChange;
 
                             if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, b);
@@ -127,5 +128,11 @@ namespace BlizzTV.Modules.BlizzBlues.Game
     {
         Us,
         Eu
+    }
+
+    public enum BlueType
+    {
+        WOW,
+        Starcraft
     }
 }

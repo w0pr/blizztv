@@ -28,15 +28,17 @@ namespace BlizzTV.Modules.Videos
     {
         private frmPlayer _player = null;
 
+        public string ChannelName { get; internal set; }
         public string VideoId { get; internal set; }
         public string Link { get; internal set; }
         public string Provider { get; set; }
         public string Movie { get; set; }
         public string FlashVars { get; set; }
        
-        public Video(string title, string guid, string link, string provider)
+        public Video(string channelName, string title, string guid, string link, string provider)
             : base(title)
-        {            
+        {
+            this.ChannelName = channelName;
             this.Guid = guid;
             this.Link = link;
             this.Provider = provider;
@@ -50,7 +52,7 @@ namespace BlizzTV.Modules.Videos
 
         public void CheckForNotifications()
         {
-            if (Settings.Instance.NotificationsEnabled &&  this.State == ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to watch.", System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled &&  this.State == ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new video is avaiable over {0}'s channel, click to start watching it.",this.ChannelName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public virtual void Process() // get the stream data by replacing provider variables. 

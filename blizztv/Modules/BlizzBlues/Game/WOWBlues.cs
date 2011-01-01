@@ -22,7 +22,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
     public class WOWBlues:BlueParser
     {
         public WOWBlues()
-            : base("World of Warcraft")
+            : base(BlueType.WOW)
         {
             this.Sources = new BlueSource[2] { new BlueSource(Region.Us, "http://us.battle.net/wow/en/forum/blizztracker/"), new BlueSource(Region.Eu, "http://eu.battle.net/wow/en/forum/blizztracker/"), };
             this.Icon = new NamedImage("wow", Assets.Images.Icons.Png._16.wow);
