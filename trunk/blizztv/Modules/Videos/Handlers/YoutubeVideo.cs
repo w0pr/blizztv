@@ -23,8 +23,8 @@ namespace BlizzTV.Modules.Videos.Handlers
     {
         private static readonly Regex Regex = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled); // compiled regex for reading video id's.
 
-        public YoutubeVideo(string title, string guid, string link, string provider)
-            : base(title, guid, link, provider)
+        public YoutubeVideo(string channelName, string title, string guid, string link, string provider)
+            : base(channelName,title, guid, link, provider)
         {
             Match m = Regex.Match(this.Link);
             if (m.Success) this.VideoId = m.Groups[1].Value;

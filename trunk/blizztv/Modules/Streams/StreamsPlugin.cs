@@ -126,7 +126,12 @@ namespace BlizzTV.Modules.Streams
                 catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e)); } // catch errors for inner stream-handlers.
             }
 
-            this.RootListItem.SetTitle(string.Format("Streams ({0})", availableCount));  // put available streams count on root object's title.
+            if (availableCount > 0) this.RootListItem.SetTitle(string.Format("Streams ({0})", availableCount));  // put available streams count on root object's title.
+            else
+            {
+                this.RootListItem.SetTitle("Streams");
+                this.RootListItem.State = State.Read;
+            }
 
             NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
             this.Updating = false;

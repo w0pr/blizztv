@@ -72,7 +72,7 @@ namespace BlizzTV.Modules.Feeds
                 {
                     try
                     {
-                        Story story = new Story(item);
+                        Story story = new Story(this.Title,item);
                         story.OnStateChange += OnChildStateChange;
                         this.Stories.Add(story);
                     }

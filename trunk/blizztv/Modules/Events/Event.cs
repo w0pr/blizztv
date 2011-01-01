@@ -115,12 +115,12 @@ namespace BlizzTV.Modules.Events
                 if ((Settings.Instance.InProgressEventNotificationsEnabled) && (this.Status == EventStatus.InProgress)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this.Notified = true; // don't notify about it more then once
-                    NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("Event in progress: {0}", this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
+                    NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, "Event is in progress, click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
                 }
                 else if (this.MinutesLeft > 0 && (this.MinutesLeft <= Settings.Instance.MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
                 {
                     this.Notified = true; // don't notify about it more then once
-                    NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("Event starts in {0} minutes: {1}", (this.Time.LocalTime - DateTime.Now).TotalMinutes.ToString("0"), this.FullTitle), "Click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
+                    NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, string.Format("Event starts in {0} minutes, click to see event details.", this.MinutesLeft.ToString("0")), System.Windows.Forms.ToolTipIcon.Info));
                 }
             }
         }

@@ -25,11 +25,13 @@ namespace BlizzTV.Modules.Feeds
 {
     public class Story : ListItem
     {
+        public string FeedName { get; private set; }
         public string Link { get; private set; }
         
-        public Story(FeedItem item)
+        public Story(string feedName, FeedItem item)
             : base(item.Title)
         {
+            this.FeedName = feedName;
             this.Guid = item.Title;
             this.Link = item.Link;
 
@@ -42,7 +44,7 @@ namespace BlizzTV.Modules.Feeds
 
         public void CheckForNotifications()
         {
-            if (Settings.Instance.NotificationsEnabled &&  this.State == ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled &&  this.State == ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void DoubleClicked(object sender, EventArgs e)

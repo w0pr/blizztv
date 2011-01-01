@@ -27,15 +27,17 @@ namespace BlizzTV.Modules.BlizzBlues.Game
 {
     public class BlueStory:ListItem
     {
+        public BlueType Type { get; private set; }
         public Region Region { get; private set; }
         public string Link { get; private set; }
         public string TopicId { get; private set; }
         public string PostId { get; private set; }
         public Dictionary<string, BlueStory> More = new Dictionary<string, BlueStory>();
     
-        public BlueStory(string title, Region region, string link, string topicId, string postId)
+        public BlueStory(BlueType type, string title, Region region, string link, string topicId, string postId)
             : base(title)
         {
+            this.Type = type;
             this.Region = region;
             this.Link = link;
             this.TopicId = topicId;
@@ -65,7 +67,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
 
         public void CheckForNotifications()
         {
-            if (Settings.Instance.NotificationsEnabled && this.State ==  ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("BlizzBlue: {0}",this.Title), "Click to read.", System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled && this.State ==  ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("{0}", this.Title), string.Format("A new {0} blue-post is available, click to open it.",this.Type) , System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void DoubleClicked(object sender, System.EventArgs e)

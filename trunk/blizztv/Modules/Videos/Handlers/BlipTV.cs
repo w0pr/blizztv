@@ -50,7 +50,7 @@ namespace BlizzTV.Modules.Videos.Handlers
 
                 foreach (var entry in entries) // create the video items.
                 {
-                    BlipTvVideo v = new BlipTvVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
+                    BlipTvVideo v = new BlipTvVideo(this.Title, entry.Title, entry.GUID, entry.Link, this.Provider);
                     v.OnStateChange += OnChildStateChange;
                     v.VideoId = entry.VideoID;
                     this.Videos.Add(v);

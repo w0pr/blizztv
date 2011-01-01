@@ -46,7 +46,7 @@ namespace BlizzTV.Modules.Videos.Handlers
 
                 foreach (var entry in entries) // create the video items.
                 {
-                    YoutubeVideo v = new YoutubeVideo(entry.Title, entry.GUID, entry.Link, this.Provider);
+                    YoutubeVideo v = new YoutubeVideo(this.Title, entry.Title, entry.GUID, entry.Link, this.Provider);
                     v.OnStateChange +=  OnChildStateChange;
                     this.Videos.Add(v);
                 }
