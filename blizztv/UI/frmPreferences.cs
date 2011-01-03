@@ -79,7 +79,12 @@ namespace BlizzTV.UI
             this.comboBoxNotificationSound.SelectedIndex = this.NotificationSoundGetSelectedIndex();
 
             // UI settings.
-            checkBoxStartOnSystemStartup.Checked = SystemStartup.Enabled;
+            if (!SystemStartup.IsSupported)
+            {
+                checkBoxStartOnSystemStartup.Enabled = false;
+                checkBoxStartOnSystemStartup.Text += " (requires administrative privileges)";
+            }
+            else checkBoxStartOnSystemStartup.Checked = SystemStartup.Enabled;
             checkBoxMinimimizeToSystemTray.Checked = Settings.Instance.MinimizeToSystemTray;
             checkBoxEnableDebugLogging.Checked = Settings.Instance.EnableDebugLogging;
             checkBoxEnableDebugConsole.Checked = Settings.Instance.EnableDebugConsole;
@@ -134,7 +139,7 @@ namespace BlizzTV.UI
             GlobalSettings.Instance.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
 
             // UI settings.
-            SystemStartup.Enabled = checkBoxStartOnSystemStartup.Checked;
+            if(SystemStartup.IsSupported) SystemStartup.Enabled = checkBoxStartOnSystemStartup.Checked;
             Settings.Instance.MinimizeToSystemTray = checkBoxMinimimizeToSystemTray.Checked;
             Settings.Instance.EnableDebugLogging = checkBoxEnableDebugLogging.Checked;
             Settings.Instance.EnableDebugConsole = checkBoxEnableDebugConsole.Checked;
