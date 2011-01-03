@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Win32;
+using System.Security;
+using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.CommonLib.Helpers
 {
@@ -34,21 +36,34 @@ namespace BlizzTV.CommonLib.Helpers
     {
         public static RegistryKey GetKey(RootKey rootKey, string key)
         {
+            RegistryKey requested = null;
             RegistryKey root = null;
-            switch (rootKey)
+
+            try
             {
-                case RootKey.HKEY_CLASSES_ROOT: root = Microsoft.Win32.Registry.ClassesRoot; break;
-                case RootKey.HKEY_CURRENT_USER: root = Microsoft.Win32.Registry.CurrentUser; break;
-                case RootKey.HKEY_LOCAL_MACHINE: root = Microsoft.Win32.Registry.LocalMachine;break;
+                switch (rootKey)
+                {
+                    case RootKey.HKEY_CLASSES_ROOT: root = Microsoft.Win32.Registry.ClassesRoot; break;
+                    case RootKey.HKEY_CURRENT_USER: root = Microsoft.Win32.Registry.CurrentUser; break;
+                    case RootKey.HKEY_LOCAL_MACHINE: root = Microsoft.Win32.Registry.LocalMachine; break;
+                }
+                requested = root.OpenSubKey(key, true);
+            }
+            catch (SecurityException e)
+            {
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("Registry.GetKey({0},{1}) failed: {2}", rootKey, key, e));
             }
 
-            return root.OpenSubKey(key, true);
+            return requested;
         }
 
         public static object GetValue(RootKey rootKey, string key, string valueName)
         {
-            if (!KeyExists(rootKey, key)) return null;
+            if (!KeyExists(rootKey, key)) return null;            
+            
             RegistryKey askedKey = GetKey(rootKey, key);
+            if (askedKey == null) return null;
+
             object value = askedKey.GetValue(valueName, null);
             askedKey.Close();
             askedKey.Flush();
@@ -59,6 +74,7 @@ namespace BlizzTV.CommonLib.Helpers
         {
             RegistryKey askedKey = GetKey(rootKey, key);
             if (askedKey == null) return false;
+
             askedKey.SetValue(valueName, value);
             askedKey.Close();
             askedKey.Flush();
@@ -68,7 +84,10 @@ namespace BlizzTV.CommonLib.Helpers
         public static void DeleteValue(RootKey rootKey, string key, string valueName)
         {
             if (!ValueExists(rootKey, key, valueName)) return;
+
             RegistryKey askedKey = GetKey(rootKey, key);
+            if (askedKey == null) return;
+
             askedKey.DeleteValue(valueName);
             askedKey.Close();
             askedKey.Flush();
@@ -78,6 +97,7 @@ namespace BlizzTV.CommonLib.Helpers
         {
             RegistryKey askedKey = GetKey(rootKey, key);
             if (askedKey == null) return false;
+
             askedKey.Close();
             askedKey.Flush();
             return true;
@@ -86,13 +106,14 @@ namespace BlizzTV.CommonLib.Helpers
         public static bool ValueExists(RootKey rootKey, string key, string valueName)
         {
             if (!KeyExists(rootKey, key)) return false;
+
             RegistryKey askedKey = GetKey(rootKey, key);
+            if (askedKey == null) return false;
+
             object value = askedKey.GetValue(valueName, null);
             askedKey.Close();
             askedKey.Flush();
             if (value != null) return true; else return false;
-        }
-
-        
+        }        
     }
 }

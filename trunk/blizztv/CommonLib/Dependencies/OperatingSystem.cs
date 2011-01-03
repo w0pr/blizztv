@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Security.Principal;
 
 namespace BlizzTV.CommonLib.Dependencies
 {
@@ -47,6 +48,19 @@ namespace BlizzTV.CommonLib.Dependencies
             else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major == 6) this.Type = OSType.VISTA;
             else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major == 5) this.Type = OSType.XP;
             else this.Type = OSType.UNKNOWN;
+        }
+
+        public bool IsAdministrator() // this will most probably not work with Vista with UAC mode enabled - http://stackoverflow.com/questions/1089046/in-net-c-test-if-user-is-an-administrative-user
+        {
+            bool isAdmin = false;
+            try
+            {
+                WindowsIdentity user = WindowsIdentity.GetCurrent();
+                WindowsPrincipal principal = new WindowsPrincipal(user);
+                isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            catch (UnauthorizedAccessException ex) { isAdmin = false; }
+            return isAdmin;
         }
     }
 }
