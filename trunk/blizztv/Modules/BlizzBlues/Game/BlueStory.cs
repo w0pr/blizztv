@@ -70,7 +70,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             if (Settings.Instance.NotificationsEnabled && this.State ==  ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("{0}", this.Title), string.Format("A new {0} blue-post is available, click to open it.",this.Type) , System.Windows.Forms.ToolTipIcon.Info));
         }
 
-        public override void DoubleClicked(object sender, System.EventArgs e)
+        public override void Open(object sender, System.EventArgs e)
         {
             this.Navigate();
         }

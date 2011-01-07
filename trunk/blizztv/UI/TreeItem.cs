@@ -50,9 +50,9 @@ namespace BlizzTV.UI
             this.OnStateChange(this, EventArgs.Empty);
         }
 
-        public void DoubleClicked(object sender, TreeNodeMouseClickEventArgs e)
+        public void Open(object sender, EventArgs e)
         {
-            this._item.DoubleClicked(sender, e); // notify the item about the double-click event.
+            this._item.Open(sender, e); // notify the item about the double-click event.
         }
 
         public void RightClicked(object sender, TreeNodeMouseClickEventArgs e)

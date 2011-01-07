@@ -75,7 +75,7 @@ namespace BlizzTV.ModuleLib
             this._title = title;
         }
 
-        public virtual void DoubleClicked(object sender, EventArgs e) { }
+        public virtual void Open(object sender, EventArgs e) { }
         public virtual void RightClicked(object sender, EventArgs e) { }
         public virtual void NotificationClicked() { }
 

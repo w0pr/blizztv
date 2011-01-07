@@ -79,7 +79,7 @@ namespace BlizzTV.Modules.Streams
             if(this.ChatAvailable) this.ChatMovie = this.ChatMovie.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
         }
 
-        public override void DoubleClicked(object sender, EventArgs e) // double-click handler
+        public override void Open(object sender, EventArgs e) // double-click handler
         {
             this.Play();
         }

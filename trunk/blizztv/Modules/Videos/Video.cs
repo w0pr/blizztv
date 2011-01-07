@@ -67,7 +67,7 @@ namespace BlizzTV.Modules.Videos
             this.FlashVars = this.FlashVars.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos)?"1":"0");
         }
 
-        public override void DoubleClicked(object sender, EventArgs e)
+        public override void Open(object sender, EventArgs e)
         {
             this.Play();
         }
