@@ -213,8 +213,12 @@ namespace BlizzTV.UI
 
         private void TreeView_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TreeItem selection = (TreeItem)TreeView.SelectedNode; // get the selected node
-            if (selection != null) selection.Open(sender,e);  // notify the item about the double-click event.
+            if (e.KeyChar == (char)13)
+            {
+                TreeItem selection = (TreeItem)TreeView.SelectedNode; // get the selected node
+                if (selection != null) selection.Open(sender, e);  // notify the item about the double-click event.
+                e.Handled = true;
+            }
         }
 
         private void TreeView_MouseUp(object sender, MouseEventArgs e) 
