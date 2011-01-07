@@ -36,7 +36,6 @@ namespace BlizzTV.Modules.Streams
         public string Description { get; internal set; }
         public int ViewerCount { get; internal set; }
         public string Movie { get; internal set; }
-        public string FlashVars { get; internal set; }
         public string ChatMovie { get; internal set; }
         public bool ChatAvailable { get; private set; }
 
@@ -70,12 +69,10 @@ namespace BlizzTV.Modules.Streams
         public virtual void Process() // get the stream data by replacing provider variables. handler's can override this method to run their own routines, though base.Process() should be called also.
         {
             this.Movie = ((StreamProvider) Providers.Instance.Dictionary[this.Provider]).Movie; // provider supplied movie source. 
-            this.FlashVars = ((StreamProvider) Providers.Instance.Dictionary[this.Provider]).FlashVars; // provider supplied flashvars.
             this.ChatAvailable = ((StreamProvider) Providers.Instance.Dictionary[this.Provider]).ChatAvailable; // Is chat functionality available for the provider?
             if (this.ChatAvailable) this.ChatMovie = ((StreamProvider) Providers.Instance.Dictionary[this.Provider]).ChatMovie; // the streams chat movie's source.
 
             this.Movie = this.Movie.Replace("%slug%", this.Slug); // replace slug variable in movie source.
-            this.FlashVars = this.FlashVars.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
             if(this.ChatAvailable) this.ChatMovie = this.ChatMovie.Replace("%slug%", this.Slug); // replace slug variable in flashvars.            
         }
 

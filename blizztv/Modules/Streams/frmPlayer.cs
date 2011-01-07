@@ -54,8 +54,7 @@ namespace BlizzTV.Modules.Streams
             try
             {
                 this.Text = string.Format("Stream: {0}@{1}", this._stream.Name, this._stream.Provider); // set the window title.
-                this.Player.FlashVars = this._stream.FlashVars; // set the flashvars.
-                this.Player.LoadMovie(0, string.Format("{0}?{1}", this._stream.Movie, this._stream.FlashVars)); // load the movie.
+                this.Player.LoadMovie(0, this._stream.Movie); // load the movie.
 
                 if (this._stream.ChatAvailable && Settings.Instance.AutomaticallyOpenChat) this.OpenChatWindow();
             }

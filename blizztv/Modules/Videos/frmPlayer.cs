@@ -51,8 +51,7 @@ namespace BlizzTV.Modules.Videos
             try
             {
                 this.Text = this._video.Title; // set the window title.
-                this.Player.FlashVars = this._video.FlashVars; // set the flashvars.
-                this.Player.LoadMovie(0, string.Format("{0}?{1}", this._video.Movie, this._video.FlashVars)); // load the movie.
+                this.Player.LoadMovie(0,this._video.Movie); // load the movie.
             }
             catch (Exception exc)
             {

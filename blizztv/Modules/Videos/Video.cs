@@ -33,7 +33,6 @@ namespace BlizzTV.Modules.Videos
         public string Link { get; internal set; }
         public string Provider { get; set; }
         public string Movie { get; set; }
-        public string FlashVars { get; set; }
        
         public Video(string channelName, string title, string guid, string link, string provider)
             : base(title)
@@ -58,13 +57,9 @@ namespace BlizzTV.Modules.Videos
         public virtual void Process() // get the stream data by replacing provider variables. 
         {
             this.Movie = ((VideoProvider) Providers.Instance.Dictionary[this.Provider]).Movie; // provider supplied movie source. 
-            this.FlashVars = ((VideoProvider) Providers.Instance.Dictionary[this.Provider]).FlashVars; // provider supplied flashvars.
 
             this.Movie = this.Movie.Replace("%video_id%", this.VideoId); // replace movie source variables
-            this.Movie = this.Movie.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos) ? "1" : "0");
-            
-            this.FlashVars = this.FlashVars.Replace("%video_id%", this.VideoId); // replace flashvars variables.
-            this.FlashVars = this.FlashVars.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos)?"1":"0");
+            this.Movie = this.Movie.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos) ? "1" : "0");            
         }
 
         public override void Open(object sender, EventArgs e)
