@@ -47,7 +47,7 @@ namespace BlizzTV.Modules.Feeds
             if (Settings.Instance.NotificationsEnabled &&  this.State == ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
-        public override void DoubleClicked(object sender, EventArgs e)
+        public override void Open(object sender, EventArgs e)
         {
             this.Navigate();
         }

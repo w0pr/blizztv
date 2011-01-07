@@ -207,8 +207,14 @@ namespace BlizzTV.UI
             if (selection != null)
             {
                 if (selection.Nodes.Count > 0) if (selection.IsExpanded) selection.Expand(); else selection.Collapse(); // if it's a parent node, let it expand() or collapse().
-                selection.DoubleClicked(sender, e);  // notify the item about the double-click event.
+                selection.Open(sender, e);  // notify the item about the double-click event.
             }
+        }
+
+        private void TreeView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TreeItem selection = (TreeItem)TreeView.SelectedNode; // get the selected node
+            if (selection != null) selection.Open(sender,e);  // notify the item about the double-click event.
         }
 
         private void TreeView_MouseUp(object sender, MouseEventArgs e) 

@@ -86,7 +86,7 @@ namespace BlizzTV.Modules.Events
             this.Icon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
         }
 
-        public override void DoubleClicked(object sender, EventArgs e)
+        public override void Open(object sender, EventArgs e)
         {
             this.ShowEvent();
         }

@@ -75,7 +75,7 @@ namespace BlizzTV.Modules.Events
 
         private void Calendar_ItemClick(object sender, CalendarItemEventArgs e)
         {
-            ((Event) e.Item.Tag).DoubleClicked(sender, e);
+            ((Event) e.Item.Tag).Open(sender, e);
         }
     }
 }

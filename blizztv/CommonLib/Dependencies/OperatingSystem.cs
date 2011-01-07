@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Principal;
+using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.CommonLib.Dependencies
 {
@@ -59,7 +60,11 @@ namespace BlizzTV.CommonLib.Dependencies
                 WindowsPrincipal principal = new WindowsPrincipal(user);
                 isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
             }
-            catch (UnauthorizedAccessException ex) { isAdmin = false; }
+            catch (UnauthorizedAccessException ex)
+            {
+                isAdmin = false;
+                Log.Instance.Write(LogMessageTypes.Info, string.Format("OperatingSystem.IsAdministrator(): UnauthorizedAccessException caught: {0}", ex));
+            }
             return isAdmin;
         }
     }

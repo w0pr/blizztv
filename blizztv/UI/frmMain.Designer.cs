@@ -259,7 +259,7 @@
             // toolStripSpacer
             // 
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(241, 17);
+            this.toolStripSpacer.Size = new System.Drawing.Size(60, 17);
             this.toolStripSpacer.Spring = true;
             // 
             // SleepIcon
@@ -330,10 +330,11 @@
             this.TreeView.ShowNodeToolTips = true;
             this.TreeView.ShowRootLines = false;
             this.TreeView.Size = new System.Drawing.Size(256, 269);
-            this.TreeView.TabIndex = 3;
+            this.TreeView.TabIndex = 0;
             this.TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseDoubleClick);
             this.TreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeView_DragDrop);
             this.TreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeView_DragEnter);
+            this.TreeView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TreeView_KeyPress);
             this.TreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TreeView_MouseUp);
             // 
             // NodeIcons
