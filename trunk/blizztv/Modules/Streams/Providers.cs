@@ -41,17 +41,14 @@ namespace BlizzTV.Modules.Streams
         [XmlAttribute("Movie")]
         public string Movie { get; set; }
 
-        [XmlAttribute("FlashVars")]
-        public string FlashVars { get; set; }
-
         [XmlAttribute("ChatMovie")]
         public string ChatMovie { get; set; }
 
-        [XmlAttribute("RegEx")]
-        public string RegEx { get; set; }
+        [XmlAttribute("URLRegEx")]
+        public string URLRegEx { get; set; }
 
-        [XmlAttribute("FormatHint")]
-        public string Hint { get; set; }
+        [XmlAttribute("URLHint")]
+        public string URLHint { get; set; }
 
         [XmlIgnoreAttribute]
         public bool ChatAvailable { get { return ChatMovie != null; }
@@ -59,7 +56,7 @@ namespace BlizzTV.Modules.Streams
 
         public bool LinkValid(string link)
         {
-            Regex regex = new Regex(this.RegEx, RegexOptions.Compiled);
+            Regex regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
             Match m = regex.Match(link);
             return m.Success;
         }
@@ -67,7 +64,7 @@ namespace BlizzTV.Modules.Streams
         public string GetSlug(string link)
         {
             if (!this.LinkValid(link)) return null;
-            Regex regex = new Regex(this.RegEx, RegexOptions.Compiled);
+            Regex regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
             Match m = regex.Match(link);
             return m.Groups["Slug"].Value;
         }

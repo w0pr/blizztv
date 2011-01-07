@@ -84,7 +84,7 @@ namespace BlizzTV.Modules.Videos
 
         private void comboBoxProviders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LabelHint.Text = ((VideoProvider) Providers.Instance.Dictionary[(string) comboBoxProviders.SelectedItem]).Hint;
+            LabelHint.Text = ((VideoProvider) Providers.Instance.Dictionary[(string) comboBoxProviders.SelectedItem]).URLHint;
         }
     }
 }
