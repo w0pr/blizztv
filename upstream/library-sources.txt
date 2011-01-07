@@ -1,0 +1,40 @@
+-----------------------
+LIBRARY SOURCES & SITES
+-----------------------
+
+managed-ESENT (Esent.Collections.dll, Esent.Interop.dll)
+--------------------------------------------------------
+Description: ManagedEsent provides managed access to ESENT, the embeddable database engine native to Windows. ManagedEsent uses the esent.dll that is part of Microsoft Windows so there are no extra unmanaged binaries to download and install.
+Site: http://managedesent.codeplex.com/
+Sources: http://managedesent.codeplex.com/SourceControl/list/changesets
+
+Html Agility Pack (HtmlAgilityPack.dll)
+---------------------------------------
+Description: This is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (you actually don't HAVE to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant with "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams).
+Site: http://htmlagilitypack.codeplex.com/
+Sources: http://htmlagilitypack.codeplex.com/SourceControl/list/changesets
+
+IrrKlang (irrKlang.NET4.dll, ikpMP3.dll)
+----------------------------------------
+Description: irrKlang is a cross platform sound library for C++, C# and all .NET languages.
+Site: http://www.ambiera.com/irrklang/
+Sources: http://www.ambiera.com/irrklang/downloads.html
+
+DotNetZip (Ionic.Zip.Reduced.dll)
+---------------------------------
+Description: DotNetZip is an easy-to-use, FAST, FREE class library and toolset for manipulating zip files or folders. Zip and Unzip is easy: with DotNetZip, .NET applications written in VB, C# - any .NET language - can easily create, read, extract, or update zip files.
+Site: http://dotnetzip.codeplex.com/
+Sources: http://dotnetzip.codeplex.com/SourceControl/list/changesets
+
+Nini (Nini.dll)
+---------------
+Description: Nini is an uncommonly powerful .NET configuration library designed to help build highly configurable applications quickly.
+Site: http://nini.sourceforge.net/
+Sources: http://nini.svn.sourceforge.net/viewvc/nini/
+
+Calendar / Agenda Control (System.Windows.Forms.Calendar.dll)
+-------------------------------------------------------------
+Description: An Outlook style calendar view with appointments and all-day events, and multiple day view support.
+Site: http://www.codeproject.com/KB/docview/WinFormsCalendarView.aspx
+Sources: http://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=38699
+Updated version: http://noteacode.blogspot.com/2010/08/calendar-winforms-control.html
