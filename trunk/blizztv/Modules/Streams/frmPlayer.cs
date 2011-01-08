@@ -20,16 +20,14 @@ using System.Windows.Forms;
 using System.Drawing;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
+using BlizzTV.CommonLib.Players;
 
 namespace BlizzTV.Modules.Streams
 {
-    public partial class frmPlayer : Form // The stream player.
+    public partial class frmPlayer : PlayerWindow // The stream player.
     {
         private readonly Stream _stream; // the stream.
         private frmChat _chatWindow = null;
-        private bool _borderless = false;
-        private bool _dragging = false;
-        private Point _drag_offset;
 
         public frmPlayer(Stream stream)
         {            
@@ -64,35 +62,7 @@ namespace BlizzTV.Modules.Streams
                 MessageBox.Show(string.Format("An error occured in stream player. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void PlayerDoubleClick(object sender, MouseEventArgs e)
-        {
-            this._dragging = false;
-            if (this._borderless) { this.FormBorderStyle = FormBorderStyle.Sizable; this._borderless = false; }
-            else { this.FormBorderStyle = FormBorderStyle.None; this._borderless = true; }
-        }
-
-        private void PlayerMouseDown(object sender, MouseEventArgs e)
-        {
-            if (this._borderless)
-            {
-                this._drag_offset = new Point(e.X - this.Location.X, e.Y - this.Location.Y);
-                this.Cursor = Cursors.SizeAll;
-                this._dragging = true;
-            }
-        }
-
-        private void PlayerMouseUp(object sender, MouseEventArgs e)
-        {
-            this._dragging = false;
-            this.Cursor = Cursors.Default;
-        }
-
-        private void PlayerMouseMove(object sender, MouseEventArgs e)
-        {
-            if (this._borderless && this._dragging) this.Location = new System.Drawing.Point(e.X - this._drag_offset.X, e.Y - this._drag_offset.Y);
-        }
-
+        
         private void MenuAlwaysOnTop_Click(object sender, EventArgs e)
         {
             SwitchTopMostMode(!this.MenuAlwaysOnTop.Checked);
