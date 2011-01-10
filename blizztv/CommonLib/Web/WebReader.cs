@@ -24,26 +24,48 @@ namespace BlizzTV.CommonLib.Web
 {
     public static class WebReader
     {
-        public static string Read(string url) // Returns content's of a given http url.
+        public static Result Read(string url, int timeout = 30 * 1000)
         {
-            string buffer;
-            using (WebClient client = new WebClient())
+            Result result=new Result();
+
+            try
             {
-                try
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Timeout = timeout;
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    client.Headers.Add(HttpRequestHeader.UserAgent, "BlizzTV (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 4.0)");
-                    using (StreamReader reader = new StreamReader(client.OpenRead(url)))
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
-                        buffer = reader.ReadToEnd();
+                        result.Response = reader.ReadToEnd();
+                        result.Status= Status.Success;
                     }
                 }
-                catch (Exception e)
-                {
-                    Log.Instance.Write(LogMessageTypes.Error,string.Format("WebReader:Read() Exception: {0}",e));
-                    return null;
-                }
             }
-            return buffer;
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.Timeout) result.Status = Status.Timeout; else result.Status = Status.Failed;                    
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("WebReader:Read() Exception: {0}", e));
+            }
+            return result;
+        }
+
+        public class Result
+        {
+            public string Response { get; internal set; }
+            public Status Status { get; internal set; }
+
+            public Result()
+            {
+                this.Response = "";
+            }
+        }
+
+        public enum Status
+        {
+            Uknown,
+            Success,
+            Failed,
+            Timeout
         }
     }
 }

@@ -66,11 +66,11 @@ namespace BlizzTV.CommonLib.Updates
             List<Update> updates = new List<Update>();
             Version latestVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-            string response = WebReader.Read("http://code.google.com/feeds/p/blizztv/downloads/basic/");
+            WebReader.Result result = WebReader.Read("http://code.google.com/feeds/p/blizztv/downloads/basic/");
 
-            if (response == null) return null;
+            if (result.Status != WebReader.Status.Success) return null;
 
-            XDocument xdoc = XDocument.Parse(response); // parse the xml
+            XDocument xdoc = XDocument.Parse(result.Response); // parse the xml
             XNamespace xmlns = "http://www.w3.org/2005/Atom";
 
             var entries = from entry in xdoc.Descendants(xmlns + "entry")

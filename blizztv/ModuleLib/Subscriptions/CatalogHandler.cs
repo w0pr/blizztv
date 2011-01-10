@@ -42,14 +42,13 @@ namespace BlizzTV.ModuleLib.Subscriptions
 
         private void Load()
         {
-            string data = WebReader.Read(this._catalogUrl);
-            if (data != null)
+            WebReader.Result result = WebReader.Read(this._catalogUrl);
+            if (result.Status != WebReader.Status.Success) return;
+
+            using (MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes(result.Response)))
             {
-                using (MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes(data)))
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(List<CatalogEntry>), new XmlAttributeOverrides(),new Type[] { this._entryType}, new XmlRootAttribute("Catalog"), "");
-                    this._entries = (List<CatalogEntry>)xs.Deserialize(stream);
-                }
+                XmlSerializer xs = new XmlSerializer(typeof(List<CatalogEntry>), new XmlAttributeOverrides(), new Type[] { this._entryType }, new XmlRootAttribute("Catalog"), "");
+                this._entries = (List<CatalogEntry>)xs.Deserialize(stream);
             }
         }
 
