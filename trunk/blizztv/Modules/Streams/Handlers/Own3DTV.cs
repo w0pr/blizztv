@@ -35,9 +35,10 @@ namespace BlizzTV.Modules.Streams.Handlers
             try
             {
                 string apiUrl = string.Format("http://static.ec.own3d.tv/live_tmp/{0}.txt?{1}", this.Slug, rnd.Next(99999));
-                string response = WebReader.Read(apiUrl);
+                WebReader.Result result = WebReader.Read(apiUrl);
+                if (result.Status != WebReader.Status.Success) return;
 
-                Match m = _regex.Match(response);
+                Match m = _regex.Match(result.Response);
                 if (m.Success)
                 {
                     if (m.Groups[2].ToString().ToLower() == "true") this.IsLive = true; else this.IsLive = false;

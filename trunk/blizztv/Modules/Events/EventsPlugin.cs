@@ -87,8 +87,10 @@ namespace BlizzTV.Modules.Events
 
                 try
                 {
-                    string xml = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml"); // read teamliquid calendar xml.
-                    XDocument xdoc = XDocument.Parse(xml); // parse the xml.
+                    WebReader.Result result = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml"); // read teamliquid calendar xml.
+                    if (result.Status != WebReader.Status.Success) return;
+
+                    XDocument xdoc = XDocument.Parse(result.Response); // parse the xml.
 
                     var months = from monthEntry in xdoc.Descendants("month") // get the events.
                                  select new

@@ -40,8 +40,8 @@ namespace BlizzTV.Modules.Feeds
             if (items == null) items = new List<FeedItem>();
             if (items.Count > 0) items.Clear();
 
-            string xml = WebReader.Read(url);
-            if (xml == null) return false;
+            WebReader.Result result = WebReader.Read(url);
+            if (result.Status != WebReader.Status.Success) return false;
 
             string linkFallback = "";
             Match m=this._blizzard_atom_regex.Match(url); // blizzard's atom feeds does not contain any links, so let's hack it.
@@ -49,7 +49,7 @@ namespace BlizzTV.Modules.Feeds
             
             foreach (IFeedParser parser in this._parsers)
             {
-                if (parser.Parse(xml, ref items,linkFallback)) return true;
+                if (parser.Parse(result.Response, ref items, linkFallback)) return true;
             }
 
             return false;

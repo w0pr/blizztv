@@ -34,13 +34,14 @@ namespace BlizzTV.Modules.Streams.Handlers
             try
             {
                 string apiUrl = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "F7DE9C9A56F4ABB48D170A9881E5AF66"); // the api url
-                string response = WebReader.Read(apiUrl); // read the api response.
+                WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
+                if (result.Status != WebReader.Status.Success) return;
 
-                Hashtable data = (Hashtable)Json.JsonDecode(response); // start parsing json.
-                ArrayList results = (ArrayList)data["results"]; // the results object.
-                if (results.Count > 0)
+                Hashtable data = (Hashtable)Json.JsonDecode(result.Response); // start parsing json.
+                ArrayList resultsObject = (ArrayList)data["results"]; // the results object.
+                if (resultsObject.Count > 0)
                 {
-                    Hashtable table = (Hashtable)results[0];
+                    Hashtable table = (Hashtable)resultsObject[0];
                     if ((string)table["status"].ToString() == "live") // if the stream is live.
                     {
                         this.IsLive = true;

@@ -55,32 +55,37 @@ namespace BlizzTV.Modules.BlizzBlues.Game
             {
                 try
                 {
-                    string xml = WebReader.Read(source.Url);
-                    HtmlDocument doc = new HtmlDocument();
-                    doc.LoadHtml(xml);
+                    WebReader.Result result = WebReader.Read(source.Url);
 
-                    foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//tr[@class='blizzard']"))
-                    {                        
-                        HtmlNodeCollection subNodes = node.SelectNodes("td[@class='post-title']//div[@class='desc']//a[@href]");
-                        string postForum = subNodes[0].InnerText;
-                        string postTitle = subNodes[1].InnerText;
-                        string postLink = string.Format("{0}{1}", source.Url, subNodes[1].Attributes["href"].Value);
-                        string topicId = "";
-                        string postId = "";
+                    if (result.Status == WebReader.Status.Success)
+                    {
 
-                        Match m = RegexBlueId.Match(subNodes[1].Attributes["href"].Value);
-                        if (m.Success)
+                        HtmlDocument doc = new HtmlDocument();
+                        doc.LoadHtml(result.Response);
+
+                        foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//tr[@class='blizzard']"))
                         {
-                            topicId = m.Groups["TopicID"].Value;
-                            postId = m.Groups["PostID"].Value;
+                            HtmlNodeCollection subNodes = node.SelectNodes("td[@class='post-title']//div[@class='desc']//a[@href]");
+                            string postForum = subNodes[0].InnerText;
+                            string postTitle = subNodes[1].InnerText;
+                            string postLink = string.Format("{0}{1}", source.Url, subNodes[1].Attributes["href"].Value);
+                            string topicId = "";
+                            string postId = "";
 
-                            BlueStory b = new BlueStory(this.Type, postTitle, source.Region, postLink, topicId, postId);
-                            b.OnStateChange += OnChildStateChange;
+                            Match m = RegexBlueId.Match(subNodes[1].Attributes["href"].Value);
+                            if (m.Success)
+                            {
+                                topicId = m.Groups["TopicID"].Value;
+                                postId = m.Groups["PostID"].Value;
 
-                            if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, b);
-                            else this.Stories[topicId].AddPost(b);                       
+                                BlueStory b = new BlueStory(this.Type, postTitle, source.Region, postLink, topicId, postId);
+                                b.OnStateChange += OnChildStateChange;
+
+                                if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, b);
+                                else this.Stories[topicId].AddPost(b);
+                            }
                         }
-                    }                    
+                    }
                 }
                 catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("BlueParser error: {0}", e)); }
             }

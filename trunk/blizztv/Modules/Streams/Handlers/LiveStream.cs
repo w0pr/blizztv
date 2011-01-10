@@ -32,16 +32,15 @@ namespace BlizzTV.Modules.Streams.Handlers
             try
             {
                 string apiUrl = string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json", this.Slug); // the api url.
-                string response = WebReader.Read(apiUrl); // read the api response
-                if (response != null) // start parsing json.
-                {
-                    Hashtable data = (Hashtable)Json.JsonDecode(response);
-                    data = (Hashtable)data["rss"]; 
-                    data = (Hashtable)data["channel"];
-                    this.IsLive = (bool)data["isLive"]; // is the stream live?
-                    this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
-                    this.Description = (string)data["description"].ToString(); // stream description.
-                }
+                WebReader.Result result = WebReader.Read(apiUrl); // read the api response
+                if (result.Status != WebReader.Status.Success) return;
+
+                Hashtable data = (Hashtable)Json.JsonDecode(result.Response);
+                data = (Hashtable)data["rss"];
+                data = (Hashtable)data["channel"];
+                this.IsLive = (bool)data["isLive"]; // is the stream live?
+                this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
+                this.Description = (string)data["description"].ToString(); // stream description.
             }
             catch (Exception e) { throw new Exception("LiveStream Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
         }
