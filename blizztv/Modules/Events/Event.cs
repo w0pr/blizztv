@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Text.RegularExpressions;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 using BlizzTV.CommonLib.Storage;
@@ -25,6 +26,8 @@ namespace BlizzTV.Modules.Events
 {
     public class Event:ListItem
     {
+        private Regex _teamliquidFilter=new Regex(@"\[/?tlpd.*?\]", RegexOptions.Compiled); // filters out teamliquid calendar's [tlpd] tags.
+
         public string FullTitle { get; private set; }
         public string Description { get; private set; }
         public string EventId { get; private set; }
@@ -77,8 +80,8 @@ namespace BlizzTV.Modules.Events
             : base(title)
         {
             Notified = false;
-            this.FullTitle = fullTitle;
-            this.Description = description;
+            this.FullTitle = fullTitle;            
+            this.Description = this._teamliquidFilter.Replace(description,"");
             this.EventId = eventId;
             this.IsOver = isOver;
             this.Time = time;
