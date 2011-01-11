@@ -259,7 +259,7 @@
             // toolStripSpacer
             // 
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(60, 17);
+            this.toolStripSpacer.Size = new System.Drawing.Size(241, 17);
             this.toolStripSpacer.Spring = true;
             // 
             // SleepIcon

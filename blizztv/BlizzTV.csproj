@@ -498,6 +498,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\notification.png" />
     <None Include="Resources\video.png" />
     <None Include="Resources\stream.png" />
     <None Include="Resources\sleep.ico" />
@@ -533,7 +534,6 @@
     <None Include="Resources\read.png" />
     <None Include="Resources\plugin.png" />
     <None Include="Resources\player.png" />
-    <None Include="Resources\notification.png" />
     <None Include="Resources\hint.png" />
     <None Include="Resources\feed.png" />
     <None Include="Resources\faq.png" />

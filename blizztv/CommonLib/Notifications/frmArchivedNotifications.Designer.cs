@@ -99,6 +99,7 @@
             this.Text = "Notifications";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmQueuedNotifications_FormClosing);
             this.Load += new System.EventHandler(this.frmQueuedNotifications_Load);
+            this.ResizeEnd += new System.EventHandler(this.frmArchivedNotifications_ResizeEnd);
             this.ResumeLayout(false);
 
         }
