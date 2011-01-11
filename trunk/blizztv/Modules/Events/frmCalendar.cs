@@ -73,9 +73,9 @@ namespace BlizzTV.Modules.Events
             e.Cancel = true; // cancel new item creation on calendar.
         }
 
-        private void Calendar_ItemClick(object sender, CalendarItemEventArgs e)
+        private void Calendar_ItemDoubleClick(object sender, CalendarItemEventArgs e)
         {
-            ((Event) e.Item.Tag).Open(sender, e);
+            ((Event)e.Item.Tag).Open(sender, e);
         }
     }
 }

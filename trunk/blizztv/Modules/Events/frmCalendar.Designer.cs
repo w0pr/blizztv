@@ -52,6 +52,7 @@
             this.MonthView.Name = "MonthView";
             this.MonthView.Size = new System.Drawing.Size(190, 449);
             this.MonthView.TabIndex = 0;
+            this.MonthView.TabStop = false;
             this.MonthView.SelectionChanged += new System.EventHandler<System.Windows.Forms.Calendar.DateRangeChangedEventArgs>(this.MonthView_SelectionChanged);
             // 
             // Calendar
@@ -91,10 +92,10 @@
             this.Calendar.Location = new System.Drawing.Point(194, 4);
             this.Calendar.Name = "Calendar";
             this.Calendar.Size = new System.Drawing.Size(570, 448);
-            this.Calendar.TabIndex = 1;
+            this.Calendar.TabIndex = 0;
             this.Calendar.LoadItems += new System.EventHandler<System.Windows.Forms.Calendar.CalendarLoadEventArgs>(this.Calendar_LoadItems);
             this.Calendar.ItemCreating += new System.EventHandler<System.Windows.Forms.Calendar.CalendarItemCancelEventArgs>(this.Calendar_ItemCreating);
-            this.Calendar.ItemClick += new System.EventHandler<System.Windows.Forms.Calendar.CalendarItemEventArgs>(this.Calendar_ItemClick);
+            this.Calendar.ItemDoubleClick += new System.EventHandler<System.Windows.Forms.Calendar.CalendarItemEventArgs>(this.Calendar_ItemDoubleClick);
             // 
             // StatusStrip
             // 

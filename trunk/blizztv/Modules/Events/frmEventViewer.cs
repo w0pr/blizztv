@@ -38,29 +38,30 @@ namespace BlizzTV.Modules.Events
         {
             this.Text = string.Format("Event: {0}", this._event.FullTitle);
             this.LabelFullTitle.Text = this._event.FullTitle;
-            this.LabelLocalTime.Text = string.Format("({0})", this._event.Time.LocalTime);
-            this.RichTextboxDescription.Text = this._event.Description;
+            this.LabelLocalTime.Text = this._event.Time.LocalTime.ToString();
+            this.RichTextboxDescription.Text = this._event.Description;            
 
             switch (this._event.Status) // Colorize LabelStatus based on event status
             {
                 case EventStatus.Over:
-                    this.LabelStatus.ForeColor = _eventOverColor;
+                    this.LabelTimeLeft.ForeColor = _eventOverColor;
                     this.ButtonSetupAlarm.Enabled = false;
-                    this.LabelStatus.Text = "Over.";
+                    this.LabelTimeLeft.Text = "Over.";
                     break;
                 case EventStatus.InProgress:
-                    this.LabelStatus.ForeColor = _eventInProgressColor;
+                    this.LabelTimeLeft.ForeColor = _eventInProgressColor;
                     this.ButtonSetupAlarm.Enabled = false;
-                    this.LabelStatus.Text = "In progress.";
+                    this.LabelTimeLeft.Text = "In progress.";
                     break;
                 case EventStatus.Upcoming:
-                    this.LabelStatus.ForeColor = _futureEventColor;
+                    this.LabelTimeLeft.ForeColor = _futureEventColor;
                     this.ButtonSetupAlarm.Enabled = true;
                     this.LabelAlarm.Visible = true;
-                    this.LabelStatus.Text = string.Format("{0} to go.", this._event.TimeLeft);
+                    this.PictureAlarmIcon.Visible = true;
+                    this.LabelTimeLeft.Text = string.Format("{0} to go.", this._event.TimeLeft);
                     break;
             }
-
+            
             if (this._event.AlarmExists())
             {
                 this.LabelAlarm.Text = string.Format("An alarm is set for event {0} minutes before.", this._event.GetAlarmMinutes());
