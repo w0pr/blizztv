@@ -81,6 +81,11 @@ namespace BlizzTV.CommonLib.Notifications
             NotificationManager.Instance.ClearArchivedNotifications();
         }
 
+        private void frmArchivedNotifications_ResizeEnd(object sender, EventArgs e)
+        {
+            this.listViewNotifications.Columns[1].Width = this.Width - (this.listViewNotifications.Columns[0].Width + 40);
+        }
+
         private class ArchivedNotificationListItemWrapper : ListViewItem
         {
             public ArchivedNotification Notification { get; private set; }
