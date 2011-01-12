@@ -92,7 +92,7 @@ namespace BlizzTV.Modules.Streams
             {
                 if (this._player == null)
                 {
-                    this._player = new frmPlayer(this); // render the stream with our own video player
+                    this._player = new frmPlayer(this);                    
                     this._player.FormClosed += PlayerClosed;
                     this._player.Show();
                 }

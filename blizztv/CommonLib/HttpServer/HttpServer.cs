@@ -36,13 +36,21 @@ namespace BlizzTV.CommonLib.HttpServer
 
         #endregion
 
-        public string Banner = string.Format("BlizzTV-httpserv {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
         public int Port = 62543;
+        public string Address = string.Empty;
+        public string Banner = string.Empty;
+        
 
         private TcpListener _listener;
         private bool _isActive = false;
         
-        private HttpServer()
+        private HttpServer() 
+        {
+            this.Address = string.Format("127.0.0.1:{0}", this.Port);
+            this.Banner = string.Format("BlizzTV-httpserv {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
+
+        public void StartUp()
         {
             Thread serverThread = new Thread(() => { this.Listen(); }) { IsBackground = true };
             serverThread.Start();

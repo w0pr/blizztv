@@ -206,7 +206,6 @@
     <Compile Include="Modules\Feeds\Parsers\Rss2.cs" />
     <Compile Include="Modules\Feeds\Subscriptions.cs" />
     <Compile Include="Modules\Streams\Catalog.cs" />
-    <Compile Include="Modules\Streams\StreamHttpHandler.cs" />
     <Compile Include="Modules\Streams\Subscriptions.cs" />
     <Compile Include="Modules\Videos\Catalog.cs" />
     <Compile Include="Modules\Videos\Subscriptions.cs" />
