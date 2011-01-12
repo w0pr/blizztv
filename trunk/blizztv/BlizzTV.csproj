@@ -133,6 +133,12 @@
       <DependentUpon>frmDownload.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonLib\Helpers\Zip.cs" />
+    <Compile Include="CommonLib\HttpServer\HttpClient.cs" />
+    <Compile Include="CommonLib\HttpServer\HttpRequest.cs" />
+    <Compile Include="CommonLib\HttpServer\HttpRequestProxy.cs" />
+    <Compile Include="CommonLib\HttpServer\HttpResponse.cs" />
+    <Compile Include="CommonLib\HttpServer\HttpServer.cs" />
+    <Compile Include="CommonLib\HttpServer\HttpRequestHandler.cs" />
     <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +206,7 @@
     <Compile Include="Modules\Feeds\Parsers\Rss2.cs" />
     <Compile Include="Modules\Feeds\Subscriptions.cs" />
     <Compile Include="Modules\Streams\Catalog.cs" />
+    <Compile Include="Modules\Streams\StreamHttpHandler.cs" />
     <Compile Include="Modules\Streams\Subscriptions.cs" />
     <Compile Include="Modules\Videos\Catalog.cs" />
     <Compile Include="Modules\Videos\Subscriptions.cs" />
