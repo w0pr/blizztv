@@ -27,23 +27,27 @@ namespace BlizzTV.Modules.Feeds.Parsers
     {
         public bool Parse(string xml, ref List<FeedItem> items, string linkFallback = "")
         {
-            XDocument xdoc = XDocument.Parse(xml);            
-
-            var entries = from item in xdoc.Descendants("item")
-                          select new
-                          {
-                              Id = item.Element("guid").Value,
-                              Title = item.Element("title").Value,
-                              Link = item.Element("link").Value,
-                          };
-
-            foreach (var entry in entries) // create the story-item's.
+            try
             {
-                items.Add(new FeedItem(entry.Title, entry.Id, entry.Link));
-            }
+                XDocument xdoc = XDocument.Parse(xml);
 
-            if (items.Count > 0) return true;
-            else return false;
+                var entries = from item in xdoc.Descendants("item")
+                              select new
+                              {
+                                  Id = item.Element("guid").Value,
+                                  Title = item.Element("title").Value,
+                                  Link = item.Element("link").Value,
+                              };
+
+                foreach (var entry in entries) // create the story-item's.
+                {
+                    items.Add(new FeedItem(entry.Title, entry.Id, entry.Link));
+                }
+
+                if (items.Count > 0) return true;
+            }
+            catch (Exception e) { }
+            return false;
         }
     }
 }
