@@ -72,10 +72,9 @@ namespace BlizzTV
 
             #endregion
 
-            #region actual startup 
+            #region actual startup
 
-            Log.Instance.Write(LogMessageTypes.Info, "BlizzTV Startup..");
-            BlizzTV.CommonLib.HttpServer.HttpServer server = BlizzTV.CommonLib.HttpServer.HttpServer.Instance;
+            Log.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV-{0} started..", Assembly.GetExecutingAssembly().GetName().Version));
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
