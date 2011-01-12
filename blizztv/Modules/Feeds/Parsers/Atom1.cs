@@ -25,26 +25,30 @@ namespace BlizzTV.Modules.Feeds.Parsers
 {
     public class Atom1:IFeedParser
     {
-        public bool Parse(string xml, ref List<FeedItem> items, string linkFallback="")
+        public bool Parse(string xml, ref List<FeedItem> items, string linkFallback = "")
         {
-            XDocument xdoc = XDocument.Parse(xml);
-            XNamespace xmlns = "http://www.w3.org/2005/Atom";
-
-            var entries = from entry in xdoc.Descendants(xmlns + "entry")
-                          select new
-                          {
-                              Id = entry.Element(xmlns + "id").Value,
-                              Title = entry.Element(xmlns + "title").Value,
-                              Link = (entry.Element(xmlns + "link") != null) ? entry.Element(xmlns + "link").Attribute("href").Value : String.Empty
-                          };
-
-            foreach (var entry in entries) // create the story-item's.
+            try
             {
-                items.Add(new FeedItem(entry.Title, entry.Id, String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)));
-            }
+                XDocument xdoc = XDocument.Parse(xml);
+                XNamespace xmlns = "http://www.w3.org/2005/Atom";
 
-            if (items.Count > 0) return true;
-            else return false;
+                var entries = from entry in xdoc.Descendants(xmlns + "entry")
+                              select new
+                              {
+                                  Id = entry.Element(xmlns + "id").Value,
+                                  Title = entry.Element(xmlns + "title").Value,
+                                  Link = (entry.Element(xmlns + "link") != null) ? entry.Element(xmlns + "link").Attribute("href").Value : String.Empty
+                              };
+
+                foreach (var entry in entries) // create the story-item's.
+                {
+                    items.Add(new FeedItem(entry.Title, entry.Id, String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)));
+                }
+
+                if (items.Count > 0) return true;
+            }
+            catch (Exception e) { }
+            return false;
         }
     }
 }
