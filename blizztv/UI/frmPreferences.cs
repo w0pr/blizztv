@@ -72,6 +72,7 @@ namespace BlizzTV.UI
             checkBoxVideoAutoPlay.Checked = GlobalSettings.Instance.AutoPlayVideos;
             CheckBoxPlayerAlwaysOnTop.Checked = GlobalSettings.Instance.PlayerWindowsAlwaysOnTop;
             checkBoxNotificationsEnabled.Checked = GlobalSettings.Instance.NotificationsEnabled;
+            groupBoxNotificationSounds.Enabled = GlobalSettings.Instance.NotificationsEnabled;
             checkBoxNotificationSoundsEnabled.Checked = GlobalSettings.Instance.NotificationSoundsEnabled;
             checkBoxAllowAutomaticUpdateChecks.Checked = GlobalSettings.Instance.AllowAutomaticUpdateChecks;
             checkBoxAllowBetaVersionNotifications.Checked = GlobalSettings.Instance.AllowBetaVersionNotifications;
