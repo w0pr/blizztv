@@ -61,6 +61,7 @@ namespace BlizzTV.Modules.Streams
             // 
             // MenuAlwaysOnTop
             // 
+            this.MenuAlwaysOnTop.Image = ((System.Drawing.Image)(resources.GetObject("MenuAlwaysOnTop.Image")));
             this.MenuAlwaysOnTop.Name = "MenuAlwaysOnTop";
             this.MenuAlwaysOnTop.Size = new System.Drawing.Size(154, 22);
             this.MenuAlwaysOnTop.Text = "Always On Top";
@@ -68,6 +69,7 @@ namespace BlizzTV.Modules.Streams
             // 
             // MenuOpenChat
             // 
+            this.MenuOpenChat.Image = ((System.Drawing.Image)(resources.GetObject("MenuOpenChat.Image")));
             this.MenuOpenChat.Name = "MenuOpenChat";
             this.MenuOpenChat.Size = new System.Drawing.Size(154, 22);
             this.MenuOpenChat.Text = "Open Chat";
