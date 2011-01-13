@@ -32,7 +32,7 @@ namespace BlizzTV.CommonLib.Helpers
         {
             get
             {
-                string expectedValue = string.Format("\"{0}\"", Assembly.GetExecutingAssembly().Location);
+                string expectedValue = string.Format("\"{0}\" /silent", Assembly.GetExecutingAssembly().Location);
                 if (!Registry.ValueExists(RootKey.HKEY_LOCAL_MACHINE, _startupKey, "BlizzTV") || (string)Registry.GetValue(RootKey.HKEY_LOCAL_MACHINE, _startupKey, "BlizzTV") != expectedValue) return false;
                 return true;
             }
