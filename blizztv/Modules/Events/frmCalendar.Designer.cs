@@ -34,6 +34,7 @@
             System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange4 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
             System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange5 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
             System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange6 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCalendar));
             this.MonthView = new System.Windows.Forms.Calendar.MonthView();
             this.Calendar = new System.Windows.Forms.Calendar.Calendar();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
@@ -120,6 +121,7 @@
             this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.Calendar);
             this.Controls.Add(this.MonthView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCalendar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Calendar";
