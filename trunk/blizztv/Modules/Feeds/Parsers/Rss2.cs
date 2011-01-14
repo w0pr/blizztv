@@ -46,7 +46,7 @@ namespace BlizzTV.Modules.Feeds.Parsers
 
                 if (items.Count > 0) return true;
             }
-            catch (Exception e) { }
+            catch (Exception) { }
             return false;
         }
     }

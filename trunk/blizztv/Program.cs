@@ -22,12 +22,16 @@ using System.Threading;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Dependencies;
 using BlizzTV.CommonLib.Config;
+using BlizzTV.CommonLib.Helpers;
 using BlizzTV.UI;
 
 namespace BlizzTV
 {
     static class Program
-    {        
+    {
+        private static Mutex _singleInstanceLock = new Mutex(true, Assembly.GetExecutingAssembly().GetName().Name); // mutex to enforce-single-instance of the application.
+        // more on single instance mutexes: http://www.ai.uga.edu/~mc/SingleInstance.html & http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -36,18 +40,11 @@ namespace BlizzTV
         {
             #region mutex-lock - don't allow more than once instance
 
-            //method: http://www.ai.uga.edu/~mc/SingleInstance.html)
-
-            bool gotMutex = false; 
-            Mutex singleInstanceLock = new Mutex(true, Assembly.GetExecutingAssembly().GetName().Name, out gotMutex); // mutex after our app. name.
-            
-            if (!gotMutex) 
+            if (!_singleInstanceLock.WaitOne(0, true))
             {
-                MessageBox.Show("Another instance of BlizzTV is already running!", "Startup Error!", MessageBoxButtons.OK, MessageBoxIcon.Error); // give a non-friendly error message :/
-                return; // exit
+                NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_BLIZZTV_SETFRONTMOST, IntPtr.Zero, IntPtr.Zero); // message the actual instance to get on front-most.
+                return;
             }
-
-            GC.KeepAlive(singleInstanceLock); // okay GC, single_instance_lock is an important variable for us, so never ever throw it to garbage!
 
             #endregion            
 
@@ -79,6 +76,8 @@ namespace BlizzTV
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
+
+            _singleInstanceLock.ReleaseMutex(); // release the mutex before the application exits..
 
             #endregion             
         }
