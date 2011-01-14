@@ -26,6 +26,7 @@ using BlizzTV.CommonLib.UI;
 using BlizzTV.CommonLib.Workload;
 using BlizzTV.CommonLib.Config;
 using BlizzTV.CommonLib.Updates;
+using BlizzTV.CommonLib.Helpers;
 using BlizzTV.ModuleLib;
 
 namespace BlizzTV.UI
@@ -92,6 +93,20 @@ namespace BlizzTV.UI
                 this.TrayIcon = null;
             }
             Application.ExitThread(); // Exit the application.
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == NativeMethods.WM_BLIZZTV_SETFRONTMOST) this.SetFrontMostWindow();
+            base.WndProc(ref m);
+        }
+
+        private void SetFrontMostWindow()
+        {
+            if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
+            bool lastTopMostState = this.TopMost;
+            this.TopMost = true;
+            this.TopMost = lastTopMostState;
         }
 
         #endregion

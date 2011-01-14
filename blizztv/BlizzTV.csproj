@@ -132,6 +132,7 @@
     <Compile Include="CommonLib\Downloads\frmDownload.Designer.cs">
       <DependentUpon>frmDownload.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonLib\Helpers\NativeMethods.cs" />
     <Compile Include="CommonLib\Helpers\Zip.cs" />
     <Compile Include="CommonLib\HttpServer\HttpClient.cs" />
     <Compile Include="CommonLib\HttpServer\HttpRequest.cs" />
