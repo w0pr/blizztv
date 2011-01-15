@@ -48,7 +48,7 @@ namespace BlizzTV.UI
         private void frmMain_Load(object sender, EventArgs e)
         {            
             if (Settings.Instance.NeedInitialConfig) { Wizard.frmWizardHost f = new Wizard.frmWizardHost(); f.ShowDialog(); } // if required run the configuration wizard.
-            if (RuntimeConfiguration.Instance.StartedOnSystemStartup) this.HideForm(); // if the app started on system startup, don't show the main form.
+            if (RuntimeConfiguration.Instance.StartedOnSystemStartup) this.MinimizeToSystemTray(); // if the app started on system startup, don't show the main form.
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.                     
             this.LoadModules(); // Load the enabled plugins.     
             this.AutomaticUpdateCheck(); // Automatically check for updates.
@@ -59,28 +59,20 @@ namespace BlizzTV.UI
             if (e.CloseReason == CloseReason.UserClosing && Settings.Instance.MinimizeToSystemTray) // only hook when user is closing the main form.
             {
                 e.Cancel = true; // live in system-tray even if form is closed
-                this.HideForm();
+                this.MinimizeToSystemTray();
             }
             else this.ExitApplication();
         }
 
-        private void frmMain_SizeChanged(object sender, EventArgs e)
+        private void MinimizeToSystemTray()
         {
-            if (this.WindowState == FormWindowState.Minimized) this.HideForm();
-        }
-
-        private void HideForm()
-        {
-            this.ShowInTaskbar = false; // hide ourself from taskbar
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow; // hide from alt-tab.
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow; // hide from alt-tab menu.
             this.Visible = false;
         }
 
-        private void ShowForm()
+        private void RestoreFromSystemTray()
         {
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;            
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable; // let it be shown in alt-tab menu.      
             this.Visible = true;
         }
 
@@ -104,6 +96,7 @@ namespace BlizzTV.UI
         private void SetFrontMostWindow()
         {
             if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
+            if (this.Visible == false) this.RestoreFromSystemTray();
             bool lastTopMostState = this.TopMost;
             this.TopMost = true;
             this.TopMost = lastTopMostState;
@@ -302,7 +295,7 @@ namespace BlizzTV.UI
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
         {
-            if (this.ShowInTaskbar == false) this.ShowForm(); // if we're just living in system-tray, remake the main form visible again            
+            this.RestoreFromSystemTray(); // if we're just living in system-tray, remake the main form visible again            
         }
 
         #endregion
