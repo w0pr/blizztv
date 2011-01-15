@@ -35,6 +35,8 @@ namespace BlizzTV.CommonLib.Players
         public PlayerWindow()
         {
             InitializeComponent();
+
+            this.Size = new Size(Settings.GlobalSettings.Instance.VideoPlayerWidth, Settings.GlobalSettings.Instance.VideoPlayerHeight); // Load the last known size & location for the window.
         }
 
         protected void PlayerDoubleClick(object sender, MouseEventArgs e)
@@ -63,6 +65,16 @@ namespace BlizzTV.CommonLib.Players
         protected void PlayerMouseMove(object sender, MouseEventArgs e)
         {
             if (this._borderless && this._dragging) this.Location = new System.Drawing.Point(e.X - this._dragOffset.X, e.Y - this._dragOffset.Y);
+        }
+
+        private void PlayerWindow_ResizeEnd(object sender, EventArgs e)
+        {
+            if (this.Size.Width != Settings.GlobalSettings.Instance.VideoPlayerWidth || this.Size.Height != Settings.GlobalSettings.Instance.VideoPlayerHeight)
+            {
+                Settings.GlobalSettings.Instance.VideoPlayerWidth = this.Size.Width;
+                Settings.GlobalSettings.Instance.VideoPlayerHeight = this.Size.Height;
+                Settings.GlobalSettings.Instance.Save();
+            }
         }
     }
 }

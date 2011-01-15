@@ -40,18 +40,51 @@ namespace BlizzTV.UI
         public frmMain()
         {
             InitializeComponent();
+            
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
             Workload.Instance.AttachControls(this.ProgressBar, this.ProgressIcon); // init. workload-manager.
             NotificationManager.Instance.AttachControls(this, this.TrayIcon, this.NotificationIcon); // init. notification-manager.
         }
 
         private void frmMain_Load(object sender, EventArgs e)
-        {            
+        {
+            // Load the last known size & location for the window.
+            this.Size = new Size(Settings.Instance.MainWindowWidth, Settings.Instance.MainWindowHeight);
+            this.DesktopLocation = new Point(Settings.Instance.MainWindowLocationX, Settings.Instance.MainWindowLocationY);
+
             if (Settings.Instance.NeedInitialConfig) { Wizard.frmWizardHost f = new Wizard.frmWizardHost(); f.ShowDialog(); } // if required run the configuration wizard.
             if (RuntimeConfiguration.Instance.StartedOnSystemStartup) this.MinimizeToSystemTray(); // if the app started on system startup, don't show the main form.
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.                     
             this.LoadModules(); // Load the enabled plugins.     
             this.AutomaticUpdateCheck(); // Automatically check for updates.
+        }
+
+        private void frmMain_ResizeEnd(object sender, EventArgs e)
+        {
+            bool needsSaving = false;
+
+            if (this.Size.Width != Settings.Instance.MainWindowWidth)
+            {
+                Settings.Instance.MainWindowWidth = this.Size.Width;
+                needsSaving = true;
+            }
+            if (this.Size.Height != Settings.Instance.MainWindowHeight)
+            {
+                Settings.Instance.MainWindowHeight = this.Size.Height;
+                needsSaving = true;
+            }
+            if (this.DesktopLocation.X != Settings.Instance.MainWindowLocationX)
+            {
+                Settings.Instance.MainWindowLocationX = this.DesktopLocation.X;
+                needsSaving = true;
+            }
+            if (this.DesktopLocation.Y != Settings.Instance.MainWindowLocationY)
+            {
+                Settings.Instance.MainWindowLocationY = this.DesktopLocation.Y;
+                needsSaving = true;
+            }
+
+            if (needsSaving) Settings.Instance.Save();
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -62,6 +95,21 @@ namespace BlizzTV.UI
                 this.MinimizeToSystemTray();
             }
             else this.ExitApplication();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == NativeMethods.WM_BLIZZTV_SETFRONTMOST) this.SetFrontMostWindow();
+            base.WndProc(ref m);
+        }
+
+        private void SetFrontMostWindow()
+        {
+            if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
+            if (this.Visible == false) this.RestoreFromSystemTray();
+            bool lastTopMostState = this.TopMost;
+            this.TopMost = true;
+            this.TopMost = lastTopMostState;
         }
 
         private void MinimizeToSystemTray()
@@ -85,21 +133,6 @@ namespace BlizzTV.UI
                 this.TrayIcon = null;
             }
             Application.ExitThread(); // Exit the application.
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == NativeMethods.WM_BLIZZTV_SETFRONTMOST) this.SetFrontMostWindow();
-            base.WndProc(ref m);
-        }
-
-        private void SetFrontMostWindow()
-        {
-            if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
-            if (this.Visible == false) this.RestoreFromSystemTray();
-            bool lastTopMostState = this.TopMost;
-            this.TopMost = true;
-            this.TopMost = lastTopMostState;
         }
 
         #endregion

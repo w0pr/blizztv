@@ -17,6 +17,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace BlizzTV.UI
 {
@@ -40,6 +41,18 @@ namespace BlizzTV.UI
 
         // enable debug console?
         public bool EnableDebugConsole { get { return this.GetBoolean("EnableDebugConsole", false); } set { this.Set("EnableDebugConsole", value); } }
+
+        // main window width
+        public int MainWindowWidth { get { return this.GetInt("MainWindowWidth", 275); } set { this.Set("MainWindowWidth", value); } }
+
+        // main window height
+        public int MainWindowHeight { get { return this.GetInt("MainWindowHeight", 350); } set { this.Set("MainWindowHeight", value); } }
+
+        // main window width
+        public int MainWindowLocationX { get { return this.GetInt("MainWindowLocationX", (Screen.PrimaryScreen.WorkingArea.Width - 275) / 2); } set { this.Set("MainWindowLocationX", value); } }
+
+        // main window height
+        public int MainWindowLocationY { get { return this.GetInt("MainWindowLocationY", (Screen.PrimaryScreen.WorkingArea.Height - 350) / 2); } set { this.Set("MainWindowLocationY", value); } }
 
         // the plugin settings wrapper.
         public Plugins Modules = new Plugins(); 

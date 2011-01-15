@@ -75,7 +75,7 @@
             this.menuHelp});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(256, 24);
+            this.menuStrip.Size = new System.Drawing.Size(259, 24);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -235,9 +235,9 @@
             this.toolStripSpacer,
             this.SleepIcon,
             this.NotificationIcon});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 293);
+            this.StatusStrip.Location = new System.Drawing.Point(0, 290);
             this.StatusStrip.Name = "StatusStrip";
-            this.StatusStrip.Size = new System.Drawing.Size(256, 22);
+            this.StatusStrip.Size = new System.Drawing.Size(259, 22);
             this.StatusStrip.TabIndex = 2;
             this.StatusStrip.Text = "statusStrip1";
             // 
@@ -329,7 +329,7 @@
             this.TreeView.SelectedImageIndex = 0;
             this.TreeView.ShowNodeToolTips = true;
             this.TreeView.ShowRootLines = false;
-            this.TreeView.Size = new System.Drawing.Size(256, 269);
+            this.TreeView.Size = new System.Drawing.Size(259, 266);
             this.TreeView.TabIndex = 0;
             this.TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseDoubleClick);
             this.TreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeView_DragDrop);
@@ -352,7 +352,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(256, 315);
+            this.ClientSize = new System.Drawing.Size(259, 312);
             this.Controls.Add(this.TreeView);
             this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.menuStrip);
@@ -364,6 +364,7 @@
             this.Text = "BlizzTV";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.ResizeEnd += new System.EventHandler(this.frmMain_ResizeEnd);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
