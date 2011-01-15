@@ -38,6 +38,7 @@
             this.ClientSize = new System.Drawing.Size(624, 347);
             this.Name = "PlayerWindow";
             this.Text = "PlayerWindow";
+            this.ResizeEnd += new System.EventHandler(this.PlayerWindow_ResizeEnd);
             this.ResumeLayout(false);
 
         }

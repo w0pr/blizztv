@@ -43,6 +43,8 @@
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.checkBoxStartOnSystemStartup = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBoxAllowBetaVersionNotifications = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowAutomaticUpdateChecks = new System.Windows.Forms.CheckBox();
@@ -61,17 +63,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CheckBoxPlayerAlwaysOnTop = new System.Windows.Forms.CheckBox();
             this.checkBoxVideoAutoPlay = new System.Windows.Forms.CheckBox();
-            this.txtVideoPlayerHeight = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtVideoPlayerWidth = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.checkBoxStartOnSystemStartup = new System.Windows.Forms.CheckBox();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabModules.SuspendLayout();
             this.tabGeneral.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.TabControl.SuspendLayout();
@@ -80,7 +76,6 @@
             this.groupBoxNotificationSounds.SuspendLayout();
             this.tabPlayer.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageList
@@ -216,6 +211,26 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.checkBoxStartOnSystemStartup);
+            this.groupBox5.Location = new System.Drawing.Point(9, 153);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(511, 48);
+            this.groupBox5.TabIndex = 3;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Windows Integration";
+            // 
+            // checkBoxStartOnSystemStartup
+            // 
+            this.checkBoxStartOnSystemStartup.AutoSize = true;
+            this.checkBoxStartOnSystemStartup.Location = new System.Drawing.Point(9, 19);
+            this.checkBoxStartOnSystemStartup.Name = "checkBoxStartOnSystemStartup";
+            this.checkBoxStartOnSystemStartup.Size = new System.Drawing.Size(174, 17);
+            this.checkBoxStartOnSystemStartup.TabIndex = 0;
+            this.checkBoxStartOnSystemStartup.Text = "Start BlizzTV on system startup.";
+            this.checkBoxStartOnSystemStartup.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
@@ -390,16 +405,13 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.CheckBoxPlayerAlwaysOnTop);
             this.groupBox1.Controls.Add(this.checkBoxVideoAutoPlay);
-            this.groupBox1.Controls.Add(this.txtVideoPlayerHeight);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtVideoPlayerWidth);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(446, 90);
+            this.groupBox1.Size = new System.Drawing.Size(519, 72);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Internal Video Player Settings";
@@ -407,7 +419,7 @@
             // CheckBoxPlayerAlwaysOnTop
             // 
             this.CheckBoxPlayerAlwaysOnTop.AutoSize = true;
-            this.CheckBoxPlayerAlwaysOnTop.Location = new System.Drawing.Point(9, 44);
+            this.CheckBoxPlayerAlwaysOnTop.Location = new System.Drawing.Point(9, 19);
             this.CheckBoxPlayerAlwaysOnTop.Name = "CheckBoxPlayerAlwaysOnTop";
             this.CheckBoxPlayerAlwaysOnTop.Size = new System.Drawing.Size(98, 17);
             this.CheckBoxPlayerAlwaysOnTop.TabIndex = 5;
@@ -417,73 +429,12 @@
             // checkBoxVideoAutoPlay
             // 
             this.checkBoxVideoAutoPlay.AutoSize = true;
-            this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 67);
+            this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 42);
             this.checkBoxVideoAutoPlay.Name = "checkBoxVideoAutoPlay";
             this.checkBoxVideoAutoPlay.Size = new System.Drawing.Size(70, 17);
             this.checkBoxVideoAutoPlay.TabIndex = 4;
             this.checkBoxVideoAutoPlay.Text = "Auto-play";
             this.checkBoxVideoAutoPlay.UseVisualStyleBackColor = true;
-            // 
-            // txtVideoPlayerHeight
-            // 
-            this.txtVideoPlayerHeight.Location = new System.Drawing.Point(220, 18);
-            this.txtVideoPlayerHeight.Name = "txtVideoPlayerHeight";
-            this.txtVideoPlayerHeight.Size = new System.Drawing.Size(49, 20);
-            this.txtVideoPlayerHeight.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(173, 21);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Height:";
-            // 
-            // txtVideoPlayerWidth
-            // 
-            this.txtVideoPlayerWidth.Location = new System.Drawing.Point(118, 18);
-            this.txtVideoPlayerWidth.Name = "txtVideoPlayerWidth";
-            this.txtVideoPlayerWidth.Size = new System.Drawing.Size(49, 20);
-            this.txtVideoPlayerWidth.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Width:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Player Size:";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.checkBoxStartOnSystemStartup);
-            this.groupBox5.Location = new System.Drawing.Point(9, 153);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(511, 48);
-            this.groupBox5.TabIndex = 3;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Windows Integration";
-            // 
-            // checkBoxStartOnSystemStartup
-            // 
-            this.checkBoxStartOnSystemStartup.AutoSize = true;
-            this.checkBoxStartOnSystemStartup.Location = new System.Drawing.Point(9, 19);
-            this.checkBoxStartOnSystemStartup.Name = "checkBoxStartOnSystemStartup";
-            this.checkBoxStartOnSystemStartup.Size = new System.Drawing.Size(174, 17);
-            this.checkBoxStartOnSystemStartup.TabIndex = 0;
-            this.checkBoxStartOnSystemStartup.Text = "Start BlizzTV on system startup.";
-            this.checkBoxStartOnSystemStartup.UseVisualStyleBackColor = true;
             // 
             // frmPreferences
             // 
@@ -508,6 +459,8 @@
             this.groupBox3.PerformLayout();
             this.tabModules.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -521,8 +474,6 @@
             this.tabPlayer.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -550,11 +501,6 @@
         private System.Windows.Forms.TabPage tabPlayer;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox checkBoxVideoAutoPlay;
-        private System.Windows.Forms.TextBox txtVideoPlayerHeight;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtVideoPlayerWidth;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox checkBoxMinimimizeToSystemTray;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox checkBoxAllowBetaVersionNotifications;
