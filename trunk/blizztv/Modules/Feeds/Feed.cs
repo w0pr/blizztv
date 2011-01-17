@@ -65,22 +65,25 @@ namespace BlizzTV.Modules.Feeds
 
         private bool Parse()
         {
-            List<FeedItem> items=null;
-            if (FeedParser.Instance.Parse(this.Url, ref items))
+            List<FeedItem> items = null;
+            if (!FeedParser.Instance.Parse(this.Url, ref items))
             {
-                foreach (FeedItem item in items)
-                {
-                    try
-                    {
-                        Story story = new Story(this.Title,item);
-                        story.OnStateChange += OnChildStateChange;
-                        this.Stories.Add(story);
-                    }
-                    catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed-Parse Error: {0}", e)); }
-                }
-                return true;
+                this.State = ModuleLib.State.Error;
+                this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                return false;
             }
-            return false;     
+
+            foreach (FeedItem item in items)
+            {
+                try
+                {
+                    Story story = new Story(this.Title, item);
+                    story.OnStateChange += OnChildStateChange;
+                    this.Stories.Add(story);
+                }
+                catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed-Parse Error: {0}", e)); }
+            }
+            return true;
         }
 
         private void OnChildStateChange(object sender, EventArgs e)

@@ -35,7 +35,7 @@ namespace BlizzTV.Modules.Events
     public class EventsPlugin : Module
     {
         private List<Event> _events = new List<Event>(); // the items list.
-        private static TimeZoneInfo KoreanTimeZone { get { TimeZoneInfo zone = TimeZoneInfo.Local; foreach (TimeZoneInfo z in TimeZoneInfo.GetSystemTimeZones()) { if (z.Id == "Korea Standard Time") zone = z; } return zone; } } // teamliquid calendar flags events in Korean time.
+        private static TimeZoneInfo _koreanTimeZone { get { TimeZoneInfo zone = TimeZoneInfo.Local; foreach (TimeZoneInfo z in TimeZoneInfo.GetSystemTimeZones()) { if (z.Id == "Korea Standard Time") zone = z; } return zone; } } // teamliquid calendar flags events in Korean time.
         private readonly ListItem _eventsToday = new ListItem("Today"); // today's events item.
         private readonly ListItem _eventsUpcoming = new ListItem("Upcoming"); // upcoming events item.
         private readonly ListItem _eventsOver = new ListItem("Past"); // past events item.
@@ -65,8 +65,7 @@ namespace BlizzTV.Modules.Events
 
             if (!RuntimeConfiguration.Instance.InSleepMode) this.CheckEvents(); // Go check for events.
 
-            // setup update timer for event checks
-            _eventTimer.Elapsed += OnTimerHit;
+            _eventTimer.Elapsed += OnTimerHit; // setup update timer for event checks.
             _eventTimer.Enabled = true;
         }
 
@@ -88,7 +87,14 @@ namespace BlizzTV.Modules.Events
                 try
                 {
                     WebReader.Result result = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml"); // read teamliquid calendar xml.
-                    if (result.Status != WebReader.Status.Success) return;
+                    if (result.Status != WebReader.Status.Success)
+                    {
+                        this.RootListItem.State = State.Error;
+                        this.RootListItem.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                        this.RootListItem.SetTitle("Events");
+                        Workload.Instance.Step(this);
+                        return;
+                    }
 
                     XDocument xdoc = XDocument.Parse(result.Response); // parse the xml.
 
@@ -119,7 +125,7 @@ namespace BlizzTV.Modules.Events
                         foreach (var dayEntry in monthEntry.days)
                             foreach (var eventEntry in dayEntry.events)
                             {
-                                Event e = new Event((string)eventEntry.short_title, (string)eventEntry.title, (string)eventEntry.description, (string)eventEntry.event_id, (bool)eventEntry.is_over, new ZonedDateTime(new DateTime((int)monthEntry.year, (int)monthEntry.month, (int)dayEntry.day, (int)eventEntry.hour, (int)eventEntry.minute, 0), KoreanTimeZone)); // TL calendar flags events in Korean time.
+                                Event e = new Event((string)eventEntry.short_title, (string)eventEntry.title, (string)eventEntry.description, (string)eventEntry.event_id, (bool)eventEntry.is_over, new ZonedDateTime(new DateTime((int)monthEntry.year, (int)monthEntry.month, (int)dayEntry.day, (int)eventEntry.hour, (int)eventEntry.minute, 0), _koreanTimeZone)); // TL calendar flags events in Korean time.
                                 this._events.Add(e);
                             }
                 }

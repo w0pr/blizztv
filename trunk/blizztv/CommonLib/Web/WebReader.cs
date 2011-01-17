@@ -62,7 +62,7 @@ namespace BlizzTV.CommonLib.Web
 
         public enum Status
         {
-            Uknown,
+            Unkown,
             Success,
             Failed,
             Timeout
