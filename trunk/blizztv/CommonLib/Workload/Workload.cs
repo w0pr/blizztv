@@ -17,6 +17,7 @@
 
 using System.Windows.Forms;
 using BlizzTV.CommonLib.UI;
+using BlizzTV.CommonLib.UI.LoadingCircle;
 
 namespace BlizzTV.CommonLib.Workload
 {
@@ -31,11 +32,11 @@ namespace BlizzTV.CommonLib.Workload
 
         private int _currentWorkload = 0;
         private ToolStripProgressBar _progressBar;
-        private ToolStripLabel _progressIcon;
+        private LoadingCircle _progressIcon;
 
         private Workload() { }
 
-        public void AttachControls(ToolStripProgressBar progressBar,ToolStripLabel progressIcon)
+        public void AttachControls(ToolStripProgressBar progressBar,LoadingCircle progressIcon)
         {
             this._progressBar = progressBar;
             this._progressIcon = progressIcon;
@@ -48,7 +49,11 @@ namespace BlizzTV.CommonLib.Workload
                 this._currentWorkload += units;
                 this._progressBar.Maximum += units;
                 if (!this._progressBar.Visible) this._progressBar.Visible = true;
-                if (!this._progressIcon.Visible) this._progressIcon.Visible = true;
+                if (!this._progressIcon.Visible)
+                {
+                    this._progressIcon.Visible = true;
+                    this._progressIcon.Active = true;
+                }
             });
         }
 
@@ -62,6 +67,7 @@ namespace BlizzTV.CommonLib.Workload
                 {
                     this._progressBar.Visible = false;
                     this._progressIcon.Visible = false;
+                    this._progressIcon.Active = false;
                     this._progressBar.Value = 0;
                     this._progressBar.Maximum = 0;
                 }

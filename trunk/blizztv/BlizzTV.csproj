@@ -156,6 +156,15 @@
     <Compile Include="CommonLib\Players\PlayerWindow.Designer.cs">
       <DependentUpon>PlayerWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonLib\UI\LoadingCircle\LoadingCircle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonLib\UI\LoadingCircle\LoadingCircle.designer.cs">
+      <DependentUpon>LoadingCircle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonLib\UI\LoadingCircle\LoadingCircleToolStripMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CommonLib\Updates\frmUpdater.cs">
       <SubType>Form</SubType>
     </Compile>

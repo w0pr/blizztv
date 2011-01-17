@@ -50,7 +50,7 @@
             this.spreadTheWordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
-            this.ProgressIcon = new System.Windows.Forms.ToolStripStatusLabel();
+            this.LoadingCircle = new BlizzTV.CommonLib.UI.LoadingCircle.LoadingCircleToolStripMenuItem();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.SleepIcon = new System.Windows.Forms.ToolStripStatusLabel();
@@ -230,7 +230,7 @@
             // StatusStrip
             // 
             this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ProgressIcon,
+            this.LoadingCircle,
             this.ProgressBar,
             this.toolStripSpacer,
             this.SleepIcon,
@@ -241,13 +241,29 @@
             this.StatusStrip.TabIndex = 2;
             this.StatusStrip.Text = "statusStrip1";
             // 
-            // ProgressIcon
+            // LoadingCircle
             // 
-            this.ProgressIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ProgressIcon.Image = ((System.Drawing.Image)(resources.GetObject("ProgressIcon.Image")));
-            this.ProgressIcon.Name = "ProgressIcon";
-            this.ProgressIcon.Size = new System.Drawing.Size(16, 17);
-            this.ProgressIcon.Visible = false;
+            // 
+            // LoadingCircle
+            // 
+            this.LoadingCircle.LoadingCircleControl.AccessibleName = "LoadingCircle";
+            this.LoadingCircle.LoadingCircleControl.Active = false;
+            this.LoadingCircle.LoadingCircleControl.Color = System.Drawing.Color.DarkGray;
+            this.LoadingCircle.LoadingCircleControl.InnerCircleRadius = 6;
+            this.LoadingCircle.LoadingCircleControl.Location = new System.Drawing.Point(0, 0);
+            this.LoadingCircle.LoadingCircleControl.Name = "LoadingCircle";
+            this.LoadingCircle.LoadingCircleControl.NumberSpoke = 24;
+            this.LoadingCircle.LoadingCircleControl.OuterCircleRadius = 7;
+            this.LoadingCircle.LoadingCircleControl.RotationSpeed = 50;
+            this.LoadingCircle.LoadingCircleControl.Size = new System.Drawing.Size(20, 20);
+            this.LoadingCircle.LoadingCircleControl.SpokeThickness = 3;
+            this.LoadingCircle.LoadingCircleControl.StylePreset = BlizzTV.CommonLib.UI.LoadingCircle.LoadingCircle.StylePresets.IE7;
+            this.LoadingCircle.LoadingCircleControl.TabIndex = 3;
+            this.LoadingCircle.LoadingCircleControl.Text = "loadingCircleToolStripMenuItem1";
+            this.LoadingCircle.LoadingCircleControl.Visible = false;
+            this.LoadingCircle.Name = "LoadingCircle";
+            this.LoadingCircle.Size = new System.Drawing.Size(20, 20);
+            this.LoadingCircle.Text = "loadingCircleToolStripMenuItem1";
             // 
             // ProgressBar
             // 
@@ -259,7 +275,7 @@
             // toolStripSpacer
             // 
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(63, 17);
+            this.toolStripSpacer.Size = new System.Drawing.Size(79, 17);
             this.toolStripSpacer.Spring = true;
             // 
             // SleepIcon
@@ -408,9 +424,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuFAQ;
         private System.Windows.Forms.ToolStripMenuItem spreadTheWordToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel NotificationIcon;
-        private System.Windows.Forms.ToolStripStatusLabel ProgressIcon;
         private System.Windows.Forms.ToolStripStatusLabel toolStripSpacer;
         private System.Windows.Forms.ToolStripStatusLabel SleepIcon;
+        private CommonLib.UI.LoadingCircle.LoadingCircleToolStripMenuItem LoadingCircle;
     }
 }
 
