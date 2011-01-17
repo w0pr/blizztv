@@ -59,6 +59,7 @@
             // 
             // LabelTimeLeft
             // 
+            this.LabelTimeLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelTimeLeft.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LabelTimeLeft.Location = new System.Drawing.Point(241, 32);
             this.LabelTimeLeft.Name = "LabelTimeLeft";
@@ -82,6 +83,7 @@
             // 
             // ButtonClose
             // 
+            this.ButtonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonClose.Location = new System.Drawing.Point(374, 202);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(75, 23);
@@ -92,6 +94,7 @@
             // 
             // ButtonSetupAlarm
             // 
+            this.ButtonSetupAlarm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonSetupAlarm.Enabled = false;
             this.ButtonSetupAlarm.Image = ((System.Drawing.Image)(resources.GetObject("ButtonSetupAlarm.Image")));
             this.ButtonSetupAlarm.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -106,6 +109,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.RichTextboxDescription);
             this.groupBox1.Location = new System.Drawing.Point(3, 53);
             this.groupBox1.Name = "groupBox1";
@@ -116,18 +122,19 @@
             // 
             // LabelAlarm
             // 
+            this.LabelAlarm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LabelAlarm.Location = new System.Drawing.Point(21, 207);
             this.LabelAlarm.Name = "LabelAlarm";
-            this.LabelAlarm.Size = new System.Drawing.Size(242, 16);
+            this.LabelAlarm.Size = new System.Drawing.Size(225, 16);
             this.LabelAlarm.TabIndex = 9;
             this.LabelAlarm.Text = "No alarm is set for event.";
             this.LabelAlarm.Visible = false;
             // 
             // LabelLocalTime
             // 
-            this.LabelLocalTime.Location = new System.Drawing.Point(20, 33);
+            this.LabelLocalTime.Location = new System.Drawing.Point(20, 31);
             this.LabelLocalTime.Name = "LabelLocalTime";
-            this.LabelLocalTime.Size = new System.Drawing.Size(194, 13);
+            this.LabelLocalTime.Size = new System.Drawing.Size(110, 15);
             this.LabelLocalTime.TabIndex = 10;
             this.LabelLocalTime.Text = "local-time";
             // 
@@ -142,6 +149,7 @@
             // 
             // pictureBox2
             // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(225, 31);
             this.pictureBox2.Name = "pictureBox2";
@@ -151,6 +159,7 @@
             // 
             // PictureAlarmIcon
             // 
+            this.PictureAlarmIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureAlarmIcon.Image = ((System.Drawing.Image)(resources.GetObject("PictureAlarmIcon.Image")));
             this.PictureAlarmIcon.Location = new System.Drawing.Point(3, 207);
             this.PictureAlarmIcon.Name = "PictureAlarmIcon";
@@ -176,13 +185,14 @@
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.LabelFullTitle);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmEventViewer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Event Viewer";
             this.Load += new System.EventHandler(this.frmEventViewer_Load);
+            this.ResizeEnd += new System.EventHandler(this.frmEventViewer_ResizeEnd);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

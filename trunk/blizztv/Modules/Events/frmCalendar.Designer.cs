@@ -126,6 +126,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Calendar";
             this.Load += new System.EventHandler(this.frmCalendar_Load);
+            this.ResizeEnd += new System.EventHandler(this.frmCalendar_ResizeEnd);
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.ResumeLayout(false);

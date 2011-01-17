@@ -29,9 +29,11 @@ namespace BlizzTV.Modules.Events
         private readonly Color _futureEventColor = Color.Black;
 
         public frmEventViewer(Event _event)
-        {
-            this._event = _event;
+        {           
             InitializeComponent();
+
+            this._event = _event;
+            this.Size = new Size(Settings.Instance.EventViewerWindowWidth, Settings.Instance.EventViewerWindowHeight); // Load the last known size & location for the window.
         }
 
         private void frmEventViewer_Load(object sender, EventArgs e)
@@ -87,6 +89,16 @@ namespace BlizzTV.Modules.Events
                 f.ShowDialog();
             }
             else MessageBox.Show("You can not setup an alarm for the event as it's just about to start", "Can not setup alarm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void frmEventViewer_ResizeEnd(object sender, EventArgs e)
+        {
+            if (this.Size.Width != Settings.Instance.EventViewerWindowWidth || this.Size.Height != Settings.Instance.EventViewerWindowHeight)
+            {
+                Settings.Instance.EventViewerWindowWidth = this.Size.Width;
+                Settings.Instance.EventViewerWindowHeight = this.Size.Height;
+                Settings.Instance.Save();
+            }
         }
     }
 }

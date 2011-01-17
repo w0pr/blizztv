@@ -30,6 +30,7 @@ namespace BlizzTV.CommonLib.Notifications
             InitializeComponent();
             this._parent = parent;
             this.SnapToParent();
+            this.OnResizeEnd(EventArgs.Empty);
         }
 
         private void SnapToParent()
