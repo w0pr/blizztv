@@ -105,7 +105,7 @@ namespace BlizzTV.Modules.Videos
             {
                 Channel c = ChannelFactory.CreateChannel(pair.Value);
                 c.OnStateChange += OnChildStateChange;
-                this._channels.Add(pair.Value.Slug, c);
+                this._channels.Add(string.Format("{0}@{1}",pair.Value.Slug,pair.Value.Provider), c);
             }
 
             Workload.Instance.Add(this,this._channels.Count);

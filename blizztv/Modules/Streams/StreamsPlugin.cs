@@ -104,7 +104,7 @@ namespace BlizzTV.Modules.Streams
 
             foreach (KeyValuePair<string, StreamSubscription> pair in Subscriptions.Instance.Dictionary)
             {
-                this._streams.Add(pair.Value.Slug, StreamFactory.CreateStream(pair.Value));
+                this._streams.Add(string.Format("{0}@{1}",pair.Value.Slug,pair.Value.Provider), StreamFactory.CreateStream(pair.Value));
             }
 
             int availableCount = 0; // available live streams count
