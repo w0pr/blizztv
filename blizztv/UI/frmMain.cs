@@ -42,7 +42,7 @@ namespace BlizzTV.UI
             InitializeComponent();
             
             DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
-            Workload.Instance.AttachControls(this.ProgressBar, this.ProgressIcon); // init. workload-manager.
+            Workload.Instance.AttachControls(this.ProgressBar, this.LoadingCircle.LoadingCircleControl); // init. workload-manager.
             NotificationManager.Instance.AttachControls(this, this.TrayIcon, this.NotificationIcon); // init. notification-manager.
         }
 
