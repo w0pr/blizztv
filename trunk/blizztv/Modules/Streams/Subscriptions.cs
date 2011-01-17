@@ -48,7 +48,7 @@ namespace BlizzTV.Modules.Streams
         {
             get
             {
-                return this.List.ToDictionary(subscription => ((StreamSubscription) subscription).Slug, subscription => (subscription as StreamSubscription));
+                return this.List.ToDictionary(subscription => string.Format("{0}@{1}",((StreamSubscription) subscription).Slug,((StreamSubscription) subscription).Provider), subscription => (subscription as StreamSubscription));
             }
         }
     }
