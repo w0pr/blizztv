@@ -30,7 +30,9 @@ namespace BlizzTV.Modules.Events
         public frmCalendar(List<Event> events)
         {
             InitializeComponent();
+
             this._events = events; // set the events list.
+            this.Size = new Size(Settings.Instance.CalendarWindowWidth, Settings.Instance.CalendarWindowHeight); // Load the last known size & location for the window.
         }
 
         private void frmCalendar_Load(object sender, EventArgs e)
@@ -76,6 +78,16 @@ namespace BlizzTV.Modules.Events
         private void Calendar_ItemDoubleClick(object sender, CalendarItemEventArgs e)
         {
             ((Event)e.Item.Tag).Open(sender, e);
+        }
+
+        private void frmCalendar_ResizeEnd(object sender, EventArgs e)
+        {
+            if (this.Size.Width != Settings.Instance.CalendarWindowWidth || this.Size.Height != Settings.Instance.CalendarWindowHeight)
+            {
+                Settings.Instance.CalendarWindowWidth = this.Size.Width;
+                Settings.Instance.CalendarWindowHeight = this.Size.Height;
+                Settings.Instance.Save();
+            }
         }
     }
 }

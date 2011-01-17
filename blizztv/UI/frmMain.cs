@@ -324,11 +324,16 @@ namespace BlizzTV.UI
 
         #endregion
 
-        #region tray-icon
+        #region tray-icon & status-bar
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
         {
             this.RestoreFromSystemTray(); // if we're just living in system-tray, remake the main form visible again            
+        }
+
+        private void NotificationIcon_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right) NotificationManager.Instance.ClearArchivedNotifications();
         }
 
         #endregion

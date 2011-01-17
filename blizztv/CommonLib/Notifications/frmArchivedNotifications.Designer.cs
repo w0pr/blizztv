@@ -48,7 +48,7 @@
             this.listViewNotifications.MultiSelect = false;
             this.listViewNotifications.Name = "listViewNotifications";
             this.listViewNotifications.ShowItemToolTips = true;
-            this.listViewNotifications.Size = new System.Drawing.Size(256, 319);
+            this.listViewNotifications.Size = new System.Drawing.Size(279, 319);
             this.listViewNotifications.SmallImageList = this.ImageList;
             this.listViewNotifications.TabIndex = 2;
             this.listViewNotifications.UseCompatibleStateImageBehavior = false;
@@ -88,7 +88,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.ButtonClose;
-            this.ClientSize = new System.Drawing.Size(256, 319);
+            this.ClientSize = new System.Drawing.Size(279, 319);
             this.Controls.Add(this.listViewNotifications);
             this.Controls.Add(this.ButtonClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;

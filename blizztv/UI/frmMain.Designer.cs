@@ -259,7 +259,7 @@
             // toolStripSpacer
             // 
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(241, 17);
+            this.toolStripSpacer.Size = new System.Drawing.Size(63, 17);
             this.toolStripSpacer.Spring = true;
             // 
             // SleepIcon
@@ -277,6 +277,7 @@
             this.NotificationIcon.Name = "NotificationIcon";
             this.NotificationIcon.Size = new System.Drawing.Size(16, 17);
             this.NotificationIcon.Visible = false;
+            this.NotificationIcon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NotificationIcon_MouseUp);
             // 
             // TrayIcon
             // 
