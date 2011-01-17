@@ -130,6 +130,13 @@ namespace BlizzTV.Assets.Images.Icons.Png {
             }
         }
         
+        internal static System.Drawing.Bitmap error {
+            get {
+                object obj = ResourceManager.GetObject("error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap eu {
             get {
                 object obj = ResourceManager.GetObject("eu", resourceCulture);

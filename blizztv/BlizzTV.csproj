@@ -514,6 +514,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\error.png" />
     <None Include="Resources\notification.png" />
     <None Include="Resources\video.png" />
     <None Include="Resources\stream.png" />

@@ -54,12 +54,15 @@ namespace BlizzTV.Modules.Videos
 
         public bool Update()
         {
-            if (this.Parse())
+            if (!this.Parse())
             {
-                foreach (Video v in this.Videos) { v.CheckForNotifications(); }
-                return true;
+                this.State = ModuleLib.State.Error;
+                this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                return false;
             }
-            return false;
+
+            foreach (Video v in this.Videos) { v.CheckForNotifications(); }
+            return true;
         }
 
         public virtual bool Parse() { throw new NotImplementedException(); }
