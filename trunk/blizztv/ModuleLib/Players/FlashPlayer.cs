@@ -15,6 +15,9 @@
  * $Id$
  */
 
+// http://blog.sharpstyle.com/2007/03/28/flash-ocx-control-and-visual-studio-2005-issues/
+// aximp.exe –source "C:\WINDOWS\system32\Macromed\Flash\Flash10l.ocx" 
+
 using System;
 using System.Windows.Forms;
 
