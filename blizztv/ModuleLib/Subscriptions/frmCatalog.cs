@@ -17,12 +17,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using BlizzTV.CommonLib.UI;
 
 namespace BlizzTV.ModuleLib.Subscriptions
 {
@@ -33,8 +35,9 @@ namespace BlizzTV.ModuleLib.Subscriptions
 
         public frmCatalog(List<CatalogEntry> entries)
         {
-            InitializeComponent();
+            InitializeComponent();            
 
+            this.listViewCatalog.DoubleBuffer();            
             this.AddedNewSubscriptions = false;
             this._entries = entries;
         }
@@ -45,6 +48,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
             {
                 this.listViewCatalog.Items.Add(new CatalogEntryItem(entry));
             }
+
             this.listViewCatalog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
@@ -64,7 +68,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
             this.Close();
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        private void ButtonAdd_Click(object sender, EventArgs e)
         {
             this.AddSubscription();
         }
@@ -76,12 +80,31 @@ namespace BlizzTV.ModuleLib.Subscriptions
 
         private void AddSubscription()
         {
-            if (listViewCatalog.SelectedItems.Count > 0)
+            if (this.listViewCatalog.SelectedItems.Count == 0) return;
+
+            CatalogEntryItem selection = (CatalogEntryItem)this.listViewCatalog.SelectedItems[0];
+            this.AddedNewSubscriptions = true;
+            selection.ForeColor = Color.Gray;
+            selection.Entry.AddAsSubscription();
+        }
+
+        private void listViewCatalog_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (listViewCatalog.ListViewItemSorter == null) this.listViewCatalog.ListViewItemSorter = new ListViewItemComparer();
+            ListViewItemComparer comparer = (ListViewItemComparer)this.listViewCatalog.ListViewItemSorter;
+            
+            if (e.Column != comparer.SortColumn) 
             {
-                this.AddedNewSubscriptions = true;
-                CatalogEntryItem selection = (CatalogEntryItem)listViewCatalog.SelectedItems[0];
-                selection.Entry.AddAsSubscription();
+                comparer.SortColumn = e.Column; 
+                comparer.SortOrder = SortOrder.Ascending;
             }
+            else
+            {
+                if (comparer.SortOrder == SortOrder.Ascending) comparer.SortOrder = SortOrder.Descending;
+                else comparer.SortOrder = SortOrder.Ascending;
+            }
+
+            listViewCatalog.Sort(); 
         }
 
         private class CatalogEntryItem : ListViewItem

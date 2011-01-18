@@ -12,15 +12,25 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id$
+ * $Id: InvokeExtensions.cs 221 2010-12-13 13:50:28Z shalafiraistlin@gmail.com $
  */
 
 using System.Windows.Forms;
 
 namespace BlizzTV.CommonLib.UI
 {
-    public static class InvokeExtensions
+    public static class ControlExtensions
     {
+        public static void DoubleBuffer(this Control control) 
+        {
+            // http://stackoverflow.com/questions/76993/how-to-double-buffer-net-controls-on-a-form/77233#77233
+            // Taxes: Remote Desktop Connection and painting: http://blogs.msdn.com/oldnewthing/archive/2006/01/03/508694.aspx
+
+            if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
+            System.Reflection.PropertyInfo dbProp = typeof(System.Windows.Forms.Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            dbProp.SetValue(control, true, null);
+        }
+
         public static void InvokeHandler(this Control control, MethodInvoker del) // Sync. control-invoke extension.
         {
             if (control.InvokeRequired)
