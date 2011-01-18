@@ -36,7 +36,7 @@ namespace BlizzTV.Modules.Streams
 
         public bool Add(StreamSubscription subscription)
         {
-            if (!this.Dictionary.ContainsKey(subscription.Slug))
+            if (!this.Dictionary.ContainsKey(string.Format("{0}@{1}",subscription.Slug,subscription.Provider)))
             {
                 base.Add(subscription);
                 return true;

@@ -40,8 +40,8 @@ namespace BlizzTV.UI
         public frmMain()
         {
             InitializeComponent();
-            
-            DoubleBufferControl(this.TreeView); // double buffer the treeview as we may have excessive amount of treeview item flooding.
+
+            this.TreeView.DoubleBuffer(); // double buffer the treeview as we may have excessive amount of treeview item flooding.
             Workload.Instance.AttachControls(this.ProgressBar, this.LoadingCircle.LoadingCircleControl); // init. workload-manager.
             NotificationManager.Instance.AttachControls(this, this.TrayIcon, this.NotificationIcon); // init. notification-manager.
         }
@@ -382,20 +382,6 @@ namespace BlizzTV.UI
         private void MenuDonate_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null); }
         private void MenuSpreadTheWord_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://twitter.com/?status=%23blizzard%20I%20love%20BlizzTV!%20(http://bit.ly/eVkpwz)", null); }
 
-        #endregion
-
-        #region misc.
-       
-        public static void DoubleBufferControl(System.Windows.Forms.Control c)
-        {
-            // http://stackoverflow.com/questions/76993/how-to-double-buffer-net-controls-on-a-form/77233#77233
-            // Taxes: Remote Desktop Connection and painting: http://blogs.msdn.com/oldnewthing/archive/2006/01/03/508694.aspx
-
-            if (System.Windows.Forms.SystemInformation.TerminalServerSession) return;
-            System.Reflection.PropertyInfo db_prop = typeof(System.Windows.Forms.Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            db_prop.SetValue(c, true, null);
-        }
-
-        #endregion                      
+        #endregion       
     }    
 }
