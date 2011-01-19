@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.UI;
+using BlizzTV.CommonLib.Extensions;
 
 namespace BlizzTV.ModuleLib.Subscriptions
 {
@@ -44,28 +45,25 @@ namespace BlizzTV.ModuleLib.Subscriptions
 
         private void frmCatalog_Load(object sender, EventArgs e)
         {
+            this.ResizeColumnHeaders();
+            this.LoadEntries();
+        }
+
+        private void LoadEntries(string filter="")
+        {
+            filter = filter.ToLower();
+            this.listViewCatalog.Items.Clear();
+
             foreach (CatalogEntry entry in this._entries)
             {
-                this.listViewCatalog.Items.Add(new CatalogEntryItem(entry));
+                if (filter.Trim() == "" || entry.Category.ToLower().IsLike(string.Format("*{0}*", filter)) || entry.Name.ToLower().IsLike(string.Format("*{0}*", filter)) || entry.Description.ToLower().IsLike(string.Format("*{0}*", filter))) this.listViewCatalog.Items.Add(new CatalogEntryItem(entry));
             }
-
-            this.listViewCatalog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
-        private void frmCatalog_ResizeEnd(object sender, EventArgs e)
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            this.listViewCatalog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-        }
-
-        private void linkLabelSuggest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://www.blizztv.com/topic/76-catalog-suggestions-feeds-streams-video-channels/");
-        }
-
-        private void ButtonClose_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if (e.KeyChar == (char)Keys.Escape) txtFilter.Text = "";
+            this.LoadEntries(txtFilter.Text);
         }
 
         private void ButtonAdd_Click(object sender, EventArgs e)
@@ -86,6 +84,21 @@ namespace BlizzTV.ModuleLib.Subscriptions
             this.AddedNewSubscriptions = true;
             selection.ForeColor = Color.Gray;
             selection.Entry.AddAsSubscription();
+        }
+
+        private void frmCatalog_ResizeEnd(object sender, EventArgs e)
+        {
+            this.ResizeColumnHeaders();
+        }
+
+        private void ResizeColumnHeaders()
+        {
+            this.listViewCatalog.Columns[2].Width = this.listViewCatalog.Width - (this.listViewCatalog.Columns[0].Width + this.listViewCatalog.Columns[1].Width + 25);
+        }
+
+        private void linkLabelSuggest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.blizztv.com/topic/76-catalog-suggestions-feeds-streams-video-channels/");
         }
 
         private void listViewCatalog_ColumnClick(object sender, ColumnClickEventArgs e)
