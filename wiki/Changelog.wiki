@@ -4,34 +4,34 @@
 *19.01.2010 - 0.19-beta (r324)*
 ----
  * Re-enabled the justin.tv stream support though it's -*NOT STABLE*- yet (the justin.tv player just refuses to work on some computers).
- * Update notification texts, they're now more descriptive. 
- * Streams module will no longer show zero as available count if no streams are online.
  * Fixed the bug with 'Start BlizzTV on system startup' where non-administrator computer users were not able to use the option. From now own, if the user misses the required administrative permissions on computer, the option will be disabled.
  * Treeview on main window now recognizes the Enter key.
- * Improved internal-providers handling.
  * Player windows do now have dragging support.
  * Improved the internal http-data reader and it now support's timeout (with a default value of 30 seconds).
- * Updated the video module's icon.
- * Updated the notifications icon.
- * Archived notifications window list columns will also get resized when the window itself is resized.
- * Updated stream player window title, it's now in Stream: %title% format.
- * Updated video players window title, it's now in [%channel%]: %title% format.
- * Fixed a few quirks in events-calendar window (the event details will now come-up on double-click instead of a single click on an event and date selection control has tab-stop enabled). 
- * Events module will now filter out teamliquid calendar's tags which renders the event description more readable.
- * Fixed a bug in atom 1.0 and rss 2.0 parsers of feeds module.
  * Fixed a few quirks & bugs in preferences window.
  * Improved the single-instance-only mechanism. It does now bring the actual instance's main window to foreground instead of showing a message box when user tries to start another instance. It also supports wake-up from system tray.
  * Fixed a bug with main-window minimization routines. 
  * Main window, player window, event-details window and calendar window will now recognize their size. Main window will also recognize it's position on desktop.
- * Archived notifications can be cleaned up by also right-click the icon on main window.
  * Implemented a brand new progress & loading animation on main windows status-strip.
- * Fixed a bug that was related with subscriptions-storage. You should now be able to both add day9's youtube and blip.tv channels together as subscriptions for videos module.
+ * Fixed a bug with dependency-checker when no sound device was available to use with audio-engine, it was running an incorrect dependency-rule.
+ * Audio-engine is now also aware now of available sound-devices. It'll no more crash the application if no sound device is available to be used.
  * Modules will now render a error icon when needed on their corresponding treeview items.
+ * Streams module will no longer show zero as available count if no streams are online.
+ * Updated the video module's icon.
+ * Updated stream player window title, it's now in Stream: %title% format.
+ * Updated video players window title, it's now in [%channel%]: %title% format.
+ * Fixed a bug that was related with subscriptions-storage. You should now be able to both add day9's youtube and blip.tv channels together as subscriptions for videos module.
+ * Fixed a few quirks in events-calendar window (the event details will now come-up on double-click instead of a single click on an event and date selection control has tab-stop enabled). 
+ * Events module will now filter out teamliquid calendar's tags which renders the event description more readable.
+ * Fixed a bug in atom 1.0 and rss 2.0 parsers of feeds module.
+ * Improved internal-providers handling.
+ * Updated the notifications icon.
+ * Update notification texts, they're now more descriptive. 
+ * Archived notifications window list columns will also get resized when the window itself is resized.
+ * Archived notifications can be cleaned up by also right-click the icon on main window.
  * Catalog window now supports sorting by columns.
  * Fixed the flickering problem for listview in catalog window.
  * Catalog window now also supports filtering of items.
- * Fixed a bug with dependency-checker when no sound device was available to use with audio-engine, it was running an incorrect dependency-rule.
-* Audio-engine is now also aware now of available sound-devices. It'll no more crash the application if no sound device is available to be used.
 
 *31.12.2010 - 0.18b-beta (r291)*
 ----
