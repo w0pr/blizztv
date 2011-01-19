@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading;
 using BlizzTV.CommonLib.Audio.Engines;
 using BlizzTV.CommonLib.Audio.Engines.IrrKlang;
+using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.CommonLib.Audio
 {
@@ -48,6 +49,7 @@ namespace BlizzTV.CommonLib.Audio
             {
                 if (e.GetType() == typeof(System.IO.FileNotFoundException)) this.EngineStatus = AudioEngineStatus.MissingDependency;
                 else this.EngineStatus = AudioEngineStatus.NoAvailableSoundDevice;
+                Log.Instance.Write(LogMessageTypes.Error, string.Format("Audio engine initialization failed because of exception: {0}", e));
             }
         }
 
