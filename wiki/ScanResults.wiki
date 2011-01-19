@@ -1,7 +1,10 @@
 #summary Scan results for of BlizzTV releases.
 #labels Featured,Documentation
 
+==== Our Release Policy ==== 
 Before publishing any binary releases of BlizzTV, we make sure they contain no infections using http://www.virustotal.com with 43 well-known scanner engines. Here you can see the results for latest reports;
+
+==== Scan Reports ====
 
  * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.19-beta.zip&can=2&q= 0.19-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=29affd199c310020c78f577473755c047bb428e3d46f929403266998c05b5bb0-1295447259 Report] (note: there's 1 false-positive)
 
@@ -29,6 +32,4 @@ Before publishing any binary releases of BlizzTV, we make sure they contain no i
 
  * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-alpha-0.1.zip&can=1&q= 0.1-alpha] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=67f0bfbf9b7907b4c964e9132b68d8889de82e62f346718ce386935eda79bbd5-1291390509 Report]
 
-Note on false-positives:
-
-E-Safe, used to be known as a [http://wyday.com/forum/viewtopic.php?f=1&t=221 problematic] engine producing false-positive results with Ionic.Zip.Reduced.dll.
+* Note on false-positives: * E-Safe, used to be known as a [http://wyday.com/forum/viewtopic.php?f=1&t=221 problematic] engine producing false-positive results with Ionic.Zip.Reduced.dll.
