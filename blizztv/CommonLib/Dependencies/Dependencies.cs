@@ -82,17 +82,9 @@ namespace BlizzTV.CommonLib.Dependencies
 
         private bool VisualCPP2010RuntimeInstalled()
         {
-            bool satisfied = true;
-            try
-            {
-                AudioPlayer player = AudioPlayer.Instance;
-            }
-            catch (TypeInitializationException e)
-            {
-                satisfied = false;
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("Dependency Visual C++ 2010 Runtime not satisfied: {0}", e));
-            }
-            return satisfied;
+            AudioPlayer player = AudioPlayer.Instance;
+            if (player.EngineStatus == AudioPlayer.AudioEngineStatus.MissingDependency) return false;
+            else return true;
         }
 
         private bool ShockwaveFlashInstalled()
