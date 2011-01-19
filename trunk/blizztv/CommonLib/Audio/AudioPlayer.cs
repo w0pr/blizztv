@@ -35,28 +35,48 @@ namespace BlizzTV.CommonLib.Audio
         #endregion
 
         private AudioEngine _engine;
+        public AudioEngineStatus EngineStatus = AudioEngineStatus.Unknown;
 
         private AudioPlayer() 
         {
-            this._engine = new IrrKlangEngine();
+            try
+            {
+                this._engine = new IrrKlangEngine();
+                this.EngineStatus = AudioEngineStatus.Ready;
+            }
+            catch (Exception e)
+            {
+                if (e.GetType() == typeof(System.IO.FileNotFoundException)) this.EngineStatus = AudioEngineStatus.MissingDependency;
+                else this.EngineStatus = AudioEngineStatus.NoAvailableSoundDevice;
+            }
         }
 
         public void Play(string filename)
         {
+            if (this.EngineStatus != AudioEngineStatus.Ready) return;
             new Thread(() => { this._engine.Play(filename); }) { IsBackground = true }.Start();          
         }
 
         public void PlayInternetStream(string url)
         {
+            if (this.EngineStatus != AudioEngineStatus.Ready) return;
             if (!this._engine.CanPlayStreams) throw new NotSupportedException();
             new Thread(() => { this._engine.PlayInternetStream(url); }) { IsBackground = true }.Start();
         }
 
         public void PlayFromMemory(string name, byte[] data)
         {
+            if (this.EngineStatus != AudioEngineStatus.Ready) return;
             if (!this._engine.CanPlayFromMemory) throw new NotFiniteNumberException();
-
             new Thread(() => { this._engine.PlayFromMemory(name, data); }) { IsBackground = true }.Start();
+        }
+
+        public enum AudioEngineStatus
+        {
+            Unknown,
+            Ready,
+            MissingDependency,
+            NoAvailableSoundDevice
         }
     }
 }
