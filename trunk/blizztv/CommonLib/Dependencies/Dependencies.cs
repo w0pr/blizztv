@@ -87,7 +87,7 @@ namespace BlizzTV.CommonLib.Dependencies
             {
                 AudioPlayer player = AudioPlayer.Instance;
             }
-            catch (Exception e)
+            catch (TypeInitializationException e)
             {
                 satisfied = false;
                 Log.Instance.Write(LogMessageTypes.Error, string.Format("Dependency Visual C++ 2010 Runtime not satisfied: {0}", e));
