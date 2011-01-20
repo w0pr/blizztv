@@ -9,7 +9,7 @@ namespace Tests.Modules.Feeds
     public class FeedParserTest
     {
         /// <summary>
-        ///A test for Parse
+        ///Feed parsing tests
         ///</summary>
         [TestMethod()]
         public void ParseTest()
@@ -31,16 +31,6 @@ namespace Tests.Modules.Feeds
 
             result = FeedParser.Instance.Parse("http://us.battle.net/sc2/en/feed/news", ref items); /* atom */
             Assert.IsTrue(result && items.Count > 0, "Failed parsing starcraft2.com atom feed");
-        }
-
-        /// <summary>
-        ///A test for Instance
-        ///</summary>
-        [TestMethod()]
-        public void InstanceTest()
-        {
-            FeedParser actual = FeedParser.Instance;
-            Assert.AreEqual(FeedParser.Instance, actual);
         }
     }
 }
