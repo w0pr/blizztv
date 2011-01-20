@@ -29,7 +29,7 @@ namespace BlizzTV
 {
     static class Program
     {
-        private static Mutex _singleInstanceLock = new Mutex(true, Assembly.GetExecutingAssembly().GetName().Name); // mutex to enforce-single-instance of the application.
+        private static readonly Mutex SingleInstanceLock = new Mutex(true, Assembly.GetExecutingAssembly().GetName().Name); // mutex to enforce-single-instance of the application.
         // more on single instance mutexes: http://www.ai.uga.edu/~mc/SingleInstance.html & http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
 
         /// <summary>
@@ -38,48 +38,32 @@ namespace BlizzTV
         [STAThread]
         static void Main()
         {
-            #region mutex-lock - don't allow more than once instance
-
-            if (!_singleInstanceLock.WaitOne(0, true))
+            // check mutex-lock - don't allow more than once instance.
+            if (!SingleInstanceLock.WaitOne(0, true))
             {
                 NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_BLIZZTV_SETFRONTMOST, IntPtr.Zero, IntPtr.Zero); // message the actual instance to get on front-most.
                 return;
             }
 
-            #endregion            
-
-            #region command-line-args
-
+            // check command-line-args.
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1 && args[1].ToLower() == "/silent") RuntimeConfiguration.Instance.StartedOnSystemStartup = true;
             else RuntimeConfiguration.Instance.StartedOnSystemStartup = false;
-
-            #endregion 
-
-            #region if enabled start logger & debug console
-
+            
+            // start logger & debug-console if enabled.
             if (Settings.Instance.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
-
-            #endregion
-
-            #region check if our dependencies are satisfied 
-
+            
+            // check if dependencies are satisfied.
             if (!Dependencies.Instance.Satisfied()) { Application.ExitThread(); return; }
 
-            #endregion
-
-            #region actual startup
-
-            Log.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV-{0} started..", Assembly.GetExecutingAssembly().GetName().Version));
+            Log.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
 
-            _singleInstanceLock.ReleaseMutex(); // release the mutex before the application exits..
-
-            #endregion             
+            SingleInstanceLock.ReleaseMutex(); // release the mutex before the application exits.     
         }
     }
 }
