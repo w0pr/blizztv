@@ -15,16 +15,12 @@
  * $Id$
  */
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
 using System.Resources;
 using BlizzTV.CommonLib.Settings;
-using BlizzTV.CommonLib.Audio;
-using System.IO;
+using BlizzTV.Audio;
 
 namespace BlizzTV.CommonLib.Notifications
 {
@@ -50,7 +46,7 @@ namespace BlizzTV.CommonLib.Notifications
         public void Play(string name = "")
         {
             if (name == "") name = GlobalSettings.Instance.NotificationSound;
-            AudioPlayer.Instance.PlayFromMemory(name, (byte[])Assets.Sounds.Notifications.ResourceManager.GetObject(name));
+            AudioManager.Instance.PlayFromMemory(name, (byte[])Assets.Sounds.Notifications.ResourceManager.GetObject(name));
         }
     }
 }

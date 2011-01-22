@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
-using BlizzTV.CommonLib.Audio;
+using BlizzTV.Audio;
 
 namespace BlizzTV.UI
 {
@@ -71,6 +71,6 @@ namespace BlizzTV.UI
         			
         private bool _enoughDots = false;		
         private void MoreDots(object sender, KeyEventArgs e) { if (e.Alt && e.Control) this._enoughDots = true; }
-        private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } AudioPlayer.Instance.PlayFromMemory("murloc", Assets.Sounds.Notifications.Murloc); _enoughDots = false; }
+        private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } AudioManager.Instance.PlayFromMemory("murloc", Assets.Sounds.Notifications.Murloc); _enoughDots = false; }
     }
 }

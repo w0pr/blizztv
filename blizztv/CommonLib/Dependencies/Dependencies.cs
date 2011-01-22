@@ -20,7 +20,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Downloads;
-using BlizzTV.CommonLib.Audio;
+using BlizzTV.Audio;
 
 namespace BlizzTV.CommonLib.Dependencies
 {
@@ -82,8 +82,8 @@ namespace BlizzTV.CommonLib.Dependencies
 
         private bool VisualCPP2010RuntimeInstalled()
         {
-            AudioPlayer player = AudioPlayer.Instance;
-            if (player.EngineStatus == AudioPlayer.AudioEngineStatus.MissingDependency) return false;
+            AudioManager player = AudioManager.Instance;
+            if (player.EngineStatus == AudioManager.AudioEngineStatus.MissingDependency) return false;
             else return true;
         }
 
