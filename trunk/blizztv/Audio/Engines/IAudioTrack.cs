@@ -15,22 +15,36 @@
  * $Id$
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using IrrKlang;
-using BlizzTV.CommonLib.Downloads;
-
-namespace BlizzTV.CommonLib.Audio.Engines.IrrKlang
+namespace BlizzTV.Audio.Engines
 {
-    class FileFactory:IFileFactory
+    /// <summary>
+    /// Audio track interface.
+    /// </summary>
+    public interface IAudioTrack
     {
-        public Stream openFile(string filename)
-        {
-            if (!filename.StartsWith("http://")) return File.OpenRead(filename);
-            return DownloadManager.Instance.Stream(filename);
-        }
+        /// <summary>
+        /// Is the track being played?
+        /// </summary>
+        bool IsPlaying { get; }
+
+        /// <summary>
+        /// Is the track currently paused?
+        /// </summary>
+        bool IsPaused { get; }
+
+        /// <summary>
+        /// Is the track finished playing?
+        /// </summary>
+        bool IsFinished { get; }
+
+        /// <summary>
+        /// Duration of the track.
+        /// </summary>
+        int Duration { get; }
+
+        /// <summary>
+        /// Current position in track.
+        /// </summary>
+        int Position { get; }
     }
 }

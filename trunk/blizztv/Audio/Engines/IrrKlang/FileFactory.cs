@@ -15,19 +15,18 @@
  * $Id$
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using IrrKlang;
+using BlizzTV.CommonLib.Downloads;
 
-namespace BlizzTV.CommonLib.Audio.Engines
+namespace BlizzTV.Audio.Engines.IrrKlang
 {
-    public interface IAudioTrack
+    class FileFactory:IFileFactory
     {
-        bool IsPlaying { get; }
-        bool IsPaused { get; }
-        bool IsFinished { get; }
-        int Duration { get; }
-        int Position { get; }
+        public Stream openFile(string filename) // our custom-implemented filefactory based on IrrKlang's IFileFactory interface.
+        {
+            if (!filename.StartsWith("http://")) return File.OpenRead(filename); // just open as normal file.
+            return DownloadManager.Instance.Stream(filename); // stream the audio file from internet.
+        }
     }
 }

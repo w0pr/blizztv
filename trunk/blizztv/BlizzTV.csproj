@@ -116,11 +116,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Subscriptions.resx</DependentUpon>
     </Compile>
-    <Compile Include="CommonLib\Audio\AudioPlayer.cs" />
-    <Compile Include="CommonLib\Audio\Engines\AudioEngine.cs" />
-    <Compile Include="CommonLib\Audio\Engines\IAudioTrack.cs" />
-    <Compile Include="CommonLib\Audio\Engines\IrrKlang\FileFactory.cs" />
-    <Compile Include="CommonLib\Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
+    <Compile Include="Audio\AudioManager.cs" />
+    <Compile Include="Audio\Engines\AudioEngine.cs" />
+    <Compile Include="Audio\Engines\IAudioTrack.cs" />
+    <Compile Include="Audio\Engines\IrrKlang\FileFactory.cs" />
+    <Compile Include="Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
+    <Compile Include="Audio\Engines\IrrKlang\IrrKlangTrack.cs" />
     <Compile Include="CommonLib\Config\RuntimeConfiguration.cs" />
     <Compile Include="CommonLib\Dependencies\OperatingSystem.cs" />
     <Compile Include="CommonLib\Downloads\Download.cs" />
