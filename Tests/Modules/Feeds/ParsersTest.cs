@@ -6,13 +6,13 @@ using System.Collections.Generic;
 namespace Tests.Modules.Feeds
 {       
     [TestClass()]
-    public class FeedParserTest
+    public class ParsersTest
     {
         /// <summary>
         ///Feed parsing tests
         ///</summary>
         [TestMethod()]
-        public void ParserTest()
+        public void FeedParsersTest()
         {
             bool result = false;
             List<FeedItem> items = null;

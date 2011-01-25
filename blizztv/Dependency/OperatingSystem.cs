@@ -16,13 +16,10 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Security.Principal;
 using BlizzTV.CommonLib.Logger;
 
-namespace BlizzTV.CommonLib.Dependencies
+namespace BlizzTV.Dependency
 {
     public class OperatingSystem
     {
@@ -34,26 +31,31 @@ namespace BlizzTV.CommonLib.Dependencies
         #endregion
 
         public OSType Type { get; private set; }
+        public bool GotAdminPrivileges { get; private set; }
 
         public enum OSType
         {
-            UNKNOWN,
-            XP,
-            VISTA,
-            WIN7
+            Unknown,
+            Xp,
+            Vista,
+            Win7
         }
 
         private OperatingSystem()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.CompareTo(new Version(6, 1)) >= 0) this.Type = OSType.WIN7;
-            else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major == 6) this.Type = OSType.VISTA;
-            else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major == 5) this.Type = OSType.XP;
-            else this.Type = OSType.UNKNOWN;
+            // get the operating system type.
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.CompareTo(new Version(6, 1)) >= 0) this.Type = OSType.Win7;
+            else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major == 6) this.Type = OSType.Vista;
+            else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major == 5) this.Type = OSType.Xp;
+            else this.Type = OSType.Unknown;
+
+            // check if the current user has administrator privileges.
+            this.GotAdminPrivileges = this.IsUserInAdministratorsGroup();
         }
 
-        public bool IsAdministrator() // this will most probably not work with Vista with UAC mode enabled - http://stackoverflow.com/questions/1089046/in-net-c-test-if-user-is-an-administrative-user
+        private bool IsUserInAdministratorsGroup() // this will most probably not work with Vista with UAC mode enabled - http://stackoverflow.com/questions/1089046/in-net-c-test-if-user-is-an-administrative-user
         {
-            bool isAdmin = false;
+            bool isAdmin;
             try
             {
                 WindowsIdentity user = WindowsIdentity.GetCurrent();
@@ -63,7 +65,7 @@ namespace BlizzTV.CommonLib.Dependencies
             catch (UnauthorizedAccessException ex)
             {
                 isAdmin = false;
-                Log.Instance.Write(LogMessageTypes.Info, string.Format("OperatingSystem.IsAdministrator(): UnauthorizedAccessException caught: {0}", ex));
+                Log.Instance.Write(LogMessageTypes.Info, string.Format("User does not have administrator privileges. UnauthorizedAccessException caught: {0}", ex));
             }
             return isAdmin;
         }

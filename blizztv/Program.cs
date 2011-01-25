@@ -20,9 +20,9 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Threading;
 using BlizzTV.CommonLib.Logger;
-using BlizzTV.CommonLib.Dependencies;
 using BlizzTV.CommonLib.Config;
 using BlizzTV.CommonLib.Helpers;
+using BlizzTV.Dependency;
 using BlizzTV.UI;
 
 namespace BlizzTV
@@ -55,7 +55,7 @@ namespace BlizzTV
             if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
             
             // check if dependencies are satisfied.
-            if (!Dependencies.Instance.Satisfied()) { Application.ExitThread(); return; }
+            if (!DependencyManager.Instance.Satisfied()) { Application.ExitThread(); return; }
 
             Log.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
 

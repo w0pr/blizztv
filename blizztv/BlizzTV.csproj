@@ -96,6 +96,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\i18n\i18n.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>i18n.resx</DependentUpon>
+    </Compile>
     <Compile Include="Assets\Images\Icons\Ico.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -123,7 +128,7 @@
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangTrack.cs" />
     <Compile Include="CommonLib\Config\RuntimeConfiguration.cs" />
-    <Compile Include="CommonLib\Dependencies\OperatingSystem.cs" />
+    <Compile Include="Dependency\OperatingSystem.cs" />
     <Compile Include="CommonLib\Downloads\Download.cs" />
     <Compile Include="CommonLib\Downloads\DownloadManager.cs" />
     <Compile Include="CommonLib\Downloads\DownloadStream.cs" />
@@ -352,7 +357,7 @@
     <Compile Include="CommonLib\Logger\Log.cs" />
     <Compile Include="CommonLib\Web\WebReader.cs" />
     <Compile Include="UI\Settings.cs" />
-    <Compile Include="CommonLib\Dependencies\Dependencies.cs" />
+    <Compile Include="Dependency\DependencyManager.cs" />
     <Compile Include="UI\frmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -402,6 +407,11 @@
       <DependentUpon>frmWizardHost.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Wizard\IWizardForm.cs" />
+    <EmbeddedResource Include="Assets\i18n\i18n.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>i18n.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Assets\Images\Icons\Ico.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Ico.Designer.cs</LastGenOutput>
