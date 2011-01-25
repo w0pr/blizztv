@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio\AudioManagerTest.cs" />
-    <Compile Include="Modules\Feeds\FeedParserTest.cs" />
+    <Compile Include="Modules\Feeds\ParsersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

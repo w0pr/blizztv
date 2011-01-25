@@ -15,12 +15,8 @@
  * $Id$
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
-using BlizzTV.CommonLib.Dependencies;
+using BlizzTV.Dependency;
 
 namespace BlizzTV.CommonLib.Helpers
 {
@@ -51,8 +47,8 @@ namespace BlizzTV.CommonLib.Helpers
         }
 
         public static bool IsSupported // If we lack administrative privileges, we'll not be able to add a startup-entry in SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run.
-        {
-            get { return Dependencies.OperatingSystem.Instance.IsAdministrator(); }
+        {            
+            get { return OperatingSystem.Instance.GotAdminPrivileges; }
         }
     }
 }
