@@ -8,7 +8,7 @@ namespace Tests.Audio
     public class AudioManagerTest
     {
         [TestMethod()]
-        public void AudioManagerInitTest()
+        public void InitTest()
         {
             AudioManager manager = AudioManager.Instance;
             Assert.IsTrue(manager.EngineStatus == AudioManager.AudioEngineStatus.Ready, "AudioManager initialization test failed.");

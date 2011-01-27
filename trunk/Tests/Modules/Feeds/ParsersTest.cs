@@ -12,7 +12,7 @@ namespace Tests.Modules.Feeds
         ///Feed parsing tests
         ///</summary>
         [TestMethod()]
-        public void FeedParsersTest()
+        public void ParseTest()
         {
             bool result = false;
             List<FeedItem> items = null;
