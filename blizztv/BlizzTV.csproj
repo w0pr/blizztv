@@ -129,13 +129,13 @@
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangTrack.cs" />
     <Compile Include="CommonLib\Config\RuntimeConfiguration.cs" />
     <Compile Include="Dependency\OperatingSystem.cs" />
-    <Compile Include="CommonLib\Downloads\Download.cs" />
-    <Compile Include="CommonLib\Downloads\DownloadManager.cs" />
-    <Compile Include="CommonLib\Downloads\DownloadStream.cs" />
-    <Compile Include="CommonLib\Downloads\frmDownload.cs">
+    <Compile Include="Downloads\Download.cs" />
+    <Compile Include="Downloads\DownloadManager.cs" />
+    <Compile Include="Downloads\DownloadStream.cs" />
+    <Compile Include="Downloads\frmDownload.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CommonLib\Downloads\frmDownload.Designer.cs">
+    <Compile Include="Downloads\frmDownload.Designer.cs">
       <DependentUpon>frmDownload.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonLib\Extensions\StringExtensions.cs" />
@@ -429,7 +429,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Subscriptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommonLib\Downloads\frmDownload.resx">
+    <EmbeddedResource Include="Downloads\frmDownload.resx">
       <DependentUpon>frmDownload.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommonLib\Notifications\frmArchivedNotifications.resx">

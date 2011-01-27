@@ -12,15 +12,12 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id$
+ * $Id: DownloadManager.cs 252 2010-12-22 09:16:37Z shalafiraistlin@gmail.com $
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace BlizzTV.CommonLib.Downloads
+namespace BlizzTV.Downloads
 {
     public sealed class DownloadManager
     {
@@ -31,16 +28,16 @@ namespace BlizzTV.CommonLib.Downloads
 
         #endregion
 
-        public List<Download> Downloads = new List<Download>();
+        private readonly List<Download> _downloads = new List<Download>(); // the internal download list.
 
-        public Download Add(string uri)
+        public Download Add(string uri) // requests a regular download.
         {
             Download download = new Download(uri);
-            this.Downloads.Add(download);
+            this._downloads.Add(download);
             return download;
         }
         
-        public DownloadStream Stream(string uri)
+        public DownloadStream Stream(string uri) // starts a download-stream.
         {
             return new DownloadStream(uri);
         }

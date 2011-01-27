@@ -12,20 +12,14 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id$
+ * $Id: frmDownload.cs 272 2010-12-27 11:06:14Z shalafiraistlin@gmail.com $
  */
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.UI;
+using BlizzTV.Assets.i18n;
 
-namespace BlizzTV.CommonLib.Downloads
+namespace BlizzTV.Downloads
 {
     public partial class frmDownload : Form
     {
@@ -44,8 +38,8 @@ namespace BlizzTV.CommonLib.Downloads
 
         public void StartDownload(Download download)
         {
-            this.labelStatistics.Text = "Connecting to download server..";
             this._download = download;
+            this.labelStatistics.Text = i18n.ConnectingDownloadServer;
             this._download.Progress += OnDownloadProgress;
             this._download.Complete += OnDownloadComplete;
             this._download.Start();
@@ -60,14 +54,13 @@ namespace BlizzTV.CommonLib.Downloads
             });            
         }
 
-        protected virtual void OnDownloadComplete(object sender, EventArgs e) 
+        protected virtual void OnDownloadComplete(bool success) 
         {
             this.progressBar.AsyncInvokeHandler(() =>
-            {
-                if (this._download.Success) this.DialogResult = System.Windows.Forms.DialogResult.OK;
-                else this.DialogResult = System.Windows.Forms.DialogResult.Abort;
-                this.Close();
-            });
+                {
+                    this.DialogResult = success ? DialogResult.OK : DialogResult.Abort;
+                    this.Close();
+                });
         }
     }
 }
