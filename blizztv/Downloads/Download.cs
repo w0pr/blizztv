@@ -151,8 +151,7 @@ namespace BlizzTV.Downloads
                         }
 
                         this.Success = true;
-                        Log.Instance.Write(LogMessageTypes.Info, string.Format("Download of {0} completed and saved as {1}.", this.Uri, this.FilePath));
-                        if (this.Complete != null) this.Complete(true);
+                        Log.Instance.Write(LogMessageTypes.Info, string.Format("Download of {0} completed and saved as {1}.", this.Uri, this.FilePath));                        
                     }
                 }   
             }
@@ -182,7 +181,9 @@ namespace BlizzTV.Downloads
                 {
                     this._filestream.Close();
                     this._filestream = null;
-                }                
+                }
+
+                if (this.Complete != null) this.Complete(this.Success);
             }
         }
 
