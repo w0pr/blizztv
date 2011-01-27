@@ -61,6 +61,15 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connecting to download server...
+        /// </summary>
+        internal static string ConnectingDownloadServer {
+            get {
+                return ResourceManager.GetString("ConnectingDownloadServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download Complete.
         /// </summary>
         internal static string DownloadComplete {

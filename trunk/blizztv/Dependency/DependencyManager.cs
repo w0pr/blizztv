@@ -20,8 +20,8 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
 using BlizzTV.CommonLib.Logger;
-using BlizzTV.CommonLib.Downloads;
 using BlizzTV.Audio;
+using BlizzTV.Downloads;
 
 namespace BlizzTV.Dependency
 {

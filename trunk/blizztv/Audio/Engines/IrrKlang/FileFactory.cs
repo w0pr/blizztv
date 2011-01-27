@@ -16,8 +16,8 @@
  */
 
 using System.IO;
+using BlizzTV.Downloads;
 using IrrKlang;
-using BlizzTV.CommonLib.Downloads;
 
 namespace BlizzTV.Audio.Engines.IrrKlang
 {

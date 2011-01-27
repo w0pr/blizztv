@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using BlizzTV.CommonLib.Downloads;
 using BlizzTV.CommonLib.UI;
+using BlizzTV.Downloads;
 
 namespace BlizzTV.CommonLib.Updates
 {
@@ -27,11 +27,11 @@ namespace BlizzTV.CommonLib.Updates
             this.StartDownload(new Download(this._update.DownloadLink,this._update.FileName));
         }
         
-        protected override void OnDownloadComplete(object sender, EventArgs e)
+        protected override void OnDownloadComplete(bool success)
         {
             this.AsyncInvokeHandler(() =>
             {
-                if ((sender as Download).Success)
+                if (success)
                 {
                     this.labelStatus.Text = "Please wait while update is being installed..";
                     this._update.Install();

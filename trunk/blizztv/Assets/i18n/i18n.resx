@@ -153,4 +153,7 @@
   <data name="VisualCPP2010DownloadFailedMessage" xml:space="preserve">
     <value>Microsoft Visual C++ 2010 redistributable download failed. Please install it manually.</value>
   </data>
+  <data name="ConnectingDownloadServer" xml:space="preserve">
+    <value>Connecting to download server..</value>
+  </data>
 </root>

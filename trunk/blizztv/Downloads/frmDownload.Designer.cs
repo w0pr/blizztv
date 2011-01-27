@@ -1,4 +1,4 @@
-﻿namespace BlizzTV.CommonLib.Downloads
+﻿namespace BlizzTV.Downloads
 {
     partial class frmDownload
     {
