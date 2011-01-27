@@ -7,6 +7,7 @@
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="MMO-Champion" Description="The most popular World of Warcraft news source." Url="http://www.mmo-champion.com/external.php?do=rss&amp;type=newcontent&amp;sectionid=1&amp;days=120&amp;count=10" />
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WorldOfRaids" Description="Yet another popular World of Warcraft news site." Url="http://www.worldofraids.com/rss/forums/1-world-of-raids-news/" />
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WOWInsider" Description="#1 World of warcraft blog on the planet." Url="http://wow.joystiq.com/rss.xml" />
+  <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="TEH Gladiators" Description="A very popular World of Warcraft comic." Url="http://www.tehgladiators.com/rss.xml" />
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WOWHead" Description="The #1 World of warcraft database's blog." Url="http://www.wowhead.com/blog&amp;rss" />
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="TenTonHammer" Description="TenTonHammer's WOW portal." Url="http://www.tentonhammer.com/wow/all/feed" />
   <Entry xsi:type="Feed" Category="Blizzard" Name="BlizzTV" Description="The BlizzTV's home." Url="http://www.blizztv.com/rss/ccs/1-blizztvcom/" />
