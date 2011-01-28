@@ -58,7 +58,7 @@ namespace BlizzTV
             if (!DependencyManager.Instance.Satisfied()) { Application.ExitThread(); return; }
 
             Log.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
-
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
