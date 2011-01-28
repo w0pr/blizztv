@@ -141,12 +141,6 @@
     <Compile Include="CommonLib\Extensions\StringExtensions.cs" />
     <Compile Include="CommonLib\Helpers\NativeMethods.cs" />
     <Compile Include="CommonLib\Helpers\Zip.cs" />
-    <Compile Include="CommonLib\HttpServer\HttpClient.cs" />
-    <Compile Include="CommonLib\HttpServer\HttpRequest.cs" />
-    <Compile Include="CommonLib\HttpServer\HttpRequestProxy.cs" />
-    <Compile Include="CommonLib\HttpServer\HttpResponse.cs" />
-    <Compile Include="CommonLib\HttpServer\HttpServer.cs" />
-    <Compile Include="CommonLib\HttpServer\HttpRequestHandler.cs" />
     <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
     </Compile>
