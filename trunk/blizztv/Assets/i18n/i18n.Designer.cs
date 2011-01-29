@@ -61,6 +61,15 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The application will exit to continue installation of update. Please restart the application after..
+        /// </summary>
+        internal static string ApplicationWillExitToContinueInstallationOfUpdateMessage {
+            get {
+                return ResourceManager.GetString("ApplicationWillExitToContinueInstallationOfUpdateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connecting to download server...
         /// </summary>
         internal static string ConnectingDownloadServer {
@@ -75,6 +84,24 @@ namespace BlizzTV.Assets.i18n {
         internal static string DownloadComplete {
             get {
                 return ResourceManager.GetString("DownloadComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloaded file is not a valid update. Please re-try downloading the update..
+        /// </summary>
+        internal static string DownloadedUpdateIsNotValidMessage {
+            get {
+                return ResourceManager.GetString("DownloadedUpdateIsNotValidMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloaded file is not a valid update.
+        /// </summary>
+        internal static string DownloadedUpdateIsNotValidTitle {
+            get {
+                return ResourceManager.GetString("DownloadedUpdateIsNotValidTitle", resourceCulture);
             }
         }
         
@@ -97,11 +124,38 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading update: {0}.
+        /// </summary>
+        internal static string DownloadingUpdateTitle {
+            get {
+                return ResourceManager.GetString("DownloadingUpdateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading Microsoft Visual C++ 2010 redistributable.
         /// </summary>
         internal static string DownloadingVisualCPP2010 {
             get {
                 return ResourceManager.GetString("DownloadingVisualCPP2010", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed downloading the update. Please try again later..
+        /// </summary>
+        internal static string FailedDownloadingTheUpdateMessage {
+            get {
+                return ResourceManager.GetString("FailedDownloadingTheUpdateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update download failed!.
+        /// </summary>
+        internal static string FailedDownloadingTheUpdateTitle {
+            get {
+                return ResourceManager.GetString("FailedDownloadingTheUpdateTitle", resourceCulture);
             }
         }
         
@@ -138,6 +192,60 @@ namespace BlizzTV.Assets.i18n {
         internal static string FlashPlayerWillBeInstalledMessage {
             get {
                 return ResourceManager.GetString("FlashPlayerWillBeInstalledMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found a new available {0} version update. Do you want to update now?.
+        /// </summary>
+        internal static string FoundANewUpdateMessage {
+            get {
+                return ResourceManager.GetString("FoundANewUpdateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New {0} update found!.
+        /// </summary>
+        internal static string FoundANewUpdateTitle {
+            get {
+                return ResourceManager.GetString("FoundANewUpdateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing Update.
+        /// </summary>
+        internal static string InstallingUpdateTitle {
+            get {
+                return ResourceManager.GetString("InstallingUpdateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re already running the latest version..
+        /// </summary>
+        internal static string NoAvailableUpdateFoundMessage {
+            get {
+                return ResourceManager.GetString("NoAvailableUpdateFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No available updates found.
+        /// </summary>
+        internal static string NoAvailableUpdateFoundTitle {
+            get {
+                return ResourceManager.GetString("NoAvailableUpdateFoundTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait while update is being installed...
+        /// </summary>
+        internal static string UpdateIsBeingInstalledMessage {
+            get {
+                return ResourceManager.GetString("UpdateIsBeingInstalledMessage", resourceCulture);
             }
         }
         

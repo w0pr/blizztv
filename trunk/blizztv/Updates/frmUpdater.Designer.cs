@@ -1,4 +1,4 @@
-﻿namespace BlizzTV.CommonLib.Updates
+﻿namespace BlizzTV.Updates
 {
     partial class frmUpdater
     {
