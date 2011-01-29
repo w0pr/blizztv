@@ -156,4 +156,40 @@
   <data name="ConnectingDownloadServer" xml:space="preserve">
     <value>Connecting to download server..</value>
   </data>
+  <data name="ApplicationWillExitToContinueInstallationOfUpdateMessage" xml:space="preserve">
+    <value>The application will exit to continue installation of update. Please restart the application after.</value>
+  </data>
+  <data name="DownloadedUpdateIsNotValidMessage" xml:space="preserve">
+    <value>Downloaded file is not a valid update. Please re-try downloading the update.</value>
+  </data>
+  <data name="DownloadedUpdateIsNotValidTitle" xml:space="preserve">
+    <value>Downloaded file is not a valid update</value>
+  </data>
+  <data name="DownloadingUpdateTitle" xml:space="preserve">
+    <value>Downloading update: {0}</value>
+  </data>
+  <data name="FailedDownloadingTheUpdateMessage" xml:space="preserve">
+    <value>Failed downloading the update. Please try again later.</value>
+  </data>
+  <data name="FailedDownloadingTheUpdateTitle" xml:space="preserve">
+    <value>Update download failed!</value>
+  </data>
+  <data name="FoundANewUpdateMessage" xml:space="preserve">
+    <value>Found a new available {0} version update. Do you want to update now?</value>
+  </data>
+  <data name="FoundANewUpdateTitle" xml:space="preserve">
+    <value>New {0} update found!</value>
+  </data>
+  <data name="InstallingUpdateTitle" xml:space="preserve">
+    <value>Installing Update</value>
+  </data>
+  <data name="NoAvailableUpdateFoundMessage" xml:space="preserve">
+    <value>You're already running the latest version.</value>
+  </data>
+  <data name="NoAvailableUpdateFoundTitle" xml:space="preserve">
+    <value>No available updates found</value>
+  </data>
+  <data name="UpdateIsBeingInstalledMessage" xml:space="preserve">
+    <value>Please wait while update is being installed..</value>
+  </data>
 </root>
