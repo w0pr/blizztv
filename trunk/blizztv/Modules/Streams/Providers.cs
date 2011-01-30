@@ -41,6 +41,9 @@ namespace BlizzTV.Modules.Streams
         [XmlAttribute("Movie")]
         public string Movie { get; set; }
 
+        [XmlAttribute("Player")]
+        public string Player { get; set; }
+
         [XmlAttribute("ChatMovie")]
         public string ChatMovie { get; set; }
 

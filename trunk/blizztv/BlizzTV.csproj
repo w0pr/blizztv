@@ -573,7 +573,9 @@
     <None Include="Resources\alarm.png" />
     <None Include="Resources\about.png" />
     <None Include="Resources\Default.xml" />
-    <None Include="Resources\Providers.xml" />
+    <None Include="Resources\Providers.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
