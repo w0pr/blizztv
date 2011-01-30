@@ -21,13 +21,14 @@ using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.StatusStorage;
 using BlizzTV.CommonLib.Notifications;
+using BlizzTV.CommonLib.Players;
 
 namespace BlizzTV.Modules.Streams
 {
     public class Stream:ListItem
     {
         private bool _isLive = false; // is the stream live?
-        private frmPlayer _player = null;
+        private PlayerWindow _player = null;
 
         public string Name { get; internal set; }
         public string Slug { get; internal set; }
