@@ -26,6 +26,7 @@
   <Entry xsi:type="Video" Category="World Of Warcraft" Name="OMFGcata" Description="Features World of Warcraft: Cataclysm." Slug="OMFGcata" Provider="Youtube" />
   <Entry xsi:type="Video" Category="World Of Warcraft" Name="tgnWorldOfWarcraft" Description="TGN.tv's World of Warcraft channel." Slug="tgnWorldOfWarcraft" Provider="Youtube" />
   <Entry xsi:type="Video" Category="World Of Warcraft" Name="YogsCast" Description="Comedic coverage of Cataclysm with Lewis and Simon, two inept Brits who get into all sorts of zany scrapes." Slug="BlueXephos" Provider="Youtube" />
+  <Entry xsi:type="Video" Category="World Of Warcraft" Name="GameBreaker.tv" Description="GameBreaker.tv's video channel covering World of Warcraft and MMO's." Slug="gamebreakertv" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Diablo" Name="Diablo" Description="Diablo's official youtube channel." Slug="diablo" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Diablo" Name="ForceD3strategy" Description="Number one location for Diablo 3 strategies and tactics" Slug="ForceD3strategy" Provider="Youtube" />
   <Entry xsi:type="Video" Category="Blizzard" Name="Blizzard" Description="Blizzard Entertainment's official youtube channel." Slug="blizzard" Provider="Youtube" />
