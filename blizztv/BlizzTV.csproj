@@ -127,7 +127,7 @@
     <Compile Include="Audio\Engines\IrrKlang\FileFactory.cs" />
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangTrack.cs" />
-    <Compile Include="CommonLib\Config\RuntimeConfiguration.cs" />
+    <Compile Include="Configuration\RuntimeConfiguration.cs" />
     <Compile Include="Dependency\OperatingSystem.cs" />
     <Compile Include="Downloads\Download.cs" />
     <Compile Include="Downloads\DownloadManager.cs" />
@@ -138,9 +138,9 @@
     <Compile Include="Downloads\frmDownload.Designer.cs">
       <DependentUpon>frmDownload.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommonLib\Extensions\StringExtensions.cs" />
-    <Compile Include="CommonLib\Helpers\NativeMethods.cs" />
-    <Compile Include="CommonLib\Helpers\Zip.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Win32API\WindowMessaging.cs" />
+    <Compile Include="Helpers\Zip.cs" />
     <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,10 +176,10 @@
     <Compile Include="CommonLib\Utils\BitmapExtensions.cs" />
     <Compile Include="CommonLib\Utils\NamedImage.cs" />
     <Compile Include="CommonLib\Utils\ReadOnlyDictionary.cs" />
-    <Compile Include="CommonLib\Helpers\Registry.cs" />
-    <Compile Include="CommonLib\Helpers\SystemStartup.cs" />
+    <Compile Include="Helpers\Registry.cs" />
+    <Compile Include="Helpers\SystemStartup.cs" />
     <Compile Include="CommonLib\Utils\ZonedDateTime.cs" />
-    <Compile Include="CommonLib\Workload\Workload.cs" />
+    <Compile Include="Workload\WorkloadManager.cs" />
     <Compile Include="ModuleLib\Settings\frmModuleSettingsHost.cs">
       <SubType>Form</SubType>
     </Compile>

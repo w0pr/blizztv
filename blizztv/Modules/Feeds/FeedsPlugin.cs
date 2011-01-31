@@ -23,10 +23,9 @@ using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
-using BlizzTV.CommonLib.Config;
+using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
-using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Feeds
 {
@@ -116,7 +115,7 @@ namespace BlizzTV.Modules.Feeds
                 this._feeds.Add(pair.Value.Url, feed);                
             }
 
-            Workload.Instance.Add(this, this._feeds.Count);
+            Workload.WorkloadManager.Instance.Add(this, this._feeds.Count);
 
             foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
             {
@@ -127,7 +126,7 @@ namespace BlizzTV.Modules.Feeds
                     foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.Guid, story); } // register the story items.
                 }
                 catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e)); }
-                Workload.Instance.Step(this);
+                Workload.WorkloadManager.Instance.Step(this);
             }
 
             this.RootListItem.SetTitle("Feeds");

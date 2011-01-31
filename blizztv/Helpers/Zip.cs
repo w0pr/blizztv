@@ -15,13 +15,9 @@
  * $Id$
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Ionic.Zip;
 
-namespace BlizzTV.CommonLib.Helpers
+namespace BlizzTV.Helpers
 {   
     public static class Zip
     {

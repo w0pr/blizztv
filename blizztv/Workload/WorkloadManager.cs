@@ -19,57 +19,59 @@ using System.Windows.Forms;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.CommonLib.UI.LoadingCircle;
 
-namespace BlizzTV.CommonLib.Workload
+namespace BlizzTV.Workload
 {
-    public class Workload // contains information about current workload progress of plugins so we can animate our progressbar on status strip
+    public class WorkloadManager // tracks current workload.
     {
         #region Instance
 
-        private static Workload _intance = new Workload();
-        public static Workload Instance { get { return _intance; } }
+        private static WorkloadManager _instance = new WorkloadManager();
+        public static WorkloadManager Instance { get { return _instance; } }
 
         #endregion
 
         private int _currentWorkload = 0;
-        private ToolStripProgressBar _progressBar;
-        private LoadingCircle _progressIcon;
+        private ToolStripProgressBar _progressBar; // the workload progress-bar.
+        private LoadingCircle _progressAnimation; // the loading animation.
 
-        private Workload() { }
+        private WorkloadManager() { }
 
-        public void AttachControls(ToolStripProgressBar progressBar,LoadingCircle progressIcon)
+        public void AttachControls(ToolStripProgressBar progressBar,LoadingCircle progressIcon) // Attaches controls to workload manager.
         {
             this._progressBar = progressBar;
-            this._progressIcon = progressIcon;
+            this._progressAnimation = progressIcon;
         }
 
-        public void Add(object sender, int units)
+        public void Add(object sender, int units) // adds given units of workload.
         {
             this._progressBar.Owner.AsyncInvokeHandler(() =>
             {
-                this._currentWorkload += units;
-                this._progressBar.Maximum += units;
+                this._currentWorkload += units; 
+                this._progressBar.Maximum += units; 
+
                 if (!this._progressBar.Visible) this._progressBar.Visible = true;
-                if (!this._progressIcon.Visible)
+
+                if (!this._progressAnimation.Visible) // if the progress loading animation is not active yet, activate it.
                 {
-                    this._progressIcon.Visible = true;
-                    this._progressIcon.Active = true;
+                    this._progressAnimation.Visible = true;
+                    this._progressAnimation.Active = true;
                 }
             });
         }
 
-        public void Step(object sender)
+        public void Step(object sender) // steps a completed workload unit.
         {
             this._progressBar.Owner.AsyncInvokeHandler(() =>
             {
                 this._currentWorkload -= 1;
                 if (this._currentWorkload > 0) this._progressBar.Value = this._progressBar.Maximum - this._currentWorkload;
-                else
+                else /* if workload queue is empty, clear the controls */
                 {
                     this._progressBar.Visible = false;
-                    this._progressIcon.Visible = false;
-                    this._progressIcon.Active = false;
                     this._progressBar.Value = 0;
                     this._progressBar.Maximum = 0;
+                    this._progressAnimation.Visible = false;
+                    this._progressAnimation.Active = false;
                 }
             });
         }

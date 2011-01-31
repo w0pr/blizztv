@@ -18,7 +18,7 @@
 using System.Reflection;
 using BlizzTV.Dependency;
 
-namespace BlizzTV.CommonLib.Helpers
+namespace BlizzTV.Helpers
 {
     public static class SystemStartup
     {

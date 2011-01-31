@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id: Update.cs 291 2010-12-31 10:43:43Z shalafiraistlin@gmail.com $
+ * $Id$
  */
 
 using System;
@@ -21,8 +21,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.Logger;
-using BlizzTV.CommonLib.Helpers;
 using BlizzTV.Assets.i18n;
+using BlizzTV.Helpers;
 
 namespace BlizzTV.Updates
 {
