@@ -23,11 +23,10 @@ using System.Threading;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Notifications;
 using BlizzTV.CommonLib.UI;
-using BlizzTV.CommonLib.Workload;
-using BlizzTV.CommonLib.Config;
-using BlizzTV.CommonLib.Helpers;
+using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.Updates;
+using BlizzTV.Win32API;
 
 namespace BlizzTV.UI
 {
@@ -42,7 +41,7 @@ namespace BlizzTV.UI
             InitializeComponent();
 
             this.TreeView.DoubleBuffer(); // double buffer the treeview as we may have excessive amount of treeview item flooding.
-            Workload.Instance.AttachControls(this.ProgressBar, this.LoadingCircle.LoadingCircleControl); // init. workload-manager.
+            Workload.WorkloadManager.Instance.AttachControls(this.ProgressBar, this.LoadingCircle.LoadingCircleControl); // init. workload-manager.
             NotificationManager.Instance.AttachControls(this, this.TrayIcon, this.NotificationIcon); // init. notification-manager.
         }
 
@@ -99,7 +98,7 @@ namespace BlizzTV.UI
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == NativeMethods.WM_BLIZZTV_SETFRONTMOST) this.SetFrontMostWindow();
+            if (m.Msg == WindowMessaging.WM_BLIZZTV_SETFRONTMOST) this.SetFrontMostWindow();
             base.WndProc(ref m);
         }
 

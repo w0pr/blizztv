@@ -25,7 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.UI;
-using BlizzTV.CommonLib.Extensions;
+using BlizzTV.Extensions;
 
 namespace BlizzTV.ModuleLib.Subscriptions
 {

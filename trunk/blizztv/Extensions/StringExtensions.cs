@@ -16,12 +16,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
-namespace BlizzTV.CommonLib.Extensions
+namespace BlizzTV.Extensions
 {
     public static class StringEntentions
     {

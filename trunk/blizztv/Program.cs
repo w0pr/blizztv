@@ -20,10 +20,10 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Threading;
 using BlizzTV.CommonLib.Logger;
-using BlizzTV.CommonLib.Config;
-using BlizzTV.CommonLib.Helpers;
+using BlizzTV.Configuration;
 using BlizzTV.Dependency;
 using BlizzTV.UI;
+using BlizzTV.Win32API;
 
 namespace BlizzTV
 {
@@ -37,11 +37,11 @@ namespace BlizzTV
         /// </summary>
         [STAThread]
         static void Main()
-        {
+       {
             // check mutex-lock - don't allow more than once instance.
             if (!SingleInstanceLock.WaitOne(0, true))
             {
-                NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_BLIZZTV_SETFRONTMOST, IntPtr.Zero, IntPtr.Zero); // message the actual instance to get on front-most.
+                WindowMessaging.PostMessage((IntPtr)WindowMessaging.HWND_BROADCAST, WindowMessaging.WM_BLIZZTV_SETFRONTMOST, IntPtr.Zero, IntPtr.Zero); // message the actual instance to get on front-most.
                 return;
             }
 

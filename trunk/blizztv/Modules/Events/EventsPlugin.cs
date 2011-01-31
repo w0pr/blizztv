@@ -24,10 +24,9 @@ using BlizzTV.CommonLib.Web;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Utils;
-using BlizzTV.CommonLib.Config;
+using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
-using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Events
 {
@@ -81,7 +80,7 @@ namespace BlizzTV.Modules.Events
                 this.Updating = true;
                 this.NotifyUpdateStarted();
 
-                Workload.Instance.Add(this, 1);
+                Workload.WorkloadManager.Instance.Add(this, 1);
                 this.RootListItem.SetTitle("Updating events..");
 
                 try
@@ -92,7 +91,7 @@ namespace BlizzTV.Modules.Events
                         this.RootListItem.State = State.Error;
                         this.RootListItem.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                         this.RootListItem.SetTitle("Events");
-                        Workload.Instance.Step(this);
+                        Workload.WorkloadManager.Instance.Step(this);
                         return;
                     }
 
@@ -156,7 +155,7 @@ namespace BlizzTV.Modules.Events
                 }
 
                 this.RootListItem.SetTitle("Events");  // add unread feeds count to root item's title.                               
-                Workload.Instance.Step(this);
+                Workload.WorkloadManager.Instance.Step(this);
 
                 this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
                 this.Updating = false;

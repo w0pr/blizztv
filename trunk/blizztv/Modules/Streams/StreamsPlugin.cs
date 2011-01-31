@@ -22,11 +22,10 @@ using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
-using BlizzTV.CommonLib.Config;
+using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
-using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -108,7 +107,7 @@ namespace BlizzTV.Modules.Streams
             }
 
             int availableCount = 0; // available live streams count
-            Workload.Instance.Add(this, this._streams.Count);
+            Workload.WorkloadManager.Instance.Add(this, this._streams.Count);
 
             foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
             {
@@ -121,7 +120,7 @@ namespace BlizzTV.Modules.Streams
                         availableCount++; // increment available live streams count.
                         this.RootListItem.Childs.Add(pair.Key, pair.Value);
                     }
-                    Workload.Instance.Step(this);
+                    Workload.WorkloadManager.Instance.Step(this);
                 }
                 catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e)); } // catch errors for inner stream-handlers.
             }

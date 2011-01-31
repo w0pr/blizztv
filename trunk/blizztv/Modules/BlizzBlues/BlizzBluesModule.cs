@@ -22,8 +22,7 @@ using System.Text;
 using System.Timers;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Settings;
-using BlizzTV.CommonLib.Workload;
-using BlizzTV.CommonLib.Config;
+using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.Modules.BlizzBlues.Game;
@@ -93,7 +92,7 @@ namespace BlizzTV.Modules.BlizzBlues
 
             if (this._parsers.Count > 0)
             {
-                Workload.Instance.Add(this, this._parsers.Count);
+                Workload.WorkloadManager.Instance.Add(this, this._parsers.Count);
 
                 foreach (BlueParser parser in this._parsers)
                 {
@@ -110,7 +109,7 @@ namespace BlizzTV.Modules.BlizzBlues
                             }
                         }
                     }
-                    Workload.Instance.Step(this);
+                    Workload.WorkloadManager.Instance.Step(this);
                 }
             }
 

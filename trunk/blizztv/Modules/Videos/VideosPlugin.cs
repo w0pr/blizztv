@@ -21,11 +21,10 @@ using System.Linq;
 using System.Timers;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Settings;
-using BlizzTV.CommonLib.Config;
+using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
-using BlizzTV.CommonLib.Workload;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -108,14 +107,14 @@ namespace BlizzTV.Modules.Videos
                 this._channels.Add(string.Format("{0}@{1}",pair.Value.Slug,pair.Value.Provider), c);
             }
 
-            Workload.Instance.Add(this,this._channels.Count);
+            Workload.WorkloadManager.Instance.Add(this,this._channels.Count);
 
             foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
             {
                 pair.Value.Update(); // update the channel.
                 this.RootListItem.Childs.Add(pair.Key, pair.Value);
                 foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.Guid, v); } // register the video items.
-                Workload.Instance.Step(this);                    
+                Workload.WorkloadManager.Instance.Step(this);                    
             }
 
             this.RootListItem.SetTitle("Videos");
