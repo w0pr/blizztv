@@ -107,7 +107,7 @@ namespace BlizzTV.Modules.Streams
             }
 
             int availableCount = 0; // available live streams count
-            Workload.WorkloadManager.Instance.Add(this, this._streams.Count);
+            Workload.WorkloadManager.Instance.Add(this._streams.Count);
 
             foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
             {
@@ -120,7 +120,7 @@ namespace BlizzTV.Modules.Streams
                         availableCount++; // increment available live streams count.
                         this.RootListItem.Childs.Add(pair.Key, pair.Value);
                     }
-                    Workload.WorkloadManager.Instance.Step(this);
+                    Workload.WorkloadManager.Instance.Step();
                 }
                 catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e)); } // catch errors for inner stream-handlers.
             }
