@@ -30,11 +30,15 @@ namespace BlizzTV.Workload
 
         #endregion
 
-        private int _currentWorkload = 0;
+        public int CurrentWorkload { get; private set; }
+
         private ToolStripProgressBar _progressBar; // the workload progress-bar.
         private LoadingCircle _progressAnimation; // the loading animation.
 
-        private WorkloadManager() { }
+        private WorkloadManager()
+        {
+            this.CurrentWorkload = 0;
+        }
 
         public void AttachControls(ToolStripProgressBar progressBar,LoadingCircle progressIcon) // Attaches controls to workload manager.
         {
@@ -42,11 +46,11 @@ namespace BlizzTV.Workload
             this._progressAnimation = progressIcon;
         }
 
-        public void Add(object sender, int units) // adds given units of workload.
+        public void Add(int units) // adds given units of workload.
         {
             this._progressBar.Owner.AsyncInvokeHandler(() =>
             {
-                this._currentWorkload += units; 
+                this.CurrentWorkload += units; 
                 this._progressBar.Maximum += units; 
 
                 if (!this._progressBar.Visible) this._progressBar.Visible = true;
@@ -59,12 +63,12 @@ namespace BlizzTV.Workload
             });
         }
 
-        public void Step(object sender) // steps a completed workload unit.
+        public void Step() // steps a completed workload unit.
         {
             this._progressBar.Owner.AsyncInvokeHandler(() =>
             {
-                this._currentWorkload -= 1;
-                if (this._currentWorkload > 0) this._progressBar.Value = this._progressBar.Maximum - this._currentWorkload;
+                this.CurrentWorkload -= 1;
+                if (this.CurrentWorkload > 0) this._progressBar.Value = this._progressBar.Maximum - this.CurrentWorkload;
                 else /* if workload queue is empty, clear the controls */
                 {
                     this._progressBar.Visible = false;

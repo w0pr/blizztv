@@ -42,7 +42,7 @@ namespace Tests.Downloads
                 foreach (byte b in hash) calculated += b.ToString("x2");
             }
 
-            return calculated.ToString();
+            return calculated;
         }
     }
 }

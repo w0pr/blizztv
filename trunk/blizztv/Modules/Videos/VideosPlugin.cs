@@ -107,14 +107,14 @@ namespace BlizzTV.Modules.Videos
                 this._channels.Add(string.Format("{0}@{1}",pair.Value.Slug,pair.Value.Provider), c);
             }
 
-            Workload.WorkloadManager.Instance.Add(this,this._channels.Count);
+            Workload.WorkloadManager.Instance.Add(this._channels.Count);
 
             foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
             {
                 pair.Value.Update(); // update the channel.
                 this.RootListItem.Childs.Add(pair.Key, pair.Value);
                 foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.Guid, v); } // register the video items.
-                Workload.WorkloadManager.Instance.Step(this);                    
+                Workload.WorkloadManager.Instance.Step();                    
             }
 
             this.RootListItem.SetTitle("Videos");
