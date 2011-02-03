@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.Downloads
 {
@@ -42,14 +42,14 @@ namespace BlizzTV.Downloads
                 {
                     try
                     {
-                        Log.Instance.Write(LogMessageTypes.Info, string.Format("Download of stream started: {0}.", this.Uri));
+                        LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Download of stream started: {0}.", this.Uri));
                         WebRequest request = WebRequest.Create(this.Uri); /* create a request to the uri */
 
                         using (this._response = request.GetResponse()) /* read the response */
                         {
                             if (this._response == null)
                             {
-                                Log.Instance.Write(LogMessageTypes.Error, string.Format("Stream-downloader can't read the response: {0}", this.Uri));
+                                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Stream-downloader can't read the response: {0}", this.Uri));
                                 this._finishedReading = true;
                                 return;
                             }
@@ -58,7 +58,7 @@ namespace BlizzTV.Downloads
                             {
                                 if (this._httpStream == null)
                                 {
-                                    Log.Instance.Write(LogMessageTypes.Error, string.Format("Stream-downloader can't read the response stream: {0}", this.Uri));
+                                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Stream-downloader can't read the response stream: {0}", this.Uri));
                                     this._finishedReading = true;
                                     return;
                                 }
@@ -76,14 +76,14 @@ namespace BlizzTV.Downloads
                                     }
                                 }
 
-                                Log.Instance.Write(LogMessageTypes.Info, string.Format("Download of stream {0} completed.", this.Uri));
+                                LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Download of stream {0} completed.", this.Uri));
                             }
                         }
                     }
 
                     catch (Exception e)
                     {
-                        Log.Instance.Write(LogMessageTypes.Info, string.Format("Download of stream {0} failed with exception: {1}", this.Uri, e));
+                        LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Download of stream {0} failed with exception: {1}", this.Uri, e));
                     }
 
                     finally

@@ -18,9 +18,9 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Players;
+using BlizzTV.Log;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -59,7 +59,7 @@ namespace BlizzTV.Modules.Streams
             }
             catch (Exception exc)
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Player Error: \n {0}", exc));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Player Error: \n {0}", exc));
                 MessageBox.Show(string.Format("An error occured in stream player. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

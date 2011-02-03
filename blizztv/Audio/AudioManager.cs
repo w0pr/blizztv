@@ -19,7 +19,7 @@ using System;
 using System.Threading;
 using BlizzTV.Audio.Engines;
 using BlizzTV.Audio.Engines.IrrKlang;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.Audio
 {
@@ -48,7 +48,7 @@ namespace BlizzTV.Audio
                 // IrrKlang requires Visual C++ 2010 runtime, if not found it'll be throwing a FileNotFoundException.
                 // Other exceptions thrown by the IrrKlang are most probable when no available sound devices exists on system.
                 this.EngineStatus = e.GetType() == typeof(System.IO.FileNotFoundException) ? AudioEngineStatus.MissingDependency : AudioEngineStatus.NoAvailableSoundDevice;
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("AudioManager is not functional as the underlying engine initialization failed: {0}", e));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("AudioManager is not functional as the underlying engine initialization failed: {0}", e));
             }
         }
 

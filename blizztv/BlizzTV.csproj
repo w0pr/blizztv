@@ -346,9 +346,9 @@
     <Compile Include="CommonLib\Settings\SettingsManager.cs" />
     <Compile Include="ModuleLib\Settings\ModuleSettings.cs" />
     <Compile Include="CommonLib\Settings\Settings.cs" />
-    <Compile Include="CommonLib\Logger\DebugConsole.cs" />
+    <Compile Include="Log\DebugConsole.cs" />
     <Compile Include="CommonLib\Web\JSON.cs" />
-    <Compile Include="CommonLib\Logger\Log.cs" />
+    <Compile Include="Log\LogManager.cs" />
     <Compile Include="CommonLib\Web\WebReader.cs" />
     <Compile Include="UI\Settings.cs" />
     <Compile Include="Dependency\DependencyManager.cs" />

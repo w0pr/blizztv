@@ -21,7 +21,7 @@ using System.Linq;
 using System.Xml.Linq;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Web;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 using BlizzTV.ModuleLib;
 
 namespace BlizzTV.Modules.Feeds
@@ -81,7 +81,7 @@ namespace BlizzTV.Modules.Feeds
                     story.OnStateChange += OnChildStateChange;
                     this.Stories.Add(story);
                 }
-                catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed-Parse Error: {0}", e)); }
+                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feed-Parse Error: {0}", e)); }
             }
             return true;
         }

@@ -16,7 +16,7 @@
  */
 
 using System;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.ModuleLib
 {
@@ -49,7 +49,7 @@ namespace BlizzTV.ModuleLib
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Write(LogMessageTypes.Error, string.Format("PluginInfo:CreateInstance() exception: {0}", e));
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("PluginInfo:CreateInstance() exception: {0}", e));
                 }
             }
             return this.ModuleInstance;
@@ -74,7 +74,7 @@ namespace BlizzTV.ModuleLib
                 }
                 else throw new LoadModuleInfoException("todo", "Plugin does not define the required attributes."); // all module should define the required atributes.              
             }
-            catch (Exception e)  { Log.Instance.Write(LogMessageTypes.Error,string.Format("ReadPluginInfo() exception: {0}",e)); }
+            catch (Exception e)  { LogManager.Instance.Write(LogMessageTypes.Error,string.Format("ReadPluginInfo() exception: {0}",e)); }
         }
 
         #region de-ctor

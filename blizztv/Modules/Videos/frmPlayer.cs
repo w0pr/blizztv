@@ -18,9 +18,9 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Players;
+using BlizzTV.Log;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -53,7 +53,7 @@ namespace BlizzTV.Modules.Videos
             }
             catch (Exception exc)
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannelsPlugin Player Error: \n {0}", exc.ToString()));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannelsPlugin Player Error: \n {0}", exc.ToString()));
                 MessageBox.Show(string.Format("An error occured in video player. \n\n[Error Details: {0}]", exc.Message), "Video Channels Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

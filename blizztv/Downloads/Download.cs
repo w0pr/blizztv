@@ -20,7 +20,7 @@ using System.IO;
 using System.Net;
 using System.Timers;
 using System.Threading;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.Downloads
 {    
@@ -108,7 +108,7 @@ namespace BlizzTV.Downloads
         {
             try
             {
-                Log.Instance.Write(LogMessageTypes.Info, string.Format("Download started: {0}.", this.Uri));
+                LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Download started: {0}.", this.Uri));
 
                 using (this._filestream = new FileStream(this.FilePath, FileMode.Create)) /* create the local file */
                 {
@@ -118,7 +118,7 @@ namespace BlizzTV.Downloads
                     {
                         if (this._response == null)
                         {
-                            Log.Instance.Write(LogMessageTypes.Error, string.Format("Downloader can't read the response: {0}", this.Uri));
+                            LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Downloader can't read the response: {0}", this.Uri));
                             if (this.Complete != null) this.Complete(false);
                             return;
                         }
@@ -132,7 +132,7 @@ namespace BlizzTV.Downloads
                         {
                             if (this._responseStream == null)
                             {
-                                Log.Instance.Write(LogMessageTypes.Error, string.Format("Downloader can't read the response stream: {0}", this.Uri));
+                                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Downloader can't read the response stream: {0}", this.Uri));
                                 if (this.Complete != null) this.Complete(false);
                                 return;
                             }
@@ -151,7 +151,7 @@ namespace BlizzTV.Downloads
                         }
 
                         this.Success = true;
-                        Log.Instance.Write(LogMessageTypes.Info, string.Format("Download of {0} completed and saved as {1}.", this.Uri, this.FilePath));                        
+                        LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Download of {0} completed and saved as {1}.", this.Uri, this.FilePath));                        
                     }
                 }   
             }
@@ -159,7 +159,7 @@ namespace BlizzTV.Downloads
             catch (Exception e)
             {
                 this.Success = false;
-                Log.Instance.Write(LogMessageTypes.Info, string.Format("Download of {0} failed with exception: {1}", this.Uri, e));
+                LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Download of {0} failed with exception: {1}", this.Uri, e));
             }
 
             finally
