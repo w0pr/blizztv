@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.ModuleLib
 {
@@ -39,10 +39,10 @@ namespace BlizzTV.ModuleLib
 
         private ModuleManager()
         {
-            Log.Instance.Write(LogMessageTypes.Info, string.Format("Module Manager - ({0}) initialized..", this.GetType().Module.Name)); // log the plugin-manager startup message.
+            LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Module Manager - ({0}) initialized..", this.GetType().Module.Name)); // log the plugin-manager startup message.
             this.ScanModules();
             
-            foreach (KeyValuePair<string,ModuleInfo> pi in this.AvailablePlugins)  { Log.Instance.Write(LogMessageTypes.Info, string.Format("Found Plugin: {0}", pi.Value.Attributes.Name)); } // print all avaiable plugin's list to log.
+            foreach (KeyValuePair<string,ModuleInfo> pi in this.AvailablePlugins)  { LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Found Plugin: {0}", pi.Value.Attributes.Name)); } // print all avaiable plugin's list to log.
         }
 
         private void ScanModules()
@@ -62,7 +62,7 @@ namespace BlizzTV.ModuleLib
             {
                 foreach (Exception exc in e.LoaderExceptions)
                 {
-                    Log.Instance.Write(LogMessageTypes.Fatal, string.Format("Exception thrown during scanning available modules: {0}", exc.ToString()));
+                    LogManager.Instance.Write(LogMessageTypes.Fatal, string.Format("Exception thrown during scanning available modules: {0}", exc.ToString()));
                 }
             }
         }

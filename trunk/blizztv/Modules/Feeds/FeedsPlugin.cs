@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using BlizzTV.CommonLib.Utils;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.Configuration;
+using BlizzTV.Log;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 
@@ -125,7 +125,7 @@ namespace BlizzTV.Modules.Feeds
                     this.RootListItem.Childs.Add(pair.Key, pair.Value);
                     foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.Guid, story); } // register the story items.
                 }
-                catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e)); }
+                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e)); }
                 Workload.WorkloadManager.Instance.Step();
             }
 

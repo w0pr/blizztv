@@ -22,9 +22,9 @@ using System.Xml.Linq;
 using System.Timers;
 using BlizzTV.CommonLib.Web;
 using BlizzTV.CommonLib.Settings;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.Configuration;
+using BlizzTV.Log;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 
@@ -131,7 +131,7 @@ namespace BlizzTV.Modules.Events
 
                 catch (Exception e)
                 {
-                    Log.Instance.Write(LogMessageTypes.Error, string.Format("EventsPlugin ParseEvents() Error: \n {0}", e.ToString()));
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("EventsPlugin ParseEvents() Error: \n {0}", e.ToString()));
                 }
 
                 this.RootListItem.Childs.Add("events-today", _eventsToday);

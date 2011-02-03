@@ -23,9 +23,9 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using BlizzTV.CommonLib.Settings;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Web;
 using BlizzTV.Assets.i18n;
+using BlizzTV.Log;
 
 namespace BlizzTV.Updates
 {
@@ -43,7 +43,7 @@ namespace BlizzTV.Updates
         public void Check(bool fullVerbose = false)
         {
             Update foundUpdate = null; 
-            Log.Instance.Write(LogMessageTypes.Info, "UpdateManager checking for available update..");
+            LogManager.Instance.Write(LogMessageTypes.Info, "UpdateManager checking for available update..");
 
             Thread updateThread = new Thread(() => { foundUpdate = CheckForUpdates(); }) { IsBackground = true }; // check for available updates in a new thread.
             updateThread.Start();
@@ -71,7 +71,7 @@ namespace BlizzTV.Updates
 
             if (result.Status != WebReader.Status.Success)
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("Error reading the updates list. Response status code: {0}", result.Status));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Error reading the updates list. Response status code: {0}", result.Status));
                 return null;
             } 
 
@@ -100,7 +100,7 @@ namespace BlizzTV.Updates
                 }
             }
 
-            if (availableUpdate!=null) Log.Instance.Write(LogMessageTypes.Info, string.Format("Found an update: {0} - {1}", availableUpdate.UpdateType, availableUpdate.Version));            
+            if (availableUpdate!=null) LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Found an update: {0} - {1}", availableUpdate.UpdateType, availableUpdate.Version));            
             return availableUpdate;
         }
     }

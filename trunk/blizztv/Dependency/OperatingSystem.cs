@@ -17,7 +17,7 @@
 
 using System;
 using System.Security.Principal;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.Dependency
 {
@@ -65,7 +65,7 @@ namespace BlizzTV.Dependency
             catch (UnauthorizedAccessException ex)
             {
                 isAdmin = false;
-                Log.Instance.Write(LogMessageTypes.Info, string.Format("User does not have administrator privileges. UnauthorizedAccessException caught: {0}", ex));
+                LogManager.Instance.Write(LogMessageTypes.Info, string.Format("User does not have administrator privileges. UnauthorizedAccessException caught: {0}", ex));
             }
             return isAdmin;
         }

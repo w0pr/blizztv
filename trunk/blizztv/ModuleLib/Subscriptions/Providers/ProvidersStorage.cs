@@ -22,7 +22,7 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using System.Reflection;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.ModuleLib.Subscriptions.Providers
 {
@@ -42,7 +42,7 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
 
         private ProvidersStorage()
         {
-            Log.Instance.Write(LogMessageTypes.Info, "Loading providers database..");
+            LogManager.Instance.Write(LogMessageTypes.Info, "Loading providers database..");
             this.RegisterKnownTypes();
             this.Load();
         }
@@ -72,7 +72,7 @@ namespace BlizzTV.ModuleLib.Subscriptions.Providers
             }
             catch (Exception e) 
             { 
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("An error occured while loading providers database: {0}", e.ToString()));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("An error occured while loading providers database: {0}", e.ToString()));
                 System.Windows.Forms.MessageBox.Show("Providers database is broken. Please re-install BlizzTV to fix.", "Providers Database Broken", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }

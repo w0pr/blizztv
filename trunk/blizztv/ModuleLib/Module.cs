@@ -17,7 +17,7 @@
 
 using System;
 using System.Collections.Generic;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.ModuleLib
 {
@@ -45,7 +45,7 @@ namespace BlizzTV.ModuleLib
         public event PluginUpdateStartedEventHandler OnPluginUpdateStarted;
         protected void NotifyUpdateStarted()
         {
-            Log.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update started: '{0}'.", this.Attributes.Name));
+            LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update started: '{0}'.", this.Attributes.Name));
             if (OnPluginUpdateStarted != null) OnPluginUpdateStarted(this);
         }
 
@@ -53,8 +53,8 @@ namespace BlizzTV.ModuleLib
         public event PluginUpdateCompleteEventHandler OnPluginUpdateComplete;
         protected void NotifyUpdateComplete(PluginUpdateCompleteEventArgs e)
         {
-            if (e.Success) Log.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update completed with success: '{0}'.", this.Attributes.Name));
-            else Log.Instance.Write(LogMessageTypes.Error, string.Format("Plugin update failed: '{0}'.", this.Attributes.Name));
+            if (e.Success) LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update completed with success: '{0}'.", this.Attributes.Name));
+            else LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Plugin update failed: '{0}'.", this.Attributes.Name));
             if (OnPluginUpdateComplete != null) OnPluginUpdateComplete(this,e); 
         }
 

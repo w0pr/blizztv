@@ -19,10 +19,10 @@ using System;
 using System.Collections.Generic;
 using System.Timers;
 using BlizzTV.CommonLib.Utils;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.Configuration;
+using BlizzTV.Log;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
@@ -122,7 +122,7 @@ namespace BlizzTV.Modules.Streams
                     }
                     Workload.WorkloadManager.Instance.Step();
                 }
-                catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e)); } // catch errors for inner stream-handlers.
+                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e)); } // catch errors for inner stream-handlers.
             }
 
             if (availableCount > 0) this.RootListItem.SetTitle(string.Format("Streams ({0})", availableCount));  // put available streams count on root object's title.

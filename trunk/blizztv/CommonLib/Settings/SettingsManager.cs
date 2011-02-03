@@ -16,8 +16,8 @@
  */
 
 using System;
+using BlizzTV.Log;
 using Nini.Config;
-using BlizzTV.CommonLib.Logger;
 
 namespace BlizzTV.CommonLib.Settings
 {
@@ -44,7 +44,7 @@ namespace BlizzTV.CommonLib.Settings
             {
                 this._fileExists = false;
                 this._parser = new IniConfigSource();
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("SettingsParser load exception: {0}", e));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("SettingsParser load exception: {0}", e));
             }
             finally
             {

@@ -19,9 +19,9 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.Audio;
 using BlizzTV.Downloads;
+using BlizzTV.Log;
 
 namespace BlizzTV.Dependency
 {
@@ -86,7 +86,7 @@ namespace BlizzTV.Dependency
             AudioManager player = AudioManager.Instance;
             if (player.EngineStatus == AudioManager.AudioEngineStatus.MissingDependency) // if AudioManager reports a missing dependency, let the rule fail.
             {
-                Log.Instance.Write(LogMessageTypes.Error, "Dependency rule VisualCpp2010RuntimeInstalled failed. Visual C++ 2010 redistributable package is not installed.");
+                LogManager.Instance.Write(LogMessageTypes.Error, "Dependency rule VisualCpp2010RuntimeInstalled failed. Visual C++ 2010 redistributable package is not installed.");
                 return false;
             }
             return true;            
@@ -101,7 +101,7 @@ namespace BlizzTV.Dependency
             }
             catch (Exception e)
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("Depedency rule ShockwaveFlashInstalled() failed. Adobe Flash Player is not installed: {0}", e));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Depedency rule ShockwaveFlashInstalled() failed. Adobe Flash Player is not installed: {0}", e));
                 return false;
             }
         }

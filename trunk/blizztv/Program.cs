@@ -19,9 +19,9 @@ using System;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Threading;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.Configuration;
 using BlizzTV.Dependency;
+using BlizzTV.Log;
 using BlizzTV.UI;
 using BlizzTV.Win32API;
 
@@ -51,13 +51,13 @@ namespace BlizzTV
             else RuntimeConfiguration.Instance.StartedOnSystemStartup = false;
             
             // start logger & debug-console if enabled.
-            if (Settings.Instance.EnableDebugLogging) Log.Instance.EnableLogger(); else Log.Instance.DisableLogger();
             if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
+            if (Settings.Instance.EnableDebugLogging) LogManager.Instance.EnableLogger(); else LogManager.Instance.DisableLogger();           
             
             // check if dependencies are satisfied.
             if (!DependencyManager.Instance.Satisfied()) { Application.ExitThread(); return; }
 
-            Log.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
+            LogManager.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

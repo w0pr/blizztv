@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using BlizzTV.Log;
 using HtmlAgilityPack;
 using BlizzTV.ModuleLib;
 using BlizzTV.CommonLib.Web;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.CommonLib.Utils;
 
 namespace BlizzTV.Modules.BlizzBlues.Game
@@ -92,7 +92,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Write(LogMessageTypes.Error, string.Format("BlueParser error: {0}", e));
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("BlueParser error: {0}", e));
                     return false;
                 }
             }

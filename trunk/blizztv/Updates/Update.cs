@@ -20,9 +20,9 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
-using BlizzTV.CommonLib.Logger;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Helpers;
+using BlizzTV.Log;
 
 namespace BlizzTV.Updates
 {
@@ -76,7 +76,7 @@ namespace BlizzTV.Updates
             }
             catch (Exception e)
             {                
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("Update parse exception: {0}", e));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Update parse exception: {0}", e));
                 this.Valid = false;
             }
         }
@@ -85,7 +85,7 @@ namespace BlizzTV.Updates
         {
             if (!this.Valid)
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("Can't install the update {0} as it's not valid.", this.Version));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Can't install the update {0} as it's not valid.", this.Version));
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace BlizzTV.Updates
             /* check the update file extension */
             if (!(fileExtension == ".exe" || fileExtension == ".zip")) 
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("Can't install the update {0} as downloaded file's extension {1} is not a valid extension for updates.", this.Version,fileExtension));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Can't install the update {0} as downloaded file's extension {1} is not a valid extension for updates.", this.Version,fileExtension));
                 MessageBox.Show(i18n.DownloadedUpdateIsNotValidMessage, i18n.DownloadedUpdateIsNotValidTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }

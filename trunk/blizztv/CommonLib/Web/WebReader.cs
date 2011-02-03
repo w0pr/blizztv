@@ -18,7 +18,7 @@
 using System;
 using System.Net;
 using System.IO;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.CommonLib.Web
 {
@@ -44,7 +44,7 @@ namespace BlizzTV.CommonLib.Web
             catch (WebException e)
             {
                 if (e.Status == WebExceptionStatus.Timeout) result.Status = Status.Timeout; else result.Status = Status.Failed;                    
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("WebReader:Read() Exception: {0}", e));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("WebReader:Read() Exception: {0}", e));
             }
             return result;
         }
@@ -62,7 +62,7 @@ namespace BlizzTV.CommonLib.Web
 
         public enum Status
         {
-            Unkown,
+            Unknown,
             Success,
             Failed,
             Timeout

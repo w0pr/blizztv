@@ -18,7 +18,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -62,7 +62,7 @@ namespace BlizzTV.Modules.Streams
             }
             catch (Exception exc)
             {
-                Log.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Chat Window Error: \n {0}", exc));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin Chat Window Error: \n {0}", exc));
                 MessageBox.Show(string.Format("An error occured in stream chat window. \n\n[Error Details: {0}]", exc.Message), "Streams Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

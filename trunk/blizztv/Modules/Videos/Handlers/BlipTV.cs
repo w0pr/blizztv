@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using BlizzTV.CommonLib.Web;
-using BlizzTV.CommonLib.Logger;
+using BlizzTV.Log;
 
 namespace BlizzTV.Modules.Videos.Handlers
 {
@@ -59,7 +59,7 @@ namespace BlizzTV.Modules.Videos.Handlers
                 }
                 return true;
             }
-            catch (Exception e) { Log.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannels Plugin - Blip.TV Channel - Update() Error: \n {0}", e)); return false; }
+            catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannels Plugin - Blip.TV Channel - Update() Error: \n {0}", e)); return false; }
         }
     }
 }
