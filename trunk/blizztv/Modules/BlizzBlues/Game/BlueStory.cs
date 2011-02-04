@@ -20,8 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.StatusStorage;
-using BlizzTV.CommonLib.Notifications;
 using BlizzTV.CommonLib.Utils;
+using BlizzTV.Notifications;
 
 namespace BlizzTV.Modules.BlizzBlues.Game
 {

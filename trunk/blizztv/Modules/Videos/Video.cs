@@ -19,8 +19,8 @@ using System;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
-using BlizzTV.CommonLib.Notifications;
 using BlizzTV.ModuleLib.StatusStorage;
+using BlizzTV.Notifications;
 
 namespace BlizzTV.Modules.Videos
 {
