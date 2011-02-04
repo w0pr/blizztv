@@ -22,7 +22,7 @@ using System.Resources;
 using BlizzTV.CommonLib.Settings;
 using BlizzTV.Audio;
 
-namespace BlizzTV.CommonLib.Notifications
+namespace BlizzTV.Notifications
 {
     public sealed class NotificationSound
     {
@@ -33,20 +33,21 @@ namespace BlizzTV.CommonLib.Notifications
 
         #endregion
 
-        private List<string> _names = new List<string>();
-
-        public List<string> Names { get { return this._names; } }
+        private readonly List<string> _names = new List<string>(); // list of available sounds keys.
+        public IEnumerable<string> Names { get { return this._names; } } // readonly collection available sounds keys.
 
         private NotificationSound()
         {
-            ResourceSet resourceset = Assets.Sounds.Notifications.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-            foreach (DictionaryEntry entry in resourceset) { this._names.Add(entry.Key.ToString()); }
+            ResourceSet resourceset = Assets.Sounds.Notifications.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true); // read the sound asset resources.
+            foreach (DictionaryEntry entry in resourceset) { this._names.Add(entry.Key.ToString()); } // add the available sounds keys to the list.
         }
 
-        public void Play(string name = "")
+        public void Play(string name = "") // Plays the supplied keys associated sound.
         {
-            if (name == "") name = GlobalSettings.Instance.NotificationSound;
-            AudioManager.Instance.PlayFromMemory(name, (byte[])Assets.Sounds.Notifications.ResourceManager.GetObject(name));
+            if (name == "") name = GlobalSettings.Instance.NotificationSound; // use the default notification sound if no key is supplied.
+            if (!this._names.Contains(name)) return;  // if the supplied key does not exists in list, just ignore.
+
+            AudioManager.Instance.PlayFromMemory(name, (byte[])Assets.Sounds.Notifications.ResourceManager.GetObject(name)); // play the request sound from memory.
         }
     }
 }

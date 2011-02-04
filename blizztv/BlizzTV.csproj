@@ -141,16 +141,16 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Win32API\WindowMessaging.cs" />
     <Compile Include="Helpers\Zip.cs" />
-    <Compile Include="CommonLib\Notifications\frmArchivedNotifications.cs">
+    <Compile Include="Notifications\frmArchivedNotifications.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CommonLib\Notifications\frmArchivedNotifications.Designer.cs">
+    <Compile Include="Notifications\frmArchivedNotifications.Designer.cs">
       <DependentUpon>frmArchivedNotifications.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommonLib\Notifications\INotificationRequester.cs" />
-    <Compile Include="CommonLib\Notifications\NotificationManager.cs" />
-    <Compile Include="CommonLib\Notifications\ArchivedNotifications.cs" />
-    <Compile Include="CommonLib\Notifications\NotificationSound.cs" />
+    <Compile Include="Notifications\INotificationRequester.cs" />
+    <Compile Include="Notifications\NotificationManager.cs" />
+    <Compile Include="Notifications\ArchivedNotifications.cs" />
+    <Compile Include="Notifications\NotificationSound.cs" />
     <Compile Include="CommonLib\Players\PlayerWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -426,7 +426,7 @@
     <EmbeddedResource Include="Downloads\frmDownload.resx">
       <DependentUpon>frmDownload.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommonLib\Notifications\frmArchivedNotifications.resx">
+    <EmbeddedResource Include="Notifications\frmArchivedNotifications.resx">
       <DependentUpon>frmArchivedNotifications.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommonLib\Players\PlayerWindow.resx">

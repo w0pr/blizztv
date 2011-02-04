@@ -15,9 +15,12 @@
  * $Id$
  */
 
-namespace BlizzTV.CommonLib.Notifications
+namespace BlizzTV.Notifications
 {
-    public interface INotificationRequester
+    /// <summary>
+    /// Interface for items that can request & handle notifications.
+    /// </summary>
+    public interface INotificationRequester 
     {
         void NotificationClicked();
     }

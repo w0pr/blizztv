@@ -1,4 +1,4 @@
-﻿namespace BlizzTV.CommonLib.Notifications
+﻿namespace BlizzTV.Notifications
 {
     partial class frmArchivedNotifications
     {

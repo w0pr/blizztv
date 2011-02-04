@@ -20,8 +20,8 @@ using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.StatusStorage;
-using BlizzTV.CommonLib.Notifications;
 using BlizzTV.CommonLib.Players;
+using BlizzTV.Notifications;
 
 namespace BlizzTV.Modules.Streams
 {

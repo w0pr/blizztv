@@ -17,7 +17,7 @@
 
 using System.Collections.Generic;
 
-namespace BlizzTV.CommonLib.Notifications
+namespace BlizzTV.Notifications
 {
     public class ArchivedNotifications
     {

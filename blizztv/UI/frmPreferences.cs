@@ -24,7 +24,7 @@ using BlizzTV.CommonLib.UI;
 using BlizzTV.Helpers;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
-using BlizzTV.CommonLib.Notifications;
+using BlizzTV.Notifications;
 
 namespace BlizzTV.UI
 {

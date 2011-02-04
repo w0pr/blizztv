@@ -30,7 +30,7 @@ namespace BlizzTV.Log
         #endregion
 
         private bool _loggerEnabled = false; 
-        private const string LogFile = "fsd:\\debug.log"; 
+        private const string LogFile = "debug.log"; 
         private FileStream _fileStream;
         private StreamWriter _logStream;        
         private bool _disposed = false;

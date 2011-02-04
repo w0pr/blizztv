@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 using BlizzTV.CommonLib.Storage;
-using BlizzTV.CommonLib.Notifications;
+using BlizzTV.Notifications;
 
 namespace BlizzTV.Modules.Events
 {
