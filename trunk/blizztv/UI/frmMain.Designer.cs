@@ -267,9 +267,9 @@
             // 
             // ProgressBar
             // 
-            this.ProgressBar.Maximum = 0;
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(100, 16);
+            this.ProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.ProgressBar.Visible = false;
             // 
             // toolStripSpacer
