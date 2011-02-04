@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BlizzTV")]
 [assembly: AssemblyProduct("BlizzTV")]
-[assembly: AssemblyCopyright("Copyright ©  2010")]
+[assembly: AssemblyCopyright("Copyright ©  2010-2011")]
 [assembly: AssemblyTrademark("BlizzTV")]
 [assembly: AssemblyCulture("")]
 
