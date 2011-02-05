@@ -106,8 +106,10 @@ namespace BlizzTV.Log
 
     public enum LogMessageTypes
     {
+        Trace,
         Debug,
         Info,
+        Warn,
         Error,
         Fatal,
     }
