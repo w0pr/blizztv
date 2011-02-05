@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using BlizzTV.CommonLib.Utils;
-using BlizzTV.CommonLib.Settings;
 using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;

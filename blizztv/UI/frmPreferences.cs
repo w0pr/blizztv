@@ -19,12 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.Helpers;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.Notifications;
+using BlizzTV.Settings;
 
 namespace BlizzTV.UI
 {

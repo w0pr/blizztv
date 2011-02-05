@@ -22,10 +22,10 @@ using System.Xml.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Web;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Log;
+using BlizzTV.Settings;
 
 namespace BlizzTV.Updates
 {

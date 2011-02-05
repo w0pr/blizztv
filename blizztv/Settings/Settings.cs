@@ -17,7 +17,7 @@
 
 using Nini.Config;
 
-namespace BlizzTV.CommonLib.Settings
+namespace BlizzTV.Settings
 {
     public class Settings
     {
@@ -26,7 +26,7 @@ namespace BlizzTV.CommonLib.Settings
         public Settings(string sectionName)
         {
             this._section = SettingsManager.Instance.Section(sectionName);
-            if (this._section == null) this._section = SettingsManager.Instance.AddSection(sectionName);
+            if (this._section == null) this._section = SettingsManager.Instance.AddSection(sectionName); // if the section does not exist already, create it.
         }
 
         public void Save()

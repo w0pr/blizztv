@@ -16,12 +16,12 @@
  */
 
 using System;
-using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.StatusStorage;
 using BlizzTV.CommonLib.Players;
 using BlizzTV.Notifications;
+using BlizzTV.Settings;
 
 namespace BlizzTV.Modules.Streams
 {

@@ -342,10 +342,10 @@
     <Compile Include="ModuleLib\Module.cs" />
     <Compile Include="ModuleLib\ModuleInfo.cs" />
     <Compile Include="ModuleLib\ModuleManager.cs" />
-    <Compile Include="CommonLib\Settings\GlobalSettings.cs" />
-    <Compile Include="CommonLib\Settings\SettingsManager.cs" />
+    <Compile Include="Settings\GlobalSettings.cs" />
+    <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="ModuleLib\Settings\ModuleSettings.cs" />
-    <Compile Include="CommonLib\Settings\Settings.cs" />
+    <Compile Include="Settings\Settings.cs" />
     <Compile Include="Log\DebugConsole.cs" />
     <Compile Include="CommonLib\Web\JSON.cs" />
     <Compile Include="Log\LogManager.cs" />
@@ -572,7 +572,9 @@
     <None Include="Resources\blizzblues.png" />
     <None Include="Resources\alarm.png" />
     <None Include="Resources\about.png" />
-    <None Include="Resources\Default.xml" />
+    <None Include="Resources\Default.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\Providers.xml">
       <SubType>Designer</SubType>
     </None>

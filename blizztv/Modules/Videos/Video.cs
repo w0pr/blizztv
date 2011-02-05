@@ -17,10 +17,10 @@
 
 using System;
 using BlizzTV.CommonLib.Utils;
-using BlizzTV.CommonLib.Settings;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.StatusStorage;
 using BlizzTV.Notifications;
+using BlizzTV.Settings;
 
 namespace BlizzTV.Modules.Videos
 {

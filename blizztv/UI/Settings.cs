@@ -21,7 +21,7 @@ using System.Windows.Forms;
 
 namespace BlizzTV.UI
 {
-    public sealed class Settings : CommonLib.Settings.Settings // The UI settings.
+    public sealed class Settings : BlizzTV.Settings.Settings // The UI settings.
     {
         #region singleton instance
 
@@ -60,7 +60,7 @@ namespace BlizzTV.UI
         private Settings() : base("UI") { }              
     }
 
-    public class Plugins : CommonLib.Settings.Settings // The plugin settings wrapper.
+    public class Plugins : BlizzTV.Settings.Settings // The plugin settings wrapper.
     {
         // the plugin settings list. TODO: convert to readonly-dictionary.
         public Dictionary<string, bool> List 

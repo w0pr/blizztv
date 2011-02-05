@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Timers;
 using BlizzTV.CommonLib.Utils;
-using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.UI;
 using BlizzTV.Configuration;
 using BlizzTV.Log;

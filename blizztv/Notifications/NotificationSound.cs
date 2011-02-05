@@ -19,8 +19,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Resources;
-using BlizzTV.CommonLib.Settings;
 using BlizzTV.Audio;
+using BlizzTV.Settings;
 
 namespace BlizzTV.Notifications
 {
