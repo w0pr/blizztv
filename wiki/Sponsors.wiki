@@ -1,0 +1,10 @@
+#summary BlizzTV Sponsors
+#labels Sponsors
+
+Thanks to our sponsors and donors, BlizzTV is actively maintained. Here's the list of our current supporters.
+
+ * [http://www.jetbrains.com/ JetBrains] for donating project-wise [http://www.jetbrains.com/resharper/ Resharper] and [http://www.jetbrains.com/profiler/ dotTrace]. 
+
+If you also want to sponsor project, please contact us over:
+
+[http://get.blizztv.com/wp-content/uploads/2011/02/contact-email.png]
