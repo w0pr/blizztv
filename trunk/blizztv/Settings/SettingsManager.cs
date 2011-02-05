@@ -19,7 +19,7 @@ using System;
 using BlizzTV.Log;
 using Nini.Config;
 
-namespace BlizzTV.CommonLib.Settings
+namespace BlizzTV.Settings
 {
     internal sealed class SettingsManager
     {
@@ -30,25 +30,26 @@ namespace BlizzTV.CommonLib.Settings
 
         #endregion
 
-        private readonly IniConfigSource _parser;
-        private bool _fileExists = true;
-        private const string ConfigFile = "blizztv.ini";
+        private readonly IniConfigSource _parser; // the ini parser.
+        private const string ConfigFile = "blizztv.ini"; // the ini file.
+        private bool _fileExists = false; // does the ini file exists?
       
         private SettingsManager()
         {
             try
             {
-                this._parser = new IniConfigSource(ConfigFile);
+                this._parser = new IniConfigSource(ConfigFile); // see if the file exists by trying to parse it.
+                this._fileExists = true;
             }
             catch (Exception e)
             {
+                this._parser = new IniConfigSource(); // initiate a new .ini source.
                 this._fileExists = false;
-                this._parser = new IniConfigSource();
-                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("SettingsParser load exception: {0}", e));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("SettingsManager encountered an exception while loading: {0}", e));
             }
             finally
             {
-                this._parser.Alias.AddAlias("On", true);
+                this._parser.Alias.AddAlias("On", true); // adds aliases so we can use On and Off directives in ini files.
                 this._parser.Alias.AddAlias("Off", false);
             }
         }

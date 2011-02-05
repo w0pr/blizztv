@@ -21,7 +21,6 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Timers;
 using BlizzTV.CommonLib.Web;
-using BlizzTV.CommonLib.Settings;
 using BlizzTV.CommonLib.Utils;
 using BlizzTV.Configuration;
 using BlizzTV.Log;

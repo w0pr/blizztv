@@ -15,10 +15,10 @@
  * $Id$
  */
 
-namespace BlizzTV.CommonLib.Settings
+namespace BlizzTV.Settings
 {
     /// <summary>
-    /// Global settings that is used by both the BlizzTV and it's plugins.
+    /// Global settings that is used by both the BlizzTV and it's modules.
     /// </summary>
     public sealed class GlobalSettings : Settings
     {
@@ -53,10 +53,10 @@ namespace BlizzTV.CommonLib.Settings
         // Holds the selected notification sound.
         public string NotificationSound { get { return this.GetString("NotificationSound", "DefaultNotification"); } set { this.Set("NotificationSound", value); } }
 
-        // allow automatic update checks?
+        // Allow automatic update checks?
         public bool AllowAutomaticUpdateChecks { get { return this.GetBoolean("AllowAutomaticUpdateChecks", true); } set { this.Set("AllowAutomaticUpdateChecks", value); } }
 
-        // allow beta version notifications?
+        // Allow beta version notifications?
         public bool AllowBetaVersionNotifications { get { return this.GetBoolean("AllowBetaVersionNotifications", true); } set { this.Set("AllowBetaVersionNotifications", value); } }
 
         private GlobalSettings() : base("Global") { }
