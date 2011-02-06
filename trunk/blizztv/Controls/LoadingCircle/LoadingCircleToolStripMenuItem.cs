@@ -41,15 +41,12 @@
 // OF SUCH DAMAGE.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace BlizzTV.CommonLib.UI.LoadingCircle
+namespace BlizzTV.Controls.LoadingCircle
 {
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
     public class LoadingCircleToolStripMenuItem : ToolStripControlHost

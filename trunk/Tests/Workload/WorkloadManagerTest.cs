@@ -1,7 +1,7 @@
-﻿using BlizzTV.Workload;
+﻿using BlizzTV.Controls.LoadingCircle;
+using BlizzTV.Workload;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows.Forms;
-using BlizzTV.CommonLib.UI.LoadingCircle;
 using System;
 
 namespace Tests.Workload

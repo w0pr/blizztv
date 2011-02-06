@@ -18,9 +18,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib.StatusStorage;
 using BlizzTV.Notifications;
+using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.ModuleLib
 {

@@ -15,7 +15,7 @@
  * $Id$
  */
 
-using BlizzTV.CommonLib.Utils;
+using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Modules.BlizzBlues.Game
 {

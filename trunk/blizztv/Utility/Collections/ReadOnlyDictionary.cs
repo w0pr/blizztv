@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BlizzTV.CommonLib.Utils
+namespace BlizzTV.Utility.Collections
 {
+    /// <summary>
+    /// Provides a read only dictionary collection.
+    /// </summary>
+    /// <typeparam name="TKey">The dictionary key.</typeparam>
+    /// <typeparam name="TValue">The key value.</typeparam>
     public class ReadOnlyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         readonly IDictionary<TKey, TValue> _dict;

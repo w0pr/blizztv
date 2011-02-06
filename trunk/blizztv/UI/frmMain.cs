@@ -20,12 +20,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
-using BlizzTV.CommonLib.UI;
 using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.Notifications;
 using BlizzTV.Settings;
 using BlizzTV.Updates;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Win32API;
 
 namespace BlizzTV.UI

@@ -20,12 +20,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Timers;
-using BlizzTV.CommonLib.Web;
-using BlizzTV.CommonLib.Utils;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
+using BlizzTV.Utility.Date;
+using BlizzTV.Utility.Imaging;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Modules.Events
 {
@@ -85,7 +86,7 @@ namespace BlizzTV.Modules.Events
                 try
                 {
                     WebReader.Result result = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml"); // read teamliquid calendar xml.
-                    if (result.Status != WebReader.Status.Success)
+                    if (result.State != WebReader.States.Success)
                     {
                         this.RootListItem.State = State.Error;
                         this.RootListItem.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);

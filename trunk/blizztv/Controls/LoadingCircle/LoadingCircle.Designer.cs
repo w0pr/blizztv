@@ -24,7 +24,7 @@
 // OF SUCH DAMAGE.
 //
 
-namespace BlizzTV.CommonLib.UI.LoadingCircle
+namespace BlizzTV.Controls.LoadingCircle
 {
     partial class LoadingCircle
     {

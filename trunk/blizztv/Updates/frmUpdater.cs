@@ -17,9 +17,9 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.CommonLib.UI;
 using BlizzTV.Downloads;
 using BlizzTV.Assets.i18n;
+using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.Updates
 {

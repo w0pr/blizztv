@@ -16,15 +16,11 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using BlizzTV.Settings;
 
-namespace BlizzTV.CommonLib.Players
+namespace BlizzTV.ModuleLib.Players
 {
     public partial class PlayerWindow : Form
     {
@@ -36,7 +32,7 @@ namespace BlizzTV.CommonLib.Players
         {
             InitializeComponent();
 
-            this.Size = new Size(Settings.GlobalSettings.Instance.VideoPlayerWidth, Settings.GlobalSettings.Instance.VideoPlayerHeight); // Load the last known size & location for the window.
+            this.Size = new Size(GlobalSettings.Instance.VideoPlayerWidth, GlobalSettings.Instance.VideoPlayerHeight); // Load the last known size & location for the window.
         }
 
         protected void PlayerDoubleClick(object sender, MouseEventArgs e)
@@ -69,11 +65,11 @@ namespace BlizzTV.CommonLib.Players
 
         private void PlayerWindow_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.Size.Width != Settings.GlobalSettings.Instance.VideoPlayerWidth || this.Size.Height != Settings.GlobalSettings.Instance.VideoPlayerHeight)
+            if (this.Size.Width != GlobalSettings.Instance.VideoPlayerWidth || this.Size.Height != GlobalSettings.Instance.VideoPlayerHeight)
             {
-                Settings.GlobalSettings.Instance.VideoPlayerWidth = this.Size.Width;
-                Settings.GlobalSettings.Instance.VideoPlayerHeight = this.Size.Height;
-                Settings.GlobalSettings.Instance.Save();
+                GlobalSettings.Instance.VideoPlayerWidth = this.Size.Width;
+                GlobalSettings.Instance.VideoPlayerHeight = this.Size.Height;
+                GlobalSettings.Instance.Save();
             }
         }
     }

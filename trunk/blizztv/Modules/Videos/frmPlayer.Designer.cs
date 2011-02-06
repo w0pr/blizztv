@@ -1,4 +1,4 @@
-﻿using BlizzTV.ModuleLib.Players;
+﻿using BlizzTV.Controls.FlashPlayer;
 
 namespace BlizzTV.Modules.Videos
 {
@@ -34,7 +34,7 @@ namespace BlizzTV.Modules.Videos
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayer));
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
-            this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
+            this.Player = new FlashPlayer();
             this.PlayerContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
             this.SuspendLayout();

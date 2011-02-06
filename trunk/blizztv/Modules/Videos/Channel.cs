@@ -18,8 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
+using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Modules.Videos
 {

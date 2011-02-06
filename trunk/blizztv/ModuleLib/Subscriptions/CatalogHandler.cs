@@ -22,7 +22,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Reflection;
 using System.IO;
-using BlizzTV.CommonLib.Web;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.ModuleLib.Subscriptions
 {
@@ -43,7 +43,7 @@ namespace BlizzTV.ModuleLib.Subscriptions
         private void Load()
         {
             WebReader.Result result = WebReader.Read(this._catalogUrl);
-            if (result.Status != WebReader.Status.Success) return;
+            if (result.State != WebReader.States.Success) return;
 
             using (MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes(result.Response)))
             {

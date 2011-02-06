@@ -15,14 +15,13 @@
  * $Id$
  */
 
-using System;
 using Microsoft.Win32;
 using System.Security;
 
-namespace BlizzTV.Helpers
+namespace BlizzTV.Utility.Helpers
 {
     /// <summary>
-    /// Provides registery access API
+    /// Helper class that provides registery access.
     /// </summary>
     public static class Registry
     {

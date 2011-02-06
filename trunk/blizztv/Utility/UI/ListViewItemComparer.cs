@@ -12,21 +12,28 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id: ListviewModuleItem.cs 217 2010-12-13 11:50:05Z shalafiraistlin@gmail.com $
+ * $Id$
  */
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace BlizzTV.CommonLib.UI
+namespace BlizzTV.Utility.UI
 {
+    /// <summary>
+    /// Provides item comparer for list-views.
+    /// </summary>
     public class ListViewItemComparer : IComparer
     {
-        public int SortColumn { get; set; }
+        /// <summary>
+        /// Column to be sorted.
+        /// </summary>
+        public int SortColumn { get; set; } 
+
+        /// <summary>
+        /// Sort order to be used.
+        /// </summary>
         public SortOrder SortOrder { get; set; }
 
         public ListViewItemComparer()
@@ -44,8 +51,8 @@ namespace BlizzTV.CommonLib.UI
         public int Compare(object x, object y)
         {
             int returnVal = -1;
-            returnVal = String.Compare(((ListViewItem)x).SubItems[SortColumn].Text, ((ListViewItem)y).SubItems[SortColumn].Text); // Determine whether the sort order is descending.                
-            if (SortOrder == SortOrder.Descending) returnVal *= -1; // Invert the value returned by String.Compare.                    
+            returnVal = string.Compare(((ListViewItem)x).SubItems[SortColumn].Text, ((ListViewItem)y).SubItems[SortColumn].Text); // Determine whether the sort order is descending.                
+            if (SortOrder == SortOrder.Descending) returnVal *= -1; // Invert the value returned by string.Compare.                    
             return returnVal;
         }
     }

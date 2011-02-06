@@ -15,16 +15,14 @@
  * $Id$
  */
 
-/* 
- * Original code by: http://techblog.procurios.nl/k/618/news/view/14605/14863/How-do-I-write-my-own-parser-for-JSON.html 
- */
+/* Original code by: http://techblog.procurios.nl/k/618/news/view/14605/14863/How-do-I-write-my-own-parser-for-JSON.html */
 
 using System;
 using System.Collections;
 using System.Globalization;
 using System.Text;
 
-namespace BlizzTV.CommonLib.Web
+namespace BlizzTV.Utility.Web
 {
 
     /// <summary>

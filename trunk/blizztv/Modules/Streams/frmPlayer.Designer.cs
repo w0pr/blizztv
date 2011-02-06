@@ -1,4 +1,5 @@
-﻿using BlizzTV.ModuleLib.Players;
+﻿using BlizzTV.Controls.FlashPlayer;
+using BlizzTV.Controls.LoadingCircle;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -32,12 +33,12 @@ namespace BlizzTV.Modules.Streams
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayer));
-            this.FlashPlayer = new BlizzTV.ModuleLib.Players.FlashPlayer();
+            this.FlashPlayer = new FlashPlayer();
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuOpenChat = new System.Windows.Forms.ToolStripMenuItem();
             this.WebBrowser = new System.Windows.Forms.WebBrowser();
-            this.LoadingCircle = new BlizzTV.CommonLib.UI.LoadingCircle.LoadingCircle();
+            this.LoadingCircle = new LoadingCircle();
             ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).BeginInit();
             this.PlayerContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -105,7 +106,7 @@ namespace BlizzTV.Modules.Streams
             this.LoadingCircle.RotationSpeed = 50;
             this.LoadingCircle.Size = new System.Drawing.Size(624, 347);
             this.LoadingCircle.SpokeThickness = 3;
-            this.LoadingCircle.StylePreset = BlizzTV.CommonLib.UI.LoadingCircle.LoadingCircle.StylePresets.IE7;
+            this.LoadingCircle.StylePreset = LoadingCircle.StylePresets.IE7;
             this.LoadingCircle.TabIndex = 2;
             // 
             // frmPlayer
@@ -134,6 +135,6 @@ namespace BlizzTV.Modules.Streams
         private System.Windows.Forms.ToolStripMenuItem MenuAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem MenuOpenChat;
         private System.Windows.Forms.WebBrowser WebBrowser;
-        private CommonLib.UI.LoadingCircle.LoadingCircle LoadingCircle;
+        private LoadingCircle LoadingCircle;
     }
 }

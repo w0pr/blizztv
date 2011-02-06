@@ -19,11 +19,21 @@ using System;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace BlizzTV.CommonLib.UI
+namespace BlizzTV.Utility.UI
 {
+    /// <summary>
+    /// Provides an Input Box.
+    /// </summary>
     public class InputBox
     {
-        public static DialogResult Show(string title, string promptText, ref string value) // Shows an InputBox and returns a DialogResult.
+        /// <summary>
+        /// Shows a input box for user input.
+        /// </summary>
+        /// <param name="title">The input-box title.</param>
+        /// <param name="promptText">The input-box prompt.</param>
+        /// <param name="value">The input provided by the user.</param>
+        /// <returns><see cref="DialogResult"/></returns>
+        public static DialogResult Show(string title, string promptText, ref string value) 
         {
             Form form = new Form();
             Label label = new Label();

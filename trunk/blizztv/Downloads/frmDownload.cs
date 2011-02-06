@@ -16,8 +16,8 @@
  */
 
 using System.Windows.Forms;
-using BlizzTV.CommonLib.UI;
 using BlizzTV.Assets.i18n;
+using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.Downloads
 {

@@ -19,11 +19,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using BlizzTV.CommonLib.Utils;
 using BlizzTV.Configuration;
 using BlizzTV.ModuleLib;
 using BlizzTV.ModuleLib.Settings;
 using BlizzTV.ModuleLib.Subscriptions.Providers;
+using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Modules.Videos
 {

@@ -16,8 +16,8 @@
  */
 
 using System.Windows.Forms;
-using BlizzTV.CommonLib.UI;
-using BlizzTV.CommonLib.UI.LoadingCircle;
+using BlizzTV.Controls.LoadingCircle;
+using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.Workload
 {
