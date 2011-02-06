@@ -21,6 +21,7 @@
   <Entry xsi:type="Stream" Category="Starcraft" Name="MorroW" Description="Top-notch zerg player stream." Slug="morrow" Provider="LiveStream" />  
   <Entry xsi:type="Stream" Category="Starcraft" Name="LZGamer" Description="Top-notch SC:BW / SC2 player stream." Slug="lzgamer" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="SjoW" Description="Popular top-notch terran player's stream." Slug="8002" Provider="Own3DTV" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="Liquid'TLO" Description="Popular top-notch terran player's stream." Slug="liquidtlotv" Provider="UStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="PhoenixWerra" Description="Stream of Korean top-notch player." Slug="phoenixwerra" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="CellaWerra" Description="Korean gamer Cella streaming high level Starcraft 2 zerg games." Slug="cellawerra" Provider="LiveStream" />   
   <Entry xsi:type="Stream" Category="Starcraft" Name="DarkFoRcE" Description="3200+ diamond european zerg player's stream." Slug="330" Provider="Own3DTV" />
