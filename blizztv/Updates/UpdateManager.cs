@@ -22,10 +22,10 @@ using System.Xml.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using BlizzTV.CommonLib.Web;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Log;
 using BlizzTV.Settings;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Updates
 {
@@ -69,9 +69,9 @@ namespace BlizzTV.Updates
             
             WebReader.Result result = WebReader.Read("http://code.google.com/feeds/p/blizztv/downloads/basic/"); // read the updates list.
 
-            if (result.Status != WebReader.Status.Success)
+            if (result.State != WebReader.States.Success)
             {
-                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Error reading the updates list. Response status code: {0}", result.Status));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Error reading the updates list. Response status code: {0}", result.State));
                 return null;
             } 
 

@@ -15,52 +15,71 @@
  * $Id$
  */
 
-using System;
 using System.Net;
 using System.IO;
 using BlizzTV.Log;
 
-namespace BlizzTV.CommonLib.Web
+namespace BlizzTV.Utility.Web
 {
+    /// <summary>
+    /// Provides web reading capabilities.
+    /// </summary>
     public static class WebReader
     {
         public static Result Read(string url, int timeout = 30 * 1000)
-        {
-            Result result=new Result();
+        {            
+            Result result=new Result(); // our result object.
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url); 
                 request.Timeout = timeout;
+
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
                         result.Response = reader.ReadToEnd();
-                        result.Status= Status.Success;
+                        result.State = States.Success;
                     }
                 }
             }
             catch (WebException e)
             {
-                if (e.Status == WebExceptionStatus.Timeout) result.Status = Status.Timeout; else result.Status = Status.Failed;                    
-                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("WebReader:Read() Exception: {0}", e));
+                result.State = e.Status == WebExceptionStatus.Timeout ? States.Timeout : States.Failed; // check the exception type and set our result state according.
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("WebReader encountered an exception: {0}", e));
             }
+
             return result;
         }
 
+
+        /// <summary>
+        /// A result object provided by the web-reader.
+        /// </summary>
         public class Result
         {
+            /// <summary>
+            /// The response read from web.
+            /// </summary>
             public string Response { get; internal set; }
-            public Status Status { get; internal set; }
+
+            /// <summary>
+            /// The result's state.
+            /// </summary>
+            public States State { get; internal set; }
 
             public Result()
             {
+                this.State = States.Unknown;
                 this.Response = "";
             }
         }
 
-        public enum Status
+        /// <summary>
+        /// The operation's result status.
+        /// </summary>
+        public enum States
         {
             Unknown,
             Success,

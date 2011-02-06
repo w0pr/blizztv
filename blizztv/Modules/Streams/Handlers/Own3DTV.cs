@@ -17,7 +17,7 @@
 
 using System;
 using System.Text.RegularExpressions;
-using BlizzTV.CommonLib.Web;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Modules.Streams.Handlers
 {
@@ -36,7 +36,7 @@ namespace BlizzTV.Modules.Streams.Handlers
             {
                 string apiUrl = string.Format("http://static.ec.own3d.tv/live_tmp/{0}.txt?{1}", this.Slug, rnd.Next(99999));
                 WebReader.Result result = WebReader.Read(apiUrl);
-                if (result.Status != WebReader.Status.Success) return;
+                if (result.State != WebReader.States.Success) return;
 
                 Match m = _regex.Match(result.Response);
                 if (m.Success)

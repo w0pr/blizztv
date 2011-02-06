@@ -1,4 +1,6 @@
-﻿namespace BlizzTV.UI
+﻿using BlizzTV.Controls.FlashPlayer;
+
+namespace BlizzTV.UI
 {
     partial class frmAbout
     {
@@ -70,7 +72,7 @@
             this.Murloc = new System.Windows.Forms.PictureBox();
             this.LabelVersion = new System.Windows.Forms.Label();
             this.buttonChangelog = new System.Windows.Forms.Button();
-            this.Player = new BlizzTV.ModuleLib.Players.FlashPlayer();
+            this.Player = new FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -337,7 +339,7 @@
         private System.Windows.Forms.PictureBox LinkFlattr;
         private System.Windows.Forms.PictureBox LinkPaypal;
         private System.Windows.Forms.PictureBox Murloc;
-        private ModuleLib.Players.FlashPlayer Player;
+        private FlashPlayer Player;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Label LabelVersion;
         private System.Windows.Forms.Button buttonChangelog;

@@ -16,18 +16,38 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace BlizzTV.CommonLib.Utils
+namespace BlizzTV.Utility.Date
 {
-    public class ZonedDateTime // Stores DateTime with zone information and allows to get store DateTime in original, UTC and local-time zone.
+    /// <summary>
+    /// Stores DateTime with zone information and allows to get store DateTime in original, UTC and local-time zone.
+    /// </summary>
+    public class ZonedDateTime 
     {
         private readonly DateTime _original;
         private readonly DateTime _utc;
         private readonly DateTime _local;
         private readonly TimeZoneInfo _timeZoneInfo;
+
+        /// <summary>
+        /// The original time on provided zone.
+        /// </summary>
+        public TimeZoneInfo TimeZoneInfo { get { return this._timeZoneInfo; } }
+
+        /// <summary>
+        /// The time in UTC.
+        /// </summary>
+        public DateTime OriginalTime { get { return this._original; } }
+
+        /// <summary>
+        /// The time in computer's current zone.
+        /// </summary>
+        public DateTime UniversalTime { get { return this._utc; } }
+
+        /// <summary>
+        /// The original zone.
+        /// </summary>
+        public DateTime LocalTime { get { return this._local; } }
 
         public ZonedDateTime(DateTime dateTime, TimeZoneInfo timeZoneInfo)
         {
@@ -36,10 +56,5 @@ namespace BlizzTV.CommonLib.Utils
             this._local = TimeZoneInfo.ConvertTime(this._utc, TimeZoneInfo.Local);
             this._timeZoneInfo = timeZoneInfo;
         }
-
-        public TimeZoneInfo TimeZoneInfo { get { return this._timeZoneInfo; } }
-        public DateTime OriginalTime { get { return this._original; } }
-        public DateTime UniversalTime { get { return this._utc; } }
-        public DateTime LocalTime { get { return this._local; } }
     }
 }

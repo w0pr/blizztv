@@ -19,10 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using BlizzTV.CommonLib.Utils;
-using BlizzTV.CommonLib.Web;
 using BlizzTV.Log;
 using BlizzTV.ModuleLib;
+using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Modules.Feeds
 {

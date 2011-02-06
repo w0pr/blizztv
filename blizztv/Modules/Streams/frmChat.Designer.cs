@@ -1,4 +1,4 @@
-﻿using BlizzTV.ModuleLib.Players;
+﻿using BlizzTV.Controls.FlashPlayer;
 
 namespace BlizzTV.Modules.Streams
 {
@@ -31,7 +31,7 @@ namespace BlizzTV.Modules.Streams
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmChat));
-            this.Chat = new BlizzTV.ModuleLib.Players.FlashPlayer();
+            this.Chat = new FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.Chat)).BeginInit();
             this.SuspendLayout();
             // 

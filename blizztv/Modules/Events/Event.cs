@@ -17,10 +17,11 @@
 
 using System;
 using System.Text.RegularExpressions;
-using BlizzTV.CommonLib.Utils;
 using BlizzTV.ModuleLib;
 using BlizzTV.CommonLib.Storage;
 using BlizzTV.Notifications;
+using BlizzTV.Utility.Date;
+using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Modules.Events
 {

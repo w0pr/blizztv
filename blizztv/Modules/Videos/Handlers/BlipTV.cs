@@ -18,8 +18,8 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
-using BlizzTV.CommonLib.Web;
 using BlizzTV.Log;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Modules.Videos.Handlers
 {
@@ -33,7 +33,7 @@ namespace BlizzTV.Modules.Videos.Handlers
             {
                 string apiUrl = string.Format("http://{0}.blip.tv/rss", this.Slug); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
-                if (result.Status != WebReader.Status.Success) return false;
+                if (result.State != WebReader.States.Success) return false;
 
                 XDocument xdoc = XDocument.Parse(result.Response); // parse the api response.
                 XNamespace xmlns = "http://blip.tv/dtd/blip/1.0";

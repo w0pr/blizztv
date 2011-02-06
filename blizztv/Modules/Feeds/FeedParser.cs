@@ -17,8 +17,8 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using BlizzTV.CommonLib.Web;
 using BlizzTV.Modules.Feeds.Parsers;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Modules.Feeds
 {
@@ -41,7 +41,7 @@ namespace BlizzTV.Modules.Feeds
             if (items.Count > 0) items.Clear();
 
             WebReader.Result result = WebReader.Read(url);
-            if (result.Status != WebReader.Status.Success) return false;
+            if (result.State != WebReader.States.Success) return false;
 
             string linkFallback = "";
             Match m=this._blizzard_atom_regex.Match(url); // blizzard's atom feeds does not contain any links, so let's hack it.

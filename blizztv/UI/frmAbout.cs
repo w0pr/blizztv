@@ -19,9 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Reflection;
-using BlizzTV.CommonLib.UI;
 using BlizzTV.ModuleLib;
 using BlizzTV.Audio;
+using BlizzTV.Utility.UI;
 
 namespace BlizzTV.UI
 {

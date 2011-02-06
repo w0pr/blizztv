@@ -17,7 +17,7 @@
 
 using System;
 using System.Collections;
-using BlizzTV.CommonLib.Web;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Modules.Streams.Handlers
 {
@@ -35,7 +35,7 @@ namespace BlizzTV.Modules.Streams.Handlers
             {
                 string apiUrl = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "F7DE9C9A56F4ABB48D170A9881E5AF66"); // the api url
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
-                if (result.Status != WebReader.Status.Success) return;
+                if (result.State != WebReader.States.Success) return;
 
                 Hashtable data = (Hashtable)Json.JsonDecode(result.Response); // start parsing json.
                 ArrayList resultsObject = (ArrayList)data["results"]; // the results object.

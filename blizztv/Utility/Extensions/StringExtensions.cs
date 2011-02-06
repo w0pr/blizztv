@@ -18,7 +18,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace BlizzTV.Extensions
+namespace BlizzTV.Utility.Extensions
 {
     public static class StringEntentions
     {
@@ -33,7 +33,7 @@ namespace BlizzTV.Extensions
         public static bool IsLike(this string s, string wildcardPattern)
         {
             if (s == null || String.IsNullOrEmpty(wildcardPattern)) return false;
-            var regexPattern = "^" + Regex.Escape(wildcardPattern) + "$"; // turn into regex pattern, and match the whole string with ^$
+            var regexPattern = string.Format("^{0}$", Regex.Escape(wildcardPattern)); // turn into regex pattern, and match the whole string with ^$
 
             regexPattern = regexPattern.Replace(@"\[!", "[^") // add support for ?, #, *, [], and [!]
                                        .Replace(@"\[", "[")
@@ -44,7 +44,7 @@ namespace BlizzTV.Extensions
 
             var result = false;
             try { result = Regex.IsMatch(s, regexPattern); }
-            catch (ArgumentException ex) { throw new ArgumentException(String.Format("Invalid pattern: {0}", wildcardPattern), ex); }
+            catch (ArgumentException ex) { throw new ArgumentException(String.Format("Invalid wildcard pattern supplied: {0}", wildcardPattern), ex); }
             return result;
         }
     }

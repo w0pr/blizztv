@@ -18,8 +18,8 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
-using BlizzTV.CommonLib.Web;
 using BlizzTV.Log;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Modules.Videos.Handlers
 {
@@ -33,7 +33,7 @@ namespace BlizzTV.Modules.Videos.Handlers
             {
                 string apiUrl = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, Settings.Instance.NumberOfVideosToQueryChannelFor); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
-                if (result.Status != WebReader.Status.Success) return false;
+                if (result.State != WebReader.States.Success) return false;
 
                 XDocument xdoc = XDocument.Parse(result.Response); // parse the api response.
                 var entries = from item in xdoc.Descendants("item") // get the videos

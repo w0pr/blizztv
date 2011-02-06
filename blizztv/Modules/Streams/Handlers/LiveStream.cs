@@ -17,7 +17,7 @@
 
 using System;
 using System.Collections;
-using BlizzTV.CommonLib.Web;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Modules.Streams.Handlers
 {
@@ -33,7 +33,7 @@ namespace BlizzTV.Modules.Streams.Handlers
             {
                 string apiUrl = string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json", this.Slug); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response
-                if (result.Status != WebReader.Status.Success) return;
+                if (result.State != WebReader.States.Success) return;
 
                 Hashtable data = (Hashtable)Json.JsonDecode(result.Response);
                 data = (Hashtable)data["rss"];

@@ -21,8 +21,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
-using BlizzTV.Helpers;
 using BlizzTV.Log;
+using BlizzTV.Utility.Helpers;
 
 namespace BlizzTV.Updates
 {

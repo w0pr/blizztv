@@ -17,8 +17,11 @@
 
 using Ionic.Zip;
 
-namespace BlizzTV.Helpers
+namespace BlizzTV.Utility.Helpers
 {   
+    /// <summary>
+    /// Helper class that provides ZIP functionalities.
+    /// </summary>
     public static class Zip
     {
         public static void Extract(string filePath, string targetPath)

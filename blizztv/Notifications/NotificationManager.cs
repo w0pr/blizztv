@@ -18,9 +18,9 @@
 using System;
 using System.Windows.Forms;
 using System.Timers;
-using BlizzTV.CommonLib.UI;
 using BlizzTV.Settings;
 using BlizzTV.UI;
+using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.Notifications
 {

@@ -21,10 +21,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using BlizzTV.Log;
+using BlizzTV.Utility.Imaging;
+using BlizzTV.Utility.Web;
 using HtmlAgilityPack;
 using BlizzTV.ModuleLib;
-using BlizzTV.CommonLib.Web;
-using BlizzTV.CommonLib.Utils;
 
 namespace BlizzTV.Modules.BlizzBlues.Game
 {
@@ -57,7 +57,7 @@ namespace BlizzTV.Modules.BlizzBlues.Game
                 try
                 {
                     WebReader.Result result = WebReader.Read(source.Url);
-                    if (result.Status != WebReader.Status.Success)
+                    if (result.State != WebReader.States.Success)
                     {
                         this.State = ModuleLib.State.Error;
                         this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);

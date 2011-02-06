@@ -44,15 +44,12 @@
 // http://www.codeproject.com/KB/cs/mrg_loadingcircle.aspx?msg=1814346
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Text;
 using System.Windows.Forms;
 
-namespace BlizzTV.CommonLib.UI.LoadingCircle
+namespace BlizzTV.Controls.LoadingCircle
 {
     public partial class LoadingCircle : Control
     {

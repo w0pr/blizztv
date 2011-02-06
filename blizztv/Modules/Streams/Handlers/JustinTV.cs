@@ -17,7 +17,7 @@
 
 using System;
 using System.Collections;
-using BlizzTV.CommonLib.Web;
+using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Modules.Streams.Handlers
 {

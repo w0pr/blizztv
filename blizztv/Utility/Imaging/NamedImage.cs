@@ -15,20 +15,22 @@
  * $Id$
  */
 
-using System.Windows.Forms;
-using BlizzTV.ModuleLib;
+using System.Drawing;
 
-namespace BlizzTV.CommonLib.UI
+namespace BlizzTV.Utility.Imaging
 {
-    public class ListviewModuleItem : ListViewItem
+    /// <summary>
+    /// Provides a key-bitmap structure.
+    /// </summary>
+    public class NamedImage
     {
-        public string ModuleName { get { return this.SubItems[1].Text; } }
+        public Bitmap Image { get; private set; }
+        public string Name { get; private set; }
 
-        public ListviewModuleItem(ModuleInfo p)
+        public NamedImage(string name,Bitmap image)
         {
-            this.ImageKey = p.Attributes.Name;
-            this.SubItems.Add(p.Attributes.Name);
-            this.SubItems.Add(p.Attributes.Description);
+            this.Image = image;
+            this.Name = name;
         }
     }
 }

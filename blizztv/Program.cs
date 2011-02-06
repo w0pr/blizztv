@@ -50,9 +50,9 @@ namespace BlizzTV
             if (args.Length > 1 && args[1].ToLower() == "/silent") RuntimeConfiguration.Instance.StartedOnSystemStartup = true;
             else RuntimeConfiguration.Instance.StartedOnSystemStartup = false;
             
-            // start logger & debug-console if enabled.
-            if (Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
-            if (Settings.Instance.EnableDebugLogging) LogManager.Instance.EnableLogger(); else LogManager.Instance.DisableLogger();           
+            // start logger & debug-console if enabled.            
+            if (UI.Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
+            if (UI.Settings.Instance.EnableDebugLogging) LogManager.Instance.EnableLogger(); else LogManager.Instance.DisableLogger();           
             
             // check if dependencies are satisfied.
             if (!DependencyManager.Instance.Satisfied()) { Application.ExitThread(); return; }
