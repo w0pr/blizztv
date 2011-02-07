@@ -199,141 +199,141 @@
     <Compile Include="ModuleLib\Subscriptions\Providers\ProvidersStorage.cs" />
     <Compile Include="ModuleLib\Subscriptions\SubscriptionsHandler.cs" />
     <Compile Include="ModuleLib\Subscriptions\SubscriptionsStorage.cs" />
-    <Compile Include="Modules\BlizzBlues\BlizzBluesModule.cs" />
-    <Compile Include="Modules\BlizzBlues\frmSettings.cs">
+    <Compile Include="BlizzBlues\BlizzBluesModule.cs" />
+    <Compile Include="BlizzBlues\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\BlizzBlues\frmSettings.Designer.cs">
+    <Compile Include="BlizzBlues\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\BlizzBlues\Game\BlueParser.cs" />
-    <Compile Include="Modules\BlizzBlues\Game\BlueStory.cs" />
-    <Compile Include="Modules\BlizzBlues\Game\SCBlues.cs" />
-    <Compile Include="Modules\BlizzBlues\Game\WOWBlues.cs" />
-    <Compile Include="Modules\BlizzBlues\Settings.cs" />
-    <Compile Include="Modules\Feeds\Catalog.cs" />
-    <Compile Include="Modules\Feeds\FeedParser.cs" />
-    <Compile Include="Modules\Feeds\Parsers\Atom1.cs" />
-    <Compile Include="Modules\Feeds\Parsers\IFeedParser.cs" />
-    <Compile Include="Modules\Feeds\Parsers\Rss2.cs" />
-    <Compile Include="Modules\Feeds\Subscriptions.cs" />
-    <Compile Include="Modules\Streams\Catalog.cs" />
-    <Compile Include="Modules\Streams\Subscriptions.cs" />
-    <Compile Include="Modules\Videos\Catalog.cs" />
-    <Compile Include="Modules\Videos\Subscriptions.cs" />
+    <Compile Include="BlizzBlues\Game\BlueParser.cs" />
+    <Compile Include="BlizzBlues\Game\BlueStory.cs" />
+    <Compile Include="BlizzBlues\Game\SCBlues.cs" />
+    <Compile Include="BlizzBlues\Game\WOWBlues.cs" />
+    <Compile Include="BlizzBlues\Settings.cs" />
+    <Compile Include="Feeds\Catalog.cs" />
+    <Compile Include="Feeds\FeedParser.cs" />
+    <Compile Include="Feeds\Parsers\Atom1.cs" />
+    <Compile Include="Feeds\Parsers\IFeedParser.cs" />
+    <Compile Include="Feeds\Parsers\Rss2.cs" />
+    <Compile Include="Feeds\Subscriptions.cs" />
+    <Compile Include="Streams\Catalog.cs" />
+    <Compile Include="Streams\Subscriptions.cs" />
+    <Compile Include="Videos\Catalog.cs" />
+    <Compile Include="Videos\Subscriptions.cs" />
     <Compile Include="Utility\UI\InputBox.cs" />
     <Compile Include="Utility\Extensions\ControlExtensions.cs" />
     <Compile Include="ModuleLib\ModuleAttributes.cs" />
-    <Compile Include="Modules\Events\Event.cs" />
-    <Compile Include="Modules\Events\EventsPlugin.cs" />
-    <Compile Include="Modules\Events\frmAlarm.cs">
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\EventsPlugin.cs" />
+    <Compile Include="Events\frmAlarm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Events\frmAlarm.Designer.cs">
+    <Compile Include="Events\frmAlarm.Designer.cs">
       <DependentUpon>frmAlarm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Events\frmCalendar.cs">
+    <Compile Include="Events\frmCalendar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Events\frmCalendar.Designer.cs">
+    <Compile Include="Events\frmCalendar.Designer.cs">
       <DependentUpon>frmCalendar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Events\frmEventViewer.cs">
+    <Compile Include="Events\frmEventViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Events\frmEventViewer.Designer.cs">
+    <Compile Include="Events\frmEventViewer.Designer.cs">
       <DependentUpon>frmEventViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Events\frmSettings.cs">
+    <Compile Include="Events\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Events\frmSettings.Designer.cs">
+    <Compile Include="Events\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Events\frmSetupAlarm.cs">
+    <Compile Include="Events\frmSetupAlarm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Events\frmSetupAlarm.Designer.cs">
+    <Compile Include="Events\frmSetupAlarm.Designer.cs">
       <DependentUpon>frmSetupAlarm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Events\Settings.cs" />
-    <Compile Include="Modules\Feeds\Feed.cs" />
-    <Compile Include="Modules\Feeds\FeedsPlugin.cs" />
-    <Compile Include="Modules\Feeds\frmAddFeed.cs">
+    <Compile Include="Events\Settings.cs" />
+    <Compile Include="Feeds\Feed.cs" />
+    <Compile Include="Feeds\FeedsPlugin.cs" />
+    <Compile Include="Feeds\frmAddFeed.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Feeds\frmAddFeed.Designer.cs">
+    <Compile Include="Feeds\frmAddFeed.Designer.cs">
       <DependentUpon>frmAddFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Feeds\frmSettings.cs">
+    <Compile Include="Feeds\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Feeds\frmSettings.Designer.cs">
+    <Compile Include="Feeds\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Feeds\Settings.cs" />
-    <Compile Include="Modules\Feeds\Story.cs" />
-    <Compile Include="Modules\Streams\frmAddStream.cs">
+    <Compile Include="Feeds\Settings.cs" />
+    <Compile Include="Feeds\Story.cs" />
+    <Compile Include="Streams\frmAddStream.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Streams\frmAddStream.Designer.cs">
+    <Compile Include="Streams\frmAddStream.Designer.cs">
       <DependentUpon>frmAddStream.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Streams\frmChat.cs">
+    <Compile Include="Streams\frmChat.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Streams\frmChat.Designer.cs">
+    <Compile Include="Streams\frmChat.Designer.cs">
       <DependentUpon>frmChat.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Streams\frmPlayer.cs">
+    <Compile Include="Streams\frmPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Streams\frmPlayer.Designer.cs">
+    <Compile Include="Streams\frmPlayer.Designer.cs">
       <DependentUpon>frmPlayer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Streams\frmSettings.cs">
+    <Compile Include="Streams\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Streams\frmSettings.Designer.cs">
+    <Compile Include="Streams\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Streams\Handlers\JustinTv.cs" />
-    <Compile Include="Modules\Streams\Handlers\LiveStream.cs" />
-    <Compile Include="Modules\Streams\Handlers\Own3Dtv.cs" />
-    <Compile Include="Modules\Streams\Handlers\UStream.cs" />
-    <Compile Include="Modules\Streams\Providers.cs" />
-    <Compile Include="Modules\Streams\Settings.cs" />
-    <Compile Include="Modules\Streams\Stream.cs" />
-    <Compile Include="Modules\Streams\StreamFactory.cs" />
-    <Compile Include="Modules\Streams\StreamsPlugin.cs" />
-    <Compile Include="Modules\Videos\Channel.cs" />
-    <Compile Include="Modules\Videos\ChannelFactory.cs" />
-    <Compile Include="Modules\Videos\frmAddChannel.cs">
+    <Compile Include="Streams\Handlers\JustinTv.cs" />
+    <Compile Include="Streams\Handlers\LiveStream.cs" />
+    <Compile Include="Streams\Handlers\Own3Dtv.cs" />
+    <Compile Include="Streams\Handlers\UStream.cs" />
+    <Compile Include="Streams\Providers.cs" />
+    <Compile Include="Streams\Settings.cs" />
+    <Compile Include="Streams\Stream.cs" />
+    <Compile Include="Streams\StreamFactory.cs" />
+    <Compile Include="Streams\StreamsPlugin.cs" />
+    <Compile Include="Videos\Channel.cs" />
+    <Compile Include="Videos\ChannelFactory.cs" />
+    <Compile Include="Videos\frmAddChannel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Videos\frmAddChannel.Designer.cs">
+    <Compile Include="Videos\frmAddChannel.Designer.cs">
       <DependentUpon>frmAddChannel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Videos\frmPlayer.cs">
+    <Compile Include="Videos\frmPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Videos\frmPlayer.Designer.cs">
+    <Compile Include="Videos\frmPlayer.Designer.cs">
       <DependentUpon>frmPlayer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Videos\frmSettings.cs">
+    <Compile Include="Videos\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Videos\frmSettings.Designer.cs">
+    <Compile Include="Videos\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Videos\Handlers\BlipTv.cs" />
-    <Compile Include="Modules\Videos\Handlers\BlipTvVideo.cs" />
-    <Compile Include="Modules\Videos\Handlers\Youtube.cs" />
-    <Compile Include="Modules\Videos\Handlers\YoutubeVideo.cs" />
-    <Compile Include="Modules\Videos\Providers.cs" />
-    <Compile Include="Modules\Videos\Settings.cs" />
-    <Compile Include="Modules\Videos\Video.cs" />
-    <Compile Include="Modules\Videos\VideosPlugin.cs" />
+    <Compile Include="Videos\Handlers\BlipTv.cs" />
+    <Compile Include="Videos\Handlers\BlipTvVideo.cs" />
+    <Compile Include="Videos\Handlers\Youtube.cs" />
+    <Compile Include="Videos\Handlers\YoutubeVideo.cs" />
+    <Compile Include="Videos\Providers.cs" />
+    <Compile Include="Videos\Settings.cs" />
+    <Compile Include="Videos\Video.cs" />
+    <Compile Include="Videos\VideosPlugin.cs" />
     <Compile Include="ModuleLib\Settings\IModuleSettingsForm.cs" />
     <Compile Include="ModuleLib\ListItem.cs" />
     <Compile Include="Controls\FlashPlayer\FlashPlayer.cs">
@@ -441,7 +441,7 @@
     <EmbeddedResource Include="ModuleLib\Subscriptions\frmCatalog.resx">
       <DependentUpon>frmCatalog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\BlizzBlues\frmSettings.resx">
+    <EmbeddedResource Include="BlizzBlues\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmAbout.resx">
@@ -454,46 +454,46 @@
     <EmbeddedResource Include="UI\frmPreferences.resx">
       <DependentUpon>frmPreferences.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Events\frmAlarm.resx">
+    <EmbeddedResource Include="Events\frmAlarm.resx">
       <DependentUpon>frmAlarm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Events\frmCalendar.resx">
+    <EmbeddedResource Include="Events\frmCalendar.resx">
       <DependentUpon>frmCalendar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Events\frmEventViewer.resx">
+    <EmbeddedResource Include="Events\frmEventViewer.resx">
       <DependentUpon>frmEventViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Events\frmSettings.resx">
+    <EmbeddedResource Include="Events\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Events\frmSetupAlarm.resx">
+    <EmbeddedResource Include="Events\frmSetupAlarm.resx">
       <DependentUpon>frmSetupAlarm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Feeds\frmAddFeed.resx">
+    <EmbeddedResource Include="Feeds\frmAddFeed.resx">
       <DependentUpon>frmAddFeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Feeds\frmSettings.resx">
+    <EmbeddedResource Include="Feeds\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Streams\frmAddStream.resx">
+    <EmbeddedResource Include="Streams\frmAddStream.resx">
       <DependentUpon>frmAddStream.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Streams\frmChat.resx">
+    <EmbeddedResource Include="Streams\frmChat.resx">
       <DependentUpon>frmChat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Streams\frmPlayer.resx">
+    <EmbeddedResource Include="Streams\frmPlayer.resx">
       <DependentUpon>frmPlayer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Streams\frmSettings.resx">
+    <EmbeddedResource Include="Streams\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Videos\frmAddChannel.resx">
+    <EmbeddedResource Include="Videos\frmAddChannel.resx">
       <DependentUpon>frmAddChannel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Videos\frmPlayer.resx">
+    <EmbeddedResource Include="Videos\frmPlayer.resx">
       <DependentUpon>frmPlayer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Videos\frmSettings.resx">
+    <EmbeddedResource Include="Videos\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
