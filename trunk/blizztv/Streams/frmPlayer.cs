@@ -49,8 +49,8 @@ namespace BlizzTV.Streams
         {
             try
             {
-                this.Text = string.Format("Stream: {0}", this._stream.Name); // set the window title.
                 this.LoadingCircle.Active = true;
+                this.Text = string.Format("Stream: {0}", this._stream.Name); // set the window title.                
                 if (this._stream.Provider == "JustinTV") this.WebBrowser.Navigate(string.Format("http://service.blizztv.com/stream/embed/{0}/{1}", this._stream.Provider, this._stream.Slug));
                 else this.FlashPlayer.LoadMovie(0, this._stream.Movie); // load the movie.
 
@@ -75,9 +75,10 @@ namespace BlizzTV.Streams
         private void FlashPlayer_OnReadyStateChange(object sender, AxShockwaveFlashObjects._IShockwaveFlashEvents_OnReadyStateChangeEvent e)
         {
             // Loading=0, Uninitialized=1, Loaded=2, Interactive=3, Complete=4.
-            if (this.WebBrowser.Visible == false && e.newState == 4)
+            if (this.FlashPlayer.Visible == false && e.newState == 4)
             {
                 this.FlashPlayer.Visible = true;
+                this.LoadingCircle.Active = false;
                 this.LoadingCircle.Visible = false;
             }
         }

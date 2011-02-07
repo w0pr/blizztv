@@ -34,10 +34,14 @@ namespace BlizzTV.Videos
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayer));
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
-            this.Player = new FlashPlayer();
+            this.FlashPlayer = new BlizzTV.Controls.FlashPlayer.FlashPlayer();
             this.PlayerContextMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).BeginInit();
             this.SuspendLayout();
+            // 
+            // LoadingCircle
+            // 
+            this.LoadingCircle.Active = true;
             // 
             // PlayerContextMenu
             // 
@@ -54,16 +58,18 @@ namespace BlizzTV.Videos
             this.MenuAlwaysOnTop.Text = "Always On Top";
             this.MenuAlwaysOnTop.Click += new System.EventHandler(this.MenuAlwaysOnTop_Click);
             // 
-            // Player
+            // FlashPlayer
             // 
-            this.Player.ContextMenuStrip = this.PlayerContextMenu;
-            this.Player.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Player.Enabled = true;
-            this.Player.Location = new System.Drawing.Point(0, 0);
-            this.Player.Name = "Player";
-            this.Player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Player.OcxState")));
-            this.Player.Size = new System.Drawing.Size(624, 347);
-            this.Player.TabIndex = 0;
+            this.FlashPlayer.ContextMenuStrip = this.PlayerContextMenu;
+            this.FlashPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FlashPlayer.Enabled = true;
+            this.FlashPlayer.Location = new System.Drawing.Point(0, 0);
+            this.FlashPlayer.Name = "FlashPlayer";
+            this.FlashPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("FlashPlayer.OcxState")));
+            this.FlashPlayer.Size = new System.Drawing.Size(624, 347);
+            this.FlashPlayer.TabIndex = 0;
+            this.FlashPlayer.Visible = false;
+            this.FlashPlayer.OnReadyStateChange += new AxShockwaveFlashObjects._IShockwaveFlashEvents_OnReadyStateChangeEventHandler(this.FlashPlayer_OnReadyStateChange);
             // 
             // frmPlayer
             // 
@@ -71,21 +77,23 @@ namespace BlizzTV.Videos
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(624, 347);
-            this.Controls.Add(this.Player);
+            this.Controls.Add(this.FlashPlayer);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPlayer";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.Player_Load);
+            this.Controls.SetChildIndex(this.FlashPlayer, 0);
+            this.Controls.SetChildIndex(this.LoadingCircle, 0);
             this.PlayerContextMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Player)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private FlashPlayer Player;
+        private FlashPlayer FlashPlayer;
         private System.Windows.Forms.ContextMenuStrip PlayerContextMenu;
         private System.Windows.Forms.ToolStripMenuItem MenuAlwaysOnTop;
     }
