@@ -19,8 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using BlizzTV.Log;
+using Module = BlizzTV.Modules.Module;
 
-namespace BlizzTV.ModuleLib
+namespace BlizzTV.Modules
 {
     public sealed class ModuleManager : IDisposable // The module manager responsible of organizing the module and stuff.
     {

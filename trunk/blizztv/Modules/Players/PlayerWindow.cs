@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id: Stream.cs 299 2011-01-07 13:20:47Z shalafiraistlin@gmail.com $
+ * $Id$
  */
 
 using System;
@@ -20,7 +20,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using BlizzTV.Settings;
 
-namespace BlizzTV.ModuleLib.Players
+namespace BlizzTV.Modules.Players
 {
     public partial class PlayerWindow : Form
     {

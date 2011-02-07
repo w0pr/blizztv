@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using BlizzTV.Log;
 
-namespace BlizzTV.ModuleLib
+namespace BlizzTV.Modules
 {
     public class Module : IDisposable // A dynamicly loadable module for BlizzTV application
     {

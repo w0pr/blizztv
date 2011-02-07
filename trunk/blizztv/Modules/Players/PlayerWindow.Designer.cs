@@ -1,4 +1,4 @@
-﻿namespace BlizzTV.ModuleLib.Players
+﻿namespace BlizzTV.Modules.Players
 {
     partial class PlayerWindow
     {

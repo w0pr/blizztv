@@ -151,10 +151,10 @@
     <Compile Include="Notifications\NotificationManager.cs" />
     <Compile Include="Notifications\ArchivedNotifications.cs" />
     <Compile Include="Notifications\NotificationSound.cs" />
-    <Compile Include="ModuleLib\Players\PlayerWindow.cs">
+    <Compile Include="Modules\Players\PlayerWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModuleLib\Players\PlayerWindow.Designer.cs">
+    <Compile Include="Modules\Players\PlayerWindow.Designer.cs">
       <DependentUpon>PlayerWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\UI\ListViewItemComparer.cs" />
@@ -180,25 +180,25 @@
     <Compile Include="Utility\Helpers\SystemStartup.cs" />
     <Compile Include="Utility\Date\ZonedDateTime.cs" />
     <Compile Include="Workload\WorkloadManager.cs" />
-    <Compile Include="ModuleLib\Settings\frmModuleSettingsHost.cs">
+    <Compile Include="Modules\Settings\frmModuleSettingsHost.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModuleLib\Settings\frmModuleSettingsHost.Designer.cs">
+    <Compile Include="Modules\Settings\frmModuleSettingsHost.Designer.cs">
       <DependentUpon>frmModuleSettingsHost.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModuleLib\StatusStorage\StatusStorage.cs" />
+    <Compile Include="Modules\StatusStorage\StatusStorage.cs" />
     <Compile Include="Storage\KeyValueStorage.cs" />
-    <Compile Include="ModuleLib\Subscriptions\CatalogHandler.cs" />
-    <Compile Include="ModuleLib\Subscriptions\frmCatalog.cs">
+    <Compile Include="Modules\Subscriptions\CatalogHandler.cs" />
+    <Compile Include="Modules\Subscriptions\frmCatalog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModuleLib\Subscriptions\frmCatalog.Designer.cs">
+    <Compile Include="Modules\Subscriptions\frmCatalog.Designer.cs">
       <DependentUpon>frmCatalog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModuleLib\Subscriptions\Providers\ProvidersHandler.cs" />
-    <Compile Include="ModuleLib\Subscriptions\Providers\ProvidersStorage.cs" />
-    <Compile Include="ModuleLib\Subscriptions\SubscriptionsHandler.cs" />
-    <Compile Include="ModuleLib\Subscriptions\SubscriptionsStorage.cs" />
+    <Compile Include="Modules\Subscriptions\Providers\ProvidersHandler.cs" />
+    <Compile Include="Modules\Subscriptions\Providers\ProvidersStorage.cs" />
+    <Compile Include="Modules\Subscriptions\SubscriptionsHandler.cs" />
+    <Compile Include="Modules\Subscriptions\SubscriptionsStorage.cs" />
     <Compile Include="BlizzBlues\BlizzBluesModule.cs" />
     <Compile Include="BlizzBlues\frmSettings.cs">
       <SubType>Form</SubType>
@@ -223,7 +223,7 @@
     <Compile Include="Videos\Subscriptions.cs" />
     <Compile Include="Utility\UI\InputBox.cs" />
     <Compile Include="Utility\Extensions\ControlExtensions.cs" />
-    <Compile Include="ModuleLib\ModuleAttributes.cs" />
+    <Compile Include="Modules\ModuleAttributes.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventsPlugin.cs" />
     <Compile Include="Events\frmAlarm.cs">
@@ -334,17 +334,17 @@
     <Compile Include="Videos\Settings.cs" />
     <Compile Include="Videos\Video.cs" />
     <Compile Include="Videos\VideosPlugin.cs" />
-    <Compile Include="ModuleLib\Settings\IModuleSettingsForm.cs" />
-    <Compile Include="ModuleLib\ListItem.cs" />
+    <Compile Include="Modules\Settings\IModuleSettingsForm.cs" />
+    <Compile Include="Modules\ListItem.cs" />
     <Compile Include="Controls\FlashPlayer\FlashPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ModuleLib\Module.cs" />
-    <Compile Include="ModuleLib\ModuleInfo.cs" />
-    <Compile Include="ModuleLib\ModuleManager.cs" />
+    <Compile Include="Modules\Module.cs" />
+    <Compile Include="Modules\ModuleInfo.cs" />
+    <Compile Include="Modules\ModuleManager.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
-    <Compile Include="ModuleLib\Settings\ModuleSettings.cs" />
+    <Compile Include="Modules\Settings\ModuleSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Log\DebugConsole.cs" />
     <Compile Include="Utility\Web\JSON.cs" />
@@ -429,16 +429,16 @@
     <EmbeddedResource Include="Notifications\frmArchivedNotifications.resx">
       <DependentUpon>frmArchivedNotifications.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModuleLib\Players\PlayerWindow.resx">
+    <EmbeddedResource Include="Modules\Players\PlayerWindow.resx">
       <DependentUpon>PlayerWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\frmUpdater.resx">
       <DependentUpon>frmUpdater.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModuleLib\Settings\frmModuleSettingsHost.resx">
+    <EmbeddedResource Include="Modules\Settings\frmModuleSettingsHost.resx">
       <DependentUpon>frmModuleSettingsHost.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModuleLib\Subscriptions\frmCatalog.resx">
+    <EmbeddedResource Include="Modules\Subscriptions\frmCatalog.resx">
       <DependentUpon>frmCatalog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BlizzBlues\frmSettings.resx">

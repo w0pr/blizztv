@@ -15,7 +15,7 @@
  * $Id$
  */
 
-using BlizzTV.ModuleLib.Settings;
+using BlizzTV.Modules.Settings;
 
 namespace BlizzTV.Streams
 {

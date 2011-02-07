@@ -17,8 +17,8 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.ModuleLib.Settings;
-using BlizzTV.ModuleLib.Subscriptions;
+using BlizzTV.Modules.Settings;
+using BlizzTV.Modules.Subscriptions;
 
 namespace BlizzTV.Streams
 {

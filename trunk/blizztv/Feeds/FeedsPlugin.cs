@@ -21,8 +21,8 @@ using System.Linq;
 using System.Timers;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
-using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Settings;
+using BlizzTV.Modules;
+using BlizzTV.Modules.Settings;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.UI;
 

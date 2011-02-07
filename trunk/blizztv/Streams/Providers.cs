@@ -18,7 +18,7 @@
 using System;
 using System.Xml.Serialization;
 using System.Text.RegularExpressions;
-using BlizzTV.ModuleLib.Subscriptions.Providers;
+using BlizzTV.Modules.Subscriptions.Providers;
 
 namespace BlizzTV.Streams
 {

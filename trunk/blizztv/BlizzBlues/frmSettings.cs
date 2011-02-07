@@ -17,7 +17,7 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.ModuleLib.Settings;
+using BlizzTV.Modules.Settings;
 
 namespace BlizzTV.BlizzBlues
 {

@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BlizzTV.Log;
+using BlizzTV.Modules;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.Web;
 using HtmlAgilityPack;
-using BlizzTV.ModuleLib;
 
 namespace BlizzTV.BlizzBlues.Game
 {
@@ -58,7 +58,7 @@ namespace BlizzTV.BlizzBlues.Game
                     WebReader.Result result = WebReader.Read(source.Url);
                     if (result.State != WebReader.States.Success)
                     {
-                        this.State = ModuleLib.State.Error;
+                        this.State = State.Error;
                         this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                         return false;
                     }
@@ -102,15 +102,15 @@ namespace BlizzTV.BlizzBlues.Game
         private void OnChildStateChange(object sender, EventArgs e)
         {
             if (this.State == (sender as BlueStory).State) return;
-            int unread = this.Stories.Count(pair => pair.Value.State == ModuleLib.State.Fresh || pair.Value.State == ModuleLib.State.Unread);
-            this.State = unread > 0 ? ModuleLib.State.Unread : ModuleLib.State.Read;
+            int unread = this.Stories.Count(pair => pair.Value.State == State.Fresh || pair.Value.State == State.Unread);
+            this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
             {
-                pair.Value.State = ModuleLib.State.Read;
+                pair.Value.State = State.Read;
                 foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Read; }
             }
         }
@@ -119,7 +119,7 @@ namespace BlizzTV.BlizzBlues.Game
         {
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
             {
-                pair.Value.State = ModuleLib.State.Unread;
+                pair.Value.State = State.Unread;
                 foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Unread; }
             }
         }

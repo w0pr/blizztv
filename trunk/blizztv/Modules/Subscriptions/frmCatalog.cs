@@ -22,7 +22,7 @@ using System.Windows.Forms;
 using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.UI;
 
-namespace BlizzTV.ModuleLib.Subscriptions
+namespace BlizzTV.Modules.Subscriptions
 {
     public partial class frmCatalog : Form
     {

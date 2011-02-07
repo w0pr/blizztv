@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BlizzTV.ModuleLib;
+using BlizzTV.Modules;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Videos
@@ -56,7 +56,7 @@ namespace BlizzTV.Videos
         {
             if (!this.Parse())
             {
-                this.State = ModuleLib.State.Error;
+                this.State = State.Error;
                 this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
@@ -69,19 +69,19 @@ namespace BlizzTV.Videos
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.State = ModuleLib.State.Read; } // marked all videos as watched.
+            foreach (Video v in this.Videos) { v.State = State.Read; } // marked all videos as watched.
         }
 
         private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.State = ModuleLib.State.Unread; } // marked all videos as unread.
+            foreach (Video v in this.Videos) { v.State = State.Unread; } // marked all videos as unread.
         }
 
         protected void OnChildStateChange(object sender, EventArgs e)
         {
             if (this.State == (sender as Video).State) return;
-            int unread = this.Videos.Count(s => s.State == ModuleLib.State.Fresh || s.State == ModuleLib.State.Unread);
-            this.State = unread > 0 ? ModuleLib.State.Unread : ModuleLib.State.Read;
+            int unread = this.Videos.Count(s => s.State == State.Fresh || s.State == State.Unread);
+            this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         #region de-ctor

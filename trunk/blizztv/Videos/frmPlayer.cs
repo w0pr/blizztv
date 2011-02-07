@@ -18,7 +18,7 @@
 using System;
 using System.Windows.Forms;
 using BlizzTV.Log;
-using BlizzTV.ModuleLib.Players;
+using BlizzTV.Modules.Players;
 using BlizzTV.Settings;
 
 namespace BlizzTV.Videos
