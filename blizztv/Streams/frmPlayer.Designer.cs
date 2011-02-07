@@ -33,12 +33,11 @@ namespace BlizzTV.Streams
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayer));
-            this.FlashPlayer = new FlashPlayer();
+            this.FlashPlayer = new BlizzTV.Controls.FlashPlayer.FlashPlayer();
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuOpenChat = new System.Windows.Forms.ToolStripMenuItem();
             this.WebBrowser = new System.Windows.Forms.WebBrowser();
-            this.LoadingCircle = new LoadingCircle();
             ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).BeginInit();
             this.PlayerContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +49,7 @@ namespace BlizzTV.Streams
             this.FlashPlayer.Location = new System.Drawing.Point(12, 12);
             this.FlashPlayer.Name = "FlashPlayer";
             this.FlashPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("FlashPlayer.OcxState")));
-            this.FlashPlayer.Size = new System.Drawing.Size(624, 347);
+            this.FlashPlayer.Size = new System.Drawing.Size(94, 69);
             this.FlashPlayer.TabIndex = 0;
             this.FlashPlayer.Visible = false;
             this.FlashPlayer.OnReadyStateChange += new AxShockwaveFlashObjects._IShockwaveFlashEvents_OnReadyStateChangeEventHandler(this.FlashPlayer_OnReadyStateChange);
@@ -93,29 +92,12 @@ namespace BlizzTV.Streams
             this.WebBrowser.Visible = false;
             this.WebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebBrowser_DocumentCompleted);
             // 
-            // LoadingCircle
-            // 
-            this.LoadingCircle.Active = false;
-            this.LoadingCircle.Color = System.Drawing.Color.DarkGray;
-            this.LoadingCircle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LoadingCircle.InnerCircleRadius = 6;
-            this.LoadingCircle.Location = new System.Drawing.Point(0, 0);
-            this.LoadingCircle.Name = "LoadingCircle";
-            this.LoadingCircle.NumberSpoke = 24;
-            this.LoadingCircle.OuterCircleRadius = 7;
-            this.LoadingCircle.RotationSpeed = 50;
-            this.LoadingCircle.Size = new System.Drawing.Size(624, 347);
-            this.LoadingCircle.SpokeThickness = 3;
-            this.LoadingCircle.StylePreset = LoadingCircle.StylePresets.IE7;
-            this.LoadingCircle.TabIndex = 2;
-            // 
             // frmPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(624, 347);
-            this.Controls.Add(this.LoadingCircle);
             this.Controls.Add(this.WebBrowser);
             this.Controls.Add(this.FlashPlayer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -135,6 +117,5 @@ namespace BlizzTV.Streams
         private System.Windows.Forms.ToolStripMenuItem MenuAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem MenuOpenChat;
         private System.Windows.Forms.WebBrowser WebBrowser;
-        private LoadingCircle LoadingCircle;
     }
 }
