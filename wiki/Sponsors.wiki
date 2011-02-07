@@ -9,7 +9,8 @@ Thanks to our sponsors and donors, BlizzTV is actively maintained. Here's the li
 
 === Sponsors ===
 
- * [http://www.jetbrains.com/ JetBrains] for donating project-wise [http://www.jetbrains.com/resharper/ Resharper] and [http://www.jetbrains.com/profiler/ dotTrace]. 
+ * [http://www.jetbrains.com/ JetBrains] for donating project-wise [http://www.jetbrains.com/resharper/ Resharper] and [http://www.jetbrains.com/profiler/ dotTrace] licence. 
+ * [http://www.visualsvn.com/ VisualSVN] for donating project-wise VisualSVN licence.
 
 ----
 
