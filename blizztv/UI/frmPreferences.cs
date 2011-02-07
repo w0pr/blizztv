@@ -89,7 +89,7 @@ namespace BlizzTV.UI
             checkBoxEnableDebugConsole.Checked = Settings.Instance.EnableDebugConsole;
 
             // load module enabled-disabled status settings.
-            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailablePlugins)
+            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailableModules)
             {
                 ListviewModuleItem item = new ListviewModuleItem(pair.Value);
                 this.listviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
@@ -104,7 +104,7 @@ namespace BlizzTV.UI
             {
                 if (pair.Value) // if module is enabled
                 {
-                    Form moduleForm = ModuleManager.Instance.InstantiatedPlugins[pair.Key].GetPreferencesForm(); // get module's preferences form.
+                    Form moduleForm = ModuleManager.Instance.InstantiatedModules[pair.Key].GetPreferencesForm(); // get module's preferences form.
 
                     if (moduleForm != null) // if module supplies a preferenes form.
                     {
@@ -147,9 +147,9 @@ namespace BlizzTV.UI
                 if (item.Checked) Settings.Instance.Modules.Enable(item.ModuleName); // enable the module.
                 else
                 {
-                    if (ModuleManager.Instance.InstantiatedPlugins.ContainsKey(item.ModuleName))
+                    if (ModuleManager.Instance.InstantiatedModules.ContainsKey(item.ModuleName))
                     {
-                        if (ModuleManager.Instance.InstantiatedPlugins[item.ModuleName].Updating) // don't allow disabling modules that are currently updating data.
+                        if (ModuleManager.Instance.InstantiatedModules[item.ModuleName].Updating) // don't allow disabling modules that are currently updating data.
                         {
                             MessageBox.Show("You can not de-activate modules that are currently updating. Please wait them finish and re-try.", string.Format("Module {0} is updating", item.ModuleName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return false;

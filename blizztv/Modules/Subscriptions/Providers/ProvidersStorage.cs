@@ -22,10 +22,15 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using System.Reflection;
+using System.Windows.Forms;
 using BlizzTV.Log;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.Modules.Subscriptions.Providers
 {
+    /// <summary>
+    /// Provides a XML based storage for subscription-providers.
+    /// </summary>
     public sealed class ProvidersStorage
     {
         #region instance
@@ -35,10 +40,8 @@ namespace BlizzTV.Modules.Subscriptions.Providers
 
         #endregion
 
-        private Type[] _knownTypes = new[] { typeof(IProvider) };
-        
-        private List<IProvider> _providers = new List<IProvider>();        
-        public List<IProvider> Providers { get { return this._providers; } }
+        private Type[] _knownTypes = new[] { typeof(Provider) }; // known types that implements Provider.
+        private List<Provider> _providers = new List<Provider>(); // the internal list of providers.
 
         private ProvidersStorage()
         {
@@ -47,37 +50,39 @@ namespace BlizzTV.Modules.Subscriptions.Providers
             this.Load();
         }
 
-        private void RegisterKnownTypes()
+        private void RegisterKnownTypes() // loads & register known types that implements Providers.
         {
-            foreach (Type t in Assembly.GetEntryAssembly().GetTypes())
+            foreach (Type t in Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof (Provider)))) 
             {
-                if (t.IsSubclassOf(typeof(IProvider)))
-                {
-                    Array.Resize(ref this._knownTypes, this._knownTypes.Length + 1);
-                    this._knownTypes[this._knownTypes.Length - 1] = t;
-                }
+                Array.Resize(ref this._knownTypes, this._knownTypes.Length + 1); 
+                this._knownTypes[this._knownTypes.Length - 1] = t;
             }
         }
 
-        private void Load()
+        private void Load() // loads the providers from xml storage.
         {
             try
             {
                 using (MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(Assets.XML.Subscriptions.Providers)))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(List<IProvider>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Providers"), "");
-                    this._providers = (List<IProvider>)xs.Deserialize(memStream);
+                    XmlSerializer xs = new XmlSerializer(typeof(List<Provider>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Providers"), "");                    
+                    this._providers = (List<Provider>)xs.Deserialize(memStream);
                 }
 
             }
             catch (Exception e) 
             { 
-                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("An error occured while loading providers database: {0}", e.ToString()));
-                System.Windows.Forms.MessageBox.Show("Providers database is broken. Please re-install BlizzTV to fix.", "Providers Database Broken", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("An exception occured while loading providers database: {0}", e));
+                MessageBox.Show(i18n.ErrorLoadingProvidersDatabaseMessage, i18n.ErrorLoadingProvidersDatabaseTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public Dictionary<string,IProvider> GetProviders(Type type)
+        /// <summary>
+        /// Returns a dictionary of providers based on supplied provider type.
+        /// </summary>
+        /// <param name="type">The provider type.</param>
+        /// <returns>Dictionary of providers based on provided provider-type.</returns>
+        public Dictionary<string,Provider> GetProviders(Type type)
         {
             return this._providers.Where(provider => provider.GetType() == type).ToDictionary(provider => provider.Name);
         }

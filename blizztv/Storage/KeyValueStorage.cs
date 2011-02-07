@@ -18,8 +18,11 @@
 using System.IO;
 using Microsoft.Isam.Esent.Collections.Generic;
 
-namespace BlizzTV.CommonLib.Storage
+namespace BlizzTV.Storage
 {
+    /// <summary>
+    /// Provides a key-value based storage.
+    /// </summary>
     public sealed class KeyValueStorage
     {
         #region instance
@@ -34,7 +37,7 @@ namespace BlizzTV.CommonLib.Storage
 
         private KeyValueStorage()
         {
-            if (!this.StorageExists()) Directory.CreateDirectory(StorageFolder);
+            if (!this.StorageExists()) Directory.CreateDirectory(StorageFolder); // create the storage directory if it doesn't exists yet.
             this._dictionary = new PersistentDictionary<string, byte>(StorageFolder);
         }
 
@@ -59,7 +62,7 @@ namespace BlizzTV.CommonLib.Storage
             return this._dictionary.Remove(key);
         }
 
-        internal bool StorageExists()
+        private bool StorageExists()
         {
             return Directory.Exists(StorageFolder);
         }

@@ -18,6 +18,7 @@
 using System;
 using System.Xml.Serialization;
 using BlizzTV.Modules.Subscriptions;
+using BlizzTV.Modules.Subscriptions.Catalog;
 
 namespace BlizzTV.Videos
 {

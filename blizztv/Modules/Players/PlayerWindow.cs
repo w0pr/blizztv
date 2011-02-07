@@ -22,34 +22,45 @@ using BlizzTV.Settings;
 
 namespace BlizzTV.Modules.Players
 {
+    /// <summary>
+    /// Provides a base framework for player windows.
+    /// </summary>
     public partial class PlayerWindow : Form
     {
-        private bool _borderless = false;
-        private bool _dragging = false;
-        private Point _dragOffset;
+        private bool _borderless = false; // are we in borderless mode?
+        private bool _dragging = false; // are we currently being dragged?
+        private Point _dragMouseOffset;
 
-        public PlayerWindow()
+        protected PlayerWindow()
         {
             InitializeComponent();
 
-            this.Size = new Size(GlobalSettings.Instance.VideoPlayerWidth, GlobalSettings.Instance.VideoPlayerHeight); // Load the last known size & location for the window.
+            this.Size = new Size(GlobalSettings.Instance.VideoPlayerWidth, GlobalSettings.Instance.VideoPlayerHeight); // set the window size & location based on last-known values.
         }
 
         protected void PlayerDoubleClick(object sender, MouseEventArgs e)
         {
             this._dragging = false;
-            if (this._borderless) { this.FormBorderStyle = FormBorderStyle.Sizable; this._borderless = false; }
-            else { this.FormBorderStyle = FormBorderStyle.None; this._borderless = true; }
+            
+            if (this._borderless)
+            {
+                this.FormBorderStyle = FormBorderStyle.Sizable; 
+                this._borderless = false;
+            }
+            else
+            {
+                this.FormBorderStyle = FormBorderStyle.None; 
+                this._borderless = true;
+            }
         }
 
         protected void PlayerMouseDown(object sender, MouseEventArgs e)
         {
-            if (this._borderless)
-            {
-                this._dragOffset = new Point(e.X - this.Location.X, e.Y - this.Location.Y);
-                this.Cursor = Cursors.SizeAll;
-                this._dragging = true;
-            }
+            if (!this._borderless) return;
+
+            this._dragMouseOffset = new Point(e.X - this.Location.X, e.Y - this.Location.Y); // remember the offset of the mouse when drag starts.
+            this.Cursor = Cursors.SizeAll;
+            this._dragging = true;
         }
 
         protected void PlayerMouseUp(object sender, MouseEventArgs e)
@@ -60,17 +71,16 @@ namespace BlizzTV.Modules.Players
 
         protected void PlayerMouseMove(object sender, MouseEventArgs e)
         {
-            if (this._borderless && this._dragging) this.Location = new System.Drawing.Point(e.X - this._dragOffset.X, e.Y - this._dragOffset.Y);
+            if (this._borderless && this._dragging) this.Location = new Point(e.X - this._dragMouseOffset.X, e.Y - this._dragMouseOffset.Y); // moves the dragged window with keeping the mouse offset in mind.
         }
 
         private void PlayerWindow_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.Size.Width != GlobalSettings.Instance.VideoPlayerWidth || this.Size.Height != GlobalSettings.Instance.VideoPlayerHeight)
-            {
-                GlobalSettings.Instance.VideoPlayerWidth = this.Size.Width;
-                GlobalSettings.Instance.VideoPlayerHeight = this.Size.Height;
-                GlobalSettings.Instance.Save();
-            }
+            if (this.Size.Width == GlobalSettings.Instance.VideoPlayerWidth && this.Size.Height == GlobalSettings.Instance.VideoPlayerHeight) return; 
+
+            GlobalSettings.Instance.VideoPlayerWidth = this.Size.Width;
+            GlobalSettings.Instance.VideoPlayerHeight = this.Size.Height;
+            GlobalSettings.Instance.Save();
         }
     }
 }

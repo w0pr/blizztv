@@ -17,8 +17,15 @@
 
 namespace BlizzTV.Modules.Settings
 {
-    public class ModuleSettings : BlizzTV.Settings.Settings // Plugin-spefic settings.
+    /// <summary>
+    /// Provides settings functionality to module's.
+    /// </summary>
+    public class ModuleSettings : BlizzTV.Settings.Settings 
     {
+        /// <summary>
+        /// Constructs a ModuleSettings instance.
+        /// </summary>
+        /// <param name="name">The module name.</param>
         protected ModuleSettings(string name) : base(string.Format("Module-{0}", name)) { }
     }
 }

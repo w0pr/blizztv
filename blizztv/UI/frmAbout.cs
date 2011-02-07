@@ -36,7 +36,7 @@ namespace BlizzTV.UI
         {
             this.LabelVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
-            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailablePlugins) // load the available modules list
+            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailableModules) // load the available modules list
             {
                 ListviewModuleItem item = new ListviewModuleItem(pair.Value);
                 this.ListviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);

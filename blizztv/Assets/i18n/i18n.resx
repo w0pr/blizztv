@@ -192,4 +192,22 @@
   <data name="UpdateIsBeingInstalledMessage" xml:space="preserve">
     <value>Please wait while update is being installed..</value>
   </data>
+  <data name="ErrorLoadingProvidersDatabaseMessage" xml:space="preserve">
+    <value>An error occured while loading your providers database. Please re-install the application to fix the problem.</value>
+  </data>
+  <data name="ErrorLoadingProvidersDatabaseTitle" xml:space="preserve">
+    <value>Providers database load error</value>
+  </data>
+  <data name="ReplacedSubscriptionsDatabaseMessage" xml:space="preserve">
+    <value>Replaced your subscriptions database, it should be all working now.</value>
+  </data>
+  <data name="ReplacedSubscriptionsDatabaseTitle" xml:space="preserve">
+    <value>Subscriptions database replaced</value>
+  </data>
+  <data name="SubscriptionsDatabaseCorruptedMessage" xml:space="preserve">
+    <value>Your subscriptions database is corrupted. Do you want it to be replaced with a default one?</value>
+  </data>
+  <data name="SubscriptionsDatabsaeCorruptedTitle" xml:space="preserve">
+    <value>Corrupted subscriptions database</value>
+  </data>
 </root>

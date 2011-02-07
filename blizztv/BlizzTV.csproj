@@ -138,6 +138,8 @@
     <Compile Include="Downloads\frmDownload.Designer.cs">
       <DependentUpon>frmDownload.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
+    <Compile Include="Modules\Subscriptions\Subscription.cs" />
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
     <Compile Include="Win32API\WindowMessaging.cs" />
     <Compile Include="Utility\Helpers\Zip.cs" />
@@ -180,19 +182,19 @@
     <Compile Include="Utility\Helpers\SystemStartup.cs" />
     <Compile Include="Utility\Date\ZonedDateTime.cs" />
     <Compile Include="Workload\WorkloadManager.cs" />
-    <Compile Include="Modules\Settings\frmModuleSettingsHost.cs">
+    <Compile Include="Modules\Settings\ModuleSettingsHost.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Settings\frmModuleSettingsHost.Designer.cs">
-      <DependentUpon>frmModuleSettingsHost.cs</DependentUpon>
+    <Compile Include="Modules\Settings\ModuleSettingsHost.Designer.cs">
+      <DependentUpon>ModuleSettingsHost.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\StatusStorage\StatusStorage.cs" />
+    <Compile Include="Modules\StateStorage\StateStorage.cs" />
     <Compile Include="Storage\KeyValueStorage.cs" />
-    <Compile Include="Modules\Subscriptions\CatalogHandler.cs" />
-    <Compile Include="Modules\Subscriptions\frmCatalog.cs">
+    <Compile Include="Modules\Subscriptions\Catalog\CatalogHandler.cs" />
+    <Compile Include="Modules\Subscriptions\Catalog\frmCatalog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Subscriptions\frmCatalog.Designer.cs">
+    <Compile Include="Modules\Subscriptions\Catalog\frmCatalog.Designer.cs">
       <DependentUpon>frmCatalog.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\Subscriptions\Providers\ProvidersHandler.cs" />
@@ -435,10 +437,10 @@
     <EmbeddedResource Include="Updates\frmUpdater.resx">
       <DependentUpon>frmUpdater.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Settings\frmModuleSettingsHost.resx">
-      <DependentUpon>frmModuleSettingsHost.cs</DependentUpon>
+    <EmbeddedResource Include="Modules\Settings\ModuleSettingsHost.resx">
+      <DependentUpon>ModuleSettingsHost.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Subscriptions\frmCatalog.resx">
+    <EmbeddedResource Include="Modules\Subscriptions\Catalog\frmCatalog.resx">
       <DependentUpon>frmCatalog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BlizzBlues\frmSettings.resx">

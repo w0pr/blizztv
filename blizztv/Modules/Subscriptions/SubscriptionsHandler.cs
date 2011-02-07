@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
 namespace BlizzTV.Modules.Subscriptions
 {
@@ -25,37 +24,42 @@ namespace BlizzTV.Modules.Subscriptions
     {
         private readonly Type _type;
 
-        public List<ISubscription> List { get { return SubscriptionsStorage.Instance.GetSubscriptions(this._type); } }
+        public IEnumerable<Subscription> List { get { return SubscriptionsStorage.Instance.GetSubscriptions(this._type); } }
 
-        public SubscriptionsHandler(Type type)
+        protected SubscriptionsHandler(Type type)
         {
             this._type = type;
         }
 
-        public void Add(ISubscription subscription)
+        /// <summary>
+        /// Adds a subscription.
+        /// </summary>
+        /// <param name="subscription">A <see cref="Subscription"/>.</param>
+        protected void Add(Subscription subscription)
         {
             SubscriptionsStorage.Instance.Subscriptions.Add(subscription);
             SubscriptionsStorage.Instance.Save();            
         }
 
-        public void Remove(ISubscription subscription)
+        /// <summary>
+        /// Removes a subscription.
+        /// </summary>
+        /// <param name="subscription">A <see cref="Subscription"/>.</param>
+        public void Remove(Subscription subscription)
         {
             SubscriptionsStorage.Instance.Subscriptions.Remove(subscription);
             SubscriptionsStorage.Instance.Save();
         }
 
-        public void Rename(ISubscription subscription, string name)
+        /// <summary>
+        /// Renames a subscription.
+        /// </summary>
+        /// <param name="subscription">A <see cref="Subscription"/>.</param>
+        /// <param name="name">The new name.</param>
+        public void Rename(Subscription subscription, string name)
         {
             subscription.Name = name;
             SubscriptionsStorage.Instance.Save();
         }
-    }
-
-    [Serializable]
-    [XmlType("Subscription")]
-    public class ISubscription
-    {
-        [XmlAttribute("Name")]
-        public string Name { get; set; }
     }
 }

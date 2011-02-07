@@ -39,7 +39,7 @@ namespace BlizzTV.Videos
         private void LoadSubscriptions()
         {
             this.ListviewSubscriptions.Items.Clear();
-            foreach (ISubscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription((VideoSubscription)subscription));
+            foreach (Subscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription((VideoSubscription)subscription));
         }
 
         private void LoadSettings()

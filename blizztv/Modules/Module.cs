@@ -17,32 +17,56 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using BlizzTV.Log;
 
 namespace BlizzTV.Modules
 {
-    public class Module : IDisposable // A dynamicly loadable module for BlizzTV application
+    /// <summary>
+    /// Provides a dynamicly loadable base module.
+    /// </summary>
+    public class Module : IDisposable 
     {
         private ModuleAttributes _attributes;
         private bool _disposed = false;
 
+        /// <summary>
+        /// The root item for the module.
+        /// </summary>
         public ListItem RootListItem { get; protected set; }
+
+        /// <summary>
+        /// Is the module currently updating it's data?
+        /// </summary>
         public bool Updating { get; protected set; }
 
+        /// <summary>
+        /// The module's attributes.
+        /// </summary>
         public ModuleAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } } // The module attributes.
-        public Dictionary<string,System.Windows.Forms.ToolStripMenuItem> Menus = new Dictionary<string,System.Windows.Forms.ToolStripMenuItem>(); // The module sub-menus.
 
-        public Module()
+        /// <summary>
+        /// Module's bound menus on form-menu.
+        /// </summary>
+        public Dictionary<string,ToolStripMenuItem> Menus = new Dictionary<string,ToolStripMenuItem>(); // The module sub-menus.
+
+        protected Module()
         {
             Updating = false;
         }
 
         public virtual void Run() { throw new NotImplementedException(); } // Notifies the module to start running -- all of them should override this method.
-        public virtual System.Windows.Forms.Form GetPreferencesForm() { return null; } // Modules shoud override this method and return the preferences form.
+
+        public virtual Form GetPreferencesForm() { return null; } // Modules shoud override this method and return the preferences form.
+
         public virtual bool TryDragDrop(string link) { return false; } // Modules can override this to supply drag & drop support.
 
         public delegate void PluginUpdateStartedEventHandler(object sender);
         public event PluginUpdateStartedEventHandler OnPluginUpdateStarted;
+
+        /// <summary>
+        /// Notifies update module started it's data update.
+        /// </summary>
         protected void NotifyUpdateStarted()
         {
             LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update started: '{0}'.", this.Attributes.Name));
@@ -51,6 +75,11 @@ namespace BlizzTV.Modules
 
         public delegate void PluginUpdateCompleteEventHandler(object sender,PluginUpdateCompleteEventArgs e);
         public event PluginUpdateCompleteEventHandler OnPluginUpdateComplete;
+
+        /// <summary>
+        /// Notifies about module data update completed.
+        /// </summary>
+        /// <param name="e"><see cref="PluginUpdateCompleteEventArgs"/></param>
         protected void NotifyUpdateComplete(PluginUpdateCompleteEventArgs e)
         {
             if (e.Success) LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update completed with success: '{0}'.", this.Attributes.Name));
@@ -83,7 +112,11 @@ namespace BlizzTV.Modules
         #endregion
     }
 
-    public class PluginUpdateCompleteEventArgs : EventArgs // Notifies information about plugin's loading results.
+    // TODO: Check if success code is supplied all-valid by modules.
+    /// <summary>
+    /// Containts information about module data-update results.
+    /// </summary>
+    public class PluginUpdateCompleteEventArgs : EventArgs
     {
         public bool Success { get; private set; }
 

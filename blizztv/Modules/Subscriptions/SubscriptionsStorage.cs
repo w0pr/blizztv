@@ -24,10 +24,15 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using System.Reflection;
+using System.Windows.Forms;
 using BlizzTV.Log;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.Modules.Subscriptions
 {
+    /// <summary>
+    /// Provides a XML based storage for subscriptions.
+    /// </summary>
     public sealed class SubscriptionsStorage
     {
         #region instance
@@ -38,10 +43,10 @@ namespace BlizzTV.Modules.Subscriptions
         #endregion
 
         private const string SubscriptonsFile = "subscriptions.db";
-        private Type[] _knownTypes = new[] { typeof(ISubscription) };
-        
-        private List<ISubscription> _subscriptions = new List<ISubscription>();                        
-        public List<ISubscription> Subscriptions { get { return this._subscriptions; } }
+        private Type[] _knownTypes = new[] { typeof(Subscription) }; // known types that implements Subscription.
+        private List<Subscription> _subscriptions = new List<Subscription>(); // the internal list of subscriptions.
+                      
+        public List<Subscription> Subscriptions { get { return this._subscriptions; } }
 
         private SubscriptionsStorage() 
         {
@@ -50,43 +55,44 @@ namespace BlizzTV.Modules.Subscriptions
             this.Load();
         }
 
-        private void RegisterKnownTypes()
+        private void RegisterKnownTypes()  // loads & register known types that implements Subscriptions.
         {
-            foreach (Type t in Assembly.GetEntryAssembly().GetTypes())
+            foreach (Type t in Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof (Subscription))))
             {
-                if (t.IsSubclassOf(typeof(ISubscription)))
-                {
-                    Array.Resize(ref this._knownTypes, this._knownTypes.Length + 1);
-                    this._knownTypes[this._knownTypes.Length - 1] = t;
-                }
+                Array.Resize(ref this._knownTypes, this._knownTypes.Length + 1);
+                this._knownTypes[this._knownTypes.Length - 1] = t;
             }
         }
 
-        private void Load()
+        private void Load() // loads the subscriptions from xml storage.
         {
             try
             {
-                if (!File.Exists(SubscriptonsFile)) this.LoadDefaults();
+                if (!File.Exists(SubscriptonsFile)) this.CreateUsingDefaults(); // if subscriptions database does not exists, create one using the default database.
                 using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Open))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(List<ISubscription>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Subscriptions"), "");
-                    this._subscriptions = (List<ISubscription>)xs.Deserialize(fileStream);
+                    XmlSerializer xs = new XmlSerializer(typeof(List<Subscription>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Subscriptions"), "");
+                    this._subscriptions = (List<Subscription>)xs.Deserialize(fileStream);
                 }
             }
             catch (Exception e) 
             { 
-                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("An error occured while loading subscriptions.db: {0}", e.ToString()));
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Your subscriptions database is corrupted. Do you want it to be replaced with a default one?", "Subscriptions Database Corrupted", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
-                if(result== System.Windows.Forms.DialogResult.Yes) 
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("An exception occured while loading subscriptions database: {0}", e));
+                DialogResult result = MessageBox.Show(i18n.SubscriptionsDatabaseCorruptedMessage, i18n.SubscriptionsDatabsaeCorruptedTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                
+                if(result == DialogResult.Yes) 
                 {
-                    this.LoadDefaults();
+                    this.CreateUsingDefaults(); 
                     this.Load();
-                    System.Windows.Forms.MessageBox.Show("Replaced your subscriptions database, it should be all working now.", "Subscriptions Database Replaced", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                    MessageBox.Show(i18n.ReplacedSubscriptionsDatabaseMessage, i18n.ReplacedSubscriptionsDatabaseTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        private void LoadDefaults()
+        /// <summary>
+        /// Creates a subscriptions database based on default database.
+        /// </summary>
+        private void CreateUsingDefaults()
         {
             using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Create))
             {
@@ -94,16 +100,24 @@ namespace BlizzTV.Modules.Subscriptions
             }
         }
 
+        /// <summary>
+        /// Saves the changes and writes to xml storage.
+        /// </summary>
         public void Save()
         {
             using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Create))
             {
-                XmlSerializer xs = new XmlSerializer(typeof(List<ISubscription>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Subscriptions"), "");
+                XmlSerializer xs = new XmlSerializer(typeof(List<Subscription>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Subscriptions"), "");
                 xs.Serialize(fileStream, this._subscriptions);
             }
         }
 
-        public List<ISubscription> GetSubscriptions(Type type)
+        /// <summary>
+        /// Returns a dictionary of subscriptions based on supplied subscription type.
+        /// </summary>
+        /// <param name="type">The subscription type.</param>
+        /// <returns>Dictionary of subscriptions based on provided subscription-type.</returns>
+        public List<Subscription> GetSubscriptions(Type type)
         {
             return this._subscriptions.Where(subscription => subscription.GetType() == type).ToList();
         }

@@ -39,7 +39,7 @@ namespace BlizzTV.Streams
         private void LoadSubscriptions()
         {
             this.ListviewSubscriptions.Items.Clear();
-            foreach (ISubscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription((StreamSubscription)subscription));
+            foreach (Subscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription((StreamSubscription)subscription));
         }
 
         private void LoadSettings()

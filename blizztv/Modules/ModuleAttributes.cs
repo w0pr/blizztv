@@ -20,14 +20,28 @@ using System.Drawing;
 
 namespace BlizzTV.Modules
 {
+    /// <summary>
+    /// Defines module attributes.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class ModuleAttributes : Attribute // Defines module attributes.
+    public class ModuleAttributes : Attribute 
     {
         private readonly string _iconName;
         private bool _disposed = false;
 
-        public string Name { get; private set; } // The module name.
-        public string Description { get; private set; } // The module description.
+        /// <summary>
+        /// The module name.
+        /// </summary>
+        public string Name { get; private set; } 
+        
+        /// <summary>
+        /// The module description.
+        /// </summary>
+        public string Description { get; private set; } 
+
+        /// <summary>
+        /// The module icon.
+        /// </summary>
         public Bitmap Icon { get; private set; } // The module icon.
 
         public ModuleAttributes(string name, string description, string iconName = null)
@@ -38,13 +52,16 @@ namespace BlizzTV.Modules
             this._iconName = iconName;
         }
 
-        internal void ResolveResources() // resolves resources for the plugin and sets the icon if appliable.
+        /// <summary>
+        /// Resolves resources for the module and sets the icon if appliable.
+        /// </summary>
+        public void ResolveResources() 
         {
-            if (this._iconName == null) return; // if we've a supplied icon-file name.
+            if (this._iconName == null) return; // if no icon name is supplied, just ignore than.
 
-            using (var stream = (Bitmap)Assets.Images.Icons.Png._16.ResourceManager.GetObject(this._iconName)) // get the resource stream.
+            using (var stream = (Bitmap)Assets.Images.Icons.Png._16.ResourceManager.GetObject(this._iconName)) // get the icon stream from resource manager.
             {
-                this.Icon = stream != null ? new Bitmap(stream) : Assets.Images.Icons.Png._16.blizztv; // if asked icon does not exists use the default icon.                                   
+                this.Icon = stream != null ? new Bitmap(stream) : Assets.Images.Icons.Png._16.blizztv; // if asked icon does not exist, then use the default icon.                                   
             }
         }
 

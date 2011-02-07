@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Modules.Settings
 {
-    partial class frmModuleSettingsHost
+    partial class ModuleSettingsHost
     {
         /// <summary>
         /// Required designer variable.
@@ -80,7 +80,7 @@
             this.Name = "frmModuleSettingsHost";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
-            this.Load += new System.EventHandler(this.frmModuleSettingsHost_Load);
+            this.Load += new System.EventHandler(this.ModuleSettingsHost_Load);
             this.ResumeLayout(false);
 
         }

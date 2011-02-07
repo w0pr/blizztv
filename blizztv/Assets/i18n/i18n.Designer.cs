@@ -142,6 +142,24 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occured while loading your providers database. Please re-install the application to fix the problem..
+        /// </summary>
+        internal static string ErrorLoadingProvidersDatabaseMessage {
+            get {
+                return ResourceManager.GetString("ErrorLoadingProvidersDatabaseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Providers database load error.
+        /// </summary>
+        internal static string ErrorLoadingProvidersDatabaseTitle {
+            get {
+                return ResourceManager.GetString("ErrorLoadingProvidersDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed downloading the update. Please try again later..
         /// </summary>
         internal static string FailedDownloadingTheUpdateMessage {
@@ -237,6 +255,42 @@ namespace BlizzTV.Assets.i18n {
         internal static string NoAvailableUpdateFoundTitle {
             get {
                 return ResourceManager.GetString("NoAvailableUpdateFoundTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replaced your subscriptions database, it should be all working now..
+        /// </summary>
+        internal static string ReplacedSubscriptionsDatabaseMessage {
+            get {
+                return ResourceManager.GetString("ReplacedSubscriptionsDatabaseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscriptions database replaced.
+        /// </summary>
+        internal static string ReplacedSubscriptionsDatabaseTitle {
+            get {
+                return ResourceManager.GetString("ReplacedSubscriptionsDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your subscriptions database is corrupted. Do you want it to be replaced with a default one?.
+        /// </summary>
+        internal static string SubscriptionsDatabaseCorruptedMessage {
+            get {
+                return ResourceManager.GetString("SubscriptionsDatabaseCorruptedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Corrupted subscriptions database.
+        /// </summary>
+        internal static string SubscriptionsDatabsaeCorruptedTitle {
+            get {
+                return ResourceManager.GetString("SubscriptionsDatabsaeCorruptedTitle", resourceCulture);
             }
         }
         

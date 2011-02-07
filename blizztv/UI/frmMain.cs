@@ -143,7 +143,7 @@ namespace BlizzTV.UI
             ModuleManager pm = ModuleManager.Instance; // Let the module-manager run..
             foreach (KeyValuePair<string, bool> pair in Settings.Instance.Modules.List) // loop through available modules.
             {
-                if (pair.Value && pm.AvailablePlugins.ContainsKey(pair.Key)) this.InstantiateModule(pair.Key); // if module is enabled, run it.
+                if (pair.Value && pm.AvailableModules.ContainsKey(pair.Key)) this.InstantiateModule(pair.Key); // if module is enabled, run it.
             }          
         }
 
@@ -290,7 +290,7 @@ namespace BlizzTV.UI
         private void TreeView_DragDrop(object sender, DragEventArgs e)
         {
             string link = (string)e.Data.GetData(DataFormats.Text);
-            foreach (KeyValuePair<string, Module> pair in ModuleManager.Instance.InstantiatedPlugins)
+            foreach (KeyValuePair<string, Module> pair in ModuleManager.Instance.InstantiatedModules)
             {
                 if (pair.Value.TryDragDrop(link)) break;
             }
@@ -316,8 +316,8 @@ namespace BlizzTV.UI
         {
             foreach (KeyValuePair<string, bool> pair in Settings.Instance.Modules.List)
             {
-                if (pair.Value && !ModuleManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.InstantiateModule(pair.Key); // instantiate the plugin.
-                else if (!pair.Value && ModuleManager.Instance.InstantiatedPlugins.ContainsKey(pair.Key)) this.KillModule(pair.Key); // kill the plugin.
+                if (pair.Value && !ModuleManager.Instance.InstantiatedModules.ContainsKey(pair.Key)) this.InstantiateModule(pair.Key); // instantiate the plugin.
+                else if (!pair.Value && ModuleManager.Instance.InstantiatedModules.ContainsKey(pair.Key)) this.KillModule(pair.Key); // kill the plugin.
             }
         }
 

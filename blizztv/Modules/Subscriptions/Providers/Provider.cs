@@ -15,26 +15,19 @@
  * $Id$
  */
 
-using BlizzTV.CommonLib.Storage;
+using System;
+using System.Xml.Serialization;
 
-namespace BlizzTV.Modules.StatusStorage
-{   
-    public class StatusStorage
+namespace BlizzTV.Modules.Subscriptions.Providers
+{
+    /// <summary>
+    /// A service provider.   
+    /// </summary>
+    [Serializable]
+    [XmlType("Provider")]
+    public class Provider
     {
-        #region instance
-
-        private static StatusStorage _instance = new StatusStorage();
-        public static StatusStorage Instance { get { return _instance; } }
-
-        #endregion
-
-        private StatusStorage() { }
-
-        public byte this[string itemId] { get { return KeyValueStorage.Instance.GetByte(string.Format("state.{0}", itemId)); } set { KeyValueStorage.Instance.SetByte(string.Format("state.{0}", itemId), value); } }
-
-        public bool Exists(string itemId)
-        {
-            return KeyValueStorage.Instance.Exists(string.Format("state.{0}", itemId));
-        }
+        [XmlAttribute("Name")]
+        public string Name { get; set; }
     }
 }
