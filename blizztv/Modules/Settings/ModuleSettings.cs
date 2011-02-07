@@ -15,7 +15,7 @@
  * $Id$
  */
 
-namespace BlizzTV.ModuleLib.Settings
+namespace BlizzTV.Modules.Settings
 {
     public class ModuleSettings : BlizzTV.Settings.Settings // Plugin-spefic settings.
     {

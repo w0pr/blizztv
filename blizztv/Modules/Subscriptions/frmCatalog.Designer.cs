@@ -1,4 +1,4 @@
-﻿namespace BlizzTV.ModuleLib.Subscriptions
+﻿namespace BlizzTV.Modules.Subscriptions
 {
     partial class frmCatalog
     {

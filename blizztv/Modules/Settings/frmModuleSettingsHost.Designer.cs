@@ -1,4 +1,4 @@
-﻿namespace BlizzTV.ModuleLib.Settings
+﻿namespace BlizzTV.Modules.Settings
 {
     partial class frmModuleSettingsHost
     {

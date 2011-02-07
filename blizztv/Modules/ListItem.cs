@@ -17,12 +17,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using BlizzTV.ModuleLib.StatusStorage;
 using BlizzTV.Notifications;
 using BlizzTV.Utility.Imaging;
 
-namespace BlizzTV.ModuleLib
+namespace BlizzTV.Modules
 {
     public class ListItem : INotificationRequester, IDisposable
     {
@@ -39,14 +37,14 @@ namespace BlizzTV.ModuleLib
         {
             get
             {
-                if (this._state == ModuleLib.State.Unknown)
+                if (this._state == State.Unknown)
                 {
                     string key = string.Format("{0}.{1}", this.GetType().ToString(), this.Guid);
-                    if (string.IsNullOrEmpty(this.Guid) || !StatusStorage.StatusStorage.Instance.Exists(key)) this.State = ModuleLib.State.Fresh;
+                    if (string.IsNullOrEmpty(this.Guid) || !StatusStorage.StatusStorage.Instance.Exists(key)) this.State = State.Fresh;
                     else
                     {
                         this._state = (State)StatusStorage.StatusStorage.Instance[key];
-                        if (this._state == ModuleLib.State.Fresh) this.State = ModuleLib.State.Unread;
+                        if (this._state == State.Fresh) this.State = State.Unread;
                         else { if (this.OnStateChange != null) this.OnStateChange(this, EventArgs.Empty); }
                     }
                 }

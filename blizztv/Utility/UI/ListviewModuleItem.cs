@@ -16,7 +16,7 @@
  */
 
 using System.Windows.Forms;
-using BlizzTV.ModuleLib;
+using BlizzTV.Modules;
 
 namespace BlizzTV.Utility.UI
 {

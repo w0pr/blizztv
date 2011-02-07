@@ -16,9 +16,9 @@
  */
 
 using System;
-using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Players;
-using BlizzTV.ModuleLib.StatusStorage;
+using BlizzTV.Modules;
+using BlizzTV.Modules.Players;
+using BlizzTV.Modules.StatusStorage;
 using BlizzTV.Notifications;
 using BlizzTV.Settings;
 using BlizzTV.Utility.Imaging;

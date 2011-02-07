@@ -17,14 +17,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
-using System.Reflection;
 using System.IO;
 using BlizzTV.Utility.Web;
 
-namespace BlizzTV.ModuleLib.Subscriptions
+namespace BlizzTV.Modules.Subscriptions
 {
     public class CatalogHandler
     {

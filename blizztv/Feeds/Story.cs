@@ -16,7 +16,7 @@
  */
 
 using System;
-using BlizzTV.ModuleLib;
+using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Utility.Imaging;
 
@@ -43,7 +43,7 @@ namespace BlizzTV.Feeds
 
         public void CheckForNotifications()
         {
-            if (Settings.Instance.NotificationsEnabled &&  this.State == ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void Open(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace BlizzTV.Feeds
         private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-            if (this.State != ModuleLib.State.Read) this.State = ModuleLib.State.Read;  
+            if (this.State != State.Read) this.State = State.Read;  
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
@@ -70,11 +70,11 @@ namespace BlizzTV.Feeds
 
             switch (this.State)
             {
-                case ModuleLib.State.Fresh:
-                case ModuleLib.State.Unread:
+                case State.Fresh:
+                case State.Unread:
                     this.ContextMenus["markasread"].Visible = true; // make mark as read menu visible.
                     break;
-                case ModuleLib.State.Read:
+                case State.Read:
                     this.ContextMenus["markasunread"].Visible = true; // make mark as unread menu visible.
                     break;
             }
@@ -82,12 +82,12 @@ namespace BlizzTV.Feeds
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.State = ModuleLib.State.Read;            
+            this.State = State.Read;            
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.State = ModuleLib.State.Unread;
+            this.State = State.Unread;
         }
     }
 }

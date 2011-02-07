@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using BlizzTV.ModuleLib;
+using BlizzTV.Modules;
 using BlizzTV.Utility.UI;
 
 namespace BlizzTV.UI.Wizard

@@ -18,7 +18,7 @@
 using System;
 using BlizzTV.Log;
 
-namespace BlizzTV.ModuleLib
+namespace BlizzTV.Modules
 {
     public class ModuleInfo : IDisposable // The module info and activator.
     {

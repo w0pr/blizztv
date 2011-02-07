@@ -16,7 +16,7 @@
  */
 
 using System;
-using BlizzTV.ModuleLib;
+using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Settings;
 using BlizzTV.Utility.Imaging;
@@ -50,7 +50,7 @@ namespace BlizzTV.Videos
 
         public void CheckForNotifications()
         {
-            if (BlizzTV.Videos.Settings.Instance.NotificationsEnabled &&  this.State == ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new video is avaiable over {0}'s channel, click to start watching it.",this.ChannelName), System.Windows.Forms.ToolTipIcon.Info));
+            if (BlizzTV.Videos.Settings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new video is avaiable over {0}'s channel, click to start watching it.",this.ChannelName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public virtual void Process() // get the stream data by replacing provider variables. 
@@ -84,7 +84,7 @@ namespace BlizzTV.Videos
                 else this._player.Focus();
             }
             else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
-            if (this.State != ModuleLib.State.Read) this.State = ModuleLib.State.Read;
+            if (this.State != State.Read) this.State = State.Read;
         }
 
         void PlayerClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
@@ -100,11 +100,11 @@ namespace BlizzTV.Videos
 
             switch (this.State) // switch on the item state.
             {
-                case  ModuleLib.State.Fresh:
-                case ModuleLib.State.Unread:
+                case  State.Fresh:
+                case State.Unread:
                     this.ContextMenus["markaswatched"].Visible = true; // make mark as watched menu visible.
                     break;
-                case ModuleLib.State.Read:
+                case State.Read:
                     this.ContextMenus["markasunwatched"].Visible = true; // make mark as unwatched menu visible.
                     break;
             }
@@ -112,12 +112,12 @@ namespace BlizzTV.Videos
 
         private void MenuMarkAsWatchedClicked(object sender, EventArgs e)
         {
-            this.State = ModuleLib.State.Read;            
+            this.State = State.Read;            
         }
 
         private void MenuMarkAsUnWatchedClicked(object sender, EventArgs e)
         {
-            this.State = ModuleLib.State.Unread;
+            this.State = State.Unread;
         }
     }
 }

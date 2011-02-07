@@ -17,9 +17,8 @@
 
 using System;
 using System.Drawing;
-using BlizzTV.Properties;
 
-namespace BlizzTV.ModuleLib
+namespace BlizzTV.Modules
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ModuleAttributes : Attribute // Defines module attributes.

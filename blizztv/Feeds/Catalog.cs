@@ -17,7 +17,7 @@
 
 using System;
 using System.Xml.Serialization;
-using BlizzTV.ModuleLib.Subscriptions;
+using BlizzTV.Modules.Subscriptions;
 
 namespace BlizzTV.Feeds
 {

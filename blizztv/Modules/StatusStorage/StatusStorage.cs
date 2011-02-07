@@ -15,10 +15,26 @@
  * $Id$
  */
 
-namespace BlizzTV.ModuleLib.Settings
-{
-    public interface IModuleSettingsForm // Implements a plugin settings form.
+using BlizzTV.CommonLib.Storage;
+
+namespace BlizzTV.Modules.StatusStorage
+{   
+    public class StatusStorage
     {
-        void SaveSettings(); // Notifies the form to save settings.
+        #region instance
+
+        private static StatusStorage _instance = new StatusStorage();
+        public static StatusStorage Instance { get { return _instance; } }
+
+        #endregion
+
+        private StatusStorage() { }
+
+        public byte this[string itemId] { get { return KeyValueStorage.Instance.GetByte(string.Format("state.{0}", itemId)); } set { KeyValueStorage.Instance.SetByte(string.Format("state.{0}", itemId), value); } }
+
+        public bool Exists(string itemId)
+        {
+            return KeyValueStorage.Instance.Exists(string.Format("state.{0}", itemId));
+        }
     }
 }

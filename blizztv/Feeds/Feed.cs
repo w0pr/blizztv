@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BlizzTV.Log;
-using BlizzTV.ModuleLib;
+using BlizzTV.Modules;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Feeds
@@ -66,7 +66,7 @@ namespace BlizzTV.Feeds
             List<FeedItem> items = null;
             if (!FeedParser.Instance.Parse(this.Url, ref items))
             {
-                this.State = ModuleLib.State.Error;
+                this.State = State.Error;
                 this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
@@ -87,18 +87,18 @@ namespace BlizzTV.Feeds
         private void OnChildStateChange(object sender, EventArgs e)
         {
             if (this.State == (sender as Story).State) return;
-            int unread = this.Stories.Count(s => s.State == ModuleLib.State.Fresh || s.State == ModuleLib.State.Unread);
-            this.State = unread > 0 ? ModuleLib.State.Unread : ModuleLib.State.Read;
+            int unread = this.Stories.Count(s => s.State == State.Fresh || s.State == State.Unread);
+            this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.State = ModuleLib.State.Read; } // marked all stories as read.
+            foreach (Story s in this.Stories) { s.State = State.Read; } // marked all stories as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.State = ModuleLib.State.Unread; } // marked all stories as unread.
+            foreach (Story s in this.Stories) { s.State = State.Unread; } // marked all stories as unread.
         }
 
         #region de-ctor

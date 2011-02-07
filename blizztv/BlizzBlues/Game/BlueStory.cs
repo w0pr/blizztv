@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BlizzTV.ModuleLib;
+using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Utility.Imaging;
 
@@ -60,13 +60,13 @@ namespace BlizzTV.BlizzBlues.Game
         private void OnChildStateChange(object sender, EventArgs e)
         {
             if (this.State == (sender as BlueStory).State) return;
-            int unread = this.More.Count(pair => pair.Value.State == ModuleLib.State.Fresh || pair.Value.State == ModuleLib.State.Unread);
+            int unread = this.More.Count(pair => pair.Value.State == State.Fresh || pair.Value.State == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public void CheckForNotifications()
         {
-            if (BlizzTV.BlizzBlues.Settings.Instance.NotificationsEnabled && this.State ==  ModuleLib.State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("{0}", this.Title), string.Format("A new {0} blue-post is available, click to open it.",this.Type) , System.Windows.Forms.ToolTipIcon.Info));
+            if (BlizzTV.BlizzBlues.Settings.Instance.NotificationsEnabled && this.State ==  State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("{0}", this.Title), string.Format("A new {0} blue-post is available, click to open it.",this.Type) , System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void Open(object sender, System.EventArgs e)
@@ -82,18 +82,18 @@ namespace BlizzTV.BlizzBlues.Game
         private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null);
-            if (this.State != ModuleLib.State.Read) this.State = ModuleLib.State.Read;
+            if (this.State != State.Read) this.State = State.Read;
         }
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.State = ModuleLib.State.Read;
+            this.State = State.Read;
             foreach (KeyValuePair<string, BlueStory> post in this.More) { post.Value.State = State.Read; }
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.State = ModuleLib.State.Unread;
+            this.State = State.Unread;
             foreach (KeyValuePair<string, BlueStory> post in this.More) { post.Value.State = State.Unread; }
         }
     }

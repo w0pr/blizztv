@@ -24,7 +24,7 @@ using System.Xml.Serialization;
 using System.Reflection;
 using BlizzTV.Log;
 
-namespace BlizzTV.ModuleLib.Subscriptions.Providers
+namespace BlizzTV.Modules.Subscriptions.Providers
 {
     public sealed class ProvidersStorage
     {

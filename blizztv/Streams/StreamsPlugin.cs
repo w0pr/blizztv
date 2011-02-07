@@ -20,9 +20,9 @@ using System.Collections.Generic;
 using System.Timers;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
-using BlizzTV.ModuleLib;
-using BlizzTV.ModuleLib.Settings;
-using BlizzTV.ModuleLib.Subscriptions.Providers;
+using BlizzTV.Modules;
+using BlizzTV.Modules.Settings;
+using BlizzTV.Modules.Subscriptions.Providers;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.UI;
 

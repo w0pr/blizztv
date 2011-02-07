@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace BlizzTV.ModuleLib.Subscriptions.Providers
+namespace BlizzTV.Modules.Subscriptions.Providers
 {
     public class ProvidersHandler
     {

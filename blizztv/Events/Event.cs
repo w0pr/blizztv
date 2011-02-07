@@ -17,8 +17,8 @@
 
 using System;
 using System.Text.RegularExpressions;
-using BlizzTV.ModuleLib;
 using BlizzTV.CommonLib.Storage;
+using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Utility.Date;
 using BlizzTV.Utility.Imaging;

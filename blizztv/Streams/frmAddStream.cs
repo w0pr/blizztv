@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using BlizzTV.ModuleLib.Subscriptions.Providers;
+using BlizzTV.Modules.Subscriptions.Providers;
 
 namespace BlizzTV.Streams
 {
