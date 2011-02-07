@@ -55,7 +55,7 @@ namespace BlizzTV.Feeds
 
     [Serializable]
     [XmlType("Feed")]
-    public class FeedSubscription : ISubscription
+    public class FeedSubscription : Subscription
     {
         [XmlAttribute("Url")]
         public string Url { get; set; }

@@ -62,7 +62,7 @@ namespace BlizzTV.Videos
 
         public override bool TryDragDrop(string link)
         {
-            foreach (KeyValuePair<string, IProvider> pair in Providers.Instance.Dictionary)
+            foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
             {
                 if (((VideoProvider) pair.Value).LinkValid(link))
                 {
@@ -176,7 +176,7 @@ namespace BlizzTV.Videos
 
         private void MenuSettingsClicked(object sender, EventArgs e)
         {
-            frmModuleSettingsHost f = new frmModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
+            ModuleSettingsHost f = new ModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
 

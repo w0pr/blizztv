@@ -182,7 +182,7 @@ namespace BlizzTV.Feeds
 
         private void MenuSettingsClicked(object sender, EventArgs e)
         {
-            frmModuleSettingsHost f = new frmModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
+            ModuleSettingsHost f = new ModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
 

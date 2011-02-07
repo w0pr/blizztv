@@ -22,23 +22,25 @@ using System.Xml.Serialization;
 using System.IO;
 using BlizzTV.Utility.Web;
 
-namespace BlizzTV.Modules.Subscriptions
+namespace BlizzTV.Modules.Subscriptions.Catalog
 {
+    /// <summary>
+    /// Provides catalog support for services.
+    /// </summary>
     public class CatalogHandler
     {
-        private string _catalogUrl;
-        private Type _entryType;
-        private List<CatalogEntry> _entries = new List<CatalogEntry>();
-        protected List<CatalogEntry> Entries { get { return this._entries; } }
+        private readonly string _catalogUrl; // the catalog url.
+        private readonly Type _entryType; // the catalog entry type.
+        private List<CatalogEntry> _entries = new List<CatalogEntry>(); // the entries of the catalog.
 
-        public CatalogHandler(Type entryType, string catalogUrl)
+        protected CatalogHandler(Type entryType, string catalogUrl)
         {
             this._entryType = entryType;
             this._catalogUrl = catalogUrl;
             this.Load();
         }
 
-        private void Load()
+        private void Load() // loads the catalog from web.
         {
             WebReader.Result result = WebReader.Read(this._catalogUrl);
             if (result.State != WebReader.States.Success) return;
@@ -50,7 +52,7 @@ namespace BlizzTV.Modules.Subscriptions
             }
         }
 
-        public bool ShowDialog()
+        public bool ShowDialog() // shows a catalog browser window.
         {
             frmCatalog f = new frmCatalog(this._entries);
             f.ShowDialog();
@@ -58,16 +60,28 @@ namespace BlizzTV.Modules.Subscriptions
         }
     }
 
+    /// <summary>
+    /// A catalog entry.
+    /// </summary>
     [Serializable]
     [XmlType("Entry")]
     public class CatalogEntry
     {
+        /// <summary>
+        /// The category of the entry.
+        /// </summary>
         [XmlAttribute("Category")]
         public string Category { get; set; }
 
+        /// <summary>
+        /// Entry name.
+        /// </summary>
         [XmlAttribute("Name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// The descriptin of the entry.
+        /// </summary>
         [XmlAttribute("Description")]
         public string Description { get; set; }
 

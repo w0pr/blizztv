@@ -17,27 +17,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
 namespace BlizzTV.Modules.Subscriptions.Providers
 {
     public class ProvidersHandler
     {
-        private readonly Type _type;
+        private readonly Type _type; // the bound provider-type.
 
-        public Dictionary<string, IProvider> Dictionary { get { return ProvidersStorage.Instance.GetProviders(this._type); } }
+        /// <summary>
+        /// Dictionary of known providers.
+        /// </summary>
+        public Dictionary<string, Provider> Dictionary { get { return ProvidersStorage.Instance.GetProviders(this._type); } } 
 
-        public ProvidersHandler(Type type)
+        protected ProvidersHandler(Type type)
         {
             this._type = type;
         }        
-    }
-
-    [Serializable]
-    [XmlType("Provider")]
-    public class IProvider
-    {
-        [XmlAttribute("Name")]
-        public string Name { get; set; }
     }
 }

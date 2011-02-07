@@ -15,16 +15,19 @@
  * $Id$
  */
 
-namespace BlizzTV.Modules.Settings
+using System;
+using System.Xml.Serialization;
+
+namespace BlizzTV.Modules.Subscriptions
 {
     /// <summary>
-    /// Implements an interface for module-settings forms.
+    /// A service subscription.
     /// </summary>
-    public interface IModuleSettingsForm 
+    [Serializable]
+    [XmlType("Subscription")]
+    public class Subscription
     {
-        /// <summary>
-        /// Notifies the settings-form to save it's contained settings.
-        /// </summary>
-        void SaveSettings();
+        [XmlAttribute("Name")]
+        public string Name { get; set; }
     }
 }

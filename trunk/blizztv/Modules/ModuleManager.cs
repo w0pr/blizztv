@@ -17,12 +17,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using BlizzTV.Log;
 using Module = BlizzTV.Modules.Module;
 
 namespace BlizzTV.Modules
 {
+    /* TODO: Needs an overhaul */
+    /// <summary>
+    /// Module manager interface.
+    /// </summary>
     public sealed class ModuleManager : IDisposable // The module manager responsible of organizing the module and stuff.
     {
         #region instance
@@ -32,30 +37,32 @@ namespace BlizzTV.Modules
 
         #endregion
 
-        private bool _disposed = false;
-        private readonly Dictionary<string, Module> _instantiatedPlugins = new Dictionary<string, Module>();
+        private readonly Dictionary<string, Module> _instantiatedModules = new Dictionary<string, Module>(); // contains a list of instantiated modules.
+        private bool _disposed = false;        
 
-        public Dictionary<string, ModuleInfo> AvailablePlugins = new Dictionary<string, ModuleInfo>(); // The available valid module's list. TODO: shoud be a readonly collection.
-        public Dictionary<string, Module> InstantiatedPlugins { get { return this._instantiatedPlugins; } } // The instantiated modules list.
+        public Dictionary<string, ModuleInfo> AvailableModules = new Dictionary<string, ModuleInfo>(); // The available valid module's list. TODO: shoud be a readonly collection.
+        public Dictionary<string, Module> InstantiatedModules { get { return this._instantiatedModules; } } // The instantiated modules list.
 
         private ModuleManager()
         {
-            LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Module Manager - ({0}) initialized..", this.GetType().Module.Name)); // log the plugin-manager startup message.
-            this.ScanModules();
-            
-            foreach (KeyValuePair<string,ModuleInfo> pi in this.AvailablePlugins)  { LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Found Plugin: {0}", pi.Value.Attributes.Name)); } // print all avaiable plugin's list to log.
+            LogManager.Instance.Write(LogMessageTypes.Info, "Module manager initialized.."); 
+            this.ScanModules(); // scan for available modules.
+
+            string foundModulesInfo = this.AvailableModules.Aggregate(string.Empty, (current, pair) => current + string.Format("{0}, ", pair.Value.Attributes.Name));
+            LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Found modules: {0}", foundModulesInfo));
         }
 
         private void ScanModules()
         {
             try
             {
-                foreach (Type t in Assembly.GetEntryAssembly().GetTypes())
+                /* loop through all available modules and add valid ones to available list */
+                foreach (Type t in Assembly.GetEntryAssembly().GetTypes()) 
                 {
-                    if (t.IsSubclassOf(typeof(Module)))
+                    if (t.IsSubclassOf(typeof(Module))) 
                     {
-                        ModuleInfo pi = new ModuleInfo(t);
-                        if (pi.Valid) AvailablePlugins.Add(pi.Attributes.Name, pi);
+                        ModuleInfo moduleInfo = new ModuleInfo(t);
+                        if (moduleInfo.Valid) AvailableModules.Add(moduleInfo.Attributes.Name, moduleInfo); 
                     }
                 }
             }
@@ -63,28 +70,28 @@ namespace BlizzTV.Modules
             {
                 foreach (Exception exc in e.LoaderExceptions)
                 {
-                    LogManager.Instance.Write(LogMessageTypes.Fatal, string.Format("Exception thrown during scanning available modules: {0}", exc.ToString()));
+                    LogManager.Instance.Write(LogMessageTypes.Fatal, string.Format("Exception caught during scanning of available modules: {0}", exc));
                 }
             }
         }
 
         public Module Instantiate(string key) // Instantiates the asked module.
         {
-            ModuleInfo pi = this.AvailablePlugins[key];
-            if (this._instantiatedPlugins.ContainsKey(key)) return pi.ModuleInstance;
+            ModuleInfo moduleInfo = this.AvailableModules[key];
+            if (this._instantiatedModules.ContainsKey(key)) return moduleInfo.ModuleInstance; // if the module is already instantiated, just return it.
             else
             {
-                Module p = pi.CreateInstance();
-                this._instantiatedPlugins.Add(key,p);
+                Module p = moduleInfo.CreateInstance();
+                this._instantiatedModules.Add(key,p);
                 return p;
             }
         }
 
         public void Kill(string key) // Kills the asked module instance.
         {
-            ModuleInfo pi = this.AvailablePlugins[key];
-            this.InstantiatedPlugins.Remove(key);
-            pi.Kill();
+            ModuleInfo moduleInfo = this.AvailableModules[key];
+            this.InstantiatedModules.Remove(key);
+            moduleInfo.Kill();
         }
 
         #region de-ctor
@@ -102,9 +109,9 @@ namespace BlizzTV.Modules
             if (this._disposed) return;
             if (disposing) // managed resources
             {
-                foreach (KeyValuePair<string, ModuleInfo> pair in this.AvailablePlugins) { pair.Value.Dispose(); }
-                this.AvailablePlugins.Clear();
-                this.AvailablePlugins = null;
+                foreach (KeyValuePair<string, ModuleInfo> pair in this.AvailableModules) { pair.Value.Dispose(); }
+                this.AvailableModules.Clear();
+                this.AvailableModules = null;
             }
             _disposed = true;
         }

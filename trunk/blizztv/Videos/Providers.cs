@@ -36,7 +36,7 @@ namespace BlizzTV.Videos
 
     [Serializable]
     [XmlType("Video")]
-    public class VideoProvider : IProvider
+    public class VideoProvider : Provider
     {
         [XmlAttribute("Movie")]
         public string Movie { get; set; }

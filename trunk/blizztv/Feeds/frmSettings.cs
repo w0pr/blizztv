@@ -39,7 +39,7 @@ namespace BlizzTV.Feeds
         private void LoadSubscriptions()
         {
             this.ListviewSubscriptions.Items.Clear();
-            foreach (ISubscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription((FeedSubscription)subscription));
+            foreach (Subscription subscription in Subscriptions.Instance.List) this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription((FeedSubscription)subscription));
         }
 
         private void LoadSettings()

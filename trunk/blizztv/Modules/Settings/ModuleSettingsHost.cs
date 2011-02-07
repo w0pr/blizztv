@@ -21,33 +21,36 @@ using System.Windows.Forms;
 
 namespace BlizzTV.Modules.Settings
 {
-    public partial class frmModuleSettingsHost : Form
+    /// <summary>
+    /// Hosts a module-settings window.
+    /// </summary>
+    public partial class ModuleSettingsHost : Form
     {
-        private Form _form;
-        private ModuleAttributes _moduleAttributes;
+        private readonly Form _hostedForm; // the hosted module-settings form.
+        private readonly ModuleAttributes _moduleAttributes; // attributes of the hosted form's module.
 
-        public frmModuleSettingsHost(ModuleAttributes moduleAttributes, Form form)
+        public ModuleSettingsHost(ModuleAttributes moduleAttributes, Form hostedForm)
         {
             InitializeComponent();
 
-            this._form = form;
+            this._hostedForm = hostedForm;
             this._moduleAttributes = moduleAttributes;
         }
 
-        private void frmModuleSettingsHost_Load(object sender, EventArgs e)
+        private void ModuleSettingsHost_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("{0} Settings", this._moduleAttributes.Name);
-            this.Icon = Icon.FromHandle(this._moduleAttributes.Icon.GetHicon());
-            this._form.TopLevel = false;
-            this._form.Dock = DockStyle.Fill;
-            this._form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Panel.Controls.Add(this._form);
-            this._form.Show();
+            this.Icon = Icon.FromHandle(this._moduleAttributes.Icon.GetHicon()); // set the icon based on the module' provided icon.
+            this._hostedForm.TopLevel = false; 
+            this._hostedForm.Dock = DockStyle.Fill;
+            this._hostedForm.FormBorderStyle = FormBorderStyle.None;
+            this.Panel.Controls.Add(this._hostedForm);
+            this._hostedForm.Show();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
-        {
-            (this._form as IModuleSettingsForm).SaveSettings();
+        {            
+            ((IModuleSettingsForm) this._hostedForm).SaveSettings();
             this.Close();
         }
 

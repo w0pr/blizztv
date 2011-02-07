@@ -33,7 +33,7 @@ namespace BlizzTV.Videos
 
         private void frmAddChannel_Load(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, IProvider> pair in Providers.Instance.Dictionary) { comboBoxProviders.Items.Add(pair.Value.Name); }
+            foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary) { comboBoxProviders.Items.Add(pair.Value.Name); }
             comboBoxProviders.SelectedIndex = 0;
         }
 

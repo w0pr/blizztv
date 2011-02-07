@@ -55,7 +55,7 @@ namespace BlizzTV.Streams
 
     [Serializable]
     [XmlType("Stream")]
-    public class StreamSubscription : ISubscription
+    public class StreamSubscription : Subscription
     {
         [XmlAttribute("Slug")]
         public string Slug { get; set; }

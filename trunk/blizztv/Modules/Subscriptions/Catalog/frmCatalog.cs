@@ -18,47 +18,52 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.UI;
 
-namespace BlizzTV.Modules.Subscriptions
+namespace BlizzTV.Modules.Subscriptions.Catalog
 {
     public partial class frmCatalog : Form
     {
-        private List<CatalogEntry> _entries;
-        public bool AddedNewSubscriptions { get; private set; }
+        private readonly List<CatalogEntry> _entries; // the list of catalog entries.
+        public bool AddedNewSubscriptions { get; private set; } // did user add a new subscription using the catalog?
 
         public frmCatalog(List<CatalogEntry> entries)
         {
-            InitializeComponent();            
+            InitializeComponent();
 
-            this.listViewCatalog.DoubleBuffer();            
             this.AddedNewSubscriptions = false;
             this._entries = entries;
+            this.listViewCatalog.DoubleBuffer(); // prevent flickering while resizing and so.
         }
 
         private void frmCatalog_Load(object sender, EventArgs e)
         {
-            this.ResizeColumnHeaders();
+            this.ResizeColumnHeaders(); 
             this.LoadEntries();
         }
 
         private void LoadEntries(string filter="")
         {
-            filter = filter.ToLower();
             this.listViewCatalog.Items.Clear();
+            filter = filter.ToLower();
 
-            foreach (CatalogEntry entry in this._entries)
+            foreach (CatalogEntry entry in this._entries.Where(entry => 
+                    filter.Trim() == "" || // if we have no filters set 
+                    entry.Category.ToLower().IsLike(string.Format("*{0}*", filter)) || // category suits the filter
+                    entry.Name.ToLower().IsLike(string.Format("*{0}*", filter)) || // name suits the filter
+                    entry.Description.ToLower().IsLike(string.Format("*{0}*", filter)))) // description suits the filter
             {
-                if (filter.Trim() == "" || entry.Category.ToLower().IsLike(string.Format("*{0}*", filter)) || entry.Name.ToLower().IsLike(string.Format("*{0}*", filter)) || entry.Description.ToLower().IsLike(string.Format("*{0}*", filter))) this.listViewCatalog.Items.Add(new CatalogEntryItem(entry));
+                this.listViewCatalog.Items.Add(new CatalogEntryItem(entry));
             }
         }
 
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Escape) txtFilter.Text = "";
-            this.LoadEntries(txtFilter.Text);
+            if (e.KeyChar == (char)Keys.Escape) txtFilter.Text = ""; // on escape-hit, reset the filter.
+            this.LoadEntries(txtFilter.Text); // filter the entries live.
         }
 
         private void ButtonAdd_Click(object sender, EventArgs e)
@@ -98,18 +103,17 @@ namespace BlizzTV.Modules.Subscriptions
 
         private void listViewCatalog_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            if (listViewCatalog.ListViewItemSorter == null) this.listViewCatalog.ListViewItemSorter = new ListViewItemComparer();
+            if (listViewCatalog.ListViewItemSorter == null) this.listViewCatalog.ListViewItemSorter = new ListViewItemComparer(); // setup a new item comparer.
             ListViewItemComparer comparer = (ListViewItemComparer)this.listViewCatalog.ListViewItemSorter;
             
-            if (e.Column != comparer.SortColumn) 
+            if (e.Column != comparer.SortColumn) // if sort requested on a new column
             {
                 comparer.SortColumn = e.Column; 
                 comparer.SortOrder = SortOrder.Ascending;
             }
-            else
+            else // if sort requested is on the same-last column
             {
-                if (comparer.SortOrder == SortOrder.Ascending) comparer.SortOrder = SortOrder.Descending;
-                else comparer.SortOrder = SortOrder.Ascending;
+                comparer.SortOrder = comparer.SortOrder == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending; // reverse the column ordering.
             }
 
             listViewCatalog.Sort(); 
