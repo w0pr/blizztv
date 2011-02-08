@@ -80,7 +80,6 @@ namespace BlizzTV.Notifications
         private void BalloonDisappearTimer(object sender, ElapsedEventArgs e)
         {
             this._gotActiveNotification = false; // reset active notification flag. 
-            this._notificationTimer.Dispose();
             this._notificationTimer = null;
         }
 

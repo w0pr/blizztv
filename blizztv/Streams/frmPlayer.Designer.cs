@@ -49,7 +49,7 @@ namespace BlizzTV.Streams
             this.FlashPlayer.Location = new System.Drawing.Point(12, 12);
             this.FlashPlayer.Name = "FlashPlayer";
             this.FlashPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("FlashPlayer.OcxState")));
-            this.FlashPlayer.Size = new System.Drawing.Size(94, 69);
+            this.FlashPlayer.Size = new System.Drawing.Size(624, 347);
             this.FlashPlayer.TabIndex = 0;
             this.FlashPlayer.Visible = false;
             this.FlashPlayer.OnReadyStateChange += new AxShockwaveFlashObjects._IShockwaveFlashEvents_OnReadyStateChangeEventHandler(this.FlashPlayer_OnReadyStateChange);
@@ -81,12 +81,9 @@ namespace BlizzTV.Streams
             // WebBrowser
             // 
             this.WebBrowser.ContextMenuStrip = this.PlayerContextMenu;
-            this.WebBrowser.IsWebBrowserContextMenuEnabled = false;
             this.WebBrowser.Location = new System.Drawing.Point(112, 12);
             this.WebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.WebBrowser.Name = "WebBrowser";
-            this.WebBrowser.ScriptErrorsSuppressed = true;
-            this.WebBrowser.ScrollBarsEnabled = false;
             this.WebBrowser.Size = new System.Drawing.Size(111, 69);
             this.WebBrowser.TabIndex = 1;
             this.WebBrowser.Visible = false;
@@ -104,6 +101,9 @@ namespace BlizzTV.Streams
             this.Name = "frmPlayer";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.Player_Load);
+            this.Controls.SetChildIndex(this.FlashPlayer, 0);
+            this.Controls.SetChildIndex(this.WebBrowser, 0);
+            this.Controls.SetChildIndex(this.LoadingCircle, 0);
             ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).EndInit();
             this.PlayerContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
