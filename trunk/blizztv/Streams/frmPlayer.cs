@@ -85,7 +85,13 @@ namespace BlizzTV.Streams
 
         private void SetupBrowserPlayer()
         {
+            this.WebBrowser.AllowNavigation = false;
+            this.WebBrowser.AllowWebBrowserDrop = false;
+            this.WebBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.WebBrowser.ScrollBarsEnabled = false;
+            this.WebBrowser.ScriptErrorsSuppressed = true;
             this.WebBrowser.Dock = DockStyle.Fill;
+            this.WebBrowser.WebBrowserShortcutsEnabled = false;
         }
 
         private void WebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -93,7 +99,7 @@ namespace BlizzTV.Streams
             this.WebBrowser.Visible = true;
             this.LoadingCircle.Visible = false;
         }
-        
+
         private void MenuAlwaysOnTop_Click(object sender, EventArgs e)
         {
             SwitchTopMostMode(!this.MenuAlwaysOnTop.Checked);
