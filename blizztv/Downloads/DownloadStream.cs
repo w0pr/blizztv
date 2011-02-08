@@ -1,5 +1,5 @@
 ﻿/*    
- * Copyright (C) 2010, BlizzTV Project - http://code.google.com/p/blizztv/
+ * Copyright (C) 2010-2011, BlizzTV Project - http://code.google.com/p/blizztv/
  *  
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General 
  * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your 
@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id: DownloadStream.cs 252 2010-12-22 09:16:37Z shalafiraistlin@gmail.com $
+ * $Id: Settings.cs 355 2011-02-07 12:05:26Z shalafiraistlin@gmail.com $
  */
 
 using System;
