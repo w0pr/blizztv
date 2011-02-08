@@ -1,5 +1,5 @@
 ﻿/*    
- * Copyright (C) 2010, BlizzTV Project - http://code.google.com/p/blizztv/
+ * Copyright (C) 2010-2011, BlizzTV Project - http://code.google.com/p/blizztv/
  *  
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General 
  * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your 
@@ -19,6 +19,9 @@ using BlizzTV.Modules.Settings;
 
 namespace BlizzTV.BlizzBlues
 {
+    /// <summary>
+    /// Settings for BlizzBlues module.
+    /// </summary>
     public class Settings : ModuleSettings
     {
         #region instance
@@ -30,9 +33,24 @@ namespace BlizzTV.BlizzBlues
 
         private Settings() : base("BlizzBlues") { }
         
+        /// <summary>
+        /// Enables tracking of World of Warcraft blues.
+        /// </summary>
         public bool TrackWorldofWarcraft { get { return this.GetBoolean("TrackWorldofWarcraft", true); } set { this.Set("TrackWorldofWarcraft", value); } }
+
+        /// <summary>
+        /// Enables tracking of Starcraft blues.
+        /// </summary>
         public bool TrackStarcraft { get { return this.GetBoolean("TrackStarcraft", true); } set { this.Set("TrackStarcraft", value); } }
+
+        /// <summary>
+        /// Data update period in seconds.
+        /// </summary>
         public int UpdatePeriod { get { return this.GetInt("UpdatePeriod", 60); } set { this.Set("UpdatePeriod", value); } }
+
+        /// <summary>
+        /// Enables notifications for the module.
+        /// </summary>
         public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
     }
 }
