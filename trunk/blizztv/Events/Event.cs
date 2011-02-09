@@ -25,18 +25,24 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Events
 {
+    /// <summary>
+    /// Holds an event.
+    /// </summary>
     public class Event:ListItem
     {
-        private Regex _teamliquidFilter=new Regex(@"\[/?tlpd.*?\]", RegexOptions.Compiled); // filters out teamliquid calendar's [tlpd] tags.
+        private readonly Regex _teamliquidDescriptionFilter=new Regex(@"\[/?tlpd.*?\]", RegexOptions.Compiled); // filters out teamliquid calendar's [tlpd] tags.
 
-        public string FullTitle { get; private set; }
-        public string Description { get; private set; }
-        public string EventId { get; private set; }
-        public bool IsOver { get; private set; }
-        public bool Notified { get; private set; }
-        public ZonedDateTime Time { get; private set; }
+        public string FullTitle { get; private set; } /* the full event title */
+        public string Description { get; private set; } /* description */
+        public string EventId { get; private set; } /* unique event id */
+        public bool IsOver { get; private set; } /* is the event over? */
+        public bool Notified { get; private set; } /* was user notified about event? */
+        public ZonedDateTime Time { get; private set; } /* event date & time */
 
-        public EventStatus Status // returns event status. 
+        /// <summary>
+        /// Returns event status.
+        /// </summary>
+        public EventStatus Status
         {
             get
             {
@@ -46,20 +52,24 @@ namespace BlizzTV.Events
             }
         }
 
+        /// <summary>
+        /// Returns minutes left to start of the event.
+        /// </summary>
         public double MinutesLeft
         {
             get
             {
-                if (this.Status == EventStatus.Upcoming)
-                {
-                    TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
-                    return timeleft.TotalMinutes;
-                }
-                return 0;
+                if (this.Status != EventStatus.Upcoming) return 0;
+
+                TimeSpan timeleft = this.Time.LocalTime - DateTime.Now;
+                return timeleft.TotalMinutes;
             }
         }
 
-        public string TimeLeft // returns event status text.
+        /// <summary>
+        /// Returns time left to start of the events as a formatted string.
+        /// </summary>
+        public string TimeLeft
         {
             get
             {
@@ -82,7 +92,7 @@ namespace BlizzTV.Events
         {
             Notified = false;
             this.FullTitle = fullTitle;            
-            this.Description = this._teamliquidFilter.Replace(description,"");
+            this.Description = this._teamliquidDescriptionFilter.Replace(description,"");
             this.EventId = eventId;
             this.IsOver = isOver;
             this.Time = time;
@@ -102,7 +112,7 @@ namespace BlizzTV.Events
 
         private void ShowEvent()
         {
-            frmEventViewer f = new frmEventViewer(this);
+            EventViewerForm f = new EventViewerForm(this);
             f.Show();
         }
 
@@ -114,14 +124,14 @@ namespace BlizzTV.Events
 
         private void CheckForNotifications()
         {
-            if (BlizzTV.Events.Settings.Instance.EventNotificationsEnabled && !this.Notified) // if notifications are enabled & we haven't notified before.
+            if (Settings.Instance.EventNotificationsEnabled && !this.Notified) // if notifications are enabled & we haven't notified before.
             {
-                if ((BlizzTV.Events.Settings.Instance.InProgressEventNotificationsEnabled) && (this.Status == EventStatus.InProgress)) // if in-progress event notifications are enabled, check for it the event has started.
+                if ((Settings.Instance.InProgressEventNotificationsEnabled) && (this.Status == EventStatus.InProgress)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this.Notified = true; // don't notify about it more then once
                     NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, "Event is in progress, click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
                 }
-                else if (this.MinutesLeft > 0 && (this.MinutesLeft <= BlizzTV.Events.Settings.Instance.MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
+                else if (this.MinutesLeft > 0 && (this.MinutesLeft <= Settings.Instance.MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
                 {
                     this.Notified = true; // don't notify about it more then once
                     NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, string.Format("Event starts in {0} minutes, click to see event details.", this.MinutesLeft.ToString("0")), System.Windows.Forms.ToolTipIcon.Info));
@@ -137,7 +147,7 @@ namespace BlizzTV.Events
             {
                 if ((int)this.GetAlarmMinutes() == (int)this.MinutesLeft)
                 {
-                    this.ShowForm(new frmAlarm(this));
+                    this.ShowForm(new AlarmForm(this));
                 }
             }
             else this.DeleteAlarm();

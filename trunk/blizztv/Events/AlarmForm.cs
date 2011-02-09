@@ -20,18 +20,18 @@ using System.Windows.Forms;
 
 namespace BlizzTV.Events
 {
-    public partial class frmAlarm : Form
+    public partial class AlarmForm : Form
     {
         private readonly Event _event;
 
-        public frmAlarm(Event @event)
+        public AlarmForm(Event @event)
         {
             InitializeComponent();
 
             this._event = @event;
         }
 
-        private void frmAlarm_Load(object sender, EventArgs e)
+        private void AlarmForm_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("Event: {0}", this._event.FullTitle);
             this.LabelEvent.Text = string.Format("Event {0}", this._event.FullTitle);
@@ -41,7 +41,7 @@ namespace BlizzTV.Events
 
         private void ButtonView_Click(object sender, EventArgs e)
         {
-            frmEventViewer f = new frmEventViewer(this._event);
+            EventViewerForm f = new EventViewerForm(this._event);
             f.Show();
             this.Close();
         }

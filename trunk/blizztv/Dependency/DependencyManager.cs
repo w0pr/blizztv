@@ -43,7 +43,7 @@ namespace BlizzTV.Dependency
                 DialogResult result = MessageBox.Show(i18n.FlashPlayerRequiredMessage, i18n.FlashPlayerRequiredTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (result == DialogResult.Yes)
                 {
-                    frmDownload f = new frmDownload(i18n.DownloadingAdobeFlashPlayer);
+                    DownloadForm f = new DownloadForm(i18n.DownloadingAdobeFlashPlayer);
                     f.StartDownload(new Download("http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe", "install_flash_player_ax.exe"));
                     if (f.ShowDialog() == DialogResult.OK) // if download succeeed
                     {
@@ -63,7 +63,7 @@ namespace BlizzTV.Dependency
                 DialogResult result = MessageBox.Show(i18n.VisualCPP2010RequiredMessage, i18n.VisualCPP2010RequiredTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (result == DialogResult.Yes)
                 {
-                    frmDownload f = new frmDownload(i18n.DownloadingVisualCPP2010);
+                    DownloadForm f = new DownloadForm(i18n.DownloadingVisualCPP2010);
                     f.StartDownload(new Download("http://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe", "vcredist_x86.exe"));
                     if (f.ShowDialog() == DialogResult.OK) // if download succeeded
                     {

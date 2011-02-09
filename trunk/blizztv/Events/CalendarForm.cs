@@ -23,45 +23,44 @@ using System.Windows.Forms.Calendar;
 
 namespace BlizzTV.Events
 {
-    public partial class frmCalendar : Form
+    public partial class CalendarForm : Form
     {
         private readonly List<Event> _events = new List<Event>(); // the events list.
 
-        public frmCalendar(List<Event> events)
+        public CalendarForm(List<Event> events)
         {
             InitializeComponent();
 
-            this._events = events; // set the events list.
-            this.Size = new Size(BlizzTV.Events.Settings.Instance.CalendarWindowWidth, BlizzTV.Events.Settings.Instance.CalendarWindowHeight); // Load the last known size & location for the window.
+            this._events = events; 
+            this.Size = new Size(BlizzTV.Events.Settings.Instance.CalendarWindowWidth, BlizzTV.Events.Settings.Instance.CalendarWindowHeight); // set the size of the window based on last known values.
         }
 
-        private void frmCalendar_Load(object sender, EventArgs e)
+        private void CalendarForm_Load(object sender, EventArgs e)
         {
-            // setup monthview visuals.
-            MonthView.MonthTitleTextColor = Color.Navy;
-            MonthView.MonthTitleColor = CalendarColorTable.FromHex("#C2DAFC");
-            MonthView.ArrowsColor = CalendarColorTable.FromHex("#77A1D3");
-            MonthView.DaySelectedBackgroundColor = CalendarColorTable.FromHex("#F4CC52");
-            MonthView.DaySelectedTextColor = MonthView.ForeColor;
+            /* setup monthview control */
+            this.MonthView.MonthTitleTextColor = Color.Navy;
+            this.MonthView.MonthTitleColor = CalendarColorTable.FromHex("#C2DAFC");
+            this.MonthView.ArrowsColor = CalendarColorTable.FromHex("#77A1D3");
+            this.MonthView.DaySelectedBackgroundColor = CalendarColorTable.FromHex("#F4CC52");
+            this.MonthView.DaySelectedTextColor = MonthView.ForeColor;
         }
 
-        private void Calendar_LoadItems(object sender, CalendarLoadEventArgs e) // load the events to calendar.
+        private void Calendar_LoadItems(object sender, CalendarLoadEventArgs e) // loads events to calendar-view.
         {
-            foreach (Event _event in this._events) // loop through events.
+            foreach (Event @event in this._events) // loop through events.
             {
-                CalendarItem c = new CalendarItem(this.Calendar, _event.Time.LocalTime, _event.Time.LocalTime.AddHours(1), _event.FullTitle); // create a calendar item.
+                CalendarItem c = new CalendarItem(this.Calendar, @event.Time.LocalTime, @event.Time.LocalTime.AddHours(1), @event.FullTitle); // create a calendar item.
+                
                 if (Calendar.ViewIntersects(c)) // if the event intersects view calendars current view range (start day-end day).
                 {
-                    c.Tag = _event; // store event on the tag.
-                    c.ToolTipText = _event.FullTitle; // item tooltip.
+                    c.Tag = @event; // store event on the tag.
+                    c.ToolTipText = @event.FullTitle; // item tooltip.
                     Calendar.Items.Add(c); // add it to calendar.
                 }
-                else 
-                {
-                    // we don't need to add this event to calendar as the calendar view does not interesect event date & time. 
-                    // (The calendar will explicitly re-ask us the events list when it's view range changes).
-                    c = null;
-                }
+
+                // we don't need to add this event to calendar as the calendar view does not interesect event date & time. 
+                // (The calendar will explicitly re-ask us the events list when it's view range changes).
+                else c = null; 
             }
         }
 
@@ -72,7 +71,7 @@ namespace BlizzTV.Events
 
         private void Calendar_ItemCreating(object sender, CalendarItemCancelEventArgs e) 
         {
-            e.Cancel = true; // cancel new item creation on calendar.
+            e.Cancel = true; // cancel new item creation by user on calendar.
         }
 
         private void Calendar_ItemDoubleClick(object sender, CalendarItemEventArgs e)
@@ -80,7 +79,7 @@ namespace BlizzTV.Events
             ((Event)e.Item.Tag).Open(sender, e);
         }
 
-        private void frmCalendar_ResizeEnd(object sender, EventArgs e)
+        private void CalendarForm_ResizeEnd(object sender, EventArgs e)
         {
             if (this.Size.Width != BlizzTV.Events.Settings.Instance.CalendarWindowWidth || this.Size.Height != BlizzTV.Events.Settings.Instance.CalendarWindowHeight)
             {

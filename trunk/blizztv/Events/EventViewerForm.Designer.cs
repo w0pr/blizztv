@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Events
 {
-    partial class frmEventViewer
+    partial class EventViewerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEventViewer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EventViewerForm));
             this.LabelFullTitle = new System.Windows.Forms.Label();
             this.LabelTimeLeft = new System.Windows.Forms.Label();
             this.RichTextboxDescription = new System.Windows.Forms.RichTextBox();
@@ -191,7 +191,7 @@
             this.Name = "frmEventViewer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Event Viewer";
-            this.Load += new System.EventHandler(this.frmEventViewer_Load);
+            this.Load += new System.EventHandler(this.EventViewerForm_Load);
             this.ResizeEnd += new System.EventHandler(this.frmEventViewer_ResizeEnd);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

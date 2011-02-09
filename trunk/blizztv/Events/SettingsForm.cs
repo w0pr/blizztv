@@ -21,14 +21,14 @@ using BlizzTV.Modules.Settings;
 
 namespace BlizzTV.Events
 {
-    public partial class frmSettings : Form, IModuleSettingsForm
+    public partial class SettingsForm : Form, IModuleSettingsForm
     {
-        public frmSettings()
+        public SettingsForm()
         {
             InitializeComponent();
         }
 
-        private void frmSettings_Load(object sender, EventArgs e)
+        private void SettingsForm_Load(object sender, EventArgs e)
         {
             checkBoxEnableNotifications.Checked = BlizzTV.Events.Settings.Instance.EventNotificationsEnabled;
             checkBoxEnableInProgressEventNotifications.Checked = BlizzTV.Events.Settings.Instance.InProgressEventNotificationsEnabled;

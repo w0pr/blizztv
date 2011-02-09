@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id: Settings.cs 355 2011-02-07 12:05:26Z shalafiraistlin@gmail.com $
+ * $Id$
  */
 
 using System.Windows.Forms;
@@ -21,16 +21,16 @@ using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.Downloads
 {
-    public partial class frmDownload : Form
+    public partial class DownloadForm : Form
     {
         private Download _download;
 
-        public frmDownload()
+        public DownloadForm()
         {
             InitializeComponent();
         }
 
-        public frmDownload(string title)
+        public DownloadForm(string title)
         {
             InitializeComponent();
             if (title != string.Empty) this.Text = title;

@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Events
 {
-    partial class frmCalendar
+    partial class CalendarForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@
             System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange4 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
             System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange5 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
             System.Windows.Forms.Calendar.CalendarHighlightRange calendarHighlightRange6 = new System.Windows.Forms.Calendar.CalendarHighlightRange();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCalendar));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalendarForm));
             this.MonthView = new System.Windows.Forms.Calendar.MonthView();
             this.Calendar = new System.Windows.Forms.Calendar.Calendar();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
@@ -125,8 +125,8 @@
             this.Name = "frmCalendar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Calendar";
-            this.Load += new System.EventHandler(this.frmCalendar_Load);
-            this.ResizeEnd += new System.EventHandler(this.frmCalendar_ResizeEnd);
+            this.Load += new System.EventHandler(this.CalendarForm_Load);
+            this.ResizeEnd += new System.EventHandler(this.CalendarForm_ResizeEnd);
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.ResumeLayout(false);
