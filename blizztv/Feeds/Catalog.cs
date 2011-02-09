@@ -22,6 +22,9 @@ using BlizzTV.Modules.Subscriptions.Catalog;
 
 namespace BlizzTV.Feeds
 {
+    /// <summary>
+    /// Provides support for online feed-catalog.
+    /// </summary>
     public class Catalog : CatalogHandler
     {
         #region instance
@@ -43,10 +46,7 @@ namespace BlizzTV.Feeds
 
         public override void AddAsSubscription()
         {
-            FeedSubscription subscription = new FeedSubscription();
-            subscription.Name = this.Name;
-            subscription.Url = this.Url;
-
+            FeedSubscription subscription = new FeedSubscription {Name = this.Name, Url = this.Url};
             Subscriptions.Instance.Add(subscription);
         }
     }
