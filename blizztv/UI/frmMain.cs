@@ -379,7 +379,7 @@ namespace BlizzTV.UI
         private void MenuUserGuide_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/UserGuide", null); }
         private void MenuFAQ_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/FAQ", null); }
         private void MenuDonate_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null); }
-        private void MenuSpreadTheWord_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://twitter.com/?status=%23blizzard%20I%20love%20BlizzTV!%20(http://bit.ly/eVkpwz)", null); }
+        private void MenuSpreadTheWord_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://twitter.com/?status=%23blizzard%20I%20love%20BlizzTV!%20(http://get.blizztv.com/)", null); }
 
         #endregion       
     }    

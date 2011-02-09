@@ -18,11 +18,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
+using BlizzTV.BlizzBlues.Parsers;
 using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Utility.Imaging;
 
-namespace BlizzTV.BlizzBlues.Game
+namespace BlizzTV.BlizzBlues
 {
     public class BlueStory:ListItem
     {
@@ -31,7 +33,8 @@ namespace BlizzTV.BlizzBlues.Game
         public string Link { get; private set; }
         public string TopicId { get; private set; }
         public string PostId { get; private set; }
-        public Dictionary<string, BlueStory> More = new Dictionary<string, BlueStory>();
+
+        public Dictionary<string, BlueStory> Successors = new Dictionary<string, BlueStory>(); // successor posts.
     
         public BlueStory(BlueType type, string title, Region region, string link, string topicId, string postId)
             : base(title)
@@ -44,32 +47,40 @@ namespace BlizzTV.BlizzBlues.Game
             this.Guid = string.Format("{0}.{1}#{2}", this.Region, this.TopicId, this.PostId);
 
             // register context menus.
-            this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
-            this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
+            this.ContextMenus.Add("markasread", new ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
+            this.ContextMenus.Add("markasunread", new ToolStripMenuItem("Mark As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
 
-            if (this.Region == Region.Eu) this.Icon = new NamedImage("eu", Assets.Images.Icons.Png._16.eu);
-            else if (this.Region == Region.Us) this.Icon = new NamedImage("us", Assets.Images.Icons.Png._16.us);
+            switch (this.Region)
+            {
+                case Region.Eu:
+                    this.Icon = new NamedImage("eu", Assets.Images.Icons.Png._16.eu);
+                    break;
+                case Region.Us:
+                    this.Icon = new NamedImage("us", Assets.Images.Icons.Png._16.us);
+                    break;
+            }
         }
 
-        public void AddPost(BlueStory blueStory)
+        public void AddSuccessorPost(BlueStory blueStory)
         {
-            this.More.Add(blueStory.PostId,blueStory);
+            this.Successors.Add(blueStory.PostId,blueStory);
             blueStory.OnStateChange += OnChildStateChange;
         }
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.State == (sender as BlueStory).State) return;
-            int unread = this.More.Count(pair => pair.Value.State == State.Fresh || pair.Value.State == State.Unread);
+            if (this.State == ((BlueStory) sender).State) return;
+
+            int unread = this.Successors.Count(pair => pair.Value.State == State.Fresh || pair.Value.State == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public void CheckForNotifications()
         {
-            if (BlizzTV.BlizzBlues.Settings.Instance.NotificationsEnabled && this.State ==  State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("{0}", this.Title), string.Format("A new {0} blue-post is available, click to open it.",this.Type) , System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled && this.State ==  State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("{0}", this.Title), string.Format("A new {0} blue-post is available, click to open it.",this.Type) , System.Windows.Forms.ToolTipIcon.Info));
         }
 
-        public override void Open(object sender, System.EventArgs e)
+        public override void Open(object sender, EventArgs e)
         {
             this.Navigate();
         }
@@ -88,13 +99,13 @@ namespace BlizzTV.BlizzBlues.Game
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
             this.State = State.Read;
-            foreach (KeyValuePair<string, BlueStory> post in this.More) { post.Value.State = State.Read; }
+            foreach (KeyValuePair<string, BlueStory> post in this.Successors) { post.Value.State = State.Read; }
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
             this.State = State.Unread;
-            foreach (KeyValuePair<string, BlueStory> post in this.More) { post.Value.State = State.Unread; }
+            foreach (KeyValuePair<string, BlueStory> post in this.Successors) { post.Value.State = State.Unread; }
         }
     }
 }

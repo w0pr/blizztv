@@ -21,34 +21,34 @@ using BlizzTV.Modules.Settings;
 
 namespace BlizzTV.BlizzBlues
 {
-    public partial class frmSettings : Form, IModuleSettingsForm
+    public partial class SettingsForm : Form, IModuleSettingsForm
     {
-        public frmSettings()
+        public SettingsForm()
         {
             InitializeComponent();
         }
 
-        private void frmSettings_Load(object sender, EventArgs e)
+        private void SettingsForm_Load(object sender, EventArgs e)
         {
             this.LoadSettings();
         }
 
         private void LoadSettings()
         {
-            numericUpDownUpdatePeriod.Value = (decimal)BlizzTV.BlizzBlues.Settings.Instance.UpdatePeriod;
-            checkBoxTrackWorldofWarcraft.Checked = BlizzTV.BlizzBlues.Settings.Instance.TrackWorldofWarcraft;
-            checkBoxTrackStarcraft.Checked = BlizzTV.BlizzBlues.Settings.Instance.TrackStarcraft;
-            checkBoxEnableNotifications.Checked = BlizzTV.BlizzBlues.Settings.Instance.NotificationsEnabled;
+            numericUpDownUpdatePeriod.Value = (decimal)Settings.Instance.UpdatePeriod;
+            checkBoxTrackWorldofWarcraft.Checked = Settings.Instance.TrackWorldofWarcraft;
+            checkBoxTrackStarcraft.Checked = Settings.Instance.TrackStarcraft;
+            checkBoxEnableNotifications.Checked = Settings.Instance.NotificationsEnabled;
         }
 
         public void SaveSettings()
         {
-            BlizzTV.BlizzBlues.Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
-            BlizzTV.BlizzBlues.Settings.Instance.TrackWorldofWarcraft = checkBoxTrackWorldofWarcraft.Checked;
-            BlizzTV.BlizzBlues.Settings.Instance.TrackStarcraft = checkBoxTrackStarcraft.Checked;
-            BlizzTV.BlizzBlues.Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
-            BlizzTV.BlizzBlues.Settings.Instance.Save();
-            BlizzBluesModule.Instance.OnSaveSettings();
+            Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
+            Settings.Instance.TrackWorldofWarcraft = checkBoxTrackWorldofWarcraft.Checked;
+            Settings.Instance.TrackStarcraft = checkBoxTrackStarcraft.Checked;
+            Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
+            Settings.Instance.Save();
+            ModuleBlizzBlues.Instance.OnSaveSettings();
         }
     }
 }
