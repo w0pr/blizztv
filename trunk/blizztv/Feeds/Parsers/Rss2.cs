@@ -22,6 +22,9 @@ using System.Xml.Linq;
 
 namespace BlizzTV.Feeds.Parsers
 {
+    /// <summary>
+    /// Parses RSS 2.0 feeds.
+    /// </summary>
     public class Rss2:IFeedParser
     {
         public bool Parse(string xml, ref List<FeedItem> items, string linkFallback = "")
@@ -38,14 +41,11 @@ namespace BlizzTV.Feeds.Parsers
                                   Link = item.Element("link").Value,
                               };
 
-                foreach (var entry in entries) // create the story-item's.
-                {
-                    items.Add(new FeedItem(entry.Title, entry.Id, entry.Link));
-                }
+                items.AddRange(entries.Select(entry => new FeedItem(entry.Title, entry.Id, entry.Link)));
 
                 if (items.Count > 0) return true;
             }
-            catch (Exception) { }
+            catch (Exception) { } // supress the exceptions as the method can also be used for checking a feed if it's compatible with the standart.
             return false;
         }
     }

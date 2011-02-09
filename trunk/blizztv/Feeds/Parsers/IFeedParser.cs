@@ -19,6 +19,9 @@ using System.Collections.Generic;
 
 namespace BlizzTV.Feeds.Parsers
 {
+    /// <summary>
+    /// Provides an interface for feed parsers.
+    /// </summary>
     public interface IFeedParser
     {
         bool Parse(string xml, ref List<FeedItem> items, string linkFallback = "");

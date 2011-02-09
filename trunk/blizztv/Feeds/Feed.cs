@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Utility.Imaging;
@@ -28,9 +29,19 @@ namespace BlizzTV.Feeds
     {
         private bool _disposed = false;
 
+        /// <summary>
+        /// Feed Name.
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Feed Url.
+        /// </summary>
         public string Url { get; private set; }
 
+        /// <summary>
+        /// The feed's stories.
+        /// </summary>
         public List<Story> Stories = new List<Story>(); 
 
         public Feed(FeedSubscription subscription)
@@ -40,8 +51,8 @@ namespace BlizzTV.Feeds
             this.Url = subscription.Url;
 
             // register context menus.
-            this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            this.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
+            this.ContextMenus.Add("markallasread", new ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            this.ContextMenus.Add("markallasunread", new ToolStripMenuItem("Mark As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
 
             this.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
         }
@@ -64,6 +75,7 @@ namespace BlizzTV.Feeds
         private bool Parse()
         {
             List<FeedItem> items = null;
+
             if (!FeedParser.Instance.Parse(this.Url, ref items))
             {
                 this.State = State.Error;
@@ -86,7 +98,8 @@ namespace BlizzTV.Feeds
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.State == (sender as Story).State) return;
+            if (this.State == ((Story) sender).State) return;
+
             int unread = this.Stories.Count(s => s.State == State.Fresh || s.State == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }

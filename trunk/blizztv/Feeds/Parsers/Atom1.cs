@@ -22,6 +22,9 @@ using System.Xml.Linq;
 
 namespace BlizzTV.Feeds.Parsers
 {
+    /// <summary>
+    /// Parses Atom 1.0 feeds.
+    /// </summary>
     public class Atom1:IFeedParser
     {
         public bool Parse(string xml, ref List<FeedItem> items, string linkFallback = "")
@@ -39,14 +42,11 @@ namespace BlizzTV.Feeds.Parsers
                                   Link = (entry.Element(xmlns + "link") != null) ? entry.Element(xmlns + "link").Attribute("href").Value : String.Empty
                               };
 
-                foreach (var entry in entries) // create the story-item's.
-                {
-                    items.Add(new FeedItem(entry.Title, entry.Id, String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)));
-                }
+                items.AddRange(entries.Select(entry => new FeedItem(entry.Title, entry.Id, String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)))); /* link fallbacks are needed by blizzard atom feeds, as their stories does not contain a valid story link, so we forge the link by linkFallback + storyId */
 
                 if (items.Count > 0) return true;
             }
-            catch (Exception) { }
+            catch (Exception) { } // supress the exceptions as the method can also be used for checking a feed if it's compatible with the standart.
             return false;
         }
     }
