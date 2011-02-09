@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Events
 {
-    partial class frmSetupAlarm
+    partial class SetupAlarmForm
     {
         /// <summary>
         /// Required designer variable.
@@ -54,7 +54,7 @@
             this.LabelEventName.Location = new System.Drawing.Point(124, 9);
             this.LabelEventName.Name = "LabelEventName";
             this.LabelEventName.Size = new System.Drawing.Size(244, 13);
-            this.LabelEventName.TabIndex = 1;
+            this.LabelEventName.TabIndex = 0;
             this.LabelEventName.Text = "Event Name";
             // 
             // label2
@@ -63,7 +63,7 @@
             this.label2.Location = new System.Drawing.Point(1, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(33, 13);
-            this.label2.TabIndex = 2;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Time:";
             // 
             // LabelEventTime
@@ -71,7 +71,7 @@
             this.LabelEventTime.Location = new System.Drawing.Point(124, 32);
             this.LabelEventTime.Name = "LabelEventTime";
             this.LabelEventTime.Size = new System.Drawing.Size(247, 13);
-            this.LabelEventTime.TabIndex = 3;
+            this.LabelEventTime.TabIndex = 0;
             this.LabelEventTime.Text = "Event Time";
             // 
             // label3
@@ -80,7 +80,7 @@
             this.label3.Location = new System.Drawing.Point(1, 76);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(120, 13);
-            this.label3.TabIndex = 4;
+            this.label3.TabIndex = 0;
             this.label3.Text = "Minutes to alarm before:";
             // 
             // ComboBoxAlertBefore
@@ -90,14 +90,14 @@
             this.ComboBoxAlertBefore.Location = new System.Drawing.Point(124, 73);
             this.ComboBoxAlertBefore.Name = "ComboBoxAlertBefore";
             this.ComboBoxAlertBefore.Size = new System.Drawing.Size(244, 21);
-            this.ComboBoxAlertBefore.TabIndex = 5;
+            this.ComboBoxAlertBefore.TabIndex = 0;
             // 
             // ButtonSetup
             // 
             this.ButtonSetup.Location = new System.Drawing.Point(293, 102);
             this.ButtonSetup.Name = "ButtonSetup";
             this.ButtonSetup.Size = new System.Drawing.Size(75, 23);
-            this.ButtonSetup.TabIndex = 6;
+            this.ButtonSetup.TabIndex = 1;
             this.ButtonSetup.Text = "Setup";
             this.ButtonSetup.UseVisualStyleBackColor = true;
             this.ButtonSetup.Click += new System.EventHandler(this.ButtonSetup_Click);
@@ -108,7 +108,7 @@
             this.ButtonCancel.Location = new System.Drawing.Point(212, 102);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
-            this.ButtonCancel.TabIndex = 7;
+            this.ButtonCancel.TabIndex = 2;
             this.ButtonCancel.Text = "Cancel";
             this.ButtonCancel.UseVisualStyleBackColor = true;
             this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
@@ -119,7 +119,7 @@
             this.label4.Location = new System.Drawing.Point(1, 52);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
-            this.label4.TabIndex = 8;
+            this.label4.TabIndex = 0;
             this.label4.Text = "Time Left:";
             // 
             // LabelTimeLeft
@@ -127,10 +127,10 @@
             this.LabelTimeLeft.Location = new System.Drawing.Point(124, 52);
             this.LabelTimeLeft.Name = "LabelTimeLeft";
             this.LabelTimeLeft.Size = new System.Drawing.Size(247, 13);
-            this.LabelTimeLeft.TabIndex = 9;
+            this.LabelTimeLeft.TabIndex = 0;
             this.LabelTimeLeft.Text = "Time Left";
             // 
-            // frmSetupAlarm
+            // SetupAlarmForm
             // 
             this.AcceptButton = this.ButtonSetup;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,9 +148,10 @@
             this.Controls.Add(this.LabelEventName);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "frmSetupAlarm";
+            this.Name = "SetupAlarmForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Setup Alarm for Event:";
+            this.Load += new System.EventHandler(this.SetupAlarmForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Downloads
 {
-    partial class frmDownload
+    partial class DownloadForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDownload));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DownloadForm));
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.labelStatistics = new System.Windows.Forms.Label();
             this.SuspendLayout();

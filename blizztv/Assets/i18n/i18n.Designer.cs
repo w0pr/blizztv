@@ -61,11 +61,47 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An alarm already exists for the event!.
+        /// </summary>
+        internal static string AnAlarmAlreadyExistsForEventMessage {
+            get {
+                return ResourceManager.GetString("AnAlarmAlreadyExistsForEventMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alarm exists.
+        /// </summary>
+        internal static string AnAlarmAlreadyExistsForEventTitle {
+            get {
+                return ResourceManager.GetString("AnAlarmAlreadyExistsForEventTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The application will exit to continue installation of update. Please restart the application after..
         /// </summary>
         internal static string ApplicationWillExitToContinueInstallationOfUpdateMessage {
             get {
                 return ResourceManager.GetString("ApplicationWillExitToContinueInstallationOfUpdateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can not setup an alarm for the event as it&apos;s just about to start.
+        /// </summary>
+        internal static string CanNotSetupEventAlarmMessage {
+            get {
+                return ResourceManager.GetString("CanNotSetupEventAlarmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not setup alarm.
+        /// </summary>
+        internal static string CanNotSetupEventAlarmTitle {
+            get {
+                return ResourceManager.GetString("CanNotSetupEventAlarmTitle", resourceCulture);
             }
         }
         
@@ -156,6 +192,42 @@ namespace BlizzTV.Assets.i18n {
         internal static string ErrorLoadingProvidersDatabaseTitle {
             get {
                 return ResourceManager.GetString("ErrorLoadingProvidersDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In progress..
+        /// </summary>
+        internal static string EventInProgressMessage {
+            get {
+                return ResourceManager.GetString("EventInProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Over..
+        /// </summary>
+        internal static string EventOverMessage {
+            get {
+                return ResourceManager.GetString("EventOverMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} to go..
+        /// </summary>
+        internal static string EventUpcomingMessage {
+            get {
+                return ResourceManager.GetString("EventUpcomingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An alarm is set for event {0} minutes before..
+        /// </summary>
+        internal static string ExistingAlarmMessage {
+            get {
+                return ResourceManager.GetString("ExistingAlarmMessage", resourceCulture);
             }
         }
         
@@ -273,6 +345,15 @@ namespace BlizzTV.Assets.i18n {
         internal static string ReplacedSubscriptionsDatabaseTitle {
             get {
                 return ResourceManager.GetString("ReplacedSubscriptionsDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setup alarm for event: {0}.
+        /// </summary>
+        internal static string SetupAlarmTitle {
+            get {
+                return ResourceManager.GetString("SetupAlarmTitle", resourceCulture);
             }
         }
         

@@ -16,29 +16,33 @@
  */
 
 using System;
+using System.Linq;
 using System.Windows.Forms;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.Events
 {
-    public partial class frmSetupAlarm : Form
+    public partial class SetupAlarmForm : Form
     {
-        private Event _event;
+        private readonly Event _event;
+        private static readonly byte[] AlarmPeriods = { 5, 10, 15, 30, 60, 90, 120 };
 
-        public frmSetupAlarm(Event _event)
+        public SetupAlarmForm(Event @event)
         {
-            InitializeComponent();
+            InitializeComponent();            
+            this._event = @event;
+        }
 
-            byte[] minutes={5,10,15,30,60,90,120};
-
-            this._event = _event;
-            this.Text = string.Format("Setup alarm for event: {0}", this._event.FullTitle);
+        private void SetupAlarmForm_Load(object sender, EventArgs e)
+        {
+            this.Text = string.Format(i18n.SetupAlarmTitle, this._event.FullTitle);
             this.LabelEventName.Text = this._event.FullTitle;
             this.LabelEventTime.Text = this._event.Time.LocalTime.ToString();
             this.LabelTimeLeft.Text = this._event.TimeLeft;
 
-            foreach (byte m in minutes)
+            foreach (byte m in AlarmPeriods.Where(m => (double) m < this._event.MinutesLeft))
             {
-                if ((double)m < this._event.MinutesLeft) this.ComboBoxAlertBefore.Items.Add(m);
+                this.ComboBoxAlertBefore.Items.Add(m);
             }
 
             if (this.ComboBoxAlertBefore.Items.Count > 0) this.ComboBoxAlertBefore.SelectedIndex = 0;
@@ -51,11 +55,10 @@ namespace BlizzTV.Events
 
         private void ButtonSetup_Click(object sender, EventArgs e)
         {
-            if (this.ComboBoxAlertBefore.SelectedIndex != -1)
-            {
-                if (!this._event.SetupAlarm(byte.Parse(this.ComboBoxAlertBefore.SelectedItem.ToString()))) MessageBox.Show("An alarm already exists for the event!", "Alarm Exists!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else this.Close();
-            }
+            if (this.ComboBoxAlertBefore.SelectedIndex == -1) return;
+
+            if (!this._event.SetupAlarm(byte.Parse(this.ComboBoxAlertBefore.SelectedItem.ToString()))) MessageBox.Show(i18n.ExistingAlarmMessage, i18n.AnAlarmAlreadyExistsForEventTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else this.Close();
         }
     }
 }

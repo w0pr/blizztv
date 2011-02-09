@@ -18,62 +18,60 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.Events
 {
-    public partial class frmEventViewer : Form
+    public partial class EventViewerForm : Form
     {
         private readonly Event _event;
         private readonly Color _eventOverColor = Color.Red;
         private readonly Color _eventInProgressColor = Color.Green;
         private readonly Color _futureEventColor = Color.Black;
 
-        public frmEventViewer(Event _event)
+        public EventViewerForm(Event @event)
         {           
             InitializeComponent();
 
-            this._event = _event;
-            this.Size = new Size(BlizzTV.Events.Settings.Instance.EventViewerWindowWidth, BlizzTV.Events.Settings.Instance.EventViewerWindowHeight); // Load the last known size & location for the window.
+            this._event = @event;
+            this.Size = new Size(BlizzTV.Events.Settings.Instance.EventViewerWindowWidth, BlizzTV.Events.Settings.Instance.EventViewerWindowHeight); // set the size of the window based on last known values.
         }
 
-        private void frmEventViewer_Load(object sender, EventArgs e)
+        private void EventViewerForm_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("Event: {0}", this._event.FullTitle);
             this.LabelFullTitle.Text = this._event.FullTitle;
             this.LabelLocalTime.Text = this._event.Time.LocalTime.ToString();
             this.RichTextboxDescription.Text = this._event.Description;            
 
-            switch (this._event.Status) // Colorize LabelStatus based on event status
+            switch (this._event.Status)
             {
                 case EventStatus.Over:
                     this.LabelTimeLeft.ForeColor = _eventOverColor;
                     this.ButtonSetupAlarm.Enabled = false;
-                    this.LabelTimeLeft.Text = "Over.";
+                    this.LabelTimeLeft.Text = i18n.EventOverMessage;
                     break;
+
                 case EventStatus.InProgress:
                     this.LabelTimeLeft.ForeColor = _eventInProgressColor;
                     this.ButtonSetupAlarm.Enabled = false;
-                    this.LabelTimeLeft.Text = "In progress.";
+                    this.LabelTimeLeft.Text = i18n.EventInProgressMessage;
                     break;
+
                 case EventStatus.Upcoming:
                     this.LabelTimeLeft.ForeColor = _futureEventColor;
                     this.ButtonSetupAlarm.Enabled = true;
                     this.LabelAlarm.Visible = true;
                     this.PictureAlarmIcon.Visible = true;
-                    this.LabelTimeLeft.Text = string.Format("{0} to go.", this._event.TimeLeft);
+                    this.LabelTimeLeft.Text = string.Format(i18n.EventUpcomingMessage, this._event.TimeLeft);
                     break;
             }
             
             if (this._event.AlarmExists())
             {
-                this.LabelAlarm.Text = string.Format("An alarm is set for event {0} minutes before.", this._event.GetAlarmMinutes());
+                this.LabelAlarm.Text = string.Format(i18n.ExistingAlarmMessage, this._event.GetAlarmMinutes());
                 this.ButtonSetupAlarm.Enabled = false;
             }
-        }
-
-        private void RichTextboxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(e.LinkText, null);            
         }
 
         private void ButtonClose_Click(object sender, EventArgs e)
@@ -83,12 +81,15 @@ namespace BlizzTV.Events
 
         private void ButtonSetupAlarm_Click(object sender, EventArgs e)
         {
-            if (this._event.MinutesLeft >= 5)
-            {
-                frmSetupAlarm f = new frmSetupAlarm(this._event);
-                f.ShowDialog();
-            }
-            else MessageBox.Show("You can not setup an alarm for the event as it's just about to start", "Can not setup alarm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (this._event.MinutesLeft < 5) MessageBox.Show(i18n.CanNotSetupEventAlarmMessage, i18n.CanNotSetupEventAlarmTitle, MessageBoxButtons.OK, MessageBoxIcon.Information); // don't allow settings alarms for events that are just about to start.
+
+            SetupAlarmForm f = new SetupAlarmForm(this._event);
+            f.ShowDialog();
+        }
+
+        private void RichTextboxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText, null);
         }
 
         private void frmEventViewer_ResizeEnd(object sender, EventArgs e)

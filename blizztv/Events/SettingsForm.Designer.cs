@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Events
 {
-    partial class frmSettings
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -86,7 +86,7 @@
             0});
             this.numericUpDownNumberOfDaysToShowEventsOnMainWindow.Name = "numericUpDownNumberOfDaysToShowEventsOnMainWindow";
             this.numericUpDownNumberOfDaysToShowEventsOnMainWindow.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDownNumberOfDaysToShowEventsOnMainWindow.TabIndex = 1;
+            this.numericUpDownNumberOfDaysToShowEventsOnMainWindow.TabIndex = 0;
             this.numericUpDownNumberOfDaysToShowEventsOnMainWindow.Value = new decimal(new int[] {
             7,
             0,
@@ -123,7 +123,7 @@
             this.checkBoxEnableNotifications.Location = new System.Drawing.Point(6, 19);
             this.checkBoxEnableNotifications.Name = "checkBoxEnableNotifications";
             this.checkBoxEnableNotifications.Size = new System.Drawing.Size(186, 17);
-            this.checkBoxEnableNotifications.TabIndex = 2;
+            this.checkBoxEnableNotifications.TabIndex = 0;
             this.checkBoxEnableNotifications.Text = "Enable notification of new events.";
             this.checkBoxEnableNotifications.UseVisualStyleBackColor = true;
             this.checkBoxEnableNotifications.CheckedChanged += new System.EventHandler(this.checkBoxEnableNotifications_CheckedChanged);
@@ -134,7 +134,7 @@
             this.checkBoxEnableInProgressEventNotifications.Location = new System.Drawing.Point(6, 42);
             this.checkBoxEnableInProgressEventNotifications.Name = "checkBoxEnableInProgressEventNotifications";
             this.checkBoxEnableInProgressEventNotifications.Size = new System.Drawing.Size(240, 17);
-            this.checkBoxEnableInProgressEventNotifications.TabIndex = 3;
+            this.checkBoxEnableInProgressEventNotifications.TabIndex = 1;
             this.checkBoxEnableInProgressEventNotifications.Text = "Enable notification for In-Progress events too.";
             this.checkBoxEnableInProgressEventNotifications.UseVisualStyleBackColor = true;
             // 
@@ -162,7 +162,7 @@
             0});
             this.numericUpDownMinutesToNotifyBeforeEvent.Name = "numericUpDownMinutesToNotifyBeforeEvent";
             this.numericUpDownMinutesToNotifyBeforeEvent.Size = new System.Drawing.Size(50, 20);
-            this.numericUpDownMinutesToNotifyBeforeEvent.TabIndex = 4;
+            this.numericUpDownMinutesToNotifyBeforeEvent.TabIndex = 2;
             this.numericUpDownMinutesToNotifyBeforeEvent.Value = new decimal(new int[] {
             15,
             0,
@@ -179,15 +179,15 @@
             this.tabControl1.Size = new System.Drawing.Size(447, 262);
             this.tabControl1.TabIndex = 0;
             // 
-            // frmSettings
+            // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(447, 262);
             this.Controls.Add(this.tabControl1);
-            this.Name = "frmSettings";
+            this.Name = "SettingsForm";
             this.Text = "frmSettings";
-            this.Load += new System.EventHandler(this.frmSettings_Load);
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.tabPage1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

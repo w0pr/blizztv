@@ -210,4 +210,31 @@
   <data name="SubscriptionsDatabsaeCorruptedTitle" xml:space="preserve">
     <value>Corrupted subscriptions database</value>
   </data>
+  <data name="ExistingAlarmMessage" xml:space="preserve">
+    <value>An alarm is set for event {0} minutes before.</value>
+  </data>
+  <data name="CanNotSetupEventAlarmMessage" xml:space="preserve">
+    <value>You can not setup an alarm for the event as it's just about to start</value>
+  </data>
+  <data name="CanNotSetupEventAlarmTitle" xml:space="preserve">
+    <value>Can not setup alarm</value>
+  </data>
+  <data name="EventInProgressMessage" xml:space="preserve">
+    <value>In progress.</value>
+  </data>
+  <data name="EventOverMessage" xml:space="preserve">
+    <value>Over.</value>
+  </data>
+  <data name="EventUpcomingMessage" xml:space="preserve">
+    <value>{0} to go.</value>
+  </data>
+  <data name="AnAlarmAlreadyExistsForEventMessage" xml:space="preserve">
+    <value>An alarm already exists for the event!</value>
+  </data>
+  <data name="AnAlarmAlreadyExistsForEventTitle" xml:space="preserve">
+    <value>Alarm exists</value>
+  </data>
+  <data name="SetupAlarmTitle" xml:space="preserve">
+    <value>Setup alarm for event: {0}</value>
+  </data>
 </root>

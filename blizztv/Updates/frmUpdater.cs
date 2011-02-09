@@ -23,7 +23,7 @@ using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.Updates
 {
-    public partial class frmUpdater : frmDownload
+    public partial class frmUpdater : DownloadForm
     {
         private readonly Update _update;
 

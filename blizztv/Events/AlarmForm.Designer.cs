@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Events
 {
-    partial class frmAlarm
+    partial class AlarmForm
     {
         /// <summary>
         /// Required designer variable.
@@ -51,7 +51,7 @@
             this.LabelStatus.Location = new System.Drawing.Point(12, 27);
             this.LabelStatus.Name = "LabelStatus";
             this.LabelStatus.Size = new System.Drawing.Size(320, 18);
-            this.LabelStatus.TabIndex = 1;
+            this.LabelStatus.TabIndex = 0;
             this.LabelStatus.Text = "is about to start in x minutes";
             // 
             // ButtonOkay
@@ -60,7 +60,7 @@
             this.ButtonOkay.Location = new System.Drawing.Point(257, 48);
             this.ButtonOkay.Name = "ButtonOkay";
             this.ButtonOkay.Size = new System.Drawing.Size(75, 23);
-            this.ButtonOkay.TabIndex = 2;
+            this.ButtonOkay.TabIndex = 1;
             this.ButtonOkay.Text = "OK";
             this.ButtonOkay.UseVisualStyleBackColor = false;
             this.ButtonOkay.Click += new System.EventHandler(this.ButtonOkay_Click);
@@ -70,12 +70,12 @@
             this.ButtonView.Location = new System.Drawing.Point(176, 48);
             this.ButtonView.Name = "ButtonView";
             this.ButtonView.Size = new System.Drawing.Size(75, 23);
-            this.ButtonView.TabIndex = 3;
+            this.ButtonView.TabIndex = 0;
             this.ButtonView.Text = "View";
             this.ButtonView.UseVisualStyleBackColor = true;
             this.ButtonView.Click += new System.EventHandler(this.ButtonView_Click);
             // 
-            // frmAlarm
+            // AlarmForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -86,11 +86,11 @@
             this.Controls.Add(this.LabelStatus);
             this.Controls.Add(this.LabelEvent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "frmAlarm";
+            this.Name = "AlarmForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Alarm:";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.frmAlarm_Load);
+            this.Load += new System.EventHandler(this.AlarmForm_Load);
             this.ResumeLayout(false);
 
         }

@@ -132,11 +132,11 @@
     <Compile Include="Downloads\Download.cs" />
     <Compile Include="Downloads\DownloadManager.cs" />
     <Compile Include="Downloads\DownloadStream.cs" />
-    <Compile Include="Downloads\frmDownload.cs">
+    <Compile Include="Downloads\DownloadForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Downloads\frmDownload.Designer.cs">
-      <DependentUpon>frmDownload.cs</DependentUpon>
+    <Compile Include="Downloads\DownloadForm.Designer.cs">
+      <DependentUpon>DownloadForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
     <Compile Include="Modules\Subscriptions\Subscription.cs" />
@@ -227,36 +227,36 @@
     <Compile Include="Utility\Extensions\ControlExtensions.cs" />
     <Compile Include="Modules\ModuleAttributes.cs" />
     <Compile Include="Events\Event.cs" />
-    <Compile Include="Events\EventsPlugin.cs" />
-    <Compile Include="Events\frmAlarm.cs">
+    <Compile Include="Events\ModuleEvents.cs" />
+    <Compile Include="Events\AlarmForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\frmAlarm.Designer.cs">
-      <DependentUpon>frmAlarm.cs</DependentUpon>
+    <Compile Include="Events\AlarmForm.Designer.cs">
+      <DependentUpon>AlarmForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\frmCalendar.cs">
+    <Compile Include="Events\CalendarForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\frmCalendar.Designer.cs">
-      <DependentUpon>frmCalendar.cs</DependentUpon>
+    <Compile Include="Events\CalendarForm.Designer.cs">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\frmEventViewer.cs">
+    <Compile Include="Events\EventViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\frmEventViewer.Designer.cs">
-      <DependentUpon>frmEventViewer.cs</DependentUpon>
+    <Compile Include="Events\EventViewerForm.Designer.cs">
+      <DependentUpon>EventViewerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\frmSettings.cs">
+    <Compile Include="Events\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\frmSettings.Designer.cs">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <Compile Include="Events\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\frmSetupAlarm.cs">
+    <Compile Include="Events\SetupAlarmForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\frmSetupAlarm.Designer.cs">
-      <DependentUpon>frmSetupAlarm.cs</DependentUpon>
+    <Compile Include="Events\SetupAlarmForm.Designer.cs">
+      <DependentUpon>SetupAlarmForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\Settings.cs" />
     <Compile Include="Feeds\Feed.cs" />
@@ -425,8 +425,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Subscriptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Downloads\frmDownload.resx">
-      <DependentUpon>frmDownload.cs</DependentUpon>
+    <EmbeddedResource Include="Downloads\DownloadForm.resx">
+      <DependentUpon>DownloadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Notifications\frmArchivedNotifications.resx">
       <DependentUpon>frmArchivedNotifications.cs</DependentUpon>
@@ -456,20 +456,20 @@
     <EmbeddedResource Include="UI\frmPreferences.resx">
       <DependentUpon>frmPreferences.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\frmAlarm.resx">
-      <DependentUpon>frmAlarm.cs</DependentUpon>
+    <EmbeddedResource Include="Events\AlarmForm.resx">
+      <DependentUpon>AlarmForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\frmCalendar.resx">
-      <DependentUpon>frmCalendar.cs</DependentUpon>
+    <EmbeddedResource Include="Events\CalendarForm.resx">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\frmEventViewer.resx">
-      <DependentUpon>frmEventViewer.cs</DependentUpon>
+    <EmbeddedResource Include="Events\EventViewerForm.resx">
+      <DependentUpon>EventViewerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\frmSettings.resx">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <EmbeddedResource Include="Events\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\frmSetupAlarm.resx">
-      <DependentUpon>frmSetupAlarm.cs</DependentUpon>
+    <EmbeddedResource Include="Events\SetupAlarmForm.resx">
+      <DependentUpon>SetupAlarmForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Feeds\frmAddFeed.resx">
       <DependentUpon>frmAddFeed.cs</DependentUpon>
