@@ -25,19 +25,24 @@ using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.Web;
 using HtmlAgilityPack;
 
-namespace BlizzTV.BlizzBlues.Game
+namespace BlizzTV.BlizzBlues.Parsers
 {
+    /// <summary>
+    /// Parser for Blizzard forums that can extract Blue-GM posts.
+    /// </summary>
     public class BlueParser:ListItem
     {
-        private static Regex RegexBlueId = new Regex(@"\.\./topic/(?<TopicID>.*?)(\?page\=.*?)?#(?<PostID>.*)", RegexOptions.Compiled);
+        private static readonly Regex RegexBlueId = new Regex(@"\.\./topic/(?<TopicID>.*?)(\?page\=.*?)?#(?<PostID>.*)", RegexOptions.Compiled); // The post details regex.
+        private readonly BlueType _type;        
         protected BlueSource[] Sources;
-
-        public BlueType Type;
-        public Dictionary<string,BlueStory> Stories = new Dictionary<string,BlueStory>();
+        
+        public readonly Dictionary<string,BlueStory> Stories = new Dictionary<string,BlueStory>(); // list of stories.
 
         public BlueParser(BlueType type)
             : base(type.ToString())
         {
+            this._type = type;
+
             // register context menus.
             this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
             this.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
@@ -49,7 +54,7 @@ namespace BlizzTV.BlizzBlues.Game
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories) { pair.Value.CheckForNotifications(); }                
         }
 
-        internal bool Parse()
+        private void Parse()
         {
             foreach(BlueSource source in this.Sources)
             {
@@ -60,7 +65,7 @@ namespace BlizzTV.BlizzBlues.Game
                     {
                         this.State = State.Error;
                         this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
-                        return false;
+                        return;
                     }
 
                     HtmlDocument doc = new HtmlDocument();
@@ -72,36 +77,32 @@ namespace BlizzTV.BlizzBlues.Game
                         string postForum = subNodes[0].InnerText;
                         string postTitle = subNodes[1].InnerText;
                         string postLink = string.Format("{0}{1}", source.Url, subNodes[1].Attributes["href"].Value);
-                        string topicId = "";
-                        string postId = "";
 
                         Match m = RegexBlueId.Match(subNodes[1].Attributes["href"].Value);
-                        if (m.Success)
-                        {
-                            topicId = m.Groups["TopicID"].Value;
-                            postId = m.Groups["PostID"].Value;
+                        if (!m.Success) continue; // if no match is found, continue the loop with next element.
 
-                            BlueStory b = new BlueStory(this.Type, postTitle, source.Region, postLink, topicId, postId);
-                            b.OnStateChange += OnChildStateChange;
+                        string topicId = m.Groups["TopicID"].Value;
+                        string postId = m.Groups["PostID"].Value;
 
-                            if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, b);
-                            else this.Stories[topicId].AddPost(b);
-                        }
+                        BlueStory b = new BlueStory(this._type, postTitle, source.Region, postLink, topicId, postId);
+                        b.OnStateChange += OnChildStateChange;
+
+                        if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, b);
+                        else this.Stories[topicId].AddSuccessorPost(b);
                     }
                 }
                 catch (Exception e)
                 {
-                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("BlueParser error: {0}", e));
-                    return false;
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module BlizzBlues caught an exception while parsing: {0}", e));
+                    return;
                 }
             }
-
-            return true;
         }
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.State == (sender as BlueStory).State) return;
+            if (this.State == ((BlueStory) sender).State) return;
+
             int unread = this.Stories.Count(pair => pair.Value.State == State.Fresh || pair.Value.State == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }
@@ -111,7 +112,7 @@ namespace BlizzTV.BlizzBlues.Game
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
             {
                 pair.Value.State = State.Read;
-                foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Read; }
+                foreach (KeyValuePair<string, BlueStory> post in pair.Value.Successors) { post.Value.State = State.Read; }
             }
         }
 
@@ -120,11 +121,14 @@ namespace BlizzTV.BlizzBlues.Game
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
             {
                 pair.Value.State = State.Unread;
-                foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Unread; }
+                foreach (KeyValuePair<string, BlueStory> post in pair.Value.Successors) { post.Value.State = State.Unread; }
             }
         }
     }
 
+    /// <summary>
+    /// Inditicates a Blizzard forum with url and region.
+    /// </summary>
     public class BlueSource
     {
         public Region Region { get; private set; }
@@ -145,7 +149,7 @@ namespace BlizzTV.BlizzBlues.Game
 
     public enum BlueType
     {
-        WOW,
+        WorldofWarcraft,
         Starcraft
     }
 }

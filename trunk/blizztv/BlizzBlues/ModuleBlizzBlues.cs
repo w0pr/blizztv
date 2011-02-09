@@ -19,7 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using BlizzTV.BlizzBlues.Game;
+using System.Windows.Forms;
+using BlizzTV.BlizzBlues.Parsers;
 using BlizzTV.Configuration;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
@@ -27,29 +28,27 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.BlizzBlues
 {
-    [ModuleAttributes("BlizzBlues", "Blizzard GM Blue post aggregator.", "blizzblues")]
-    class BlizzBluesModule:Module
+    [ModuleAttributes("BlizzBlues", "Blizzard GM-Blue's aggregator.", "blizzblues")]
+    class ModuleBlizzBlues : Module
     {
-        internal List<BlueParser> _parsers = new List<BlueParser>();
-        private Timer _updateTimer;
+        private readonly List<BlueParser> _parsers = new List<BlueParser>(); // list of blue-post parsers
+        private System.Timers.Timer _updateTimer;
 
-        public static BlizzBluesModule Instance;
+        public static ModuleBlizzBlues Instance; // the module instance.
 
-        public BlizzBluesModule()
+        public ModuleBlizzBlues()
         {
-            BlizzBluesModule.Instance = this;
-            this.RootListItem=new ListItem("BlizzBlues");
-            this.RootListItem.Icon = new NamedImage("blizzblues", Assets.Images.Icons.Png._16.blizzblues);
+            Instance = this;
 
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Blues", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
-            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
-        }
+            this.RootListItem=new ListItem("BlizzBlues")
+                                  {
+                                      Icon = new NamedImage("blizzblues", Assets.Images.Icons.Png._16.blizzblues)
+                                  };
 
-        public override System.Windows.Forms.Form GetPreferencesForm()
-        {
-            return new frmSettings();            
+            this.RootListItem.ContextMenus.Add("manualupdate", new ToolStripMenuItem("Update Blues", Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate))); // mark as unread menu.
+            this.RootListItem.ContextMenus.Add("markallasread", new ToolStripMenuItem("Mark All As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
+            this.RootListItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem("Mark All As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
+            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); // settings menu.
         }
 
         public override void Run()
@@ -60,13 +59,12 @@ namespace BlizzTV.BlizzBlues
 
         private void UpdateBlues()
         {
-            if (this.Updating) return;
-
+            if (this.Updating) return; // if module is already updating, ignore this request.
 
             this.Updating = true;
             this.NotifyUpdateStarted();
 
-            if (this._parsers.Count > 0)
+            if (this._parsers.Count > 0) // reset the current data.
             {
                 this._parsers.Clear();
                 this.RootListItem.Childs.Clear();
@@ -74,16 +72,16 @@ namespace BlizzTV.BlizzBlues
 
             this.RootListItem.SetTitle("Updating BlizzBlues..");
 
-            if (BlizzTV.BlizzBlues.Settings.Instance.TrackWorldofWarcraft)
+            if (Settings.Instance.TrackWorldofWarcraft)
             {
-                WOWBlues wow = new WOWBlues();
+                WorldofWarcraft wow = new WorldofWarcraft();
                 this._parsers.Add(wow);
                 wow.OnStateChange += OnChildStateChange;
             }
 
-            if (BlizzTV.BlizzBlues.Settings.Instance.TrackStarcraft)
+            if (Settings.Instance.TrackStarcraft)
             {
-                SCBlues sc = new SCBlues();
+                Starcraft sc = new Starcraft();
                 this._parsers.Add(sc);
                 sc.OnStateChange += OnChildStateChange;
             }
@@ -99,9 +97,9 @@ namespace BlizzTV.BlizzBlues
                     foreach (KeyValuePair<string, BlueStory> storyPair in parser.Stories)
                     {
                         parser.Childs.Add(storyPair.Key, storyPair.Value);
-                        if (storyPair.Value.More.Count > 0)
+                        if (storyPair.Value.Successors.Count > 0) // if story have posts more than one..
                         {
-                            foreach (KeyValuePair<string, BlueStory> postPair in storyPair.Value.More)
+                            foreach (KeyValuePair<string, BlueStory> postPair in storyPair.Value.Successors)
                             {
                                 storyPair.Value.Childs.Add(string.Format("{0}-{1}", postPair.Value.TopicId, postPair.Value.PostId), postPair.Value);
                             }
@@ -116,9 +114,15 @@ namespace BlizzTV.BlizzBlues
             this.Updating = false;
         }
 
+        public override Form GetPreferencesForm()
+        {
+            return new SettingsForm();
+        }
+
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.State == (sender as BlueParser).State) return;
+            if (this.RootListItem.State == ((BlueParser) sender).State) return;
+
             int unread = this._parsers.Count(parser => parser.State == State.Unread);
             this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
         }
@@ -130,7 +134,7 @@ namespace BlizzTV.BlizzBlues
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
                     pair.Value.State = State.Read;
-                    foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Read; }
+                    foreach (KeyValuePair<string, BlueStory> post in pair.Value.Successors) { post.Value.State = State.Read; }
                 }
             }
         }
@@ -142,12 +146,12 @@ namespace BlizzTV.BlizzBlues
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
                     pair.Value.State = State.Unread;
-                    foreach (KeyValuePair<string, BlueStory> post in pair.Value.More) { post.Value.State = State.Unread; }
+                    foreach (KeyValuePair<string, BlueStory> post in pair.Value.Successors) { post.Value.State = State.Unread; }
                 }
             }
         }
 
-        private void RunManualUpdate(object sender, EventArgs e)
+        private void MenuUpdate(object sender, EventArgs e)
         {
             System.Threading.Thread thread = new System.Threading.Thread(this.UpdateBlues) { IsBackground = true };
             thread.Start();
@@ -166,14 +170,14 @@ namespace BlizzTV.BlizzBlues
 
         private void SetupUpdateTimer()
         {
-            if (this._updateTimer != null)
+            if (this._updateTimer != null) // clean the old update timer if exists.
             {
                 this._updateTimer.Enabled = false;
                 this._updateTimer.Elapsed -= OnTimerHit;
                 this._updateTimer = null;
             }
 
-            _updateTimer = new Timer(BlizzTV.BlizzBlues.Settings.Instance.UpdatePeriod * 60000);
+            _updateTimer = new System.Timers.Timer(Settings.Instance.UpdatePeriod * 60000);
             _updateTimer.Elapsed += OnTimerHit;
             _updateTimer.Enabled = true;
         }

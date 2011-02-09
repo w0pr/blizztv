@@ -17,14 +17,21 @@
 
 using BlizzTV.Utility.Imaging;
 
-namespace BlizzTV.BlizzBlues.Game
+namespace BlizzTV.BlizzBlues.Parsers
 {
-    class SCBlues:BlueParser
+    /// <summary>
+    /// Parses official Starcraft forums.
+    /// </summary>
+    class Starcraft:BlueParser
     {
-        public SCBlues()
+        public Starcraft()
             : base(BlueType.Starcraft)
         {
-            this.Sources = new BlueSource[2] { new BlueSource(Region.Us, "http://us.battle.net/sc2/en/forum/blizztracker/"), new BlueSource(Region.Eu, "http://eu.battle.net/sc2/en/forum/blizztracker/") };
+            this.Sources = new BlueSource[2]
+                               {
+                                   new BlueSource(Region.Us, "http://us.battle.net/sc2/en/forum/blizztracker/"), 
+                                   new BlueSource(Region.Eu, "http://eu.battle.net/sc2/en/forum/blizztracker/")
+                               };
             this.Icon = new NamedImage("sc2", Assets.Images.Icons.Png._16.sc2);
         }
     }

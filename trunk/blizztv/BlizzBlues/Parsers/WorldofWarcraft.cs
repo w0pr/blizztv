@@ -17,14 +17,21 @@
 
 using BlizzTV.Utility.Imaging;
 
-namespace BlizzTV.BlizzBlues.Game
+namespace BlizzTV.BlizzBlues.Parsers
 {
-    public class WOWBlues:BlueParser
+    public class WorldofWarcraft:BlueParser
     {
-        public WOWBlues()
-            : base(BlueType.WOW)
+        /// <summary>
+        /// Parses official World of Warcraft forums.
+        /// </summary>
+        public WorldofWarcraft()
+            : base(BlueType.WorldofWarcraft)
         {
-            this.Sources = new BlueSource[2] { new BlueSource(Region.Us, "http://us.battle.net/wow/en/forum/blizztracker/"), new BlueSource(Region.Eu, "http://eu.battle.net/wow/en/forum/blizztracker/"), };
+            this.Sources = new BlueSource[2]
+                               {
+                                   new BlueSource(Region.Us, "http://us.battle.net/wow/en/forum/blizztracker/"),
+                                   new BlueSource(Region.Eu, "http://eu.battle.net/wow/en/forum/blizztracker/"),
+                               };
             this.Icon = new NamedImage("wow", Assets.Images.Icons.Png._16.wow);
         }
     }

@@ -201,17 +201,17 @@
     <Compile Include="Modules\Subscriptions\Providers\ProvidersStorage.cs" />
     <Compile Include="Modules\Subscriptions\SubscriptionsHandler.cs" />
     <Compile Include="Modules\Subscriptions\SubscriptionsStorage.cs" />
-    <Compile Include="BlizzBlues\BlizzBluesModule.cs" />
-    <Compile Include="BlizzBlues\frmSettings.cs">
+    <Compile Include="BlizzBlues\ModuleBlizzBlues.cs" />
+    <Compile Include="BlizzBlues\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BlizzBlues\frmSettings.Designer.cs">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <Compile Include="BlizzBlues\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BlizzBlues\Game\BlueParser.cs" />
-    <Compile Include="BlizzBlues\Game\BlueStory.cs" />
-    <Compile Include="BlizzBlues\Game\SCBlues.cs" />
-    <Compile Include="BlizzBlues\Game\WOWBlues.cs" />
+    <Compile Include="BlizzBlues\Parsers\BlueParser.cs" />
+    <Compile Include="BlizzBlues\BlueStory.cs" />
+    <Compile Include="BlizzBlues\Parsers\Starcraft.cs" />
+    <Compile Include="BlizzBlues\Parsers\WorldofWarcraft.cs" />
     <Compile Include="BlizzBlues\Settings.cs" />
     <Compile Include="Feeds\Catalog.cs" />
     <Compile Include="Feeds\FeedParser.cs" />
@@ -443,8 +443,8 @@
     <EmbeddedResource Include="Modules\Subscriptions\Catalog\frmCatalog.resx">
       <DependentUpon>frmCatalog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BlizzBlues\frmSettings.resx">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <EmbeddedResource Include="BlizzBlues\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>

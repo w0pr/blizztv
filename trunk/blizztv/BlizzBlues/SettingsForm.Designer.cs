@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.BlizzBlues
 {
-    partial class frmSettings
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.checkBoxEnableNotifications = new System.Windows.Forms.CheckBox();
@@ -119,7 +119,7 @@
             0});
             this.numericUpDownUpdatePeriod.Name = "numericUpDownUpdatePeriod";
             this.numericUpDownUpdatePeriod.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDownUpdatePeriod.TabIndex = 1;
+            this.numericUpDownUpdatePeriod.TabIndex = 0;
             this.numericUpDownUpdatePeriod.Value = new decimal(new int[] {
             1,
             0,
@@ -173,15 +173,15 @@
             this.tabControl1.Size = new System.Drawing.Size(447, 262);
             this.tabControl1.TabIndex = 1;
             // 
-            // frmSettings
+            // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(447, 262);
             this.Controls.Add(this.tabControl1);
-            this.Name = "frmSettings";
+            this.Name = "SettingsForm";
             this.Text = "frmSettings";
-            this.Load += new System.EventHandler(this.frmSettings_Load);
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.tabPage1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();

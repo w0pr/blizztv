@@ -52,7 +52,7 @@ namespace BlizzTV.UI
             this.spreadTheWordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
-            this.LoadingCircle = new LoadingCircleToolStripMenuItem();
+            this.LoadingCircle = new BlizzTV.Controls.LoadingCircle.LoadingCircleToolStripMenuItem();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.SleepIcon = new System.Windows.Forms.ToolStripStatusLabel();
