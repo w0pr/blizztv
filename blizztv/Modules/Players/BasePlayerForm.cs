@@ -25,13 +25,13 @@ namespace BlizzTV.Modules.Players
     /// <summary>
     /// Provides a base framework for player windows.
     /// </summary>
-    public partial class PlayerForm : Form
+    public partial class BasePlayerForm : Form
     {
         private bool _borderless = false; // are we in borderless mode?
         private bool _dragging = false; // are we currently being dragged?
         private Point _dragMouseOffset;
 
-        protected PlayerForm()
+        protected BasePlayerForm()
         {
             InitializeComponent();
 
