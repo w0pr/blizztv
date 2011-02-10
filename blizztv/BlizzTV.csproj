@@ -316,7 +316,9 @@
     <Compile Include="Videos\AddChannelForm.Designer.cs">
       <DependentUpon>AddChannelForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videos\PlayerForm.cs" />
+    <Compile Include="Videos\PlayerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Videos\PlayerForm.Designer.cs">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
