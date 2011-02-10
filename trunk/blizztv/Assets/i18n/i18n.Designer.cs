@@ -241,6 +241,24 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error parsing the video channel. Please check the channel URL and retry..
+        /// </summary>
+        internal static string ErrorParsingVideoChannelMessage {
+            get {
+                return ResourceManager.GetString("ErrorParsingVideoChannelMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error parsing video channel.
+        /// </summary>
+        internal static string ErrorParsingVideoChannelTitle {
+            get {
+                return ResourceManager.GetString("ErrorParsingVideoChannelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In progress..
         /// </summary>
         internal static string EventInProgressMessage {
@@ -304,6 +322,15 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please fill the feed name and URL fields!.
+        /// </summary>
+        internal static string FillFeedNameAndUrlFieldsMessage {
+            get {
+                return ResourceManager.GetString("FillFeedNameAndUrlFieldsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please fill the stream name and url fields!.
         /// </summary>
         internal static string FillStreamNameAndUrlFieldsMessage {
@@ -313,11 +340,11 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please fill the feed name and URL fields!.
+        ///   Looks up a localized string similar to Please fill the channel name and url fields!.
         /// </summary>
-        internal static string FillTheFeedNameAndUrlFieldsMessage {
+        internal static string FillVideoChannelNameAndUrlFieldsMessage {
             get {
-                return ResourceManager.GetString("FillTheFeedNameAndUrlFieldsMessage", resourceCulture);
+                return ResourceManager.GetString("FillVideoChannelNameAndUrlFieldsMessage", resourceCulture);
             }
         }
         
@@ -396,9 +423,18 @@ namespace BlizzTV.Assets.i18n {
         /// <summary>
         ///   Looks up a localized string similar to Invalid URL.
         /// </summary>
-        internal static string InvalidStreamUrlTitle {
+        internal static string InvalidUrl {
             get {
-                return ResourceManager.GetString("InvalidStreamUrlTitle", resourceCulture);
+                return ResourceManager.GetString("InvalidUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is an invalid {1} url. Please correct the url and retry..
+        /// </summary>
+        internal static string InvalidVideoChannelUrlMessage {
+            get {
+                return ResourceManager.GetString("InvalidVideoChannelUrlMessage", resourceCulture);
             }
         }
         
@@ -588,6 +624,15 @@ namespace BlizzTV.Assets.i18n {
         internal static string UpdateIsBeingInstalledMessage {
             get {
                 return ResourceManager.GetString("UpdateIsBeingInstalledMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The channel already exists in your subscriptions named as &apos;{0}&apos;..
+        /// </summary>
+        internal static string VideoChannelSubscriptionsAlreadyExists {
+            get {
+                return ResourceManager.GetString("VideoChannelSubscriptionsAlreadyExists", resourceCulture);
             }
         }
         

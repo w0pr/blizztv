@@ -46,10 +46,12 @@ namespace BlizzTV.Videos
 
         public override void AddAsSubscription()
         {
-            VideoSubscription subscription = new VideoSubscription();
-            subscription.Name = this.Name;
-            subscription.Provider = this.Provider;
-            subscription.Slug = this.Slug;
+            VideoSubscription subscription = new VideoSubscription
+                                                 {
+                                                     Name = this.Name,
+                                                     Provider = this.Provider,
+                                                     Slug = this.Slug
+                                                 };
 
             Subscriptions.Instance.Add(subscription);
         }

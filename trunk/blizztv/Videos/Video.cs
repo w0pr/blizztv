@@ -21,12 +21,13 @@ using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Settings;
 using BlizzTV.Utility.Imaging;
+using System.Windows.Forms;
 
 namespace BlizzTV.Videos
 {
     public class Video:ListItem
     {
-        private frmPlayer _player = null;
+        private PlayerForm _player = null;
 
         public string ChannelName { get; internal set; }
         public string VideoId { get; internal set; }
@@ -42,8 +43,8 @@ namespace BlizzTV.Videos
             this.Link = link;
             this.Provider = provider;
 
-            this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsWatchedClicked)));
-            this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnWatchedClicked)));
+            this.ContextMenus.Add("markaswatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsWatchedClicked)));
+            this.ContextMenus.Add("markasunwatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnWatchedClicked)));
 
             this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
         }
@@ -77,7 +78,7 @@ namespace BlizzTV.Videos
             {
                 if (this._player == null)
                 {
-                    this._player = new frmPlayer(this); // render the video with our own video player
+                    this._player = new PlayerForm(this); // render the video with our own video player
                     this._player.FormClosed += PlayerClosed;
                     this._player.Show();
                 }

@@ -23,11 +23,11 @@ using BlizzTV.Settings;
 
 namespace BlizzTV.Videos
 {
-    public partial class frmPlayer : PlayerWindow // The video player.
+    public partial class PlayerForm : PlayerWindow // The video player.
     {
         private readonly Video _video; // The video. 
 
-        public frmPlayer(Video video)
+        public PlayerForm(Video video)
         {
             InitializeComponent();
 
@@ -43,7 +43,7 @@ namespace BlizzTV.Videos
             this._video.Process(); // process the video so that it's template variables are replaced.
         }
 
-        private void Player_Load(object sender, EventArgs e)
+        private void PlayerForm_Load(object sender, EventArgs e)
         {
             try
             {
