@@ -19,9 +19,12 @@ using System;
 using System.Collections;
 using BlizzTV.Utility.Web;
 
-namespace BlizzTV.Streams.Handlers
+namespace BlizzTV.Streams.Parsers
 {
-    public class UStream:Stream // ustream wrapper
+    /// <summary>
+    /// Ustream parser.
+    /// </summary>
+    public class UStream:Stream
     {
         private UInt32 _streamId;
 
@@ -51,7 +54,7 @@ namespace BlizzTV.Streams.Handlers
                     }
                 }
             }
-            catch (Exception e) { throw new Exception("Ustream Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
+            catch (Exception e) { throw new Exception("Stream module's ustream parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
         }
 
         public override void Process() // for ustream we also need to replace stream_id variable in movie and flash vars templates.

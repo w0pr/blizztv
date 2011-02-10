@@ -22,16 +22,16 @@ using BlizzTV.Log;
 
 namespace BlizzTV.Streams
 {
-    public partial class frmChat : Form
+    public partial class ChatForm : Form
     {
-        private readonly Stream _stream; // the stream.
-        private readonly frmPlayer _parent;
+        private readonly Stream _stream; 
+        private readonly PlayerForm _parent;
         private bool _snapParent = false;
         private bool _borderless = false;
         private bool _dragging = false;
-        private Point _drag_offset;
+        private Point _dragOffset;
 
-        public frmChat(frmPlayer parent, Stream stream)
+        public ChatForm(PlayerForm parent, Stream stream)
         {
             InitializeComponent();
 
@@ -50,13 +50,13 @@ namespace BlizzTV.Streams
             this.Height = Settings.Instance.ChatWindowHeight;
         }
 
-        private void frmChat_Load(object sender, EventArgs e)
+        private void ChatForm_Load(object sender, EventArgs e)
         {
             try
             {
                 this._snapParent = true;
                 this.SnapToParent();
-                this.Move += frmChat_Move;
+                this.Move += ChatForm_Move;
                 this.Text = string.Format("Chat: {0}@{1}", this._stream.Name, this._stream.Provider); // set the window title.
                 this.Chat.LoadMovie(0, string.Format("{0}", this._stream.ChatMovie)); // load the movie.
             }
@@ -79,7 +79,7 @@ namespace BlizzTV.Streams
         {
             if (this._borderless)
             {
-                this._drag_offset = new Point(e.X - this.Location.X, e.Y - this.Location.Y);
+                this._dragOffset = new Point(e.X - this.Location.X, e.Y - this.Location.Y);
                 this.Cursor = Cursors.SizeAll;
                 this._dragging = true;
             }
@@ -93,7 +93,7 @@ namespace BlizzTV.Streams
 
         private void ChatMouseMove(object sender, MouseEventArgs e)
         {
-            if (this._borderless && this._dragging) this.Location = new System.Drawing.Point(e.X - this._drag_offset.X, e.Y - this._drag_offset.Y);
+            if (this._borderless && this._dragging) this.Location = new System.Drawing.Point(e.X - this._dragOffset.X, e.Y - this._dragOffset.Y);
         }
 
         void OnParentClose(object sender, FormClosedEventArgs e)
@@ -118,7 +118,7 @@ namespace BlizzTV.Streams
             if (this.Height != this._parent.Height) this.Height = this._parent.Height;
         }
 
-        private void frmChat_Move(object sender, EventArgs e)
+        private void ChatForm_Move(object sender, EventArgs e)
         {
             int margin = Math.Abs(this.Left - (this._parent.Left + this._parent.Width));
             if (margin <= 15)

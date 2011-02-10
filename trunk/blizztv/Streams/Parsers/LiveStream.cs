@@ -19,9 +19,12 @@ using System;
 using System.Collections;
 using BlizzTV.Utility.Web;
 
-namespace BlizzTV.Streams.Handlers
+namespace BlizzTV.Streams.Parsers
 {
-    public class LiveStream:Stream // livestream wrapper
+    /// <summary>
+    /// Parser for LiveStream.
+    /// </summary>
+    public class LiveStream:Stream
     {
         public LiveStream(StreamSubscription subscription) : base(subscription) { }
 
@@ -42,7 +45,7 @@ namespace BlizzTV.Streams.Handlers
                 this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
                 this.Description = (string)data["description"].ToString(); // stream description.
             }
-            catch (Exception e) { throw new Exception("LiveStream Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
+            catch (Exception e) { throw new Exception("Stream module's livestream parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
         }
     }
 }

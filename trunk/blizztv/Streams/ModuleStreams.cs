@@ -30,19 +30,21 @@ using BlizzTV.Utility.UI;
 namespace BlizzTV.Streams
 {
     [ModuleAttributes("Streams", "Live stream aggregator plugin.","stream")]
-    public class StreamsPlugin:Module
+    public class ModuleStreams:Module
     {
-        internal Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
+        private Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _updateTimer;
         private bool _disposed = false;
 
-        public static StreamsPlugin Instance;
+        public static ModuleStreams Instance;
 
-        public StreamsPlugin()
+        public ModuleStreams()
         {
-            StreamsPlugin.Instance = this;
-            this.RootListItem = new ListItem("Streams");
-            this.RootListItem.Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream);
+            ModuleStreams.Instance = this;
+            this.RootListItem = new ListItem("Streams")
+                                    {
+                                        Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream)
+                                    };
 
             this.RootListItem.ContextMenus.Add("refresh", new System.Windows.Forms.ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); 
             this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
@@ -56,7 +58,7 @@ namespace BlizzTV.Streams
 
         public override System.Windows.Forms.Form GetPreferencesForm()
         {
-            return new frmSettings();
+            return new SettingsForm();
         }
 
         public override bool TryDragDrop(string link)

@@ -16,10 +16,13 @@
  */
 
 using System;
-using BlizzTV.Streams.Handlers;
+using BlizzTV.Streams.Parsers;
 
 namespace BlizzTV.Streams
 {
+    /// <summary>
+    /// Stream factory.
+    /// </summary>
     public static class StreamFactory // streams factory
     {
         public static Stream CreateStream(StreamSubscription subscription) // creates a stream object based on it's provider

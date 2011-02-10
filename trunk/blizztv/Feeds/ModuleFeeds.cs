@@ -63,7 +63,7 @@ namespace BlizzTV.Feeds
         {
             if (Subscriptions.Instance.Dictionary.ContainsKey(link))
             {
-                MessageBox.Show(string.Format(i18n.FeedAlreadyExistsInSubscriptionsMessage, Subscriptions.Instance.Dictionary[link].Name), i18n.FeedAlreadyExistsInSubscriptionsTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.FeedSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[link].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 

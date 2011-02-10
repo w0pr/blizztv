@@ -243,10 +243,10 @@
   <data name="AddNewFeedTitle" xml:space="preserve">
     <value>Add New Feed</value>
   </data>
-  <data name="FeedAlreadyExistsInSubscriptionsMessage" xml:space="preserve">
+  <data name="FeedSubscriptionAlreadyExists" xml:space="preserve">
     <value>The feed already exists in your subscriptions named as '{0}'.</value>
   </data>
-  <data name="FeedAlreadyExistsInSubscriptionsTitle" xml:space="preserve">
+  <data name="SubscriptionExists" xml:space="preserve">
     <value>Subscription exists</value>
   </data>
   <data name="AllFieldsRequiredTitle" xml:space="preserve">
@@ -290,5 +290,20 @@
   </data>
   <data name="MarkAsWatched" xml:space="preserve">
     <value>Mark As Watched</value>
+  </data>
+  <data name="FillStreamNameAndUrlFieldsMessage" xml:space="preserve">
+    <value>Please fill the stream name and url fields!</value>
+  </data>
+  <data name="InvalidStreamUrlMessage" xml:space="preserve">
+    <value>{0} is an invalid {1} url. Please correct the url and retry.</value>
+  </data>
+  <data name="InvalidStreamUrlTitle" xml:space="preserve">
+    <value>Invalid URL</value>
+  </data>
+  <data name="StreamSubscriptionAlreadyExistsMessage" xml:space="preserve">
+    <value>The stream already exists in your subscriptions named as '{0}'.</value>
+  </data>
+  <data name="StreamOnlineNotification" xml:space="preserve">
+    <value>Stream is online, click to start watching it.</value>
   </data>
 </root>

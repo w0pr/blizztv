@@ -18,20 +18,21 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Modules.Subscriptions.Providers;
 
 namespace BlizzTV.Streams
 {
-    public partial class frmAddStream : Form
+    public partial class AddStreamForm : Form
     {
         public StreamSubscription Subscription = new StreamSubscription();
 
-        public frmAddStream()
+        public AddStreamForm()
         {
             InitializeComponent();
         }
 
-        private void frmAddStream_Load(object sender, EventArgs e)
+        private void AddStreamForm_Load(object sender, EventArgs e)
         {
             foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary) { comboBoxProviders.Items.Add(pair.Value.Name); }
             comboBoxProviders.SelectedIndex = 0;
@@ -41,21 +42,21 @@ namespace BlizzTV.Streams
         {
             if (txtName.Text.Trim() == "" || txtURL.Text.Trim() == "")
             {
-                MessageBox.Show("Please fill the stream name and url fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(i18n.FillStreamNameAndUrlFieldsMessage, i18n.AllFieldsRequiredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             StreamProvider provider = (StreamProvider)Providers.Instance.Dictionary[comboBoxProviders.SelectedItem.ToString()];
             if (!provider.LinkValid(txtURL.Text))
             {
-                MessageBox.Show(string.Format("{0} is an invalid {1} url. Please correct the url and retry.", txtURL.Text, provider.Name), "Invalid URL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.InvalidStreamUrlMessage, txtURL.Text, provider.Name), i18n.InvalidStreamUrlTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             String slug = provider.GetSlug(txtURL.Text);
             if (Subscriptions.Instance.Dictionary.ContainsKey(slug))
             {
-                MessageBox.Show(string.Format("The stream already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[slug].Name), "Subscription Exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.StreamSubscriptionAlreadyExistsMessage, Subscriptions.Instance.Dictionary[slug].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

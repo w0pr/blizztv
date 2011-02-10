@@ -30,10 +30,29 @@ namespace BlizzTV.Streams
 
         private Settings() : base("Streams") { }
 
+        /// <summary>
+        /// Enables notifications for streams module.
+        /// </summary>
         public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
+
+        /// <summary>
+        /// Sets update period for streams module.
+        /// </summary>
         public int UpdatePeriod { get { return this.GetInt("UpdatePeriod", 60); } set { this.Set("UpdatePeriod", value); } }
+
+        /// <summary>
+        /// Automatically loads chat window open stream load.
+        /// </summary>
         public bool AutomaticallyOpenChat { get { return this.GetBoolean("AutomaticallyOpenChat", false); } set { this.Set("AutomaticallyOpenChat", value); } }
+
+        /// <summary>
+        /// Sets chat window's width.
+        /// </summary>
         public int ChatWindowWidth { get { return this.GetInt("ChatWindowWidth", 350); } set { this.Set("ChatWindowWidth", value); } }
+
+        /// <summary>
+        /// Sets chat window's height.
+        /// </summary>
         public int ChatWindowHeight { get { return this.GetInt("ChatWindowHeight", 385); } set { this.Set("ChatWindowHeight", value); } }
     }
 }

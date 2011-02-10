@@ -2,7 +2,7 @@
 
 namespace BlizzTV.Streams
 {
-    partial class frmChat
+    partial class ChatForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace BlizzTV.Streams
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmChat));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChatForm));
             this.Chat = new FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.Chat)).BeginInit();
             this.SuspendLayout();
@@ -55,7 +55,7 @@ namespace BlizzTV.Streams
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmChat";
             this.Text = "frmChat";
-            this.Load += new System.EventHandler(this.frmChat_Load);
+            this.Load += new System.EventHandler(this.ChatForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Chat)).EndInit();
             this.ResumeLayout(false);
 

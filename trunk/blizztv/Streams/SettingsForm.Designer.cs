@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Streams
 {
-    partial class frmSettings
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -320,7 +320,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "frmSettings";
             this.Text = "frmSettings";
-            this.Load += new System.EventHandler(this.frmSettings_Load);
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

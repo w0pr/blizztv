@@ -40,7 +40,7 @@ namespace BlizzTV.Feeds
 
             if (Subscriptions.Instance.Dictionary.ContainsKey(txtURL.Text))
             {
-                MessageBox.Show(string.Format(i18n.FeedAlreadyExistsInSubscriptionsMessage, Subscriptions.Instance.Dictionary[txtURL.Text].Name), i18n.FeedAlreadyExistsInSubscriptionsTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.FeedSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[txtURL.Text].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

@@ -23,12 +23,12 @@ using BlizzTV.Settings;
 
 namespace BlizzTV.Streams
 {
-    public partial class frmPlayer : PlayerWindow // The stream player.
+    public partial class PlayerForm : PlayerWindow // The stream player.
     {
         private readonly Stream _stream; // the stream.
-        private frmChat _chatWindow = null;
+        private ChatForm _chatWindow = null;
 
-        public frmPlayer(Stream stream)
+        public PlayerForm(Stream stream)
         {            
             InitializeComponent();
             
@@ -39,13 +39,13 @@ namespace BlizzTV.Streams
             this._stream = stream; // set the stream.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
 
-            if ((Providers.Instance.Dictionary[this._stream.Provider] as StreamProvider).Player == "Flash") this.SetupFlashPlayer();
-            else if ((Providers.Instance.Dictionary[this._stream.Provider] as StreamProvider).Player == "Browser") this.SetupBrowserPlayer();
+            if (((StreamProvider) Providers.Instance.Dictionary[this._stream.Provider]).Player == "Flash") this.SetupFlashPlayer();
+            else if (((StreamProvider) Providers.Instance.Dictionary[this._stream.Provider]).Player == "Browser") this.SetupBrowserPlayer();
 
             if (!((StreamProvider) Providers.Instance.Dictionary[this._stream.Provider]).ChatAvailable) this.MenuOpenChat.Enabled = false; 
         }
 
-        private void Player_Load(object sender, EventArgs e) 
+        private void PlayerForm_Load(object sender, EventArgs e) 
         {
             try
             {
@@ -128,7 +128,7 @@ namespace BlizzTV.Streams
         {
             if (this._chatWindow == null)
             {
-                this._chatWindow = new frmChat(this,this._stream);
+                this._chatWindow = new ChatForm(this,this._stream);
                 this._chatWindow.FormClosed += ChatWindowClosed;
                 this._chatWindow.Show();
             }
