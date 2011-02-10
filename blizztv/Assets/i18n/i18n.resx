@@ -321,4 +321,13 @@
   <data name="VideoChannelSubscriptionsAlreadyExists" xml:space="preserve">
     <value>The channel already exists in your subscriptions named as '{0}'.</value>
   </data>
+  <data name="CanNotDeactivateUpdatingModules" xml:space="preserve">
+    <value>You can not de-activate modules that are currently updating. Please wait them finish and re-try.</value>
+  </data>
+  <data name="ModuleUpdating" xml:space="preserve">
+    <value>Module {0} is updating</value>
+  </data>
+  <data name="SaveTheMurlocs" xml:space="preserve">
+    <value>Save the Murlocs!</value>
+  </data>
 </root>

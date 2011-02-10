@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id: Settings.cs 355 2011-02-07 12:05:26Z shalafiraistlin@gmail.com $
+ * $Id$
  */
 
 using System;
@@ -23,11 +23,11 @@ using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.Updates
 {
-    public partial class frmUpdater : DownloadForm
+    public partial class UpdaterForm : DownloadForm
     {
         private readonly Update _update;
 
-        public frmUpdater(Update update)
+        public UpdaterForm(Update update)
         {
             if (update == null) return; 
             this._update = update;
@@ -35,7 +35,7 @@ namespace BlizzTV.Updates
             InitializeComponent();
         }
 
-        private void frmUpdater_Load(object sender, EventArgs e)
+        private void UpdaterForm_Load(object sender, EventArgs e)
         {
             this.Text = string.Format(i18n.DownloadingUpdateTitle, this._update.Version);
             this.StartDownload(new Download(this._update.DownloadLink,this._update.FileName)); // start downloading the update.

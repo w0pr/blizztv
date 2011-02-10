@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
 using BlizzTV.Notifications;
@@ -28,14 +29,14 @@ using BlizzTV.Utility.UI;
 
 namespace BlizzTV.UI
 {
-    public partial class frmPreferences : Form
+    public partial class PreferencesForm : Form
     {
         private readonly List<TabPage> _pluginTabs = new List<TabPage>();
         private bool _loadComplete = false;
 
-        public frmPreferences() { InitializeComponent(); }
+        public PreferencesForm() { InitializeComponent(); }
 
-        private void frmPreferences_Load(object sender, EventArgs e)
+        private void PreferencesForm_Load(object sender, EventArgs e)
         {
             this.LoadSettings(); // load settings.
             this.LoadModuleTabs(); // load module setting-tabs.
@@ -151,7 +152,7 @@ namespace BlizzTV.UI
                     {
                         if (ModuleManager.Instance.InstantiatedModules[item.ModuleName].Updating) // don't allow disabling modules that are currently updating data.
                         {
-                            MessageBox.Show("You can not de-activate modules that are currently updating. Please wait them finish and re-try.", string.Format("Module {0} is updating", item.ModuleName), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(i18n.CanNotDeactivateUpdatingModules, string.Format(i18n.ModuleUpdating, item.ModuleName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return false;
                         }
                     }

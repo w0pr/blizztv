@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Notifications
 {
-    partial class frmArchivedNotifications
+    partial class NotificationsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -98,7 +98,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Notifications";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmQueuedNotifications_FormClosing);
-            this.Load += new System.EventHandler(this.frmQueuedNotifications_Load);
+            this.Load += new System.EventHandler(this.NotificationsForm_Load);
             this.ResizeEnd += new System.EventHandler(this.frmArchivedNotifications_ResizeEnd);
             this.ResumeLayout(false);
 

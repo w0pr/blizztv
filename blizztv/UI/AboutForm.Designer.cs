@@ -2,7 +2,7 @@
 
 namespace BlizzTV.UI
 {
-    partial class frmAbout
+    partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace BlizzTV.UI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Hüseyin Uslu",
             "Developer."}, -1);
@@ -308,7 +308,7 @@ namespace BlizzTV.UI
             this.Name = "frmAbout";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About BlizzTV";
-            this.Load += new System.EventHandler(this.frmAbout_Load);
+            this.Load += new System.EventHandler(this.AboutForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MoreDots);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);

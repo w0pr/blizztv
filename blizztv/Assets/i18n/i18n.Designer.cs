@@ -115,6 +115,15 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can not de-activate modules that are currently updating. Please wait them finish and re-try..
+        /// </summary>
+        internal static string CanNotDeactivateUpdatingModules {
+            get {
+                return ResourceManager.GetString("CanNotDeactivateUpdatingModules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can not setup an alarm for the event as it&apos;s just about to start.
         /// </summary>
         internal static string CanNotSetupEventAlarmMessage {
@@ -511,6 +520,15 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Module {0} is updating.
+        /// </summary>
+        internal static string ModuleUpdating {
+            get {
+                return ResourceManager.GetString("ModuleUpdating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You&apos;re already running the latest version..
         /// </summary>
         internal static string NoAvailableUpdateFoundMessage {
@@ -552,6 +570,15 @@ namespace BlizzTV.Assets.i18n {
         internal static string ReplacedSubscriptionsDatabaseTitle {
             get {
                 return ResourceManager.GetString("ReplacedSubscriptionsDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the Murlocs!.
+        /// </summary>
+        internal static string SaveTheMurlocs {
+            get {
+                return ResourceManager.GetString("SaveTheMurlocs", resourceCulture);
             }
         }
         

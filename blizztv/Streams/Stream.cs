@@ -29,7 +29,7 @@ namespace BlizzTV.Streams
     public class Stream:ListItem
     {
         private bool _isLive = false; // is the stream live?
-        private PlayerWindow _player = null;
+        private PlayerForm _player = null;
 
         public string Name { get; internal set; }
         public string Slug { get; internal set; }

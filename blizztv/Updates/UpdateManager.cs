@@ -54,7 +54,7 @@ namespace BlizzTV.Updates
                 DialogResult result = MessageBox.Show(string.Format(i18n.FoundANewUpdateMessage, foundUpdate.UpdateType), string.Format(i18n.FoundANewUpdateTitle, foundUpdate.UpdateType), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes) // if user approves installing the update
                 {
-                    frmUpdater f = new frmUpdater(foundUpdate);
+                    UpdaterForm f = new UpdaterForm(foundUpdate);
                     f.ShowDialog();
                 }
             }

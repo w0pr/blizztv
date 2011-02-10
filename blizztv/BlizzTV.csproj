@@ -143,21 +143,21 @@
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
     <Compile Include="Win32API\WindowMessaging.cs" />
     <Compile Include="Utility\Helpers\Zip.cs" />
-    <Compile Include="Notifications\frmArchivedNotifications.cs">
+    <Compile Include="Notifications\NotificationsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Notifications\frmArchivedNotifications.Designer.cs">
-      <DependentUpon>frmArchivedNotifications.cs</DependentUpon>
+    <Compile Include="Notifications\NotificationsForm.Designer.cs">
+      <DependentUpon>NotificationsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Notifications\INotificationRequester.cs" />
     <Compile Include="Notifications\NotificationManager.cs" />
     <Compile Include="Notifications\ArchivedNotifications.cs" />
     <Compile Include="Notifications\NotificationSound.cs" />
-    <Compile Include="Modules\Players\PlayerWindow.cs">
+    <Compile Include="Modules\Players\PlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Players\PlayerWindow.Designer.cs">
-      <DependentUpon>PlayerWindow.cs</DependentUpon>
+    <Compile Include="Modules\Players\PlayerForm.Designer.cs">
+      <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\UI\ListViewItemComparer.cs" />
     <Compile Include="Controls\LoadingCircle\LoadingCircle.cs">
@@ -169,11 +169,11 @@
     <Compile Include="Controls\LoadingCircle\LoadingCircleToolStripMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Updates\frmUpdater.cs">
+    <Compile Include="Updates\UpdaterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Updates\frmUpdater.Designer.cs">
-      <DependentUpon>frmUpdater.cs</DependentUpon>
+    <Compile Include="Updates\UpdaterForm.Designer.cs">
+      <DependentUpon>UpdaterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\Extensions\BitmapExtensions.cs" />
     <Compile Include="Utility\Imaging\NamedImage.cs" />
@@ -182,11 +182,11 @@
     <Compile Include="Utility\Helpers\SystemStartup.cs" />
     <Compile Include="Utility\Date\ZonedDateTime.cs" />
     <Compile Include="Workload\WorkloadManager.cs" />
-    <Compile Include="Modules\Settings\ModuleSettingsHost.cs">
+    <Compile Include="Modules\Settings\ModuleSettingsHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Settings\ModuleSettingsHost.Designer.cs">
-      <DependentUpon>ModuleSettingsHost.cs</DependentUpon>
+    <Compile Include="Modules\Settings\ModuleSettingsHostForm.Designer.cs">
+      <DependentUpon>ModuleSettingsHostForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\StateStorage\StateStorage.cs" />
     <Compile Include="Storage\KeyValueStorage.cs" />
@@ -287,9 +287,7 @@
     <Compile Include="Streams\ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\PlayerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Streams\PlayerForm.cs" />
     <Compile Include="Streams\PlayerForm.Designer.cs">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
@@ -316,9 +314,7 @@
     <Compile Include="Videos\AddChannelForm.Designer.cs">
       <DependentUpon>AddChannelForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videos\PlayerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Videos\PlayerForm.cs" />
     <Compile Include="Videos\PlayerForm.Designer.cs">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
@@ -354,23 +350,23 @@
     <Compile Include="Utility\Web\WebReader.cs" />
     <Compile Include="UI\Settings.cs" />
     <Compile Include="Dependency\DependencyManager.cs" />
-    <Compile Include="UI\frmAbout.cs">
+    <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\frmAbout.Designer.cs">
-      <DependentUpon>frmAbout.cs</DependentUpon>
+    <Compile Include="UI\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\frmMain.cs">
+    <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <Compile Include="UI\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\frmPreferences.cs">
+    <Compile Include="UI\PreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\frmPreferences.Designer.cs">
-      <DependentUpon>frmPreferences.cs</DependentUpon>
+    <Compile Include="UI\PreferencesForm.Designer.cs">
+      <DependentUpon>PreferencesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\TreeItem.cs" />
     <Compile Include="Program.cs" />
@@ -428,17 +424,17 @@
     <EmbeddedResource Include="Downloads\DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Notifications\frmArchivedNotifications.resx">
-      <DependentUpon>frmArchivedNotifications.cs</DependentUpon>
+    <EmbeddedResource Include="Notifications\NotificationsForm.resx">
+      <DependentUpon>NotificationsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Players\PlayerWindow.resx">
-      <DependentUpon>PlayerWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Modules\Players\PlayerForm.resx">
+      <DependentUpon>PlayerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Updates\frmUpdater.resx">
-      <DependentUpon>frmUpdater.cs</DependentUpon>
+    <EmbeddedResource Include="Updates\UpdaterForm.resx">
+      <DependentUpon>UpdaterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Settings\ModuleSettingsHost.resx">
-      <DependentUpon>ModuleSettingsHost.cs</DependentUpon>
+    <EmbeddedResource Include="Modules\Settings\ModuleSettingsHostForm.resx">
+      <DependentUpon>ModuleSettingsHostForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Subscriptions\Catalog\frmCatalog.resx">
       <DependentUpon>frmCatalog.cs</DependentUpon>
@@ -446,15 +442,15 @@
     <EmbeddedResource Include="BlizzBlues\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\frmAbout.resx">
-      <DependentUpon>frmAbout.cs</DependentUpon>
+    <EmbeddedResource Include="UI\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <EmbeddedResource Include="UI\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\frmPreferences.resx">
-      <DependentUpon>frmPreferences.cs</DependentUpon>
+    <EmbeddedResource Include="UI\PreferencesForm.resx">
+      <DependentUpon>PreferencesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\AlarmForm.resx">
       <DependentUpon>AlarmForm.cs</DependentUpon>
