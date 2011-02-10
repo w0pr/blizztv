@@ -17,13 +17,13 @@
 
 using System.Text.RegularExpressions;
 
-namespace BlizzTV.Videos.Handlers
+namespace BlizzTV.Videos.Parsers.Video
 {
-    public class YoutubeVideo:Video
+    public class Youtube:Videos.Video
     {
         private static readonly Regex Regex = new Regex(@"http://www\.youtube\.com/watch\?v\=(.*)\&", RegexOptions.Compiled); // compiled regex for reading video id's.
 
-        public YoutubeVideo(string channelName, string title, string guid, string link, string provider)
+        public Youtube(string channelName, string title, string guid, string link, string provider)
             : base(channelName,title, guid, link, provider)
         {
             Match m = Regex.Match(this.Link);

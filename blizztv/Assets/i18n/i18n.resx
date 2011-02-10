@@ -258,7 +258,7 @@
   <data name="ErrorParsingFeedTitle" xml:space="preserve">
     <value>Error parsing feed</value>
   </data>
-  <data name="FillTheFeedNameAndUrlFieldsMessage" xml:space="preserve">
+  <data name="FillFeedNameAndUrlFieldsMessage" xml:space="preserve">
     <value>Please fill the feed name and URL fields!</value>
   </data>
   <data name="MarkAllAsRead" xml:space="preserve">
@@ -297,7 +297,7 @@
   <data name="InvalidStreamUrlMessage" xml:space="preserve">
     <value>{0} is an invalid {1} url. Please correct the url and retry.</value>
   </data>
-  <data name="InvalidStreamUrlTitle" xml:space="preserve">
+  <data name="InvalidUrl" xml:space="preserve">
     <value>Invalid URL</value>
   </data>
   <data name="StreamSubscriptionAlreadyExistsMessage" xml:space="preserve">
@@ -305,5 +305,20 @@
   </data>
   <data name="StreamOnlineNotification" xml:space="preserve">
     <value>Stream is online, click to start watching it.</value>
+  </data>
+  <data name="ErrorParsingVideoChannelMessage" xml:space="preserve">
+    <value>There was an error parsing the video channel. Please check the channel URL and retry.</value>
+  </data>
+  <data name="ErrorParsingVideoChannelTitle" xml:space="preserve">
+    <value>Error parsing video channel</value>
+  </data>
+  <data name="FillVideoChannelNameAndUrlFieldsMessage" xml:space="preserve">
+    <value>Please fill the channel name and url fields!</value>
+  </data>
+  <data name="InvalidVideoChannelUrlMessage" xml:space="preserve">
+    <value>{0} is an invalid {1} url. Please correct the url and retry.</value>
+  </data>
+  <data name="VideoChannelSubscriptionsAlreadyExists" xml:space="preserve">
+    <value>The channel already exists in your subscriptions named as '{0}'.</value>
   </data>
 </root>

@@ -15,11 +15,11 @@
  * $Id$
  */
 
-namespace BlizzTV.Videos.Handlers
+namespace BlizzTV.Videos.Parsers.Video
 {
-    public class BlipTvVideo:Video
+    public class BlipTv:Videos.Video
     {
-        public BlipTvVideo(string channelName, string title, string guid, string link, string provider)
+        public BlipTv(string channelName, string title, string guid, string link, string provider)
             : base(channelName, title, guid, link, provider) { }
     }
 }

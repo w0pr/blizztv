@@ -18,20 +18,21 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Modules.Subscriptions.Providers;
 
 namespace BlizzTV.Videos
 {
-    public partial class frmAddChannel : Form
+    public partial class AddChannelForm : Form
     {
         public VideoSubscription Subscription = new VideoSubscription();
 
-        public frmAddChannel()
+        public AddChannelForm()
         {
             InitializeComponent();
         }
 
-        private void frmAddChannel_Load(object sender, EventArgs e)
+        private void AddChannelForm_Load(object sender, EventArgs e)
         {
             foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary) { comboBoxProviders.Items.Add(pair.Value.Name); }
             comboBoxProviders.SelectedIndex = 0;
@@ -41,21 +42,21 @@ namespace BlizzTV.Videos
         {
             if (txtName.Text.Trim() == "" || txtURL.Text.Trim() == "")
             {
-                MessageBox.Show("Please fill the channel name and url fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(i18n.FillVideoChannelNameAndUrlFieldsMessage, i18n.AllFieldsRequiredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             VideoProvider provider = (VideoProvider)Providers.Instance.Dictionary[comboBoxProviders.SelectedItem.ToString()];
             if (!provider.LinkValid(txtURL.Text))
             {
-                MessageBox.Show(string.Format("{0} is an invalid {1} url. Please correct the url and retry.", txtURL.Text, provider.Name), "Invalid URL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.InvalidVideoChannelUrlMessage, txtURL.Text, provider.Name), i18n.InvalidUrl, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             String slug = provider.GetSlug(txtURL.Text);
             if(Subscriptions.Instance.Dictionary.ContainsKey(slug))
             {
-                MessageBox.Show(string.Format("The channel already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[slug].Name), "Subscription Exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.VideoChannelSubscriptionsAlreadyExists, Subscriptions.Instance.Dictionary[slug].Name),i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -67,7 +68,7 @@ namespace BlizzTV.Videos
             {
                 if (!channel.IsValid())
                 {
-                    MessageBox.Show("There was an error parsing the video channel. Please check the channel URL and retry.", "Error parsing video channel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(i18n.ErrorParsingVideoChannelMessage, i18n.ErrorParsingVideoChannelTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }

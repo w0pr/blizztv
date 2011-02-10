@@ -30,8 +30,19 @@ namespace BlizzTV.Videos
 
         private Settings() : base("Videos") { }
 
+        /// <summary>
+        /// Enables notifications for video channels module.
+        /// </summary>
         public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
+
+        /// <summary>
+        /// Sets the number of videos to query video channels for.
+        /// </summary>
         public int NumberOfVideosToQueryChannelFor { get { return this.GetInt("NumberOfVideosToQueryChannelFor", 10); } set { this.Set("NumberOfVideosToQueryChannelFor", value); } }
+
+        /// <summary>
+        /// Sets the update period for video channels.
+        /// </summary>
         public int UpdatePeriod { get { return this.GetInt("UpdatePeriod", 60); } set { this.Set("UpdatePeriod", value); } }
     }
 }

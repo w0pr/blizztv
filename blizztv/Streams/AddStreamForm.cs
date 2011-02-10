@@ -49,7 +49,7 @@ namespace BlizzTV.Streams
             StreamProvider provider = (StreamProvider)Providers.Instance.Dictionary[comboBoxProviders.SelectedItem.ToString()];
             if (!provider.LinkValid(txtURL.Text))
             {
-                MessageBox.Show(string.Format(i18n.InvalidStreamUrlMessage, txtURL.Text, provider.Name), i18n.InvalidStreamUrlTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.InvalidStreamUrlMessage, txtURL.Text, provider.Name), i18n.InvalidUrl, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

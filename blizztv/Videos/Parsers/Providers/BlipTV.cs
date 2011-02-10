@@ -21,39 +21,45 @@ using System.Xml.Linq;
 using BlizzTV.Log;
 using BlizzTV.Utility.Web;
 
-namespace BlizzTV.Videos.Handlers
+namespace BlizzTV.Videos.Parsers.Providers
 {
-    public class Youtube : Channel
+    public class BlipTv : Channel
     {
-        public Youtube(VideoSubscription subscription) : base(subscription) { }
+        public BlipTv(VideoSubscription subscription) : base(subscription) { }
 
         public override bool Parse()
         {
             try
             {
-                string apiUrl = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, Settings.Instance.NumberOfVideosToQueryChannelFor); // the api url.
+                string apiUrl = string.Format("http://{0}.blip.tv/rss", this.Slug); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
                 if (result.State != WebReader.States.Success) return false;
 
                 XDocument xdoc = XDocument.Parse(result.Response); // parse the api response.
+                XNamespace xmlns = "http://blip.tv/dtd/blip/1.0";
                 var entries = from item in xdoc.Descendants("item") // get the videos
                               select new
                               {
                                   GUID = item.Element("guid").Value,
                                   Title = item.Element("title").Value,
-                                  Link = item.Element("link").Value
+                                  Link = item.Element("link").Value,
+                                  VideoID = item.Element(xmlns + "posts_id").Value
                               };
+
+                int i = 0;
 
                 foreach (var entry in entries) // create the video items.
                 {
-                    YoutubeVideo v = new YoutubeVideo(this.Title, entry.Title, entry.GUID, entry.Link, this.Provider);
-                    v.OnStateChange +=  OnChildStateChange;
+                    Video.BlipTv v = new Video.BlipTv(this.Title, entry.Title, entry.GUID, entry.Link, this.Provider);
+                    v.OnStateChange += OnChildStateChange;
+                    v.VideoId = entry.VideoID;
                     this.Videos.Add(v);
+                    i++;
+                    if (i >= Settings.Instance.NumberOfVideosToQueryChannelFor) break;
                 }
-
                 return true;
             }
-            catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannels Plugin - Youtube Channel - Update() Error: \n {0}", e)); return false; }
+            catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module video's BlipTV parser caught an exception: {0}", e)); return false; }
         }
     }
 }

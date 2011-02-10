@@ -22,15 +22,15 @@ using BlizzTV.Modules.Subscriptions;
 
 namespace BlizzTV.Videos
 {
-    public partial class frmSettings : Form,IModuleSettingsForm
+    public partial class SettingsForm : Form,IModuleSettingsForm
     {
-        public frmSettings()
+        public SettingsForm()
         {
             InitializeComponent();
             this.ListviewSubscriptions.AfterLabelEdit += OnItemEdit;
         }
 
-        private void frmSettings_Load(object sender, EventArgs e)
+        private void SettingsForm_Load(object sender, EventArgs e)
         {
             this.LoadSubscriptions();
             this.LoadSettings();
@@ -55,7 +55,7 @@ namespace BlizzTV.Videos
             Settings.Instance.NumberOfVideosToQueryChannelFor = (int)numericUpDownNumberOfVideosToQueryChannelFor.Value;
             Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
             Settings.Instance.Save();
-            VideosPlugin.Instance.OnSaveSettings();
+            ModuleVideos.Instance.OnSaveSettings();
         }
 
         private void buttonCatalog_Click(object sender, EventArgs e)
@@ -65,7 +65,7 @@ namespace BlizzTV.Videos
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            frmAddChannel f = new frmAddChannel();
+            AddChannelForm f = new AddChannelForm();
             if (f.ShowDialog() == DialogResult.OK)
             {
                 Subscriptions.Instance.Add(f.Subscription);

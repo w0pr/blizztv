@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Modules;
 using BlizzTV.Utility.Imaging;
@@ -41,8 +42,8 @@ namespace BlizzTV.Videos
             this.Slug = subscription.Slug;
             this.Provider = subscription.Provider;         
 
-            this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked))); 
-            this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked))); 
+            this.ContextMenus.Add("markaswatched", new ToolStripMenuItem(i18n.MarkAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked))); 
+            this.ContextMenus.Add("markasunwatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked))); 
 
             this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
         }
@@ -79,7 +80,8 @@ namespace BlizzTV.Videos
 
         protected void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.State == (sender as Video).State) return;
+            if (this.State == ((Video) sender).State) return;
+
             int unread = this.Videos.Count(s => s.State == State.Fresh || s.State == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }

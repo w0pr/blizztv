@@ -34,7 +34,7 @@ namespace BlizzTV.Feeds
         {
             if (txtName.Text.Trim() == "" || txtURL.Text.Trim() == "")
             {
-                MessageBox.Show(i18n.FillTheFeedNameAndUrlFieldsMessage, i18n.AllFieldsRequiredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(i18n.FillFeedNameAndUrlFieldsMessage, i18n.AllFieldsRequiredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

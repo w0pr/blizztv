@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
+using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Configuration;
 using BlizzTV.Modules;
@@ -29,24 +30,24 @@ using BlizzTV.Utility.Imaging;
 namespace BlizzTV.Videos
 {
     [ModuleAttributes("Videos", "Video aggregator plugin.","video")]
-    public class VideosPlugin:Module
+    public class ModuleVideos:Module
     {
         internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
-        private Timer _updateTimer;
+        private System.Timers.Timer _updateTimer;
         private bool _disposed = false;
 
-        public static VideosPlugin Instance;
+        public static ModuleVideos Instance;
 
-        public VideosPlugin() : base()
+        public ModuleVideos() : base()
         {
-            VideosPlugin.Instance = this;
+            ModuleVideos.Instance = this;
             this.RootListItem = new ListItem("Videos");
             this.RootListItem.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
 
-            this.RootListItem.ContextMenus.Add("refresh", new System.Windows.Forms.ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); 
-            this.RootListItem.ContextMenus.Add("markallaswatched", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
-            this.RootListItem.ContextMenus.Add("markallasunwatched", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAllAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked)));
-            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this.RootListItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); 
+            this.RootListItem.ContextMenus.Add("markallaswatched", new ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
+            this.RootListItem.ContextMenus.Add("markallasunwatched", new ToolStripMenuItem(i18n.MarkAllAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked)));
+            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()
@@ -55,9 +56,9 @@ namespace BlizzTV.Videos
             this.SetupUpdateTimer();
         }
 
-        public override System.Windows.Forms.Form GetPreferencesForm()
+        public override Form GetPreferencesForm()
         {
-            return new frmSettings();
+            return new SettingsForm();
         }
 
         public override bool TryDragDrop(string link)
@@ -75,7 +76,7 @@ namespace BlizzTV.Videos
                         if (channel.IsValid())
                         {
                             if (Subscriptions.Instance.Add(v)) this.RunManualUpdate(this, new EventArgs());
-                            else System.Windows.Forms.MessageBox.Show(string.Format("The channel already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[v.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            else MessageBox.Show(string.Format(i18n.VideoChannelSubscriptionsAlreadyExists, Subscriptions.Instance.Dictionary[v.Slug].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return true;
                         }
                     }
@@ -123,7 +124,8 @@ namespace BlizzTV.Videos
         
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.State == (sender as Channel).State) return;
+            if (this.RootListItem.State == ((Channel) sender).State) return;
+
             int unread = this._channels.Count(pair => pair.Value.State == State.Unread);
             this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
         }
@@ -142,7 +144,7 @@ namespace BlizzTV.Videos
                 this._updateTimer = null;
             }
 
-            _updateTimer = new Timer(BlizzTV.Videos.Settings.Instance.UpdatePeriod * 60000);
+            _updateTimer = new System.Timers.Timer(Settings.Instance.UpdatePeriod * 60000);
             _updateTimer.Elapsed += OnTimerHit;
             _updateTimer.Enabled = true;
         }

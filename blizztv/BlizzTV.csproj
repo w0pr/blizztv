@@ -310,32 +310,32 @@
     <Compile Include="Streams\ModuleStreams.cs" />
     <Compile Include="Videos\Channel.cs" />
     <Compile Include="Videos\ChannelFactory.cs" />
-    <Compile Include="Videos\frmAddChannel.cs">
+    <Compile Include="Videos\AddChannelForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Videos\frmAddChannel.Designer.cs">
-      <DependentUpon>frmAddChannel.cs</DependentUpon>
+    <Compile Include="Videos\AddChannelForm.Designer.cs">
+      <DependentUpon>AddChannelForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videos\frmPlayer.cs">
+    <Compile Include="Videos\PlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Videos\frmPlayer.Designer.cs">
-      <DependentUpon>frmPlayer.cs</DependentUpon>
+    <Compile Include="Videos\PlayerForm.Designer.cs">
+      <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videos\frmSettings.cs">
+    <Compile Include="Videos\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Videos\frmSettings.Designer.cs">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <Compile Include="Videos\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videos\Handlers\BlipTv.cs" />
-    <Compile Include="Videos\Handlers\BlipTvVideo.cs" />
-    <Compile Include="Videos\Handlers\Youtube.cs" />
-    <Compile Include="Videos\Handlers\YoutubeVideo.cs" />
+    <Compile Include="Videos\Parsers\Providers\BlipTv.cs" />
+    <Compile Include="Videos\Parsers\Video\BlipTv.cs" />
+    <Compile Include="Videos\Parsers\Providers\Youtube.cs" />
+    <Compile Include="Videos\Parsers\Video\Youtube.cs" />
     <Compile Include="Videos\Providers.cs" />
     <Compile Include="Videos\Settings.cs" />
     <Compile Include="Videos\Video.cs" />
-    <Compile Include="Videos\VideosPlugin.cs" />
+    <Compile Include="Videos\ModuleVideos.cs" />
     <Compile Include="Modules\Settings\IModuleSettingsForm.cs" />
     <Compile Include="Modules\ListItem.cs" />
     <Compile Include="Controls\FlashPlayer\FlashPlayer.cs">
@@ -489,14 +489,14 @@
     <EmbeddedResource Include="Streams\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Videos\frmAddChannel.resx">
-      <DependentUpon>frmAddChannel.cs</DependentUpon>
+    <EmbeddedResource Include="Videos\AddChannelForm.resx">
+      <DependentUpon>AddChannelForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Videos\frmPlayer.resx">
-      <DependentUpon>frmPlayer.cs</DependentUpon>
+    <EmbeddedResource Include="Videos\PlayerForm.resx">
+      <DependentUpon>PlayerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Videos\frmSettings.resx">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <EmbeddedResource Include="Videos\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -621,6 +621,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Videos\Handlers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

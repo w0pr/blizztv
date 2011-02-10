@@ -16,7 +16,7 @@
  */
 
 using System;
-using BlizzTV.Videos.Handlers;
+using BlizzTV.Videos.Parsers.Providers;
 
 namespace BlizzTV.Videos
 {
@@ -32,7 +32,7 @@ namespace BlizzTV.Videos
                 default: break;
             }
 
-            if(channel==null) throw new NotImplementedException(string.Format("Video channel provider not implemented: '{0}'", subscription.Provider)); // throw an exception if video channel was not associated with a valid provider.
+            if(channel==null) throw new NotImplementedException(string.Format("Module video's channel factory have been asked for an invalid channel-provider: '{0}'", subscription.Provider)); // throw an exception if video channel was not associated with a valid provider.
             return channel;
         }
     }

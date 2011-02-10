@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Videos
 {
-    partial class frmAddChannel
+    partial class AddChannelForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddChannel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddChannelForm));
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.comboBoxProviders = new System.Windows.Forms.ComboBox();
@@ -153,7 +153,7 @@
             this.Name = "frmAddChannel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add New Video Channel";
-            this.Load += new System.EventHandler(this.frmAddChannel_Load);
+            this.Load += new System.EventHandler(this.AddChannelForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
