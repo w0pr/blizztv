@@ -153,11 +153,11 @@
     <Compile Include="Notifications\NotificationManager.cs" />
     <Compile Include="Notifications\ArchivedNotifications.cs" />
     <Compile Include="Notifications\NotificationSound.cs" />
-    <Compile Include="Modules\Players\PlayerForm.cs">
+    <Compile Include="Modules\Players\BasePlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Players\PlayerForm.Designer.cs">
-      <DependentUpon>PlayerForm.cs</DependentUpon>
+    <Compile Include="Modules\Players\BasePlayerForm.Designer.cs">
+      <DependentUpon>BasePlayerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\UI\ListViewItemComparer.cs" />
     <Compile Include="Controls\LoadingCircle\LoadingCircle.cs">
@@ -287,7 +287,9 @@
     <Compile Include="Streams\ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\PlayerForm.cs" />
+    <Compile Include="Streams\PlayerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Streams\PlayerForm.Designer.cs">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
@@ -427,8 +429,8 @@
     <EmbeddedResource Include="Notifications\NotificationsForm.resx">
       <DependentUpon>NotificationsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Players\PlayerForm.resx">
-      <DependentUpon>PlayerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Modules\Players\BasePlayerForm.resx">
+      <DependentUpon>BasePlayerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\UpdaterForm.resx">
       <DependentUpon>UpdaterForm.cs</DependentUpon>
