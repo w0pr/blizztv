@@ -22,15 +22,15 @@ using BlizzTV.Modules.Subscriptions;
 
 namespace BlizzTV.Feeds
 {
-    public partial class frmSettings : Form, IModuleSettingsForm
+    public partial class SettingsForm : Form, IModuleSettingsForm
     {
-        public frmSettings()
+        public SettingsForm()
         {
             InitializeComponent();
             this.ListviewSubscriptions.AfterLabelEdit += OnItemEdit;
         }
 
-        private void frmSettings_Load(object sender, EventArgs e)
+        private void SettingsForm_Load(object sender, EventArgs e)
         {
             this.LoadSubscriptions();
             this.LoadSettings();
@@ -44,21 +44,21 @@ namespace BlizzTV.Feeds
 
         private void LoadSettings()
         {
-            checkBoxEnableNotifications.Checked = BlizzTV.Feeds.Settings.Instance.NotificationsEnabled;
-            numericUpDownUpdatePeriod.Value = (decimal)BlizzTV.Feeds.Settings.Instance.UpdatePeriod;
+            checkBoxEnableNotifications.Checked = Settings.Instance.NotificationsEnabled;
+            numericUpDownUpdatePeriod.Value = (decimal)Settings.Instance.UpdatePeriod;
         }
 
         public void SaveSettings()
         {
-            BlizzTV.Feeds.Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
-            BlizzTV.Feeds.Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
-            BlizzTV.Feeds.Settings.Instance.Save();
-            FeedsPlugin.Instance.OnSaveSettings();
+            Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
+            Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
+            Settings.Instance.Save();
+            ModuleFeeds.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            frmAddFeed f = new frmAddFeed();
+            AddFeedForm f = new AddFeedForm();
             if (f.ShowDialog() == DialogResult.OK)
             {
                 Subscriptions.Instance.Add(f.Subscription);
@@ -93,7 +93,7 @@ namespace BlizzTV.Feeds
 
         void OnItemEdit(object sender, LabelEditEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Label)) Subscriptions.Instance.Rename((ListviewSubscriptions.Items[e.Item] as ListviewFeedSubscription).Subscription, e.Label);
+            if (!string.IsNullOrEmpty(e.Label)) Subscriptions.Instance.Rename(((ListviewFeedSubscription) ListviewSubscriptions.Items[e.Item]).Subscription, e.Label);
         }
     }
 

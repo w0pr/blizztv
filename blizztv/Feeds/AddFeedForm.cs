@@ -17,14 +17,15 @@
 
 using System;
 using System.Windows.Forms;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.Feeds
 {
-    public partial class frmAddFeed : Form
+    public partial class AddFeedForm : Form
     {
-        public FeedSubscription Subscription = new FeedSubscription();
+        public readonly FeedSubscription Subscription = new FeedSubscription();
 
-        public frmAddFeed()
+        public AddFeedForm()
         {
             InitializeComponent();
         }
@@ -33,13 +34,13 @@ namespace BlizzTV.Feeds
         {
             if (txtName.Text.Trim() == "" || txtURL.Text.Trim() == "")
             {
-                MessageBox.Show("Please fill the feed name and URL fields!", "All fields required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(i18n.FillTheFeedNameAndUrlFieldsMessage, i18n.AllFieldsRequiredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (Subscriptions.Instance.Dictionary.ContainsKey(txtURL.Text))
             {
-                MessageBox.Show(string.Format("The feed already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[txtURL.Text].Name), "Subscription Exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.FeedAlreadyExistsInSubscriptionsMessage, Subscriptions.Instance.Dictionary[txtURL.Text].Name), i18n.FeedAlreadyExistsInSubscriptionsTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -50,7 +51,7 @@ namespace BlizzTV.Feeds
             {
                 if (!feed.IsValid())
                 {
-                    MessageBox.Show("There was an error parsing the feed. Please check the feed URL and retry.", "Error parsing feed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(i18n.ErrorParsingFeedMessage, i18n.ErrorParsingFeedTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }

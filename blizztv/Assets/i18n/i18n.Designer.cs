@@ -61,6 +61,33 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter name for the new feed.
+        /// </summary>
+        internal static string AddNewFeedMessage {
+            get {
+                return ResourceManager.GetString("AddNewFeedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Feed.
+        /// </summary>
+        internal static string AddNewFeedTitle {
+            get {
+                return ResourceManager.GetString("AddNewFeedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All fields required.
+        /// </summary>
+        internal static string AllFieldsRequiredTitle {
+            get {
+                return ResourceManager.GetString("AllFieldsRequiredTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An alarm already exists for the event!.
         /// </summary>
         internal static string AnAlarmAlreadyExistsForEventMessage {
@@ -196,6 +223,24 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error parsing the feed. Please check the feed URL and retry..
+        /// </summary>
+        internal static string ErrorParsingFeedMessage {
+            get {
+                return ResourceManager.GetString("ErrorParsingFeedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error parsing feed.
+        /// </summary>
+        internal static string ErrorParsingFeedTitle {
+            get {
+                return ResourceManager.GetString("ErrorParsingFeedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In progress..
         /// </summary>
         internal static string EventInProgressMessage {
@@ -246,6 +291,33 @@ namespace BlizzTV.Assets.i18n {
         internal static string FailedDownloadingTheUpdateTitle {
             get {
                 return ResourceManager.GetString("FailedDownloadingTheUpdateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The feed already exists in your subscriptions named as &apos;{0}&apos;..
+        /// </summary>
+        internal static string FeedAlreadyExistsInSubscriptionsMessage {
+            get {
+                return ResourceManager.GetString("FeedAlreadyExistsInSubscriptionsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription exists.
+        /// </summary>
+        internal static string FeedAlreadyExistsInSubscriptionsTitle {
+            get {
+                return ResourceManager.GetString("FeedAlreadyExistsInSubscriptionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please fill the feed name and URL fields!.
+        /// </summary>
+        internal static string FillTheFeedNameAndUrlFieldsMessage {
+            get {
+                return ResourceManager.GetString("FillTheFeedNameAndUrlFieldsMessage", resourceCulture);
             }
         }
         
@@ -313,6 +385,78 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mark All As Read.
+        /// </summary>
+        internal static string MarkAllAsRead {
+            get {
+                return ResourceManager.GetString("MarkAllAsRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark All As Unread.
+        /// </summary>
+        internal static string MarkAllAsUnread {
+            get {
+                return ResourceManager.GetString("MarkAllAsUnread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark All As Unwatched.
+        /// </summary>
+        internal static string MarkAllAsUnwatched {
+            get {
+                return ResourceManager.GetString("MarkAllAsUnwatched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark All As Watched.
+        /// </summary>
+        internal static string MarkAllAsWatched {
+            get {
+                return ResourceManager.GetString("MarkAllAsWatched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark As Read.
+        /// </summary>
+        internal static string MarkAsRead {
+            get {
+                return ResourceManager.GetString("MarkAsRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark As Unread.
+        /// </summary>
+        internal static string MarkAsUnread {
+            get {
+                return ResourceManager.GetString("MarkAsUnread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark As Unwatched.
+        /// </summary>
+        internal static string MarkAsUnwatched {
+            get {
+                return ResourceManager.GetString("MarkAsUnwatched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark As Watched.
+        /// </summary>
+        internal static string MarkAsWatched {
+            get {
+                return ResourceManager.GetString("MarkAsWatched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You&apos;re already running the latest version..
         /// </summary>
         internal static string NoAvailableUpdateFoundMessage {
@@ -331,6 +475,15 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        internal static string Refresh {
+            get {
+                return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replaced your subscriptions database, it should be all working now..
         /// </summary>
         internal static string ReplacedSubscriptionsDatabaseMessage {
@@ -345,6 +498,15 @@ namespace BlizzTV.Assets.i18n {
         internal static string ReplacedSubscriptionsDatabaseTitle {
             get {
                 return ResourceManager.GetString("ReplacedSubscriptionsDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         

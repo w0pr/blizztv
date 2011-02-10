@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Feeds
 {
-    partial class frmAddFeed
+    partial class AddFeedForm
     {
         /// <summary>
         /// Required designer variable.

@@ -22,6 +22,9 @@ using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Feeds
 {
+    /// <summary>
+    /// Parses a feed using supported spefication-parsers.
+    /// </summary>
     public class FeedParser
     {
         #region instance
@@ -31,9 +34,8 @@ namespace BlizzTV.Feeds
 
         #endregion 
 
-        private Regex _blizzard_atom_regex = new Regex(@".*\.battle.net/.*/en", RegexOptions.Compiled);
-
-        private IFeedParser[] _parsers = new IFeedParser[] { new Rss2(),new Atom1() };
+        private readonly Regex _blizzardAtomRegex = new Regex(@".*\.battle.net/.*/en", RegexOptions.Compiled); // regex used for parsing blizzard atom feeds.
+        private readonly IFeedParser[] _parsers = new IFeedParser[] { new Rss2(),new Atom1() }; // our supported parsers.
 
         public bool Parse(string url,ref List<FeedItem> items)
         {
@@ -41,10 +43,10 @@ namespace BlizzTV.Feeds
             if (items.Count > 0) items.Clear();
 
             WebReader.Result result = WebReader.Read(url);
-            if (result.State != WebReader.States.Success) return false;
+            if (result.State != WebReader.States.Success) return false; 
 
             string linkFallback = "";
-            Match m=this._blizzard_atom_regex.Match(url); // blizzard's atom feeds does not contain any links, so let's hack it.
+            Match m=this._blizzardAtomRegex.Match(url); // blizzard's atom feeds does not contain any links, so let's hack it.
             if (m.Success) linkFallback = string.Format("{0}/blog/", m.Groups[0]);
             
             foreach (IFeedParser parser in this._parsers)
@@ -59,13 +61,13 @@ namespace BlizzTV.Feeds
     public class FeedItem
     {
         public string Title { get; private set; }
-        public string ID { get; private set; }
+        public string Id { get; private set; }
         public string Link { get; private set; }
 
         public FeedItem(string title, string id, string link)
         {
             this.Title = title;
-            this.ID = id;
+            this.Id = id;
             this.Link = link;
         }
     }

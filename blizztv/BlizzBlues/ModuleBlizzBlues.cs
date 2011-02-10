@@ -25,6 +25,7 @@ using BlizzTV.Configuration;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
 using BlizzTV.Utility.Imaging;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.BlizzBlues
 {
@@ -45,10 +46,10 @@ namespace BlizzTV.BlizzBlues
                                       Icon = new NamedImage("blizzblues", Assets.Images.Icons.Png._16.blizzblues)
                                   };
 
-            this.RootListItem.ContextMenus.Add("manualupdate", new ToolStripMenuItem("Update Blues", Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("markallasread", new ToolStripMenuItem("Mark All As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            this.RootListItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem("Mark All As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
-            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); // settings menu.
+            this.RootListItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate))); 
+            this.RootListItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
+            this.RootListItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
+            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); 
         }
 
         public override void Run()

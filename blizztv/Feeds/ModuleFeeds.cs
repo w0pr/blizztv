@@ -19,35 +19,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
+using System.Windows.Forms;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.UI;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.Feeds
 {
     [ModuleAttributes("Feeds","Feed aggregator plugin.","feed")]
-    public class FeedsPlugin:Module
+    public class ModuleFeeds:Module
     {
-        internal Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // the feeds list 
-        private Timer _updateTimer;
+        private Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // list of feeds.
+        private System.Timers.Timer _updateTimer;
         private bool _disposed = false;
 
-        public static FeedsPlugin Instance;
+        public static ModuleFeeds Instance;
 
-        public FeedsPlugin()
+        public ModuleFeeds()
         {
-            FeedsPlugin.Instance = this;
-            this.RootListItem = new ListItem("Feeds");
-            this.RootListItem.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
+            ModuleFeeds.Instance = this;
+            this.RootListItem = new ListItem("Feeds")
+                                    {
+                                        Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed)
+                                    };
 
-            // register context menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Feeds", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            this.RootListItem.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem("Mark All As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.            
-            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this.RootListItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this.RootListItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this.RootListItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
+            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()
@@ -56,22 +59,15 @@ namespace BlizzTV.Feeds
             this.SetupUpdateTimer();
         }
 
-        public override System.Windows.Forms.Form GetPreferencesForm()
-        {
-            return new frmSettings();
-        }
-
-        public override bool TryDragDrop(string link)
+        public override bool TryDragDrop(string link) // Tries parsing a drag & dropped link to see if it's a feed and parsable.
         {
             if (Subscriptions.Instance.Dictionary.ContainsKey(link))
             {
-                System.Windows.Forms.MessageBox.Show(string.Format("The feed already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[link].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(i18n.FeedAlreadyExistsInSubscriptionsMessage, Subscriptions.Instance.Dictionary[link].Name), i18n.FeedAlreadyExistsInSubscriptionsTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
-            FeedSubscription feedSubscription = new FeedSubscription();
-            feedSubscription.Name = "test-feed";
-            feedSubscription.Url = link;
+            FeedSubscription feedSubscription = new FeedSubscription {Name = "test-feed", Url = link};
 
             using (Feed feed = new Feed(feedSubscription))
             {
@@ -79,12 +75,17 @@ namespace BlizzTV.Feeds
                 {
                     FeedSubscription subscription = new FeedSubscription();
                     string feedName = "";
-                    if (InputBox.Show("Add New Feed", "Please enter name for the new feed", ref feedName) == System.Windows.Forms.DialogResult.OK)
+
+                    if (InputBox.Show(i18n.AddNewFeedTitle, i18n.AddNewFeedMessage, ref feedName) == DialogResult.OK)
                     {
                         subscription.Name = feedName;
                         subscription.Url = link;
-                        if (Subscriptions.Instance.Add(subscription)) this.RunManualUpdate(this, new EventArgs()); else return false;
-                        return true;
+                        if (Subscriptions.Instance.Add(subscription))
+                        {
+                            this.RunManualUpdate(this, new EventArgs());
+                            return true;
+                        }
+                        return false;
                     }
                 }
             }
@@ -92,7 +93,7 @@ namespace BlizzTV.Feeds
             return false;
         }
 
-        internal void UpdateFeeds()
+        private void UpdateFeeds()
         {
             if (this.Updating) return;
 
@@ -124,7 +125,7 @@ namespace BlizzTV.Feeds
                     this.RootListItem.Childs.Add(pair.Key, pair.Value);
                     foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.Guid, story); } // register the story items.
                 }
-                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feed Plugin - UpdateFeeds Exception: {0}", e)); }
+                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module feeds caught an exception while updating feeds: {0}", e)); }
                 Workload.WorkloadManager.Instance.Step();
             }
 
@@ -135,9 +136,15 @@ namespace BlizzTV.Feeds
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.State == (sender as Feed).State) return;
+            if (this.RootListItem.State == ((Feed) sender).State) return;
+
             int unread = this._feeds.Count(pair => pair.Value.State == State.Unread);
             this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
+        }
+
+        public override Form GetPreferencesForm()
+        {
+            return new SettingsForm();
         }
 
         public void OnSaveSettings()
@@ -154,7 +161,7 @@ namespace BlizzTV.Feeds
                 this._updateTimer = null;
             }
 
-            _updateTimer = new Timer(BlizzTV.Feeds.Settings.Instance.UpdatePeriod * 60000);
+            _updateTimer = new System.Timers.Timer(Settings.Instance.UpdatePeriod * 60000);
             _updateTimer.Elapsed += OnTimerHit;
             _updateTimer.Enabled = true;
         }
