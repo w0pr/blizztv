@@ -275,39 +275,39 @@
     </Compile>
     <Compile Include="Feeds\Settings.cs" />
     <Compile Include="Feeds\Story.cs" />
-    <Compile Include="Streams\frmAddStream.cs">
+    <Compile Include="Streams\AddStreamForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Streams\frmAddStream.Designer.cs">
-      <DependentUpon>frmAddStream.cs</DependentUpon>
+    <Compile Include="Streams\AddStreamForm.Designer.cs">
+      <DependentUpon>AddStreamForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\frmChat.cs">
+    <Compile Include="Streams\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Streams\frmChat.Designer.cs">
-      <DependentUpon>frmChat.cs</DependentUpon>
+    <Compile Include="Streams\ChatForm.Designer.cs">
+      <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\frmPlayer.cs">
+    <Compile Include="Streams\PlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Streams\frmPlayer.Designer.cs">
-      <DependentUpon>frmPlayer.cs</DependentUpon>
+    <Compile Include="Streams\PlayerForm.Designer.cs">
+      <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\frmSettings.cs">
+    <Compile Include="Streams\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Streams\frmSettings.Designer.cs">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <Compile Include="Streams\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\Handlers\JustinTv.cs" />
-    <Compile Include="Streams\Handlers\LiveStream.cs" />
-    <Compile Include="Streams\Handlers\Own3Dtv.cs" />
-    <Compile Include="Streams\Handlers\UStream.cs" />
+    <Compile Include="Streams\Parsers\JustinTv.cs" />
+    <Compile Include="Streams\Parsers\LiveStream.cs" />
+    <Compile Include="Streams\Parsers\Own3Dtv.cs" />
+    <Compile Include="Streams\Parsers\UStream.cs" />
     <Compile Include="Streams\Providers.cs" />
     <Compile Include="Streams\Settings.cs" />
     <Compile Include="Streams\Stream.cs" />
     <Compile Include="Streams\StreamFactory.cs" />
-    <Compile Include="Streams\StreamsPlugin.cs" />
+    <Compile Include="Streams\ModuleStreams.cs" />
     <Compile Include="Videos\Channel.cs" />
     <Compile Include="Videos\ChannelFactory.cs" />
     <Compile Include="Videos\frmAddChannel.cs">
@@ -477,17 +477,17 @@
     <EmbeddedResource Include="Feeds\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Streams\frmAddStream.resx">
-      <DependentUpon>frmAddStream.cs</DependentUpon>
+    <EmbeddedResource Include="Streams\AddStreamForm.resx">
+      <DependentUpon>AddStreamForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Streams\frmChat.resx">
-      <DependentUpon>frmChat.cs</DependentUpon>
+    <EmbeddedResource Include="Streams\ChatForm.resx">
+      <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Streams\frmPlayer.resx">
-      <DependentUpon>frmPlayer.cs</DependentUpon>
+    <EmbeddedResource Include="Streams\PlayerForm.resx">
+      <DependentUpon>PlayerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Streams\frmSettings.resx">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <EmbeddedResource Include="Streams\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Videos\frmAddChannel.resx">
       <DependentUpon>frmAddChannel.cs</DependentUpon>

@@ -3,7 +3,7 @@ using BlizzTV.Controls.LoadingCircle;
 
 namespace BlizzTV.Streams
 {
-    partial class frmPlayer
+    partial class PlayerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@ namespace BlizzTV.Streams
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPlayer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayerForm));
             this.FlashPlayer = new BlizzTV.Controls.FlashPlayer.FlashPlayer();
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +100,7 @@ namespace BlizzTV.Streams
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPlayer";
             this.Text = "Player";
-            this.Load += new System.EventHandler(this.Player_Load);
+            this.Load += new System.EventHandler(this.PlayerForm_Load);
             this.Controls.SetChildIndex(this.FlashPlayer, 0);
             this.Controls.SetChildIndex(this.WebBrowser, 0);
             this.Controls.SetChildIndex(this.LoadingCircle, 0);

@@ -22,15 +22,15 @@ using BlizzTV.Modules.Subscriptions;
 
 namespace BlizzTV.Streams
 {
-    public partial class frmSettings : Form, IModuleSettingsForm
+    public partial class SettingsForm : Form, IModuleSettingsForm
     {
-        public frmSettings()
+        public SettingsForm()
         {
             InitializeComponent();
             ListviewSubscriptions.AfterLabelEdit += OnItemEdit;
         }
 
-        private void frmSettings_Load(object sender, EventArgs e)
+        private void SettingsForm_Load(object sender, EventArgs e)
         {
             this.LoadSubscriptions();
             this.LoadSettings();
@@ -59,12 +59,12 @@ namespace BlizzTV.Streams
             Settings.Instance.ChatWindowWidth = (int)numericUpDownChatWindowWidth.Value;
             Settings.Instance.ChatWindowHeight = (int)numericUpDownChatWindowHeight.Value;
             Settings.Instance.Save();
-            StreamsPlugin.Instance.OnSaveSettings();
+            ModuleStreams.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            frmAddStream f = new frmAddStream();
+            AddStreamForm f = new AddStreamForm();
             if (f.ShowDialog() == DialogResult.OK)
             {
                 Subscriptions.Instance.Add(f.Subscription);

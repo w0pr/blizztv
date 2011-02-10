@@ -19,8 +19,11 @@ using System;
 using System.Text.RegularExpressions;
 using BlizzTV.Utility.Web;
 
-namespace BlizzTV.Streams.Handlers
+namespace BlizzTV.Streams.Parsers
 {
+    /// <summary>
+    /// Own3D.tv parser
+    /// </summary>
     public class Own3Dtv:Stream
     {
         private Regex _regex = new Regex("liveViewers=(.*)&liveStatus=(.*)&liveVerified=.*", RegexOptions.Compiled);
@@ -45,7 +48,7 @@ namespace BlizzTV.Streams.Handlers
                     this.ViewerCount = int.Parse(m.Groups[1].ToString());
                 }
             }
-            catch (Exception e) { throw new Exception("Own3dTV Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
+            catch (Exception e) { throw new Exception("Stream module's own3d.tv parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
         }
     }
 }

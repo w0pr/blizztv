@@ -19,9 +19,12 @@ using System;
 using System.Collections;
 using BlizzTV.Utility.Web;
 
-namespace BlizzTV.Streams.Handlers
+namespace BlizzTV.Streams.Parsers
 {
-    public class JustinTv:Stream // justintv wrapper
+    /// <summary>
+    /// Parser for justin.tv streams.
+    /// </summary>
+    public class JustinTv:Stream
     {
         public JustinTv(StreamSubscription subscription) : base(subscription) { }
 
@@ -43,7 +46,7 @@ namespace BlizzTV.Streams.Handlers
                     this.Description = (string)table["title"].ToString(); // stream description.
                 }
             }
-            catch (Exception e) { throw new Exception("JustinTV Wrapper Error.", e); } // throw exception to upper layer embedding details in the inner exception.
+            catch (Exception e) { throw new Exception("Stream module's justin.tv parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
         }
     }
 }

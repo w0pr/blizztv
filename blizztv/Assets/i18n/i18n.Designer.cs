@@ -297,18 +297,18 @@ namespace BlizzTV.Assets.i18n {
         /// <summary>
         ///   Looks up a localized string similar to The feed already exists in your subscriptions named as &apos;{0}&apos;..
         /// </summary>
-        internal static string FeedAlreadyExistsInSubscriptionsMessage {
+        internal static string FeedSubscriptionAlreadyExists {
             get {
-                return ResourceManager.GetString("FeedAlreadyExistsInSubscriptionsMessage", resourceCulture);
+                return ResourceManager.GetString("FeedSubscriptionAlreadyExists", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Subscription exists.
+        ///   Looks up a localized string similar to Please fill the stream name and url fields!.
         /// </summary>
-        internal static string FeedAlreadyExistsInSubscriptionsTitle {
+        internal static string FillStreamNameAndUrlFieldsMessage {
             get {
-                return ResourceManager.GetString("FeedAlreadyExistsInSubscriptionsTitle", resourceCulture);
+                return ResourceManager.GetString("FillStreamNameAndUrlFieldsMessage", resourceCulture);
             }
         }
         
@@ -381,6 +381,24 @@ namespace BlizzTV.Assets.i18n {
         internal static string InstallingUpdateTitle {
             get {
                 return ResourceManager.GetString("InstallingUpdateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is an invalid {1} url. Please correct the url and retry..
+        /// </summary>
+        internal static string InvalidStreamUrlMessage {
+            get {
+                return ResourceManager.GetString("InvalidStreamUrlMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid URL.
+        /// </summary>
+        internal static string InvalidStreamUrlTitle {
+            get {
+                return ResourceManager.GetString("InvalidStreamUrlTitle", resourceCulture);
             }
         }
         
@@ -516,6 +534,33 @@ namespace BlizzTV.Assets.i18n {
         internal static string SetupAlarmTitle {
             get {
                 return ResourceManager.GetString("SetupAlarmTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stream is online, click to start watching it..
+        /// </summary>
+        internal static string StreamOnlineNotification {
+            get {
+                return ResourceManager.GetString("StreamOnlineNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The stream already exists in your subscriptions named as &apos;{0}&apos;..
+        /// </summary>
+        internal static string StreamSubscriptionAlreadyExistsMessage {
+            get {
+                return ResourceManager.GetString("StreamSubscriptionAlreadyExistsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription exists.
+        /// </summary>
+        internal static string SubscriptionExists {
+            get {
+                return ResourceManager.GetString("SubscriptionExists", resourceCulture);
             }
         }
         
