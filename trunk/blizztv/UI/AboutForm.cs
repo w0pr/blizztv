@@ -19,20 +19,21 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Reflection;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Audio;
 using BlizzTV.Modules;
 using BlizzTV.Utility.UI;
 
 namespace BlizzTV.UI
 {
-    public partial class frmAbout : Form
+    public partial class AboutForm : Form
     {
-        public frmAbout()
+        public AboutForm()
         {
             InitializeComponent();
         }
 
-        private void frmAbout_Load(object sender, EventArgs e)
+        private void AboutForm_Load(object sender, EventArgs e)
         {
             this.LabelVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
@@ -71,6 +72,6 @@ namespace BlizzTV.UI
         			
         private bool _enoughDots = false;		
         private void MoreDots(object sender, KeyEventArgs e) { if (e.Alt && e.Control) this._enoughDots = true; }
-        private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = "Save the murlocs!"; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } AudioManager.Instance.PlayFromMemory("murloc", Assets.Sounds.Notifications.Murloc); _enoughDots = false; }
+        private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = i18n.SaveTheMurlocs; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } AudioManager.Instance.PlayFromMemory("murloc", Assets.Sounds.Notifications.Murloc); _enoughDots = false; }
     }
 }

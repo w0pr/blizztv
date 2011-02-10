@@ -21,11 +21,11 @@ using BlizzTV.Modules;
 
 namespace BlizzTV.Notifications
 {
-    public partial class frmArchivedNotifications : Form
+    public partial class NotificationsForm : Form
     {
         private readonly Form _parent; // reference to parent main-window.
 
-        public frmArchivedNotifications(Form parent)
+        public NotificationsForm(Form parent)
         {
             InitializeComponent();
 
@@ -34,7 +34,7 @@ namespace BlizzTV.Notifications
             this.OnResizeEnd(EventArgs.Empty); // run the window-resize code at initial load.
         }
         
-        private void frmQueuedNotifications_Load(object sender, EventArgs e)
+        private void NotificationsForm_Load(object sender, EventArgs e)
         {
             foreach(ArchivedNotification notification in ArchivedNotifications.Instance.Queue)
             {

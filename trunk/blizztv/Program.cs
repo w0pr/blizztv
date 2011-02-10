@@ -61,7 +61,7 @@ namespace BlizzTV
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+            Application.Run(new MainForm());
 
             SingleInstanceLock.ReleaseMutex(); // release the mutex before the application exits.     
         }

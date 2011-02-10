@@ -35,14 +35,14 @@ namespace BlizzTV.Notifications
 
         private bool _gotActiveNotification = false; /* does an active notification exists which is currently being showed to user? */
         private const int BalloonDuration = 10000;
-        private frmMain _mainForm; 
+        private MainForm _mainForm; 
         private NotifyIcon _trayIcon;
         private ToolStripStatusLabel _archivedNotificationsIcon;
         private System.Timers.Timer _notificationTimer; /* timer for handling notification states */
 
         private NotificationManager() { }
 
-        public void AttachControls(frmMain mainForm, NotifyIcon trayIcon, ToolStripStatusLabel archivedNotificationsIcon)
+        public void AttachControls(MainForm mainForm, NotifyIcon trayIcon, ToolStripStatusLabel archivedNotificationsIcon)
         {
             this._mainForm = mainForm;
             this._trayIcon = trayIcon;
@@ -93,7 +93,7 @@ namespace BlizzTV.Notifications
 
         private void ArchivedNotificationsIconClick(object sender, EventArgs e)
         {
-            frmArchivedNotifications f = new frmArchivedNotifications(this._mainForm);
+            NotificationsForm f = new NotificationsForm(this._mainForm);
             f.ShowDialog();        
         }
 

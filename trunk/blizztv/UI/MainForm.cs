@@ -30,13 +30,13 @@ using BlizzTV.Win32API;
 
 namespace BlizzTV.UI
 {
-    public partial class frmMain : Form
+    public partial class MainForm : Form
     {
         private readonly Dictionary<string, TreeItem> _moduleRoots = new Dictionary<string, TreeItem>();
 
         #region ctor & form handlers
 
-        public frmMain()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -45,7 +45,7 @@ namespace BlizzTV.UI
             NotificationManager.Instance.AttachControls(this, this.TrayIcon, this.NotificationIcon); // init. notification-manager.
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             // Load the last known size & location for the window.
             this.Size = new Size(Settings.Instance.MainWindowWidth, Settings.Instance.MainWindowHeight);
@@ -58,7 +58,7 @@ namespace BlizzTV.UI
             this.AutomaticUpdateCheck(); // Automatically check for updates.
         }
 
-        private void frmMain_ResizeEnd(object sender, EventArgs e)
+        private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
             bool needsSaving = false;
 
@@ -86,7 +86,7 @@ namespace BlizzTV.UI
             if (needsSaving) Settings.Instance.Save();
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing && Settings.Instance.MinimizeToSystemTray) // only hook when user is closing the main form.
             {
@@ -302,13 +302,13 @@ namespace BlizzTV.UI
 
         private void MenuPreferences_Click(object sender, EventArgs e) // shows preferences form.
         {
-            frmPreferences p = new frmPreferences();
+            PreferencesForm p = new PreferencesForm();
             if (p.ShowDialog() == DialogResult.OK) ApplySettings();
         }
 
         private void MenuPlugins_Click(object sender, EventArgs e) // shows preferences form with module's tab active.
         {
-            frmPreferences p = new frmPreferences();
+            PreferencesForm p = new PreferencesForm();
             if (p.ShowDialog("tabModules") == DialogResult.OK) ApplySettings();
         }
 
@@ -368,7 +368,7 @@ namespace BlizzTV.UI
 
         private void MenuAbout_Click(object sender, EventArgs e)
         {
-            frmAbout f = new frmAbout();
+            AboutForm f = new AboutForm();
             f.ShowDialog();
         }
 

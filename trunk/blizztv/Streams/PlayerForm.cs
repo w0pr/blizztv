@@ -23,7 +23,7 @@ using BlizzTV.Settings;
 
 namespace BlizzTV.Streams
 {
-    public partial class PlayerForm : PlayerWindow // The stream player.
+    public partial class PlayerForm : PlayerForm // The stream player.
     {
         private readonly Stream _stream; // the stream.
         private ChatForm _chatWindow = null;

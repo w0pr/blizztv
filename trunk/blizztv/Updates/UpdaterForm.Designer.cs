@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Updates
 {
-    partial class frmUpdater
+    partial class UpdaterForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUpdater));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpdaterForm));
             this.labelStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -53,7 +53,7 @@
             this.Name = "frmUpdater";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Updater";
-            this.Load += new System.EventHandler(this.frmUpdater_Load);
+            this.Load += new System.EventHandler(this.UpdaterForm_Load);
             this.Controls.SetChildIndex(this.labelStatus, 0);
             this.ResumeLayout(false);
 

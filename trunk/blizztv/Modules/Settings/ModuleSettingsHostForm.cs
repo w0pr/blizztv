@@ -24,12 +24,12 @@ namespace BlizzTV.Modules.Settings
     /// <summary>
     /// Hosts a module-settings window.
     /// </summary>
-    public partial class ModuleSettingsHost : Form
+    public partial class ModuleSettingsHostForm : Form
     {
         private readonly Form _hostedForm; // the hosted module-settings form.
         private readonly ModuleAttributes _moduleAttributes; // attributes of the hosted form's module.
 
-        public ModuleSettingsHost(ModuleAttributes moduleAttributes, Form hostedForm)
+        public ModuleSettingsHostForm(ModuleAttributes moduleAttributes, Form hostedForm)
         {
             InitializeComponent();
 
@@ -37,7 +37,7 @@ namespace BlizzTV.Modules.Settings
             this._moduleAttributes = moduleAttributes;
         }
 
-        private void ModuleSettingsHost_Load(object sender, EventArgs e)
+        private void ModuleSettingsHostForm_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("{0} Settings", this._moduleAttributes.Name);
             this.Icon = Icon.FromHandle(this._moduleAttributes.Icon.GetHicon()); // set the icon based on the module' provided icon.

@@ -23,7 +23,7 @@ using BlizzTV.Settings;
 
 namespace BlizzTV.Videos
 {
-    public partial class PlayerForm : PlayerWindow // The video player.
+    public partial class PlayerForm : PlayerForm // The video player.
     {
         private readonly Video _video; // The video. 
 

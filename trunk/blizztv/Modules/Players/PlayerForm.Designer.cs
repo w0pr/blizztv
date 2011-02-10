@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.Modules.Players
 {
-    partial class PlayerWindow
+    partial class PlayerForm
     {
         /// <summary>
         /// Required designer variable.

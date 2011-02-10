@@ -195,7 +195,7 @@ namespace BlizzTV.Events
 
         private void MenuSettingsClicked(object sender, EventArgs e)
         {
-            ModuleSettingsHost f = new ModuleSettingsHost(this.Attributes, this.GetPreferencesForm());
+            ModuleSettingsHostForm f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
 
