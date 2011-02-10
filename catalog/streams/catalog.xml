@@ -40,11 +40,12 @@
   <Entry xsi:type="Stream" Category="Starcraft" Name="Spades" Description="High level 3000+ terran player streaming." Slug="spades" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="oGsTheWind" Description="High level zerg player streaming." Slug="oGsTheWind" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="FnaticMSISen" Description="Sen of FnaticMSI's Starcraft II stream." Slug="sen-s-channel" Provider="LiveStream" />
-  <Entry xsi:type="Stream" Category="Starcraft" Name="RootCatZ" Description="RootCatZ Starcraft II stream." Slug="root-catz" Provider="LiveStream" />
+  <Entry xsi:type="Stream" Category="Starcraft" Name="RootCatZ" Description="RootCatZ Starcraft II stream." Slug="rootcatz" Provider="JustinTV" />
   <Entry xsi:type="Stream" Category="Starcraft" Name="Trumpsc" Description="Trumpsc's Starcraft II stream." Slug="trumpsc" Provider="JustinTV" />
   <Entry xsi:type="Stream" Category="World Of Warcraft" Name="WOWInsider" Description="Audio only WOWInsider show." Slug="wow-insider-show" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="World Of Warcraft" Name="Tankz" Description="A popular PvE and PvP stream with warrior POV." Slug="xfire_tankz4321" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="World Of Warcraft" Name="GameBreaker.tv" Description="GameBraker.tv's stream covering mainly World of Warcraft and MMO's." Slug="gamebreakertv" Provider="JustinTV" />
+  <Entry xsi:type="Stream" Category="Heros of Newerth" Name="HonCast" Description="Official coverage of Heroes of Newerth events. " Slug="honcast" Provider="JustinTV" />
   <Entry xsi:type="Stream" Category="League Of Legends" Name="SOLAR1S" Description="SOLAR1S is the Senior Strategy Specialist for League of Legends on Gamereplays.org. This channel will broadcast gamereplays staff team play, tournaments and other competive level events." Slug="solar1slol" Provider="LiveStream" />
   <Entry xsi:type="Stream" Category="League Of Legends" Name="CLGaming" Description="Popular League of Legends stream." Slug="214" Provider="Own3DTV" /> 
   <Entry xsi:type="Stream" Category="Dawn Of War" Name="DOW2Live" Description="A Dawn of War 2 community which specialises in dow2 live streaming." Slug="dow2live" Provider="UStream" />
