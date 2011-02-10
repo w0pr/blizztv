@@ -23,6 +23,7 @@ using BlizzTV.BlizzBlues.Parsers;
 using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Utility.Imaging;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.BlizzBlues
 {
@@ -34,7 +35,7 @@ namespace BlizzTV.BlizzBlues
         public string TopicId { get; private set; }
         public string PostId { get; private set; }
 
-        public Dictionary<string, BlueStory> Successors = new Dictionary<string, BlueStory>(); // successor posts.
+        public readonly Dictionary<string, BlueStory> Successors = new Dictionary<string, BlueStory>(); // successor posts.
     
         public BlueStory(BlueType type, string title, Region region, string link, string topicId, string postId)
             : base(title)
@@ -46,9 +47,8 @@ namespace BlizzTV.BlizzBlues
             this.PostId = postId;
             this.Guid = string.Format("{0}.{1}#{2}", this.Region, this.TopicId, this.PostId);
 
-            // register context menus.
-            this.ContextMenus.Add("markasread", new ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
-            this.ContextMenus.Add("markasunread", new ToolStripMenuItem("Mark As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
+            this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
+            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); 
 
             switch (this.Region)
             {

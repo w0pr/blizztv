@@ -19,9 +19,13 @@ using System;
 using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Utility.Imaging;
+using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.Feeds
 {
+    /// <summary>
+    /// Feed story.
+    /// </summary>
     public class Story : ListItem
     {
         public string FeedName { get; private set; }
@@ -34,9 +38,8 @@ namespace BlizzTV.Feeds
             this.Guid = item.Title;
             this.Link = item.Link;
 
-            // register context menus.
-            this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked))); // mark as read menu.
-            this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem("Mark As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); // mark as unread menu.                            
+            this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked))); 
+            this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); 
 
             this.Icon = new NamedImage("story", Assets.Images.Icons.Png._16.feed);
         }
@@ -72,10 +75,10 @@ namespace BlizzTV.Feeds
             {
                 case State.Fresh:
                 case State.Unread:
-                    this.ContextMenus["markasread"].Visible = true; // make mark as read menu visible.
+                    this.ContextMenus["markasread"].Visible = true;
                     break;
                 case State.Read:
-                    this.ContextMenus["markasunread"].Visible = true; // make mark as unread menu visible.
+                    this.ContextMenus["markasunread"].Visible = true;
                     break;
             }
         }

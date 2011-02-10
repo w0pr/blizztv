@@ -30,7 +30,14 @@ namespace BlizzTV.Feeds
 
         private Settings() : base("Feeds") { }
 
+        /// <summary>
+        /// Feed module's update period.
+        /// </summary>
         public int UpdatePeriod { get { return this.GetInt("UpdatePeriod", 60); } set { this.Set("UpdatePeriod", value); } }
+
+        /// <summary>
+        /// Enables notifications for feeds module.
+        /// </summary>
         public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
     }
 }

@@ -260,18 +260,18 @@
     </Compile>
     <Compile Include="Events\Settings.cs" />
     <Compile Include="Feeds\Feed.cs" />
-    <Compile Include="Feeds\FeedsPlugin.cs" />
-    <Compile Include="Feeds\frmAddFeed.cs">
+    <Compile Include="Feeds\ModuleFeeds.cs" />
+    <Compile Include="Feeds\AddFeedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Feeds\frmAddFeed.Designer.cs">
-      <DependentUpon>frmAddFeed.cs</DependentUpon>
+    <Compile Include="Feeds\AddFeedForm.Designer.cs">
+      <DependentUpon>AddFeedForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Feeds\frmSettings.cs">
+    <Compile Include="Feeds\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Feeds\frmSettings.Designer.cs">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <Compile Include="Feeds\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Feeds\Settings.cs" />
     <Compile Include="Feeds\Story.cs" />
@@ -471,11 +471,11 @@
     <EmbeddedResource Include="Events\SetupAlarmForm.resx">
       <DependentUpon>SetupAlarmForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Feeds\frmAddFeed.resx">
-      <DependentUpon>frmAddFeed.cs</DependentUpon>
+    <EmbeddedResource Include="Feeds\AddFeedForm.resx">
+      <DependentUpon>AddFeedForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Feeds\frmSettings.resx">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <EmbeddedResource Include="Feeds\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Streams\frmAddStream.resx">
       <DependentUpon>frmAddStream.cs</DependentUpon>
@@ -622,7 +622,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(SolutionDir)upstream\ikpMP3.dll" $(TargetDir)</PostBuildEvent>

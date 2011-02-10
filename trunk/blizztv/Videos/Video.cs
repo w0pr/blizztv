@@ -16,6 +16,7 @@
  */
 
 using System;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Settings;
@@ -41,16 +42,15 @@ namespace BlizzTV.Videos
             this.Link = link;
             this.Provider = provider;
 
-            // register context menus.
-            this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Watched", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsWatchedClicked))); // mark as read menu.
-            this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem("Mark As Unwatched", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnWatchedClicked))); // mark as unread menu.            
+            this.ContextMenus.Add("markaswatched", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsWatchedClicked)));
+            this.ContextMenus.Add("markasunwatched", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnWatchedClicked)));
 
             this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
         }
 
         public void CheckForNotifications()
         {
-            if (BlizzTV.Videos.Settings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new video is avaiable over {0}'s channel, click to start watching it.",this.ChannelName), System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new video is avaiable over {0}'s channel, click to start watching it.",this.ChannelName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public virtual void Process() // get the stream data by replacing provider variables. 

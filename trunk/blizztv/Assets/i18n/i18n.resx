@@ -237,4 +237,58 @@
   <data name="SetupAlarmTitle" xml:space="preserve">
     <value>Setup alarm for event: {0}</value>
   </data>
+  <data name="AddNewFeedMessage" xml:space="preserve">
+    <value>Please enter name for the new feed</value>
+  </data>
+  <data name="AddNewFeedTitle" xml:space="preserve">
+    <value>Add New Feed</value>
+  </data>
+  <data name="FeedAlreadyExistsInSubscriptionsMessage" xml:space="preserve">
+    <value>The feed already exists in your subscriptions named as '{0}'.</value>
+  </data>
+  <data name="FeedAlreadyExistsInSubscriptionsTitle" xml:space="preserve">
+    <value>Subscription exists</value>
+  </data>
+  <data name="AllFieldsRequiredTitle" xml:space="preserve">
+    <value>All fields required</value>
+  </data>
+  <data name="ErrorParsingFeedMessage" xml:space="preserve">
+    <value>There was an error parsing the feed. Please check the feed URL and retry.</value>
+  </data>
+  <data name="ErrorParsingFeedTitle" xml:space="preserve">
+    <value>Error parsing feed</value>
+  </data>
+  <data name="FillTheFeedNameAndUrlFieldsMessage" xml:space="preserve">
+    <value>Please fill the feed name and URL fields!</value>
+  </data>
+  <data name="MarkAllAsRead" xml:space="preserve">
+    <value>Mark All As Read</value>
+  </data>
+  <data name="MarkAllAsUnread" xml:space="preserve">
+    <value>Mark All As Unread</value>
+  </data>
+  <data name="MarkAsRead" xml:space="preserve">
+    <value>Mark As Read</value>
+  </data>
+  <data name="MarkAsUnread" xml:space="preserve">
+    <value>Mark As Unread</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MarkAllAsUnwatched" xml:space="preserve">
+    <value>Mark All As Unwatched</value>
+  </data>
+  <data name="MarkAllAsWatched" xml:space="preserve">
+    <value>Mark All As Watched</value>
+  </data>
+  <data name="MarkAsUnwatched" xml:space="preserve">
+    <value>Mark As Unwatched</value>
+  </data>
+  <data name="MarkAsWatched" xml:space="preserve">
+    <value>Mark As Watched</value>
+  </data>
 </root>

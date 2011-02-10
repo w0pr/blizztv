@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Utility.Imaging;
@@ -50,9 +51,8 @@ namespace BlizzTV.Feeds
             this.Name = subscription.Name;
             this.Url = subscription.Url;
 
-            // register context menus.
-            this.ContextMenus.Add("markallasread", new ToolStripMenuItem("Mark As Read", Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); // mark as read menu.
-            this.ContextMenus.Add("markallasunread", new ToolStripMenuItem("Mark As Unread", Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); // mark as unread menu.
+            this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
+            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
 
             this.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
         }

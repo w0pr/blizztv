@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Timers;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
 using BlizzTV.Modules;
@@ -43,9 +44,8 @@ namespace BlizzTV.Streams
             this.RootListItem = new ListItem("Streams");
             this.RootListItem.Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream);
 
-            // register context-menu's.
-            this.RootListItem.ContextMenus.Add("manualupdate", new System.Windows.Forms.ToolStripMenuItem("Update Streams", Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); // mark as unread menu.
-            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this.RootListItem.ContextMenus.Add("refresh", new System.Windows.Forms.ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); 
+            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Run()
@@ -149,7 +149,7 @@ namespace BlizzTV.Streams
                 this._updateTimer = null;
             }
 
-            _updateTimer = new Timer(BlizzTV.Streams.Settings.Instance.UpdatePeriod * 60000);
+            _updateTimer = new Timer(Settings.Instance.UpdatePeriod * 60000);
             _updateTimer.Elapsed += OnTimerHit;
             _updateTimer.Enabled = true;
         }
