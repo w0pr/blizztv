@@ -6,6 +6,8 @@ Before publishing any binary releases of BlizzTV, we make sure they contain no i
 
 ==== Scan Reports ====
 
+ * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.19-beta.zip&can=2&q= 0.20-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=24f22060b37ad3750138d0dbc33495c2465570dab3c94dcb49633478c97fb873-1297417035 Report] (note: there's 1 false-positive)
+
  * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.19-beta.zip&can=2&q= 0.19-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=29affd199c310020c78f577473755c047bb428e3d46f929403266998c05b5bb0-1295447259 Report] (note: there's 1 false-positive)
 
  * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.18b-beta.zip&can=2&q= 0.18b-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=4d75b78ce4afabc51dbd1e6922da566fbbccd759c06553db0104b27521c9ce5c-1293881336 Report] (note: there's 1 false-positive)
