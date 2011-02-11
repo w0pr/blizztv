@@ -90,12 +90,6 @@ namespace BlizzTV.Log
         {
             if (this._disposed) return;
 
-            if (this._loggerEnabled)
-            {
-                this._logStream.Dispose();                
-                this._fileStream.Dispose();                
-            }
-
             this._logStream = null;
             this._fileStream = null;
             _disposed = true;

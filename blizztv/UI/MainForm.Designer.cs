@@ -123,7 +123,6 @@ namespace BlizzTV.UI
             this.menuModules.Name = "menuModules";
             this.menuModules.Size = new System.Drawing.Size(176, 22);
             this.menuModules.Text = "Modules";
-            this.menuModules.Click += new System.EventHandler(this.MenuPlugins_Click);
             // 
             // toolStripSeparator1
             // 
@@ -367,7 +366,7 @@ namespace BlizzTV.UI
             this.TreeviewContextMenu.Name = "TreeviewContextMenu";
             this.TreeviewContextMenu.Size = new System.Drawing.Size(61, 4);
             // 
-            // frmMain
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -379,7 +378,7 @@ namespace BlizzTV.UI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
-            this.Name = "frmMain";
+            this.Name = "MainForm";
             this.Text = "BlizzTV";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
