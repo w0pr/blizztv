@@ -1,10 +1,11 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
-*11.02.2010 - 0.20-beta (r372)*
+*11.02.2010 - 0.20-beta (r374)*
 ----
  * Improved justin.tv stream handling, it should be now working in all configurations.
  * Fixed a rare bug with justin.tv streams.
+ * Fixed a serious bug with accessing resource paths. When application was run from a different path then it's installed path, it wasn't be able to access resource files & folders correctly and instead was creating new instances of them on the current relative folder. This issue was also affecting "Start BlizzTV on Startup" option.
  * Improved download handling.
  * Improved video/stream players loading routines.
  * Cleaned-up code by refactoring all the source (that's why it took so long to get this release. 
