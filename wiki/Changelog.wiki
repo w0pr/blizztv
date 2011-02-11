@@ -1,6 +1,15 @@
 #summary BlizzTV changelog
 #labels Featured,Documentation,Development
 
+*11.02.2010 - 0.20-beta (r372)*
+----
+ * Improved justin.tv stream handling, it should be now working in all configurations.
+ * Fixed a rare bug with justin.tv streams.
+ * Improved download handling.
+ * Improved video/stream players loading routines.
+ * Cleaned-up code by refactoring all the source (that's why it took so long to get this release. 
+ * Fixed a few misc. bugs.
+
 *19.01.2010 - 0.19-beta (r324)*
 ----
  * Re-enabled the justin.tv stream support though it's -*NOT STABLE*- yet (the justin.tv player just refuses to work on some computers).
