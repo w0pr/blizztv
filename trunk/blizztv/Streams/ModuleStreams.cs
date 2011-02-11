@@ -87,7 +87,7 @@ namespace BlizzTV.Streams
             return false;
         }
 
-        internal void UpdateStreams()
+        private void UpdateStreams()
         {
             if (this.Updating) return;
 

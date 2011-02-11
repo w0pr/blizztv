@@ -43,7 +43,7 @@ namespace BlizzTV.Streams.Parsers
                     this.IsLive = true; // is the stream live?
                     Hashtable table = (Hashtable)data[0];
                     this.ViewerCount = Int32.Parse(table["stream_count"].ToString()); // stream viewers count.
-                    this.Description = (string)table["title"].ToString(); // stream description.
+                    if(table.Contains("title")) this.Description = (string)table["title"].ToString(); // stream description.
                 }
             }
             catch (Exception e) { throw new Exception("Stream module's justin.tv parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.

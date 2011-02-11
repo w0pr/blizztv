@@ -306,12 +306,6 @@ namespace BlizzTV.UI
             if (p.ShowDialog() == DialogResult.OK) ApplySettings();
         }
 
-        private void MenuPlugins_Click(object sender, EventArgs e) // shows preferences form with module's tab active.
-        {
-            PreferencesForm p = new PreferencesForm();
-            if (p.ShowDialog("tabModules") == DialogResult.OK) ApplySettings();
-        }
-
         private void ApplySettings() // Insantiates or kills plugins based on new applied plugin settings.
         {
             foreach (KeyValuePair<string, bool> pair in Settings.Instance.Modules.List)
