@@ -17,6 +17,7 @@
 
 using System.IO;
 using Microsoft.Isam.Esent.Collections.Generic;
+using BlizzTV.Utility.Helpers;
 
 namespace BlizzTV.Storage
 {
@@ -32,13 +33,13 @@ namespace BlizzTV.Storage
 
         #endregion
 
-        private const string StorageFolder = "Storage";
+        private readonly string _storageFolder = ApplicationHelper.GetResourcePath("Storage");
         private readonly PersistentDictionary<string, byte> _dictionary;        
 
         private KeyValueStorage()
         {
-            if (!this.StorageExists()) Directory.CreateDirectory(StorageFolder); // create the storage directory if it doesn't exists yet.
-            this._dictionary = new PersistentDictionary<string, byte>(StorageFolder);
+            if (!this.StorageExists()) Directory.CreateDirectory(_storageFolder); // create the storage directory if it doesn't exists yet.
+            this._dictionary = new PersistentDictionary<string, byte>(_storageFolder);
         }
 
         public byte GetByte(string key)
@@ -64,7 +65,7 @@ namespace BlizzTV.Storage
 
         private bool StorageExists()
         {
-            return Directory.Exists(StorageFolder);
+            return Directory.Exists(_storageFolder);
         }
     }
 }

@@ -17,6 +17,7 @@
 
 using System;
 using System.IO;
+using BlizzTV.Utility.Helpers;
 
 namespace BlizzTV.Log
 {
@@ -29,8 +30,8 @@ namespace BlizzTV.Log
 
         #endregion
 
-        private bool _loggerEnabled = false; 
-        private const string LogFile = "debug.log"; 
+        private bool _loggerEnabled = false;
+        private readonly string _logFile = ApplicationHelper.GetResourcePath("debug.log");
         private FileStream _fileStream;
         private StreamWriter _logStream;        
         private bool _disposed = false;
@@ -43,7 +44,7 @@ namespace BlizzTV.Log
 
             try
             {
-                this._fileStream = new FileStream(LogFile, FileMode.Append, FileAccess.Write);
+                this._fileStream = new FileStream(_logFile, FileMode.Append, FileAccess.Write);
                 this._logStream = new StreamWriter(this._fileStream);
                 this._loggerEnabled = true;
             }
@@ -52,7 +53,7 @@ namespace BlizzTV.Log
                 this._loggerEnabled = false;
                 this._fileStream = null;
                 this._logStream = null;
-                DebugConsole.Instance.Write(LogMessageTypes.Error,string.Format("LogManager caught an exception while opening the log file: {0} - {1}", LogFile, e));
+                DebugConsole.Instance.Write(LogMessageTypes.Error,string.Format("LogManager caught an exception while opening the log file: {0} - {1}", _logFile, e));
             }
         }
 

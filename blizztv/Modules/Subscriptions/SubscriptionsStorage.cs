@@ -27,6 +27,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using BlizzTV.Log;
 using BlizzTV.Assets.i18n;
+using BlizzTV.Utility.Helpers;
 
 namespace BlizzTV.Modules.Subscriptions
 {
@@ -42,7 +43,7 @@ namespace BlizzTV.Modules.Subscriptions
 
         #endregion
 
-        private const string SubscriptonsFile = "subscriptions.db";
+        private readonly string _subscriptonsFile = ApplicationHelper.GetResourcePath("subscriptions.db");
         private Type[] _knownTypes = new[] { typeof(Subscription) }; // known types that implements Subscription.
         private List<Subscription> _subscriptions = new List<Subscription>(); // the internal list of subscriptions.
                       
@@ -68,8 +69,8 @@ namespace BlizzTV.Modules.Subscriptions
         {
             try
             {
-                if (!File.Exists(SubscriptonsFile)) this.CreateUsingDefaults(); // if subscriptions database does not exists, create one using the default database.
-                using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Open))
+                if (!File.Exists(_subscriptonsFile)) this.CreateUsingDefaults(); // if subscriptions database does not exists, create one using the default database.
+                using (FileStream fileStream = new FileStream(_subscriptonsFile, FileMode.Open))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(List<Subscription>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Subscriptions"), "");
                     this._subscriptions = (List<Subscription>)xs.Deserialize(fileStream);
@@ -94,7 +95,7 @@ namespace BlizzTV.Modules.Subscriptions
         /// </summary>
         private void CreateUsingDefaults()
         {
-            using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Create))
+            using (FileStream fileStream = new FileStream(_subscriptonsFile, FileMode.Create))
             {
                 fileStream.Write(Encoding.UTF8.GetBytes(Assets.XML.Subscriptions.Default), 0, Assets.XML.Subscriptions.Default.Length);
             }
@@ -105,7 +106,7 @@ namespace BlizzTV.Modules.Subscriptions
         /// </summary>
         public void Save()
         {
-            using (FileStream fileStream = new FileStream(SubscriptonsFile, FileMode.Create))
+            using (FileStream fileStream = new FileStream(_subscriptonsFile, FileMode.Create))
             {
                 XmlSerializer xs = new XmlSerializer(typeof(List<Subscription>), new XmlAttributeOverrides(), this._knownTypes, new XmlRootAttribute("Subscriptions"), "");
                 xs.Serialize(fileStream, this._subscriptions);
