@@ -16,8 +16,9 @@
  */
 
 using System;
-using BlizzTV.Log;
 using Nini.Config;
+using BlizzTV.Log;
+using BlizzTV.Utility.Helpers;
 
 namespace BlizzTV.Settings
 {
@@ -31,14 +32,14 @@ namespace BlizzTV.Settings
         #endregion
 
         private readonly IniConfigSource _parser; // the ini parser.
-        private const string ConfigFile = "blizztv.ini"; // the ini file.
+        private readonly string _configFile = ApplicationHelper.GetResourcePath("blizztv.ini"); // the config file's location.
         private bool _fileExists = false; // does the ini file exists?
       
         private SettingsManager()
         {
             try
             {
-                this._parser = new IniConfigSource(ConfigFile); // see if the file exists by trying to parse it.
+                this._parser = new IniConfigSource(_configFile); // see if the file exists by trying to parse it.
                 this._fileExists = true;
             }
             catch (Exception e)
@@ -69,7 +70,7 @@ namespace BlizzTV.Settings
             if (this._fileExists) this._parser.Save();
             else
             {
-                this._parser.Save(ConfigFile);
+                this._parser.Save(_configFile);
                 this._fileExists = true;
             }
         }

@@ -141,6 +141,7 @@
     <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
     <Compile Include="Modules\Subscriptions\Subscription.cs" />
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
+    <Compile Include="Utility\Helpers\ApplicationHelper.cs" />
     <Compile Include="Win32API\WindowMessaging.cs" />
     <Compile Include="Utility\Helpers\Zip.cs" />
     <Compile Include="Notifications\NotificationsForm.cs">
