@@ -49,25 +49,35 @@ namespace BlizzTV
             // attach our embedded assembly loader.
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyManager.Instance.Resolver;
 
-            // check command-line-args.
-            string[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 1 && args[1].ToLower() == "/silent") RuntimeConfiguration.Instance.StartedOnSystemStartup = true;
-            else RuntimeConfiguration.Instance.StartedOnSystemStartup = false;
-            
-            // start logger & debug-console if enabled.            
-            if (UI.Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
-            if (UI.Settings.Instance.EnableDebugLogging) LogManager.Instance.EnableLogger(); else LogManager.Instance.DisableLogger();           
-            
-            // check if dependencies are satisfied.
-            if (!DependencyManager.Instance.Satisfied()) { Application.ExitThread(); return; }
-
-            LogManager.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
+            // code that requires custom-assembly resolving should stay away from Main() -- otherwise JIT will be failing to startup our code.            
+            Startup();
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
 
             SingleInstanceLock.ReleaseMutex(); // release the mutex before the application exits.     
+        }
+
+        /// <summary>
+        /// As below code needs an assembly-resolve (cause of the UI.Settings.Instance) for the Nini reference, we had to move away the line from Main() function
+        /// in order give the JIT chance to parse Main() function and register the custom assembly resolver. Failing to do so would make JIT fail the initilization and run Main().
+        /// </summary>
+        static void Startup()
+        {
+            // check command-line-args.
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1 && args[1].ToLower() == "/silent") RuntimeConfiguration.Instance.StartedOnSystemStartup = true;
+            else RuntimeConfiguration.Instance.StartedOnSystemStartup = false;
+
+            // start logger & debug-console if enabled.            
+            if (UI.Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
+            if (UI.Settings.Instance.EnableDebugLogging) LogManager.Instance.EnableLogger(); else LogManager.Instance.DisableLogger();
+
+            // check if dependencies are satisfied.
+            if (!DependencyManager.Instance.Satisfied()) { Application.ExitThread(); return; }
+
+            LogManager.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
         }
     }
 }
