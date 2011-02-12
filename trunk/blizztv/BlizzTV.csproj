@@ -90,7 +90,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms.Calendar">
       <HintPath>..\upstream\System.Windows.Forms.Calendar.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -531,6 +531,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <EmbeddedResource Include="Assets\Assemblies\System.Windows.Forms.Calendar.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Ionic.Zip.Reduced.dll" />
     <EmbeddedResource Include="Assets\Assemblies\HtmlAgilityPack.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Esent.Collections.dll" />
