@@ -531,6 +531,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <EmbeddedResource Include="Assets\Assemblies\AxInterop.ShockwaveFlashObjects.dll" />
+    <EmbeddedResource Include="Assets\Assemblies\Interop.ShockwaveFlashObjects.dll" />
     <EmbeddedResource Include="Assets\Assemblies\System.Windows.Forms.Calendar.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Ionic.Zip.Reduced.dll" />
     <EmbeddedResource Include="Assets\Assemblies\HtmlAgilityPack.dll" />
@@ -625,6 +627,7 @@
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
+      <Private>False</Private>
     </COMReference>
     <COMReference Include="ShockwaveFlashObjects">
       <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
@@ -633,7 +636,8 @@
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </COMReference>
   </ItemGroup>
   <ItemGroup>
