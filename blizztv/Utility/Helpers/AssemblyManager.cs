@@ -59,7 +59,6 @@ namespace BlizzTV.Utility.Helpers
 
                 return assembly;
             }
-
         }
     }
 }
