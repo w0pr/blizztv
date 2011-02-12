@@ -34,7 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxInterop.ShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="AxInterop.ShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\upstream\AxInterop.ShockwaveFlashObjects.dll</HintPath>
+    </Reference>
     <Reference Include="Esent.Collections">
       <HintPath>..\upstream\Esent.Collections.dll</HintPath>
     </Reference>
@@ -47,9 +49,14 @@
     <Reference Include="Interop.ShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <Private>True</Private>
+      <HintPath>..\upstream\Interop.ShockwaveFlashObjects.dll</HintPath>
     </Reference>
-    <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.5, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="irrKlang.NET4, Version=1.0.3861.18767, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86" />
+    <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\upstream\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+    <Reference Include="irrKlang.NET4, Version=1.0.3861.18767, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
+      <HintPath>..\upstream\irrKlang.NET4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Nini">
