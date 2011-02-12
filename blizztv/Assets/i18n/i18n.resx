@@ -330,4 +330,10 @@
   <data name="SaveTheMurlocs" xml:space="preserve">
     <value>Save the Murlocs!</value>
   </data>
+  <data name="CanNotLoadRequiredAssembliesMessage" xml:space="preserve">
+    <value>BlizzTV could not load one of it's required dependincies. Please re-install the program.</value>
+  </data>
+  <data name="CanNotLoadRequiredAssembliesTitle" xml:space="preserve">
+    <value>Startup Error</value>
+  </data>
 </root>

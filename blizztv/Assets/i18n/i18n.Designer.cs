@@ -124,6 +124,24 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BlizzTV could not load one of it&apos;s required dependincies. Please re-install the program..
+        /// </summary>
+        internal static string CanNotLoadRequiredAssembliesMessage {
+            get {
+                return ResourceManager.GetString("CanNotLoadRequiredAssembliesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Startup Error.
+        /// </summary>
+        internal static string CanNotLoadRequiredAssembliesTitle {
+            get {
+                return ResourceManager.GetString("CanNotLoadRequiredAssembliesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can not setup an alarm for the event as it&apos;s just about to start.
         /// </summary>
         internal static string CanNotSetupEventAlarmMessage {

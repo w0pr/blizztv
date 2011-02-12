@@ -23,6 +23,7 @@ using BlizzTV.Configuration;
 using BlizzTV.Dependency;
 using BlizzTV.Log;
 using BlizzTV.UI;
+using BlizzTV.Utility.Helpers;
 using BlizzTV.Win32API;
 
 namespace BlizzTV
@@ -44,6 +45,9 @@ namespace BlizzTV
                 WindowMessaging.PostMessage((IntPtr)WindowMessaging.HWND_BROADCAST, WindowMessaging.WM_BLIZZTV_SETFRONTMOST, IntPtr.Zero, IntPtr.Zero); // message the actual instance to get on front-most.
                 return;
             }
+
+            // attach our embedded assembly loader.
+            AppDomain.CurrentDomain.AssemblyResolve += AssemblyManager.Instance.Resolver;
 
             // check command-line-args.
             string[] args = Environment.GetCommandLineArgs();

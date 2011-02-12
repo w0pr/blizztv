@@ -63,28 +63,34 @@
   <ItemGroup>
     <Reference Include="Esent.Collections">
       <HintPath>..\upstream\Esent.Collections.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Esent.Interop">
       <HintPath>..\upstream\Esent.Interop.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\upstream\HtmlAgilityPack.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\upstream\Ionic.Zip.Reduced.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="irrKlang.NET4">
       <HintPath>..\upstream\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="Nini">
       <HintPath>..\upstream\Nini.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms.Calendar">
       <HintPath>..\upstream\System.Windows.Forms.Calendar.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -142,6 +148,7 @@
     <Compile Include="Modules\Subscriptions\Subscription.cs" />
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
     <Compile Include="Utility\Helpers\ApplicationHelper.cs" />
+    <Compile Include="Utility\Helpers\AssemblyManager.cs" />
     <Compile Include="Win32API\WindowMessaging.cs" />
     <Compile Include="Utility\Helpers\Zip.cs" />
     <Compile Include="Notifications\NotificationsForm.cs">
@@ -524,6 +531,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <EmbeddedResource Include="Assets\Assemblies\Nini.dll" />
+    <EmbeddedResource Include="Assets\Assemblies\Ionic.Zip.Reduced.dll" />
+    <EmbeddedResource Include="Assets\Assemblies\HtmlAgilityPack.dll" />
+    <EmbeddedResource Include="Assets\Assemblies\Esent.Collections.dll" />
+    <EmbeddedResource Include="Assets\Assemblies\Esent.Interop.dll" />
+    <None Include="App.config" />
     <None Include="Resources\error.png" />
     <None Include="Resources\notification.png" />
     <None Include="Resources\video.png" />

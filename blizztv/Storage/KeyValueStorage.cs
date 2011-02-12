@@ -33,7 +33,7 @@ namespace BlizzTV.Storage
 
         #endregion
 
-        private readonly string _storageFolder = ApplicationHelper.GetResourcePath("Storage");
+        private readonly string _storageFolder = ApplicationHelper.GetResourcePath("storage");
         private readonly PersistentDictionary<string, byte> _dictionary;        
 
         private KeyValueStorage()
