@@ -55,7 +55,8 @@
     <StartupObject>BlizzTV.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
@@ -83,7 +84,7 @@
     </Reference>
     <Reference Include="Nini">
       <HintPath>..\upstream\Nini.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -531,7 +532,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
-    <EmbeddedResource Include="Assets\Assemblies\Nini.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Ionic.Zip.Reduced.dll" />
     <EmbeddedResource Include="Assets\Assemblies\HtmlAgilityPack.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Esent.Collections.dll" />
