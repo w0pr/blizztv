@@ -83,7 +83,7 @@
     </Reference>
     <Reference Include="Nini">
       <HintPath>..\upstream\Nini.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -531,6 +531,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <EmbeddedResource Include="Assets\Assemblies\Nini.dll" />
     <EmbeddedResource Include="Assets\Assemblies\AxInterop.ShockwaveFlashObjects.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Interop.ShockwaveFlashObjects.dll" />
     <EmbeddedResource Include="Assets\Assemblies\System.Windows.Forms.Calendar.dll" />
