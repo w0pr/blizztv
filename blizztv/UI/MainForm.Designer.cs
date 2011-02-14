@@ -49,7 +49,6 @@ namespace BlizzTV.UI
             this.menuCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuDonate = new System.Windows.Forms.ToolStripMenuItem();
-            this.spreadTheWordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.LoadingCircle = new BlizzTV.Controls.LoadingCircle.LoadingCircleToolStripMenuItem();
@@ -148,7 +147,6 @@ namespace BlizzTV.UI
             this.menuCheckUpdates,
             this.toolStripSeparator4,
             this.menuDonate,
-            this.spreadTheWordToolStripMenuItem,
             this.menuAbout});
             this.menuHelp.Name = "menuHelp";
             this.menuHelp.Size = new System.Drawing.Size(44, 20);
@@ -158,7 +156,7 @@ namespace BlizzTV.UI
             // 
             this.menuBlizztvcom.Image = ((System.Drawing.Image)(resources.GetObject("menuBlizztvcom.Image")));
             this.menuBlizztvcom.Name = "menuBlizztvcom";
-            this.menuBlizztvcom.Size = new System.Drawing.Size(163, 22);
+            this.menuBlizztvcom.Size = new System.Drawing.Size(153, 22);
             this.menuBlizztvcom.Text = "BlizzTV.com";
             this.menuBlizztvcom.Click += new System.EventHandler(this.MenuBlizzTVCom_Click);
             // 
@@ -166,7 +164,7 @@ namespace BlizzTV.UI
             // 
             this.menuUserGuide.Image = ((System.Drawing.Image)(resources.GetObject("menuUserGuide.Image")));
             this.menuUserGuide.Name = "menuUserGuide";
-            this.menuUserGuide.Size = new System.Drawing.Size(163, 22);
+            this.menuUserGuide.Size = new System.Drawing.Size(153, 22);
             this.menuUserGuide.Text = "User Guide";
             this.menuUserGuide.Click += new System.EventHandler(this.MenuUserGuide_Click);
             // 
@@ -174,20 +172,20 @@ namespace BlizzTV.UI
             // 
             this.menuFAQ.Image = ((System.Drawing.Image)(resources.GetObject("menuFAQ.Image")));
             this.menuFAQ.Name = "menuFAQ";
-            this.menuFAQ.Size = new System.Drawing.Size(163, 22);
+            this.menuFAQ.Size = new System.Drawing.Size(153, 22);
             this.menuFAQ.Text = "FAQ";
             this.menuFAQ.Click += new System.EventHandler(this.MenuFAQ_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(150, 6);
             // 
             // menuBugReports
             // 
             this.menuBugReports.Image = ((System.Drawing.Image)(resources.GetObject("menuBugReports.Image")));
             this.menuBugReports.Name = "menuBugReports";
-            this.menuBugReports.Size = new System.Drawing.Size(163, 22);
+            this.menuBugReports.Size = new System.Drawing.Size(153, 22);
             this.menuBugReports.Text = "Bug Reports";
             this.menuBugReports.Click += new System.EventHandler(this.MenuBugReports_Click);
             // 
@@ -195,36 +193,28 @@ namespace BlizzTV.UI
             // 
             this.menuCheckUpdates.Image = ((System.Drawing.Image)(resources.GetObject("menuCheckUpdates.Image")));
             this.menuCheckUpdates.Name = "menuCheckUpdates";
-            this.menuCheckUpdates.Size = new System.Drawing.Size(163, 22);
+            this.menuCheckUpdates.Size = new System.Drawing.Size(153, 22);
             this.menuCheckUpdates.Text = "Check Updates";
             this.menuCheckUpdates.Click += new System.EventHandler(this.MenuCheckUpdates);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(150, 6);
             // 
             // menuDonate
             // 
             this.menuDonate.Image = ((System.Drawing.Image)(resources.GetObject("menuDonate.Image")));
             this.menuDonate.Name = "menuDonate";
-            this.menuDonate.Size = new System.Drawing.Size(163, 22);
+            this.menuDonate.Size = new System.Drawing.Size(153, 22);
             this.menuDonate.Text = "Donate";
             this.menuDonate.Click += new System.EventHandler(this.MenuDonate_Click);
-            // 
-            // spreadTheWordToolStripMenuItem
-            // 
-            this.spreadTheWordToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("spreadTheWordToolStripMenuItem.Image")));
-            this.spreadTheWordToolStripMenuItem.Name = "spreadTheWordToolStripMenuItem";
-            this.spreadTheWordToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.spreadTheWordToolStripMenuItem.Text = "Spread the word!";
-            this.spreadTheWordToolStripMenuItem.Click += new System.EventHandler(this.MenuSpreadTheWord_Click);
             // 
             // menuAbout
             // 
             this.menuAbout.Image = ((System.Drawing.Image)(resources.GetObject("menuAbout.Image")));
             this.menuAbout.Name = "menuAbout";
-            this.menuAbout.Size = new System.Drawing.Size(163, 22);
+            this.menuAbout.Size = new System.Drawing.Size(153, 22);
             this.menuAbout.Text = "About";
             this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // 
@@ -423,7 +413,6 @@ namespace BlizzTV.UI
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem ContextMenuSleepMode;
         private System.Windows.Forms.ToolStripMenuItem menuFAQ;
-        private System.Windows.Forms.ToolStripMenuItem spreadTheWordToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel NotificationIcon;
         private System.Windows.Forms.ToolStripStatusLabel toolStripSpacer;
         private System.Windows.Forms.ToolStripStatusLabel SleepIcon;

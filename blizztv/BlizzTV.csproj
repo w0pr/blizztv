@@ -570,7 +570,6 @@
     <None Include="Resources\us.png" />
     <None Include="Resources\update.png" />
     <None Include="Resources\unread.png" />
-    <None Include="Resources\spreadtheword.png" />
     <None Include="Resources\sleep.png" />
     <None Include="Resources\settings.png" />
     <None Include="Resources\sc2.png" />

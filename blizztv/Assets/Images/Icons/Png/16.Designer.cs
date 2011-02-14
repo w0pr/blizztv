@@ -221,13 +221,6 @@ namespace BlizzTV.Assets.Images.Icons.Png {
             }
         }
         
-        internal static System.Drawing.Bitmap spreadtheword {
-            get {
-                object obj = ResourceManager.GetObject("spreadtheword", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap stream {
             get {
                 object obj = ResourceManager.GetObject("stream", resourceCulture);
