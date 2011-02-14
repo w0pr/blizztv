@@ -49,7 +49,8 @@ namespace BlizzTV.UI
 
            switch (ListviewCredits.SelectedIndices[0])
            {
-               case 1: System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/Donors"); break;
+               case 0: System.Diagnostics.Process.Start("http://www.int6.org"); break;
+               case 1: System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/Sponsors"); break;
                case 2: System.Diagnostics.Process.Start("http://www.teamliquid.net"); break;
                case 3: System.Diagnostics.Process.Start("http://www.famfamfam.com"); break;
                case 4: System.Diagnostics.Process.Start("http://nini.sourceforge.net"); break;
