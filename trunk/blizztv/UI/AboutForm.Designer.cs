@@ -55,11 +55,6 @@ namespace BlizzTV.UI
             "No murlocs were harmed during making of this program."}, -1);
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ListviewModules = new System.Windows.Forms.ListView();
-            this.colIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.buttonOK = new System.Windows.Forms.Button();
             this.LinkBlizzTV = new System.Windows.Forms.LinkLabel();
@@ -72,13 +67,16 @@ namespace BlizzTV.UI
             this.Murloc = new System.Windows.Forms.PictureBox();
             this.LabelVersion = new System.Windows.Forms.Label();
             this.buttonChangelog = new System.Windows.Forms.Button();
-            this.Player = new FlashPlayer();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.Player = new BlizzTV.Controls.FlashPlayer.FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LinkFlattr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LinkPaypal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Murloc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,7 +84,7 @@ namespace BlizzTV.UI
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(346, 9);
+            this.label1.Location = new System.Drawing.Point(48, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 33);
             this.label1.TabIndex = 5;
@@ -95,56 +93,12 @@ namespace BlizzTV.UI
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(308, 7);
+            this.pictureBox1.Location = new System.Drawing.Point(10, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.ListviewModules);
-            this.groupBox2.Location = new System.Drawing.Point(7, 192);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(438, 117);
-            this.groupBox2.TabIndex = 9;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Modules";
-            // 
-            // ListviewModules
-            // 
-            this.ListviewModules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colIcon,
-            this.ColName,
-            this.ColDescription});
-            this.ListviewModules.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ListviewModules.FullRowSelect = true;
-            this.ListviewModules.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ListviewModules.Location = new System.Drawing.Point(3, 16);
-            this.ListviewModules.Name = "ListviewModules";
-            this.ListviewModules.ShowGroups = false;
-            this.ListviewModules.ShowItemToolTips = true;
-            this.ListviewModules.Size = new System.Drawing.Size(432, 98);
-            this.ListviewModules.SmallImageList = this.imageList;
-            this.ListviewModules.TabIndex = 0;
-            this.ListviewModules.UseCompatibleStateImageBehavior = false;
-            this.ListviewModules.View = System.Windows.Forms.View.Details;
-            // 
-            // colIcon
-            // 
-            this.colIcon.Text = "";
-            this.colIcon.Width = 22;
-            // 
-            // ColName
-            // 
-            this.ColName.Text = "Name";
-            this.ColName.Width = 100;
-            // 
-            // ColDescription
-            // 
-            this.ColDescription.Text = "Description";
-            this.ColDescription.Width = 289;
             // 
             // imageList
             // 
@@ -154,9 +108,9 @@ namespace BlizzTV.UI
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(370, 312);
+            this.buttonOK.Location = new System.Drawing.Point(370, 267);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.Size = new System.Drawing.Size(74, 23);
             this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -165,7 +119,7 @@ namespace BlizzTV.UI
             // LinkBlizzTV
             // 
             this.LinkBlizzTV.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LinkBlizzTV.Location = new System.Drawing.Point(320, 61);
+            this.LinkBlizzTV.Location = new System.Drawing.Point(22, 61);
             this.LinkBlizzTV.Name = "LinkBlizzTV";
             this.LinkBlizzTV.Size = new System.Drawing.Size(125, 13);
             this.LinkBlizzTV.TabIndex = 11;
@@ -177,9 +131,9 @@ namespace BlizzTV.UI
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.ListviewCredits);
-            this.groupBox1.Location = new System.Drawing.Point(7, 77);
+            this.groupBox1.Location = new System.Drawing.Point(7, 90);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(438, 109);
+            this.groupBox1.Size = new System.Drawing.Size(438, 172);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credits";
@@ -204,7 +158,7 @@ namespace BlizzTV.UI
             this.ListviewCredits.Name = "ListviewCredits";
             this.ListviewCredits.ShowGroups = false;
             this.ListviewCredits.ShowItemToolTips = true;
-            this.ListviewCredits.Size = new System.Drawing.Size(432, 90);
+            this.ListviewCredits.Size = new System.Drawing.Size(432, 153);
             this.ListviewCredits.TabIndex = 1;
             this.ListviewCredits.UseCompatibleStateImageBehavior = false;
             this.ListviewCredits.View = System.Windows.Forms.View.Details;
@@ -223,10 +177,10 @@ namespace BlizzTV.UI
             // LinkFlattr
             // 
             this.LinkFlattr.Image = ((System.Drawing.Image)(resources.GetObject("LinkFlattr.Image")));
-            this.LinkFlattr.Location = new System.Drawing.Point(10, 315);
+            this.LinkFlattr.Location = new System.Drawing.Point(191, 270);
             this.LinkFlattr.Name = "LinkFlattr";
             this.LinkFlattr.Size = new System.Drawing.Size(93, 20);
-            this.LinkFlattr.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.LinkFlattr.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.LinkFlattr.TabIndex = 13;
             this.LinkFlattr.TabStop = false;
             this.LinkFlattr.Click += new System.EventHandler(this.LinkFlattr_Click);
@@ -234,10 +188,10 @@ namespace BlizzTV.UI
             // LinkPaypal
             // 
             this.LinkPaypal.Image = ((System.Drawing.Image)(resources.GetObject("LinkPaypal.Image")));
-            this.LinkPaypal.Location = new System.Drawing.Point(109, 315);
+            this.LinkPaypal.Location = new System.Drawing.Point(111, 269);
             this.LinkPaypal.Name = "LinkPaypal";
             this.LinkPaypal.Size = new System.Drawing.Size(74, 21);
-            this.LinkPaypal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.LinkPaypal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LinkPaypal.TabIndex = 14;
             this.LinkPaypal.TabStop = false;
             this.LinkPaypal.Click += new System.EventHandler(this.LinkPaypal_Click);
@@ -245,7 +199,7 @@ namespace BlizzTV.UI
             // Murloc
             // 
             this.Murloc.Image = ((System.Drawing.Image)(resources.GetObject("Murloc.Image")));
-            this.Murloc.Location = new System.Drawing.Point(10, 7);
+            this.Murloc.Location = new System.Drawing.Point(383, 24);
             this.Murloc.Name = "Murloc";
             this.Murloc.Size = new System.Drawing.Size(56, 50);
             this.Murloc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -256,7 +210,7 @@ namespace BlizzTV.UI
             // LabelVersion
             // 
             this.LabelVersion.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LabelVersion.Location = new System.Drawing.Point(345, 42);
+            this.LabelVersion.Location = new System.Drawing.Point(47, 45);
             this.LabelVersion.Name = "LabelVersion";
             this.LabelVersion.Size = new System.Drawing.Size(100, 12);
             this.LabelVersion.TabIndex = 17;
@@ -265,13 +219,33 @@ namespace BlizzTV.UI
             // 
             // buttonChangelog
             // 
-            this.buttonChangelog.Location = new System.Drawing.Point(289, 312);
+            this.buttonChangelog.Location = new System.Drawing.Point(290, 267);
             this.buttonChangelog.Name = "buttonChangelog";
-            this.buttonChangelog.Size = new System.Drawing.Size(75, 23);
+            this.buttonChangelog.Size = new System.Drawing.Size(74, 23);
             this.buttonChangelog.TabIndex = 18;
             this.buttonChangelog.Text = "Changelog";
             this.buttonChangelog.UseVisualStyleBackColor = true;
             this.buttonChangelog.Click += new System.EventHandler(this.buttonChangelog_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(153, 12);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 20;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(175, 12);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 21;
+            this.pictureBox4.TabStop = false;
             // 
             // Player
             // 
@@ -282,12 +256,14 @@ namespace BlizzTV.UI
             this.Player.Size = new System.Drawing.Size(624, 347);
             this.Player.TabIndex = 16;
             // 
-            // frmAbout
+            // AboutForm
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 343);
+            this.ClientSize = new System.Drawing.Size(451, 299);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.Player);
             this.Controls.Add(this.Murloc);
             this.Controls.Add(this.LinkPaypal);
@@ -295,7 +271,6 @@ namespace BlizzTV.UI
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.LinkBlizzTV);
             this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LabelVersion);
@@ -305,17 +280,18 @@ namespace BlizzTV.UI
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmAbout";
+            this.Name = "AboutForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About BlizzTV";
             this.Load += new System.EventHandler(this.AboutForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MoreDots);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LinkFlattr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LinkPaypal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Murloc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Player)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -326,10 +302,6 @@ namespace BlizzTV.UI
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListView ListviewModules;
-        private System.Windows.Forms.ColumnHeader ColName;
-        private System.Windows.Forms.ColumnHeader ColDescription;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.LinkLabel LinkBlizzTV;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -343,6 +315,7 @@ namespace BlizzTV.UI
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Label LabelVersion;
         private System.Windows.Forms.Button buttonChangelog;
-        private System.Windows.Forms.ColumnHeader colIcon;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }
