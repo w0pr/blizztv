@@ -32,25 +32,25 @@ namespace BlizzTV.UI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Hüseyin Uslu",
             "Developer."}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Donors",
             "Thanks for supporting the project by donations!"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "TeamLiquid.net",
             "Thanks for calendar API and all suggestions from TL users."}, -1);
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Mark James",
             "The shiny icons."}, -1);
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "Brent R. Matzelle",
             "Lovely Nini."}, -1);
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "DotNetZip",
             "http://dotnetzip.codeplex.com"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "SaveTheMurlocs.org",
             "No murlocs were harmed during making of this program."}, -1);
             this.label1 = new System.Windows.Forms.Label();
@@ -149,13 +149,13 @@ namespace BlizzTV.UI
             this.ListviewCredits.FullRowSelect = true;
             this.ListviewCredits.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ListviewCredits.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem8,
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7});
             this.ListviewCredits.Location = new System.Drawing.Point(3, 16);
             this.ListviewCredits.Name = "ListviewCredits";
             this.ListviewCredits.ShowGroups = false;

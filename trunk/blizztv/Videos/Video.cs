@@ -43,7 +43,7 @@ namespace BlizzTV.Videos
             this.Link = link;
             this.Provider = provider;
 
-            this.ContextMenus.Add("markaswatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsWatchedClicked)));
+            this.ContextMenus.Add("markaswatched", new ToolStripMenuItem(i18n.MarkAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsWatchedClicked)));
             this.ContextMenus.Add("markasunwatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnWatchedClicked)));
 
             this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
