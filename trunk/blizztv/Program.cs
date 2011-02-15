@@ -49,14 +49,24 @@ namespace BlizzTV
             // attach our embedded assembly loader.
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyManager.Instance.Resolver;
 
+            // attach unhandled-exception handler on release mode.
+            #if !DEBUG
+                AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+            #endif
+
             // code that requires custom-assembly resolving should stay away from Main() -- otherwise JIT will be failing to startup our code.            
             Startup();
-            
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
 
             SingleInstanceLock.ReleaseMutex(); // release the mutex before the application exits.     
+        }
+
+        static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Unhandled exception caught: {0}", e.ExceptionObject));
         }
 
         /// <summary>
