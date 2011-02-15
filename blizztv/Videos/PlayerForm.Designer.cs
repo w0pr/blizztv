@@ -48,7 +48,7 @@ namespace BlizzTV.Videos
             this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuAlwaysOnTop});
             this.PlayerContextMenu.Name = "PlayerContextMenu";
-            this.PlayerContextMenu.Size = new System.Drawing.Size(155, 48);
+            this.PlayerContextMenu.Size = new System.Drawing.Size(155, 26);
             // 
             // MenuAlwaysOnTop
             // 
@@ -71,7 +71,7 @@ namespace BlizzTV.Videos
             this.FlashPlayer.Visible = false;
             this.FlashPlayer.OnReadyStateChange += new AxShockwaveFlashObjects._IShockwaveFlashEvents_OnReadyStateChangeEventHandler(this.FlashPlayer_OnReadyStateChange);
             // 
-            // frmPlayer
+            // PlayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -80,7 +80,7 @@ namespace BlizzTV.Videos
             this.Controls.Add(this.FlashPlayer);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmPlayer";
+            this.Name = "PlayerForm";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.PlayerForm_Load);
             this.Controls.SetChildIndex(this.FlashPlayer, 0);

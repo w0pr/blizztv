@@ -531,6 +531,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\video.png" />
     <EmbeddedResource Include="Assets\Assemblies\Nini.dll" />
     <EmbeddedResource Include="Assets\Assemblies\AxInterop.ShockwaveFlashObjects.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Interop.ShockwaveFlashObjects.dll" />
@@ -541,7 +542,6 @@
     <EmbeddedResource Include="Assets\Assemblies\Esent.Interop.dll" />
     <None Include="Resources\error.png" />
     <None Include="Resources\notification.png" />
-    <None Include="Resources\video.png" />
     <None Include="Resources\stream.png" />
     <None Include="Resources\sleep.ico" />
     <None Include="Resources\blizztv.ico" />
