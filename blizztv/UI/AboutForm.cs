@@ -36,6 +36,15 @@ namespace BlizzTV.UI
         private void AboutForm_Load(object sender, EventArgs e)
         {
             this.LabelVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            this.toolTip.AutoPopDelay = 5000;
+            this.toolTip.InitialDelay = 1000;
+            this.toolTip.ReshowDelay = 500;
+            this.toolTip.ShowAlways = true;
+            this.toolTip.SetToolTip(this.picMurloc, "Save the murlocs!");
+            this.toolTip.SetToolTip(this.picTwitter, "Follow BlizzTV on twitter");
+            this.toolTip.SetToolTip(this.picFacebook, "Follow BlizzTV on facebook");
+            this.toolTip.SetToolTip(this.LinkFlattr, "Help us improve the BlizzTV by donating on Flattr");
+            this.toolTip.SetToolTip(this.LinkPaypal, "Help us improve the BlizzTV by donating on Paypal");
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -57,13 +66,15 @@ namespace BlizzTV.UI
                case 5: System.Diagnostics.Process.Start("http://dotnetzip.codeplex.com"); break;
                case 6: System.Diagnostics.Process.Start("http://www.savethemurlocs.org"); break;
            }           
-        }	
-
+        }
+        
         private void buttonChangelog_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/Changelog", null); }	
         private void LinkBlizzTV_Clicked(object sender, LinkLabelLinkClickedEventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com", null); }
         private void LinkFlattr_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://flattr.com/thing/86300/BlizzTV", null); }
         private void LinkPaypal_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null); }
-        			
+        private void picTwitter_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://twitter.com/blizztv", null); }
+        private void picFacebook_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://www.facebook.com/pages/BlizzTV/104535529611622", null); }
+			
         private bool _enoughDots = false;		
         private void MoreDots(object sender, KeyEventArgs e) { if (e.Alt && e.Control) this._enoughDots = true; }
         private void EvenMoreDots(object sender, EventArgs e) { if (this._enoughDots) { this.Text = i18n.SaveTheMurlocs; this.Width = 640; this.Height = 385; this.Player.Visible = true; this.Player.Dock = DockStyle.Fill; this.Player.LoadMovie(0, "http://www.youtube.com/v/bvwFcfQWOGY?fs=1&autoplay=1&hl=en_US"); } AudioManager.Instance.PlayFromMemory("murloc", Assets.Sounds.Notifications.Murloc); _enoughDots = false; }
