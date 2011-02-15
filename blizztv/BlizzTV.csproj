@@ -539,7 +539,6 @@
     <EmbeddedResource Include="Assets\Assemblies\HtmlAgilityPack.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Esent.Collections.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Esent.Interop.dll" />
-    <None Include="App.config" />
     <None Include="Resources\error.png" />
     <None Include="Resources\notification.png" />
     <None Include="Resources\video.png" />
