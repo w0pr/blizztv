@@ -57,7 +57,7 @@ namespace BlizzTV.Streams
                 this._snapParent = true;
                 this.SnapToParent();
                 this.Move += ChatForm_Move;
-                this.Text = string.Format("Chat: {0}@{1}", this._stream.Name, this._stream.Provider); // set the window title.
+                this.Text = string.Format("Chat: {0}", this._stream.Name); // set the window title.
                 this.Chat.LoadMovie(0, string.Format("{0}", this._stream.ChatMovie)); // load the movie.
             }
             catch (Exception exc)
