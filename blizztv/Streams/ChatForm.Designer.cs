@@ -31,7 +31,7 @@ namespace BlizzTV.Streams
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChatForm));
-            this.Chat = new FlashPlayer();
+            this.Chat = new BlizzTV.Controls.FlashPlayer.FlashPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.Chat)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +45,7 @@ namespace BlizzTV.Streams
             this.Chat.Size = new System.Drawing.Size(334, 351);
             this.Chat.TabIndex = 1;
             // 
-            // frmChat
+            // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -53,8 +53,9 @@ namespace BlizzTV.Streams
             this.ClientSize = new System.Drawing.Size(334, 351);
             this.Controls.Add(this.Chat);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "frmChat";
-            this.Text = "frmChat";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "ChatForm";
+            this.Text = "Chat Window";
             this.Load += new System.EventHandler(this.ChatForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Chat)).EndInit();
             this.ResumeLayout(false);

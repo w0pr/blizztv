@@ -36,7 +36,7 @@ namespace BlizzTV.Streams.Parsers
 
             try
             {
-                string apiUrl = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "F7DE9C9A56F4ABB48D170A9881E5AF66"); // the api url
+                string apiUrl = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "0FB451E8E15DCEBECE707004AA0166E8"); // the api url
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
                 if (result.State != WebReader.States.Success) return;
 
