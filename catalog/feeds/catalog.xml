@@ -2,7 +2,7 @@
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Entry xsi:type="Feed" Category="Starcraft" Name="Starcraft2.com" Description="Starcraft2's official site." Url="http://us.battle.net/sc2/en/feed/news" />  
   <Entry xsi:type="Feed" Category="Starcraft" Name="TeamLiquid" Description="The most popular Starcraft II fansite." Url="http://www.teamliquid.net/rss/news.xml" />
-  <Entry xsi:type="Feed" Category="Starcraft" Name="GosuGamers" Description="Yet another popular Starcraft II fansite." Url="http://www.gosugamers.net/starcraft2/sc2.rss" />
+  <Entry xsi:type="Feed" Category="Starcraft" Name="GosuGamers-SCII" Description="Yet another popular Starcraft II fansite." Url="http://www.gosugamers.net/starcraft2/sc2.rss" />
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WorldofWarcraft.com" Description="World of Warcraft's official site." Url="http://us.battle.net/wow/en/feed/news" />
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="MMO-Champion" Description="The most popular World of Warcraft news source." Url="http://www.mmo-champion.com/external.php?do=rss&amp;type=newcontent&amp;sectionid=1&amp;days=120&amp;count=10" />
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="WorldOfRaids" Description="Yet another popular World of Warcraft news site." Url="http://www.worldofraids.com/rss/forums/1-world-of-raids-news/" />
@@ -14,6 +14,10 @@
   <Entry xsi:type="Feed" Category="WorldofWarcraft" Name="GameBreaker.tv" Description="Covering World of Warcraft and general MMO-gaming." Url="http://www.gamebreaker.tv/feed/" />
   <Entry xsi:type="Feed" Category="Blizzard" Name="BlizzTV" Description="The BlizzTV's home." Url="http://www.blizztv.com/rss/ccs/1-blizztvcom/" />
   <Entry xsi:type="Feed" Category="Blizzard" Name="BlizzPlanet" Description="Everything Blizzard Entertainment!" Url="http://feeds.feedburner.com/blizzplanetcom" />
+  <Entry xsi:type="Feed" Category="HeroesofNewerth" Name="GosuGamers-HON" Description="GosuGamer's Heroes of Newerth coverage" Url="http://www.gosugamers.net/hon/hon.rss" />
+  <Entry xsi:type="Feed" Category="LeagueofLegends" Name="LeagueofLegends.com" Description="LoL's official news stream." Url="http://www.leagueoflegends.com/board/external.php?type=RSS2&forumids=9" />
+  <Entry xsi:type="Feed" Category="LeagueofLegends" Name="LeagueofReplays" Description="LeagueofReplays LOL coverage." Url="http://www.leagueofreplays.com/feed.php?type=RSS" />
   <Entry xsi:type="Feed" Category="MMO" Name="Massively.com" Description="Massive covarage of massive multiplayer online games!" Url="http://massively.joystiq.com/rss.xml" />
   <Entry xsi:type="Feed" Category="Gaming" Name="n4g.com" Description="News for gamers by n4g.com" Url="http://n4g.com/rss/news?channel=&amp;sort=latest" />
+  <Entry xsi:type="Feed" Category="Gaming" Name="GameReplays.org" Description="GameReplays.org's feed." Url="http://www.gamereplays.org/community/index.php?act=rssout&id=1" />
 </Catalog>
