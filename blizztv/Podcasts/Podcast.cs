@@ -38,7 +38,7 @@ namespace BlizzTV.Podcasts
         /// <summary>
         /// The feed's stories.
         /// </summary>
-        public List<Chapter> Chapters = new List<Chapter>();
+        public List<Episode> Chapters = new List<Episode>();
 
         public Podcast(PodcastSubscription subscription)
             : base(subscription.Name)
@@ -73,7 +73,7 @@ namespace BlizzTV.Podcasts
             {
                 try
                 {
-                    Chapter c = new Chapter(this.Title, item);
+                    Episode c = new Episode(this.Title, item);
                     this.Chapters.Add(c);
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Podcast parser caught an exception: {0}", e)); }

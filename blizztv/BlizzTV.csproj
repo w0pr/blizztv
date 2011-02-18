@@ -134,6 +134,9 @@
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangTrack.cs" />
     <Compile Include="Configuration\RuntimeConfiguration.cs" />
+    <Compile Include="Controls\MediaPlayer\MediaPlayer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Dependency\OperatingSystem.cs" />
     <Compile Include="Downloads\Download.cs" />
     <Compile Include="Downloads\DownloadManager.cs" />
@@ -146,10 +149,16 @@
     </Compile>
     <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
     <Compile Include="Modules\Subscriptions\Subscription.cs" />
-    <Compile Include="Podcasts\Chapter.cs" />
+    <Compile Include="Podcasts\Episode.cs" />
     <Compile Include="Podcasts\ModulePodcasts.cs" />
     <Compile Include="Podcasts\Parsers\IPodcastFeedParser.cs" />
     <Compile Include="Podcasts\Parsers\Rss2.cs" />
+    <Compile Include="Podcasts\PlayerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Podcasts\PlayerForm.Designer.cs">
+      <DependentUpon>PlayerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Podcasts\Podcast.cs" />
     <Compile Include="Podcasts\PodcastParser.cs" />
     <Compile Include="Podcasts\Subscriptions.cs" />
@@ -449,6 +458,9 @@
     <EmbeddedResource Include="Modules\Players\BasePlayerForm.resx">
       <DependentUpon>BasePlayerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Podcasts\PlayerForm.resx">
+      <DependentUpon>PlayerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Updates\UpdaterForm.resx">
       <DependentUpon>UpdaterForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -538,6 +550,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <EmbeddedResource Include="Assets\Assemblies\AxInterop.WMPLib.dll" />
+    <EmbeddedResource Include="Assets\Assemblies\Interop.WMPLib.dll" />
     <None Include="Resources\podcast.png" />
     <None Include="Resources\video.png" />
     <EmbeddedResource Include="Assets\Assemblies\Nini.dll" />
@@ -636,8 +650,36 @@
       <Isolated>False</Isolated>
       <Private>False</Private>
     </COMReference>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+      <Private>False</Private>
+    </COMReference>
     <COMReference Include="ShockwaveFlashObjects">
       <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
