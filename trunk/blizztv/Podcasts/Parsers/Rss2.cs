@@ -20,32 +20,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace BlizzTV.Feeds.Parsers
+namespace BlizzTV.Podcasts.Parsers
 {
     /// <summary>
-    /// Parses RSS 2.0 feeds.
+    /// Parses RSS 2.0 based podcast-feeds.
     /// </summary>
-    public class Rss2:IFeedParser
+    public class Rss2:IPodcastFeedParser
     {
-        public bool Parse(string xml, ref List<FeedItem> items, string linkFallback = "")
+        public bool Parse(string xml, ref List<PodcastItem> items)
         {
             try
             {
                 XDocument xdoc = XDocument.Parse(xml);
-
+                
                 var entries = from item in xdoc.Descendants("item")
                               select new
                               {
                                   Id = item.Element("guid").Value,
                                   Title = item.Element("title").Value,
                                   Link = item.Element("link").Value,
+                                  Enclosure=item.Element("enclosure").Attribute("url").Value
                               };
 
-                items.AddRange(entries.Select(entry => new FeedItem(entry.Title, entry.Id, entry.Link)));
+                items.AddRange(entries.Select(entry => new PodcastItem(entry.Title, entry.Id, entry.Link, entry.Enclosure)));
 
                 return items.Count > 0;
             }
-            catch (Exception) { return false; } // supress the exceptions as the method can also be used for checking a feed if it's compatible with the standart.            
+            catch (Exception) { return false; } // supress the exceptions as the method can also be used for checking a podcast-feed if it's compatible with the standart.
         }
     }
 }

@@ -29,10 +29,10 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Videos
 {
-    [ModuleAttributes("Videos", "Video aggregator plugin.","video")]
+    [ModuleAttributes("Videos", "Video aggregator module.","video")]
     public class ModuleVideos:Module
     {
-        internal Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
+        private Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private System.Timers.Timer _updateTimer;
         private bool _disposed = false;
 
@@ -41,8 +41,10 @@ namespace BlizzTV.Videos
         public ModuleVideos() : base()
         {
             ModuleVideos.Instance = this;
-            this.RootListItem = new ListItem("Videos");
-            this.RootListItem.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
+            this.RootListItem = new ListItem("Videos")
+                                    {
+                                        Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video)
+                                    };
 
             this.RootListItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); 
             this.RootListItem.ContextMenus.Add("markallaswatched", new ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
@@ -86,7 +88,7 @@ namespace BlizzTV.Videos
             return false;
         }
 
-        internal void UpdateChannels()
+        private void UpdateChannels()
         {
             if (this.Updating) return;
             this.Updating = true;

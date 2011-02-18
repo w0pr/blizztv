@@ -44,10 +44,9 @@ namespace BlizzTV.Feeds.Parsers
 
                 items.AddRange(entries.Select(entry => new FeedItem(entry.Title, entry.Id, String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)))); /* link fallbacks are needed by blizzard atom feeds, as their stories does not contain a valid story link, so we forge the link by linkFallback + storyId */
 
-                if (items.Count > 0) return true;
+                return items.Count > 0;
             }
-            catch (Exception) { } // supress the exceptions as the method can also be used for checking a feed if it's compatible with the standart.
-            return false;
+            catch (Exception) { return false; } // supress the exceptions as the method can also be used for checking a feed if it's compatible with the standart.
         }
     }
 }

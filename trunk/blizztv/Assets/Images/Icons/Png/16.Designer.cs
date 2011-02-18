@@ -193,6 +193,13 @@ namespace BlizzTV.Assets.Images.Icons.Png {
             }
         }
         
+        internal static System.Drawing.Bitmap podcast {
+            get {
+                object obj = ResourceManager.GetObject("podcast", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap read {
             get {
                 object obj = ResourceManager.GetObject("read", resourceCulture);

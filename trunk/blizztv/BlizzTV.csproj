@@ -146,6 +146,13 @@
     </Compile>
     <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
     <Compile Include="Modules\Subscriptions\Subscription.cs" />
+    <Compile Include="Podcasts\Chapter.cs" />
+    <Compile Include="Podcasts\ModulePodcasts.cs" />
+    <Compile Include="Podcasts\Parsers\IPodcastFeedParser.cs" />
+    <Compile Include="Podcasts\Parsers\Rss2.cs" />
+    <Compile Include="Podcasts\Podcast.cs" />
+    <Compile Include="Podcasts\PodcastParser.cs" />
+    <Compile Include="Podcasts\Subscriptions.cs" />
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
     <Compile Include="Utility\Helpers\ApplicationHelper.cs" />
     <Compile Include="Utility\Helpers\AssemblyManager.cs" />
@@ -531,6 +538,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\podcast.png" />
     <None Include="Resources\video.png" />
     <EmbeddedResource Include="Assets\Assemblies\Nini.dll" />
     <EmbeddedResource Include="Assets\Assemblies\AxInterop.ShockwaveFlashObjects.dll" />
@@ -639,9 +647,7 @@
       <Private>False</Private>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Videos\Handlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(SolutionDir)upstream\ikpMP3.dll" $(TargetDir)</PostBuildEvent>
