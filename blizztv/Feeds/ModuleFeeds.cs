@@ -30,7 +30,7 @@ using BlizzTV.Assets.i18n;
 
 namespace BlizzTV.Feeds
 {
-    [ModuleAttributes("Feeds","Feed aggregator plugin.","feed")]
+    [ModuleAttributes("Feeds","Feed aggregator module.","feed")]
     public class ModuleFeeds:Module
     {
         private Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // list of feeds.

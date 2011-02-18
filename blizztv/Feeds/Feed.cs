@@ -91,7 +91,7 @@ namespace BlizzTV.Feeds
                     story.OnStateChange += OnChildStateChange;
                     this.Stories.Add(story);
                 }
-                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feed-Parse Error: {0}", e)); }
+                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feed parser caught an exception: {0}", e)); }
             }
             return true;
         }
