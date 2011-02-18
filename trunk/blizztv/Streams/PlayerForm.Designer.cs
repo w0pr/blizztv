@@ -49,7 +49,7 @@ namespace BlizzTV.Streams
             this.FlashPlayer.Location = new System.Drawing.Point(12, 12);
             this.FlashPlayer.Name = "FlashPlayer";
             this.FlashPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("FlashPlayer.OcxState")));
-            this.FlashPlayer.Size = new System.Drawing.Size(624, 347);
+            this.FlashPlayer.Size = new System.Drawing.Size(115, 69);
             this.FlashPlayer.TabIndex = 0;
             this.FlashPlayer.Visible = false;
             this.FlashPlayer.OnReadyStateChange += new AxShockwaveFlashObjects._IShockwaveFlashEvents_OnReadyStateChangeEventHandler(this.FlashPlayer_OnReadyStateChange);
@@ -81,7 +81,7 @@ namespace BlizzTV.Streams
             // WebBrowser
             // 
             this.WebBrowser.ContextMenuStrip = this.PlayerContextMenu;
-            this.WebBrowser.Location = new System.Drawing.Point(112, 12);
+            this.WebBrowser.Location = new System.Drawing.Point(157, 12);
             this.WebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.WebBrowser.Name = "WebBrowser";
             this.WebBrowser.Size = new System.Drawing.Size(111, 69);
@@ -89,7 +89,7 @@ namespace BlizzTV.Streams
             this.WebBrowser.Visible = false;
             this.WebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebBrowser_DocumentCompleted);
             // 
-            // frmPlayer
+            // PlayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -98,12 +98,11 @@ namespace BlizzTV.Streams
             this.Controls.Add(this.WebBrowser);
             this.Controls.Add(this.FlashPlayer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmPlayer";
+            this.Name = "PlayerForm";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.PlayerForm_Load);
             this.Controls.SetChildIndex(this.FlashPlayer, 0);
             this.Controls.SetChildIndex(this.WebBrowser, 0);
-            this.Controls.SetChildIndex(this.LoadingCircle, 0);
             ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).EndInit();
             this.PlayerContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);

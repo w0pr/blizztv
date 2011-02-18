@@ -39,10 +39,6 @@ namespace BlizzTV.Videos
             ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).BeginInit();
             this.SuspendLayout();
             // 
-            // LoadingCircle
-            // 
-            this.LoadingCircle.Active = true;
-            // 
             // PlayerContextMenu
             // 
             this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -84,7 +80,6 @@ namespace BlizzTV.Videos
             this.Text = "Player";
             this.Load += new System.EventHandler(this.PlayerForm_Load);
             this.Controls.SetChildIndex(this.FlashPlayer, 0);
-            this.Controls.SetChildIndex(this.LoadingCircle, 0);
             this.PlayerContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).EndInit();
             this.ResumeLayout(false);

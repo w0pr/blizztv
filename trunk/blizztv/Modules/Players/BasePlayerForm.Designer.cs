@@ -46,15 +46,16 @@
             this.LoadingCircle.SpokeThickness = 3;
             this.LoadingCircle.StylePreset = BlizzTV.Controls.LoadingCircle.LoadingCircle.StylePresets.IE7;
             this.LoadingCircle.TabIndex = 3;
+            this.LoadingCircle.Visible = false;
             // 
-            // PlayerWindow
+            // BasePlayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(624, 347);
             this.Controls.Add(this.LoadingCircle);
-            this.Name = "PlayerWindow";
+            this.Name = "BasePlayerForm";
             this.Text = "PlayerWindow";
             this.ResizeEnd += new System.EventHandler(this.PlayerWindow_ResizeEnd);
             this.ResumeLayout(false);
@@ -63,6 +64,6 @@
 
         #endregion
 
-        protected Controls.LoadingCircle.LoadingCircle LoadingCircle;
+        private Controls.LoadingCircle.LoadingCircle LoadingCircle;
     }
 }

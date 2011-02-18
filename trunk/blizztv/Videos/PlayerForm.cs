@@ -31,10 +31,10 @@ namespace BlizzTV.Videos
         {
             InitializeComponent();
 
-            this.FlashPlayer.DoubleClick += PlayerDoubleClick; // setup mouse handlers.
-            this.FlashPlayer.MouseDown += PlayerMouseDown;
-            this.FlashPlayer.MouseUp += PlayerMouseUp;
-            this.FlashPlayer.MouseMove += PlayerMouseMove;
+            this.FlashPlayer.DoubleClick += SwitchBorderlessMode; // setup mouse handlers.
+            this.FlashPlayer.MouseDown += FormDragStart;
+            this.FlashPlayer.MouseUp += FormDragEnd;
+            this.FlashPlayer.MouseMove += FormDrag;
 
             this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
             this._video = video; // set the video.
@@ -47,7 +47,7 @@ namespace BlizzTV.Videos
         {
             try
             {
-                this.LoadingCircle.Active = true;
+                this.LoadingStarted();
                 this.Text = string.Format("[{0}] {1}", this._video.ChannelName, this._video.Title); // set the window title.
                 this.FlashPlayer.LoadMovie(0,this._video.Movie); // load the movie.
             }
@@ -61,12 +61,10 @@ namespace BlizzTV.Videos
         private void FlashPlayer_OnReadyStateChange(object sender, AxShockwaveFlashObjects._IShockwaveFlashEvents_OnReadyStateChangeEvent e)
         {
             // Loading=0, Uninitialized=1, Loaded=2, Interactive=3, Complete=4.
-            if (this.FlashPlayer.Visible == false && e.newState == 4)
-            {
-                this.FlashPlayer.Visible = true;
-                this.LoadingCircle.Active = false;
-                this.LoadingCircle.Visible = false;
-            }
+            if (this.FlashPlayer.Visible != false || e.newState != 4) return;
+
+            this.FlashPlayer.Visible = true;
+            this.LoadingFinished();
         }
 
         private void MenuAlwaysOnTop_Click(object sender, EventArgs e)
