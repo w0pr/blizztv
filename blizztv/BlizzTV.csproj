@@ -149,6 +149,7 @@
     </Compile>
     <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
     <Compile Include="Modules\Subscriptions\Subscription.cs" />
+    <Compile Include="Podcasts\Catalog.cs" />
     <Compile Include="Podcasts\Episode.cs" />
     <Compile Include="Podcasts\ModulePodcasts.cs" />
     <Compile Include="Podcasts\Parsers\IPodcastFeedParser.cs" />
@@ -161,6 +162,12 @@
     </Compile>
     <Compile Include="Podcasts\Podcast.cs" />
     <Compile Include="Podcasts\PodcastParser.cs" />
+    <Compile Include="Podcasts\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Podcasts\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Podcasts\Subscriptions.cs" />
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
     <Compile Include="Utility\Helpers\ApplicationHelper.cs" />
@@ -460,6 +467,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Podcasts\PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Podcasts\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\UpdaterForm.resx">
       <DependentUpon>UpdaterForm.cs</DependentUpon>
