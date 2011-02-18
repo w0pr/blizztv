@@ -71,7 +71,7 @@ namespace BlizzTV.Podcasts
                 {
                     pair.Value.Update();
                     this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                    foreach (Chapter chapter in pair.Value.Chapters) { pair.Value.Childs.Add(chapter.Guid, chapter); } // register the chapter items.
+                    foreach (Episode chapter in pair.Value.Chapters) { pair.Value.Childs.Add(chapter.Guid, chapter); } // register the chapter items.
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module podcasts caught an exception while updating feeds: {0}", e)); }
                 Workload.WorkloadManager.Instance.Step();

@@ -23,18 +23,18 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Podcasts
 {
-    public class Chapter:ListItem
+    public class Episode:ListItem
     {
         public string PodcastName { get; private set; }
         public string Link { get; private set; }
-        public string AudioLink { get; private set; }
+        public string Enclosure { get; private set; }
 
-        public Chapter(string podcastName, PodcastItem item)
+        public Episode(string podcastName, PodcastItem item)
             : base(item.Title)
         {
             this.PodcastName = podcastName;
             this.Link = item.Link;
-            this.AudioLink = item.Enclosure;
+            this.Enclosure = item.Enclosure;
             this.Guid = item.Id;
 
             this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
@@ -49,9 +49,10 @@ namespace BlizzTV.Podcasts
         {
             if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
             {
-                AudioManager.Instance.PlayInternetStream(this.AudioLink);
+                PlayerForm f = new PlayerForm(this);
+                f.Show();
             }
-            else System.Diagnostics.Process.Start(this.AudioLink, null); 
+            else System.Diagnostics.Process.Start(this.Enclosure, null); 
         }
 
     }
