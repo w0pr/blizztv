@@ -38,10 +38,6 @@ namespace BlizzTV.Podcasts
             ((System.ComponentModel.ISupportInitialize)(this.pictureSlider)).BeginInit();
             this.SuspendLayout();
             // 
-            // LoadingCircle
-            // 
-            this.LoadingCircle.Size = new System.Drawing.Size(419, 134);
-            // 
             // AudioPlayer
             // 
             this.AudioPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -89,7 +85,6 @@ namespace BlizzTV.Podcasts
             this.Text = "PlayerForm";
             this.Load += new System.EventHandler(this.PlayerForm_Load);
             this.Controls.SetChildIndex(this.AudioPlayer, 0);
-            this.Controls.SetChildIndex(this.LoadingCircle, 0);
             this.Controls.SetChildIndex(this.LabelSlider, 0);
             this.Controls.SetChildIndex(this.pictureSlider, 0);
             ((System.ComponentModel.ISupportInitialize)(this.AudioPlayer)).EndInit();

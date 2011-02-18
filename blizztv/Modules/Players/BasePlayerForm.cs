@@ -38,23 +38,36 @@ namespace BlizzTV.Modules.Players
             this.Size = new Size(GlobalSettings.Instance.VideoPlayerWidth, GlobalSettings.Instance.VideoPlayerHeight); // set the window size & location based on last-known values.
         }
 
-        protected void PlayerDoubleClick(object sender, MouseEventArgs e)
+        protected void LoadingStarted()
         {
-            this._dragging = false;
-            
-            if (this._borderless)
-            {
-                this.FormBorderStyle = FormBorderStyle.Sizable; 
-                this._borderless = false;
-            }
-            else
-            {
-                this.FormBorderStyle = FormBorderStyle.None; 
-                this._borderless = true;
-            }
+            this.LoadingCircle.Visible = true;
+            this.LoadingCircle.Active = true;
+            this.LoadingCircle.BringToFront();
         }
 
-        protected void PlayerDoubleClick(object sender, EventArgs e)
+        protected void LoadingFinished()
+        {
+            if (this.LoadingCircle == null) return;
+
+            this.LoadingCircle.SendToBack();
+            this.LoadingCircle.Active = false;           
+            this.LoadingCircle.Visible = false;
+            this.Controls.Remove(this.LoadingCircle);
+            this.LoadingCircle.Dispose();
+            this.LoadingCircle = null;
+        }
+
+        protected void SwitchBorderlessMode(object sender, MouseEventArgs e)
+        {
+            this.SwitchBorderlessMode();
+        }
+
+        protected void SwitchBorderlessMode(object sender, EventArgs e)
+        {
+            this.SwitchBorderlessMode();
+        }
+
+        private void SwitchBorderlessMode()
         {
             this._dragging = false;
 
@@ -67,10 +80,10 @@ namespace BlizzTV.Modules.Players
             {
                 this.FormBorderStyle = FormBorderStyle.None;
                 this._borderless = true;
-            }
+            } 
         }
 
-        protected void PlayerMouseDown(object sender, MouseEventArgs e)
+        protected void FormDragStart(object sender, MouseEventArgs e)
         {
             if (!this._borderless) return;
 
@@ -79,13 +92,13 @@ namespace BlizzTV.Modules.Players
             this._dragging = true;
         }
 
-        protected void PlayerMouseUp(object sender, MouseEventArgs e)
+        protected void FormDragEnd(object sender, MouseEventArgs e)
         {
             this._dragging = false;
             this.Cursor = Cursors.Default;
         }
 
-        protected void PlayerMouseMove(object sender, MouseEventArgs e)
+        protected void FormDrag(object sender, MouseEventArgs e)
         {
             if (this._borderless && this._dragging) this.Location = new Point(e.X - this._dragMouseOffset.X, e.Y - this._dragMouseOffset.Y); // moves the dragged window with keeping the mouse offset in mind.
         }

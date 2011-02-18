@@ -49,7 +49,7 @@ namespace BlizzTV.Streams
         {
             try
             {
-                this.LoadingCircle.Active = true;
+                this.LoadingStarted();
                 this.Text = string.Format("Stream: {0}", this._stream.Name); // set the window title.                
                 if (this._stream.Provider == "JustinTV") this.WebBrowser.Navigate(string.Format("http://service.blizztv.com/stream/embed/{0}/{1}", this._stream.Provider, this._stream.Slug));
                 else this.FlashPlayer.LoadMovie(0, this._stream.Movie); // load the movie.
@@ -65,10 +65,10 @@ namespace BlizzTV.Streams
 
         private void SetupFlashPlayer()
         {
-            this.FlashPlayer.DoubleClick += PlayerDoubleClick; // setup mouse handlers.
-            this.FlashPlayer.MouseDown += PlayerMouseDown;
-            this.FlashPlayer.MouseUp += PlayerMouseUp;
-            this.FlashPlayer.MouseMove += PlayerMouseMove;
+            this.FlashPlayer.DoubleClick += SwitchBorderlessMode; // setup mouse handlers.
+            this.FlashPlayer.MouseDown += FormDragStart;
+            this.FlashPlayer.MouseUp += FormDragEnd;
+            this.FlashPlayer.MouseMove += FormDrag;
             this.FlashPlayer.Dock = DockStyle.Fill;
         }
 
@@ -78,8 +78,7 @@ namespace BlizzTV.Streams
             if (this.FlashPlayer.Visible == false && e.newState == 4)
             {
                 this.FlashPlayer.Visible = true;
-                this.LoadingCircle.Active = false;
-                this.LoadingCircle.Visible = false;
+                this.LoadingFinished();
             }
         }
 
@@ -97,7 +96,7 @@ namespace BlizzTV.Streams
         private void WebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             this.WebBrowser.Visible = true;
-            this.LoadingCircle.Visible = false;
+            this.LoadingFinished();
         }
 
         private void MenuAlwaysOnTop_Click(object sender, EventArgs e)

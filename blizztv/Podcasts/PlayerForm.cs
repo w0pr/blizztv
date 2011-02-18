@@ -43,23 +43,21 @@ namespace BlizzTV.Podcasts
 
             this._episode = episode;
 
-            this.LoadingCircle.Visible = false;
-
-            this.DoubleClick += PlayerDoubleClick;
+            this.DoubleClick += SwitchBorderlessMode;
             this.DoubleClick += ModeDoubleClickHandler;
-            this.MouseDown += PlayerMouseDown;
-            this.MouseUp += PlayerMouseUp;
-            this.MouseMove += PlayerMouseMove;
+            this.MouseDown += FormDragStart;
+            this.MouseUp += FormDragEnd;
+            this.MouseMove += FormDrag;
 
             this.AudioPlayer.enableContextMenu = false;
-            this.AudioPlayer.DoubleClick += PlayerDoubleClick;
+            this.AudioPlayer.DoubleClick += SwitchBorderlessMode;
             this.AudioPlayer.DoubleClick += ModeDoubleClickHandler;
 
-            this.LabelSlider.DoubleClick += PlayerDoubleClick;
+            this.LabelSlider.DoubleClick += SwitchBorderlessMode;
             this.LabelSlider.DoubleClick += ModeDoubleClickHandler;
-            this.LabelSlider.MouseDown += PlayerMouseDown;
-            this.LabelSlider.MouseUp += PlayerMouseUp;
-            this.LabelSlider.MouseMove += PlayerMouseMove;
+            this.LabelSlider.MouseDown += FormDragStart;
+            this.LabelSlider.MouseUp += FormDragEnd;
+            this.LabelSlider.MouseMove += FormDrag;
             this.LabelSlider.DoubleBuffer();
 
             this.SwitchNormalMode();
