@@ -54,6 +54,22 @@ namespace BlizzTV.Modules.Players
             }
         }
 
+        protected void PlayerDoubleClick(object sender, EventArgs e)
+        {
+            this._dragging = false;
+
+            if (this._borderless)
+            {
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+                this._borderless = false;
+            }
+            else
+            {
+                this.FormBorderStyle = FormBorderStyle.None;
+                this._borderless = true;
+            }
+        }
+
         protected void PlayerMouseDown(object sender, MouseEventArgs e)
         {
             if (!this._borderless) return;
