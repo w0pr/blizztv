@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Utility.Imaging;
@@ -80,6 +81,11 @@ namespace BlizzTV.Podcasts
             this.RootListItem.SetTitle("Podcasts");
             this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
             this.Updating = false;
+        }
+
+        public override Form GetPreferencesForm()
+        {
+            return new SettingsForm();
         }
     }
 }
