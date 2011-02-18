@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LoadingCircle = new BlizzTV.Controls.LoadingCircle.LoadingCircle();
+            this.LoadingAnimation = new BlizzTV.Controls.LoadingCircle.LoadingCircle();
             this.SuspendLayout();
             // 
-            // LoadingCircle
+            // LoadingAnimation
             // 
-            this.LoadingCircle.Active = false;
-            this.LoadingCircle.Color = System.Drawing.Color.DarkGray;
-            this.LoadingCircle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LoadingCircle.InnerCircleRadius = 6;
-            this.LoadingCircle.Location = new System.Drawing.Point(0, 0);
-            this.LoadingCircle.Name = "LoadingCircle";
-            this.LoadingCircle.NumberSpoke = 24;
-            this.LoadingCircle.OuterCircleRadius = 7;
-            this.LoadingCircle.RotationSpeed = 50;
-            this.LoadingCircle.Size = new System.Drawing.Size(624, 347);
-            this.LoadingCircle.SpokeThickness = 3;
-            this.LoadingCircle.StylePreset = BlizzTV.Controls.LoadingCircle.LoadingCircle.StylePresets.IE7;
-            this.LoadingCircle.TabIndex = 3;
-            this.LoadingCircle.Visible = false;
+            this.LoadingAnimation.Active = false;
+            this.LoadingAnimation.Color = System.Drawing.Color.DarkGray;
+            this.LoadingAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LoadingAnimation.InnerCircleRadius = 6;
+            this.LoadingAnimation.Location = new System.Drawing.Point(0, 0);
+            this.LoadingAnimation.Name = "LoadingAnimation";
+            this.LoadingAnimation.NumberSpoke = 24;
+            this.LoadingAnimation.OuterCircleRadius = 7;
+            this.LoadingAnimation.RotationSpeed = 50;
+            this.LoadingAnimation.Size = new System.Drawing.Size(624, 347);
+            this.LoadingAnimation.SpokeThickness = 3;
+            this.LoadingAnimation.StylePreset = BlizzTV.Controls.LoadingCircle.LoadingCircle.StylePresets.IE7;
+            this.LoadingAnimation.TabIndex = 3;
+            this.LoadingAnimation.Visible = false;
             // 
             // BasePlayerForm
             // 
@@ -54,7 +54,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(624, 347);
-            this.Controls.Add(this.LoadingCircle);
+            this.Controls.Add(this.LoadingAnimation);
             this.Name = "BasePlayerForm";
             this.Text = "PlayerWindow";
             this.ResizeEnd += new System.EventHandler(this.PlayerWindow_ResizeEnd);
@@ -64,6 +64,6 @@
 
         #endregion
 
-        private Controls.LoadingCircle.LoadingCircle LoadingCircle;
+        private Controls.LoadingCircle.LoadingCircle LoadingAnimation;
     }
 }

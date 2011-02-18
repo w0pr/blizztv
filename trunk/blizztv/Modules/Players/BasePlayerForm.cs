@@ -40,21 +40,21 @@ namespace BlizzTV.Modules.Players
 
         protected void LoadingStarted()
         {
-            this.LoadingCircle.Visible = true;
-            this.LoadingCircle.Active = true;
-            this.LoadingCircle.BringToFront();
+            this.LoadingAnimation.Visible = true;
+            this.LoadingAnimation.Active = true;
+            this.LoadingAnimation.BringToFront();
         }
 
         protected void LoadingFinished()
         {
-            if (this.LoadingCircle == null) return;
+            if (this.LoadingAnimation == null) return;
 
-            this.LoadingCircle.SendToBack();
-            this.LoadingCircle.Active = false;           
-            this.LoadingCircle.Visible = false;
-            this.Controls.Remove(this.LoadingCircle);
-            this.LoadingCircle.Dispose();
-            this.LoadingCircle = null;
+            this.LoadingAnimation.SendToBack();
+            this.LoadingAnimation.Active = false;           
+            this.LoadingAnimation.Visible = false;
+            this.Controls.Remove(this.LoadingAnimation);
+            this.LoadingAnimation.Dispose();
+            this.LoadingAnimation = null;
         }
 
         protected void SwitchBorderlessMode(object sender, MouseEventArgs e)
