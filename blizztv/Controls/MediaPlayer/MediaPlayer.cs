@@ -23,33 +23,12 @@ namespace BlizzTV.Controls.MediaPlayer
 {
     public class MediaPlayer: AxWindowsMediaPlayer
     {
-        private const int WM_MOUSEMOVE = 0x0200;
-        private const int WM_MOUSEWHEEL = 0x020A;
-        private const int WM_LBUTTONDOWN = 0x0201;
-        private const int WM_LBUTTONUP = 0x0202;
         private const int WM_LBUTTONDBLCLK = 0x0203;
-        private const int WM_RBUTTONDOWN = 0x0204;
-        private const int WM_RBUTTONUP = 0x0205;
 
         /// <summary>
         /// Fires on Double Click.
         /// </summary>
         public new event MouseEventHandler DoubleClick;
-
-        /// <summary>
-        /// Fires on Mouse Down.
-        /// </summary>
-        public new event MouseEventHandler MouseDown;
-
-        /// <summary>
-        /// Fires on Mouse Up.
-        /// </summary>
-        public new event MouseEventHandler MouseUp;
-
-        /// <summary>
-        /// Fires on Mouse Move.
-        /// </summary>
-        public new event MouseEventHandler MouseMove;
 
         public MediaPlayer() { }
 
@@ -57,19 +36,6 @@ namespace BlizzTV.Controls.MediaPlayer
         {
             switch (m.Msg)
             {
-                case WM_LBUTTONDOWN:
-                    if (this.MouseDown != null) this.MouseDown(this, new MouseEventArgs(MouseButtons.Left, 1, Cursor.Position.X, Cursor.Position.Y, 0));
-                    break;
-                case WM_LBUTTONUP:
-                    if (this.MouseUp != null) this.MouseUp(this, new MouseEventArgs(MouseButtons.None, 0, Cursor.Position.X, Cursor.Position.Y, 0));
-                    break;
-                case WM_MOUSEMOVE:
-                    if (this.MouseMove != null) this.MouseMove(this, new MouseEventArgs(MouseButtons.None, 0, Cursor.Position.X, Cursor.Position.Y, 0));
-                    break;
-                case WM_RBUTTONDOWN:
-                    if (this.ContextMenuStrip != null) this.ContextMenuStrip.Show(Cursor.Position.X, Cursor.Position.Y);
-                    m.Result = IntPtr.Zero; // don't allow actual wmplayer control process the message by flagging it as processed.
-                    return;
                 case WM_LBUTTONDBLCLK:
                     if (this.DoubleClick != null) this.DoubleClick(this, new MouseEventArgs(MouseButtons.Left, 2, Cursor.Position.X, Cursor.Position.Y, 0));
                     m.Result = IntPtr.Zero; // don't allow actual wmplayer control process the message by flagging it as processed.
