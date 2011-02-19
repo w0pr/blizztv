@@ -44,24 +44,34 @@ namespace BlizzTV.Podcasts
 
         private void LoadSettings()
         {
+            checkBoxEnableNotifications.Checked = Settings.Instance.NotificationsEnabled;
+            numericUpDownUpdatePeriod.Value = (decimal)Settings.Instance.UpdatePeriod;
         }
 
         public void SaveSettings()
         {
+            Settings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
+            Settings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
+            Settings.Instance.Save();
+            ModulePodcasts.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            AddFeedForm f = new AddFeedForm();
+            if (f.ShowDialog() != DialogResult.OK) return;
+
+            Subscriptions.Instance.Add(f.Subscription);
+            this.ListviewSubscriptions.Items.Add(new ListviewPodcastSubscription(f.Subscription));
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            if (ListviewSubscriptions.SelectedItems.Count > 0)
-            {
-                ListviewPodcastSubscription selection = (ListviewPodcastSubscription)ListviewSubscriptions.SelectedItems[0];
-                Subscriptions.Instance.Remove(selection.Subscription);
-                selection.Remove();
-            }
+            if (ListviewSubscriptions.SelectedItems.Count <= 0) return;
+
+            ListviewPodcastSubscription selection = (ListviewPodcastSubscription)ListviewSubscriptions.SelectedItems[0];
+            Subscriptions.Instance.Remove(selection.Subscription);
+            selection.Remove();
         }
 
         private void buttonCatalog_Click(object sender, EventArgs e)

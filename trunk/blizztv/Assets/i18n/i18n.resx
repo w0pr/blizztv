@@ -336,4 +336,22 @@
   <data name="CanNotLoadRequiredAssembliesTitle" xml:space="preserve">
     <value>Startup Error</value>
   </data>
+  <data name="PodcastSubscriptionAlreadyExists" xml:space="preserve">
+    <value>The podcast already exists in your subscriptions named as '{0}'.</value>
+  </data>
+  <data name="AddNewPodcastMessage" xml:space="preserve">
+    <value>Please enter name for the new podcast</value>
+  </data>
+  <data name="AddNewPodcastTitle" xml:space="preserve">
+    <value>Add New Podcast</value>
+  </data>
+  <data name="FillPodcastNameAndUrlFieldsMessage" xml:space="preserve">
+    <value>Please fill the podcast name and URL fields!</value>
+  </data>
+  <data name="ErrorParsingPodcastMessage" xml:space="preserve">
+    <value>There was an error parsing the podcast. Please check the podcast URL and retry.</value>
+  </data>
+  <data name="ErrorParsingPodcastTitle" xml:space="preserve">
+    <value>Error parsing podcast</value>
+  </data>
 </root>

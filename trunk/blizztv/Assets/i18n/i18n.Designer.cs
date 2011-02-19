@@ -79,6 +79,24 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter name for the new podcast.
+        /// </summary>
+        internal static string AddNewPodcastMessage {
+            get {
+                return ResourceManager.GetString("AddNewPodcastMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Podcast.
+        /// </summary>
+        internal static string AddNewPodcastTitle {
+            get {
+                return ResourceManager.GetString("AddNewPodcastTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All fields required.
         /// </summary>
         internal static string AllFieldsRequiredTitle {
@@ -268,6 +286,24 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error parsing the podcast. Please check the podcast URL and retry..
+        /// </summary>
+        internal static string ErrorParsingPodcastMessage {
+            get {
+                return ResourceManager.GetString("ErrorParsingPodcastMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error parsing podcast.
+        /// </summary>
+        internal static string ErrorParsingPodcastTitle {
+            get {
+                return ResourceManager.GetString("ErrorParsingPodcastTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error parsing the video channel. Please check the channel URL and retry..
         /// </summary>
         internal static string ErrorParsingVideoChannelMessage {
@@ -354,6 +390,15 @@ namespace BlizzTV.Assets.i18n {
         internal static string FillFeedNameAndUrlFieldsMessage {
             get {
                 return ResourceManager.GetString("FillFeedNameAndUrlFieldsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please fill the podcast name and URL fields!.
+        /// </summary>
+        internal static string FillPodcastNameAndUrlFieldsMessage {
+            get {
+                return ResourceManager.GetString("FillPodcastNameAndUrlFieldsMessage", resourceCulture);
             }
         }
         
@@ -561,6 +606,15 @@ namespace BlizzTV.Assets.i18n {
         internal static string NoAvailableUpdateFoundTitle {
             get {
                 return ResourceManager.GetString("NoAvailableUpdateFoundTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The podcast already exists in your subscriptions named as &apos;{0}&apos;..
+        /// </summary>
+        internal static string PodcastSubscriptionAlreadyExists {
+            get {
+                return ResourceManager.GetString("PodcastSubscriptionAlreadyExists", resourceCulture);
             }
         }
         
