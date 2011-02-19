@@ -138,5 +138,14 @@ namespace BlizzTV.Streams
         {
             this._chatWindow = null;
         }
+
+        private void PlayerForm_ResizeEnd(object sender, EventArgs e)
+        {
+            if (this.Size.Width == GlobalSettings.Instance.VideoPlayerWidth && this.Size.Height == GlobalSettings.Instance.VideoPlayerHeight) return;
+
+            GlobalSettings.Instance.VideoPlayerWidth = this.Size.Width;
+            GlobalSettings.Instance.VideoPlayerHeight = this.Size.Height;
+            GlobalSettings.Instance.Save();
+        }
     }
 }

@@ -43,15 +43,15 @@ namespace BlizzTV.Podcasts
 
             this._episode = episode;
 
-            this.DoubleClick += SwitchBorderlessMode;
-            this.DoubleClick += ModeDoubleClickHandler;
-            this.MouseDown += FormDragStart;
-            this.MouseUp += FormDragEnd;
-            this.MouseMove += FormDrag;
+            this.gradientPanel.DoubleClick += SwitchBorderlessMode;
+            this.gradientPanel.DoubleClick += ModeDoubleClickHandler;
+            this.gradientPanel.MouseDown += FormDragStart;
+            this.gradientPanel.MouseUp += FormDragEnd;
+            this.gradientPanel.MouseMove += FormDrag;
 
-            this.AudioPlayer.enableContextMenu = false;
-            this.AudioPlayer.DoubleClick += SwitchBorderlessMode;
-            this.AudioPlayer.DoubleClick += ModeDoubleClickHandler;
+            this.MediaPlayer.enableContextMenu = false;
+            this.MediaPlayer.DoubleClick += SwitchBorderlessMode;
+            this.MediaPlayer.DoubleClick += ModeDoubleClickHandler;
 
             this.LabelSlider.DoubleClick += SwitchBorderlessMode;
             this.LabelSlider.DoubleClick += ModeDoubleClickHandler;
@@ -67,15 +67,16 @@ namespace BlizzTV.Podcasts
         {
             this.Text = string.Format("{0} - [{1}]", this._episode.Title, this._episode.PodcastName);
             this._sliderText = string.Format("     {0} - [{1}]     ", this._episode.Title, this._episode.PodcastName);            
-            this.AudioPlayer.URL = this._episode.Enclosure;
+            this.MediaPlayer.URL = this._episode.Enclosure;
         }
 
         private void SwitchNormalMode()
         {
             this._windowMode = WindowMode.Normal;
             if(this._lastNormalModeHeight!=0) this.Height = this._lastNormalModeHeight;
-            this.AudioPlayer.uiMode = "full";
-            this.AudioPlayer.Dock = DockStyle.Fill;
+            this.gradientPanel.Visible = false;
+            this.MediaPlayer.uiMode = "full";
+            this.MediaPlayer.Dock = DockStyle.Fill;
             this.LabelSlider.Visible = false;
             this.pictureSlider.Visible = false;
             this.DisposeSliderTimer();
@@ -86,12 +87,14 @@ namespace BlizzTV.Podcasts
             this._windowMode = WindowMode.Compact;
             this._lastNormalModeHeight = this.Height;
             this.Height = CompactModeHeight;
+
+            this.gradientPanel.Visible = true;
             
-            
-            this.AudioPlayer.uiMode = "none";            
-            this.AudioPlayer.Dock = DockStyle.None;
-            this.AudioPlayer.Left = 170;
-            this.AudioPlayer.Width = 50;
+            this.MediaPlayer.uiMode = "none";            
+            this.MediaPlayer.Dock = DockStyle.None;
+            this.MediaPlayer.Left = 170;
+            this.MediaPlayer.Width = 50;
+            this.MediaPlayer.Height = 16;
 
             this.LabelSlider.Left = 20;
             this.LabelSlider.Visible = true;

@@ -45,10 +45,10 @@ namespace BlizzTV.Streams
             // 
             this.FlashPlayer.ContextMenuStrip = this.PlayerContextMenu;
             this.FlashPlayer.Enabled = true;
-            this.FlashPlayer.Location = new System.Drawing.Point(12, 12);
+            this.FlashPlayer.Location = new System.Drawing.Point(274, 12);
             this.FlashPlayer.Name = "FlashPlayer";
             this.FlashPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("FlashPlayer.OcxState")));
-            this.FlashPlayer.Size = new System.Drawing.Size(115, 69);
+            this.FlashPlayer.Size = new System.Drawing.Size(139, 69);
             this.FlashPlayer.TabIndex = 0;
             this.FlashPlayer.Visible = false;
             this.FlashPlayer.OnReadyStateChange += new AxShockwaveFlashObjects._IShockwaveFlashEvents_OnReadyStateChangeEventHandler(this.FlashPlayer_OnReadyStateChange);
@@ -100,6 +100,7 @@ namespace BlizzTV.Streams
             this.Name = "PlayerForm";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.PlayerForm_Load);
+            this.ResizeEnd += new System.EventHandler(this.PlayerForm_ResizeEnd);
             this.Controls.SetChildIndex(this.FlashPlayer, 0);
             this.Controls.SetChildIndex(this.WebBrowser, 0);
             ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).EndInit();

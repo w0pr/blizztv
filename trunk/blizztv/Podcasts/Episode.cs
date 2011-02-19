@@ -31,6 +31,8 @@ namespace BlizzTV.Podcasts
         public string Link { get; private set; }
         public string Enclosure { get; private set; }
 
+        private PlayerForm _player = null;
+
         public Episode(string podcastName, PodcastItem item)
             : base(item.Title)
         {
@@ -52,24 +54,33 @@ namespace BlizzTV.Podcasts
 
         public override void Open(object sender, EventArgs e)
         {
-            this.Navigate();
+            this.Play();
         }
 
         public override void NotificationClicked()
         {
-            this.Navigate();
+            this.Play();
         }
 
-        private void Navigate()
+        private void Play()
         {
             if (GlobalSettings.Instance.UseInternalViewers) // if internal-viewers method is selected
             {
-                PlayerForm f = new PlayerForm(this);
-                f.Show();
+                if (this._player == null)
+                {
+                    this._player = new PlayerForm(this);
+                    this._player.FormClosed += PlayerClosed;
+                    this._player.Show();
+                }
+                else this._player.Focus();
             }
             else System.Diagnostics.Process.Start(this.Enclosure, null);
-
             if (this.State != State.Read) this.State = State.Read;  
+        }
+
+        void PlayerClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        {
+            this._player = null;
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
