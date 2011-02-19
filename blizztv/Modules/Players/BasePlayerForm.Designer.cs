@@ -59,7 +59,6 @@ namespace BlizzTV.Modules.Players
             this.Controls.Add(this.LoadingAnimation);
             this.Name = "BasePlayerForm";
             this.Text = "PlayerWindow";
-            this.ResizeEnd += new System.EventHandler(this.PlayerWindow_ResizeEnd);
             this.ResumeLayout(false);
 
         }

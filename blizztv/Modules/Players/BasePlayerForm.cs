@@ -102,14 +102,5 @@ namespace BlizzTV.Modules.Players
         {
             if (this._borderless && this._dragging) this.Location = new Point(e.X - this._dragMouseOffset.X, e.Y - this._dragMouseOffset.Y); // moves the dragged window with keeping the mouse offset in mind.
         }
-
-        private void PlayerWindow_ResizeEnd(object sender, EventArgs e)
-        {
-            if (this.Size.Width == GlobalSettings.Instance.VideoPlayerWidth && this.Size.Height == GlobalSettings.Instance.VideoPlayerHeight) return; 
-
-            GlobalSettings.Instance.VideoPlayerWidth = this.Size.Width;
-            GlobalSettings.Instance.VideoPlayerHeight = this.Size.Height;
-            GlobalSettings.Instance.Save();
-        }
     }
 }

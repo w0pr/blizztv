@@ -31,30 +31,33 @@ namespace BlizzTV.Podcasts
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayerForm));
-            this.AudioPlayer = new BlizzTV.Controls.MediaPlayer.MediaPlayer();
+            this.MediaPlayer = new BlizzTV.Controls.MediaPlayer.MediaPlayer();
             this.LabelSlider = new System.Windows.Forms.Label();
             this.pictureSlider = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.AudioPlayer)).BeginInit();
+            this.gradientPanel = new BlizzTV.Controls.Panels.GradientPanel();
+            ((System.ComponentModel.ISupportInitialize)(this.MediaPlayer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureSlider)).BeginInit();
+            this.gradientPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // AudioPlayer
+            // MediaPlayer
             // 
-            this.AudioPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AudioPlayer.Enabled = true;
-            this.AudioPlayer.Location = new System.Drawing.Point(0, 0);
-            this.AudioPlayer.Name = "AudioPlayer";
-            this.AudioPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("AudioPlayer.OcxState")));
-            this.AudioPlayer.Size = new System.Drawing.Size(419, 134);
-            this.AudioPlayer.TabIndex = 4;
-            this.AudioPlayer.OpenStateChange += new AxWMPLib._WMPOCXEvents_OpenStateChangeEventHandler(this.AudioPlayer_OpenStateChange);
+            this.MediaPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MediaPlayer.Enabled = true;
+            this.MediaPlayer.Location = new System.Drawing.Point(0, 0);
+            this.MediaPlayer.Name = "MediaPlayer";
+            this.MediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MediaPlayer.OcxState")));
+            this.MediaPlayer.Size = new System.Drawing.Size(623, 406);
+            this.MediaPlayer.TabIndex = 4;
+            this.MediaPlayer.OpenStateChange += new AxWMPLib._WMPOCXEvents_OpenStateChangeEventHandler(this.AudioPlayer_OpenStateChange);
             // 
             // LabelSlider
             // 
             this.LabelSlider.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.LabelSlider.BackColor = System.Drawing.Color.Black;
             this.LabelSlider.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.LabelSlider.ForeColor = System.Drawing.Color.LawnGreen;
-            this.LabelSlider.Location = new System.Drawing.Point(24, 2);
+            this.LabelSlider.ForeColor = System.Drawing.Color.LightGreen;
+            this.LabelSlider.Location = new System.Drawing.Point(25, 3);
             this.LabelSlider.Name = "LabelSlider";
             this.LabelSlider.Size = new System.Drawing.Size(150, 16);
             this.LabelSlider.TabIndex = 5;
@@ -63,8 +66,9 @@ namespace BlizzTV.Podcasts
             // 
             // pictureSlider
             // 
+            this.pictureSlider.BackColor = System.Drawing.Color.Transparent;
             this.pictureSlider.Image = ((System.Drawing.Image)(resources.GetObject("pictureSlider.Image")));
-            this.pictureSlider.Location = new System.Drawing.Point(2, 2);
+            this.pictureSlider.Location = new System.Drawing.Point(3, 3);
             this.pictureSlider.Name = "pictureSlider";
             this.pictureSlider.Size = new System.Drawing.Size(16, 16);
             this.pictureSlider.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -72,33 +76,48 @@ namespace BlizzTV.Podcasts
             this.pictureSlider.TabStop = false;
             this.pictureSlider.Visible = false;
             // 
+            // gradientPanel
+            // 
+            this.gradientPanel.BorderColor = System.Drawing.Color.Gray;
+            this.gradientPanel.Controls.Add(this.pictureSlider);
+            this.gradientPanel.Controls.Add(this.LabelSlider);
+            this.gradientPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gradientPanel.GradientEndColor = System.Drawing.Color.Black;
+            this.gradientPanel.GradientStartColor = System.Drawing.Color.DimGray;
+            this.gradientPanel.Location = new System.Drawing.Point(0, 0);
+            this.gradientPanel.Name = "gradientPanel";
+            this.gradientPanel.ShadowOffSet = 0;
+            this.gradientPanel.Size = new System.Drawing.Size(623, 406);
+            this.gradientPanel.TabIndex = 7;
+            this.gradientPanel.Visible = false;
+            // 
             // PlayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 134);
-            this.Controls.Add(this.pictureSlider);
-            this.Controls.Add(this.LabelSlider);
-            this.Controls.Add(this.AudioPlayer);
+            this.ClientSize = new System.Drawing.Size(623, 406);
+            this.Controls.Add(this.MediaPlayer);
+            this.Controls.Add(this.gradientPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PlayerForm";
             this.Text = "PlayerForm";
             this.Load += new System.EventHandler(this.PlayerForm_Load);
-            this.Controls.SetChildIndex(this.AudioPlayer, 0);
-            this.Controls.SetChildIndex(this.LabelSlider, 0);
-            this.Controls.SetChildIndex(this.pictureSlider, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.AudioPlayer)).EndInit();
+            this.Controls.SetChildIndex(this.gradientPanel, 0);
+            this.Controls.SetChildIndex(this.MediaPlayer, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.MediaPlayer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureSlider)).EndInit();
+            this.gradientPanel.ResumeLayout(false);
+            this.gradientPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private MediaPlayer AudioPlayer;
+        private MediaPlayer MediaPlayer;
         private System.Windows.Forms.Label LabelSlider;
         private System.Windows.Forms.PictureBox pictureSlider;
+        private Controls.Panels.GradientPanel gradientPanel;
 
 
     }

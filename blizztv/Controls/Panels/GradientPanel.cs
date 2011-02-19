@@ -29,8 +29,8 @@ namespace BlizzTV.Controls.Panels
     public partial class GradientPanel : Panel
     {
         private int _borderWidth = 1;
-        int _shadowOffSet = 0;
-        int _cornerRadius = 0;
+        int _shadowOffSet = 1;
+        int _cornerRadius = 1;
         Color _borderColor = Color.Gray;
         Color _gradientStartColor = Color.White;
         Color _gradientEndColor = Color.Gray;
@@ -54,7 +54,7 @@ namespace BlizzTV.Controls.Panels
         public int ShadowOffSet
         {
             get { return _shadowOffSet; }
-            set { if (value == 0) value = 1; _shadowOffSet = Math.Abs(value); Invalidate(); }
+            set { _shadowOffSet = Math.Abs(value); Invalidate(); }
         }
 
         /// <summary>

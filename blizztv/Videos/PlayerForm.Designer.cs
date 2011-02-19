@@ -79,6 +79,7 @@ namespace BlizzTV.Videos
             this.Name = "PlayerForm";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.PlayerForm_Load);
+            this.ResizeEnd += new System.EventHandler(this.PlayerForm_ResizeEnd);
             this.Controls.SetChildIndex(this.FlashPlayer, 0);
             this.PlayerContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.FlashPlayer)).EndInit();
