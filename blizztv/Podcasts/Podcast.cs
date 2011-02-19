@@ -17,6 +17,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Utility.Imaging;
@@ -38,7 +41,7 @@ namespace BlizzTV.Podcasts
         /// <summary>
         /// The feed's stories.
         /// </summary>
-        public List<Episode> Chapters = new List<Episode>();
+        public List<Episode> Episodes = new List<Episode>();
 
         public Podcast(PodcastSubscription subscription)
             : base(subscription.Name)
@@ -46,13 +49,22 @@ namespace BlizzTV.Podcasts
             this.Name = subscription.Name;
             this.Url = subscription.Url;
 
+            this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
+
             this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
+        }
+
+        public bool IsValid()
+        {
+            return this.Parse();
         }
 
         public bool Update()
         {
             if(this.Parse())
             {
+                foreach (Episode episode in this.Episodes) { episode.CheckForNotifications(); }
                 return true;
             }
             return false;
@@ -73,12 +85,31 @@ namespace BlizzTV.Podcasts
             {
                 try
                 {
-                    Episode c = new Episode(this.Title, item);
-                    this.Chapters.Add(c);
+                    Episode episode = new Episode(this.Title, item);
+                    episode.OnStateChange += OnChildStateChange;
+                    this.Episodes.Add(episode);
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Podcast parser caught an exception: {0}", e)); }
             }
             return true;
+        }
+
+        private void OnChildStateChange(object sender, EventArgs e)
+        {
+            if (this.State == ((Episode)sender).State) return;
+
+            int unread= this.Episodes.Count(episode => episode.State == State.Fresh || episode.State == State.Unread);
+            this.State = unread > 0 ? State.Unread : State.Read;
+        }
+
+        private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
+        {
+            foreach (Episode episode in this.Episodes) { episode.State = State.Read; } // marked all episodes as read.
+        }
+
+        private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
+        {
+            foreach (Episode episode in this.Episodes) { episode.State = State.Unread; } // marked all episodes as unread.
         }
     }
 }

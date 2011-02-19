@@ -16,8 +16,10 @@
  */
 
 using System;
+using BlizzTV.Assets.i18n;
 using BlizzTV.Audio;
 using BlizzTV.Modules;
+using BlizzTV.Notifications;
 using BlizzTV.Settings;
 using BlizzTV.Utility.Imaging;
 
@@ -37,10 +39,23 @@ namespace BlizzTV.Podcasts
             this.Enclosure = item.Enclosure;
             this.Guid = item.Id;
 
+            this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
+            this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); 
+
             this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
         }
 
+        public void CheckForNotifications()
+        {
+            if (Settings.Instance.NotificationsEnabled && this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new podcast episode is available on {0}, click to open it.", this.PodcastName), System.Windows.Forms.ToolTipIcon.Info));
+        }
+
         public override void Open(object sender, EventArgs e)
+        {
+            this.Navigate();
+        }
+
+        public override void NotificationClicked()
         {
             this.Navigate();
         }
@@ -52,8 +67,37 @@ namespace BlizzTV.Podcasts
                 PlayerForm f = new PlayerForm(this);
                 f.Show();
             }
-            else System.Diagnostics.Process.Start(this.Enclosure, null); 
+            else System.Diagnostics.Process.Start(this.Enclosure, null);
+
+            if (this.State != State.Read) this.State = State.Read;  
         }
 
+        public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
+        {
+            // make conditional context-menus invisible.
+            this.ContextMenus["markasread"].Visible = false;
+            this.ContextMenus["markasunread"].Visible = false;
+
+            switch (this.State)
+            {
+                case State.Fresh:
+                case State.Unread:
+                    this.ContextMenus["markasread"].Visible = true;
+                    break;
+                case State.Read:
+                    this.ContextMenus["markasunread"].Visible = true;
+                    break;
+            }
+        }
+
+        private void MenuMarkAsReadClicked(object sender, EventArgs e)
+        {
+            this.State = State.Read;
+        }
+
+        private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
+        {
+            this.State = State.Unread;
+        }
     }
 }

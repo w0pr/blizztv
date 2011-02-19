@@ -59,21 +59,19 @@ namespace BlizzTV.Feeds
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             AddFeedForm f = new AddFeedForm();
-            if (f.ShowDialog() == DialogResult.OK)
-            {
-                Subscriptions.Instance.Add(f.Subscription);
-                this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription(f.Subscription));
-            }
+            if (f.ShowDialog() != DialogResult.OK) return;
+
+            Subscriptions.Instance.Add(f.Subscription);
+            this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription(f.Subscription));
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            if (ListviewSubscriptions.SelectedItems.Count > 0)
-            {
-                ListviewFeedSubscription selection = (ListviewFeedSubscription)ListviewSubscriptions.SelectedItems[0];
-                Subscriptions.Instance.Remove(selection.Subscription);        
-                selection.Remove();
-            }
+            if (ListviewSubscriptions.SelectedItems.Count <= 0) return;
+
+            ListviewFeedSubscription selection = (ListviewFeedSubscription)ListviewSubscriptions.SelectedItems[0];
+            Subscriptions.Instance.Remove(selection.Subscription);        
+            selection.Remove();
         }
 
         private void buttonCatalog_Click(object sender, EventArgs e)
