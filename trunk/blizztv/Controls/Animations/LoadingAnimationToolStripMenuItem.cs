@@ -46,10 +46,10 @@ using System.Windows.Forms.Design;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace BlizzTV.Controls.LoadingCircle
+namespace BlizzTV.Controls.Animations
 {
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
-    public class LoadingCircleToolStripMenuItem : ToolStripControlHost
+    public class LoadingAnimationToolStripMenuItem : ToolStripControlHost
     {
         // Constants =========================================================
 
@@ -62,17 +62,17 @@ namespace BlizzTV.Controls.LoadingCircle
         /// <value>The loading circle control.</value>
         [RefreshProperties(RefreshProperties.All),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public LoadingCircle LoadingCircleControl
+        public LoadingAnimation LoadingCircleControl
         {
-            get { return Control as LoadingCircle; }
+            get { return Control as LoadingAnimation; }
         }
 
         // Constructor ========================================================
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoadingCircleToolStripMenuItem"/> class.
+        /// Initializes a new instance of the <see cref="LoadingAnimationToolStripMenuItem"/> class.
         /// </summary>
-        public LoadingCircleToolStripMenuItem()
-            : base(new LoadingCircle())
+        public LoadingAnimationToolStripMenuItem()
+            : base(new LoadingAnimation())
         {
         }
 

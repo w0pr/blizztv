@@ -1,4 +1,6 @@
-﻿namespace BlizzTV.Modules.Players
+﻿using BlizzTV.Controls.Animations;
+
+namespace BlizzTV.Modules.Players
 {
     partial class BasePlayerForm
     {
@@ -28,7 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LoadingAnimation = new BlizzTV.Controls.LoadingCircle.LoadingCircle();
+            this.LoadingAnimation = new LoadingAnimation();
             this.SuspendLayout();
             // 
             // LoadingAnimation
@@ -44,7 +46,7 @@
             this.LoadingAnimation.RotationSpeed = 50;
             this.LoadingAnimation.Size = new System.Drawing.Size(624, 347);
             this.LoadingAnimation.SpokeThickness = 3;
-            this.LoadingAnimation.StylePreset = BlizzTV.Controls.LoadingCircle.LoadingCircle.StylePresets.IE7;
+            this.LoadingAnimation.StylePreset = LoadingAnimation.StylePresets.IE7;
             this.LoadingAnimation.TabIndex = 3;
             this.LoadingAnimation.Visible = false;
             // 
@@ -64,6 +66,6 @@
 
         #endregion
 
-        private Controls.LoadingCircle.LoadingCircle LoadingAnimation;
+        private LoadingAnimation LoadingAnimation;
     }
 }

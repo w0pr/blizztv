@@ -1,4 +1,4 @@
-﻿using BlizzTV.Controls.LoadingCircle;
+﻿using BlizzTV.Controls.Animations;
 
 namespace BlizzTV.UI
 {
@@ -51,7 +51,7 @@ namespace BlizzTV.UI
             this.menuDonate = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
-            this.LoadingCircle = new BlizzTV.Controls.LoadingCircle.LoadingCircleToolStripMenuItem();
+            this.LoadingCircle = new LoadingAnimationToolStripMenuItem();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.SleepIcon = new System.Windows.Forms.ToolStripStatusLabel();
@@ -248,7 +248,7 @@ namespace BlizzTV.UI
             this.LoadingCircle.LoadingCircleControl.RotationSpeed = 50;
             this.LoadingCircle.LoadingCircleControl.Size = new System.Drawing.Size(20, 20);
             this.LoadingCircle.LoadingCircleControl.SpokeThickness = 3;
-            this.LoadingCircle.LoadingCircleControl.StylePreset = BlizzTV.Controls.LoadingCircle.LoadingCircle.StylePresets.IE7;
+            this.LoadingCircle.LoadingCircleControl.StylePreset = LoadingAnimation.StylePresets.IE7;
             this.LoadingCircle.LoadingCircleControl.TabIndex = 3;
             this.LoadingCircle.LoadingCircleControl.Text = "loadingCircleToolStripMenuItem1";
             this.LoadingCircle.LoadingCircleControl.Visible = false;
@@ -416,7 +416,7 @@ namespace BlizzTV.UI
         private System.Windows.Forms.ToolStripStatusLabel NotificationIcon;
         private System.Windows.Forms.ToolStripStatusLabel toolStripSpacer;
         private System.Windows.Forms.ToolStripStatusLabel SleepIcon;
-        private LoadingCircleToolStripMenuItem LoadingCircle;
+        private LoadingAnimationToolStripMenuItem LoadingCircle;
     }
 }
 

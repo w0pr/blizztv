@@ -1,4 +1,4 @@
-﻿using BlizzTV.Controls.LoadingCircle;
+﻿using BlizzTV.Controls.Animations;
 using BlizzTV.Workload;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows.Forms;
@@ -16,7 +16,7 @@ namespace Tests.Workload
             ToolStripProgressBar progressBar = new ToolStripProgressBar();
             toolstrip.Items.Add(progressBar);
 
-            WorkloadManager.Instance.AttachControls(progressBar, new LoadingCircle());
+            WorkloadManager.Instance.AttachControls(progressBar, new LoadingAnimation());
             
             WorkloadManager.Instance.Add(1);
             WorkloadManager.Instance.Step();
