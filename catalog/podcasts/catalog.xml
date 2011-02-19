@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Entry xsi:type="Podcast" Category="Starcraft" Name="The Creep" Description="The Creep podcast dedicated to Starcraft II." Url="http://www.myextralife.com/ftp/radio/creep.xml" />
-  <Entry xsi:type="Podcast" Category="Starcraft" Name="Day[9]" Description="The famous Starcraft II video podcast by Sean." Url="http://day9tv.blip.tv/rss" />
   <Entry xsi:type="Podcast" Category="WorldofWarcraft" Name="The Instance" Description="The most popular World of Warcraft podcast." Url="http://www.myextralife.com/ftp/radio/instance_rss.xml" />
   <Entry xsi:type="Podcast" Category="WorldofWarcraft" Name="The Legendary" Description="Video podcast show The World Of Warcraft Show featuring Gary Gannon, Mike B, and Josh Alen aka Lore." Url="http://thelegendary.blip.tv/rss/" />
   <Entry xsi:type="Podcast" Category="Blizzard" Name="BlizzCast" Description="Blizzard Entertainment's offical podcast." Url="http://www.myextralife.com/ftp/radio/instance_rss.xml" />
