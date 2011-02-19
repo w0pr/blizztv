@@ -134,6 +134,12 @@
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangTrack.cs" />
     <Compile Include="Configuration\RuntimeConfiguration.cs" />
+    <Compile Include="Controls\Panels\GradientPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Panels\GradientPanel.Designer.cs">
+      <DependentUpon>GradientPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MediaPlayer\MediaPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -198,13 +204,13 @@
       <DependentUpon>BasePlayerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\UI\ListViewItemComparer.cs" />
-    <Compile Include="Controls\LoadingCircle\LoadingCircle.cs">
+    <Compile Include="Controls\Animations\LoadingAnimation.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\LoadingCircle\LoadingCircle.designer.cs">
-      <DependentUpon>LoadingCircle.cs</DependentUpon>
+    <Compile Include="Controls\Animations\LoadingAnimation.designer.cs">
+      <DependentUpon>LoadingAnimation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LoadingCircle\LoadingCircleToolStripMenuItem.cs">
+    <Compile Include="Controls\Animations\LoadingAnimationToolStripMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Updates\UpdaterForm.cs">

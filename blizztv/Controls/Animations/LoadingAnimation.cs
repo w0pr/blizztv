@@ -49,9 +49,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace BlizzTV.Controls.LoadingCircle
+namespace BlizzTV.Controls.Animations
 {
-    public partial class LoadingCircle : Control
+    public partial class LoadingAnimation : Control
     {
         // Constants =========================================================
         private const double NumberOfDegreesInCircle = 360;
@@ -300,7 +300,7 @@ namespace BlizzTV.Controls.LoadingCircle
         /// <summary>
         /// Initializes a new instance of the <see cref="T:LoadingCircle"/> class.
         /// </summary>
-        public LoadingCircle()
+        public LoadingAnimation()
         {
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);

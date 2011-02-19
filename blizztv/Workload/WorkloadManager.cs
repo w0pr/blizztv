@@ -16,7 +16,7 @@
  */
 
 using System.Windows.Forms;
-using BlizzTV.Controls.LoadingCircle;
+using BlizzTV.Controls.Animations;
 using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.Workload
@@ -33,14 +33,14 @@ namespace BlizzTV.Workload
         public int CurrentWorkload { get; private set; }
 
         private ToolStripProgressBar _progressBar; // the workload progress-bar.
-        private LoadingCircle _progressAnimation; // the loading animation.
+        private LoadingAnimation _progressAnimation; // the loading animation.
 
         private WorkloadManager()
         {
             this.CurrentWorkload = 0;
         }
 
-        public void AttachControls(ToolStripProgressBar progressBar,LoadingCircle progressIcon) // Attaches controls to workload manager.
+        public void AttachControls(ToolStripProgressBar progressBar,LoadingAnimation progressIcon) // Attaches controls to workload manager.
         {
             this._progressBar = progressBar;
             this._progressAnimation = progressIcon;

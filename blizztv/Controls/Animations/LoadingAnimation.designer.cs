@@ -24,9 +24,9 @@
 // OF SUCH DAMAGE.
 //
 
-namespace BlizzTV.Controls.LoadingCircle
+namespace BlizzTV.Controls.Animations
 {
-    partial class LoadingCircle
+    partial class LoadingAnimation
     {
         /// <summary>
         /// Required designer variable.

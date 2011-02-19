@@ -1,5 +1,4 @@
 ﻿using BlizzTV.Controls.FlashPlayer;
-using BlizzTV.Controls.LoadingCircle;
 
 namespace BlizzTV.Streams
 {
