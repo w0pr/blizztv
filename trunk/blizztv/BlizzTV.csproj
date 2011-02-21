@@ -576,9 +576,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\podcast-unmuted.png" />
+    <None Include="Resources\podcast-muted.png" />
+    <None Include="Resources\podcast.png" />
     <EmbeddedResource Include="Assets\Assemblies\AxInterop.WMPLib.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Interop.WMPLib.dll" />
-    <None Include="Resources\podcast.png" />
     <None Include="Resources\video.png" />
     <EmbeddedResource Include="Assets\Assemblies\Nini.dll" />
     <EmbeddedResource Include="Assets\Assemblies\AxInterop.ShockwaveFlashObjects.dll" />
@@ -721,8 +723,8 @@
     <PostBuildEvent>copy "$(SolutionDir)upstream\ikpMP3.dll" $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked" 
+  if not exist "$(TargetPath).locked" if exist "$(TargetPath)" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

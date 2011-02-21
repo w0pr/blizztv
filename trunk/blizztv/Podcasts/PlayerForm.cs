@@ -27,9 +27,10 @@ namespace BlizzTV.Podcasts
     public partial class PlayerForm : BasePlayerForm
     {
         private Episode _episode;
-        private WindowMode _windowMode = WindowMode.Normal;        
+        private WindowMode _windowMode = WindowMode.Normal;
+        private MuteControl _muteControl = MuteControl.Unmuted;
         private int _lastNormalModeHeight = 0;
-        private const int CompactModeHeight=20;
+        private const int CompactModeHeight = 18;
 
         private const int SliderSpeed = 125;
         private string _sliderText;
@@ -78,7 +79,7 @@ namespace BlizzTV.Podcasts
             this.MediaPlayer.uiMode = "full";
             this.MediaPlayer.Dock = DockStyle.Fill;
             this.LabelSlider.Visible = false;
-            this.pictureSlider.Visible = false;
+            this.pictureMuteControl.Visible = false;
             this.DisposeSliderTimer();
         }
 
@@ -89,18 +90,24 @@ namespace BlizzTV.Podcasts
             this.Height = CompactModeHeight;
 
             this.gradientPanel.Visible = true;
-            
-            this.MediaPlayer.uiMode = "none";            
+
+            this.MediaPlayer.uiMode = "none";
             this.MediaPlayer.Dock = DockStyle.None;
-            this.MediaPlayer.Left = 170;
+            this.MediaPlayer.Left = 20;
+            this.MediaPlayer.Top = 1;
             this.MediaPlayer.Width = 50;
             this.MediaPlayer.Height = 16;
+            this.MediaPlayer.BringToFront();
 
-            this.LabelSlider.Left = 20;
+            this.labelPosition.Left = 71;
+            this.labelPosition.Visible = true;
+
+            this.LabelSlider.Left = 99;
+            this.LabelSlider.Width = this.Width - 100;
             this.LabelSlider.Visible = true;
             this.SetUpSliderTimer();
 
-            this.pictureSlider.Visible = true;
+            this.pictureMuteControl.Visible = true;
         }
         
         private void SetUpSliderTimer()
@@ -181,6 +188,23 @@ namespace BlizzTV.Podcasts
             }   
         }
 
+        private void pictureMuteControl_Click(object sender, EventArgs e)
+        {
+            switch (this._muteControl)
+            {
+                case MuteControl.Unmuted:
+                    this._muteControl = MuteControl.Muted;
+                    this.pictureMuteControl.Image = Assets.Images.Icons.Png._16.podcast_muted;
+                    this.MediaPlayer.settings.mute = true;
+                    break;
+                case MuteControl.Muted:
+                    this._muteControl = MuteControl.Unmuted;
+                    this.pictureMuteControl.Image = Assets.Images.Icons.Png._16.podcast_unmuted;
+                    this.MediaPlayer.settings.mute = false;
+                    break;
+            }
+        }
+
         private void AudioPlayer_OpenStateChange(object sender, AxWMPLib._WMPOCXEvents_OpenStateChangeEvent e)
         {
             MediaState state = (MediaState) e.newState;
@@ -222,6 +246,12 @@ namespace BlizzTV.Podcasts
         {
             Normal,
             Compact
+        }
+
+        public enum MuteControl
+        {
+            Unmuted,
+            Muted
         }
     }
 }

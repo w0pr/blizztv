@@ -200,6 +200,20 @@ namespace BlizzTV.Assets.Images.Icons.Png {
             }
         }
         
+        internal static System.Drawing.Bitmap podcast_muted {
+            get {
+                object obj = ResourceManager.GetObject("podcast_muted", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap podcast_unmuted {
+            get {
+                object obj = ResourceManager.GetObject("podcast_unmuted", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap read {
             get {
                 object obj = ResourceManager.GetObject("read", resourceCulture);
