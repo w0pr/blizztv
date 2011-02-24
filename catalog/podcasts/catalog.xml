@@ -3,7 +3,7 @@
   <Entry xsi:type="Podcast" Category="Starcraft" Name="The Creep" Description="The Creep podcast dedicated to Starcraft II." Url="http://www.myextralife.com/ftp/radio/creep.xml" />
   <Entry xsi:type="Podcast" Category="WorldofWarcraft" Name="The Instance" Description="The most popular World of Warcraft podcast." Url="http://www.myextralife.com/ftp/radio/instance_rss.xml" />
   <Entry xsi:type="Podcast" Category="WorldofWarcraft" Name="The Legendary" Description="Video podcast show The World Of Warcraft Show featuring Gary Gannon, Mike B, and Josh Alen aka Lore." Url="http://thelegendary.blip.tv/rss/" />
-  <Entry xsi:type="Podcast" Category="Blizzard" Name="BlizzCast" Description="Blizzard Entertainment's offical podcast." Url="http://www.myextralife.com/ftp/radio/instance_rss.xml" />
+  <Entry xsi:type="Podcast" Category="Blizzard" Name="BlizzCast" Description="Blizzard Entertainment's offical podcast." Url="http://feeds.feedburner.com/blizzardent" />
   <Entry xsi:type="Podcast" Category="HeroesofNewerth" Name="HONPodcast" Description="An unofficial Heroes of Newerth podcast." Url="http://honpodcast.podomatic.com/rss2.xml" />
   <Entry xsi:type="Podcast" Category="LeagueofLegends" Name="LeagueCast" Description="An unofficial League of Legends podcast." Url="http://leaguecastpodcast.podomatic.com/rss2.xml" />
   <Entry xsi:type="Podcast" Category="e-Sports" Name="djWheat.tv" Description="DJWheat's e-Sports podcast." Url="http://feeds2.feedburner.com/djWHEAT" />

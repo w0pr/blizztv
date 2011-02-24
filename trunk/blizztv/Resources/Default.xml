@@ -14,4 +14,7 @@
   <Subscription xsi:type="Stream" Name="GLHF.tv" Slug="TheGunrun" Provider="UStream" />
   <Subscription xsi:type="Stream" Name="ICCupTV" Slug="iccup-tv" Provider="UStream" />
   <Subscription xsi:type="Stream" Name="TeamLiquidTV" Slug="teamliquidtv" Provider="UStream" />
+  <Subscription xsi:type="Podcast" Name="The Creep" Url="http://www.myextralife.com/ftp/radio/creep.xml" />
+  <Subscription xsi:type="Podcast" Name="The Instance" Url="http://www.myextralife.com/ftp/radio/instance_rss.xml" />
+  <Subscription xsi:type="Podcast" Name="BlizzCast" Url="http://feeds.feedburner.com/blizzardent" />
 </Subscriptions>
