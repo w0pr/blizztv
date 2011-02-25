@@ -16,6 +16,8 @@
  */
 
 using System;
+using System.Diagnostics;
+using System.Drawing;
 using System.Timers;
 using Timer = System.Timers.Timer;
 using System.Windows.Forms;
@@ -26,17 +28,19 @@ namespace BlizzTV.Podcasts
 {
     public partial class PlayerForm : BasePlayerForm
     {
-        private Episode _episode;
+        private readonly Episode _episode;
         private WindowMode _windowMode = WindowMode.Normal;
         private MuteControl _muteControl = MuteControl.Unmuted;
         private int _lastNormalModeHeight = 0;
         private const int CompactModeHeight = 18;
 
-        private const int SliderSpeed = 125;
+        private bool _needSliding = false;
         private string _sliderText;
+        private const int SliderSpeed = 125;
         private SliderDiretion _sliderDirection = SliderDiretion.Left;
         private int _sliderPosition = 0;
         private Timer _sliderTimer;
+        private Timer _positionTimer;
 
         public PlayerForm(Episode episode)
         {
@@ -66,8 +70,7 @@ namespace BlizzTV.Podcasts
 
         private void PlayerForm_Load(object sender, EventArgs e)
         {
-            this.Text = string.Format("{0} - [{1}]", this._episode.Title, this._episode.PodcastName);
-            this._sliderText = string.Format("     {0} - [{1}]     ", this._episode.Title, this._episode.PodcastName);            
+            this.Text = string.Format("{0} - [{1}]", this._episode.Title, this._episode.PodcastName);         
             this.MediaPlayer.URL = this._episode.Enclosure;
         }
 
@@ -81,6 +84,7 @@ namespace BlizzTV.Podcasts
             this.LabelSlider.Visible = false;
             this.pictureMuteControl.Visible = false;
             this.DisposeSliderTimer();
+            this.DisposePositionTimer();
         }
 
         private void SwitchCompactMode()
@@ -102,22 +106,51 @@ namespace BlizzTV.Podcasts
             this.labelPosition.Left = 71;
             this.labelPosition.Visible = true;
 
-            this.LabelSlider.Left = 99;
-            this.LabelSlider.Width = this.Width - 100;
+            this.LabelSlider.Left = 116;
+            this.LabelSlider.Width = this.Width - 117;
             this.LabelSlider.Visible = true;
             this.SetUpSliderTimer();
+
+            this.SetupPositionTimer();
 
             this.pictureMuteControl.Visible = true;
         }
         
         private void SetUpSliderTimer()
         {
-            this._sliderPosition = 0;
-            this._sliderDirection = SliderDiretion.Left;
+            this.ResetSlider();
 
             this._sliderTimer = new Timer(SliderSpeed);
             this._sliderTimer.Elapsed += OnSliderTimerHit;
             this._sliderTimer.Enabled = true;
+        }
+
+        private void ResetSlider()
+        {
+            this._sliderPosition = 0;
+            this._sliderDirection = SliderDiretion.Left;   
+        }
+        
+
+        private void SetSliderText(string text)
+        {
+            this._sliderText = text;
+
+            using(Graphics g=CreateGraphics())
+            {
+                var labelSize = g.MeasureString(text, LabelSlider.Font);
+                this._needSliding = labelSize.Width > LabelSlider.Width;
+            }
+
+            this.ResetSlider();
+        }
+
+        private void SetupPositionTimer()
+        {
+            this._positionTimer = new Timer(1000);
+            this._positionTimer.Elapsed += OnPositionTimerHit;
+            this._positionTimer.Enabled = true;
+            this.OnPositionTimerHit(this, null);
         }
 
         private void DisposeSliderTimer()
@@ -129,10 +162,27 @@ namespace BlizzTV.Podcasts
             this._sliderTimer = null;
         }
 
+        private void DisposePositionTimer()
+        {
+            if (this._positionTimer == null) return;
+
+            this._positionTimer.Enabled = false;
+            this._positionTimer.Elapsed -= OnPositionTimerHit;
+            this._positionTimer = null;
+        }
+
         private void OnSliderTimerHit(object source, ElapsedEventArgs e)
         {
+            if (string.IsNullOrEmpty(this._sliderText)) return;
+
             this.LabelSlider.AsyncInvokeHandler(() =>
             {
+                if (!this._needSliding)
+                {
+                    this.LabelSlider.Text = this._sliderText; 
+                    return;
+                }
+
                 this.LabelSlider.Text = this._sliderText.Substring(this._sliderPosition);
 
                 switch (this._sliderDirection)
@@ -161,6 +211,16 @@ namespace BlizzTV.Podcasts
                 }
             });
         }
+
+        void OnPositionTimerHit(object sender, ElapsedEventArgs e)
+        {
+            this.labelPosition.AsyncInvokeHandler(() =>
+            {
+                var currentPosition = TimeSpan.FromSeconds(this.MediaPlayer.Ctlcontrols.currentPosition);
+                this.labelPosition.Text = string.Format("{0:D2}:{1:D2}:{2:D2}", currentPosition.Hours, currentPosition.Minutes, currentPosition.Seconds);
+            });
+        }
+
 
         private void ModeDoubleClickHandler(object sender, MouseEventArgs e)
         {
@@ -205,12 +265,52 @@ namespace BlizzTV.Podcasts
             }
         }
 
-        private void AudioPlayer_OpenStateChange(object sender, AxWMPLib._WMPOCXEvents_OpenStateChangeEvent e)
+        private void MediaPlayer_OpenStateChange(object sender, AxWMPLib._WMPOCXEvents_OpenStateChangeEvent e)
         {
-            MediaState state = (MediaState) e.newState;
+            var openState = (OpenState)e.newState;
+            Debug.WriteLine(openState);          
         }
 
-        public enum MediaState
+        private void MediaPlayer_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            var playState = (PlayState) e.newState;
+            switch (playState)
+            {
+                case PlayState.Buffering:
+                    this.SetSliderText("Buffering..");            
+                    break;
+                case PlayState.MediaEnded:
+                    this.SetSliderText("End of playback.");
+                    break;
+                case PlayState.Paused:
+                    this.SetSliderText(string.Format("     {0} [paused]    ", this._episode.Title));
+                    break;
+                case PlayState.Reconnecting:
+                    this.SetSliderText("Reconnecting..");
+                    break;
+                case PlayState.ScanForward:
+                    this.SetSliderText("Scanning forward..");
+                    break;
+                case PlayState.ScanReserve:
+                    this.SetSliderText("Scanning backward..");
+                    break;
+                case PlayState.Stopped:
+                    this.SetSliderText(string.Format("     {0} [stopped]    ", this._episode.Title));
+                    break;
+                case PlayState.Transitioning:
+                    this.SetSliderText("Connecting..");
+                    break;
+                case PlayState.Playing:
+                    this.SetSliderText(string.Format("     {0}     ", this._episode.Title));
+                    break;
+                case PlayState.Waiting:
+                    this.SetSliderText("Waiting for data..");
+                    break;
+            }
+        }
+
+        /* http://msdn.microsoft.com/en-us/library/dd564878(v=VS.85).aspx */
+        private enum OpenState
         {
             Undefined = 0,
             PlaylistChanging = 1,
@@ -235,20 +335,37 @@ namespace BlizzTV.Podcasts
             MediaWaiting = 20,
             OpeningUnknownUrl = 21 
         }
+        
+        /* http://msdn.microsoft.com/en-us/library/dd564881(v=VS.85).aspx */
+        private enum PlayState
+        {
+            Undefined = 0,
+            Stopped = 1,
+            Paused = 2,
+            Playing = 3,
+            ScanForward = 4,
+            ScanReserve = 5,
+            Buffering = 6,
+            Waiting = 7,
+            MediaEnded = 8,
+            Transitioning = 9,
+            Ready = 10,
+            Reconnecting = 11
+        }
 
-        public enum SliderDiretion
+        private enum SliderDiretion
         {
             Left,
             Right
         }
 
-        public enum WindowMode
+        private enum WindowMode
         {
             Normal,
             Compact
         }
 
-        public enum MuteControl
+        private enum MuteControl
         {
             Unmuted,
             Muted

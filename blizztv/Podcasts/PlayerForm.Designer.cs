@@ -50,7 +50,8 @@ namespace BlizzTV.Podcasts
             this.MediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MediaPlayer.OcxState")));
             this.MediaPlayer.Size = new System.Drawing.Size(315, 141);
             this.MediaPlayer.TabIndex = 4;
-            this.MediaPlayer.OpenStateChange += new AxWMPLib._WMPOCXEvents_OpenStateChangeEventHandler(this.AudioPlayer_OpenStateChange);
+            this.MediaPlayer.OpenStateChange += new AxWMPLib._WMPOCXEvents_OpenStateChangeEventHandler(this.MediaPlayer_OpenStateChange);
+            this.MediaPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.MediaPlayer_PlayStateChange);
             // 
             // LabelSlider
             // 
@@ -62,7 +63,6 @@ namespace BlizzTV.Podcasts
             this.LabelSlider.Name = "LabelSlider";
             this.LabelSlider.Size = new System.Drawing.Size(150, 16);
             this.LabelSlider.TabIndex = 5;
-            this.LabelSlider.Text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
             this.LabelSlider.Visible = false;
             // 
             // gradientPanel
@@ -89,9 +89,9 @@ namespace BlizzTV.Podcasts
             this.labelPosition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(188)))), ((int)(((byte)(196)))));
             this.labelPosition.Location = new System.Drawing.Point(24, 1);
             this.labelPosition.Name = "labelPosition";
-            this.labelPosition.Size = new System.Drawing.Size(28, 16);
+            this.labelPosition.Size = new System.Drawing.Size(44, 16);
             this.labelPosition.TabIndex = 7;
-            this.labelPosition.Text = "00:00";
+            this.labelPosition.Text = "00:00:00";
             this.labelPosition.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelPosition.Visible = false;
             // 
