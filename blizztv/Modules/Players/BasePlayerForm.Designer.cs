@@ -30,7 +30,7 @@ namespace BlizzTV.Modules.Players
         /// </summary>
         private void InitializeComponent()
         {
-            this.LoadingAnimation = new LoadingAnimation();
+            this.LoadingAnimation = new BlizzTV.Controls.Animations.LoadingAnimation();
             this.SuspendLayout();
             // 
             // LoadingAnimation
@@ -46,7 +46,7 @@ namespace BlizzTV.Modules.Players
             this.LoadingAnimation.RotationSpeed = 50;
             this.LoadingAnimation.Size = new System.Drawing.Size(624, 347);
             this.LoadingAnimation.SpokeThickness = 3;
-            this.LoadingAnimation.StylePreset = LoadingAnimation.StylePresets.IE7;
+            this.LoadingAnimation.StylePreset = BlizzTV.Controls.Animations.LoadingAnimation.StylePresets.IE7;
             this.LoadingAnimation.TabIndex = 3;
             this.LoadingAnimation.Visible = false;
             // 
@@ -58,6 +58,7 @@ namespace BlizzTV.Modules.Players
             this.ClientSize = new System.Drawing.Size(624, 347);
             this.Controls.Add(this.LoadingAnimation);
             this.Name = "BasePlayerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "PlayerWindow";
             this.ResumeLayout(false);
 

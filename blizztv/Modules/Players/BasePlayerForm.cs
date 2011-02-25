@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using BlizzTV.Settings;
@@ -101,6 +102,7 @@ namespace BlizzTV.Modules.Players
         protected void FormDrag(object sender, MouseEventArgs e)
         {
             if (this._borderless && this._dragging) this.Location = new Point(e.X - this._dragMouseOffset.X, e.Y - this._dragMouseOffset.Y); // moves the dragged window with keeping the mouse offset in mind.
+            Debug.WriteLine(string.Format("[{0}]: result: {1} cords: {2}:{3} offset: {4}",sender,this.Location,e.X,e.Y,this._dragMouseOffset));
         }
     }
 }
