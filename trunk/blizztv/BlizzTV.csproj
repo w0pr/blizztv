@@ -576,8 +576,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
-    <None Include="Resources\podcast-unmuted.png" />
     <None Include="Resources\podcast-muted.png" />
+    <None Include="Resources\podcast-unmuted.png" />
     <None Include="Resources\podcast.png" />
     <EmbeddedResource Include="Assets\Assemblies\AxInterop.WMPLib.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Interop.WMPLib.dll" />

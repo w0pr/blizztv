@@ -48,18 +48,15 @@ namespace BlizzTV.Podcasts
 
             this._episode = episode;
 
-            this.gradientPanel.DoubleClick += SwitchBorderlessMode;
-            this.gradientPanel.DoubleClick += ModeDoubleClickHandler;
+            this.gradientPanel.DoubleClick += SwitchMode;          
             this.gradientPanel.MouseDown += FormDragStart;
             this.gradientPanel.MouseUp += FormDragEnd;
             this.gradientPanel.MouseMove += FormDrag;
 
             this.MediaPlayer.enableContextMenu = false;
-            this.MediaPlayer.DoubleClick += SwitchBorderlessMode;
-            this.MediaPlayer.DoubleClick += ModeDoubleClickHandler;
+            this.MediaPlayer.DoubleClick += SwitchMode;
 
-            this.LabelSlider.DoubleClick += SwitchBorderlessMode;
-            this.LabelSlider.DoubleClick += ModeDoubleClickHandler;
+            this.LabelSlider.DoubleClick += SwitchMode;   
             this.LabelSlider.MouseDown += FormDragStart;
             this.LabelSlider.MouseUp += FormDragEnd;
             this.LabelSlider.MouseMove += FormDrag;
@@ -222,30 +219,29 @@ namespace BlizzTV.Podcasts
         }
 
 
-        private void ModeDoubleClickHandler(object sender, MouseEventArgs e)
+        private void SwitchMode(object sender, MouseEventArgs e)
         {
-            switch (this._windowMode)
-            {
-                case WindowMode.Normal:
-                    this.SwitchCompactMode();
-                    break;
-                case WindowMode.Compact:
-                    this.SwitchNormalMode();
-                    break;
-            }
+            this.SwitchMode();
         }
 
-        private void ModeDoubleClickHandler(object sender,EventArgs e)
+        private void SwitchMode(object sender,EventArgs e)
+        {
+            this.SwitchMode();
+        }
+
+        private void SwitchMode()
         {
             switch (this._windowMode)
             {
                 case WindowMode.Normal:
+                    this.SwitchBorderlessMode(this, EventArgs.Empty);
                     this.SwitchCompactMode();
                     break;
                 case WindowMode.Compact:
                     this.SwitchNormalMode();
+                    this.SwitchBorderlessMode(this, EventArgs.Empty);
                     break;
-            }   
+            }
         }
 
         private void pictureMuteControl_Click(object sender, EventArgs e)
