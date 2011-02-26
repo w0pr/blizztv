@@ -370,8 +370,8 @@ namespace BlizzTV.UI
         private void TrayIconMenuExit_Click(object sender, EventArgs e) { this.ExitApplication(); }
         private void MenuBlizzTVCom_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com", null); }
         private void MenuBugReports_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/issues/list", null); }
-        private void MenuUserGuide_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/UserGuide", null); }
-        private void MenuFAQ_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/FAQ", null); }
+        private void MenuUserGuide_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com/topic/96-user-guide/", null); }
+        private void MenuFAQ_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com/topic/95-frequently-asked-questions/", null); }
         private void MenuDonate_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null); }
 
         #endregion       
