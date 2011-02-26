@@ -29,12 +29,6 @@ namespace BlizzTV.Settings
 
         #endregion
 
-        // The default video player width.
-        public int VideoPlayerWidth { get { return this.GetInt("VideoPlayerWidth", 640); } set { this.Set("VideoPlayerWidth", value); } }
-
-        // The default video player height.
-        public int VideoPlayerHeight { get { return this.GetInt("VideoPlayerHeight", 385); } set { this.Set("VideoPlayerHeight", value); } }
-
         // States if video's should be played automatically.
         public bool AutoPlayVideos { get { return this.GetBoolean("AutoPlayVideos", true); } set { this.Set("AutoPlayVideos", value); } }
 

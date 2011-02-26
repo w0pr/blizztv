@@ -39,5 +39,15 @@ namespace BlizzTV.Podcasts
         /// Enables notifications for podcasts module.
         /// </summary>
         public bool NotificationsEnabled { get { return this.GetBoolean("NotificationsEnabled", true); } set { this.Set("NotificationsEnabled", value); } }
+
+        /// <summary>
+        /// Sets podcast player windows width.
+        /// </summary>
+        public int PlayerWidth { get { return this.GetInt("PlayerWidth", 275); } set { this.Set("PlayerWidth", value); } }
+
+        /// <summary>
+        /// Sets podcast player windows height.
+        /// </summary>
+        public int PlayerHeight { get { return this.GetInt("PlayerHeight", 150); } set { this.Set("PlayerHeight", value); } }
     }
 }

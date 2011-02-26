@@ -16,7 +16,6 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Timers;
 using Timer = System.Timers.Timer;
@@ -44,7 +43,10 @@ namespace BlizzTV.Podcasts
 
         public PlayerForm(Episode episode)
         {
-            InitializeComponent();            
+            InitializeComponent();
+
+            this.MouseCoordinateSystem = CoordinateSystem.Relative;
+            this.Size = new Size(Settings.Instance.PlayerWidth, Settings.Instance.PlayerHeight); // set the window size based on last saved values.
 
             this._episode = episode;
 
@@ -69,6 +71,16 @@ namespace BlizzTV.Podcasts
         {
             this.Text = string.Format("{0} - [{1}]", this._episode.Title, this._episode.PodcastName);         
             this.MediaPlayer.URL = this._episode.Enclosure;
+        }
+
+        private void PlayerForm_ResizeEnd(object sender, EventArgs e)
+        {
+            if (this.Size.Width == Settings.Instance.PlayerWidth && this.Size.Height == Settings.Instance.PlayerHeight) return;
+
+            Settings.Instance.PlayerWidth = this.Size.Width;
+            Settings.Instance.PlayerHeight = this.Size.Height;
+            Settings.Instance.Save();
+
         }
 
         private void SwitchNormalMode()
@@ -106,6 +118,8 @@ namespace BlizzTV.Podcasts
             this.LabelSlider.Left = 116;
             this.LabelSlider.Width = this.Width - 117;
             this.LabelSlider.Visible = true;
+            this.LabelSlider.Height = 16;
+            this.LabelSlider.Top = 1;
             this.SetUpSliderTimer();
 
             this.SetupPositionTimer();
@@ -261,12 +275,6 @@ namespace BlizzTV.Podcasts
             }
         }
 
-        private void MediaPlayer_OpenStateChange(object sender, AxWMPLib._WMPOCXEvents_OpenStateChangeEvent e)
-        {
-            var openState = (OpenState)e.newState;
-            Debug.WriteLine(openState);          
-        }
-
         private void MediaPlayer_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
             var playState = (PlayState) e.newState;
@@ -303,33 +311,6 @@ namespace BlizzTV.Podcasts
                     this.SetSliderText("Waiting for data..");
                     break;
             }
-        }
-
-        /* http://msdn.microsoft.com/en-us/library/dd564878(v=VS.85).aspx */
-        private enum OpenState
-        {
-            Undefined = 0,
-            PlaylistChanging = 1,
-            PlaylistLocating = 2,
-            PlaylistConnecting = 3,
-            PlaylistLoading = 4,
-            PlaylistOpening = 5,
-            PlaylistOpenNoMedia = 6,
-            PlaylistChanged = 7,
-            MediaChanging = 8,
-            MediaLocating = 9,
-            MediaConnecting = 10,
-            MediaLoading = 11,
-            MediaOpening = 12,
-            MediaOpen = 13,
-            BeginCodecAcquisition = 14,
-            EndCodecAcquisition = 15,
-            BeginLicenseAcquisition = 16,
-            EndLicenseAcquisition = 17,
-            BeginIndividualization = 18,
-            EndIndividualization = 19,
-            MediaWaiting = 20,
-            OpeningUnknownUrl = 21 
         }
         
         /* http://msdn.microsoft.com/en-us/library/dd564881(v=VS.85).aspx */

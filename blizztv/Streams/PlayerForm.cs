@@ -17,6 +17,7 @@
 
 using System;
 using System.Windows.Forms;
+using System.Drawing;
 using BlizzTV.Log;
 using BlizzTV.Modules.Players;
 using BlizzTV.Settings;
@@ -33,8 +34,7 @@ namespace BlizzTV.Streams
             InitializeComponent();
             
             this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
-            this.Width = GlobalSettings.Instance.VideoPlayerWidth; // get the default player width.
-            this.Height = GlobalSettings.Instance.VideoPlayerHeight; // get the default player height.
+            this.Size = new Size(Settings.Instance.PlayerWidth, Settings.Instance.PlayerHeight); // set the window size based on last saved values.
 
             this._stream = stream; // set the stream.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
@@ -141,11 +141,11 @@ namespace BlizzTV.Streams
 
         private void PlayerForm_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.Size.Width == GlobalSettings.Instance.VideoPlayerWidth && this.Size.Height == GlobalSettings.Instance.VideoPlayerHeight) return;
+            if (this.Size.Width == Settings.Instance.PlayerWidth && this.Size.Height == Settings.Instance.PlayerHeight) return;
 
-            GlobalSettings.Instance.VideoPlayerWidth = this.Size.Width;
-            GlobalSettings.Instance.VideoPlayerHeight = this.Size.Height;
-            GlobalSettings.Instance.Save();
+            Settings.Instance.PlayerWidth = this.Size.Width;
+            Settings.Instance.PlayerHeight = this.Size.Height;
+            Settings.Instance.Save();
         }
     }
 }

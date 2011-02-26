@@ -48,9 +48,8 @@ namespace BlizzTV.Podcasts
             this.MediaPlayer.Location = new System.Drawing.Point(0, 0);
             this.MediaPlayer.Name = "MediaPlayer";
             this.MediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MediaPlayer.OcxState")));
-            this.MediaPlayer.Size = new System.Drawing.Size(315, 141);
+            this.MediaPlayer.Size = new System.Drawing.Size(259, 112);
             this.MediaPlayer.TabIndex = 4;
-            this.MediaPlayer.OpenStateChange += new AxWMPLib._WMPOCXEvents_OpenStateChangeEventHandler(this.MediaPlayer_OpenStateChange);
             this.MediaPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.MediaPlayer_PlayStateChange);
             // 
             // LabelSlider
@@ -59,9 +58,9 @@ namespace BlizzTV.Podcasts
             this.LabelSlider.BackColor = System.Drawing.Color.Black;
             this.LabelSlider.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LabelSlider.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(171)))), ((int)(((byte)(177)))));
-            this.LabelSlider.Location = new System.Drawing.Point(64, 1);
+            this.LabelSlider.Location = new System.Drawing.Point(90, 0);
             this.LabelSlider.Name = "LabelSlider";
-            this.LabelSlider.Size = new System.Drawing.Size(150, 16);
+            this.LabelSlider.Size = new System.Drawing.Size(150, 17);
             this.LabelSlider.TabIndex = 5;
             this.LabelSlider.Visible = false;
             // 
@@ -77,7 +76,7 @@ namespace BlizzTV.Podcasts
             this.gradientPanel.Location = new System.Drawing.Point(0, 0);
             this.gradientPanel.Name = "gradientPanel";
             this.gradientPanel.ShadowOffSet = 0;
-            this.gradientPanel.Size = new System.Drawing.Size(315, 141);
+            this.gradientPanel.Size = new System.Drawing.Size(259, 112);
             this.gradientPanel.TabIndex = 7;
             this.gradientPanel.Visible = false;
             // 
@@ -87,7 +86,7 @@ namespace BlizzTV.Podcasts
             this.labelPosition.BackColor = System.Drawing.Color.Black;
             this.labelPosition.Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelPosition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(188)))), ((int)(((byte)(196)))));
-            this.labelPosition.Location = new System.Drawing.Point(24, 1);
+            this.labelPosition.Location = new System.Drawing.Point(40, 1);
             this.labelPosition.Name = "labelPosition";
             this.labelPosition.Size = new System.Drawing.Size(44, 16);
             this.labelPosition.TabIndex = 7;
@@ -112,13 +111,14 @@ namespace BlizzTV.Podcasts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(315, 141);
+            this.ClientSize = new System.Drawing.Size(259, 112);
             this.Controls.Add(this.gradientPanel);
             this.Controls.Add(this.MediaPlayer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PlayerForm";
             this.Text = "PlayerForm";
             this.Load += new System.EventHandler(this.PlayerForm_Load);
+            this.ResizeEnd += new System.EventHandler(this.PlayerForm_ResizeEnd);
             this.Controls.SetChildIndex(this.MediaPlayer, 0);
             this.Controls.SetChildIndex(this.gradientPanel, 0);
             ((System.ComponentModel.ISupportInitialize)(this.MediaPlayer)).EndInit();
