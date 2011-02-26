@@ -91,15 +91,14 @@
     <Compile Include="Workload\WorkloadManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Shadow Include="Test References\BlizzTV.accessor" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\blizztv\BlizzTV.csproj">
       <Project>{695B8F18-1DD6-4D10-AECF-F673309C217C}</Project>
       <Name>BlizzTV</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Test References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
