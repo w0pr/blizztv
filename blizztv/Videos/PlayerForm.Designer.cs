@@ -44,7 +44,7 @@ namespace BlizzTV.Videos
             this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuAlwaysOnTop});
             this.PlayerContextMenu.Name = "PlayerContextMenu";
-            this.PlayerContextMenu.Size = new System.Drawing.Size(155, 26);
+            this.PlayerContextMenu.Size = new System.Drawing.Size(155, 48);
             // 
             // MenuAlwaysOnTop
             // 

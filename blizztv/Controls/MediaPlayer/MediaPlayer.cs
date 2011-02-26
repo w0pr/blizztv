@@ -24,6 +24,7 @@ namespace BlizzTV.Controls.MediaPlayer
     public class MediaPlayer: AxWindowsMediaPlayer
     {
         private const int WM_LBUTTONDBLCLK = 0x0203;
+        private const int WM_RBUTTONDOWN = 0x0204;
 
         /// <summary>
         /// Fires on Double Click.
@@ -38,6 +39,10 @@ namespace BlizzTV.Controls.MediaPlayer
             {
                 case WM_LBUTTONDBLCLK:
                     if (this.DoubleClick != null) this.DoubleClick(this, new MouseEventArgs(MouseButtons.Left, 2, Cursor.Position.X, Cursor.Position.Y, 0));
+                    m.Result = IntPtr.Zero; // don't allow actual wmplayer control process the message by flagging it as processed.
+                    return;
+                case WM_RBUTTONDOWN:
+                    if (this.ContextMenuStrip != null) this.ContextMenuStrip.Show(Cursor.Position.X, Cursor.Position.Y);
                     m.Result = IntPtr.Zero; // don't allow actual wmplayer control process the message by flagging it as processed.
                     return;
             }

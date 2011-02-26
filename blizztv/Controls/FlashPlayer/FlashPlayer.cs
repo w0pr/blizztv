@@ -29,13 +29,11 @@ namespace BlizzTV.Controls.FlashPlayer
     public class FlashPlayer : AxShockwaveFlashObjects.AxShockwaveFlash
     {
         private const int WM_MOUSEMOVE = 0x0200;
-        private const int WM_MOUSEWHEEL = 0x020A;
         private const int WM_LBUTTONDOWN = 0x0201;
         private const int WM_LBUTTONUP = 0x0202;
         private const int WM_LBUTTONDBLCLK = 0x0203; 
         private const int WM_RBUTTONDOWN = 0x0204;
-        private const int WM_RBUTTONUP = 0x0205;                      
-        
+
         /// <summary>
         /// Fires on Double Click.
         /// </summary>
