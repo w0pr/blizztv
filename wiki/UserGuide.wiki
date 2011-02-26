@@ -1,7 +1,2 @@
-#summary user guide place holder
 #labels Featured,Documentation
-Also check [FAQ] page for answers to most frequently asked questions.
-
-= User Guide =
-
-placeholder..
+You can find user-guide over http://www.blizztv.com/topic/96-user-guide/.
