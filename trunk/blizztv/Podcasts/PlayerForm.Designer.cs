@@ -30,19 +30,24 @@ namespace BlizzTV.Podcasts
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayerForm));
             this.MediaPlayer = new BlizzTV.Controls.MediaPlayer.MediaPlayer();
+            this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MenuAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.LabelSlider = new System.Windows.Forms.Label();
             this.gradientPanel = new BlizzTV.Controls.Panels.GradientPanel();
             this.labelPosition = new System.Windows.Forms.Label();
             this.pictureMuteControl = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.MediaPlayer)).BeginInit();
+            this.PlayerContextMenu.SuspendLayout();
             this.gradientPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureMuteControl)).BeginInit();
             this.SuspendLayout();
             // 
             // MediaPlayer
             // 
+            this.MediaPlayer.ContextMenuStrip = this.PlayerContextMenu;
             this.MediaPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MediaPlayer.Enabled = true;
             this.MediaPlayer.Location = new System.Drawing.Point(0, 0);
@@ -51,6 +56,21 @@ namespace BlizzTV.Podcasts
             this.MediaPlayer.Size = new System.Drawing.Size(259, 112);
             this.MediaPlayer.TabIndex = 4;
             this.MediaPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.MediaPlayer_PlayStateChange);
+            // 
+            // PlayerContextMenu
+            // 
+            this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuAlwaysOnTop});
+            this.PlayerContextMenu.Name = "PlayerContextMenu";
+            this.PlayerContextMenu.Size = new System.Drawing.Size(155, 48);
+            // 
+            // MenuAlwaysOnTop
+            // 
+            this.MenuAlwaysOnTop.Image = ((System.Drawing.Image)(resources.GetObject("MenuAlwaysOnTop.Image")));
+            this.MenuAlwaysOnTop.Name = "MenuAlwaysOnTop";
+            this.MenuAlwaysOnTop.Size = new System.Drawing.Size(154, 22);
+            this.MenuAlwaysOnTop.Text = "Always On Top";
+            this.MenuAlwaysOnTop.Click += new System.EventHandler(this.MenuAlwaysOnTop_Click);
             // 
             // LabelSlider
             // 
@@ -122,6 +142,7 @@ namespace BlizzTV.Podcasts
             this.Controls.SetChildIndex(this.MediaPlayer, 0);
             this.Controls.SetChildIndex(this.gradientPanel, 0);
             ((System.ComponentModel.ISupportInitialize)(this.MediaPlayer)).EndInit();
+            this.PlayerContextMenu.ResumeLayout(false);
             this.gradientPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureMuteControl)).EndInit();
             this.ResumeLayout(false);
@@ -135,6 +156,8 @@ namespace BlizzTV.Podcasts
         private System.Windows.Forms.PictureBox pictureMuteControl;
         private Controls.Panels.GradientPanel gradientPanel;
         private System.Windows.Forms.Label labelPosition;
+        private System.Windows.Forms.ContextMenuStrip PlayerContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem MenuAlwaysOnTop;
 
 
     }

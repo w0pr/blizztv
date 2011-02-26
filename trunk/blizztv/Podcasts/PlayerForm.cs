@@ -18,6 +18,7 @@
 using System;
 using System.Drawing;
 using System.Timers;
+using BlizzTV.Settings;
 using Timer = System.Timers.Timer;
 using System.Windows.Forms;
 using BlizzTV.Modules.Players;
@@ -47,6 +48,7 @@ namespace BlizzTV.Podcasts
 
             this.MouseCoordinateSystem = CoordinateSystem.Relative;
             this.Size = new Size(Settings.Instance.PlayerWidth, Settings.Instance.PlayerHeight); // set the window size based on last saved values.
+            this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
 
             this._episode = episode;
 
@@ -55,8 +57,13 @@ namespace BlizzTV.Podcasts
             this.gradientPanel.MouseUp += FormDragEnd;
             this.gradientPanel.MouseMove += FormDrag;
 
-            this.MediaPlayer.enableContextMenu = false;
             this.MediaPlayer.DoubleClick += SwitchMode;
+
+            this.labelPosition.DoubleClick += SwitchMode;
+            this.labelPosition.MouseDown += FormDragStart;
+            this.labelPosition.MouseUp += FormDragEnd;
+            this.labelPosition.MouseMove += FormDrag;
+            this.labelPosition.DoubleBuffer();
 
             this.LabelSlider.DoubleClick += SwitchMode;   
             this.LabelSlider.MouseDown += FormDragStart;
@@ -81,6 +88,25 @@ namespace BlizzTV.Podcasts
             Settings.Instance.PlayerHeight = this.Size.Height;
             Settings.Instance.Save();
 
+        }
+
+        private void SwitchTopMostMode(bool topMost)
+        {
+            if (topMost)
+            {
+                this.TopMost = true;
+                this.MenuAlwaysOnTop.Checked = true;
+            }
+            else
+            {
+                this.TopMost = false;
+                this.MenuAlwaysOnTop.Checked = false;
+            }
+        }
+
+        private void MenuAlwaysOnTop_Click(object sender, EventArgs e)
+        {
+            SwitchTopMostMode(!this.MenuAlwaysOnTop.Checked);
         }
 
         private void SwitchNormalMode()
