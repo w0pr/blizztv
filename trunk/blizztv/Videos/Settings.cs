@@ -44,5 +44,15 @@ namespace BlizzTV.Videos
         /// Sets the update period for video channels.
         /// </summary>
         public int UpdatePeriod { get { return this.GetInt("UpdatePeriod", 60); } set { this.Set("UpdatePeriod", value); } }
+
+        /// <summary>
+        /// Sets video player windows width.
+        /// </summary>
+        public int PlayerWidth { get { return this.GetInt("PlayerWidth", 640); } set { this.Set("PlayerWidth", value); } }
+
+        /// <summary>
+        /// Sets video player windows height.
+        /// </summary>
+        public int PlayerHeight { get { return this.GetInt("PlayerHeight", 385); } set { this.Set("PlayerHeight", value); } }
     }
 }

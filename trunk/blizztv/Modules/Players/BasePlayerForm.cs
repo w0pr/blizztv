@@ -16,7 +16,6 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using BlizzTV.Settings;
@@ -32,11 +31,13 @@ namespace BlizzTV.Modules.Players
         private bool _dragging = false; // are we currently being dragged?
         private Point _dragMouseOffset;
 
+        protected CoordinateSystem MouseCoordinateSystem { get; set; } 
+
         protected BasePlayerForm()
         {
             InitializeComponent();
 
-            this.Size = new Size(GlobalSettings.Instance.VideoPlayerWidth, GlobalSettings.Instance.VideoPlayerHeight); // set the window size & location based on last-known values.
+            this.MouseCoordinateSystem = CoordinateSystem.Absolute;
         }
 
         protected void LoadingStarted()
@@ -88,7 +89,10 @@ namespace BlizzTV.Modules.Players
         {
             if (!this._borderless) return;
 
-            this._dragMouseOffset = new Point(e.X - this.Location.X, e.Y - this.Location.Y); // remember the offset of the mouse when drag starts.
+            Point startLocation = e.Location;
+            if (this.MouseCoordinateSystem == CoordinateSystem.Relative) startLocation = ((Control) sender).PointToScreen(startLocation);
+
+            this._dragMouseOffset = new Point(startLocation.X - this.Location.X, startLocation.Y - this.Location.Y); // remember the offset of the mouse when drag starts.
             this.Cursor = Cursors.SizeAll;
             this._dragging = true;
         }
@@ -101,8 +105,16 @@ namespace BlizzTV.Modules.Players
 
         protected void FormDrag(object sender, MouseEventArgs e)
         {
-            if (this._borderless && this._dragging) this.Location = new Point(e.X - this._dragMouseOffset.X, e.Y - this._dragMouseOffset.Y); // moves the dragged window with keeping the mouse offset in mind.
-            Debug.WriteLine(string.Format("[{0}]: result: {1} cords: {2}:{3} offset: {4}",sender,this.Location,e.X,e.Y,this._dragMouseOffset));
+            Point newLocation = e.Location;
+            if (this.MouseCoordinateSystem == CoordinateSystem.Relative) newLocation = ((Control) sender).PointToScreen(newLocation);
+
+            if (this._borderless && this._dragging) this.Location = new Point(newLocation.X - this._dragMouseOffset.X, newLocation.Y - this._dragMouseOffset.Y); // moves the dragged window with keeping the mouse offset in mind.
+        }
+
+        protected enum CoordinateSystem
+        {
+            Absolute,
+            Relative
         }
     }
 }

@@ -54,5 +54,15 @@ namespace BlizzTV.Streams
         /// Sets chat window's height.
         /// </summary>
         public int ChatWindowHeight { get { return this.GetInt("ChatWindowHeight", 385); } set { this.Set("ChatWindowHeight", value); } }
+
+        /// <summary>
+        /// Sets stream player windows width.
+        /// </summary>
+        public int PlayerWidth { get { return this.GetInt("PlayerWidth", 640); } set { this.Set("PlayerWidth", value); } }
+
+        /// <summary>
+        /// Sets stream player windows height.
+        /// </summary>
+        public int PlayerHeight { get { return this.GetInt("PlayerHeight", 385); } set { this.Set("PlayerHeight", value); } }
     }
 }
