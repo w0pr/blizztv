@@ -234,7 +234,7 @@ namespace BlizzTV.UI
 
         private void AutomaticUpdateCheck() // Checks for if an update is available
         {
-            if (GlobalSettings.Instance.AllowAutomaticUpdateChecks) { UpdateManager.Instance.Check(); }
+            if (GlobalSettings.Instance.AllowAutomaticUpdateChecks) { UpdateManager.Check(); }
         }        
 
         #endregion
@@ -357,7 +357,7 @@ namespace BlizzTV.UI
 
         private void MenuCheckUpdates(object sender, EventArgs e) // manually checks for updates.
         {
-            UpdateManager.Instance.Check(true); 
+            UpdateManager.Check(true); 
         }
 
         private void MenuAbout_Click(object sender, EventArgs e)
