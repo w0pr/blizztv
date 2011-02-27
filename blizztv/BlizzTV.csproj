@@ -723,8 +723,8 @@
     <PostBuildEvent>copy "$(SolutionDir)upstream\ikpMP3.dll" $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked" 
-  if not exist "$(TargetPath).locked" if exist "$(TargetPath)" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

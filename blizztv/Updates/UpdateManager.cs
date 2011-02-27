@@ -29,50 +29,25 @@ using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Updates
 {
-    internal sealed class UpdateManager
+    public static class UpdateManager
     {
-        #region instance
-
-        private static UpdateManager _instance = new UpdateManager();
-        public static UpdateManager Instance { get { return _instance; } }
-
-        #endregion
-
-        private UpdateManager() { }
-
-        public void Check(bool fullVerbose = false)
+        public static void Check(bool fullVerbose = false)
         {
-            Update foundUpdate = null; 
-            LogManager.Instance.Write(LogMessageTypes.Info, "UpdateManager checking for available update..");
+            LogManager.Instance.Write(LogMessageTypes.Info, "UpdateManager checking for available updates..");
 
-            Thread updateThread = new Thread(() => { foundUpdate = CheckForUpdates(); }) { IsBackground = true }; // check for available updates in a new thread.
+            var updateThread = new Thread(() => CheckForUpdates(fullVerbose)) { IsBackground = true }; // check for available updates in a new thread.
             updateThread.Start();
-            updateThread.Join();
-
-            if (foundUpdate != null) // if a new update is available
-            {
-                DialogResult result = MessageBox.Show(string.Format(i18n.FoundANewUpdateMessage, foundUpdate.UpdateType), string.Format(i18n.FoundANewUpdateTitle, foundUpdate.UpdateType), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes) // if user approves installing the update
-                {
-                    UpdaterForm f = new UpdaterForm(foundUpdate);
-                    f.ShowDialog();
-                }
-            }
-            // if we're in full-verbose mode, notify also about when no update is found.            
-            else if (fullVerbose) MessageBox.Show(i18n.NoAvailableUpdateFoundMessage, i18n.NoAvailableUpdateFoundTitle, MessageBoxButtons.OK, MessageBoxIcon.Information); 
         }
 
-        private Update CheckForUpdates()
-        {
-            Update availableUpdate = null;
-            Version currentVersion = Assembly.GetExecutingAssembly().GetName().Version; // the running-version.
-            
+        private static void CheckForUpdates(bool fullVerbose)
+        {            
+            Version currentVersion = Assembly.GetExecutingAssembly().GetName().Version; // get the running-version.            
             WebReader.Result result = WebReader.Read("http://code.google.com/feeds/p/blizztv/downloads/basic/"); // read the updates list.
 
             if (result.State != WebReader.States.Success)
             {
                 LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Error reading the updates list. Response status code: {0}", result.State));
-                return null;
+                return;
             } 
 
             XDocument xdoc = XDocument.Parse(result.Response); // start parsing the xml.
@@ -89,6 +64,7 @@ namespace BlizzTV.Updates
 
 
             List<Update> updatesList = entries.Select(e => new Update(e.date, e.link, e.title, e.details)).ToList(); // list of all updates.
+            Update availableUpdate = null;
 
             foreach (Update u in updatesList) // check all the found updates and see if there's an available fresh version.
             {
@@ -100,8 +76,22 @@ namespace BlizzTV.Updates
                 }
             }
 
-            if (availableUpdate!=null) LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Found an update: {0} - {1}", availableUpdate.UpdateType, availableUpdate.Version));            
-            return availableUpdate;
+            if (availableUpdate != null) // if a new update is available
+            {
+                LogManager.Instance.Write(LogMessageTypes.Info, string.Format("Found an update: {0} - {1}", availableUpdate.UpdateType, availableUpdate.Version));
+                
+                DialogResult dialogResult = MessageBox.Show(string.Format(i18n.FoundANewUpdateMessage, availableUpdate.UpdateType), string.Format(i18n.FoundANewUpdateTitle, availableUpdate.UpdateType), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.Yes) // if user approves installing the update
+                {
+                    var f = new UpdaterForm(availableUpdate);
+                    f.ShowDialog();
+                }
+            }
+            else
+            {
+                LogManager.Instance.Write(LogMessageTypes.Info, "No updates found.");
+                if(fullVerbose) MessageBox.Show(i18n.NoAvailableUpdateFoundMessage, i18n.NoAvailableUpdateFoundTitle, MessageBoxButtons.OK, MessageBoxIcon.Information); // if we're in full-verbose mode, notify also about when no update is found. 
+            }
         }
     }
 }
