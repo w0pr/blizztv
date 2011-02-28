@@ -19,6 +19,7 @@ using System;
 using System.Windows.Forms;
 using BlizzTV.Modules.Settings;
 using BlizzTV.Modules.Subscriptions;
+using BlizzTV.Modules.Subscriptions.Catalog;
 
 namespace BlizzTV.Feeds
 {
@@ -76,7 +77,8 @@ namespace BlizzTV.Feeds
 
         private void buttonCatalog_Click(object sender, EventArgs e)
         {
-            if (Catalog.Instance.ShowDialog()) this.LoadSubscriptions();
+            CatalogBrowserForm form = new CatalogBrowserForm("http://www.blizztv.com/catalog/feeds");
+            form.ShowDialog();
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
