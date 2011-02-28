@@ -68,7 +68,6 @@ namespace BlizzTV.UI
         {
             // global settings.
             if (GlobalSettings.Instance.UseInternalViewers) radioButtonUseInternalViewers.Checked = true; else radioButtonUseDefaultWebBrowser.Checked = true;
-            checkBoxVideoAutoPlay.Checked = GlobalSettings.Instance.AutoPlayVideos;
             CheckBoxPlayerAlwaysOnTop.Checked = GlobalSettings.Instance.PlayerWindowsAlwaysOnTop;
             checkBoxNotificationsEnabled.Checked = GlobalSettings.Instance.NotificationsEnabled;
             groupBoxNotificationSounds.Enabled = GlobalSettings.Instance.NotificationsEnabled;
@@ -127,8 +126,7 @@ namespace BlizzTV.UI
         private bool SaveSettings() // sets the settings.
         {
             // globals ettings.
-            if (radioButtonUseInternalViewers.Checked) GlobalSettings.Instance.UseInternalViewers = true; else GlobalSettings.Instance.UseInternalViewers = false;
-            GlobalSettings.Instance.AutoPlayVideos = checkBoxVideoAutoPlay.Checked;
+            GlobalSettings.Instance.UseInternalViewers = radioButtonUseInternalViewers.Checked;
             GlobalSettings.Instance.PlayerWindowsAlwaysOnTop = CheckBoxPlayerAlwaysOnTop.Checked;
             GlobalSettings.Instance.NotificationsEnabled = checkBoxNotificationsEnabled.Checked;
             GlobalSettings.Instance.NotificationSoundsEnabled = checkBoxNotificationSoundsEnabled.Checked;

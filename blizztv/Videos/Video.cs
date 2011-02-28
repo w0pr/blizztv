@@ -59,7 +59,6 @@ namespace BlizzTV.Videos
             this.Movie = ((VideoProvider) Providers.Instance.Dictionary[this.Provider]).Movie; // provider supplied movie source. 
 
             this.Movie = this.Movie.Replace("%video_id%", this.VideoId); // replace movie source variables
-            this.Movie = this.Movie.Replace("%auto_play%", (GlobalSettings.Instance.AutoPlayVideos) ? "1" : "0");            
         }
 
         public override void Open(object sender, EventArgs e)
