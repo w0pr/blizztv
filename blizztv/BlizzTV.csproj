@@ -151,6 +151,12 @@
     <Compile Include="Downloads\DownloadForm.Designer.cs">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Subscriptions\Catalog\CatalogBrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Subscriptions\Catalog\CatalogBrowserForm.Designer.cs">
+      <DependentUpon>CatalogBrowserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
     <Compile Include="Modules\Subscriptions\Subscription.cs" />
     <Compile Include="Podcasts\AddFeedForm.cs">
@@ -469,6 +475,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Downloads\DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Subscriptions\Catalog\CatalogBrowserForm.resx">
+      <DependentUpon>CatalogBrowserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Notifications\NotificationsForm.resx">
       <DependentUpon>NotificationsForm.cs</DependentUpon>
