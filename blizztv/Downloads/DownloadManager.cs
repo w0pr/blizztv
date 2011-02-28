@@ -35,11 +35,6 @@ namespace BlizzTV.Downloads
             Download download = new Download(uri);
             this._downloads.Add(download);
             return download;
-        }
-        
-        public DownloadStream Stream(string uri) // starts a download-stream.
-        {
-            return new DownloadStream(uri);
-        }
+        }        
     }
 }
