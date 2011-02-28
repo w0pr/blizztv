@@ -39,7 +39,6 @@ namespace BlizzTV.Streams.Parsers
                 if (result.State != WebReader.States.Success) return;
 
                 Hashtable data = (Hashtable)Json.JsonDecode(result.Response);
-                data = (Hashtable)data["rss"];
                 data = (Hashtable)data["channel"];
                 this.IsLive = (bool)data["isLive"]; // is the stream live?
                 this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
