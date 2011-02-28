@@ -29,9 +29,6 @@ namespace BlizzTV.Settings
 
         #endregion
 
-        // States if video's should be played automatically.
-        public bool AutoPlayVideos { get { return this.GetBoolean("AutoPlayVideos", true); } set { this.Set("AutoPlayVideos", value); } }
-
         // Always on top setting for player windows.
         public bool PlayerWindowsAlwaysOnTop { get { return this.GetBoolean("PlayerWindowsAlwaysOnTop", true); } set { this.Set("PlayerWindowsAlwaysOnTop", value); } }
 

@@ -62,7 +62,6 @@
             this.tabPlayer = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CheckBoxPlayerAlwaysOnTop = new System.Windows.Forms.CheckBox();
-            this.checkBoxVideoAutoPlay = new System.Windows.Forms.CheckBox();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabModules.SuspendLayout();
@@ -349,9 +348,9 @@
             // 
             this.groupBoxNotificationSounds.Controls.Add(this.checkBoxNotificationSoundsEnabled);
             this.groupBoxNotificationSounds.Controls.Add(this.comboBoxNotificationSound);
-            this.groupBoxNotificationSounds.Location = new System.Drawing.Point(15, 37);
+            this.groupBoxNotificationSounds.Location = new System.Drawing.Point(5, 35);
             this.groupBoxNotificationSounds.Name = "groupBoxNotificationSounds";
-            this.groupBoxNotificationSounds.Size = new System.Drawing.Size(240, 72);
+            this.groupBoxNotificationSounds.Size = new System.Drawing.Size(520, 72);
             this.groupBoxNotificationSounds.TabIndex = 2;
             this.groupBoxNotificationSounds.TabStop = false;
             this.groupBoxNotificationSounds.Text = "Notification Sounds";
@@ -362,7 +361,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxNotificationSoundsEnabled.Location = new System.Drawing.Point(6, 19);
             this.checkBoxNotificationSoundsEnabled.Name = "checkBoxNotificationSoundsEnabled";
-            this.checkBoxNotificationSoundsEnabled.Size = new System.Drawing.Size(228, 17);
+            this.checkBoxNotificationSoundsEnabled.Size = new System.Drawing.Size(508, 17);
             this.checkBoxNotificationSoundsEnabled.TabIndex = 2;
             this.checkBoxNotificationSoundsEnabled.Text = "Enable notification sounds";
             this.checkBoxNotificationSoundsEnabled.UseVisualStyleBackColor = true;
@@ -376,14 +375,14 @@
             this.comboBoxNotificationSound.FormattingEnabled = true;
             this.comboBoxNotificationSound.Location = new System.Drawing.Point(6, 42);
             this.comboBoxNotificationSound.Name = "comboBoxNotificationSound";
-            this.comboBoxNotificationSound.Size = new System.Drawing.Size(228, 21);
+            this.comboBoxNotificationSound.Size = new System.Drawing.Size(508, 21);
             this.comboBoxNotificationSound.TabIndex = 0;
             this.comboBoxNotificationSound.SelectedIndexChanged += new System.EventHandler(this.comboBoxNotificationSound_SelectedIndexChanged);
             // 
             // checkBoxNotificationsEnabled
             // 
             this.checkBoxNotificationsEnabled.AutoSize = true;
-            this.checkBoxNotificationsEnabled.Location = new System.Drawing.Point(15, 14);
+            this.checkBoxNotificationsEnabled.Location = new System.Drawing.Point(11, 12);
             this.checkBoxNotificationsEnabled.Name = "checkBoxNotificationsEnabled";
             this.checkBoxNotificationsEnabled.Size = new System.Drawing.Size(118, 17);
             this.checkBoxNotificationsEnabled.TabIndex = 0;
@@ -408,10 +407,9 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.CheckBoxPlayerAlwaysOnTop);
-            this.groupBox1.Controls.Add(this.checkBoxVideoAutoPlay);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(519, 72);
+            this.groupBox1.Size = new System.Drawing.Size(519, 44);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Internal Video Player Settings";
@@ -426,17 +424,7 @@
             this.CheckBoxPlayerAlwaysOnTop.Text = "Always On Top";
             this.CheckBoxPlayerAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
-            // checkBoxVideoAutoPlay
-            // 
-            this.checkBoxVideoAutoPlay.AutoSize = true;
-            this.checkBoxVideoAutoPlay.Location = new System.Drawing.Point(9, 42);
-            this.checkBoxVideoAutoPlay.Name = "checkBoxVideoAutoPlay";
-            this.checkBoxVideoAutoPlay.Size = new System.Drawing.Size(70, 17);
-            this.checkBoxVideoAutoPlay.TabIndex = 4;
-            this.checkBoxVideoAutoPlay.Text = "Auto-play";
-            this.checkBoxVideoAutoPlay.UseVisualStyleBackColor = true;
-            // 
-            // frmPreferences
+            // PreferencesForm
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -450,7 +438,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmPreferences";
+            this.Name = "PreferencesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Preferences";
             this.Load += new System.EventHandler(this.PreferencesForm_Load);
@@ -500,7 +488,6 @@
         private System.Windows.Forms.TabPage tabUI;
         private System.Windows.Forms.TabPage tabPlayer;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBoxVideoAutoPlay;
         private System.Windows.Forms.CheckBox checkBoxMinimimizeToSystemTray;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox checkBoxAllowBetaVersionNotifications;
