@@ -33,16 +33,19 @@ namespace BlizzTV.Feeds.Parsers
             {
                 XDocument xdoc = XDocument.Parse(xml);
 
-                var entries = from item in xdoc.Descendants("item")
+                if (xdoc.Root == null) return false;
+                XNamespace defaultNS = xdoc.Root.GetDefaultNamespace();
+
+                var entries = from item in xdoc.Descendants(defaultNS + "item")
                               select new
-                              {
-                                  Id = item.Element("guid").Value,
-                                  Title = item.Element("title").Value,
-                                  Link = item.Element("link").Value,
-                              };
+                                         {
+                                             Id = (string) item.Element(defaultNS + "guid") ?? "",
+                                             Title = (string) item.Element(defaultNS + "title") ?? "",
+                                             Link = (string) item.Element(defaultNS + "link") ?? "",
+                                         };
 
+                if (items == null) items = new List<FeedItem>();
                 items.AddRange(entries.Select(entry => new FeedItem(entry.Title, entry.Id, entry.Link)));
-
                 return items.Count > 0;
             }
             catch (Exception) { return false; } // supress the exceptions as the method can also be used for checking a feed if it's compatible with the standart.            

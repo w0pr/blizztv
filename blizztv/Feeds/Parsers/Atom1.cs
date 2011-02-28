@@ -32,18 +32,20 @@ namespace BlizzTV.Feeds.Parsers
             try
             {
                 XDocument xdoc = XDocument.Parse(xml);
-                XNamespace xmlns = "http://www.w3.org/2005/Atom";
 
-                var entries = from entry in xdoc.Descendants(xmlns + "entry")
+                if (xdoc.Root == null) return false;
+                XNamespace defaultNS = xdoc.Root.GetDefaultNamespace();
+
+                var entries = from entry in xdoc.Descendants(defaultNS + "entry")
                               select new
-                              {
-                                  Id = entry.Element(xmlns + "id").Value,
-                                  Title = entry.Element(xmlns + "title").Value,
-                                  Link = (entry.Element(xmlns + "link") != null) ? entry.Element(xmlns + "link").Attribute("href").Value : String.Empty
-                              };
+                                         {
+                                             Id = (string) entry.Element(defaultNS + "id") ?? "",
+                                             Title = (string) entry.Element(defaultNS + "title") ?? "",
+                                             Link = (entry.Element(defaultNS + "link") != null) ? entry.Element(defaultNS + "link").Attribute("href").Value : ""
+                                         };
 
+                if (items == null) items = new List<FeedItem>();
                 items.AddRange(entries.Select(entry => new FeedItem(entry.Title, entry.Id, String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)))); /* link fallbacks are needed by blizzard atom feeds, as their stories does not contain a valid story link, so we forge the link by linkFallback + storyId */
-
                 return items.Count > 0;
             }
             catch (Exception) { return false; } // supress the exceptions as the method can also be used for checking a feed if it's compatible with the standart.

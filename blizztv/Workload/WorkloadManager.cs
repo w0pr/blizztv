@@ -48,6 +48,8 @@ namespace BlizzTV.Workload
 
         public void Add(int units) // adds given units of workload.
         {
+            if (units <= 0) return;
+
             this._progressBar.Owner.AsyncInvokeHandler(() =>
             {
                 this.CurrentWorkload += units; 

@@ -32,18 +32,21 @@ namespace BlizzTV.Podcasts.Parsers
             try
             {
                 XDocument xdoc = XDocument.Parse(xml);
-                
-                var entries = from item in xdoc.Descendants("item")
+
+                if (xdoc.Root == null) return false;                
+                XNamespace defaultNS = xdoc.Root.GetDefaultNamespace();
+
+                var entries = from item in xdoc.Descendants(defaultNS + "item")
                               select new
-                              {
-                                  Id = item.Element("guid").Value,
-                                  Title = item.Element("title").Value,
-                                  Link = item.Element("link").Value,
-                                  Enclosure=item.Element("enclosure").Attribute("url").Value
-                              };
+                                         {
+                                             Id = (string) item.Element(defaultNS + "guid") ?? "",
+                                             Title = (string) item.Element(defaultNS + "title") ?? "",
+                                             Link = (string) item.Element(defaultNS + "link") ?? "",
+                                             Enclosure = (XElement) item.Element(defaultNS + "enclosure") ?? null
+                                         };
 
-                items.AddRange(entries.Select(entry => new PodcastItem(entry.Title, entry.Id, entry.Link, entry.Enclosure)));
-
+                if (items == null) items = new List<PodcastItem>();
+                items.AddRange(entries.Where(entry => entry.Enclosure != null).Select(entry => new PodcastItem(entry.Title, entry.Id, entry.Link, entry.Enclosure.Attribute("url").Value)));
                 return items.Count > 0;
             }
             catch (Exception) { return false; } // supress the exceptions as the method can also be used for checking a podcast-feed if it's compatible with the standart.
