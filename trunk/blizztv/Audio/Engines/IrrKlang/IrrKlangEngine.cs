@@ -26,7 +26,6 @@ namespace BlizzTV.Audio.Engines.IrrKlang
         public IrrKlangEngine()
         {
             this._engine = new ISoundEngine(); // startup IrrKlang's internal sound engine.
-            this._engine.AddFileFactory(new FileFactory()); // setup our own file factory so can add the support for http streaming.
         }
 
         public override bool CanPlayStreams { get { return true; } }

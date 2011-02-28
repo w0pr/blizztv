@@ -1,4 +1,13 @@
-﻿/*    
+/*
+Usage:
+        public IrrKlangEngine()
+        {
+            this._engine = new ISoundEngine(); // startup IrrKlang's internal sound engine.
+            this._engine.AddFileFactory(new FileFactory()); // setup our own file factory so can add the support for http streaming.
+        }
+*/
+
+/*    
  * Copyright (C) 2010-2011, BlizzTV Project - http://code.google.com/p/blizztv/
  *  
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General 
@@ -12,7 +21,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id$
+ * $Id: FileFactory.cs 360 2011-02-08 21:21:46Z shalafiraistlin@gmail.com $
  */
 
 using System.IO;

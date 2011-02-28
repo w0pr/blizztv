@@ -130,7 +130,6 @@
     <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Audio\Engines\AudioEngine.cs" />
     <Compile Include="Audio\Engines\IAudioTrack.cs" />
-    <Compile Include="Audio\Engines\IrrKlang\FileFactory.cs" />
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangTrack.cs" />
     <Compile Include="Configuration\RuntimeConfiguration.cs" />
@@ -146,7 +145,6 @@
     <Compile Include="Dependency\OperatingSystem.cs" />
     <Compile Include="Downloads\Download.cs" />
     <Compile Include="Downloads\DownloadManager.cs" />
-    <Compile Include="Downloads\DownloadStream.cs" />
     <Compile Include="Downloads\DownloadForm.cs">
       <SubType>Form</SubType>
     </Compile>
