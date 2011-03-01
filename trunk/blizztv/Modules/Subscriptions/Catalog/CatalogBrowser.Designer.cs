@@ -33,6 +33,7 @@
             this.buttonBack = new System.Windows.Forms.ToolStripButton();
             this.buttonForward = new System.Windows.Forms.ToolStripButton();
             this.browser = new System.Windows.Forms.WebBrowser();
+            this.loadingAnimation = new BlizzTV.Controls.Animations.LoadingAnimationToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,7 +41,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonBack,
-            this.buttonForward});
+            this.buttonForward,
+            this.loadingAnimation});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1035, 25);
@@ -55,7 +57,8 @@
             this.buttonBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(23, 22);
-            this.buttonBack.Text = "toolStripButton1";
+            this.buttonBack.Text = "Click to go back";
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
             // buttonForward
             // 
@@ -65,7 +68,8 @@
             this.buttonForward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonForward.Name = "buttonForward";
             this.buttonForward.Size = new System.Drawing.Size(23, 22);
-            this.buttonForward.Text = "toolStripButton2";
+            this.buttonForward.Text = "Click to go forward";
+            this.buttonForward.Click += new System.EventHandler(this.buttonForward_Click);
             // 
             // browser
             // 
@@ -79,6 +83,30 @@
             this.browser.TabIndex = 1;
             this.browser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.browser_DocumentCompleted);
             this.browser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.browser_Navigating);
+            // 
+            // loadingAnimation
+            // 
+            this.loadingAnimation.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            // 
+            // loadingAnimation
+            // 
+            this.loadingAnimation.LoadingCircleControl.AccessibleName = "loadingAnimation";
+            this.loadingAnimation.LoadingCircleControl.Active = false;
+            this.loadingAnimation.LoadingCircleControl.Color = System.Drawing.Color.DarkGray;
+            this.loadingAnimation.LoadingCircleControl.InnerCircleRadius = 6;
+            this.loadingAnimation.LoadingCircleControl.Location = new System.Drawing.Point(1006, 1);
+            this.loadingAnimation.LoadingCircleControl.Name = "loadingAnimation";
+            this.loadingAnimation.LoadingCircleControl.NumberSpoke = 24;
+            this.loadingAnimation.LoadingCircleControl.OuterCircleRadius = 7;
+            this.loadingAnimation.LoadingCircleControl.RotationSpeed = 50;
+            this.loadingAnimation.LoadingCircleControl.Size = new System.Drawing.Size(28, 22);
+            this.loadingAnimation.LoadingCircleControl.SpokeThickness = 3;
+            this.loadingAnimation.LoadingCircleControl.StylePreset = BlizzTV.Controls.Animations.LoadingAnimation.StylePresets.IE7;
+            this.loadingAnimation.LoadingCircleControl.TabIndex = 1;
+            this.loadingAnimation.LoadingCircleControl.Text = "loadingAnimationToolStripMenuItem1";
+            this.loadingAnimation.Name = "loadingAnimation";
+            this.loadingAnimation.Size = new System.Drawing.Size(28, 22);
+            this.loadingAnimation.Text = "loadingAnimationToolStripMenuItem1";
             // 
             // CatalogBrowser
             // 
@@ -104,5 +132,6 @@
         private System.Windows.Forms.WebBrowser browser;
         private System.Windows.Forms.ToolStripButton buttonBack;
         private System.Windows.Forms.ToolStripButton buttonForward;
+        private Controls.Animations.LoadingAnimationToolStripMenuItem loadingAnimation;
     }
 }
