@@ -56,6 +56,7 @@ namespace BlizzTV.Utility.Extensions
         /// <param name="delegate">The delegate that will be invoked.</param>
         public static void AsyncInvokeHandler(this Control control, MethodInvoker @delegate) // Async. control-invoke extension.
         {
+            if (control == null) return;
             if (control.InvokeRequired) control.BeginInvoke(@delegate); // if we're not in control's actual thread, switch to it and run the supplied delegate.
             else @delegate(); // if we don't need an invoke, just run the supplied delegate.
         }

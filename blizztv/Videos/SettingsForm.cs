@@ -19,6 +19,7 @@ using System;
 using System.Windows.Forms;
 using BlizzTV.Modules.Settings;
 using BlizzTV.Modules.Subscriptions;
+using BlizzTV.Modules.Subscriptions.Catalog;
 
 namespace BlizzTV.Videos
 {
@@ -60,7 +61,9 @@ namespace BlizzTV.Videos
 
         private void buttonCatalog_Click(object sender, EventArgs e)
         {
-            if (Catalog.Instance.ShowDialog()) this.LoadSubscriptions();
+            var form = new CatalogBrowser(ModuleVideos.Instance);
+            form.ShowDialog();
+            this.LoadSubscriptions();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)

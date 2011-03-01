@@ -18,12 +18,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows.Forms;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
+using BlizzTV.Modules.Subscriptions.Catalog;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.UI;
 using BlizzTV.Assets.i18n;
@@ -31,10 +33,11 @@ using BlizzTV.Assets.i18n;
 namespace BlizzTV.Feeds
 {
     [ModuleAttributes("Feeds","Feed aggregator module.","feed")]
-    public class ModuleFeeds:Module
+    public class ModuleFeeds : Module ,ISubscriptionConsumer
     {
         private Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // list of feeds.
         private System.Timers.Timer _updateTimer;
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://feed/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);
         private bool _disposed = false;
 
         public static ModuleFeeds Instance;
@@ -197,6 +200,23 @@ namespace BlizzTV.Feeds
         {
             System.Threading.Thread thread = new System.Threading.Thread(this.UpdateFeeds) {IsBackground = true};
             thread.Start();                 
+        }
+
+        public string GetCatalogUrl()
+        {
+            return "http://www.blizztv.com/catalog/feeds";
+        }
+
+        public void ConsumeSubscription(string entryUrl)
+        {
+            Match match = this._subscriptionConsumerRegex.Match(entryUrl);
+            if (!match.Success) return;
+
+            string name = match.Groups["Name"].Value;
+            string url = match.Groups["Url"].Value;
+
+            var subscription = new FeedSubscription {Name = name, Url = url};
+            Subscriptions.Instance.Add(subscription);
         }
 
         #region de-ctor
