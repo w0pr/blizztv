@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id$
+ * $Id: frmCatalog.cs 360 2011-02-08 21:21:46Z shalafiraistlin@gmail.com $
  */
 
 using System;
@@ -37,7 +37,7 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
             this.browser.Navigate(this._catalogUrl);
         }
 
-        private void WebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             this.loadingAnimation.LoadingCircleControl.Active = false;
             this.loadingAnimation.Visible = false;
@@ -45,14 +45,14 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
             if (browser.Document != null) this.Text = browser.Document.Title;
         }
 
-        private void WebBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        private void browser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
         {
             Match match = this._protocolRegex.Match(e.Url.ToString());
 
             if (match.Success)
             {
                 e.Cancel = true;
-                this.WebBrowser_DocumentCompleted(this, null);
+                this.browser_DocumentCompleted(this, null);
 
                 string moduleName = match.Groups[1].Value;
                 string subscriptionName = match.Groups[2].Value;
@@ -63,6 +63,6 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
                 this.loadingAnimation.LoadingCircleControl.Active = true;
                 this.loadingAnimation.Visible = true;
             }
-        }        
+        }
     }
 }
