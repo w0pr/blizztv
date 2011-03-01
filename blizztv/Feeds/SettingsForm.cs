@@ -77,7 +77,7 @@ namespace BlizzTV.Feeds
 
         private void buttonCatalog_Click(object sender, EventArgs e)
         {
-            CatalogBrowserForm form = new CatalogBrowserForm("http://www.blizztv.com/catalog/feeds");
+            CatalogBrowser form = new CatalogBrowser("http://www.blizztv.com/catalog/feeds");
             form.ShowDialog();
         }
 
