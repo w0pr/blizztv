@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Audio;
@@ -43,9 +44,9 @@ namespace BlizzTV.Dependency
                 DialogResult result = MessageBox.Show(i18n.FlashPlayerRequiredMessage, i18n.FlashPlayerRequiredTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (result == DialogResult.Yes)
                 {
-                    DownloadForm f = new DownloadForm(i18n.DownloadingAdobeFlashPlayer);
-                    f.StartDownload(new Download("http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe", "install_flash_player_ax.exe"));
-                    if (f.ShowDialog() == DialogResult.OK) // if download succeeed
+                    var downloadForm = new DownloadForm(i18n.DownloadingAdobeFlashPlayer);
+                    downloadForm.StartDownload(new Download("http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe", "install_flash_player_ax.exe"));
+                    if (downloadForm.ShowDialog() == DialogResult.OK) // if download succeeed
                     {
                         MessageBox.Show(i18n.FlashPlayerWillBeInstalledMessage, i18n.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Process.Start("install_flash_player_ax.exe");                        
@@ -58,14 +59,15 @@ namespace BlizzTV.Dependency
                 }
                 return false; // rule is not satisfied.
             }
+
             if (!this.VisualCpp2010RuntimeInstalled()) // if visual c++ 2010 redistributable package is not installed, ask for it as it's required by audio-engine irrKlang.
             {
                 DialogResult result = MessageBox.Show(i18n.VisualCPP2010RequiredMessage, i18n.VisualCPP2010RequiredTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (result == DialogResult.Yes)
                 {
-                    DownloadForm f = new DownloadForm(i18n.DownloadingVisualCPP2010);
-                    f.StartDownload(new Download("http://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe", "vcredist_x86.exe"));
-                    if (f.ShowDialog() == DialogResult.OK) // if download succeeded
+                    var downloadForm = new DownloadForm(i18n.DownloadingVisualCPP2010);
+                    downloadForm.StartDownload(new Download("http://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe", "vcredist_x86.exe"));
+                    if (downloadForm.ShowDialog() == DialogResult.OK) // if download succeeded
                     {
                         MessageBox.Show(i18n.VisualCPP2010WillBeInstalledMessage, i18n.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Process.Start("vcredist_x86.exe");
@@ -78,6 +80,25 @@ namespace BlizzTV.Dependency
                 }
                 return false;
             }
+
+            if(!this.MsHtmlPIAInstalled()) // Windows-Vista does not provide the required Microsoft.mshtml.dll primary interop assembly (used by Internet Explorer based web-browser control). Check for it and if required install it.
+            {
+                MessageBox.Show(i18n.MSHtmlPIAForVistaRequiredMessage, i18n.MSHtmlPIAForVistaRequiredTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                var downloadForm = new DownloadForm(i18n.DownloadingMSHtmlPIAForVista);
+                downloadForm.StartDownload(new Download("http://blizztv.googlecode.com/svn/dependencies/vs90_piaredist.exe", "vs90_piaredist.exe"));
+                if (downloadForm.ShowDialog() == DialogResult.OK) // if download succeeded
+                {
+                    MessageBox.Show(i18n.MSHtmlPIAForVistaWillBeInstalledMessage, i18n.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Process.Start("vs90_piaredist.exe");
+                }
+                else // if download failed
+                {
+                    MessageBox.Show(i18n.MSHtmlPIAForVistaDownloadFailedMessage, i18n.DownloadFailed, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Process.Start("IExplore.exe", "http://blizztv.googlecode.com/svn/dependencies/vs90_piaredist.exe");
+                    return false;
+                }
+            }
+
             return true;
         }
 
@@ -104,6 +125,12 @@ namespace BlizzTV.Dependency
                 LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Depedency rule ShockwaveFlashInstalled() failed. Adobe Flash Player is not installed: {0}", e));
                 return false;
             }
+        }
+
+        private bool MsHtmlPIAInstalled() // checks for mshtml primary interop asembly.
+        {
+            string expectedPath = string.Format("{0}\\Microsoft.NET\\Primary Interop Assemblies\\Microsoft.mshtml.dll",System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles));            
+            return OperatingSystem.Instance.Type != OperatingSystem.OSType.Vista || File.Exists(expectedPath);
         }
     }       
 }
