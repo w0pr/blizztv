@@ -15,7 +15,9 @@
  * $Id$
  */
 
+using System;
 using System.IO;
+using BlizzTV.Log;
 using Microsoft.Isam.Esent.Collections.Generic;
 using BlizzTV.Utility.Helpers;
 
@@ -38,8 +40,19 @@ namespace BlizzTV.Storage
 
         private KeyValueStorage()
         {
-            if (!this.StorageExists()) Directory.CreateDirectory(_storageFolder); // create the storage directory if it doesn't exists yet.
-            this._dictionary = new PersistentDictionary<string, byte>(_storageFolder);
+            if (!this.StorageExists()) Directory.CreateDirectory(this._storageFolder); // create the storage directory if it doesn't exists yet.
+
+            try
+            {
+                this._dictionary = new PersistentDictionary<string, byte>(this._storageFolder);
+            }            
+            catch(Microsoft.Isam.Esent.Interop.EsentErrorException e) // The database sanity may not be all okay, if so try to re-create a new database.
+            {
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("An exception occured while trying to inititialize Esent database. Will be creating a new db. Exception: {0}", e));
+                Directory.Delete(this._storageFolder,true);
+                Directory.CreateDirectory(this._storageFolder);
+                this._dictionary = new PersistentDictionary<string, byte>(this._storageFolder);
+            }
         }
 
         public byte GetByte(string key)
