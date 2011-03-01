@@ -16,52 +16,43 @@
  */
 
 using System;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace BlizzTV.Modules.Subscriptions.Catalog
 {
-    public partial class CatalogBrowserForm : Form
+    public partial class CatalogBrowser : Form
     {
         private string _catalogUrl;
-
         private Regex _protocolRegex = new Regex("blizztv\\://(?<Module>.*?)/(?<SubscriptionName>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
 
-        public CatalogBrowserForm(string catalogUrl)
+        public CatalogBrowser(string catalogUrl)
         {
             InitializeComponent();
-
             this._catalogUrl = catalogUrl;
         }
 
-        private void frmCatalogBrowser_Load(object sender, EventArgs e)
+        private void Catalog_Load(object sender, EventArgs e)
         {
-            this.Browser.Navigate(this._catalogUrl);
+            this.browser.Navigate(this._catalogUrl);
         }
 
-        private void Browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void WebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            this.ProgressBar.Visible = false;
-            this.LoadingAnimation.LoadingCircleControl.Active = false;
-            this.LoadingAnimation.Visible = false;
+            this.loadingAnimation.LoadingCircleControl.Active = false;
+            this.loadingAnimation.Visible = false;
 
-            if (Browser.Document != null) this.Text = Browser.Document.Title;
+            if (browser.Document != null) this.Text = browser.Document.Title;
         }
 
-        private void Browser_ProgressChanged(object sender, WebBrowserProgressChangedEventArgs e)
-        {
-            if (this.ProgressBar.Maximum != e.MaximumProgress) this.ProgressBar.Maximum = (int) e.MaximumProgress;
-            if (e.CurrentProgress >= 0 & e.CurrentProgress<= this.ProgressBar.Maximum) this.ProgressBar.Value = (int) e.CurrentProgress;
-        }
-
-        private void Browser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        private void WebBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
         {
             Match match = this._protocolRegex.Match(e.Url.ToString());
 
             if (match.Success)
             {
                 e.Cancel = true;
-                this.Browser_DocumentCompleted(this, null);
+                this.WebBrowser_DocumentCompleted(this, null);
 
                 string moduleName = match.Groups[1].Value;
                 string subscriptionName = match.Groups[2].Value;
@@ -69,11 +60,9 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
             }
             else
             {
-                this.ProgressBar.Value = 0;
-                this.ProgressBar.Visible = true;
-                this.LoadingAnimation.LoadingCircleControl.Active = true;
-                this.LoadingAnimation.Visible = true;
+                this.loadingAnimation.LoadingCircleControl.Active = true;
+                this.loadingAnimation.Visible = true;
             }
-        }
+        }        
     }
 }
