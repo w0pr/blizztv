@@ -354,4 +354,19 @@
   <data name="ErrorParsingPodcastTitle" xml:space="preserve">
     <value>Error parsing podcast</value>
   </data>
+  <data name="DownloadingMSHtmlPIAForVista" xml:space="preserve">
+    <value>Downloading Vista support files</value>
+  </data>
+  <data name="MSHtmlPIAForVistaDownloadFailedMessage" xml:space="preserve">
+    <value>Primary Interopability Assemblies 2007 package download failed. Please install i manually.</value>
+  </data>
+  <data name="MSHtmlPIAForVistaRequiredMessage" xml:space="preserve">
+    <value>BlizzTV requires Primary Interopability Assemblies 2007 package to work on Windows Vista. It'll be downloaded now.</value>
+  </data>
+  <data name="MSHtmlPIAForVistaRequiredTitle" xml:space="preserve">
+    <value>Missing component: Primary Interopability Assemblies 2007 for Windows Vista</value>
+  </data>
+  <data name="MSHtmlPIAForVistaWillBeInstalledMessage" xml:space="preserve">
+    <value>Primary Interopability Assemblies 2007 package will now be installed. </value>
+  </data>
 </root>
