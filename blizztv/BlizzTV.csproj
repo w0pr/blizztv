@@ -133,6 +133,12 @@
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangEngine.cs" />
     <Compile Include="Audio\Engines\IrrKlang\IrrKlangTrack.cs" />
     <Compile Include="Configuration\RuntimeConfiguration.cs" />
+    <Compile Include="Controls\NotificationBar\NotificationBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NotificationBar\NotificationBar.Designer.cs">
+      <DependentUpon>NotificationBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Panels\GradientPanel.cs">
       <SubType>Component</SubType>
     </Compile>
