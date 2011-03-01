@@ -39,10 +39,11 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
 
         private void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            //this.loadingAnimation.LoadingCircleControl.Active = false;
-            //this.loadingAnimation.Visible = false;
+            this.loadingAnimation.LoadingCircleControl.Active = false;
+            this.loadingAnimation.Visible = false;
 
-            if (browser.Document != null) this.Text = browser.Document.Title;
+            this.buttonBack.Enabled = this.browser.CanGoBack;
+            this.buttonForward.Enabled = this.browser.CanGoForward;
         }
 
         private void browser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
@@ -57,9 +58,19 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
             }
             else
             {
-                //this.loadingAnimation.LoadingCircleControl.Active = true;
-                //this.loadingAnimation.Visible = true;
+                this.loadingAnimation.LoadingCircleControl.Active = true;
+                this.loadingAnimation.Visible = true;
             }
+        }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            if (this.browser.CanGoBack) this.browser.GoBack();
+        }
+
+        private void buttonForward_Click(object sender, EventArgs e)
+        {
+            if (this.browser.CanGoForward) this.browser.GoForward();
         }
     }
 }
