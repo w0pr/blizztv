@@ -163,6 +163,7 @@
     <Compile Include="Modules\Subscriptions\Catalog\CatalogBrowser.Designer.cs">
       <DependentUpon>CatalogBrowser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Subscriptions\Catalog\ISubscriptionConsumer.cs" />
     <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
     <Compile Include="Modules\Subscriptions\Subscription.cs" />
     <Compile Include="Podcasts\AddFeedForm.cs">
@@ -171,7 +172,6 @@
     <Compile Include="Podcasts\AddFeedForm.Designer.cs">
       <DependentUpon>AddFeedForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Podcasts\Catalog.cs" />
     <Compile Include="Podcasts\Episode.cs" />
     <Compile Include="Podcasts\ModulePodcasts.cs" />
     <Compile Include="Podcasts\Parsers\IPodcastFeedParser.cs" />
@@ -244,13 +244,6 @@
     </Compile>
     <Compile Include="Modules\StateStorage\StateStorage.cs" />
     <Compile Include="Storage\KeyValueStorage.cs" />
-    <Compile Include="Modules\Subscriptions\Catalog\CatalogHandler.cs" />
-    <Compile Include="Modules\Subscriptions\Catalog\frmCatalog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modules\Subscriptions\Catalog\frmCatalog.Designer.cs">
-      <DependentUpon>frmCatalog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Modules\Subscriptions\Providers\ProvidersHandler.cs" />
     <Compile Include="Modules\Subscriptions\Providers\ProvidersStorage.cs" />
     <Compile Include="Modules\Subscriptions\SubscriptionsHandler.cs" />
@@ -267,15 +260,12 @@
     <Compile Include="BlizzBlues\Parsers\Starcraft.cs" />
     <Compile Include="BlizzBlues\Parsers\WorldofWarcraft.cs" />
     <Compile Include="BlizzBlues\Settings.cs" />
-    <Compile Include="Feeds\Catalog.cs" />
     <Compile Include="Feeds\FeedParser.cs" />
     <Compile Include="Feeds\Parsers\Atom1.cs" />
     <Compile Include="Feeds\Parsers\IFeedParser.cs" />
     <Compile Include="Feeds\Parsers\Rss2.cs" />
     <Compile Include="Feeds\Subscriptions.cs" />
-    <Compile Include="Streams\Catalog.cs" />
     <Compile Include="Streams\Subscriptions.cs" />
-    <Compile Include="Videos\Catalog.cs" />
     <Compile Include="Videos\Subscriptions.cs" />
     <Compile Include="Utility\UI\InputBox.cs" />
     <Compile Include="Utility\Extensions\ControlExtensions.cs" />
@@ -505,9 +495,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Settings\ModuleSettingsHostForm.resx">
       <DependentUpon>ModuleSettingsHostForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Subscriptions\Catalog\frmCatalog.resx">
-      <DependentUpon>frmCatalog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BlizzBlues\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>

@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Timers;
 using BlizzTV.Assets.i18n;
@@ -25,16 +26,18 @@ using BlizzTV.Configuration;
 using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
+using BlizzTV.Modules.Subscriptions.Catalog;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.UI;
 
 namespace BlizzTV.Podcasts
 {
     [ModuleAttributes("Podcasts", "Podcast aggregator module.", "podcast")]
-    public class ModulePodcasts:Module
+    public class ModulePodcasts : Module,ISubscriptionConsumer
     {
         private Dictionary<string, Podcast> _podcasts = new Dictionary<string, Podcast>(); // list of feeds.
         private System.Timers.Timer _updateTimer;
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://podcast/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);
 
         public static ModulePodcasts Instance;
 
@@ -197,6 +200,23 @@ namespace BlizzTV.Podcasts
         {
             System.Threading.Thread thread = new System.Threading.Thread(this.UpdatePodcasts) { IsBackground = true };
             thread.Start();
+        }
+
+        public string GetCatalogUrl()
+        {
+            return "http://www.blizztv.com/catalog/podcasts";
+        }
+
+        public void ConsumeSubscription(string entryUrl)
+        {
+            Match match = this._subscriptionConsumerRegex.Match(entryUrl);
+            if (!match.Success) return;
+
+            string name = match.Groups["Name"].Value;
+            string url = match.Groups["Url"].Value;
+
+            var subscription = new PodcastSubscription { Name = name, Url = url };
+            Subscriptions.Instance.Add(subscription);
         }
     }
 }

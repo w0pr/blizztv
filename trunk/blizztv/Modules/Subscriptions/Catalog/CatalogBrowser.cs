@@ -23,24 +23,24 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
 {
     public partial class CatalogBrowser : Form
     {
-        private string _catalogUrl;
-        private Regex _protocolRegex = new Regex("blizztv\\://(?<Module>.*?)/(?<SubscriptionName>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
+        private ISubscriptionConsumer _consumer;
+        private Regex _protocolRegex = new Regex("blizztv\\://(?<Module>.*?)/(?<Name>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
 
-        public CatalogBrowser(string catalogUrl)
+        public CatalogBrowser(ISubscriptionConsumer consumer)
         {
             InitializeComponent();
-            this._catalogUrl = catalogUrl;
+            this._consumer = consumer;
         }
 
         private void Catalog_Load(object sender, EventArgs e)
         {
-            this.browser.Navigate(this._catalogUrl);
+            this.browser.Navigate(this._consumer.GetCatalogUrl());
         }
 
         private void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            this.loadingAnimation.LoadingCircleControl.Active = false;
-            this.loadingAnimation.Visible = false;
+            //this.loadingAnimation.LoadingCircleControl.Active = false;
+            //this.loadingAnimation.Visible = false;
 
             if (browser.Document != null) this.Text = browser.Document.Title;
         }
@@ -53,15 +53,12 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
             {
                 e.Cancel = true;
                 this.browser_DocumentCompleted(this, null);
-
-                string moduleName = match.Groups[1].Value;
-                string subscriptionName = match.Groups[2].Value;
-                string slug = match.Groups[3].Value;
+                this._consumer.ConsumeSubscription(e.Url.ToString());
             }
             else
             {
-                this.loadingAnimation.LoadingCircleControl.Active = true;
-                this.loadingAnimation.Visible = true;
+                //this.loadingAnimation.LoadingCircleControl.Active = true;
+                //this.loadingAnimation.Visible = true;
             }
         }
     }

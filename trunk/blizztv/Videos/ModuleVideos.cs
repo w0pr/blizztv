@@ -18,22 +18,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Configuration;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
+using BlizzTV.Modules.Subscriptions.Catalog;
 using BlizzTV.Modules.Subscriptions.Providers;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Videos
 {
     [ModuleAttributes("Videos", "Video aggregator module.","video")]
-    public class ModuleVideos:Module
+    public class ModuleVideos : Module, ISubscriptionConsumer
     {
         private Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private System.Timers.Timer _updateTimer;
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://videochannel/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
         private bool _disposed = false;
 
         public static ModuleVideos Instance;
@@ -182,6 +185,24 @@ namespace BlizzTV.Videos
         {
             ModuleSettingsHostForm f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
+        }
+
+        public string GetCatalogUrl()
+        {
+            return "http://www.blizztv.com/catalog/videochannels";
+        }
+
+        public void ConsumeSubscription(string entryUrl)
+        {
+            Match match = this._subscriptionConsumerRegex.Match(entryUrl);
+            if (!match.Success) return;
+
+            string name = match.Groups["Name"].Value;
+            string provider = match.Groups["Provider"].Value;
+            string slug = match.Groups["Slug"].Value;
+
+            var subscription = new VideoSubscription { Name = name, Provider = provider, Slug = slug };
+            Subscriptions.Instance.Add(subscription);
         }
 
         #region de-ctor

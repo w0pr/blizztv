@@ -17,12 +17,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Timers;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
+using BlizzTV.Modules.Subscriptions.Catalog;
 using BlizzTV.Modules.Subscriptions.Providers;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.UI;
@@ -30,10 +32,11 @@ using BlizzTV.Utility.UI;
 namespace BlizzTV.Streams
 {
     [ModuleAttributes("Streams", "Live stream aggregator plugin.","stream")]
-    public class ModuleStreams:Module
+    public class ModuleStreams : Module , ISubscriptionConsumer
     {
         private Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _updateTimer;
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://stream/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
         private bool _disposed = false;
 
         public static ModuleStreams Instance;
@@ -171,6 +174,24 @@ namespace BlizzTV.Streams
         {
             ModuleSettingsHostForm f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
+        }
+
+        public string GetCatalogUrl()
+        {
+            return "http://www.blizztv.com/catalog/streams";
+        }
+
+        public void ConsumeSubscription(string entryUrl)
+        {
+            Match match = this._subscriptionConsumerRegex.Match(entryUrl);
+            if (!match.Success) return;
+
+            string name = match.Groups["Name"].Value;
+            string provider = match.Groups["Provider"].Value;
+            string slug = match.Groups["Slug"].Value;
+
+            var subscription = new StreamSubscription {Name = name, Provider = provider, Slug = slug};
+            Subscriptions.Instance.Add(subscription);
         }
 
         #region de-ctor
