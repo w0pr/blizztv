@@ -31,7 +31,7 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Videos
 {
-    [ModuleAttributes("Videos", "Video aggregator module.","video")]
+    [ModuleAttributes("Videos", "Video aggregator.","video")]
     public class ModuleVideos : Module, ISubscriptionConsumer
     {
         private Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.

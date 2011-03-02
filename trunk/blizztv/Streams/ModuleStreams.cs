@@ -31,7 +31,7 @@ using BlizzTV.Utility.UI;
 
 namespace BlizzTV.Streams
 {
-    [ModuleAttributes("Streams", "Live stream aggregator plugin.","stream")]
+    [ModuleAttributes("Streams", "Live-stream aggregator.","stream")]
     public class ModuleStreams : Module , ISubscriptionConsumer
     {
         private Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();

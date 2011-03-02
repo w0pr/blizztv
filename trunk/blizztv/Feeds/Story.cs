@@ -35,7 +35,7 @@ namespace BlizzTV.Feeds
             : base(item.Title)
         {
             this.FeedName = feedName;
-            this.Guid = item.Title;
+            this.Guid = item.Id;
             this.Link = item.Link;
 
             this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked))); 
