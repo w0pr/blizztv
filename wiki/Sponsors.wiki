@@ -1,21 +1,4 @@
 #summary BlizzTV Sponsors
 #labels Sponsors
 
-Thanks to our sponsors and donors, BlizzTV is actively maintained. Here's the list of our current supporters & donors. If you also want to sponsor project, please contact us over:
-
-[http://get.blizztv.com/wp-content/uploads/2011/02/contact-email.png]
-
-----
-
-=== Sponsors ===
-
- * [http://www.jetbrains.com/ JetBrains] for donating project-wise [http://www.jetbrains.com/resharper/ Resharper] and [http://www.jetbrains.com/profiler/ dotTrace] licence. 
- * [http://www.visualsvn.com/ VisualSVN] for donating project-wise VisualSVN licence.
- * [http://balsamiq.com/ Balsamiq Studios] for donating project-wise Balsamiq Mockups.
-
-----
-
-=== Donors ===
-
- * Eduardo Sollet 
- * Jonas Molander (http://esportbetting.eu)
+Sponsor info can be found over http://get.blizztv.com/sponsors/.
