@@ -576,6 +576,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\update.png" />
     <None Include="Resources\download.png" />
     <None Include="Resources\video.png" />
     <None Include="Resources\podcast.png" />
@@ -618,7 +619,6 @@
     <None Include="Resources\userinterface.png" />
     <None Include="Resources\userguide.png" />
     <None Include="Resources\us.png" />
-    <None Include="Resources\update.png" />
     <None Include="Resources\unread.png" />
     <None Include="Resources\sleep.png" />
     <None Include="Resources\settings.png" />
