@@ -16,8 +16,10 @@
  */
 
 using System;
+using System.IO;
+using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
-using BlizzTV.Audio;
+using BlizzTV.Downloads;
 using BlizzTV.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Settings;
@@ -29,8 +31,25 @@ namespace BlizzTV.Podcasts
     {
         public string PodcastName { get; private set; }
         public string Link { get; private set; }
-        public string Enclosure { get; private set; }
+        private string Enclosure { get; set; }
 
+        public bool Downloaded
+        {
+            get
+            {
+                return File.Exists(string.Format("{0}\\{1}\\{2}", PodcastsStoragePath, this.PodcastName, Path.GetFileName(this.Enclosure)));
+            }
+        }
+
+        public string MediaLocation
+        {
+            get
+            {
+                return this.Downloaded ? string.Format("{0}\\{1}\\{2}", PodcastsStoragePath, this.PodcastName, Path.GetFileName(this.Enclosure)) : this.Enclosure;
+            }
+        }
+
+        private static readonly string PodcastsStoragePath;
         private PlayerForm _player = null;
 
         public Episode(string podcastName, PodcastItem item)
@@ -41,10 +60,19 @@ namespace BlizzTV.Podcasts
             this.Enclosure = item.Enclosure;
             this.Guid = item.Id;
 
-            this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
-            this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); 
+            this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
+            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked)));
+            var menuDownloadEpisode = new ToolStripMenuItem(i18n.DownloadEpisode, Assets.Images.Icons.Png._16.download,new EventHandler(MenuDownloadEpisode));
+            this.ContextMenus.Add("download", menuDownloadEpisode);
+            if (this.Downloaded) menuDownloadEpisode.Text = i18n.ReDownloadPodcastEpisode;
 
             this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
+        }
+
+        static Episode()
+        {
+            PodcastsStoragePath = string.Format("{0}\\Podcasts", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+            if (!Directory.Exists(PodcastsStoragePath)) Directory.CreateDirectory(PodcastsStoragePath); // if directory does not exist, create it.   
         }
 
         public void CheckForNotifications()
@@ -74,11 +102,11 @@ namespace BlizzTV.Podcasts
                 }
                 else this._player.Focus();
             }
-            else System.Diagnostics.Process.Start(this.Enclosure, null);
+            else System.Diagnostics.Process.Start(this.MediaLocation, null);
             if (this.State != State.Read) this.State = State.Read;  
         }
 
-        void PlayerClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        void PlayerClosed(object sender, FormClosedEventArgs e)
         {
             this._player = null;
         }
@@ -109,6 +137,16 @@ namespace BlizzTV.Podcasts
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
             this.State = State.Unread;
+        }
+
+        private void MenuDownloadEpisode(object sender, EventArgs e)
+        {
+            var podcastDirectory = string.Format("{0}\\{1}", PodcastsStoragePath, this.PodcastName);
+            if (!Directory.Exists(podcastDirectory)) Directory.CreateDirectory(podcastDirectory);
+
+            var downloadForm = new DownloadForm(string.Format(i18n.DownloadingPodcastEpisode, this.Title));
+            downloadForm.StartDownload(new Download(this.Enclosure,string.Format("{0}\\{1}", podcastDirectory,Path.GetFileName(this.Enclosure))));
+            downloadForm.Show();
         }
     }
 }

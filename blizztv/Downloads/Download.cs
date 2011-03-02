@@ -89,10 +89,10 @@ namespace BlizzTV.Downloads
         public delegate void DownloadCompleteEventHandler(bool success);
         public event DownloadCompleteEventHandler Complete; /* fires when download is complete */
 
-        public Download(string uri, string filename="")
+        public Download(string uri, string filePath="")
         {
-            this.Uri = uri;
-            this.FilePath = filename;
+            this.Uri = uri;            
+            this.FilePath = string.IsNullOrEmpty(filePath) ? Path.GetFileName(uri) : filePath;
             this.FileSize = 0;
             this.DownloadedBytes = 0;
             this.BytesPerSec = 0;

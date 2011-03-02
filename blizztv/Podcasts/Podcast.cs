@@ -26,7 +26,7 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.Podcasts
 {
-    public class Podcast : ListItem 
+    public class Podcast : ListItem
     {
         /// <summary>
         /// Feed Name.
@@ -50,7 +50,7 @@ namespace BlizzTV.Podcasts
             this.Url = subscription.Url;
 
             this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
-            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
+            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
 
             this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
         }
@@ -62,7 +62,7 @@ namespace BlizzTV.Podcasts
 
         public bool Update()
         {
-            if(this.Parse())
+            if (this.Parse())
             {
                 foreach (Episode episode in this.Episodes) { episode.CheckForNotifications(); }
                 return true;
@@ -74,14 +74,14 @@ namespace BlizzTV.Podcasts
         {
             List<PodcastItem> items = null;
 
-            if(!PodcastParser.Instance.Parse(this.Url,ref items))
+            if (!PodcastParser.Instance.Parse(this.Url, ref items))
             {
                 this.State = State.Error;
                 this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
 
-            foreach(PodcastItem item in items)
+            foreach (PodcastItem item in items)
             {
                 try
                 {
@@ -98,7 +98,7 @@ namespace BlizzTV.Podcasts
         {
             if (this.State == ((Episode)sender).State) return;
 
-            int unread= this.Episodes.Count(episode => episode.State == State.Fresh || episode.State == State.Unread);
+            int unread = this.Episodes.Count(episode => episode.State == State.Fresh || episode.State == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }
 

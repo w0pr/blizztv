@@ -369,4 +369,13 @@
   <data name="MSHtmlPIAForVistaWillBeInstalledMessage" xml:space="preserve">
     <value>Primary Interopability Assemblies 2007 package will now be installed. </value>
   </data>
+  <data name="DownloadEpisode" xml:space="preserve">
+    <value>Download episode</value>
+  </data>
+  <data name="DownloadingPodcastEpisode" xml:space="preserve">
+    <value>Downloading podcast episode: {0}</value>
+  </data>
+  <data name="ReDownloadPodcastEpisode" xml:space="preserve">
+    <value>Re-download episode</value>
+  </data>
 </root>

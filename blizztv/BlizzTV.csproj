@@ -576,6 +576,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\download.png" />
     <None Include="Resources\video.png" />
     <None Include="Resources\podcast.png" />
     <None Include="Resources\podcast-muted.png" />
