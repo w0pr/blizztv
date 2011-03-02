@@ -32,7 +32,7 @@ using BlizzTV.Utility.UI;
 
 namespace BlizzTV.Podcasts
 {
-    [ModuleAttributes("Podcasts", "Podcast aggregator module.", "podcast")]
+    [ModuleAttributes("Podcasts", "Podcast aggregator.", "podcast")]
     public class ModulePodcasts : Module,ISubscriptionConsumer
     {
         private Dictionary<string, Podcast> _podcasts = new Dictionary<string, Podcast>(); // list of feeds.
