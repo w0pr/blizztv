@@ -317,7 +317,7 @@ namespace BlizzTV.Controls.Animations
             m_Timer.Tick += new EventHandler(aTimer_Tick);
             ActiveTimer();
 
-            this.Resize += new EventHandler(LoadingCircle_Resize);
+            this.Resize += new EventHandler(LoadingAnimation_Resize);
         }
 
         // Events ============================================================
@@ -326,7 +326,7 @@ namespace BlizzTV.Controls.Animations
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        void LoadingCircle_Resize(object sender, EventArgs e)
+        void LoadingAnimation_Resize(object sender, EventArgs e)
         {
             GetControlCenterPoint();
         }

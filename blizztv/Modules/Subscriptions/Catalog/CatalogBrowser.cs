@@ -25,11 +25,16 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
     {
         private ISubscriptionConsumer _consumer;
         private Regex _protocolRegex = new Regex("blizztv\\://(?<Module>.*?)/(?<Name>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
+        private Timer _notificationTimer = new Timer();
 
         public CatalogBrowser(ISubscriptionConsumer consumer)
         {
             InitializeComponent();
             this._consumer = consumer;
+
+            this._notificationTimer.Interval = 2000;
+            this._notificationTimer.Tick+=NotificationTimer_Tick;
+            this.notificationBar.Hide();
         }
 
         private void Catalog_Load(object sender, EventArgs e)
@@ -39,7 +44,7 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
 
         private void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            this.loadingAnimation.LoadingCircleControl.Active = false;
+            this.loadingAnimation.LoadingAnimationControl.Active = false;
             this.loadingAnimation.Visible = false;
 
             this.buttonBack.Enabled = this.browser.CanGoBack;
@@ -55,12 +60,21 @@ namespace BlizzTV.Modules.Subscriptions.Catalog
                 e.Cancel = true;
                 this.browser_DocumentCompleted(this, null);
                 this._consumer.ConsumeSubscription(e.Url.ToString());
+                this.notificationBar.Text = string.Format("Entry '{0}' has been added to your subscriptions.", match.Groups["Name"].Value);
+                this.notificationBar.Show(true);
+                this._notificationTimer.Enabled=true;
             }
             else
             {
-                this.loadingAnimation.LoadingCircleControl.Active = true;
+                this.loadingAnimation.LoadingAnimationControl.Active = true;
                 this.loadingAnimation.Visible = true;
             }
+        }
+
+        void  NotificationTimer_Tick(object sender, EventArgs e)
+        {
+ 	        this._notificationTimer.Enabled=false;
+            this.notificationBar.Hide(true);
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
