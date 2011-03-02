@@ -77,7 +77,7 @@ namespace BlizzTV.Podcasts
         private void PlayerForm_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("{0} - [{1}]", this._episode.Title, this._episode.PodcastName);         
-            this.MediaPlayer.URL = this._episode.Enclosure;
+            this.MediaPlayer.URL = this._episode.MediaLocation;
         }
 
         private void PlayerForm_ResizeEnd(object sender, EventArgs e)

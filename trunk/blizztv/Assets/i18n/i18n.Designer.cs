@@ -214,6 +214,15 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download episode.
+        /// </summary>
+        internal static string DownloadEpisode {
+            get {
+                return ResourceManager.GetString("DownloadEpisode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download Failed.
         /// </summary>
         internal static string DownloadFailed {
@@ -237,6 +246,15 @@ namespace BlizzTV.Assets.i18n {
         internal static string DownloadingMSHtmlPIAForVista {
             get {
                 return ResourceManager.GetString("DownloadingMSHtmlPIAForVista", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading podcast episode: {0}.
+        /// </summary>
+        internal static string DownloadingPodcastEpisode {
+            get {
+                return ResourceManager.GetString("DownloadingPodcastEpisode", resourceCulture);
             }
         }
         
@@ -660,6 +678,15 @@ namespace BlizzTV.Assets.i18n {
         internal static string PodcastSubscriptionAlreadyExists {
             get {
                 return ResourceManager.GetString("PodcastSubscriptionAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-download episode.
+        /// </summary>
+        internal static string ReDownloadPodcastEpisode {
+            get {
+                return ResourceManager.GetString("ReDownloadPodcastEpisode", resourceCulture);
             }
         }
         
