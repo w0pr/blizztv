@@ -264,7 +264,7 @@ namespace BlizzTV.UI
             // toolStripSpacer
             // 
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(79, 17);
+            this.toolStripSpacer.Size = new System.Drawing.Size(244, 17);
             this.toolStripSpacer.Spring = true;
             // 
             // SleepIcon
