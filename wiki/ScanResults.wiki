@@ -1,37 +1,4 @@
 #summary Scan results for of BlizzTV releases.
 #labels Featured,Documentation
 
-==== Our Release Policy ==== 
-Before publishing any binary releases of BlizzTV, we make sure they contain no infections using http://www.virustotal.com with 43 well-known scanner engines. Here you can see the results for latest reports;
-
-==== Scan Reports ====
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.20-beta.zip&can=2&q= 0.20-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=24f22060b37ad3750138d0dbc33495c2465570dab3c94dcb49633478c97fb873-1297417035 Report] (note: there's 1 false-positive)
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.19-beta.zip&can=2&q= 0.19-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=29affd199c310020c78f577473755c047bb428e3d46f929403266998c05b5bb0-1295447259 Report] (note: there's 1 false-positive)
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.18b-beta.zip&can=2&q= 0.18b-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=4d75b78ce4afabc51dbd1e6922da566fbbccd759c06553db0104b27521c9ce5c-1293881336 Report] (note: there's 1 false-positive)
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.18-beta.zip&can=2&q= 0.18-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=c0b60b13974fafd234487e4c1aa2a947a6cbd48800faba6f14b803a3bee5a69a-1293715300 Report] (note: there's 1 false-positive)
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.17b-beta.zip&can=2&q= 0.17b-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=bfcf2bf4f8eb65fa1e6ea624fa037100b201b296767fe806a95702a23752cd3a-1292584717 Report]
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.17-beta.zip&can=2&q= 0.17b-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=913cf51452c521e9e5484e4bd940d60d5fb42ad69c52f905567e87810f65b303-1292583543 Report]
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.16-beta.zip&can=2&q= 0.16-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=29b790233ff14a6de1064e260ff94657352ccce0b3b855e0400ae3fb55db8ddf-1291716241 Report]
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.15-beta.zip&can=1&q= 0.15-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=7cfed27e17a3419dd8300098fa79b9ba7810388f0ba1b6f519c417b1f112fdb3-1291389080# Report]
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.14b-beta.zip&can=1&q= 0.14b-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=c6af69f193fda053c868a9999cde0cfd376c7fcc8c8a30acc8faf530536249e1-1291390047 Report]
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.14-beta.zip&can=1&q= 0.14-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=838ce2ae819103340629b16dc433551852303c90016b7952967136706e272558-1291389883 Report]
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-0.13-beta.zip&can=1&q= 0.13-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=393ed6fa2a576d6cadbf4dcf1b8c34b7c5742a695335804b76f30a4aa3f9c14b-1291390182 Report]
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=Blizztv-0.12-beta.zip&can=1&q= 0.12-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=286e62dfb343f036d71cd02a35f74301a212e1e6b7a18b0030ef5eea584e8e96-1291390397 Report]
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv0.11.beta.zip&can=1&q= 0.11-beta] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=6f5b4b1cd2a3a55c8c1e945b4a834558a4b90fe38be6b51ea307834678bd296b-1291390453 Report] (note: there's 1 false-positive)
-
- * [http://code.google.com/p/blizztv/downloads/detail?name=blizztv-alpha-0.1.zip&can=1&q= 0.1-alpha] - *_All Clean_* - [http://www.virustotal.com/file-scan/report.html?id=67f0bfbf9b7907b4c964e9132b68d8889de82e62f346718ce386935eda79bbd5-1291390509 Report]
-
-* Note on false-positives: * E-Safe, used to be known as a [http://wyday.com/forum/viewtopic.php?f=1&t=221 problematic] engine producing false-positive results with Ionic.Zip.Reduced.dll.
+You can find scan results over http://www.blizztv.com/topic/100-scan-results/.
