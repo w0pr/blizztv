@@ -237,20 +237,20 @@ namespace BlizzTV.UI
             // 
             // LoadingAnimation
             // 
-            this.LoadingAnimation.LoadingCircleControl.AccessibleName = "LoadingAnimation";
-            this.LoadingAnimation.LoadingCircleControl.Active = false;
-            this.LoadingAnimation.LoadingCircleControl.Color = System.Drawing.Color.DarkGray;
-            this.LoadingAnimation.LoadingCircleControl.InnerCircleRadius = 6;
-            this.LoadingAnimation.LoadingCircleControl.Location = new System.Drawing.Point(0, 0);
-            this.LoadingAnimation.LoadingCircleControl.Name = "LoadingCircle";
-            this.LoadingAnimation.LoadingCircleControl.NumberSpoke = 24;
-            this.LoadingAnimation.LoadingCircleControl.OuterCircleRadius = 7;
-            this.LoadingAnimation.LoadingCircleControl.RotationSpeed = 50;
-            this.LoadingAnimation.LoadingCircleControl.Size = new System.Drawing.Size(20, 20);
-            this.LoadingAnimation.LoadingCircleControl.SpokeThickness = 3;
-            this.LoadingAnimation.LoadingCircleControl.StylePreset = BlizzTV.Controls.Animations.LoadingAnimation.StylePresets.IE7;
-            this.LoadingAnimation.LoadingCircleControl.TabIndex = 3;
-            this.LoadingAnimation.LoadingCircleControl.Visible = false;
+            this.LoadingAnimation.LoadingAnimationControl.AccessibleName = "LoadingAnimation";
+            this.LoadingAnimation.LoadingAnimationControl.Active = false;
+            this.LoadingAnimation.LoadingAnimationControl.Color = System.Drawing.Color.DarkGray;
+            this.LoadingAnimation.LoadingAnimationControl.InnerCircleRadius = 6;
+            this.LoadingAnimation.LoadingAnimationControl.Location = new System.Drawing.Point(0, 0);
+            this.LoadingAnimation.LoadingAnimationControl.Name = "LoadingCircle";
+            this.LoadingAnimation.LoadingAnimationControl.NumberSpoke = 24;
+            this.LoadingAnimation.LoadingAnimationControl.OuterCircleRadius = 7;
+            this.LoadingAnimation.LoadingAnimationControl.RotationSpeed = 50;
+            this.LoadingAnimation.LoadingAnimationControl.Size = new System.Drawing.Size(20, 20);
+            this.LoadingAnimation.LoadingAnimationControl.SpokeThickness = 3;
+            this.LoadingAnimation.LoadingAnimationControl.StylePreset = BlizzTV.Controls.Animations.LoadingAnimation.StylePresets.IE7;
+            this.LoadingAnimation.LoadingAnimationControl.TabIndex = 3;
+            this.LoadingAnimation.LoadingAnimationControl.Visible = false;
             this.LoadingAnimation.Name = "LoadingAnimation";
             this.LoadingAnimation.Size = new System.Drawing.Size(20, 20);
             // 
@@ -264,7 +264,7 @@ namespace BlizzTV.UI
             // toolStripSpacer
             // 
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(244, 17);
+            this.toolStripSpacer.Size = new System.Drawing.Size(79, 17);
             this.toolStripSpacer.Spring = true;
             // 
             // SleepIcon

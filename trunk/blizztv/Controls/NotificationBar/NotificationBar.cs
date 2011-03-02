@@ -18,44 +18,35 @@
 /* Based on code of: http://www.codeproject.com/KB/miscctrl/InformationBar.aspx */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Media;
+using System.ComponentModel;
+using System.Threading;
 
-namespace WinControls
+namespace BlizzTV.Controls.NotificationBar
 {
-    public partial class NotificationBar : Control
+    public class NotificationBar : Control
     {
-        Timer flashTimer = new Timer();
-        ContextMenuStrip onClickMenu = null;
+        System.Windows.Forms.Timer flashTimer = new System.Windows.Forms.Timer();
         ImageList smallImageList = null;
         int imageKey = 0;
 
         Size closeButtonSize = new Size(20, 20);
         int closeButtonPadding = 6;
+        int textY = 5;
 
         bool playSoundOnVisible = true;
         bool mouseInBounds = false;
         bool controlHighlighted = false;
+        bool inAnimation = false;
 
         int tickCount = 0;
         int flashCount = 0;
         int flashTo = 0;
 
-        public ContextMenuStrip OnClickMenuStrip
-        {
-            get
-            {
-                return onClickMenu;
-            }
-            set
-            {
-                onClickMenu = value;
-            }
-        }
-
+        [Description("Image list containg images shown on the left side of the control"),
+        Category("Appearance")]
         public ImageList SmallImageList
         {
             get
@@ -68,6 +59,9 @@ namespace WinControls
             }
         }
 
+        [DefaultValue(0)]
+        [Description("The index of an image contained in the SmallImageList in which to display on the control"),
+        Category("Appearance")]
         public int ImageIndex
         {
             get
@@ -94,6 +88,9 @@ namespace WinControls
             }
         }
 
+        [DefaultValue(true)]
+        [Description("Weather or not a sound should be played when the control is shown"),
+        Category("Behavior")]
         public bool PlaySoundWhenShown
         {
             get
@@ -119,11 +116,14 @@ namespace WinControls
 
         public void Flash(int interval, int times)
         {
-            flashTo = times;
-            tickCount = 0;
+            if (this.Visible)
+            {
+                flashTo = times;
+                tickCount = 0;
 
-            flashTimer.Interval = interval;
-            flashTimer.Start();
+                flashTimer.Interval = interval;
+                flashTimer.Start();
+            }
         }
 
         public void Flash(int numberOfTimes)
@@ -136,10 +136,64 @@ namespace WinControls
             Flash(milliseconds, 1);
         }
 
+        public void Show(bool animate)
+        {
+            if (animate)
+            {
+                int origHeight = this.Height;
+                this.Height = 1;
+                this.Show();
+                inAnimation = true;
+
+                for (int height = this.Height; height < origHeight; height += 5)
+                {
+                    textY += 2;
+                    this.Height = height;
+                    this.Refresh();
+                    Thread.Sleep(5);
+                }
+
+                inAnimation = false;
+            }
+            else
+            {
+                this.Show();
+            }
+
+            this.Refresh();
+        }
+
+        public void Hide(bool animate)
+        {
+            if (animate)
+            {
+                int origHeight = this.Height;
+                inAnimation = true;
+
+                for (int height = this.Height; height > 1; height -= 5)
+                {
+                    textY -= 2;
+                    this.Height = height;
+                    this.Refresh();
+                    Thread.Sleep(5);
+                }
+                this.Hide();
+                this.Height = origHeight;
+                inAnimation = false;
+            }
+            else
+            {
+                this.Hide();
+            }
+
+            this.Refresh();
+        }
+
         void flashTimer_Tick(object sender, EventArgs e)
         {
             if (controlHighlighted)
             {
+                this.ForeColor = SystemColors.ControlText;
                 this.BackColor = SystemColors.Info;
                 controlHighlighted = false;
                 flashCount++;
@@ -152,12 +206,13 @@ namespace WinControls
             }
             else
             {
+                this.ForeColor = SystemColors.HighlightText;
                 this.BackColor = SystemColors.Highlight;
                 controlHighlighted = true;
             }
 
             tickCount++;
-            this.Invalidate();
+            this.Refresh();
         }
 
         #region Protected Methods
@@ -187,7 +242,18 @@ namespace WinControls
             textRect.X = leftPadding;
             textRect.Y = 5;
 
-            this.Height = (numLines * lineHeight) + 10;
+            if (this.Height < (numLines * lineHeight) + 10)
+            {
+                if (!inAnimation)
+                {
+                    textRect.Y = 5;
+                    this.Height = (numLines * lineHeight) + 10;
+                }
+                else
+                {
+                    textRect.Y = textY;
+                }
+            }
 
             TextRenderer.DrawText(e.Graphics, this.Text, this.Font, textRect, this.ForeColor, TextFormatFlags.WordBreak | TextFormatFlags.Left | TextFormatFlags.Top);
         }
@@ -201,7 +267,7 @@ namespace WinControls
                 closeButtonColor = Color.White;
             }
 
-            Pen linePen = new Pen(closeButtonColor, 2);
+            Pen linePen = new Pen(this.ForeColor, 2);
             Point line1Start = new Point((this.Width - (closeButtonSize.Width - closeButtonPadding)), closeButtonPadding);
             Point line1End = new Point((this.Width - closeButtonPadding), (closeButtonSize.Height - closeButtonPadding));
             Point line2Start = new Point((this.Width - closeButtonPadding), closeButtonPadding);
@@ -221,6 +287,7 @@ namespace WinControls
 
         protected override void OnMouseEnter(EventArgs e)
         {
+            this.ForeColor = SystemColors.HighlightText;
             this.BackColor = SystemColors.Highlight;
             mouseInBounds = true;
 
@@ -231,13 +298,16 @@ namespace WinControls
         {
             if (controlHighlighted)
             {
+                this.ForeColor = SystemColors.HighlightText;
                 this.BackColor = SystemColors.Highlight;
             }
             else
             {
+                this.ForeColor = SystemColors.ControlText;
                 this.BackColor = SystemColors.Info;
             }
 
+            this.ForeColor = SystemColors.ControlText;
             mouseInBounds = false;
 
             base.OnMouseLeave(e);
@@ -251,9 +321,9 @@ namespace WinControls
             }
             else
             {
-                if (onClickMenu != null)
+                if (ContextMenuStrip != null)
                 {
-                    onClickMenu.Show(this, e.Location);
+                    ContextMenuStrip.Show(this, e.Location);
                 }
             }
 
@@ -266,6 +336,7 @@ namespace WinControls
             {
                 SystemSounds.Beep.Play();
             }
+
             base.OnVisibleChanged(e);
         }
         #endregion

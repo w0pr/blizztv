@@ -62,7 +62,7 @@ namespace BlizzTV.Controls.Animations
         /// <value>The loading circle control.</value>
         [RefreshProperties(RefreshProperties.All),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public LoadingAnimation LoadingCircleControl
+        public LoadingAnimation LoadingAnimationControl
         {
             get { return Control as LoadingAnimation; }
         }
@@ -87,7 +87,7 @@ namespace BlizzTV.Controls.Animations
         public override Size GetPreferredSize(Size constrainingSize)
         {
             //return base.GetPreferredSize(constrainingSize);
-            return this.LoadingCircleControl.GetPreferredSize(constrainingSize);
+            return this.LoadingAnimationControl.GetPreferredSize(constrainingSize);
         }
 
         /// <summary>
