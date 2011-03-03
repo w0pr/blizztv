@@ -54,11 +54,12 @@ namespace BlizzTV
                 AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             #endif
 
+            Application.EnableVisualStyles(); // as our dependency manager can show download forms, we have to make this calls here.
+            Application.SetCompatibleTextRenderingDefault(false);
+
             // code that requires custom-assembly resolving should stay away from Main() -- otherwise JIT will be failing to startup our code.            
             Startup();
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
 
             SingleInstanceLock.ReleaseMutex(); // release the mutex before the application exits.     
@@ -84,8 +85,7 @@ namespace BlizzTV
             if (UI.Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
             if (UI.Settings.Instance.EnableDebugLogging) LogManager.Instance.EnableLogger(); else LogManager.Instance.DisableLogger();
 
-            // check if dependencies are satisfied.
-            if (!DependencyManager.Instance.Satisfied()) { Application.ExitThread(); return; }
+            if (!DependencyManager.Instance.Satisfied()) { Environment.Exit(-1); } // check if dependencies are satisfied.
 
             LogManager.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
         }

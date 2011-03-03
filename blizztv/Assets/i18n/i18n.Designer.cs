@@ -619,7 +619,7 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Primary Interopability Assemblies 2007 package download failed. Please install i manually..
+        ///   Looks up a localized string similar to Download failed for Windows Vista support files. Please install it manually and start the application after..
         /// </summary>
         internal static string MSHtmlPIAForVistaDownloadFailedMessage {
             get {
@@ -628,7 +628,7 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BlizzTV requires Primary Interopability Assemblies 2007 package to work on Windows Vista. It&apos;ll be downloaded now..
+        ///   Looks up a localized string similar to BlizzTV requires support files (Primary Interopability Assemblies) to work on Windows Vista. It&apos;ll be downloaded now..
         /// </summary>
         internal static string MSHtmlPIAForVistaRequiredMessage {
             get {
@@ -637,7 +637,7 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Missing component: Primary Interopability Assemblies 2007 for Windows Vista.
+        ///   Looks up a localized string similar to Missing component: Support files for Windows Vista.
         /// </summary>
         internal static string MSHtmlPIAForVistaRequiredTitle {
             get {
@@ -646,7 +646,7 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Primary Interopability Assemblies 2007 package will now be installed. .
+        ///   Looks up a localized string similar to Downloaded package will now be installed. .
         /// </summary>
         internal static string MSHtmlPIAForVistaWillBeInstalledMessage {
             get {

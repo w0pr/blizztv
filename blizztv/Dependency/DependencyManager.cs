@@ -83,7 +83,7 @@ namespace BlizzTV.Dependency
 
             if(!this.MsHtmlPIAInstalled()) // Windows-Vista does not provide the required Microsoft.mshtml.dll primary interop assembly (used by Internet Explorer based web-browser control). Check for it and if required install it.
             {
-                MessageBox.Show(i18n.MSHtmlPIAForVistaRequiredMessage, i18n.MSHtmlPIAForVistaRequiredTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                MessageBox.Show(i18n.MSHtmlPIAForVistaRequiredMessage, i18n.MSHtmlPIAForVistaRequiredTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 var downloadForm = new DownloadForm(i18n.DownloadingMSHtmlPIAForVista);
                 downloadForm.StartDownload(new Download("http://blizztv.googlecode.com/svn/dependencies/vs90_piaredist.exe", "vs90_piaredist.exe"));
                 if (downloadForm.ShowDialog() == DialogResult.OK) // if download succeeded
