@@ -43,7 +43,7 @@ namespace BlizzTV.Utility.Helpers
                 string name = fields[0];
                 string culture = fields[2];
                 // failing to ignore queries for satellite resource assemblies or using [assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)] 
-                // in AssemblyInfo.cs will crash the program on non en-US based system cultures.
+                // in AssemblyInfo.cs will crash the program on non en-US based system cultures. detailed discussion: http://connect.microsoft.com/VisualStudio/feedback/details/526836/wpf-appdomain-assemblyresolve-being-called-when-it-shouldnt
                 if (name.EndsWith(".resources") && !culture.EndsWith("neutral")) return null;
 
                 string resourceName = string.Format("BlizzTV.Assets.Assemblies.{0}.dll", askedAssembly.Name);

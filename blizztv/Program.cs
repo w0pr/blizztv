@@ -54,8 +54,8 @@ namespace BlizzTV
                 AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             #endif
 
-            Application.EnableVisualStyles(); // as our dependency manager can show download forms, we have to make this calls here.
-            Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles(); // as our dependency manager can show download forms, we have to make this calls here
+            Application.SetCompatibleTextRenderingDefault(false); // or SetCompatibleTextRenderingDefault will fail and crash the program.
 
             // code that requires custom-assembly resolving should stay away from Main() -- otherwise JIT will be failing to startup our code.            
             Startup();
