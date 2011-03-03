@@ -81,24 +81,6 @@ namespace BlizzTV.Dependency
                 return false;
             }
 
-            /*if(!this.MsHtmlPIAInstalled()) // Windows-Vista does not provide the required Microsoft.mshtml.dll primary interop assembly (used by Internet Explorer based web-browser control). Check for it and if required install it.
-            {
-                MessageBox.Show(i18n.MSHtmlPIAForVistaRequiredMessage, i18n.MSHtmlPIAForVistaRequiredTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                var downloadForm = new DownloadForm(i18n.DownloadingMSHtmlPIAForVista);
-                downloadForm.StartDownload(new Download("http://blizztv.googlecode.com/svn/dependencies/vs90_piaredist.exe", "vs90_piaredist.exe"));
-                if (downloadForm.ShowDialog() == DialogResult.OK) // if download succeeded
-                {
-                    MessageBox.Show(i18n.MSHtmlPIAForVistaWillBeInstalledMessage, i18n.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Process.Start("vs90_piaredist.exe");
-                }
-                else // if download failed
-                {
-                    MessageBox.Show(i18n.MSHtmlPIAForVistaDownloadFailedMessage, i18n.DownloadFailed, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Process.Start("IExplore.exe", "http://blizztv.googlecode.com/svn/dependencies/vs90_piaredist.exe");
-                    return false;
-                }
-            }*/
-
             return true;
         }
 
@@ -125,12 +107,6 @@ namespace BlizzTV.Dependency
                 LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Depedency rule ShockwaveFlashInstalled() failed. Adobe Flash Player is not installed: {0}", e));
                 return false;
             }
-        }
-
-        private bool MsHtmlPIAInstalled() // checks for mshtml primary interop asembly.
-        {
-            string expectedPath = string.Format("{0}\\Microsoft.NET\\Primary Interop Assemblies\\Microsoft.mshtml.dll",System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles));            
-            return OperatingSystem.Instance.Type != OperatingSystem.OSType.Vista || File.Exists(expectedPath);
         }
     }       
 }
