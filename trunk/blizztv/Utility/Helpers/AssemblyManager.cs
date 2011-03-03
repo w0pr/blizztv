@@ -34,18 +34,24 @@ namespace BlizzTV.Utility.Helpers
 
         public Assembly Resolver(object sender, ResolveEventArgs args)
         {
-            AssemblyName askedAssembly = new AssemblyName(args.Name);
-
             lock (this)
             {
                 Assembly assembly;
+                AssemblyName askedAssembly = new AssemblyName(args.Name);
+
+                string[] fields = args.Name.Split(',');
+                string name = fields[0];
+                string culture = fields[2];
+                // failing to ignore queries for satellite resource assemblies or using [assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)] 
+                // in AssemblyInfo.cs will crash the program on non en-US based system cultures.
+                if (name.EndsWith(".resources") && !culture.EndsWith("neutral")) return null;
 
                 string resourceName = string.Format("BlizzTV.Assets.Assemblies.{0}.dll", askedAssembly.Name);
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
                 {
                     if (stream == null)
                     {
-                        LogManager.Instance.Write(LogMessageTypes.Fatal, string.Format("Can not resolve asked assembly: {0}", askedAssembly.Name));
+                        LogManager.Instance.Write(LogMessageTypes.Fatal, string.Format("Can not resolve asked assembly: {0}", askedAssembly));
                         MessageBox.Show(i18n.CanNotLoadRequiredAssembliesMessage, i18n.CanNotLoadRequiredAssembliesTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Environment.Exit(-1);
                     }
@@ -55,7 +61,7 @@ namespace BlizzTV.Utility.Helpers
                     assembly = Assembly.Load(assemblyData);
                 }
 
-                LogManager.Instance.Write(LogMessageTypes.Trace, "Loaded embedded assembly: " + askedAssembly.Name);
+                LogManager.Instance.Write(LogMessageTypes.Trace, "Loaded embedded assembly: " + askedAssembly);
 
                 return assembly;
             }
