@@ -59,7 +59,7 @@ namespace BlizzTV.UI
            switch (ListviewCredits.SelectedIndices[0])
            {
                case 0: System.Diagnostics.Process.Start("http://www.int6.org"); break;
-               case 1: System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/Sponsors"); break;
+               case 1: System.Diagnostics.Process.Start("http://www.blizztv.com/topic/101-donation-info/"); break;
                case 2: System.Diagnostics.Process.Start("http://www.teamliquid.net"); break;
                case 3: System.Diagnostics.Process.Start("http://www.famfamfam.com"); break;
                case 4: System.Diagnostics.Process.Start("http://nini.sourceforge.net"); break;
@@ -67,8 +67,8 @@ namespace BlizzTV.UI
                case 6: System.Diagnostics.Process.Start("http://www.savethemurlocs.org"); break;
            }           
         }
-        
-        private void buttonChangelog_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://code.google.com/p/blizztv/wiki/Changelog", null); }	
+
+        private void buttonChangelog_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com/topic/99-changelog/", null); }	
         private void LinkBlizzTV_Clicked(object sender, LinkLabelLinkClickedEventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com", null); }
         private void LinkFlattr_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://flattr.com/thing/86300/BlizzTV", null); }
         private void LinkPaypal_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null); }
