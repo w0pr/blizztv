@@ -241,15 +241,6 @@ namespace BlizzTV.Assets.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloading Vista support files.
-        /// </summary>
-        internal static string DownloadingMSHtmlPIAForVista {
-            get {
-                return ResourceManager.GetString("DownloadingMSHtmlPIAForVista", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Downloading podcast episode: {0}.
         /// </summary>
         internal static string DownloadingPodcastEpisode {
@@ -615,42 +606,6 @@ namespace BlizzTV.Assets.i18n {
         internal static string ModuleUpdating {
             get {
                 return ResourceManager.GetString("ModuleUpdating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download failed for Windows Vista support files. Please install it manually and start the application after..
-        /// </summary>
-        internal static string MSHtmlPIAForVistaDownloadFailedMessage {
-            get {
-                return ResourceManager.GetString("MSHtmlPIAForVistaDownloadFailedMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BlizzTV requires support files (Primary Interopability Assemblies) to work on Windows Vista. It&apos;ll be downloaded now..
-        /// </summary>
-        internal static string MSHtmlPIAForVistaRequiredMessage {
-            get {
-                return ResourceManager.GetString("MSHtmlPIAForVistaRequiredMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Missing component: Support files for Windows Vista.
-        /// </summary>
-        internal static string MSHtmlPIAForVistaRequiredTitle {
-            get {
-                return ResourceManager.GetString("MSHtmlPIAForVistaRequiredTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Downloaded package will now be installed. .
-        /// </summary>
-        internal static string MSHtmlPIAForVistaWillBeInstalledMessage {
-            get {
-                return ResourceManager.GetString("MSHtmlPIAForVistaWillBeInstalledMessage", resourceCulture);
             }
         }
         
