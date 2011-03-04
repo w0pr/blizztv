@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows.Forms;
+using System.Diagnostics;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
 using BlizzTV.Modules;
@@ -120,6 +121,9 @@ namespace BlizzTV.Feeds
 
             Workload.WorkloadManager.Instance.Add(this._feeds.Count);
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
             {
                 try
@@ -131,6 +135,11 @@ namespace BlizzTV.Feeds
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module feeds caught an exception while updating feeds: {0}", e)); }
                 Workload.WorkloadManager.Instance.Step();
             }
+
+            stopwatch.Stop();
+            TimeSpan ts = stopwatch.Elapsed;
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} feeds in {1}.", this._feeds.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds/10)));
+
 
             this.RootListItem.SetTitle("Feeds");
             this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
