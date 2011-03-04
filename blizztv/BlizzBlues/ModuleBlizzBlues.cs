@@ -17,11 +17,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Timers;
 using System.Windows.Forms;
 using BlizzTV.BlizzBlues.Parsers;
 using BlizzTV.Configuration;
+using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
 using BlizzTV.Utility.Imaging;
@@ -91,6 +93,9 @@ namespace BlizzTV.BlizzBlues
             {
                 Workload.WorkloadManager.Instance.Add(this._parsers.Count);
 
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+
                 foreach (BlueParser parser in this._parsers)
                 {
                     parser.Update();
@@ -108,6 +113,10 @@ namespace BlizzTV.BlizzBlues
                     }
                     Workload.WorkloadManager.Instance.Step();
                 }
+
+                stopwatch.Stop();
+                TimeSpan ts = stopwatch.Elapsed;
+                LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} blizzblue-parsers in {1}.", this._parsers.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
             }
 
             this.RootListItem.SetTitle("BlizzBlues");

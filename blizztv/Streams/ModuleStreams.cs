@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Timers;
+using System.Diagnostics;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
@@ -113,6 +114,9 @@ namespace BlizzTV.Streams
             int availableCount = 0; // available live streams count
             Workload.WorkloadManager.Instance.Add(this._streams.Count);
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
             {
                 try
@@ -128,6 +132,10 @@ namespace BlizzTV.Streams
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e)); } // catch errors for inner stream-handlers.
             }
+
+            stopwatch.Stop();
+            TimeSpan ts = stopwatch.Elapsed;
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} streams in {1}.", this._streams.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
             if (availableCount > 0) this.RootListItem.SetTitle(string.Format("Streams ({0})", availableCount));  // put available streams count on root object's title.
             else

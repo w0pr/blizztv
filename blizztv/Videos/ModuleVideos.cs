@@ -21,8 +21,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows.Forms;
+using System.Diagnostics;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Configuration;
+using BlizzTV.Log;
 using BlizzTV.Modules;
 using BlizzTV.Modules.Settings;
 using BlizzTV.Modules.Subscriptions.Catalog;
@@ -114,6 +116,9 @@ namespace BlizzTV.Videos
 
             Workload.WorkloadManager.Instance.Add(this._channels.Count);
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
             {
                 pair.Value.Update(); // update the channel.
@@ -121,6 +126,10 @@ namespace BlizzTV.Videos
                 foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.Guid, v); } // register the video items.
                 Workload.WorkloadManager.Instance.Step();                    
             }
+
+            stopwatch.Stop();
+            TimeSpan ts = stopwatch.Elapsed;
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", this._channels.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
             this.RootListItem.SetTitle("Videos");
             NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));

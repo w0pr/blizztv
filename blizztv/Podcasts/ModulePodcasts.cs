@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Timers;
+using System.Diagnostics;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Configuration;
 using BlizzTV.Log;
@@ -120,6 +121,9 @@ namespace BlizzTV.Podcasts
 
             Workload.WorkloadManager.Instance.Add(this._podcasts.Count);
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             foreach(KeyValuePair<string,Podcast> pair in this._podcasts)
             {
                 try
@@ -131,6 +135,10 @@ namespace BlizzTV.Podcasts
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module podcasts caught an exception while updating podcasts: {0}", e)); }
                 Workload.WorkloadManager.Instance.Step();
             }
+
+            stopwatch.Stop();
+            TimeSpan ts = stopwatch.Elapsed;
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} podcasts in {1}.", this._podcasts.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
             this.RootListItem.SetTitle("Podcasts");
             this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
