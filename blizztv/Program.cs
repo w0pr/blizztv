@@ -49,11 +49,6 @@ namespace BlizzTV
             // attach our embedded assembly loader.
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyManager.Instance.Resolver;
 
-            // attach unhandled-exception handler on release mode.
-            #if !DEBUG
-                AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
-            #endif
-
             Application.EnableVisualStyles(); // as our dependency manager can show download forms, we have to make this calls here
             Application.SetCompatibleTextRenderingDefault(false); // or SetCompatibleTextRenderingDefault will fail and crash the program.
 
@@ -63,11 +58,6 @@ namespace BlizzTV
             Application.Run(new MainForm());
 
             SingleInstanceLock.ReleaseMutex(); // release the mutex before the application exits.     
-        }
-
-        static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
-        {
-            LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Unhandled exception caught: {0}", e.ExceptionObject));
         }
 
         /// <summary>
