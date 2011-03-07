@@ -209,7 +209,7 @@ namespace ConcurrencyTests
                 }
                 logicalCpuCountSupported = true;
             }
-            catch(Exception e) { logicalCpuCountSupported = false; }
+            catch(Exception) { logicalCpuCountSupported = false; }
 
             Console.WriteLine("Test Environment: {0} physical cpus, {1} cores, {2} logical cpus.", physicalCpuCount, coreCountSupported ? coreCount.ToString() : "NotSupported", logicalCpuCountSupported ? logicalCpuCount.ToString() : "NotSupported");
         }
