@@ -17,7 +17,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Diagnostics;
 using BlizzTV.Assets.i18n;
@@ -117,7 +119,45 @@ namespace BlizzTV.Streams
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
+            int i = 0;
+            var tasks = new Task<Stream>[this._streams.Count];
+
+            foreach (KeyValuePair<string, Stream> pair in this._streams)
+            {
+                KeyValuePair<string, Stream> local = pair;
+                tasks[i] = Task.Factory.StartNew(() => TaskProcessStream(local.Value));
+                i++;
+            }
+
+            var tasksWaitQueue = tasks;
+
+            while (tasksWaitQueue.Length > 0)
+            {
+                int taskIndex = Task.WaitAny(tasksWaitQueue);
+                tasksWaitQueue = tasksWaitQueue.Where((t) => t != tasksWaitQueue[taskIndex]).ToArray();
+                Workload.WorkloadManager.Instance.Step();
+            }
+
+            try { Task.WaitAll(tasks); }
+            catch (AggregateException aggregateException)
+            {
+                foreach (var exception in aggregateException.InnerExceptions)
+                {
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Streams module caught an exception while running stream processing task:  {0}", exception));
+                }
+            }
+
+            foreach (Task<Stream> task in tasks)
+            {
+                if(task.Result.IsLive)
+                {
+                    task.Result.SetTitle(string.Format("{0} ({1})", task.Result.Title, task.Result.ViewerCount)); // put stream viewers count on title.
+                    availableCount++;
+                    this.RootListItem.Childs.Add(string.Format("{0}@{1}", task.Result.Slug, task.Result.Provider), task.Result);                    
+                }                
+            }
+
+            /*foreach (KeyValuePair<string, Stream> pair in this._streams) // loop through all streams
             {
                 try
                 {
@@ -131,7 +171,7 @@ namespace BlizzTV.Streams
                     Workload.WorkloadManager.Instance.Step();
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("StreamsPlugin ParseStreams() Error: \n {0}", e)); } // catch errors for inner stream-handlers.
-            }
+            }*/
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
@@ -146,6 +186,12 @@ namespace BlizzTV.Streams
 
             NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
             this.Updating = false;
+        }
+
+        private static Stream TaskProcessStream(Stream stream)
+        {
+            stream.Update();
+            return stream;
         }
 
         public void OnSaveSettings()
