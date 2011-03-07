@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -119,13 +120,47 @@ namespace BlizzTV.Videos
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
+            int i = 0;
+            var tasks = new Task<Channel>[this._channels.Count];
+
+            foreach (KeyValuePair<string, Channel> pair in this._channels)
+            {
+                KeyValuePair<string, Channel> local = pair;
+                tasks[i] = Task.Factory.StartNew(() => TaskProcessChannel(local.Value));
+                i++;
+            }
+
+            var tasksWaitQueue = tasks;
+
+            while (tasksWaitQueue.Length > 0)
+            {
+                int taskIndex = Task.WaitAny(tasksWaitQueue);
+                tasksWaitQueue = tasksWaitQueue.Where((t) => t != tasksWaitQueue[taskIndex]).ToArray();
+                Workload.WorkloadManager.Instance.Step();
+            }
+
+            try { Task.WaitAll(tasks); }
+            catch (AggregateException aggregateException)
+            {
+                foreach (var exception in aggregateException.InnerExceptions)
+                {
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Video channels module caught an exception while running channel processing task:  {0}", exception));
+                }
+            }
+
+            foreach (Task<Channel> task in tasks)
+            {
+                this.RootListItem.Childs.Add(string.Format("{0}@{1}",task.Result.Slug,task.Result.Provider), task.Result);
+                foreach (Video video in task.Result.Videos) { task.Result.Childs.Add(video.Guid, video); }
+            }
+
+            /*foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
             {
                 pair.Value.Update(); // update the channel.
                 this.RootListItem.Childs.Add(pair.Key, pair.Value);
                 foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.Guid, v); } // register the video items.
                 Workload.WorkloadManager.Instance.Step();                    
-            }
+            }*/
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
@@ -134,6 +169,12 @@ namespace BlizzTV.Videos
             this.RootListItem.SetTitle("Videos");
             NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
             this.Updating = false;
+        }
+
+        private static Channel TaskProcessChannel(Channel channel)
+        {
+            channel.Update();
+            return channel;
         }
         
         private void OnChildStateChange(object sender, EventArgs e)

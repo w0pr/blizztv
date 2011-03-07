@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -124,7 +125,41 @@ namespace BlizzTV.Feeds
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
+            int i = 0;
+            var tasks = new Task<Feed>[this._feeds.Count];
+
+            foreach(KeyValuePair<string,Feed> pair in this._feeds)
+            {
+                KeyValuePair<string, Feed> local = pair; 
+                tasks[i] = Task.Factory.StartNew(() => TaskProcessFeed(local.Value));
+                i++;
+            }
+
+            var tasksWaitQueue = tasks;
+
+            while (tasksWaitQueue.Length > 0)
+            {
+                int taskIndex = Task.WaitAny(tasksWaitQueue);
+                tasksWaitQueue = tasksWaitQueue.Where((t) => t != tasksWaitQueue[taskIndex]).ToArray();
+                Workload.WorkloadManager.Instance.Step();
+            }
+
+            try { Task.WaitAll(tasks); }
+            catch(AggregateException aggregateException)
+            {
+                foreach(var exception in aggregateException.InnerExceptions)
+                {
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feeds module caught an exception while running feed processing task:  {0}", exception));
+                }
+            }
+
+            foreach (Task<Feed> task in tasks)
+            {
+                this.RootListItem.Childs.Add(task.Result.Url, task.Result);
+                foreach (Story story in task.Result.Stories) { task.Result.Childs.Add(story.Guid, story); }
+            }
+
+            /*foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
             {
                 try
                 {
@@ -134,16 +169,21 @@ namespace BlizzTV.Feeds
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module feeds caught an exception while updating feeds: {0}", e)); }
                 Workload.WorkloadManager.Instance.Step();
-            }
+            }*/
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
             LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} feeds in {1}.", this._feeds.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds/10)));
 
-
             this.RootListItem.SetTitle("Feeds");
             this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
             this.Updating = false;
+        }
+
+        private static Feed TaskProcessFeed(Feed feed)
+        {
+            feed.Update();
+            return feed;
         }
 
         private void OnChildStateChange(object sender, EventArgs e)

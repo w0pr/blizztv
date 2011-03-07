@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Timers;
 using System.Diagnostics;
@@ -124,7 +125,41 @@ namespace BlizzTV.Podcasts
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
+            int i = 0;
+            var tasks = new Task<Podcast>[this._podcasts.Count];
+
             foreach(KeyValuePair<string,Podcast> pair in this._podcasts)
+            {
+                KeyValuePair<string, Podcast> local = pair;
+                tasks[i] = Task.Factory.StartNew(() => TaskProcessPodcast(local.Value));
+                i++;
+            }
+
+            var tasksWaitQueue = tasks;
+
+            while (tasksWaitQueue.Length > 0)
+            {
+                int taskIndex = Task.WaitAny(tasksWaitQueue);
+                tasksWaitQueue = tasksWaitQueue.Where((t) => t != tasksWaitQueue[taskIndex]).ToArray();
+                Workload.WorkloadManager.Instance.Step();
+            }
+
+            try { Task.WaitAll(tasks); }
+            catch (AggregateException aggregateException)
+            {
+                foreach (var exception in aggregateException.InnerExceptions)
+                {
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Podcasts module caught an exception while running podcast processing task:  {0}", exception));
+                }
+            }
+
+            foreach (Task<Podcast> task in tasks)
+            {
+                this.RootListItem.Childs.Add(task.Result.Url, task.Result);
+                foreach (Episode episode in task.Result.Episodes) { task.Result.Childs.Add(episode.Guid, episode); }
+            }
+
+            /*foreach(KeyValuePair<string,Podcast> pair in this._podcasts)
             {
                 try
                 {
@@ -134,7 +169,7 @@ namespace BlizzTV.Podcasts
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module podcasts caught an exception while updating podcasts: {0}", e)); }
                 Workload.WorkloadManager.Instance.Step();
-            }
+            }*/
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
@@ -143,6 +178,12 @@ namespace BlizzTV.Podcasts
             this.RootListItem.SetTitle("Podcasts");
             this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
             this.Updating = false;
+        }
+
+        private static Podcast TaskProcessPodcast(Podcast podcast)
+        {
+            podcast.Update();
+            return podcast;
         }
 
         private void OnChildStateChange(object sender, EventArgs e)
