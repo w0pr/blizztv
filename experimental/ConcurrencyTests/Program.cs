@@ -178,26 +178,40 @@ namespace ConcurrencyTests
 
         static void PrintCPUInfo()
         {
+            /* code taken from: http://stackoverflow.com/questions/1542213/how-to-find-the-number-of-cpu-cores-via-net-c/2670568#2670568 */
+
             int physicalCpuCount = 0;
             int coreCount = 0;
+            bool coreCountSupported;
             int logicalCpuCount = 0;
+            bool logicalCpuCountSupported;
 
             foreach (var item in new ManagementObjectSearcher("Select * from Win32_ComputerSystem").Get())
             {
                 physicalCpuCount = Int32.Parse(item["NumberOfProcessors"].ToString());
             }
 
-            foreach (var item in new ManagementObjectSearcher("Select * from Win32_Processor").Get())
+            try
             {
-                coreCount += int.Parse(item["NumberOfCores"].ToString());
+                foreach (var item in new ManagementObjectSearcher("Select * from Win32_Processor").Get())
+                {
+                    coreCount += int.Parse(item["NumberOfCores"].ToString());
+                }
+                coreCountSupported=true;
             }
+            catch(Exception) { coreCountSupported = false; }
 
-            foreach (var item in new ManagementObjectSearcher("Select * from Win32_ComputerSystem").Get())
+            try
             {
-                logicalCpuCount = Int32.Parse(item["NumberOfLogicalProcessors"].ToString());
+                foreach (var item in new ManagementObjectSearcher("Select * from Win32_ComputerSystem").Get())
+                {
+                    logicalCpuCount = Int32.Parse(item["NumberOfLogicalProcessors"].ToString());
+                }
+                logicalCpuCountSupported = true;
             }
+            catch(Exception e) { logicalCpuCountSupported = false; }
 
-            Console.WriteLine("Test Environment: {0} physical cpus, {1} cores, {2} logical cpus.", physicalCpuCount, coreCount, logicalCpuCount);
+            Console.WriteLine("Test Environment: {0} physical cpus, {1} cores, {2} logical cpus.", physicalCpuCount, coreCountSupported ? coreCount.ToString() : "NotSupported", logicalCpuCountSupported ? logicalCpuCount.ToString() : "NotSupported");
         }
     }
 
