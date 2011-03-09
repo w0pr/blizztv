@@ -18,7 +18,7 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
-using BlizzTV.Modules;
+using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Utility.Extensions;
 
 namespace BlizzTV.UI

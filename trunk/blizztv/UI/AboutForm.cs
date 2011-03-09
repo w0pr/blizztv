@@ -21,7 +21,6 @@ using System.Windows.Forms;
 using System.Reflection;
 using BlizzTV.Assets.i18n;
 using BlizzTV.Audio;
-using BlizzTV.Modules;
 using BlizzTV.Utility.UI;
 
 namespace BlizzTV.UI
