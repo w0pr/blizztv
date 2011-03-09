@@ -45,6 +45,11 @@ namespace BlizzTV.InfraStructure.Modules
         }
 
         /// <summary>
+        /// Allows modules to startup.
+        /// </summary>
+        public virtual void Startup() { }
+
+        /// <summary>
         /// Notifies the module to refresh it's data.
         /// </summary>
         public virtual void Refresh() { throw new NotImplementedException(); }

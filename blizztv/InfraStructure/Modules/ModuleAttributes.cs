@@ -79,20 +79,20 @@ namespace BlizzTV.InfraStructure.Modules
             }
         }
 
-        [Flags]
         /// <summary>
         /// States module functionality.
         /// </summary>
+        [Flags]
         public enum ModuleFunctionality
         {
             /// <summary>
-            /// Module renders items for main-window treeview.
-            /// </summary>
-            RendersTreeItems,
-            /// <summary>
             /// Module renders main-window menus.
             /// </summary>
-            RendersMenus
+            RendersMenus = 0x1,
+            /// <summary>
+            /// Module renders items for main-window treeview.
+            /// </summary>
+            RendersTreeItems = 0x2
         }
 
         #region de-ctor

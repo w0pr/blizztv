@@ -142,6 +142,10 @@
     <Compile Include="Controls\Panels\GradientPanel.Designer.cs">
       <DependentUpon>GradientPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmbeddedModules\Irc\IrcModule.cs" />
+    <Compile Include="IRCLibrary\Connection\IrcConnection.cs" />
+    <Compile Include="IRCLibrary\IrcClient.cs" />
+    <Compile Include="IRCLibrary\Server\IrcServer.cs" />
     <Compile Include="Media\Controls\WMP\WMPPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
