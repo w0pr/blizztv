@@ -142,7 +142,7 @@
     <Compile Include="Controls\Panels\GradientPanel.Designer.cs">
       <DependentUpon>GradientPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MediaPlayer\MediaPlayer.cs">
+    <Compile Include="Media\Controls\WMP\WMPPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Dependency\OperatingSystem.cs" />
@@ -154,41 +154,41 @@
     <Compile Include="Downloads\DownloadForm.Designer.cs">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Subscriptions\Catalog\CatalogBrowser.cs">
+    <Compile Include="InfraStructure\Modules\Subscriptions\Catalog\CatalogBrowser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Subscriptions\Catalog\CatalogBrowser.Designer.cs">
+    <Compile Include="InfraStructure\Modules\Subscriptions\Catalog\CatalogBrowser.Designer.cs">
       <DependentUpon>CatalogBrowser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Subscriptions\Catalog\ISubscriptionConsumer.cs" />
-    <Compile Include="Modules\Subscriptions\Providers\Provider.cs" />
-    <Compile Include="Modules\Subscriptions\Subscription.cs" />
-    <Compile Include="Podcasts\AddFeedForm.cs">
+    <Compile Include="InfraStructure\Modules\Subscriptions\Catalog\ISubscriptionConsumer.cs" />
+    <Compile Include="InfraStructure\Modules\Subscriptions\Providers\Provider.cs" />
+    <Compile Include="InfraStructure\Modules\Subscriptions\Subscription.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\Settings\AddPodcastForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Podcasts\AddFeedForm.Designer.cs">
-      <DependentUpon>AddFeedForm.cs</DependentUpon>
+    <Compile Include="EmbeddedModules\Podcasts\Settings\AddPodcastForm.Designer.cs">
+      <DependentUpon>AddPodcastForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Podcasts\Episode.cs" />
-    <Compile Include="Podcasts\ModulePodcasts.cs" />
-    <Compile Include="Podcasts\Parsers\IPodcastFeedParser.cs" />
-    <Compile Include="Podcasts\Parsers\Rss2.cs" />
-    <Compile Include="Podcasts\PlayerForm.cs">
+    <Compile Include="EmbeddedModules\Podcasts\Episode.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\PodcastsModule.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\Parsers\IPodcastFeedParser.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\Parsers\Rss2.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\UI\PlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Podcasts\PlayerForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Podcasts\UI\PlayerForm.Designer.cs">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Podcasts\Podcast.cs" />
-    <Compile Include="Podcasts\PodcastParser.cs" />
-    <Compile Include="Podcasts\Settings.cs" />
-    <Compile Include="Podcasts\SettingsForm.cs">
+    <Compile Include="EmbeddedModules\Podcasts\Podcast.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\Parsers\PodcastParser.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\Settings\ModuleSettings.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Podcasts\SettingsForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Podcasts\Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Podcasts\Subscriptions.cs" />
+    <Compile Include="EmbeddedModules\Podcasts\Subscriptions.cs" />
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
     <Compile Include="Utility\Helpers\ApplicationHelper.cs" />
     <Compile Include="Utility\Helpers\AssemblyManager.cs" />
@@ -204,11 +204,11 @@
     <Compile Include="Notifications\NotificationManager.cs" />
     <Compile Include="Notifications\ArchivedNotifications.cs" />
     <Compile Include="Notifications\NotificationSound.cs" />
-    <Compile Include="Modules\Players\BasePlayerForm.cs">
+    <Compile Include="Media\Player\BasePlayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Players\BasePlayerForm.Designer.cs">
-      <DependentUpon>BasePlayerForm.cs</DependentUpon>
+    <Compile Include="Media\Player\BasePlayer.Designer.cs">
+      <DependentUpon>BasePlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\UI\ListViewItemComparer.cs" />
     <Compile Include="Controls\Animations\LoadingAnimation.cs">
@@ -233,161 +233,161 @@
     <Compile Include="Utility\Helpers\SystemStartup.cs" />
     <Compile Include="Utility\Date\ZonedDateTime.cs" />
     <Compile Include="Workload\WorkloadManager.cs" />
-    <Compile Include="Modules\Settings\ModuleSettingsHostForm.cs">
+    <Compile Include="InfraStructure\Modules\Settings\ModuleSettingsHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Settings\ModuleSettingsHostForm.Designer.cs">
+    <Compile Include="InfraStructure\Modules\Settings\ModuleSettingsHostForm.Designer.cs">
       <DependentUpon>ModuleSettingsHostForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\StateStorage\StateStorage.cs" />
+    <Compile Include="InfraStructure\Modules\Storage\StateStorage.cs" />
     <Compile Include="Storage\KeyValueStorage.cs" />
-    <Compile Include="Modules\Subscriptions\Providers\ProvidersHandler.cs" />
-    <Compile Include="Modules\Subscriptions\Providers\ProvidersStorage.cs" />
-    <Compile Include="Modules\Subscriptions\SubscriptionsHandler.cs" />
-    <Compile Include="Modules\Subscriptions\SubscriptionsStorage.cs" />
-    <Compile Include="BlizzBlues\ModuleBlizzBlues.cs" />
-    <Compile Include="BlizzBlues\SettingsForm.cs">
+    <Compile Include="InfraStructure\Modules\Subscriptions\Providers\ProvidersHandler.cs" />
+    <Compile Include="InfraStructure\Modules\Subscriptions\Providers\ProvidersStorage.cs" />
+    <Compile Include="InfraStructure\Modules\Subscriptions\SubscriptionsHandler.cs" />
+    <Compile Include="InfraStructure\Modules\Subscriptions\SubscriptionsStorage.cs" />
+    <Compile Include="EmbeddedModules\BlueTracker\BlueTrackerModule.cs" />
+    <Compile Include="EmbeddedModules\BlueTracker\Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BlizzBlues\SettingsForm.Designer.cs">
+    <Compile Include="EmbeddedModules\BlueTracker\Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BlizzBlues\Parsers\BlueParser.cs" />
-    <Compile Include="BlizzBlues\BlueStory.cs" />
-    <Compile Include="BlizzBlues\Parsers\Starcraft.cs" />
-    <Compile Include="BlizzBlues\Parsers\WorldofWarcraft.cs" />
-    <Compile Include="BlizzBlues\Settings.cs" />
-    <Compile Include="Feeds\FeedParser.cs" />
-    <Compile Include="Feeds\Parsers\Atom1.cs" />
-    <Compile Include="Feeds\Parsers\IFeedParser.cs" />
-    <Compile Include="Feeds\Parsers\Rss2.cs" />
-    <Compile Include="Feeds\Subscriptions.cs" />
-    <Compile Include="Streams\Subscriptions.cs" />
-    <Compile Include="Videos\Subscriptions.cs" />
+    <Compile Include="EmbeddedModules\BlueTracker\Parsers\BlueParser.cs" />
+    <Compile Include="EmbeddedModules\BlueTracker\BlueStory.cs" />
+    <Compile Include="EmbeddedModules\BlueTracker\Parsers\Starcraft.cs" />
+    <Compile Include="EmbeddedModules\BlueTracker\Parsers\WorldofWarcraft.cs" />
+    <Compile Include="EmbeddedModules\BlueTracker\Settings\ModuleSettings.cs" />
+    <Compile Include="EmbeddedModules\Feeds\Parsers\FeedParser.cs" />
+    <Compile Include="EmbeddedModules\Feeds\Parsers\Atom1.cs" />
+    <Compile Include="EmbeddedModules\Feeds\Parsers\IFeedParser.cs" />
+    <Compile Include="EmbeddedModules\Feeds\Parsers\Rss2.cs" />
+    <Compile Include="EmbeddedModules\Feeds\Subscriptions.cs" />
+    <Compile Include="EmbeddedModules\Streams\Subscriptions.cs" />
+    <Compile Include="EmbeddedModules\Videos\Subscriptions.cs" />
     <Compile Include="Utility\UI\InputBox.cs" />
     <Compile Include="Utility\Extensions\ControlExtensions.cs" />
-    <Compile Include="Modules\ModuleAttributes.cs" />
-    <Compile Include="Events\Event.cs" />
-    <Compile Include="Events\ModuleEvents.cs" />
-    <Compile Include="Events\AlarmForm.cs">
+    <Compile Include="InfraStructure\Modules\ModuleAttributes.cs" />
+    <Compile Include="EmbeddedModules\Events\Event.cs" />
+    <Compile Include="EmbeddedModules\Events\EventsModule.cs" />
+    <Compile Include="EmbeddedModules\Events\UI\AlarmForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\AlarmForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Events\UI\AlarmForm.Designer.cs">
       <DependentUpon>AlarmForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CalendarForm.cs">
+    <Compile Include="EmbeddedModules\Events\UI\CalendarForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\CalendarForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Events\UI\CalendarForm.Designer.cs">
       <DependentUpon>CalendarForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\EventViewerForm.cs">
+    <Compile Include="EmbeddedModules\Events\UI\EventViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\EventViewerForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Events\UI\EventViewerForm.Designer.cs">
       <DependentUpon>EventViewerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\SettingsForm.cs">
+    <Compile Include="EmbeddedModules\Events\Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\SettingsForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Events\Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\SetupAlarmForm.cs">
+    <Compile Include="EmbeddedModules\Events\UI\SetupAlarmForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Events\SetupAlarmForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Events\UI\SetupAlarmForm.Designer.cs">
       <DependentUpon>SetupAlarmForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\Settings.cs" />
-    <Compile Include="Feeds\Feed.cs" />
-    <Compile Include="Feeds\ModuleFeeds.cs" />
-    <Compile Include="Feeds\AddFeedForm.cs">
+    <Compile Include="EmbeddedModules\Events\Settings\ModuleSettings.cs" />
+    <Compile Include="EmbeddedModules\Feeds\Feed.cs" />
+    <Compile Include="EmbeddedModules\Feeds\FeedsModule.cs" />
+    <Compile Include="EmbeddedModules\Feeds\Settings\AddFeedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Feeds\AddFeedForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Feeds\Settings\AddFeedForm.Designer.cs">
       <DependentUpon>AddFeedForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Feeds\SettingsForm.cs">
+    <Compile Include="EmbeddedModules\Feeds\Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Feeds\SettingsForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Feeds\Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Feeds\Settings.cs" />
-    <Compile Include="Feeds\Story.cs" />
-    <Compile Include="Streams\AddStreamForm.cs">
+    <Compile Include="EmbeddedModules\Feeds\Settings\ModuleSettings.cs" />
+    <Compile Include="EmbeddedModules\Feeds\Story.cs" />
+    <Compile Include="EmbeddedModules\Streams\Settings\AddStreamForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Streams\AddStreamForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Streams\Settings\AddStreamForm.Designer.cs">
       <DependentUpon>AddStreamForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\ChatForm.cs">
+    <Compile Include="EmbeddedModules\Streams\UI\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Streams\ChatForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Streams\UI\ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\PlayerForm.cs">
+    <Compile Include="EmbeddedModules\Streams\UI\PlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Streams\PlayerForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Streams\UI\PlayerForm.Designer.cs">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\SettingsForm.cs">
+    <Compile Include="EmbeddedModules\Streams\Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Streams\SettingsForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Streams\Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Streams\Parsers\JustinTv.cs" />
-    <Compile Include="Streams\Parsers\LiveStream.cs" />
-    <Compile Include="Streams\Parsers\Own3Dtv.cs" />
-    <Compile Include="Streams\Parsers\UStream.cs" />
-    <Compile Include="Streams\Providers.cs" />
-    <Compile Include="Streams\Settings.cs" />
-    <Compile Include="Streams\Stream.cs" />
-    <Compile Include="Streams\StreamFactory.cs" />
-    <Compile Include="Streams\ModuleStreams.cs" />
-    <Compile Include="Videos\Channel.cs" />
-    <Compile Include="Videos\ChannelFactory.cs" />
-    <Compile Include="Videos\AddChannelForm.cs">
+    <Compile Include="EmbeddedModules\Streams\Parsers\JustinTv.cs" />
+    <Compile Include="EmbeddedModules\Streams\Parsers\LiveStream.cs" />
+    <Compile Include="EmbeddedModules\Streams\Parsers\Own3Dtv.cs" />
+    <Compile Include="EmbeddedModules\Streams\Parsers\UStream.cs" />
+    <Compile Include="EmbeddedModules\Streams\Providers.cs" />
+    <Compile Include="EmbeddedModules\Streams\Settings\ModuleSettings.cs" />
+    <Compile Include="EmbeddedModules\Streams\Stream.cs" />
+    <Compile Include="EmbeddedModules\Streams\StreamFactory.cs" />
+    <Compile Include="EmbeddedModules\Streams\StreamsModule.cs" />
+    <Compile Include="EmbeddedModules\Videos\Channel.cs" />
+    <Compile Include="EmbeddedModules\Videos\ChannelFactory.cs" />
+    <Compile Include="EmbeddedModules\Videos\Settings\AddChannelForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Videos\AddChannelForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Videos\Settings\AddChannelForm.Designer.cs">
       <DependentUpon>AddChannelForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videos\PlayerForm.cs">
+    <Compile Include="EmbeddedModules\Videos\UI\PlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Videos\PlayerForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Videos\UI\PlayerForm.Designer.cs">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videos\SettingsForm.cs">
+    <Compile Include="EmbeddedModules\Videos\Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Videos\SettingsForm.Designer.cs">
+    <Compile Include="EmbeddedModules\Videos\Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videos\Parsers\Providers\BlipTv.cs" />
-    <Compile Include="Videos\Parsers\Video\BlipTv.cs" />
-    <Compile Include="Videos\Parsers\Providers\Youtube.cs" />
-    <Compile Include="Videos\Parsers\Video\Youtube.cs" />
-    <Compile Include="Videos\Providers.cs" />
-    <Compile Include="Videos\Settings.cs" />
-    <Compile Include="Videos\Video.cs" />
-    <Compile Include="Videos\ModuleVideos.cs" />
-    <Compile Include="Modules\Settings\IModuleSettingsForm.cs" />
-    <Compile Include="Modules\ListItem.cs" />
-    <Compile Include="Controls\FlashPlayer\FlashPlayer.cs">
+    <Compile Include="EmbeddedModules\Videos\Parsers\BlipTv.cs" />
+    <Compile Include="EmbeddedModules\Videos\Parsers\Video\BlipTv.cs" />
+    <Compile Include="EmbeddedModules\Videos\Parsers\Youtube.cs" />
+    <Compile Include="EmbeddedModules\Videos\Parsers\Video\Youtube.cs" />
+    <Compile Include="EmbeddedModules\Videos\Providers.cs" />
+    <Compile Include="EmbeddedModules\Videos\Settings\ModuleSettings.cs" />
+    <Compile Include="EmbeddedModules\Videos\Video.cs" />
+    <Compile Include="EmbeddedModules\Videos\VideosModule.cs" />
+    <Compile Include="InfraStructure\Modules\Settings\IModuleSettingsForm.cs" />
+    <Compile Include="InfraStructure\Modules\ListItem.cs" />
+    <Compile Include="Media\Controls\Flash\FlashPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Modules\Module.cs" />
-    <Compile Include="Modules\ModuleInfo.cs" />
-    <Compile Include="Modules\ModuleManager.cs" />
+    <Compile Include="InfraStructure\Modules\Module.cs" />
+    <Compile Include="InfraStructure\Modules\ModuleInfo.cs" />
+    <Compile Include="InfraStructure\Modules\ModuleManager.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
-    <Compile Include="Modules\Settings\ModuleSettings.cs" />
+    <Compile Include="InfraStructure\Modules\Settings\ModuleSettingsBase.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Log\DebugConsole.cs" />
     <Compile Include="Utility\Web\JSON.cs" />
@@ -469,31 +469,31 @@
     <EmbeddedResource Include="Downloads\DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Subscriptions\Catalog\CatalogBrowser.resx">
+    <EmbeddedResource Include="InfraStructure\Modules\Subscriptions\Catalog\CatalogBrowser.resx">
       <DependentUpon>CatalogBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Notifications\NotificationsForm.resx">
       <DependentUpon>NotificationsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Players\BasePlayerForm.resx">
-      <DependentUpon>BasePlayerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Media\Player\BasePlayer.resx">
+      <DependentUpon>BasePlayer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Podcasts\AddFeedForm.resx">
-      <DependentUpon>AddFeedForm.cs</DependentUpon>
+    <EmbeddedResource Include="EmbeddedModules\Podcasts\Settings\AddPodcastForm.resx">
+      <DependentUpon>AddPodcastForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Podcasts\PlayerForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Podcasts\UI\PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Podcasts\SettingsForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Podcasts\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\UpdaterForm.resx">
       <DependentUpon>UpdaterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\Settings\ModuleSettingsHostForm.resx">
+    <EmbeddedResource Include="InfraStructure\Modules\Settings\ModuleSettingsHostForm.resx">
       <DependentUpon>ModuleSettingsHostForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BlizzBlues\SettingsForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\BlueTracker\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AboutForm.resx">
@@ -506,46 +506,46 @@
     <EmbeddedResource Include="UI\PreferencesForm.resx">
       <DependentUpon>PreferencesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\AlarmForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Events\UI\AlarmForm.resx">
       <DependentUpon>AlarmForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\CalendarForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Events\UI\CalendarForm.resx">
       <DependentUpon>CalendarForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\EventViewerForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Events\UI\EventViewerForm.resx">
       <DependentUpon>EventViewerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\SettingsForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Events\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\SetupAlarmForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Events\UI\SetupAlarmForm.resx">
       <DependentUpon>SetupAlarmForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Feeds\AddFeedForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Feeds\Settings\AddFeedForm.resx">
       <DependentUpon>AddFeedForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Feeds\SettingsForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Feeds\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Streams\AddStreamForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Streams\Settings\AddStreamForm.resx">
       <DependentUpon>AddStreamForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Streams\ChatForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Streams\UI\ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Streams\PlayerForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Streams\UI\PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Streams\SettingsForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Streams\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Videos\AddChannelForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Videos\Settings\AddChannelForm.resx">
       <DependentUpon>AddChannelForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Videos\PlayerForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Videos\UI\PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Videos\SettingsForm.resx">
+    <EmbeddedResource Include="EmbeddedModules\Videos\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

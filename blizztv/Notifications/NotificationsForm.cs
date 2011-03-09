@@ -17,7 +17,7 @@
 
 using System;
 using System.Windows.Forms;
-using BlizzTV.Modules;
+using BlizzTV.InfraStructure.Modules;
 
 namespace BlizzTV.Notifications
 {

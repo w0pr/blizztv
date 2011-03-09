@@ -1,4 +1,4 @@
-﻿using BlizzTV.Controls.FlashPlayer;
+﻿using BlizzTV.Media.Controls.Flash;
 
 namespace BlizzTV.UI
 {
@@ -69,7 +69,7 @@ namespace BlizzTV.UI
             this.buttonChangelog = new System.Windows.Forms.Button();
             this.picTwitter = new System.Windows.Forms.PictureBox();
             this.picFacebook = new System.Windows.Forms.PictureBox();
-            this.Player = new BlizzTV.Controls.FlashPlayer.FlashPlayer();
+            this.Player = new FlashPlayer();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picBlizzTV)).BeginInit();
             this.groupBox1.SuspendLayout();

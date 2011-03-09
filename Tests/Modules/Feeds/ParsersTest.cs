@@ -1,4 +1,4 @@
-﻿using BlizzTV.Feeds;
+﻿using BlizzTV.EmbeddedModules.Feeds.Parsers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
