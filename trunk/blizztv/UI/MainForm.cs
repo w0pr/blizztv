@@ -169,40 +169,59 @@ namespace BlizzTV.UI
 
         private void StartupModule(Module module) // Startup's a module.
         {
-            // setup module events.
-            module.OnPluginUpdateStarted += ModuleUpdateStarted; 
-            module.OnPluginUpdateComplete += ModuleUpdateComplete;
-            this.RegisterPluginMenus(module); // setup the module's menu's.
-            module.Run(); // run the module.
+            if((module.Attributes.Functionality & ModuleAttributes.ModuleFunctionality.RendersMenus) == ModuleAttributes.ModuleFunctionality.RendersMenus) 
+                this.AttachModuleMenus(module); // register's the module menus.
+
+            if ((module.Attributes.Functionality & ModuleAttributes.ModuleFunctionality.RendersTreeItems) != ModuleAttributes.ModuleFunctionality.RendersTreeItems) 
+                return;
+
+            module.DataRefreshStarting += ModuleDataRefreshStarting;
+            module.DataRefreshCompleted += ModuleDataRefreshCompleted;
+            module.Refresh(); // run the module.
         }
 
-        private void ModuleUpdateStarted(object sender) // Fires when module starts an update.
+        private void AttachModuleMenus(Module p) // Register's modules main-menu item's.
         {
-            this.TreeView.InvokeHandler(() => 
-                {
-                    if (!this._moduleRoots.ContainsKey(((Module) sender).Attributes.Name)) // if the module root is not yet registered; 
-                    {
-                        TreeItem t = new TreeItem((Module)sender, ((Module)sender).RootListItem); // create a new treeitem for the module root.
-                        TreeView.Nodes.Add(t); // add it to treeview.
-                        this._moduleRoots.Add((sender as Module).Attributes.Name, t); // and also to to root item's dictionary.
-                        t.Render(); // render the root item.
-                    }
-                    else this._moduleRoots[(sender as Module).Attributes.Name].Nodes.Clear(); // if it root item's already registered, then just cleanup it's childs.
-                });
+            Dictionary<string, ToolStripMenuItem> menus = p.GetMenus(); // request the module menus.
+            if (menus == null) return; 
+            if (menus.Count <= 0) return;
+
+            this.AsyncInvokeHandler(() =>
+            {
+                var parent = new ToolStripMenuItem(p.Attributes.Name, p.Attributes.Icon); // create the parent module-menu.
+                menuModules.DropDownItems.Add(parent); // add the parent-menu.
+
+                foreach (KeyValuePair<string, ToolStripMenuItem> pair in menus) parent.DropDownItems.Add(pair.Value); // add requested sub-menu as a drop-down menu.
+            });
         }
 
-        private void ModuleUpdateComplete(object sender, PluginUpdateCompleteEventArgs e) // Fires when module finishes an update.
+        void ModuleDataRefreshStarting(object sender, EventArgs e)
         {
             this.TreeView.InvokeHandler(() =>
+            {
+                if (!this._moduleRoots.ContainsKey(((Module)sender).Attributes.Name)) // if the module root is not yet registered; 
                 {
-                    if (this._moduleRoots.ContainsKey(((Module) sender).Attributes.Name))
-                    {
-                        this.TreeView.BeginUpdate(); // notify the treeview about we're begging a mass-update.
-                        TreeItem rootItem = this._moduleRoots[((Module)sender).Attributes.Name]; // get the module's root item.
-                        foreach (KeyValuePair<string, ListItem> pair in rootItem.Item.Childs) { this.LoadPluginListItems((Module)sender, pair.Value, rootItem); } // load the provided listitem's by module.
-                        this.TreeView.EndUpdate(); // okay treeview, we're done.
-                    }
-                });
+                    var t = new TreeItem((Module)sender, ((Module)sender).RootListItem); // create a new treeitem for the module root.
+                    TreeView.Nodes.Add(t); // add it to treeview.
+                    this._moduleRoots.Add((sender as Module).Attributes.Name, t); // and also to to root item's dictionary.
+                    t.Render(); // render the root item.
+                }
+                else this._moduleRoots[(sender as Module).Attributes.Name].Nodes.Clear(); // if it root item's already registered, then just cleanup it's childs.
+            });
+        }
+
+        void ModuleDataRefreshCompleted(object sender, DataRefreshCompletedEventArgs e)
+        {
+            this.TreeView.InvokeHandler(() =>
+            {
+                if (this._moduleRoots.ContainsKey(((Module)sender).Attributes.Name))
+                {
+                    this.TreeView.BeginUpdate(); // notify the treeview about we're begging a mass-update.
+                    TreeItem rootItem = this._moduleRoots[((Module)sender).Attributes.Name]; // get the module's root item.
+                    foreach (KeyValuePair<string, ListItem> pair in rootItem.Item.Childs) { this.LoadPluginListItems((Module)sender, pair.Value, rootItem); } // load the provided listitem's by module.
+                    this.TreeView.EndUpdate(); // okay treeview, we're done.
+                }
+            });
         }
 
         private void LoadPluginListItems(Module plugin,ListItem item,TreeItem parent) // recursively loads a listitem and it's childs to treeview.
@@ -212,20 +231,6 @@ namespace BlizzTV.UI
             t.Render();
 
             if (item.Childs.Count > 0) { foreach (KeyValuePair<string, ListItem> pair in item.Childs) { this.LoadPluginListItems(plugin, pair.Value, t); } } // make this recursive.           
-        }
-
-        private void RegisterPluginMenus(Module p) // Register's modules main-menu item's.
-        {
-            this.AsyncInvokeHandler(() =>
-                {
-                    if (p.Menus.Count > 0) // if module request's menus.
-                    {
-                        ToolStripMenuItem parent = new ToolStripMenuItem(p.Attributes.Name, p.Attributes.Icon); // create the parent module-menu first.
-                        menuModules.DropDownItems.Add(parent); // add the parent-menu.
-
-                        foreach (KeyValuePair<string, ToolStripMenuItem> pair in p.Menus) parent.DropDownItems.Add(pair.Value); // add requested sub-menu as a drop-down menu.
-                    }
-                });
         }
 
         #endregion

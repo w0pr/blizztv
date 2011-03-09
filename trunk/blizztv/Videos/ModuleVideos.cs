@@ -58,10 +58,10 @@ namespace BlizzTV.Videos
             this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
-        public override void Run()
+        public override void Refresh()
         {
             this.UpdateChannels();
-            this.SetupUpdateTimer();
+            if(this._updateTimer==null) this.SetupUpdateTimer();
         }
 
         public override Form GetPreferencesForm()
@@ -96,9 +96,9 @@ namespace BlizzTV.Videos
 
         private void UpdateChannels()
         {
-            if (this.Updating) return;
-            this.Updating = true;
-            this.NotifyUpdateStarted();
+            if (this.RefreshingData) return;
+            this.RefreshingData = true;
+            this.OnDataRefreshStarting(EventArgs.Empty);
 
             if (this._channels.Count > 0)  // clear previous entries before doing an update.
             {
@@ -167,8 +167,8 @@ namespace BlizzTV.Videos
             LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", this._channels.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
             this.RootListItem.SetTitle("Videos");
-            NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-            this.Updating = false;
+            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
+            this.RefreshingData = false;
         }
 
         private static Channel TaskProcessChannel(Channel channel)
