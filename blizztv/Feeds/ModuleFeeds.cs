@@ -37,9 +37,11 @@ namespace BlizzTV.Feeds
     [ModuleAttributes("Feeds","Feed aggregator.","feed")]
     public class ModuleFeeds : Module ,ISubscriptionConsumer
     {
+        private readonly ListItem _rootItem = new ListItem("Feeds") { Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed) };
         private Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // list of feeds.
-        private System.Timers.Timer _updateTimer;
+        private System.Timers.Timer _updateTimer = null;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://feed/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);
+        
         private bool _disposed = false;
 
         public static ModuleFeeds Instance;
@@ -47,15 +49,11 @@ namespace BlizzTV.Feeds
         public ModuleFeeds()
         {
             ModuleFeeds.Instance = this;
-            this.RootListItem = new ListItem("Feeds")
-                                    {
-                                        Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed)
-                                    };
 
-            this.RootListItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
-            this.RootListItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
-            this.RootListItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
-            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._rootItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this._rootItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
+            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Refresh()
@@ -64,7 +62,7 @@ namespace BlizzTV.Feeds
             if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
-        public override bool TryDragDrop(string link) // Tries parsing a drag & dropped link to see if it's a feed and parsable.
+        public override bool AddSubscriptionFromUrl(string link) // Tries parsing a drag & dropped link to see if it's a feed and parsable.
         {
             if (Subscriptions.Instance.Dictionary.ContainsKey(link))
             {
@@ -98,6 +96,11 @@ namespace BlizzTV.Feeds
             return false;
         }
 
+        public override ListItem GetRootItem()
+        {
+            return this._rootItem;
+        }
+
         private void UpdateFeeds()
         {
             if (this.RefreshingData) return;
@@ -108,10 +111,10 @@ namespace BlizzTV.Feeds
             if (this._feeds.Count > 0) // clear previous entries before doing an update.
             {
                 this._feeds.Clear();
-                this.RootListItem.Childs.Clear();
+                this._rootItem.Childs.Clear();
             }
-                
-            this.RootListItem.SetTitle("Updating feeds..");
+
+            this._rootItem.SetTitle("Updating feeds..");
 
             foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
             {
@@ -155,7 +158,7 @@ namespace BlizzTV.Feeds
 
             foreach (Task<Feed> task in tasks)
             {
-                this.RootListItem.Childs.Add(task.Result.Url, task.Result);
+                this._rootItem.Childs.Add(task.Result.Url, task.Result);
                 foreach (Story story in task.Result.Stories) { task.Result.Childs.Add(story.Guid, story); }
             }
 
@@ -175,7 +178,7 @@ namespace BlizzTV.Feeds
             TimeSpan ts = stopwatch.Elapsed;
             LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} feeds in {1}.", this._feeds.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds/10)));
 
-            this.RootListItem.SetTitle("Feeds");
+            this._rootItem.SetTitle("Feeds");
             this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
         }
@@ -188,10 +191,10 @@ namespace BlizzTV.Feeds
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.State == ((Feed) sender).State) return;
+            if (this._rootItem.State == ((Feed)sender).State) return;
 
             int unread = this._feeds.Count(pair => pair.Value.State == State.Unread);
-            this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
+            this._rootItem.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public override Form GetPreferencesForm()

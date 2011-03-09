@@ -34,10 +34,11 @@ namespace BlizzTV.Events
     [ModuleAttributes("Events", "E-Sports events tracker.", "_event", ModuleAttributes.ModuleFunctionality.RendersMenus | ModuleAttributes.ModuleFunctionality.RendersTreeItems)]
     public class ModuleEvents : Module
     {
+
+        private ListItem _rootItem = new ListItem("Events") { Icon = new NamedImage("event", Assets.Images.Icons.Png._16._event) };
         private List<Event> _events = new List<Event>(); // list of events.
         private System.Timers.Timer _eventTimer = new System.Timers.Timer(60000); // runs every one minute and check events & alarms.
         private static TimeZoneInfo KoreanTimeZone { get { TimeZoneInfo zone = TimeZoneInfo.Local; foreach (TimeZoneInfo z in TimeZoneInfo.GetSystemTimeZones()) { if (z.Id == "Korea Standard Time") zone = z; } return zone; } } // teamliquid calendar flags events in Korean time.
-
         private readonly ListItem _eventsToday = new ListItem("Today"); // today's events item.
         private readonly ListItem _eventsUpcoming = new ListItem("Upcoming"); // upcoming events item.
         private readonly ListItem _eventsOver = new ListItem("Past"); // past events item.        
@@ -45,18 +46,14 @@ namespace BlizzTV.Events
         
         public ModuleEvents() : base()
         {
-            NamedImage eventIcon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
-            this.RootListItem = new ListItem("Events")
-                                    {
-                                        Icon=eventIcon
-                                    };
+            var eventIcon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
 
             this._eventsToday.Icon = eventIcon;
             this._eventsUpcoming.Icon = eventIcon;
             this._eventsOver.Icon = eventIcon;
-            
-            this.RootListItem.ContextMenus.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
-            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+
+            this._rootItem.ContextMenus.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
+            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
         
         /// <summary>
@@ -66,6 +63,11 @@ namespace BlizzTV.Events
         public override Dictionary<string, ToolStripMenuItem> GetMenus()
         {
             return new Dictionary<string, ToolStripMenuItem> {{ "calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked)) }};
+        }
+
+        public override ListItem GetRootItem()
+        {
+            return this._rootItem;
         }
 
         public override void Refresh()
@@ -86,16 +88,16 @@ namespace BlizzTV.Events
             this.OnDataRefreshStarting(EventArgs.Empty);
 
             Workload.WorkloadManager.Instance.Add(1);
-            this.RootListItem.SetTitle("Updating events..");
+            this._rootItem.SetTitle("Updating events..");
 
             try
             {
                 WebReader.Result result = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml"); // read teamliquid calendar xml.
                 if (result.State != WebReader.States.Success)
                 {
-                    this.RootListItem.State = State.Error;
-                    this.RootListItem.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
-                    this.RootListItem.SetTitle("Events");
+                    this._rootItem.State = State.Error;
+                    this._rootItem.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                    this._rootItem.SetTitle("Events");
                     Workload.WorkloadManager.Instance.Step();
                     return;
                 }
@@ -152,9 +154,9 @@ namespace BlizzTV.Events
                 LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Events module caught an exception while parsing events: {0}", e));
             }
 
-            this.RootListItem.Childs.Add("events-today", _eventsToday);
-            this.RootListItem.Childs.Add("events-upcoming", _eventsUpcoming);
-            this.RootListItem.Childs.Add("events-over", _eventsOver);
+            this._rootItem.Childs.Add("events-today", _eventsToday);
+            this._rootItem.Childs.Add("events-upcoming", _eventsUpcoming);
+            this._rootItem.Childs.Add("events-over", _eventsOver);
 
             foreach (Event e in from e in this._events
                                 let filterStart = DateTime.Now.Date.Subtract(new TimeSpan(Settings.Instance.NumberOfDaysToShowEventsOnMainWindow, 0, 0, 0))
@@ -170,7 +172,7 @@ namespace BlizzTV.Events
                 }
             }
 
-            this.RootListItem.SetTitle("Events");  
+            this._rootItem.SetTitle("Events");  
             Workload.WorkloadManager.Instance.Step();
 
             this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));

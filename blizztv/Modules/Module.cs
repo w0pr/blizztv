@@ -30,11 +30,6 @@ namespace BlizzTV.Modules
         private bool _disposed = false; // is the module disposed already?
 
         /// <summary>
-        /// The root item for the module.
-        /// </summary>
-        public ListItem RootListItem { get; protected set; }
-
-        /// <summary>
         /// Is the module currently refreshing it's data?
         /// </summary>
         public bool RefreshingData { get; protected set; }
@@ -42,7 +37,7 @@ namespace BlizzTV.Modules
         /// <summary>
         /// The module's attributes.
         /// </summary>
-        public ModuleAttributes Attributes { get; set; } 
+        public ModuleAttributes Attributes { get; set; }
 
         protected Module()
         {
@@ -55,10 +50,16 @@ namespace BlizzTV.Modules
         public virtual void Refresh() { throw new NotImplementedException(); }
 
         /// <summary>
-        /// Returns the modules request menus.
+        /// Returns the module's request menus.
         /// </summary>
         /// <returns>A dictionary of requested menus.</returns>
         public virtual Dictionary<string, ToolStripMenuItem> GetMenus() { return null; }
+
+        /// <summary>
+        /// Returns the module's root treeview item.
+        /// </summary>
+        /// <returns><see cref="ListItem"/></returns>
+        public virtual ListItem GetRootItem() { return null; }                    
 
         /// <summary>
         /// Returns preferences form for the module. 
@@ -71,8 +72,8 @@ namespace BlizzTV.Modules
         /// Returns a boolean based on if module is able to parse the supplied link.
         /// </summary>
         /// <param name="link">The resource url.</param>
-        /// <returns></returns>
-        public virtual bool TryDragDrop(string link) { return false; }
+        /// <returns><see cref="bool"/></returns>
+        public virtual bool AddSubscriptionFromUrl(string link) { return false; }
 
         #region Events
 
@@ -126,8 +127,6 @@ namespace BlizzTV.Modules
             if (disposing) // managed resources
             {
                 this.Attributes = null;
-                this.RootListItem.Childs.Clear();
-                this.RootListItem = null;
             }
             _disposed = true;
         }

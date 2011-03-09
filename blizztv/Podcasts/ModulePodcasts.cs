@@ -37,6 +37,7 @@ namespace BlizzTV.Podcasts
     [ModuleAttributes("Podcasts", "Podcast aggregator.", "podcast")]
     public class ModulePodcasts : Module,ISubscriptionConsumer
     {
+        private readonly ListItem _rootItem = new ListItem("Podcasts") { Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast) };
         private Dictionary<string, Podcast> _podcasts = new Dictionary<string, Podcast>(); // list of feeds.
         private System.Timers.Timer _updateTimer;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://podcast/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);
@@ -47,15 +48,10 @@ namespace BlizzTV.Podcasts
         {
             ModulePodcasts.Instance = this;
 
-            this.RootListItem = new ListItem("Podcasts")
-                                    {
-                                        Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast)
-                                    };
-
-            this.RootListItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
-            this.RootListItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
-            this.RootListItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
-            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._rootItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this._rootItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
+            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Refresh()
@@ -64,7 +60,7 @@ namespace BlizzTV.Podcasts
             if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
-        public override bool TryDragDrop(string link) // Tries parsing a drag & dropped link to see if it's a podcast and parsable.
+        public override bool AddSubscriptionFromUrl(string link) // Tries parsing a drag & dropped link to see if it's a podcast and parsable.
         {
             if (Subscriptions.Instance.Dictionary.ContainsKey(link))
             {
@@ -98,6 +94,11 @@ namespace BlizzTV.Podcasts
             return false;
         }
 
+        public override ListItem GetRootItem()
+        {
+            return this._rootItem;
+        }
+
         private void UpdatePodcasts()
         {
             if (this.RefreshingData) return;
@@ -108,10 +109,10 @@ namespace BlizzTV.Podcasts
             if (this._podcasts.Count > 0) // clear previous entries before doing an update.
             {
                 this._podcasts.Clear();
-                this.RootListItem.Childs.Clear();
+                this._rootItem.Childs.Clear();
             }
 
-            this.RootListItem.SetTitle("Updating podcasts..");
+            this._rootItem.SetTitle("Updating podcasts..");
 
             foreach (KeyValuePair<string, PodcastSubscription> pair in Subscriptions.Instance.Dictionary)
             {
@@ -155,7 +156,7 @@ namespace BlizzTV.Podcasts
 
             foreach (Task<Podcast> task in tasks)
             {
-                this.RootListItem.Childs.Add(task.Result.Url, task.Result);
+                this._rootItem.Childs.Add(task.Result.Url, task.Result);
                 foreach (Episode episode in task.Result.Episodes) { task.Result.Childs.Add(episode.Guid, episode); }
             }
 
@@ -175,7 +176,7 @@ namespace BlizzTV.Podcasts
             TimeSpan ts = stopwatch.Elapsed;
             LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} podcasts in {1}.", this._podcasts.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
-            this.RootListItem.SetTitle("Podcasts");
+            this._rootItem.SetTitle("Podcasts");
             this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
         }
@@ -188,10 +189,10 @@ namespace BlizzTV.Podcasts
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.State == ((Podcast)sender).State) return;
+            if (this._rootItem.State == ((Podcast)sender).State) return;
 
             int unread = this._podcasts.Count(pair => pair.Value.State == State.Unread);
-            this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
+            this._rootItem.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public override Form GetPreferencesForm()
