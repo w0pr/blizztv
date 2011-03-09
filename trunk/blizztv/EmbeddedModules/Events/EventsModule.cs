@@ -64,7 +64,7 @@ namespace BlizzTV.EmbeddedModules.Events
         /// <returns></returns>
         public override Dictionary<string, ToolStripMenuItem> GetMenus()
         {
-            return new Dictionary<string, ToolStripMenuItem> {{ "calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked)) }};
+            return new Dictionary<string, ToolStripMenuItem> { { "calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked)) } };
         }
 
         public override ListItem GetRootItem()

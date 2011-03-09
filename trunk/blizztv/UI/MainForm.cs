@@ -169,11 +169,12 @@ namespace BlizzTV.UI
 
         private void StartupModule(Module module) // Startup's a module.
         {
+            module.Startup();
+
             if((module.Attributes.Functionality & ModuleAttributes.ModuleFunctionality.RendersMenus) == ModuleAttributes.ModuleFunctionality.RendersMenus) 
                 this.AttachModuleMenus(module); // register's the module menus.
 
-            if ((module.Attributes.Functionality & ModuleAttributes.ModuleFunctionality.RendersTreeItems) != ModuleAttributes.ModuleFunctionality.RendersTreeItems) 
-                return;
+            if ((module.Attributes.Functionality & ModuleAttributes.ModuleFunctionality.RendersTreeItems) != ModuleAttributes.ModuleFunctionality.RendersTreeItems) return;
 
             module.DataRefreshStarting += ModuleDataRefreshStarting;
             module.DataRefreshCompleted += ModuleDataRefreshCompleted;
