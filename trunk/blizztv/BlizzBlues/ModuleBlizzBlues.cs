@@ -34,6 +34,7 @@ namespace BlizzTV.BlizzBlues
     [ModuleAttributes("BlizzBlues", "Blizzard GM-Blue's aggregator.", "blizzblues")]
     class ModuleBlizzBlues : Module
     {
+        private readonly ListItem _rootItem = new ListItem("BlizzBlues") { Icon = new NamedImage("blizzblues", Assets.Images.Icons.Png._16.blizzblues) };
         private readonly List<BlueParser> _parsers = new List<BlueParser>(); // list of blue-post parsers
         private System.Timers.Timer _updateTimer;
 
@@ -43,21 +44,21 @@ namespace BlizzTV.BlizzBlues
         {
             Instance = this;
 
-            this.RootListItem=new ListItem("BlizzBlues")
-                                  {
-                                      Icon = new NamedImage("blizzblues", Assets.Images.Icons.Png._16.blizzblues)
-                                  };
-
-            this.RootListItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate))); 
-            this.RootListItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
-            this.RootListItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
-            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); 
+            this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate)));
+            this._rootItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this._rootItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
+            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); 
         }
 
         public override void Refresh()
         {
             this.UpdateBlues();
             if (this._updateTimer == null) this.SetupUpdateTimer();
+        }
+
+        public override ListItem GetRootItem()
+        {
+            return this._rootItem;
         }
 
         private void UpdateBlues()
@@ -70,10 +71,10 @@ namespace BlizzTV.BlizzBlues
             if (this._parsers.Count > 0) // reset the current data.
             {
                 this._parsers.Clear();
-                this.RootListItem.Childs.Clear();
+                this._rootItem.Childs.Clear();
             }
 
-            this.RootListItem.SetTitle("Updating BlizzBlues..");
+            this._rootItem.SetTitle("Updating BlizzBlues..");
 
             if (Settings.Instance.TrackWorldofWarcraft)
             {
@@ -99,7 +100,7 @@ namespace BlizzTV.BlizzBlues
                 foreach (BlueParser parser in this._parsers)
                 {
                     parser.Update();
-                    this.RootListItem.Childs.Add(parser.Title, parser);
+                    this._rootItem.Childs.Add(parser.Title, parser);
                     foreach (KeyValuePair<string, BlueStory> storyPair in parser.Stories)
                     {
                         parser.Childs.Add(storyPair.Key, storyPair.Value);
@@ -119,7 +120,7 @@ namespace BlizzTV.BlizzBlues
                 LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} blizzblue-parsers in {1}.", this._parsers.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
             }
 
-            this.RootListItem.SetTitle("BlizzBlues");
+            this._rootItem.SetTitle("BlizzBlues");
             this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
         }
@@ -131,10 +132,10 @@ namespace BlizzTV.BlizzBlues
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.State == ((BlueParser) sender).State) return;
+            if (this._rootItem.State == ((BlueParser)sender).State) return;
 
             int unread = this._parsers.Count(parser => parser.State == State.Unread);
-            this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
+            this._rootItem.State = unread > 0 ? State.Unread : State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)

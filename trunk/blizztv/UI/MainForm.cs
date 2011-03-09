@@ -201,7 +201,7 @@ namespace BlizzTV.UI
             {
                 if (!this._moduleRoots.ContainsKey(((Module)sender).Attributes.Name)) // if the module root is not yet registered; 
                 {
-                    var t = new TreeItem((Module)sender, ((Module)sender).RootListItem); // create a new treeitem for the module root.
+                    var t = new TreeItem((Module)sender, ((Module)sender).GetRootItem()); // create a new treeitem for the module root.
                     TreeView.Nodes.Add(t); // add it to treeview.
                     this._moduleRoots.Add((sender as Module).Attributes.Name, t); // and also to to root item's dictionary.
                     t.Render(); // render the root item.
@@ -297,7 +297,7 @@ namespace BlizzTV.UI
             string link = (string)e.Data.GetData(DataFormats.Text);
             foreach (KeyValuePair<string, Module> pair in ModuleManager.Instance.InstantiatedModules)
             {
-                if (pair.Value.TryDragDrop(link)) break;
+                if (pair.Value.AddSubscriptionFromUrl(link)) break;
             }
         }
 

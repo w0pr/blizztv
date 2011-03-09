@@ -37,6 +37,7 @@ namespace BlizzTV.Streams
     [ModuleAttributes("Streams", "Live-stream aggregator.","stream")]
     public class ModuleStreams : Module , ISubscriptionConsumer
     {
+        private readonly ListItem _rootItem = new ListItem("Streams") { Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream) };
         private Dictionary<string,Stream> _streams = new Dictionary<string,Stream>();
         private Timer _updateTimer;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://stream/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
@@ -47,13 +48,9 @@ namespace BlizzTV.Streams
         public ModuleStreams()
         {
             ModuleStreams.Instance = this;
-            this.RootListItem = new ListItem("Streams")
-                                    {
-                                        Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream)
-                                    };
 
-            this.RootListItem.ContextMenus.Add("refresh", new System.Windows.Forms.ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); 
-            this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this._rootItem.ContextMenus.Add("refresh", new System.Windows.Forms.ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._rootItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Refresh()
@@ -67,7 +64,7 @@ namespace BlizzTV.Streams
             return new SettingsForm();
         }
 
-        public override bool TryDragDrop(string link)
+        public override bool AddSubscriptionFromUrl(string link)
         {
             foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
             {
@@ -93,6 +90,11 @@ namespace BlizzTV.Streams
             return false;
         }
 
+        public override ListItem GetRootItem()
+        {
+            return this._rootItem;
+        }
+
         private void UpdateStreams()
         {
             if (this.RefreshingData) return;
@@ -103,10 +105,10 @@ namespace BlizzTV.Streams
             if (this._streams.Count > 0)// clear previous entries before doing an update.
             {
                 this._streams.Clear();
-                this.RootListItem.Childs.Clear();
+                this._rootItem.Childs.Clear();
             }
 
-            this.RootListItem.SetTitle("Updating streams..");
+            this._rootItem.SetTitle("Updating streams..");
 
             foreach (KeyValuePair<string, StreamSubscription> pair in Subscriptions.Instance.Dictionary)
             {
@@ -153,7 +155,7 @@ namespace BlizzTV.Streams
                 {
                     task.Result.SetTitle(string.Format("{0} ({1})", task.Result.Title, task.Result.ViewerCount)); // put stream viewers count on title.
                     availableCount++;
-                    this.RootListItem.Childs.Add(string.Format("{0}@{1}", task.Result.Slug, task.Result.Provider), task.Result);                    
+                    this._rootItem.Childs.Add(string.Format("{0}@{1}", task.Result.Slug, task.Result.Provider), task.Result);                    
                 }                
             }
 
@@ -177,11 +179,11 @@ namespace BlizzTV.Streams
             TimeSpan ts = stopwatch.Elapsed;
             LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} streams in {1}.", this._streams.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
-            if (availableCount > 0) this.RootListItem.SetTitle(string.Format("Streams ({0})", availableCount));  // put available streams count on root object's title.
+            if (availableCount > 0) this._rootItem.SetTitle(string.Format("Streams ({0})", availableCount));  // put available streams count on root object's title.
             else
             {
-                this.RootListItem.SetTitle("Streams");
-                this.RootListItem.State = State.Read;
+                this._rootItem.SetTitle("Streams");
+                this._rootItem.State = State.Read;
             }
 
             this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));

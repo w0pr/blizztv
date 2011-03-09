@@ -37,6 +37,7 @@ namespace BlizzTV.Videos
     [ModuleAttributes("Videos", "Video aggregator.","video")]
     public class ModuleVideos : Module, ISubscriptionConsumer
     {
+        private readonly ListItem _rootItem = new ListItem("Videos") { Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video) };
         private Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
         private System.Timers.Timer _updateTimer;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://videochannel/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
@@ -47,15 +48,11 @@ namespace BlizzTV.Videos
         public ModuleVideos() : base()
         {
             ModuleVideos.Instance = this;
-            this.RootListItem = new ListItem("Videos")
-                                    {
-                                        Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video)
-                                    };
 
-            this.RootListItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate))); 
-            this.RootListItem.ContextMenus.Add("markallaswatched", new ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
-            this.RootListItem.ContextMenus.Add("markallasunwatched", new ToolStripMenuItem(i18n.MarkAllAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked)));
-            this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._rootItem.ContextMenus.Add("markallaswatched", new ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
+            this._rootItem.ContextMenus.Add("markallasunwatched", new ToolStripMenuItem(i18n.MarkAllAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked)));
+            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Refresh()
@@ -69,7 +66,7 @@ namespace BlizzTV.Videos
             return new SettingsForm();
         }
 
-        public override bool TryDragDrop(string link)
+        public override bool AddSubscriptionFromUrl(string link)
         {
             foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
             {
@@ -94,6 +91,11 @@ namespace BlizzTV.Videos
             return false;
         }
 
+        public override ListItem GetRootItem()
+        {
+            return this._rootItem;
+        }
+
         private void UpdateChannels()
         {
             if (this.RefreshingData) return;
@@ -103,10 +105,10 @@ namespace BlizzTV.Videos
             if (this._channels.Count > 0)  // clear previous entries before doing an update.
             {
                 this._channels.Clear();
-                this.RootListItem.Childs.Clear();
+                this._rootItem.Childs.Clear();
             }
 
-            this.RootListItem.SetTitle("Updating videos..");
+            this._rootItem.SetTitle("Updating videos..");
 
             foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
             {
@@ -150,7 +152,7 @@ namespace BlizzTV.Videos
 
             foreach (Task<Channel> task in tasks)
             {
-                this.RootListItem.Childs.Add(string.Format("{0}@{1}",task.Result.Slug,task.Result.Provider), task.Result);
+                this._rootItem.Childs.Add(string.Format("{0}@{1}", task.Result.Slug, task.Result.Provider), task.Result);
                 foreach (Video video in task.Result.Videos) { task.Result.Childs.Add(video.Guid, video); }
             }
 
@@ -166,7 +168,7 @@ namespace BlizzTV.Videos
             TimeSpan ts = stopwatch.Elapsed;
             LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", this._channels.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
-            this.RootListItem.SetTitle("Videos");
+            this._rootItem.SetTitle("Videos");
             this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
         }
@@ -179,10 +181,10 @@ namespace BlizzTV.Videos
         
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.RootListItem.State == ((Channel) sender).State) return;
+            if (this._rootItem.State == ((Channel)sender).State) return;
 
             int unread = this._channels.Count(pair => pair.Value.State == State.Unread);
-            this.RootListItem.State = unread > 0 ? State.Unread : State.Read;
+            this._rootItem.State = unread > 0 ? State.Unread : State.Read;
         }
         
         public void OnSaveSettings()
