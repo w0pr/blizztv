@@ -56,10 +56,10 @@ namespace BlizzTV.Streams
             this.RootListItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
-        public override void Run()
+        public override void Refresh()
         {            
             this.UpdateStreams();
-            this.SetupUpdateTimer();
+            if (this._updateTimer == null)  this.SetupUpdateTimer();
         }
 
         public override System.Windows.Forms.Form GetPreferencesForm()
@@ -95,10 +95,10 @@ namespace BlizzTV.Streams
 
         private void UpdateStreams()
         {
-            if (this.Updating) return;
+            if (this.RefreshingData) return;
 
-            this.Updating = true;
-            this.NotifyUpdateStarted();
+            this.RefreshingData = true;
+            this.OnDataRefreshStarting(EventArgs.Empty);
 
             if (this._streams.Count > 0)// clear previous entries before doing an update.
             {
@@ -184,8 +184,8 @@ namespace BlizzTV.Streams
                 this.RootListItem.State = State.Read;
             }
 
-            NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-            this.Updating = false;
+            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
+            this.RefreshingData = false;
         }
 
         private static Stream TaskProcessStream(Stream stream)

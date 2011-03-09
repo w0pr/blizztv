@@ -25,10 +25,9 @@ namespace BlizzTV.Modules
     /// <summary>
     /// Provides a dynamicly loadable base module.
     /// </summary>
-    public class Module : IDisposable 
+    public class Module : IDisposable
     {
-        private ModuleAttributes _attributes;
-        private bool _disposed = false;
+        private bool _disposed = false; // is the module disposed already?
 
         /// <summary>
         /// The root item for the module.
@@ -36,56 +35,80 @@ namespace BlizzTV.Modules
         public ListItem RootListItem { get; protected set; }
 
         /// <summary>
-        /// Is the module currently updating it's data?
+        /// Is the module currently refreshing it's data?
         /// </summary>
-        public bool Updating { get; protected set; }
+        public bool RefreshingData { get; protected set; }
 
         /// <summary>
         /// The module's attributes.
         /// </summary>
-        public ModuleAttributes Attributes { get { return this._attributes; } internal set { this._attributes = value; } } // The module attributes.
-
-        /// <summary>
-        /// Module's bound menus on form-menu.
-        /// </summary>
-        public Dictionary<string,ToolStripMenuItem> Menus = new Dictionary<string,ToolStripMenuItem>(); // The module sub-menus.
+        public ModuleAttributes Attributes { get; set; } 
 
         protected Module()
         {
-            Updating = false;
+            RefreshingData = false;
         }
-
-        public virtual void Run() { throw new NotImplementedException(); } // Notifies the module to start running -- all of them should override this method.
-
-        public virtual Form GetPreferencesForm() { return null; } // Modules shoud override this method and return the preferences form.
-
-        public virtual bool TryDragDrop(string link) { return false; } // Modules can override this to supply drag & drop support.
-
-        public delegate void PluginUpdateStartedEventHandler(object sender);
-        public event PluginUpdateStartedEventHandler OnPluginUpdateStarted;
 
         /// <summary>
-        /// Notifies update module started it's data update.
+        /// Notifies the module to refresh it's data.
         /// </summary>
-        protected void NotifyUpdateStarted()
-        {
-            LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update started: '{0}'.", this.Attributes.Name));
-            if (OnPluginUpdateStarted != null) OnPluginUpdateStarted(this);
-        }
-
-        public delegate void PluginUpdateCompleteEventHandler(object sender,PluginUpdateCompleteEventArgs e);
-        public event PluginUpdateCompleteEventHandler OnPluginUpdateComplete;
+        public virtual void Refresh() { throw new NotImplementedException(); }
 
         /// <summary>
-        /// Notifies about module data update completed.
+        /// Returns the modules request menus.
         /// </summary>
-        /// <param name="e"><see cref="PluginUpdateCompleteEventArgs"/></param>
-        protected void NotifyUpdateComplete(PluginUpdateCompleteEventArgs e)
+        /// <returns>A dictionary of requested menus.</returns>
+        public virtual Dictionary<string, ToolStripMenuItem> GetMenus() { return null; }
+
+        /// <summary>
+        /// Returns preferences form for the module. 
+        /// Modules that would like to use configuration options should override this method and return it's preferences form.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Form GetPreferencesForm() { return null; }
+
+        /// <summary>
+        /// Returns a boolean based on if module is able to parse the supplied link.
+        /// </summary>
+        /// <param name="link">The resource url.</param>
+        /// <returns></returns>
+        public virtual bool TryDragDrop(string link) { return false; }
+
+        #region Events
+
+        /// <summary>
+        /// Notifies observers about module is refreshing it's data.
+        /// </summary>
+        public event EventHandler<EventArgs> DataRefreshStarting;
+
+        /// <summary>
+        /// Let's modules notify observers about starting of data refresh.
+        /// </summary>
+        /// <param name="e"><see cref="EventArgs"/></param>
+        protected void OnDataRefreshStarting(EventArgs e)
         {
-            if (e.Success) LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("Plugin update completed with success: '{0}'.", this.Attributes.Name));
-            else LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Plugin update failed: '{0}'.", this.Attributes.Name));
-            if (OnPluginUpdateComplete != null) OnPluginUpdateComplete(this,e); 
+            LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("[{0}] Data refresh started.", this.Attributes.Name));
+            EventHandler<EventArgs> handler = DataRefreshStarting;
+            if (handler != null) handler(this, e);
         }
+
+        /// <summary>
+        /// Notifies observers about module completed it's data refresh.
+        /// </summary>
+        public event EventHandler<DataRefreshCompletedEventArgs> DataRefreshCompleted;
+
+        /// <summary>
+        /// Let's modules notify observers about completion of it's data refresh.
+        /// </summary>
+        /// <param name="e"><see cref="EventArgs"/></param>
+        protected void OnDataRefreshCompleted(DataRefreshCompletedEventArgs e)
+        {
+            LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("[{0}] Data refresh {1}.", this.Attributes.Name, e.Succes ? "completed with success" : "failed"));
+            EventHandler<DataRefreshCompletedEventArgs> handler = DataRefreshCompleted;
+            if (handler != null) handler(this, e);
+        }
+
+        #endregion
 
         #region de-ctor
 
@@ -102,7 +125,7 @@ namespace BlizzTV.Modules
             if (this._disposed) return;
             if (disposing) // managed resources
             {
-                this._attributes = null;
+                this.Attributes = null;
                 this.RootListItem.Childs.Clear();
                 this.RootListItem = null;
             }
@@ -112,17 +135,20 @@ namespace BlizzTV.Modules
         #endregion
     }
 
-    // TODO: Check if success code is supplied all-valid by modules.
-    /// <summary>
-    /// Containts information about module data-update results.
-    /// </summary>
-    public class PluginUpdateCompleteEventArgs : EventArgs
-    {
-        public bool Success { get; private set; }
+    #region Event arguments
 
-        public PluginUpdateCompleteEventArgs(bool success)
+    /// <summary>
+    /// Stores information about module's data update complete event.
+    /// </summary>
+    public class DataRefreshCompletedEventArgs : EventArgs
+    {
+        public bool Succes { get; private set; }
+
+        public DataRefreshCompletedEventArgs(bool success)
         {
-            this.Success = success;
+            this.Succes = success;
         }
     }
+
+    #endregion
 }

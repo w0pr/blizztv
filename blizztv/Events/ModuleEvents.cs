@@ -31,7 +31,7 @@ using BlizzTV.Utility.Web;
 
 namespace BlizzTV.Events
 {
-    [ModuleAttributes("Events", "E-Sports events tracker.", "_event")]
+    [ModuleAttributes("Events", "E-Sports events tracker.", "_event", ModuleAttributes.ModuleFunctionality.RendersMenus | ModuleAttributes.ModuleFunctionality.RendersTreeItems)]
     public class ModuleEvents : Module
     {
         private List<Event> _events = new List<Event>(); // list of events.
@@ -54,13 +54,21 @@ namespace BlizzTV.Events
             this._eventsToday.Icon = eventIcon;
             this._eventsUpcoming.Icon = eventIcon;
             this._eventsOver.Icon = eventIcon;
-
-            this.Menus.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // register calender menu.
+            
             this.RootListItem.ContextMenus.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
             this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
+        
+        /// <summary>
+        /// Returns global menu items.
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, ToolStripMenuItem> GetMenus()
+        {
+            return new Dictionary<string, ToolStripMenuItem> {{ "calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked)) }};
+        }
 
-        public override void Run()
+        public override void Refresh()
         {
             this.ParseEvents();
 
@@ -72,10 +80,10 @@ namespace BlizzTV.Events
 
         private void ParseEvents()
         {
-            if (this.Updating) return; 
+            if (this.RefreshingData) return; 
 
-            this.Updating = true;
-            this.NotifyUpdateStarted();
+            this.RefreshingData = true;
+            this.OnDataRefreshStarting(EventArgs.Empty);
 
             Workload.WorkloadManager.Instance.Add(1);
             this.RootListItem.SetTitle("Updating events..");
@@ -165,8 +173,8 @@ namespace BlizzTV.Events
             this.RootListItem.SetTitle("Events");  
             Workload.WorkloadManager.Instance.Step();
 
-            this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-            this.Updating = false;
+            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
+            this.RefreshingData = false;
         }
 
         public override Form GetPreferencesForm()

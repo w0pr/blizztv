@@ -58,10 +58,10 @@ namespace BlizzTV.Feeds
             this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
-        public override void Run()
+        public override void Refresh()
         {
             this.UpdateFeeds();
-            this.SetupUpdateTimer();
+            if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
         public override bool TryDragDrop(string link) // Tries parsing a drag & dropped link to see if it's a feed and parsable.
@@ -100,10 +100,10 @@ namespace BlizzTV.Feeds
 
         private void UpdateFeeds()
         {
-            if (this.Updating) return;
+            if (this.RefreshingData) return;
 
-            this.Updating = true;
-            this.NotifyUpdateStarted();
+            this.RefreshingData = true;
+            this.OnDataRefreshStarting(EventArgs.Empty);
 
             if (this._feeds.Count > 0) // clear previous entries before doing an update.
             {
@@ -176,8 +176,8 @@ namespace BlizzTV.Feeds
             LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} feeds in {1}.", this._feeds.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds/10)));
 
             this.RootListItem.SetTitle("Feeds");
-            this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-            this.Updating = false;
+            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
+            this.RefreshingData = false;
         }
 
         private static Feed TaskProcessFeed(Feed feed)

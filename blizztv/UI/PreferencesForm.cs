@@ -148,7 +148,7 @@ namespace BlizzTV.UI
                 {
                     if (ModuleManager.Instance.InstantiatedModules.ContainsKey(item.ModuleName))
                     {
-                        if (ModuleManager.Instance.InstantiatedModules[item.ModuleName].Updating) // don't allow disabling modules that are currently updating data.
+                        if (ModuleManager.Instance.InstantiatedModules[item.ModuleName].RefreshingData) // don't allow disabling modules that are currently updating data.
                         {
                             MessageBox.Show(i18n.CanNotDeactivateUpdatingModules, string.Format(i18n.ModuleUpdating, item.ModuleName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return false;

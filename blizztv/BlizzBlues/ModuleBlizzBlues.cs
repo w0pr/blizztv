@@ -54,18 +54,18 @@ namespace BlizzTV.BlizzBlues
             this.RootListItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); 
         }
 
-        public override void Run()
+        public override void Refresh()
         {
             this.UpdateBlues();
-            this.SetupUpdateTimer();
+            if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
         private void UpdateBlues()
         {
-            if (this.Updating) return; // if module is already updating, ignore this request.
+            if (this.RefreshingData) return; // if module is already updating, ignore this request.
 
-            this.Updating = true;
-            this.NotifyUpdateStarted();
+            this.RefreshingData = true;
+            this.OnDataRefreshStarting(EventArgs.Empty);
 
             if (this._parsers.Count > 0) // reset the current data.
             {
@@ -120,8 +120,8 @@ namespace BlizzTV.BlizzBlues
             }
 
             this.RootListItem.SetTitle("BlizzBlues");
-            this.NotifyUpdateComplete(new PluginUpdateCompleteEventArgs(true));
-            this.Updating = false;
+            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
+            this.RefreshingData = false;
         }
 
         public override Form GetPreferencesForm()
