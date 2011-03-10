@@ -52,6 +52,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages
             ConnectionInfo,
             ServerInfo,
             Motd,
+            Join
         }
 
         public virtual Color ForeColor() { return Color.Black; }
