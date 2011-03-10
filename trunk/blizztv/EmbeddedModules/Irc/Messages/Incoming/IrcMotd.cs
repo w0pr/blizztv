@@ -15,9 +15,9 @@
  * $Id$
  */
 
-namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
+namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming
 {
-    [IrcMessageAttributes("372")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "372")]
     public class IrcMotd : IncomingIrcMessage
     {
         public IrcMotd(string prefix, string target, string parameters)
@@ -25,7 +25,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         { }
     }
 
-    [IrcMessageAttributes("375")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "375")]
     public class IrcMotdStart : IncomingIrcMessage
     {
         public IrcMotdStart(string prefix, string target, string parameters)
@@ -38,7 +38,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("376")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "376")]
     public class IrcMotdEnd : IncomingIrcMessage
     {
         public IrcMotdEnd(string prefix, string target, string parameters)

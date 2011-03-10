@@ -22,7 +22,8 @@ using System.Text;
 
 namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
 {
-    public class IrcUser : IrcOutgoingMessage
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Outgoing, "user")]
+    public class IrcUser : OutgoingIrcMessage
     {
         private readonly string _user;
         private readonly string _realName;

@@ -16,14 +16,21 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using BlizzTV.EmbeddedModules.Irc.Connection;
 using BlizzTV.EmbeddedModules.Irc.Messages.Incoming;
+using BlizzTV.EmbeddedModules.Irc.Messages.Outgoing;
 
 namespace BlizzTV.EmbeddedModules.Irc.UI
 {
     public partial class ServerForm : Form
     {
+        [DllImport("user32.dll")] public static extern IntPtr SendMessage(IntPtr window, int message, int wparam, int lparam);
+
+        const int WM_VSCROLL = 0x115;
+        const int SB_BOTTOM = 7;
+
         private IrcServer _ircServer;
 
         public ServerForm(IrcServer ircServer)
@@ -45,6 +52,38 @@ namespace BlizzTV.EmbeddedModules.Irc.UI
             {
                 this.textBox.SelectionColor = message.ForeColor();
                 this.textBox.SelectedText += string.Format("{0}{1}", message, Environment.NewLine);
+            }
+
+            SendMessage(this.textBox.Handle, WM_VSCROLL, SB_BOTTOM, 0);
+        }
+
+        private void AppendText(string message)
+        {
+            this.textBox.SelectionStart = this.textBox.TextLength;
+            this.textBox.Text += message;
+            SendMessage(this.textBox.Handle, WM_VSCROLL, SB_BOTTOM, 0);
+        }
+
+        private void inputBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                var input = this.inputBox.Text;
+                this.inputBox.Text = "";
+                if (input[0] != '/') return;
+
+                OutgoingIrcMessage message = null;
+
+                try
+                {
+                    message = CommandFactory.Get(input.Substring(1));
+                    if (message != null) this._ircServer.Send(message);
+                    else this.AppendText("> Unknown command.\n");
+                }
+                catch (Exception exception)
+                {
+                    this.AppendText("> Invalid command.\n");
+                }                                
             }
         }
     }

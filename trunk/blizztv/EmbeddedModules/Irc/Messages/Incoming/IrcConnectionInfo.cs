@@ -12,15 +12,15 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see 
  * <http://www.gnu.org/licenses/>. 
  * 
- * $Id: IrcMotd.cs 457 2011-03-10 14:58:27Z shalafiraistlin@gmail.com $
+ * $Id$
  */
 
 using System;
 using System.Text.RegularExpressions;
 
-namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
+namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming
 {
-    [IrcMessageAttributes("001")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "001")]
     public class IrcReplyWelcome : IncomingIrcMessage
     {
         public IrcReplyWelcome(string prefix, string target, string parameters)
@@ -33,7 +33,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("002")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "002")]
     public class IrcReplyYourHost : IncomingIrcMessage
     {
         public IrcReplyYourHost(string prefix, string target, string parameters)
@@ -46,7 +46,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("003")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "003")]
     public class IrcHostCreatedDate : IncomingIrcMessage
     {
         public IrcHostCreatedDate(string prefix, string target, string parameters)
@@ -59,7 +59,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("004")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "004")]
     public class IrcReplyServerInfo : IncomingIrcMessage
     {
         private static readonly Regex Regex = new Regex(@"(?<servername>.*?) (?<version>.*?) (?<usermodes>.*?) (?<channelmodes>.*)", RegexOptions.Compiled);
@@ -87,7 +87,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("251")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "251")]
     public class IrcReplyUsersInfo : IncomingIrcMessage
     {
         public IrcReplyUsersInfo(string prefix, string target, string parameters)
@@ -100,7 +100,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("252")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "252")]
     public class IrcReplyOpsInfo : IncomingIrcMessage
     {
         private static readonly Regex Regex = new Regex(@"(?<operatorcount>.*?) :.*", RegexOptions.Compiled);
@@ -122,7 +122,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("253")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "253")]
     public class IrcReplyUnknownInfo : IncomingIrcMessage
     {
         private static readonly Regex Regex = new Regex(@"(?<unknownconnections>.*?) :.*", RegexOptions.Compiled);
@@ -144,7 +144,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("254")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "254")]
     public class IrcReplyChannelsInfo : IncomingIrcMessage
     {
         private static readonly Regex Regex = new Regex(@"(?<channelscount>.*?) :.*", RegexOptions.Compiled);
@@ -166,7 +166,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
         }
     }
 
-    [IrcMessageAttributes("255")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "255")]
     public class IrcSelfUsersInfo : IncomingIrcMessage
     {
         public IrcSelfUsersInfo(string prefix, string target, string parameters)

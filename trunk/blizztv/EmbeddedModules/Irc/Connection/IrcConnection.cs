@@ -110,7 +110,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
             return message;
         }
 
-        public void Send(IrcOutgoingMessage message)
+        public void Send(OutgoingIrcMessage message)
         {
             var raw = string.Format("{0}\r\n", message.GetRawMessage());
             var sendBuffer = Encoding.UTF8.GetBytes(raw);

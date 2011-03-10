@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using BlizzTV.EmbeddedModules.Irc.Messages;
 using BlizzTV.EmbeddedModules.Irc.Messages.Incoming;
-using BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection;
 using BlizzTV.EmbeddedModules.Irc.Messages.Outgoing;
 using BlizzTV.EmbeddedModules.Irc.UI;
 using BlizzTV.InfraStructure.Modules;
@@ -79,12 +78,11 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
             this.Send(new IrcUser("blizztv", "Hüseyin Uslu"));
         }
 
-        public void Send(IrcOutgoingMessage message)
+        public void Send(OutgoingIrcMessage message)
         {
             if (!this.Connected) return;
             this._connection.Send(message);
         }
-
 
         private void MessageRecieved(object sender, IrcMessageEventArgs e)
         {
