@@ -17,11 +17,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using BlizzTV.Log;
 
 namespace BlizzTV.IRCLibrary.Connection
 {
@@ -30,13 +30,17 @@ namespace BlizzTV.IRCLibrary.Connection
         public string Hostname { get; private set; }
         public int Port { get; private set; }
 
-        private Socket _socket;
+        private readonly Socket _socket;
+        private byte[] _inputBuffer;
+        private int _bufferPosition = 0;
 
         public IrcConnection(string hostname, int port)
         {
-            this.Hostname = hostname;
-            this.Port = port;
             this._socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this._inputBuffer = new byte[0xFFF];
+
+            this.Hostname = hostname;
+            this.Port = port;            
         }
 
         public void Connect()
@@ -46,19 +50,117 @@ namespace BlizzTV.IRCLibrary.Connection
         }
 
         private void ConnectAsync(EndPoint remoteEndPoint)
-        {
-            LogManager.Instance.Write(Log.LogMessageTypes.Info, string.Format("IRCConnection: Connecting to {0}:{1}", this.Hostname, this.Port));
-
-            var socketAsyncEventArgs = new SocketAsyncEventArgs {RemoteEndPoint = remoteEndPoint};
-            socketAsyncEventArgs.Completed += SocketConnectionCompleted;
-            this._socket.ConnectAsync(socketAsyncEventArgs);
+        {           
+            var connectEventArgs = new SocketAsyncEventArgs {RemoteEndPoint = remoteEndPoint};
+            connectEventArgs.Completed += ConnectAsynCompleted;
+            this._socket.ConnectAsync(connectEventArgs);
         }
 
-        private void SocketConnectionCompleted(object sender, SocketAsyncEventArgs e)
+        private void ConnectAsynCompleted(object sender, SocketAsyncEventArgs e)
         {
-            if (e.SocketError != SocketError.Success) throw new SocketException((int) e.SocketError);
+            this.OnConnectionCompleted(e.SocketError == SocketError.Success ? new IrcConnectionCompletedEventArgs(true) : new IrcConnectionCompletedEventArgs(false, new SocketException((int) e.SocketError)));
+            this.RecvAsync();
+        }
 
-            
+        private void RecvAsync()
+        {
+            var recvBuffer = new byte[0xFFF];
+            var recieveEventArgs = new SocketAsyncEventArgs();
+            recieveEventArgs.SetBuffer(recvBuffer, 0, recvBuffer.Length);
+            recieveEventArgs.Completed += AsyncRecvCompleted;
+            this._socket.ReceiveAsync(recieveEventArgs);
+        }
+
+        private void AsyncRecvCompleted(object sender, SocketAsyncEventArgs e)
+        {
+            if (e.SocketError != SocketError.Success) throw new SocketException((int)e.SocketError);
+            if (this._socket == null || this._socket.Connected == false) return;
+
+            Buffer.BlockCopy(e.Buffer, 0, this._inputBuffer, _bufferPosition, e.BytesTransferred);
+            this._bufferPosition += e.BytesTransferred;
+
+            string message;
+
+            do
+            {
+                message = ExtractMessage(ref this._inputBuffer, ref this._bufferPosition);
+                if (string.IsNullOrEmpty(message)) continue;
+                this.OnMessageRecieved(new IrcMessageEventArgs(message));
+            } while (message != string.Empty);
+
+            this.RecvAsync();
+        }
+
+        /* http://stackoverflow.com/questions/3554302/irc-using-networkstream-buffer-fills-and-line-gets-chomped */
+        private static string ExtractMessage(ref byte[] buffer, ref int lenght)
+        {
+            var message = string.Empty;
+            var stringBuffer = Encoding.UTF8.GetString(buffer, 0, lenght);
+            var lineBreakPosition = stringBuffer.IndexOf("\r\n");
+
+            if(lineBreakPosition > -1)
+            {
+                message = stringBuffer.Substring(0, lineBreakPosition);
+                var tempBuffer = new byte[0xFFF];
+                lenght = lenght - message.Length - 2;
+                if (lenght > 0)
+                {
+                    Array.Copy(buffer, lineBreakPosition + 2, tempBuffer, 0, lenght);
+                    buffer = tempBuffer;
+                }
+            }
+            return message;
+        }
+
+        public void Send(string message)
+        {
+            message = string.Format("{0}\r\n", message);
+            var sendBuffer = Encoding.UTF8.GetBytes(message);
+            var sendEventArgs = new SocketAsyncEventArgs();
+            sendEventArgs.SetBuffer(sendBuffer, 0, sendBuffer.Length);
+            this._socket.SendAsync(sendEventArgs);
+        }
+
+        #region Events
+
+        public EventHandler<IrcMessageEventArgs> MessageRecieved;
+
+        private void OnMessageRecieved(IrcMessageEventArgs e)
+        {
+            EventHandler<IrcMessageEventArgs> handler = MessageRecieved;
+            if (handler != null) handler(this, e);
+        }
+
+        public EventHandler<IrcConnectionCompletedEventArgs> ConnectionCompleted;
+
+        private void OnConnectionCompleted(IrcConnectionCompletedEventArgs e)
+        {
+            EventHandler<IrcConnectionCompletedEventArgs> handler = ConnectionCompleted;
+            if (handler != null) handler(this, e);
+        }
+
+        #endregion
+    }
+
+    #region Event arguments
+
+    public class IrcConnectionCompletedEventArgs : EventArgs
+    {
+        public bool Success { get; private set; }
+        public Exception Exception { get; private set; }
+
+        public IrcConnectionCompletedEventArgs(bool success, Exception exception = null)
+        {
+            this.Success = success;
+            this.Exception = exception;
         }
     }
+
+    public class IrcMessageEventArgs : EventArgs
+    {
+        public string Message {get; private set;}
+        public IrcMessageEventArgs(string message) { this.Message = message; }
+    }
+
+    #endregion 
 }

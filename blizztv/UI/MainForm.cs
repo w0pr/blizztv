@@ -196,7 +196,7 @@ namespace BlizzTV.UI
             });
         }
 
-        void ModuleDataRefreshStarting(object sender, EventArgs e)
+        private void ModuleDataRefreshStarting(object sender, EventArgs e)
         {
             this.TreeView.InvokeHandler(() =>
             {
@@ -211,7 +211,7 @@ namespace BlizzTV.UI
             });
         }
 
-        void ModuleDataRefreshCompleted(object sender, DataRefreshCompletedEventArgs e)
+        private void ModuleDataRefreshCompleted(object sender, DataRefreshCompletedEventArgs e)
         {
             this.TreeView.InvokeHandler(() =>
             {

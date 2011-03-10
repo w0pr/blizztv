@@ -27,7 +27,7 @@ namespace BlizzTV.IRCLibrary
     {
         public IrcClient()
         {
-            var server = new IrcServer("Quakenet", "uk.quakenet.org", 6667);
+            var server = new IrcServer("Quakenet", "127.0.0.1", 6667);
             server.Connect();
         }
     }
