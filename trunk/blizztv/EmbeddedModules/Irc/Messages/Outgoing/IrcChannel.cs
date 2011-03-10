@@ -23,11 +23,11 @@ using System.Text;
 namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
 {
     [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Outgoing, "join")]
-    public class IrcChannelJoin : OutgoingIrcMessage
+    public class IrcJoinChannel : OutgoingIrcMessage
     {
         private readonly string _channel;
 
-        public IrcChannelJoin(string channel)
+        public IrcJoinChannel(string channel)
             : base(MessageTypes.Nick)
         {
             this._channel = channel;

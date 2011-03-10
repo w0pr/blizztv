@@ -17,12 +17,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BlizzTV.EmbeddedModules.Irc.Messages;
 using BlizzTV.EmbeddedModules.Irc.Messages.Incoming;
 using BlizzTV.EmbeddedModules.Irc.Messages.Outgoing;
 using BlizzTV.EmbeddedModules.Irc.UI;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Log;
+using IrcChannelJoin = BlizzTV.EmbeddedModules.Irc.Messages.Incoming.IrcChannelJoin;
 
 namespace BlizzTV.EmbeddedModules.Irc.Connection
 {
@@ -36,6 +38,8 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
         public string ServerVersion { get; private set; }
         public string AvailableUserModes { get; private set; }
         public string AvailableServerModes { get; private set; }
+        public string Nickname { get; private set; }
+        private Dictionary<string, IrcChannel> _channels = new Dictionary<string, IrcChannel>();
 
         private IrcConnection _connection = null;
         public readonly List<IrcMessage> MessageBackLog = new List<IrcMessage>();
@@ -46,6 +50,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
             this.ServerName = this.Hostname;
             this.Port = port;
             this.Connected = false;
+            this.Nickname = "blizztv";
         }
 
         public void Connect()
@@ -74,8 +79,8 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
             }
 
             this.Connected = true;
-            this.Send(new IrcNick("blizztv"));
-            this.Send(new IrcUser("blizztv", "Hüseyin Uslu"));
+            this.Send(new IrcNick(this.Nickname));
+            this.Send(new IrcUser("blizztv", "blizztv-user"));
         }
 
         public void Send(OutgoingIrcMessage message)
@@ -91,8 +96,6 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
 
         private void ParseMessage(string line)
         {
-            try
-            {
                 var prefix = string.Empty;
                 var command = string.Empty;
                 var target = string.Empty;
@@ -121,13 +124,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
 
                 var message = Factory.Parse(prefix, command, target, parameters);
                 if (message != null) this.RouteMessage(message);
-                else
-                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Unknown message type recieved: {0}:{1}:{2}", prefix, command, parameters));
-            }
-            catch(Exception e)
-            {
-                
-            }
+                else LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Unknown message type recieved: {0}:{1}:{2}", prefix, command, parameters));
         }
 
         private void RouteMessage(IncomingIrcMessage message)
@@ -140,6 +137,31 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
                 case IrcMessage.MessageTypes.ServerInfo:
                 case IrcMessage.MessageTypes.Motd:
                     this.ProcessMessage(message);
+                    break;
+                case IrcMessage.MessageTypes.Join:
+                    this.RouteChannelMessages(message);
+                    break;
+            }
+        }
+
+        public void RouteChannelMessages(IncomingIrcMessage message)
+        {
+            switch (message.Type)
+            {
+                case IrcMessage.MessageTypes.Join:
+                    if (((IrcChannelJoin)message).Source.Name == this.Nickname)
+                    {
+                        var channel = new IrcChannel((IrcChannelJoin)message);
+                        this._channels.Add(((IrcChannelJoin)message).ChannelName, channel);
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<string, IrcChannel> pair in this._channels.Where(pair => ((IrcChannelJoin) message).ChannelName == pair.Key))
+                        {
+                            pair.Value.ProcessMessage(message);
+                            break;
+                        }
+                    }
                     break;
             }
         }
@@ -162,7 +184,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
                     this.ServerVersion = ((IrcReplyServerInfo)message).ServerVersion;
                     this.AvailableUserModes = ((IrcReplyServerInfo)message).UserModes;
                     this.AvailableServerModes = ((IrcReplyServerInfo)message).ChannelModes;
-                break;
+                    break;
             }
         }
 
