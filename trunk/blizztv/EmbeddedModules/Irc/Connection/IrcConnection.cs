@@ -16,14 +16,12 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using BlizzTV.EmbeddedModules.Irc.Messages.Outgoing;
 
-namespace BlizzTV.IRCLibrary.Connection
+namespace BlizzTV.EmbeddedModules.Irc.Connection
 {
     public class IrcConnection
     {
@@ -112,10 +110,10 @@ namespace BlizzTV.IRCLibrary.Connection
             return message;
         }
 
-        public void Send(string message)
+        public void Send(IrcOutgoingMessage message)
         {
-            message = string.Format("{0}\r\n", message);
-            var sendBuffer = Encoding.UTF8.GetBytes(message);
+            var raw = string.Format("{0}\r\n", message.GetRawMessage());
+            var sendBuffer = Encoding.UTF8.GetBytes(raw);
             var sendEventArgs = new SocketAsyncEventArgs();
             sendEventArgs.SetBuffer(sendBuffer, 0, sendBuffer.Length);
             this._socket.SendAsync(sendEventArgs);
