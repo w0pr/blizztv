@@ -25,61 +25,46 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages
 {
     public class IrcMessage
     {
-        public string Prefix { get; protected set; }
-        public string Target { get; protected set; }
-        public string Parameters { get; protected set; }
-        public Directions Direction { get; protected set; }
-        public IrcMessageAttributes.MessageTypes Type { get; set; }
+        public string Prefix { get; private set; }
+        public string Target { get; private set; }
+        public string Parameters { get; private set; }
+        public MessageTypes Type { get; private set; }
 
-        public IrcMessage(Directions direction)
-        {
-            this.Direction = direction;
+        public IrcMessage(MessageTypes type) : this(type, string.Empty, string.Empty, string.Empty)
+        {            
         }
 
-        public IrcMessage(string prefix, string target, string parameters, Directions direction)
+        public IrcMessage(MessageTypes type, string prefix, string target, string parameters)
         {
+            this.Type = type;
             this.Prefix = prefix;
             this.Target = target;
             this.Parameters = parameters;
-            this.Direction = direction;
+        }
+
+        public enum MessageTypes
+        {
+            Nick,
+            User,
+            Notice,
+            Ping,
+            Pong,
+            ConnectionInfo,
+            ServerInfo,
+            Motd,
         }
 
         public virtual Color ForeColor() { return Color.Black; }
-
-        public enum Directions
-        {
-            Incoming,
-            Outgoing
-        }
     }
 
     [AttributeUsage(AttributeTargets.Class)]
     public class IrcMessageAttributes : Attribute
     {
-        public MessageTypes Type { get; private set; }
+        public string CommandId { get; private set; }
 
-        public IrcMessageAttributes(MessageTypes type)
+        public IrcMessageAttributes(string commandId)
         {
-            this.Type = type;
-        }
-
-        public enum MessageTypes
-        {
-            Notice,
-            Ping,
-            ServerMsg001,
-            ServerMsg002,
-            ServerMsg003,
-            ServerMsg004,
-            ServerMsg251,
-            ServerMsg252,
-            ServerMsg253,
-            ServerMsg254,
-            ServerMsg255,
-            ServerMsg372, /* motd */
-            ServerMsg375, /* motd start */
-            ServerMsg376, /* end of motd */
-            
+            this.CommandId = commandId;
         }
     }
 }

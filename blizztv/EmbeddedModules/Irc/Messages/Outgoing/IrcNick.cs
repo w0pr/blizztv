@@ -26,7 +26,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
     {
         private readonly string _nick;
 
-        public IrcNick(string nick)
+        public IrcNick(string nick):base(MessageTypes.Nick)
         {
             this._nick = nick;
         }

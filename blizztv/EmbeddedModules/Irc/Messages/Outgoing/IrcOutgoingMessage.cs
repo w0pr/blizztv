@@ -24,8 +24,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
 {
     public class IrcOutgoingMessage:IrcMessage
     {
-        public IrcOutgoingMessage():
-            base(Directions.Outgoing)
+        public IrcOutgoingMessage(MessageTypes type):base(type)
         { }
 
         public virtual string GetRawMessage()

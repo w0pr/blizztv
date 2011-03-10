@@ -26,7 +26,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
     {
         private string _code;
 
-        public IrcPong(string code)
+        public IrcPong(string code):base(MessageTypes.Pong)
         {
             this._code = code;    
         }
