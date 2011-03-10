@@ -47,6 +47,7 @@
             this.textBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.textBox.Size = new System.Drawing.Size(624, 416);
             this.textBox.TabIndex = 0;
+            this.textBox.TabStop = false;
             this.textBox.Text = "";
             // 
             // inputBox
@@ -57,7 +58,8 @@
             this.inputBox.Location = new System.Drawing.Point(0, 418);
             this.inputBox.Name = "inputBox";
             this.inputBox.Size = new System.Drawing.Size(624, 26);
-            this.inputBox.TabIndex = 1;
+            this.inputBox.TabIndex = 0;
+            this.inputBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputBox_KeyPress);
             // 
             // ServerForm
             // 

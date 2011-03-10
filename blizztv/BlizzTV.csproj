@@ -143,19 +143,21 @@
     <Compile Include="Controls\Panels\GradientPanel.Designer.cs">
       <DependentUpon>GradientPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmbeddedModules\Irc\CommandFactory.cs" />
     <Compile Include="EmbeddedModules\Irc\IrcModule.cs" />
     <Compile Include="EmbeddedModules\Irc\Connection\IrcConnection.cs" />
     <Compile Include="EmbeddedModules\Irc\IrcClient.cs" />
     <Compile Include="EmbeddedModules\Irc\Connection\IrcServer.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Factory.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\IMessageConsumer.cs" />
-    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcConnectionInfo.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcConnectionInfo.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IncomingIrcMessage.cs" />
-    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcMotd.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcMotd.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcNotice.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcPing.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\IrcMessage.cs" />
-    <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcOutgoingMessage.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcChannel.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\OutgoingIrcMessage.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcNick.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcPong.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcUser.cs" />

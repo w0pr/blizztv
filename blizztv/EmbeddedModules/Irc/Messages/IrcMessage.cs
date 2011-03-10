@@ -60,11 +60,19 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages
     [AttributeUsage(AttributeTargets.Class)]
     public class IrcMessageAttributes : Attribute
     {
-        public string CommandId { get; private set; }
+        public string Command { get; private set; }
+        public MessageDirection Direction { get; private set; }
 
-        public IrcMessageAttributes(string commandId)
+        public IrcMessageAttributes(MessageDirection direction, string commandId)
         {
-            this.CommandId = commandId;
+            this.Direction = direction;
+            this.Command = commandId;
+        }
+
+        public enum MessageDirection
+        {
+            Incoming,
+            Outgoing
         }
     }
 }

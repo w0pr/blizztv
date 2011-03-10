@@ -22,7 +22,7 @@ using System.Text;
 
 namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming
 {
-    [IrcMessageAttributes("ping")]
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "ping")]
     public class IrcPing : IncomingIrcMessage
     {
         public string Code { get; private set; }

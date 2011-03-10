@@ -37,16 +37,15 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages
             {
                 if (!t.IsSubclassOf(typeof (IncomingIrcMessage))) continue;
 
-                object[] attr = t.GetCustomAttributes(typeof(IrcMessageAttributes), true); 
-                if(attr.Length>0) IncomingMessagesTypes.Add(((IrcMessageAttributes) attr[0]).CommandId,t);
+                object[] attr = t.GetCustomAttributes(typeof(IrcMessageAttributes), true);
+                if (attr.Length <= 0) continue;
+                if (((IrcMessageAttributes)attr[0]).Direction == IrcMessageAttributes.MessageDirection.Incoming) IncomingMessagesTypes.Add(((IrcMessageAttributes) attr[0]).Command, t);
             }            
         }
 
         public static IncomingIrcMessage Parse(string prefix, string command, string target, string parameters)
         {
             IncomingIrcMessage message = null;
-
-            command = Regex.Replace(command, @"\s", "");
 
             foreach (KeyValuePair<string, Type> pair in IncomingMessagesTypes.Where(pair => EnUsCulture.ToLower(command) == pair.Key))
             {

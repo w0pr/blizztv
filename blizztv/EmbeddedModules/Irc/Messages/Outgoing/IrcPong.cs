@@ -22,7 +22,8 @@ using System.Text;
 
 namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
 {
-    public class IrcPong : IrcOutgoingMessage
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Outgoing, "pong")]
+    public class IrcPong : OutgoingIrcMessage
     {
         private string _code;
 

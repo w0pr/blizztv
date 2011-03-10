@@ -17,26 +17,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming
+namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
 {
-    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Incoming, "notice")]
-    public class IrcNotice : IncomingIrcMessage
+    public class OutgoingIrcMessage:IrcMessage
     {
-        public IrcNotice(string prefix, string target, string parameters)
-            : base(MessageTypes.Notice,prefix, target, parameters) { }
+        public OutgoingIrcMessage(MessageTypes type):base(type)
+        { }
 
-        public override string ToString()
+        public virtual string GetRawMessage()
         {
-            return string.Format("-{0}",this.Parameters);
-        }
-
-        public override System.Drawing.Color ForeColor()
-        {
-            return Color.DarkMagenta;
+            return string.Empty;
         }
     }
 }

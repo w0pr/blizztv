@@ -22,7 +22,8 @@ using System.Text;
 
 namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
 {
-    public class IrcNick : IrcOutgoingMessage
+    [IrcMessageAttributes(IrcMessageAttributes.MessageDirection.Outgoing, "nick")]
+    public class IrcNick : OutgoingIrcMessage
     {
         private readonly string _nick;
 
