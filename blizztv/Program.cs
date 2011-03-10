@@ -75,9 +75,17 @@ namespace BlizzTV
             if (UI.Settings.Instance.EnableDebugConsole) DebugConsole.Instance.EnableDebugConsole(); else DebugConsole.Instance.DisableDebugConsole();
             if (UI.Settings.Instance.EnableDebugLogging) LogManager.Instance.EnableLogger(); else LogManager.Instance.DisableLogger();
 
+            // handle any non-processed exceptions.
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
             if (!DependencyManager.Instance.Satisfied()) { Environment.Exit(-1); } // check if dependencies are satisfied.
 
             LogManager.Instance.Write(LogMessageTypes.Info, string.Format("BlizzTV v{0} started.", Assembly.GetExecutingAssembly().GetName().Version)); // log the program name & version at the startup.
+        }
+
+        static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            LogManager.Instance.Write(LogMessageTypes.Error, string.Format("{0}: {1}", e.IsTerminating ? "Application terminating because of un-handled exception" : "Caught unhandled exception: ", e.ExceptionObject));
         }
     }
 }

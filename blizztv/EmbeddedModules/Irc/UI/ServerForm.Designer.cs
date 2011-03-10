@@ -45,7 +45,7 @@
             this.textBox.Name = "textBox";
             this.textBox.ReadOnly = true;
             this.textBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.textBox.Size = new System.Drawing.Size(624, 244);
+            this.textBox.Size = new System.Drawing.Size(624, 248);
             this.textBox.TabIndex = 0;
             this.textBox.TabStop = false;
             this.textBox.Text = "";
@@ -55,7 +55,7 @@
             this.inputBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.inputBox.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.inputBox.Location = new System.Drawing.Point(0, 246);
+            this.inputBox.Location = new System.Drawing.Point(0, 250);
             this.inputBox.Name = "inputBox";
             this.inputBox.Size = new System.Drawing.Size(624, 20);
             this.inputBox.TabIndex = 0;
