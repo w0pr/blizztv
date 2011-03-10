@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BlizzTV.IRCLibrary.Connection;
+using BlizzTV.Log;
 
 namespace BlizzTV.IRCLibrary.Server
 {
@@ -43,9 +44,32 @@ namespace BlizzTV.IRCLibrary.Server
         public void Connect()
         {
             if (this.Connected) return;
-            if (this._connection == null) this._connection = new IrcConnection(this.Hostname, this.Port);
+            
+            if (this._connection == null)
+            {
+                this._connection = new IrcConnection(this.Hostname, this.Port);
+                this._connection.MessageRecieved += MessageRecieved;
+                this._connection.ConnectionCompleted += ConnectionCompleted;
+            }
 
+            LogManager.Instance.Write(LogMessageTypes.Info, string.Format("IrcClient connecting to {0}:{1}.", this.Hostname, this.Port));
             this._connection.Connect();
+        }
+
+        private void ConnectionCompleted(object sender, IrcConnectionCompletedEventArgs e)
+        {
+            LogManager.Instance.Write(LogMessageTypes.Info, string.Format("IrcClient {0} to {1}:{2}.", e.Success ? "connected" : "failed to connect", this.Hostname, this.Port));
+            this.Send("NICK blizztvdev");
+        }
+
+        private void MessageRecieved(object sender, IrcMessageEventArgs e)
+        {
+            Log.LogManager.Instance.Write(LogMessageTypes.Info, string.Format("IRCMessage: {0}", e.Message));
+        }
+
+        public void Send(string message)
+        {
+            this._connection.Send(message);
         }
     }
 }
