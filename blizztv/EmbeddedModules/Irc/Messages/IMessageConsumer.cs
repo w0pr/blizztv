@@ -19,16 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BlizzTV.IRCLibrary.Server;
+using BlizzTV.EmbeddedModules.Irc.Messages.Incoming;
 
-namespace BlizzTV.IRCLibrary
+namespace BlizzTV.EmbeddedModules.Irc.Messages
 {
-    public class IrcClient
+    public interface IMessageConsumer
     {
-        public IrcClient()
-        {
-            var server = new IrcServer("Quakenet", "127.0.0.1", 6667);
-            server.Connect();
-        }
+        void ProcessMessage(IncomingIrcMessage message);
     }
 }

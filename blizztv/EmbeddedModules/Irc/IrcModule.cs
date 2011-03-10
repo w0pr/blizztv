@@ -15,22 +15,42 @@
  * $Id$
  */
 
+using System;
+using BlizzTV.EmbeddedModules.Irc;
+using BlizzTV.EmbeddedModules.Irc.Connection;
 using BlizzTV.InfraStructure.Modules;
-using BlizzTV.IRCLibrary;
+using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.IRC
 {
-    [ModuleAttributes("IRC-Client", "IRC client module.", "_event", ModuleAttributes.ModuleFunctionality.RendersMenus)]
+    [ModuleAttributes("IRC-Client", "IRC client module.", "_event", ModuleAttributes.ModuleFunctionality.RendersMenus | ModuleAttributes.ModuleFunctionality.RendersTreeItems)]
     public class IrcModule : Module
     {
-        public IrcModule()
-        {
-            
-        }
+        private IrcClient ircClient;
+        private readonly ListItem _rootItem = new ListItem("IRC") { Icon = new NamedImage("irc", Assets.Images.Icons.Png._16.feed) };
+
+        public IrcModule() { }
 
         public override void Startup()
         {
-            var ircClient = new IrcClient();
+            this.ircClient = new IrcClient();
+        }
+
+        public override ListItem GetRootItem()
+        {
+            return this._rootItem;
+        }
+
+        public override void Refresh()
+        {
+            this.OnDataRefreshStarting(EventArgs.Empty); 
+          
+            foreach(IrcServer server in this.ircClient.ActiveServers)
+            {
+                this._rootItem.Childs.Add(server.Title, server);
+            }
+            
+            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
         }
     }
 }

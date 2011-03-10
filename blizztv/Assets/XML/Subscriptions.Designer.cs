@@ -76,8 +76,8 @@ namespace BlizzTV.Assets.XML {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;Providers xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;Provider xsi:type=&quot;Stream&quot; Name=&quot;LiveStream&quot; Movie=&quot;http://cdn.livestream.com/grid/LSPlayer.swf&quot; FlashVars=&quot;channel=%slug%&amp;amp;autoPlay=true&quot; ChatMovie=&quot;http://cdn.livestream.com/chat/LivestreamChat.swf?&amp;amp;showTimestamp=true&amp;amp;channel=%slug%&quot; RegEx=&quot;http://www.livestream.com/(?&amp;lt;Slug&amp;gt;.*)&quot; FormatHint=&quot;http://www.livestream.com/&amp;lt;slug&amp;gt;&quot; /&gt;
-        ///  &lt;Provider xsi:typ [rest of string was truncated]&quot;;.
+        ///  &lt;Provider xsi:type=&quot;Stream&quot; Name=&quot;LiveStream&quot; Player=&quot;Flash&quot; Movie=&quot;http://cdn.livestream.com/grid/LSPlayer.swf?channel=%slug%&amp;amp;autoPlay=true&quot; ChatMovie=&quot;http://cdn.livestream.com/chat/LivestreamChat.swf?&amp;amp;showTimestamp=true&amp;amp;channel=%slug%&quot; URLRegEx=&quot;http://www.livestream.com/(?&amp;lt;Slug&amp;gt;.*)&quot; URLHint=&quot;http://www.livestream.com/&amp;lt;slug&amp;gt;&quot; /&gt;
+        ///  &lt;Provider xsi: [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Providers {
             get {

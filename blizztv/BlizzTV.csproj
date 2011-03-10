@@ -11,7 +11,8 @@
     <RootNamespace>BlizzTV</RootNamespace>
     <AssemblyName>BlizzTV</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -143,9 +144,37 @@
       <DependentUpon>GradientPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="EmbeddedModules\Irc\IrcModule.cs" />
-    <Compile Include="IRCLibrary\Connection\IrcConnection.cs" />
-    <Compile Include="IRCLibrary\IrcClient.cs" />
-    <Compile Include="IRCLibrary\Server\IrcServer.cs" />
+    <Compile Include="EmbeddedModules\Irc\Connection\IrcConnection.cs" />
+    <Compile Include="EmbeddedModules\Irc\IrcClient.cs" />
+    <Compile Include="EmbeddedModules\Irc\Connection\IrcServer.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Factory.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\IMessageConsumer.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IncomingIrcMessage.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcMotd.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcMotdEnd.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcMotdStart.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcNotice.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcPing.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplyChannelsInfo.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplyOpsInfo.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplySelfUsersInfo.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplyServerInfo.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplyUnknownInfo.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplyYourHost.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplyHostCreatedDate.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplyWelcome.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\Connection\IrcReplyUsersInfo.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\IrcMessage.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcOutgoingMessage.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcNick.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcPong.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcUser.cs" />
+    <Compile Include="EmbeddedModules\Irc\UI\ServerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmbeddedModules\Irc\UI\ServerForm.Designer.cs">
+      <DependentUpon>ServerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Media\Controls\WMP\WMPPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -473,6 +502,9 @@
     <EmbeddedResource Include="Downloads\DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedModules\Irc\UI\ServerForm.resx">
+      <DependentUpon>ServerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InfraStructure\Modules\Subscriptions\Catalog\CatalogBrowser.resx">
       <DependentUpon>CatalogBrowser.cs</DependentUpon>
     </EmbeddedResource>
@@ -578,6 +610,7 @@
   <ItemGroup>
     <Content Include="app.ico" />
     <EmbeddedResource Include="Assets\Assemblies\Microsoft.mshtml.dll" />
+    <None Include="app.config" />
     <None Include="Resources\update.png" />
     <None Include="Resources\download.png" />
     <None Include="Resources\video.png" />
