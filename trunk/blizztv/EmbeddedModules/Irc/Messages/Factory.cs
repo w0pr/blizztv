@@ -23,6 +23,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using BlizzTV.EmbeddedModules.Irc.Messages.Incoming;
+using BlizzTV.Log;
 
 namespace BlizzTV.EmbeddedModules.Irc.Messages
 {
@@ -37,10 +38,15 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages
             {
                 if (!t.IsSubclassOf(typeof (IncomingIrcMessage))) continue;
 
-                object[] attr = t.GetCustomAttributes(typeof(IrcMessageAttributes), true);
+                object[] attr = t.GetCustomAttributes(typeof (IrcMessageAttributes), true);
                 if (attr.Length <= 0) continue;
-                if (((IrcMessageAttributes)attr[0]).Direction == IrcMessageAttributes.MessageDirection.Incoming) IncomingMessagesTypes.Add(((IrcMessageAttributes) attr[0]).Command, t);
-            }            
+
+                var attributes = ((IrcMessageAttributes) attr[0]);
+                if (attributes.Direction != IrcMessageAttributes.MessageDirection.Incoming) continue;
+
+                if (!IncomingMessagesTypes.ContainsKey(attributes.Command)) IncomingMessagesTypes.Add(attributes.Command, t);
+                else LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Can't register incoming-message '{0}' as a message with same key is already registered.", attributes.Command));
+            }
         }
 
         public static IncomingIrcMessage Parse(string prefix, string command, string target, string parameters)

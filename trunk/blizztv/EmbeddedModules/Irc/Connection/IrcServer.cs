@@ -24,7 +24,6 @@ using BlizzTV.EmbeddedModules.Irc.Messages.Outgoing;
 using BlizzTV.EmbeddedModules.Irc.UI;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Log;
-using IrcChannelJoin = BlizzTV.EmbeddedModules.Irc.Messages.Incoming.IrcChannelJoin;
 
 namespace BlizzTV.EmbeddedModules.Irc.Connection
 {
@@ -120,7 +119,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
                     if (line[0] == ':') line = line.Substring(1);
                 }
 
-                parameters = line;
+                parameters = line.Trim();
 
                 var message = Factory.Parse(prefix, command, target, parameters);
                 if (message != null) this.RouteMessage(message);
@@ -139,30 +138,29 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
                     this.ProcessMessage(message);
                     break;
                 case IrcMessage.MessageTypes.Join:
-                    this.RouteChannelMessages(message);
+                case IrcMessage.MessageTypes.NamesList:
+                case IrcMessage.MessageTypes.EndofNames:
+                    this.RouteChannelMessages((IrcChannelMessage)message);
                     break;
             }
         }
 
-        public void RouteChannelMessages(IncomingIrcMessage message)
+        public void RouteChannelMessages(IrcChannelMessage message)
         {
-            switch (message.Type)
+            if(message.Type== IrcMessage.MessageTypes.Join)
             {
-                case IrcMessage.MessageTypes.Join:
-                    if (((IrcChannelJoin)message).Source.Name == this.Nickname)
-                    {
-                        var channel = new IrcChannel((IrcChannelJoin)message);
-                        this._channels.Add(((IrcChannelJoin)message).ChannelName, channel);
-                    }
-                    else
-                    {
-                        foreach (KeyValuePair<string, IrcChannel> pair in this._channels.Where(pair => ((IrcChannelJoin) message).ChannelName == pair.Key))
-                        {
-                            pair.Value.ProcessMessage(message);
-                            break;
-                        }
-                    }
-                    break;
+                if (((IrcJoin)message).Source.Name == this.Nickname)
+                {
+                    var channel = new IrcChannel((IrcJoin)message);
+                    this._channels.Add(((IrcJoin)message).ChannelName, channel);
+                    return;
+                }
+            }
+
+            foreach (KeyValuePair<string, IrcChannel> pair in this._channels.Where(pair => message.ChannelName == pair.Key))
+            {
+                pair.Value.ProcessMessage(message);
+                break;
             }
         }
 
