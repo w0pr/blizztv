@@ -27,7 +27,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Outgoing
         private readonly string _user;
         private readonly string _realName;
 
-        public IrcUser(string user, string realName)
+        public IrcUser(string user, string realName):base(MessageTypes.User)
         {
             this._user = user;
             this._realName = realName;

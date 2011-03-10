@@ -17,17 +17,37 @@
 
 namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming.Connection
 {
-    [IrcMessageAttributes(IrcMessageAttributes.MessageTypes.ServerMsg372)]
+    [IrcMessageAttributes("372")]
     public class IrcMotd : IncomingIrcMessage
     {
         public IrcMotd(string prefix, string target, string parameters)
-            : base(prefix, target, parameters)
-        {
-        }
+            : base(MessageTypes.Motd, prefix, target, parameters)
+        { }
+    }
+
+    [IrcMessageAttributes("375")]
+    public class IrcMotdStart : IncomingIrcMessage
+    {
+        public IrcMotdStart(string prefix, string target, string parameters)
+            : base(MessageTypes.Motd, prefix, target, parameters)
+        { }
 
         public override string ToString()
         {
-            return this.Parameters;
+            return string.Format("{0}\n-", this.Parameters);
+        }
+    }
+
+    [IrcMessageAttributes("376")]
+    public class IrcMotdEnd : IncomingIrcMessage
+    {
+        public IrcMotdEnd(string prefix, string target, string parameters)
+            : base(MessageTypes.Motd, prefix, target, parameters)
+        { }
+
+        public override string ToString()
+        {
+            return string.Format("{0}\n-", this.Parameters);
         }
     }
 }

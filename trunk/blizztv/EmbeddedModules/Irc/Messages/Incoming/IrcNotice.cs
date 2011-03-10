@@ -23,11 +23,11 @@ using System.Text;
 
 namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming
 {
-    [IrcMessageAttributes(IrcMessageAttributes.MessageTypes.Notice)]
+    [IrcMessageAttributes("notice")]
     public class IrcNotice : IncomingIrcMessage
     {
         public IrcNotice(string prefix, string target, string parameters)
-            : base(prefix, target, parameters) { }
+            : base(MessageTypes.Notice,prefix, target, parameters) { }
 
         public override string ToString()
         {

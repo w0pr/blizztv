@@ -25,9 +25,14 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages.Incoming
 {
     public class IncomingIrcMessage:IrcMessage
     {
-        public IncomingIrcMessage(string prefix, string target, string parameters)
-            : base(prefix, target, parameters, Directions.Incoming)
+        public IncomingIrcMessage(MessageTypes type, string prefix, string target, string parameters)
+            : base(type, prefix, target, parameters)
         {
+        }
+
+        public override string ToString()
+        {
+            return this.Parameters;
         }
     }
 }

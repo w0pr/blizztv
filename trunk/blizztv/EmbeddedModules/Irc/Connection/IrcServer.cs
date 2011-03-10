@@ -124,9 +124,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
                 var message = Factory.Parse(prefix, command, target, parameters);
                 if (message != null) this.RouteMessage(message);
                 else
-                    LogManager.Instance.Write(LogMessageTypes.Error,
-                                              string.Format("Unknown message type recieved: {0}:{1}:{2}", prefix,
-                                                            command, parameters));
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Unknown message type recieved: {0}:{1}:{2}", prefix, command, parameters));
             }
             catch(Exception e)
             {
@@ -138,20 +136,11 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
         {
             switch(message.Type)
             {                   
-                case IrcMessageAttributes.MessageTypes.Notice:
-                case IrcMessageAttributes.MessageTypes.Ping:
-                case IrcMessageAttributes.MessageTypes.ServerMsg001:
-                case IrcMessageAttributes.MessageTypes.ServerMsg002:
-                case IrcMessageAttributes.MessageTypes.ServerMsg003:
-                case IrcMessageAttributes.MessageTypes.ServerMsg004:
-                case IrcMessageAttributes.MessageTypes.ServerMsg251:
-                case IrcMessageAttributes.MessageTypes.ServerMsg252:
-                case IrcMessageAttributes.MessageTypes.ServerMsg253:
-                case IrcMessageAttributes.MessageTypes.ServerMsg254:
-                case IrcMessageAttributes.MessageTypes.ServerMsg255:
-                case IrcMessageAttributes.MessageTypes.ServerMsg375:
-                case IrcMessageAttributes.MessageTypes.ServerMsg372:
-                case IrcMessageAttributes.MessageTypes.ServerMsg376:
+                case IrcMessage.MessageTypes.Notice:
+                case IrcMessage.MessageTypes.Ping:
+                case IrcMessage.MessageTypes.ConnectionInfo:
+                case IrcMessage.MessageTypes.ServerInfo:
+                case IrcMessage.MessageTypes.Motd:
                     this.ProcessMessage(message);
                     break;
             }
@@ -161,24 +150,15 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
         {
             switch (message.Type)
             {
-                case IrcMessageAttributes.MessageTypes.Ping:
+                case IrcMessage.MessageTypes.Ping:
                     this.Send(new IrcPong(((IrcPing)message).Code));
                     break;
-                case IrcMessageAttributes.MessageTypes.Notice:
-                case IrcMessageAttributes.MessageTypes.ServerMsg001:
-                case IrcMessageAttributes.MessageTypes.ServerMsg002:
-                case IrcMessageAttributes.MessageTypes.ServerMsg003:
-                case IrcMessageAttributes.MessageTypes.ServerMsg251:
-                case IrcMessageAttributes.MessageTypes.ServerMsg252:
-                case IrcMessageAttributes.MessageTypes.ServerMsg253:
-                case IrcMessageAttributes.MessageTypes.ServerMsg254:
-                case IrcMessageAttributes.MessageTypes.ServerMsg255:
-                case IrcMessageAttributes.MessageTypes.ServerMsg375:
-                case IrcMessageAttributes.MessageTypes.ServerMsg372:
-                case IrcMessageAttributes.MessageTypes.ServerMsg376:
+                case IrcMessage.MessageTypes.Notice:
+                case IrcMessage.MessageTypes.ConnectionInfo:
+                case IrcMessage.MessageTypes.Motd:
                     this.MessageBackLog.Add(message);
                     break;
-                case IrcMessageAttributes.MessageTypes.ServerMsg004:
+                case IrcMessage.MessageTypes.ServerInfo:
                     this.MessageBackLog.Add(message);
                     this.ServerName = ((IrcReplyServerInfo) message).ServerName;
                     this.ServerVersion = ((IrcReplyServerInfo)message).ServerVersion;

@@ -28,21 +28,17 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages
 {
     public static class Factory
     {
-        private static Dictionary<IrcMessageAttributes.MessageTypes, Type> _incomingMessagesTypes = new Dictionary<IrcMessageAttributes.MessageTypes, Type>();
-        private static TextInfo _enUSCulture = new CultureInfo("en-US", false).TextInfo;
+        private static readonly Dictionary<string, Type> IncomingMessagesTypes = new Dictionary<string, Type>();
+        private static readonly TextInfo EnUsCulture = new CultureInfo("en-US", false).TextInfo;
 
         static Factory()
         {
             foreach (Type t in Assembly.GetEntryAssembly().GetTypes())
             {
-                if (t.IsSubclassOf(typeof(IncomingIrcMessage)))
-                {
-                    object[] attr = t.GetCustomAttributes(typeof(IrcMessageAttributes), true); // get the attributes of the module.
-                    if(attr.Length>0)
-                    {
-                        _incomingMessagesTypes.Add(((IrcMessageAttributes) attr[0]).Type,t);
-                    }
-                }
+                if (!t.IsSubclassOf(typeof (IncomingIrcMessage))) continue;
+
+                object[] attr = t.GetCustomAttributes(typeof(IrcMessageAttributes), true); 
+                if(attr.Length>0) IncomingMessagesTypes.Add(((IrcMessageAttributes) attr[0]).CommandId,t);
             }            
         }
 
@@ -51,16 +47,10 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages
             IncomingIrcMessage message = null;
 
             command = Regex.Replace(command, @"\s", "");
-            try
-            {
-                if (Int32.Parse(command) > 0) command = string.Format("ServerMsg{0}", command);
-            }
-            catch (FormatException) { }
 
-            foreach (KeyValuePair<IrcMessageAttributes.MessageTypes, Type> pair in _incomingMessagesTypes.Where(pair => _enUSCulture.ToLower(command) == _enUSCulture.ToLower(pair.Key.ToString())))
+            foreach (KeyValuePair<string, Type> pair in IncomingMessagesTypes.Where(pair => EnUsCulture.ToLower(command) == pair.Key))
             {
                 message = (IncomingIrcMessage)Activator.CreateInstance(pair.Value, new object[] {prefix, target, parameters});
-                message.Type = pair.Key;
                 break;
             }
 
