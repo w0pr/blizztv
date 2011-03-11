@@ -44,12 +44,6 @@ namespace BlizzTV.InfraStructure.Modules
         /// </summary>
         public Bitmap Icon { get; private set; } // The module icon.
 
-
-        /// <summary>
-        /// The module functionality
-        /// </summary>
-        public ModuleFunctionality Functionality { get; private set; }
-
         /// <summary>
         /// Module attributes constructor.
         /// </summary>
@@ -57,12 +51,11 @@ namespace BlizzTV.InfraStructure.Modules
         /// <param name="description">The module description.</param>       
         /// <param name="iconName">Module icon's name.</param>
         /// <param name="functionality">The module functionality.</param>
-        public ModuleAttributes(string name, string description, string iconName = null, ModuleFunctionality functionality = ModuleFunctionality.RendersTreeItems)
+        public ModuleAttributes(string name, string description, string iconName = null)
         {
             Icon = null;
             this.Name = name;
             this.Description = description;
-            this.Functionality = functionality;
             this._iconName = iconName;
         }
 
@@ -77,22 +70,6 @@ namespace BlizzTV.InfraStructure.Modules
             {
                 this.Icon = stream != null ? new Bitmap(stream) : Assets.Images.Icons.Png._16.blizztv; // if asked icon does not exist, then use the default icon.                                   
             }
-        }
-
-        /// <summary>
-        /// States module functionality.
-        /// </summary>
-        [Flags]
-        public enum ModuleFunctionality
-        {
-            /// <summary>
-            /// Module renders main-window menus.
-            /// </summary>
-            RendersMenus = 0x1,
-            /// <summary>
-            /// Module renders items for main-window treeview.
-            /// </summary>
-            RendersTreeItems = 0x2
         }
 
         #region de-ctor

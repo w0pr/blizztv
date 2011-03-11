@@ -45,6 +45,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
         {
             Instance = this;
 
+            this.CanRenderTreeNodes = true;
+
             this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate)));
             this._rootItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
             this._rootItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));

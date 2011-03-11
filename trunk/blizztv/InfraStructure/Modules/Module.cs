@@ -29,21 +29,31 @@ namespace BlizzTV.InfraStructure.Modules
     {
         private bool _disposed = false; // is the module disposed already?
 
-        public static Control UIThreadControl { get; set; } // the control that can be used for accessing the UI thread.
+        /// <summary>
+        /// The module's attributes.
+        /// </summary>
+        public ModuleAttributes Attributes { get; set; }
+
+        /// <summary>
+        /// Can the module render global menus?
+        /// </summary>
+        public bool CanRenderMenus { get; protected set; }
+
+        /// <summary>
+        /// Can the module render tree nodes?
+        /// </summary>
+        public bool CanRenderTreeNodes { get; protected set; }
 
         /// <summary>
         /// Is the module currently refreshing it's data?
         /// </summary>
         public bool RefreshingData { get; protected set; }
 
-        /// <summary>
-        /// The module's attributes.
-        /// </summary>
-        public ModuleAttributes Attributes { get; set; }
-
         protected Module()
         {
-            RefreshingData = false;
+            this.CanRenderMenus = false;
+            this.CanRenderTreeNodes = false;
+            this.RefreshingData = false;
         }
 
         /// <summary>
