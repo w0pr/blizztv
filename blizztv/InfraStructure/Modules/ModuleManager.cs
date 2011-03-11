@@ -76,6 +76,8 @@ namespace BlizzTV.InfraStructure.Modules
 
         public Module Instantiate(string key) // Instantiates the asked module.
         {
+            if (!this.AvailableModules.ContainsKey(key)) return null;
+
             ModuleInfo moduleInfo = this.AvailableModules[key];
             if (this._instantiatedModules.ContainsKey(key)) return moduleInfo.ModuleInstance; // if the module is already instantiated, just return it.
             else

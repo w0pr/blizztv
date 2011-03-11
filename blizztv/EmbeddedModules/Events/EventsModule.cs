@@ -33,7 +33,7 @@ using BlizzTV.Utility.Web;
 
 namespace BlizzTV.EmbeddedModules.Events
 {
-    [ModuleAttributes("Events", "E-Sports events tracker.", "_event", ModuleAttributes.ModuleFunctionality.RendersMenus | ModuleAttributes.ModuleFunctionality.RendersTreeItems)]
+    [ModuleAttributes("Events", "E-Sports events tracker.", "_event")]
     public class EventsModule : Module
     {
 
@@ -48,6 +48,9 @@ namespace BlizzTV.EmbeddedModules.Events
         
         public EventsModule() : base()
         {
+            this.CanRenderMenus = true;
+            this.CanRenderTreeNodes = true;
+
             var eventIcon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
 
             this._eventsToday.Icon = eventIcon;

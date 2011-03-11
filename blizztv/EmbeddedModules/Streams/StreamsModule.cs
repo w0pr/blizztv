@@ -50,6 +50,8 @@ namespace BlizzTV.EmbeddedModules.Streams
         {
             StreamsModule.Instance = this;
 
+            this.CanRenderTreeNodes = true;
+
             this._rootItem.ContextMenus.Add("refresh", new System.Windows.Forms.ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
             this._rootItem.ContextMenus.Add("settings", new System.Windows.Forms.ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
