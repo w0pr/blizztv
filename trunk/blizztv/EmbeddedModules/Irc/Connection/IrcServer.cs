@@ -49,7 +49,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
             this.ServerName = this.Hostname;
             this.Port = port;
             this.Connected = false;
-            this.Nickname = "blizztv";
+            this.Nickname = "shalafiii";
         }
 
         public void Connect()
@@ -123,7 +123,7 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
 
                 var message = Factory.Parse(prefix, command, target, parameters);
                 if (message != null) this.RouteMessage(message);
-                else LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Unknown message type recieved: {0}:{1}:{2}", prefix, command, parameters));
+                else LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Unknown message type recieved: source: {0} cmd: {1} target: {2} parameters: {3}", prefix, command,target, parameters));
         }
 
         private void RouteMessage(IncomingIrcMessage message)
@@ -141,6 +141,9 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
                 case IrcMessage.MessageTypes.NamesList:
                 case IrcMessage.MessageTypes.EndofNames:
                     this.RouteChannelMessages((IrcChannelMessage)message);
+                    break;
+                case IrcMessage.MessageTypes.PrivMsg:
+                    this.RouteChatMessages(message);
                     break;
             }
         }
@@ -161,6 +164,21 @@ namespace BlizzTV.EmbeddedModules.Irc.Connection
             {
                 pair.Value.ProcessMessage(message);
                 break;
+            }
+        }
+
+        public void RouteChatMessages(IncomingIrcMessage message)
+        {
+            if(((IrcPrivMsg)message).Source.Name== this.Nickname) // query message
+            {
+                
+            }
+            else // channel message
+            {
+                foreach (KeyValuePair<string, IrcChannel> pair in this._channels.Where(pair => pair.Key == ((IrcPrivMsg) message).Target))
+                {
+                    pair.Value.ProcessMessage(message);
+                }
             }
         }
 

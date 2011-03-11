@@ -21,17 +21,13 @@ using System.Windows.Forms;
 using BlizzTV.EmbeddedModules.Irc.Connection;
 using BlizzTV.EmbeddedModules.Irc.Messages.Incoming;
 using BlizzTV.EmbeddedModules.Irc.Messages.Outgoing;
+using BlizzTV.Win32API;
 
 namespace BlizzTV.EmbeddedModules.Irc.UI
 {
     public partial class ServerForm : Form
-    {
-        [DllImport("user32.dll")] public static extern IntPtr SendMessage(IntPtr window, int message, int wparam, int lparam);
-
-        const int WM_VSCROLL = 0x115;
-        const int SB_BOTTOM = 7;
-
-        private IrcServer _ircServer;
+    {        
+        private readonly IrcServer _ircServer;
 
         public ServerForm(IrcServer ircServer)
         {
@@ -50,18 +46,18 @@ namespace BlizzTV.EmbeddedModules.Irc.UI
         {
             foreach(IncomingIrcMessage message in this._ircServer.MessageBackLog)
             {
-                this.textBox.SelectionColor = message.ForeColor();
-                this.textBox.SelectedText += string.Format("{0}{1}", message, Environment.NewLine);
+                this.serverText.SelectionColor = message.ForeColor();
+                this.serverText.SelectedText += string.Format("{0}{1}", message, Environment.NewLine);
             }
 
-            SendMessage(this.textBox.Handle, WM_VSCROLL, SB_BOTTOM, 0);
+            WindowMessaging.SendMessage(this.serverText.Handle, WindowMessaging.WM_VSCROLL, WindowMessaging.SB_BOTTOM, 0);
         }
 
         private void AppendText(string message)
         {
-            this.textBox.SelectionStart = this.textBox.TextLength;
-            this.textBox.Text += message;
-            SendMessage(this.textBox.Handle, WM_VSCROLL, SB_BOTTOM, 0);
+            this.serverText.SelectionStart = this.serverText.TextLength;
+            this.serverText.Text += message;
+            WindowMessaging.SendMessage(this.serverText.Handle, WindowMessaging.WM_VSCROLL, WindowMessaging.SB_BOTTOM, 0);
         }
 
         private void inputBox_KeyPress(object sender, KeyPressEventArgs e)

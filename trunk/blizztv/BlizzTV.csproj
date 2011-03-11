@@ -154,6 +154,7 @@
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcChannel.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcConnectionInfo.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IncomingIrcMessage.cs" />
+    <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcMessages.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcMotd.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcNotice.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Incoming\IrcPing.cs" />
@@ -164,6 +165,12 @@
     <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcPong.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\Outgoing\IrcUser.cs" />
     <Compile Include="EmbeddedModules\Irc\Messages\MessageSource.cs" />
+    <Compile Include="EmbeddedModules\Irc\UI\ChannelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmbeddedModules\Irc\UI\ChannelForm.Designer.cs">
+      <DependentUpon>ChannelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmbeddedModules\Irc\UI\ServerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -496,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Downloads\DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedModules\Irc\UI\ChannelForm.resx">
+      <DependentUpon>ChannelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmbeddedModules\Irc\UI\ServerForm.resx">
       <DependentUpon>ServerForm.cs</DependentUpon>

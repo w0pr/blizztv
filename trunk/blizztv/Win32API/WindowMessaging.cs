@@ -28,6 +28,9 @@ namespace BlizzTV.Win32API
         public static readonly int WM_BLIZZTV_SETFRONTMOST = RegisterWindowMessage("WM_BLIZZTV_SETFRONTMOST"); // our custom defined message.
         public const int HWND_BROADCAST = 0xffff; //  the message is sent to all top-level windows in the system, including disabled or invisible unowned windows, overlapped windows, and pop-up windows; but the message is not sent to child windows.
 
+        public const int WM_VSCROLL = 0x115;
+        public const int SB_BOTTOM = 7;
+
         [DllImport("user32")]
         // Places (posts) a message in the message queue associated with the thread that created the specified window and returns without waiting for the thread to process the message.
         public static extern bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
@@ -35,5 +38,8 @@ namespace BlizzTV.Win32API
         [DllImport("user32")]
         // Defines a new window message that is guaranteed to be unique throughout the system. The message value can be used when sending or posting messages.
         private static extern int RegisterWindowMessage(string message);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr window, int message, int wparam, int lparam);
     }
 }

@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Windows.Forms;
 using BlizzTV.EmbeddedModules.Irc;
 using BlizzTV.EmbeddedModules.Irc.Connection;
 using BlizzTV.InfraStructure.Modules;
@@ -25,7 +26,7 @@ namespace BlizzTV.EmbeddedModules.IRC
 {
     [ModuleAttributes("IRC-Client", "IRC client module.", "_event", ModuleAttributes.ModuleFunctionality.RendersMenus | ModuleAttributes.ModuleFunctionality.RendersTreeItems)]
     public class IrcModule : Module
-    {
+    {        
         private IrcClient ircClient;
         private readonly ListItem _rootItem = new ListItem("IRC") { Icon = new NamedImage("irc", Assets.Images.Icons.Png._16.feed) };
 

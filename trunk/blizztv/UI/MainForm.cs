@@ -169,6 +169,7 @@ namespace BlizzTV.UI
 
         private void StartupModule(Module module) // Startup's a module.
         {
+            Module.UIThreadControl = this.TreeView;
             module.Startup();
 
             if((module.Attributes.Functionality & ModuleAttributes.ModuleFunctionality.RendersMenus) == ModuleAttributes.ModuleFunctionality.RendersMenus) 
