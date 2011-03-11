@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Windows.Forms;
 using BlizzTV.EmbeddedModules.Feeds.Parsers;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Notifications;
@@ -27,7 +28,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
     /// <summary>
     /// Feed story.
     /// </summary>
-    public class Story : ListItem
+    public class Story : ModuleNode
     {
         public string FeedName { get; private set; }
         public string Link { get; private set; }
@@ -36,18 +37,18 @@ namespace BlizzTV.EmbeddedModules.Feeds
             : base(item.Title)
         {
             this.FeedName = feedName;
-            this.Guid = item.Id;
+            //this.Guid = item.Id;
             this.Link = item.Link;
 
-            this.ContextMenus.Add("markasread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked))); 
-            this.ContextMenus.Add("markasunread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); 
+            this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
+            this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); 
 
             this.Icon = new NamedImage("story", Assets.Images.Icons.Png._16.feed);
         }
 
         public void CheckForNotifications()
         {
-            if (EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
+            //if (EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void Open(object sender, EventArgs e)
@@ -63,11 +64,12 @@ namespace BlizzTV.EmbeddedModules.Feeds
         private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-            if (this.State != State.Read) this.State = State.Read;  
+            //if (this.State != State.Read) this.State = State.Read;  
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
         {
+            /*
             // make conditional context-menus invisible.
             this.ContextMenus["markasread"].Visible=false;
             this.ContextMenus["markasunread"].Visible=false;
@@ -82,16 +84,17 @@ namespace BlizzTV.EmbeddedModules.Feeds
                     this.ContextMenus["markasunread"].Visible = true;
                     break;
             }
+             */
         }
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.State = State.Read;            
+            //this.State = State.Read;            
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.State = State.Unread;
+            //this.State = State.Unread;
         }
     }
 }

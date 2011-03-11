@@ -49,6 +49,8 @@ namespace BlizzTV.InfraStructure.Modules
         /// </summary>
         public bool RefreshingData { get; protected set; }
 
+        public static TreeView UITreeView = null;
+
         protected Module()
         {
             this.CanRenderMenus = false;
@@ -76,7 +78,13 @@ namespace BlizzTV.InfraStructure.Modules
         /// Returns the module's root treeview item.
         /// </summary>
         /// <returns><see cref="ListItem"/></returns>
-        public virtual ListItem GetRootItem() { return null; }                    
+        public virtual ListItem GetRootItem() { return null; }
+
+        /// <summary>
+        /// Returns the module's root treenode.
+        /// </summary>
+        /// <returns><see cref="TreeNode"/></returns>
+        public virtual TreeNode GetTreeNode() { return null; }
 
         /// <summary>
         /// Returns preferences form for the module. 

@@ -47,14 +47,14 @@ namespace BlizzTV.EmbeddedModules.Feeds.Settings
             this.Subscription.Name = txtName.Text;
             this.Subscription.Url = txtURL.Text;
 
-            using (Feed feed = new Feed(this.Subscription))
+            /*using (Feed feed = new Feed(this.Subscription))
             {
                 if (!feed.IsValid())
                 {
                     MessageBox.Show(i18n.ErrorParsingFeedMessage, i18n.ErrorParsingFeedTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-            }
+            }*/
 
             this.DialogResult = DialogResult.OK;
             this.Close();  

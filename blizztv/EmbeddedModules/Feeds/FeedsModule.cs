@@ -29,6 +29,7 @@ using BlizzTV.InfraStructure.Modules;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Catalog;
 using BlizzTV.Log;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.UI;
 using BlizzTV.Assets.i18n;
@@ -38,6 +39,10 @@ namespace BlizzTV.EmbeddedModules.Feeds
     [ModuleAttributes("Feeds","Feed aggregator.","feed")]
     public class FeedsModule : Module ,ISubscriptionConsumer
     {
+        private readonly ModuleNode _moduleNode = new ModuleNode("Feeds");
+
+
+
         private readonly ListItem _rootItem = new ListItem("Feeds") { Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed) };
         private Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // list of feeds.
         private System.Timers.Timer _updateTimer = null;
@@ -59,6 +64,11 @@ namespace BlizzTV.EmbeddedModules.Feeds
             this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
+        public override void Startup()
+        {
+            this.Refresh();                   
+        }
+
         public override void Refresh()
         {
             this.UpdateFeeds();
@@ -75,7 +85,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
             FeedSubscription feedSubscription = new FeedSubscription {Name = "test-feed", Url = link};
 
-            using (Feed feed = new Feed(feedSubscription))
+            /*using (Feed feed = new Feed(feedSubscription))
             {
                 if (feed.IsValid())
                 {
@@ -94,7 +104,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
                         return false;
                     }
                 }
-            }
+            }*/
 
             return false;
         }
@@ -102,6 +112,11 @@ namespace BlizzTV.EmbeddedModules.Feeds
         public override ListItem GetRootItem()
         {
             return this._rootItem;
+        }
+
+        public override TreeNode GetTreeNode()
+        {
+            return this._moduleNode;
         }
 
         private void UpdateFeeds()
@@ -122,7 +137,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
             foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
             {
                 Feed feed = new Feed(pair.Value);
-                feed.OnStateChange += OnChildStateChange;
+                //feed.OnStateChange += OnChildStateChange;
                 this._feeds.Add(pair.Value.Url, feed);                
             }
 
@@ -159,23 +174,19 @@ namespace BlizzTV.EmbeddedModules.Feeds
                 }
             }
 
-            foreach (Task<Feed> task in tasks)
+            Module.UITreeView.AsyncInvokeHandler(() =>
             {
-                this._rootItem.Childs.Add(task.Result.Url, task.Result);
-                foreach (Story story in task.Result.Stories) { task.Result.Childs.Add(story.Guid, story); }
-            }
-
-            /*foreach (KeyValuePair<string, Feed> pair in this._feeds) // loop through feeds.
-            {
-                try
-                {
-                    pair.Value.Update(); // update the feed.
-                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                    foreach (Story story in pair.Value.Stories) { pair.Value.Childs.Add(story.Guid, story); } // register the story items.
+                foreach (Task<Feed> task in tasks)
+                {                
+                    this._moduleNode.Nodes.Add(task.Result);                
+                    foreach(Story story in task.Result.Stories)
+                    {
+                        task.Result.Nodes.Add(story);
+                    }
+                //this._rootItem.Childs.Add(task.Result.Url, task.Result);
+                //foreach (Story story in task.Result.Stories) { task.Result.Childs.Add(story.Guid, story); }
                 }
-                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module feeds caught an exception while updating feeds: {0}", e)); }
-                Workload.WorkloadManager.Instance.Step();
-            }*/
+            });
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
@@ -194,10 +205,10 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this._rootItem.State == ((Feed)sender).State) return;
+            /*if (this._rootItem.State == ((Feed)sender).State) return;
 
             int unread = this._feeds.Count(pair => pair.Value.State == State.Unread);
-            this._rootItem.State = unread > 0 ? State.Unread : State.Read;
+            this._rootItem.State = unread > 0 ? State.Unread : State.Read;*/
         }
 
         public override Form GetPreferencesForm()
@@ -233,7 +244,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             foreach (Story s in this._feeds.SelectMany(pair => pair.Value.Stories))
             {
-                s.State = State.Read;
+                //s.State = State.Read;
             }
         }
 
@@ -241,7 +252,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             foreach (Story s in this._feeds.SelectMany(pair => pair.Value.Stories))
             {
-                s.State = State.Unread;
+                //s.State = State.Unread;
             }
         }
 
@@ -285,7 +296,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
                 this._updateTimer.Elapsed -= OnTimerHit;
                 this._updateTimer.Dispose();
                 this._updateTimer = null;
-                foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Dispose(); }
+                //foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Dispose(); }
                 this._feeds.Clear();
                 this._feeds = null;
             }

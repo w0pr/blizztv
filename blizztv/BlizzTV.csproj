@@ -143,6 +143,7 @@
     <Compile Include="Controls\Panels\GradientPanel.Designer.cs">
       <DependentUpon>GradientPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="InfraStructure\Modules\ModuleNode.cs" />
     <Compile Include="Media\Controls\WMP\WMPPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
