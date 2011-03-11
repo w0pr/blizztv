@@ -27,14 +27,14 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Feeds
 {
-    public class Feed : ListItem
+    public class Feed : ModuleNode
     {
         private bool _disposed = false;
 
         /// <summary>
         /// Feed Name.
         /// </summary>
-        public string Name { get; private set; }
+        //public string Name { get; private set; }
 
         /// <summary>
         /// Feed Url.
@@ -47,15 +47,15 @@ namespace BlizzTV.EmbeddedModules.Feeds
         public List<Story> Stories = new List<Story>(); 
 
         public Feed(FeedSubscription subscription)
-            : base(subscription.Name)
+            //: base(subscription.Name)
         {
-            this.Name = subscription.Name;
+            this.Text = subscription.Name;
             this.Url = subscription.Url;
 
-            this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
-            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
+            //this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
+            //this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
 
-            this.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
+            //this.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
         }
 
         public bool IsValid()
@@ -79,8 +79,8 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
             if (!FeedParser.Instance.Parse(this.Url, ref items))
             {
-                this.State = State.Error;
-                this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                //this.State = State.Error;
+                //this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
 
@@ -88,8 +88,9 @@ namespace BlizzTV.EmbeddedModules.Feeds
             {
                 try
                 {
-                    Story story = new Story(this.Title, item);
-                    story.OnStateChange += OnChildStateChange;
+                    Story story = new Story(this.Text, item);
+                    //Story story = new Story(this.Title, item);
+                    //story.OnStateChange += OnChildStateChange;
                     this.Stories.Add(story);
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feed parser caught an exception: {0}", e)); }
@@ -99,25 +100,25 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.State == ((Story) sender).State) return;
+            //if (this.State == ((Story) sender).State) return;
 
-            int unread = this.Stories.Count(s => s.State == State.Fresh || s.State == State.Unread);
-            this.State = unread > 0 ? State.Unread : State.Read;
+            //int unread = this.Stories.Count(s => s.State == State.Fresh || s.State == State.Unread);
+            //this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.State = State.Read; } // marked all stories as read.
+            //foreach (Story s in this.Stories) { s.State = State.Read; } // marked all stories as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this.Stories) { s.State = State.Unread; } // marked all stories as unread.
+            //foreach (Story s in this.Stories) { s.State = State.Unread; } // marked all stories as unread.
         }
 
         #region de-ctor
 
-        ~Feed() { Dispose(false); }
+        /*~Feed() { Dispose(false); }
 
         protected override void Dispose(bool disposing)
         {
@@ -129,7 +130,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
                 this.Stories = null;
             }
             base.Dispose(disposing);
-        }
+        }*/
 
         #endregion
     }

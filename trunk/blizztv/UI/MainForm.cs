@@ -43,6 +43,8 @@ namespace BlizzTV.UI
             this.TreeView.DoubleBuffer(); // double buffer the treeview as we may have excessive amount of treeview item flooding.
             Workload.WorkloadManager.Instance.AttachControls(this.ProgressBar, this.LoadingAnimation.LoadingAnimationControl); // init. workload-manager.
             NotificationManager.Instance.AttachControls(this, this.TrayIcon, this.NotificationIcon); // init. notification-manager.
+
+            Module.UITreeView = this.TreeView;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -153,6 +155,13 @@ namespace BlizzTV.UI
             ThreadStart threadStart = () => StartupModule(module); // create a new thread for the module.
             Thread moduleThread = new Thread(threadStart) { IsBackground = true };  // make the thread a background-one.
             moduleThread.Start();
+
+            if (module.CanRenderMenus) this.AttachModuleMenus(module); // register's the module menus.
+
+            if (!module.CanRenderTreeNodes) return;
+            TreeNode node = module.GetTreeNode();
+            if (node == null) return;
+            this.TreeView.Nodes.Add(node);
         }
 
         private void KillModule(string key) // Kill's an active module.
@@ -169,14 +178,12 @@ namespace BlizzTV.UI
 
         private void StartupModule(Module module) // Startup's a module.
         {
-            module.Startup();
+            module.Startup();            
 
-            if (module.CanRenderMenus) this.AttachModuleMenus(module); // register's the module menus.
-
-            if (!module.CanRenderTreeNodes) return;
-            module.DataRefreshStarting += ModuleDataRefreshStarting;
-            module.DataRefreshCompleted += ModuleDataRefreshCompleted;
-            module.Refresh(); // run the module.
+            //if (!module.CanRenderTreeNodes) return;
+            //module.DataRefreshStarting += ModuleDataRefreshStarting;
+            //module.DataRefreshCompleted += ModuleDataRefreshCompleted;
+            //module.Refresh(); // run the module.
         }
 
         private void AttachModuleMenus(Module p) // Register's modules main-menu item's.
@@ -247,43 +254,41 @@ namespace BlizzTV.UI
 
         private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) // Treeview node double-click handler.
         {
-            TreeItem selection = (TreeItem)TreeView.SelectedNode; // get the selected node
-            if (selection != null)
-            {
-                if (selection.Nodes.Count > 0) if (selection.IsExpanded) selection.Expand(); else selection.Collapse(); // if it's a parent node, let it expand() or collapse().
-                selection.Open(sender, e);  // notify the item about the double-click event.
-            }
+            var selection = (ModuleNode) this.TreeView.SelectedNode;
+            if (selection == null) return;
+
+            selection.Open(sender, e);
         }
 
         private void TreeView_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
-                TreeItem selection = (TreeItem)TreeView.SelectedNode; // get the selected node
-                if (selection != null) selection.Open(sender, e);  // notify the item about the double-click event.
-                e.Handled = true;
+                var selection = (ModuleNode)TreeView.SelectedNode; // get the selected node
+                if (selection == null) return;
+                    
+                selection.Open(sender, e);  
+                e.Handled = true; // don't let treeview beep.
             }
         }
 
         private void TreeView_MouseUp(object sender, MouseEventArgs e) 
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                Point pClick = new Point(e.X, e.Y); // the click-point.
-                TreeItem selection = (TreeItem)TreeView.GetNodeAt(pClick); // the clicked node.
-                if (selection != null)
-                {
-                    TreeView.SelectedNode = selection;
-                    if (selection.Item.ContextMenus.Count > 0) // if selected node own's custom-context menu's
-                    {
-                        TreeviewContextMenu.Items.Clear();
-                        foreach (KeyValuePair<string, ToolStripMenuItem> pair in selection.Item.ContextMenus) TreeviewContextMenu.Items.Add(pair.Value); // add custom-context menu's.
-                        Point pClient = this.PointToClient(TreeView.PointToScreen(pClick)); // point to screen.
-                        Point pShow = new Point(pClient.X + 5, pClient.Y - 20); // the actual cordinates.
-                        TreeviewContextMenu.Show(TreeView, pShow);
-                    }
-                }
-            }
+            if (e.Button != MouseButtons.Right) return;
+
+            var pClick = new Point(e.X, e.Y); // the click-point.
+            var selection = (ModuleNode)TreeView.GetNodeAt(pClick); // the clicked node.
+            if (selection == null) return;
+
+            TreeView.SelectedNode = selection;
+            if (selection.Menu.Count == 0) return; // if the selected item has no attach menu's just return.
+
+            TreeviewContextMenu.Items.Clear();
+            foreach(KeyValuePair<string,ToolStripMenuItem> pair in selection.Menu) { TreeviewContextMenu.Items.Add(pair.Value); } //add custom-context menu's.
+
+            Point pClient = this.PointToClient(TreeView.PointToScreen(pClick)); // point to screen.
+            var pShow = new Point(pClient.X + 5, pClient.Y - 20); // the actual cordinates.
+            TreeviewContextMenu.Show(TreeView, pShow);
         }
 
         private void TreeView_DragEnter(object sender, DragEventArgs e)
