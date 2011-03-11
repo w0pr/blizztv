@@ -26,8 +26,8 @@ namespace BlizzTV.EmbeddedModules.Irc
 
         public IrcClient()
         {
-            var server = new IrcServer("Quakenet", "bonesoul-ev.mine.nu", 6667);
-            //var server = new IrcServer("Quakenet", "irc.quakenet.org", 6667);
+            //var server = new IrcServer("Quakenet", "bonesoul-ev.mine.nu", 6667);
+            var server = new IrcServer("Quakenet", "irc.quakenet.org", 6667);
             //var server = new IrcServer("Quakenet", "irc.freenode.net", 6667);
             this.ActiveServers.Add(server);
             server.Connect();

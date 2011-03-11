@@ -54,7 +54,8 @@ namespace BlizzTV.EmbeddedModules.Irc.Messages
             Motd,
             Join,
             NamesList,
-            EndofNames
+            EndofNames,
+            PrivMsg
         }
 
         public virtual Color ForeColor() { return Color.Black; }

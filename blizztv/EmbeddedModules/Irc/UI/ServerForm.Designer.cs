@@ -29,33 +29,33 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerForm));
-            this.textBox = new System.Windows.Forms.RichTextBox();
+            this.serverText = new System.Windows.Forms.RichTextBox();
             this.inputBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBox
+            // serverText
             // 
-            this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox.BackColor = System.Drawing.Color.White;
-            this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox.Location = new System.Drawing.Point(0, 0);
-            this.textBox.Name = "textBox";
-            this.textBox.ReadOnly = true;
-            this.textBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.textBox.Size = new System.Drawing.Size(624, 248);
-            this.textBox.TabIndex = 0;
-            this.textBox.TabStop = false;
-            this.textBox.Text = "";
+            this.serverText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.serverText.BackColor = System.Drawing.Color.White;
+            this.serverText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.serverText.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.serverText.Location = new System.Drawing.Point(0, 0);
+            this.serverText.Name = "serverText";
+            this.serverText.ReadOnly = true;
+            this.serverText.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.serverText.Size = new System.Drawing.Size(624, 240);
+            this.serverText.TabIndex = 0;
+            this.serverText.TabStop = false;
+            this.serverText.Text = "";
             // 
             // inputBox
             // 
-            this.inputBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.inputBox.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.inputBox.Location = new System.Drawing.Point(0, 250);
+            this.inputBox.Location = new System.Drawing.Point(0, 242);
             this.inputBox.Name = "inputBox";
             this.inputBox.Size = new System.Drawing.Size(624, 20);
             this.inputBox.TabIndex = 0;
@@ -65,9 +65,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 270);
+            this.ClientSize = new System.Drawing.Size(624, 262);
             this.Controls.Add(this.inputBox);
-            this.Controls.Add(this.textBox);
+            this.Controls.Add(this.serverText);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ServerForm";
             this.Text = "IRC Server";
@@ -79,7 +79,7 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox textBox;
+        private System.Windows.Forms.RichTextBox serverText;
         private System.Windows.Forms.TextBox inputBox;
 
 

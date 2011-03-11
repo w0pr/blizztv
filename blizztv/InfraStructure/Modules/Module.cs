@@ -29,6 +29,8 @@ namespace BlizzTV.InfraStructure.Modules
     {
         private bool _disposed = false; // is the module disposed already?
 
+        public static Control UIThreadControl { get; set; } // the control that can be used for accessing the UI thread.
+
         /// <summary>
         /// Is the module currently refreshing it's data?
         /// </summary>
