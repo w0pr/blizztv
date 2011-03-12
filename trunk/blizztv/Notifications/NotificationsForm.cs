@@ -38,7 +38,7 @@ namespace BlizzTV.Notifications
         {
             foreach(ArchivedNotification notification in ArchivedNotifications.Instance.Queue)
             {
-                ArchivedNotificationListItemWrapper itemWrapper = new ArchivedNotificationListItemWrapper(notification);
+                var itemWrapper = new ArchivedNotificationListItemWrapper(notification);
                 this.listViewNotifications.Items.Add(itemWrapper);
                 this.SetNotificationIcon(itemWrapper); // set the item's icon.
             }
@@ -53,9 +53,9 @@ namespace BlizzTV.Notifications
 
         private void SetNotificationIcon(ArchivedNotificationListItemWrapper listItem)
         {
-            if (!listItem.Notification.Item.GetType().IsSubclassOf(typeof (ListItem))) return;
+            if (!listItem.Notification.Item.GetType().IsSubclassOf(typeof (ModuleNode))) return;
 
-            ListItem item = (ListItem)listItem.Notification.Item; 
+            var item = (ModuleNode)listItem.Notification.Item; 
             if (item.Icon == null) return; // if item doesn't have an assosiciated icon, just ignore.
 
             if (!this.ImageList.Images.ContainsKey(item.Icon.Name)) this.ImageList.Images.Add(item.Icon.Name, item.Icon.Image); // add the icon to imagelist if doesnt exists yet.
@@ -66,7 +66,7 @@ namespace BlizzTV.Notifications
         {
             if (listViewNotifications.SelectedItems.Count <= 0) return;
 
-            ArchivedNotificationListItemWrapper selection = (ArchivedNotificationListItemWrapper)listViewNotifications.SelectedItems[0];
+            var selection = (ArchivedNotificationListItemWrapper)listViewNotifications.SelectedItems[0];
             selection.Notification.Item.NotificationClicked();
         }
 

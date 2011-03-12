@@ -60,6 +60,11 @@ namespace BlizzTV.EmbeddedModules.Events
             this._moduleNode.Nodes.Add( _eventsUpcoming);
             this._moduleNode.Nodes.Add(_eventsOver);
 
+            State state = this._moduleNode.State; /* temp */
+            State state2 = this._eventsToday.State; /* temp */
+            State state3 = this._eventsUpcoming.State; /* temp */
+            State state4 = this._eventsOver.State; /* temp */
+
             this._moduleNode.Menu.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
@@ -80,11 +85,6 @@ namespace BlizzTV.EmbeddedModules.Events
 
         public override void Startup()
         {
-            this.Refresh();
-        }
-
-        public override void Refresh()
-        {
             this.ParseEvents();
 
             if (!RuntimeConfiguration.Instance.InSleepMode) this.CheckEvents(); // Go check for events.
@@ -96,9 +96,7 @@ namespace BlizzTV.EmbeddedModules.Events
         private void ParseEvents()
         {
             if (this.RefreshingData) return; 
-
             this.RefreshingData = true;
-            this.OnDataRefreshStarting(EventArgs.Empty);
 
             Workload.WorkloadManager.Instance.Add(1);
 
@@ -109,7 +107,7 @@ namespace BlizzTV.EmbeddedModules.Events
                 {
                     Module.UITreeView.AsyncInvokeHandler(() =>
                     {
-                        this._moduleNode.SetState(NodeState.Error);
+                        this._moduleNode.State = State.Error;
                         this._moduleNode.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                     });
                     Workload.WorkloadManager.Instance.Step();

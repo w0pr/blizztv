@@ -57,7 +57,7 @@ namespace BlizzTV.EmbeddedModules.Videos
         {
             if (this.Parse())
             {
-                foreach (Video video in this.Nodes) { video.CheckForNotifications(); }
+                foreach (Video video in this.Videos) { video.CheckForNotifications(); }
                 return true;
             }
 
@@ -68,20 +68,20 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video video in this.Nodes) { video.SetState(NodeState.Read); } // marked all videos as watched.
+            foreach (Video video in this.Nodes) { video.State=State.Read; } // marked all videos as watched.
         }
 
         private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video video in this.Nodes) { video.SetState(NodeState.Read); } // marked all videos as un-watched.
+            foreach (Video video in this.Nodes) { video.State=State.Read; } // marked all videos as un-watched.
         }
 
         protected void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this.GetState() == ((Video)sender).GetState()) return;
+            if (this.State == ((Video)sender).State) return;
 
-            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
-            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = (from ModuleNode node in this.Nodes select node.State).Count(state => state == State.Fresh || state == State.Unread);
+            this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         #region de-ctor

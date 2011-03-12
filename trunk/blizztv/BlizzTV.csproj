@@ -380,7 +380,6 @@
     <Compile Include="EmbeddedModules\Videos\Video.cs" />
     <Compile Include="EmbeddedModules\Videos\VideosModule.cs" />
     <Compile Include="InfraStructure\Modules\Settings\IModuleSettingsForm.cs" />
-    <Compile Include="InfraStructure\Modules\ListItem.cs" />
     <Compile Include="Media\Controls\Flash\FlashPlayer.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -415,7 +414,6 @@
     <Compile Include="UI\PreferencesForm.Designer.cs">
       <DependentUpon>PreferencesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\TreeItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\UI\ListviewModuleItem.cs" />

@@ -60,7 +60,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             if (this.Parse())
             {
-                foreach (Story story in this.Nodes) { story.CheckForNotifications(); }
+                foreach (Story story in this.Stories) { story.CheckForNotifications(); }
                 return true;
             }
             return false;
@@ -72,7 +72,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
             if (!FeedParser.Instance.Parse(this.Url, ref items))
             {
-                this.SetState(NodeState.Error);
+                this.State = State.Error;
                 this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
@@ -96,20 +96,20 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this.GetState() == ((Story)sender).GetState()) return;
+            if (this.State == ((Story)sender).State) return;
 
-            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
-            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = (from ModuleNode node in this.Nodes select node.State).Count(state => state == State.Fresh || state == State.Unread);
+            this.State=unread > 0 ? State.Unread : State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story story in this.Nodes) { story.SetState(NodeState.Read); } // marked all stories as read.
+            foreach (Story story in this.Nodes) { story.State=State.Read; } // marked all stories as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story story in this.Nodes) { story.SetState(NodeState.Unread); } // marked all stories as read.
+            foreach (Story story in this.Nodes) { story.State=State.Unread; } // marked all stories as read.
         }
 
         #region de-ctor

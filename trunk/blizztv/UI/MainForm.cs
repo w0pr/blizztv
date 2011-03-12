@@ -32,7 +32,7 @@ namespace BlizzTV.UI
 {
     public partial class MainForm : Form
     {
-        private readonly Dictionary<string, TreeItem> _moduleRoots = new Dictionary<string, TreeItem>();
+        private readonly Dictionary<string, ModuleNode> _moduleNodes = new Dictionary<string, ModuleNode>();
 
         #region ctor & form handlers
 
@@ -166,11 +166,11 @@ namespace BlizzTV.UI
 
         private void KillModule(string key) // Kill's an active module.
         {
-            if (this._moduleRoots.ContainsKey(key)) // clean up the module.
+            if (this._moduleNodes.ContainsKey(key)) // clean up the module.
             {
-                this._moduleRoots[key].Nodes.Clear(); // remove the module root's childs.
-                this.TreeView.Nodes.Remove(this._moduleRoots[key]); // remove the module root from treeview.
-                this._moduleRoots.Remove(key); // remove the module root from dictionary.
+                this._moduleNodes[key].Nodes.Clear(); // remove the module root's childs.
+                this.TreeView.Nodes.Remove(this._moduleNodes[key]); // remove the module root from treeview.
+                this._moduleNodes.Remove(key); // remove the module root from dictionary.
             }
             
             ModuleManager.Instance.Kill(key); // let the module-manager to kill it.
@@ -199,44 +199,6 @@ namespace BlizzTV.UI
 
                 foreach (KeyValuePair<string, ToolStripMenuItem> pair in menus) parent.DropDownItems.Add(pair.Value); // add requested sub-menu as a drop-down menu.
             });
-        }
-
-        private void ModuleDataRefreshStarting(object sender, EventArgs e)
-        {
-            this.TreeView.InvokeHandler(() =>
-            {
-                if (!this._moduleRoots.ContainsKey(((Module)sender).Attributes.Name)) // if the module root is not yet registered; 
-                {
-                    var t = new TreeItem((Module)sender, ((Module)sender).GetRootItem()); // create a new treeitem for the module root.
-                    TreeView.Nodes.Add(t); // add it to treeview.
-                    this._moduleRoots.Add((sender as Module).Attributes.Name, t); // and also to to root item's dictionary.
-                    t.Render(); // render the root item.
-                }
-                else this._moduleRoots[(sender as Module).Attributes.Name].Nodes.Clear(); // if it root item's already registered, then just cleanup it's childs.
-            });
-        }
-
-        private void ModuleDataRefreshCompleted(object sender, DataRefreshCompletedEventArgs e)
-        {
-            this.TreeView.InvokeHandler(() =>
-            {
-                if (this._moduleRoots.ContainsKey(((Module)sender).Attributes.Name))
-                {
-                    this.TreeView.BeginUpdate(); // notify the treeview about we're begging a mass-update.
-                    TreeItem rootItem = this._moduleRoots[((Module)sender).Attributes.Name]; // get the module's root item.
-                    foreach (KeyValuePair<string, ListItem> pair in rootItem.Item.Childs) { this.LoadPluginListItems((Module)sender, pair.Value, rootItem); } // load the provided listitem's by module.
-                    this.TreeView.EndUpdate(); // okay treeview, we're done.
-                }
-            });
-        }
-
-        private void LoadPluginListItems(Module plugin,ListItem item,TreeItem parent) // recursively loads a listitem and it's childs to treeview.
-        {
-            TreeItem t = new TreeItem(plugin, item);
-            parent.Nodes.Add(t);
-            t.Render();
-
-            if (item.Childs.Count > 0) { foreach (KeyValuePair<string, ListItem> pair in item.Childs) { this.LoadPluginListItems(plugin, pair.Value, t); } } // make this recursive.           
         }
 
         #endregion

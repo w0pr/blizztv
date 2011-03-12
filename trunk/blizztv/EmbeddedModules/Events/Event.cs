@@ -103,6 +103,7 @@ namespace BlizzTV.EmbeddedModules.Events
             this.Time = time;
 
             this.Icon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
+            State state=this.State; /* temp */
         }
 
         public override void Open(object sender, EventArgs e)
@@ -134,12 +135,12 @@ namespace BlizzTV.EmbeddedModules.Events
                 if ((ModuleSettings.Instance.InProgressEventNotificationsEnabled) && (this.Status == EventStatus.InProgress)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this.Notified = true; // don't notify about it more then once
-                    //NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, "Event is in progress, click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
+                    NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, "Event is in progress, click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
                 }
                 else if (this.MinutesLeft > 0 && (this.MinutesLeft <= ModuleSettings.Instance.MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
                 {
                     this.Notified = true; // don't notify about it more then once
-                    //NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, string.Format("Event starts in {0} minutes, click to see event details.", this.MinutesLeft.ToString("0")), System.Windows.Forms.ToolTipIcon.Info));
+                    NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, string.Format("Event starts in {0} minutes, click to see event details.", this.MinutesLeft.ToString("0")), System.Windows.Forms.ToolTipIcon.Info));
                 }
             }
         }
