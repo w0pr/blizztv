@@ -20,15 +20,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using BlizzTV.InfraStructure.Modules.Storage;
+using BlizzTV.Notifications;
 using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.InfraStructure.Modules
 {
-    public class ModuleNode : TreeNode, IDisposable
+    public class ModuleNode : TreeNode, INotificationRequester, IDisposable
     {
         private bool _disposed = false;
-        private NodeState _state = NodeState.Unknown; // the state of the item.
+        private State _state = State.Unknown; // the state of the item.
 
         public ModuleNode(string text) : base(text)
         {
@@ -55,32 +56,34 @@ namespace BlizzTV.InfraStructure.Modules
         /// </summary>
         protected bool RememberState { get; set; }
 
-        public NodeState GetState()
+        /// <summary>
+        /// The item state.
+        /// </summary>
+        public State State
         {
-            if (this._state != NodeState.Unknown) return this._state;
-
-            string key = string.Format("{0}.{1}", this.GetType(), this.Guid);
-            if (!this.RememberState || !StateStorage.Instance.Exists(key)) this.SetState(NodeState.Fresh);
-            else
+            get
             {
-                this.SetState((NodeState) StateStorage.Instance[key]);
-                if (this._state == NodeState.Fresh) this.SetState(NodeState.Unread);
-                else this.OnStateChanged();
+                if (this._state == State.Unknown)
+                {
+                    string key = string.Format("{0}.{1}", this.GetType(), this.Guid);
+
+                    if (!this.RememberState || !StateStorage.Instance.Exists(key)) this.State = State.Fresh; // if key does not exists in state-storage already, then it's just fresh.                    
+                    else // if already exists on state-storage
+                    {
+                        this._state = (State)StateStorage.Instance[key]; // get the last state from storage.
+                        if (this._state == State.Fresh) this.State = State.Unread; // if last state was fresh, change it unread.
+                        else { this.OnStateChanged(); }
+                    }
+                }
+                return this._state;
             }
-            return this._state;
-        }
-
-        public void SetState(NodeState state)
-        {
-            this._state = state;            
-
-            if (this.RememberState)
+            set
             {
+                this._state = value;
                 string key = string.Format("{0}.{1}", this.GetType(), this.Guid);
-                StateStorage.Instance[key] = (byte)this._state;
+                if (this.RememberState) StateStorage.Instance[key] = (byte)this._state; // set the new state.
+                this.OnStateChanged(); // notify about the state change.
             }
-
-            this.OnStateChanged();
         }
 
         /// <summary>
@@ -104,7 +107,7 @@ namespace BlizzTV.InfraStructure.Modules
                 string iconKey = this.Icon.Name;
                 Bitmap image = this.Icon.Image;
 
-                if (this._state == NodeState.Read)
+                if (this._state == State.Read)
                 {
                     iconKey += "GrayScaled";
                     image = image.GrayScale();
@@ -159,7 +162,7 @@ namespace BlizzTV.InfraStructure.Modules
     /// <summary>
     /// Item states.
     /// </summary>
-    public enum NodeState
+    public enum State
     {
         Unknown,
         Fresh,

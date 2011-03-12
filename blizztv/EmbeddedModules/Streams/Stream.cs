@@ -51,7 +51,7 @@ namespace BlizzTV.EmbeddedModules.Streams
 
                 // TODO: when the application goes offline the stream should set to offline in status storage.
                 if (StateStorage.Instance.Exists(string.Format("stream.{0}", this.Name))) wasOnline = Convert.ToBoolean(StateStorage.Instance[string.Format("stream.{0}", this.Name)]);
-                //if (Settings.ModuleSettings.Instance.NotificationsEnabled && !wasOnline && this._isLive) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Text, i18n.StreamOnlineNotification, System.Windows.Forms.ToolTipIcon.Info));
+                if (Settings.ModuleSettings.Instance.NotificationsEnabled && !wasOnline && this._isLive) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Text, i18n.StreamOnlineNotification, System.Windows.Forms.ToolTipIcon.Info));
                 StateStorage.Instance[string.Format("stream.{0}", this.Name)] = Convert.ToByte(this._isLive);                
             }
         }
@@ -68,7 +68,6 @@ namespace BlizzTV.EmbeddedModules.Streams
 
             this.Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream);
             this.RememberState = true;
-            this.GetState(); /* temp call */
         }
 
         public virtual void Process() // get the stream data by replacing provider variables. handler's can override this method to run their own routines, though base.Process() should be called also.

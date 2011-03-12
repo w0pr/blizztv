@@ -69,15 +69,15 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
 
         private void OnChildStateChange(object sender, EventArgs e)
         {
-            if (this.GetState() == ((BlueStory)sender).GetState()) return;
+            if (this.State == ((BlueStory)sender).State) return;
 
-            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
-            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = (from ModuleNode node in this.Nodes select node.State).Count(state => state == State.Fresh || state == State.Unread);
+            this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public void CheckForNotifications()
         {
-            //if (EmbeddedModules.BlueTracker.Settings.ModuleSettings.Instance.NotificationsEnabled && this.State ==  State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("{0}", this.Title), string.Format("A new {0} blue-post is available, click to open it.",this.Type) , System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.ModuleSettings.Instance.NotificationsEnabled && this.State ==  State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(string.Format("{0}", this.Text), string.Format("A new {0} blue-post is available, click to open it.",this.Type) , System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void Open(object sender, EventArgs e)
@@ -93,19 +93,19 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
         private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null);
-            if (this.GetState() != NodeState.Read) this.SetState(NodeState.Read);
+            if (this.State != State.Read) this.State = State.Read;
         }
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.SetState(NodeState.Read);
-            foreach (BlueStory post in this.Successors) { post.SetState(NodeState.Read); }
+            this.State = State.Read;
+            foreach (BlueStory post in this.Successors) { post.State = State.Read; }
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.SetState(NodeState.Unread);
-            foreach (BlueStory post in this.Successors) { post.SetState(NodeState.Unread); }
+            this.State = State.Unread;
+            foreach (BlueStory post in this.Successors) { post.State=State.Unread; }
         }
     }
 }

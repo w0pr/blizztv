@@ -61,13 +61,8 @@ namespace BlizzTV.EmbeddedModules.Streams
 
         public override void Startup()
         {
-            this.Refresh();
-        }
-
-        public override void Refresh()
-        {            
             this.UpdateStreams();
-            if (this._updateTimer == null)  this.SetupUpdateTimer();
+            if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
         public override Form GetPreferencesForm()
@@ -165,7 +160,7 @@ namespace BlizzTV.EmbeddedModules.Streams
                 else
                 {
                     this._moduleNode.Text = "Streams";
-                    this._moduleNode.SetState(NodeState.Read);
+                    this._moduleNode.State = State.Read;
                 }
 
                 Module.UITreeView.EndUpdate();

@@ -62,13 +62,8 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         public override void Startup()
         {
-            this.Refresh();
-        }
-
-        public override void Refresh()
-        {
             this.UpdateChannels();
-            if(this._updateTimer==null) this.SetupUpdateTimer();
+            if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
         public override Form GetPreferencesForm()
@@ -176,10 +171,10 @@ namespace BlizzTV.EmbeddedModules.Videos
         
         private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this._moduleNode.GetState() == ((Channel)sender).GetState()) return;
+            if (this._moduleNode.State == ((Channel)sender).State) return;
 
-            int unread = this._moduleNode.Nodes.Cast<Channel>().Count(feed => feed.GetState() == NodeState.Unread);
-            this._moduleNode.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = this._moduleNode.Nodes.Cast<Channel>().Count(feed => feed.State == State.Unread);
+            this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
         }
         
         public void OnSaveSettings()
@@ -216,7 +211,7 @@ namespace BlizzTV.EmbeddedModules.Videos
         {
             foreach (Video video in from Channel channel in this._moduleNode.Nodes from Video video in channel.Nodes select video)
             {
-                video.SetState(NodeState.Read);
+                video.State = State.Read;
             }
         }
 
@@ -224,7 +219,7 @@ namespace BlizzTV.EmbeddedModules.Videos
         {
             foreach (Video video in from Channel channel in this._moduleNode.Nodes from Video video in channel.Nodes select video)
             {
-                video.SetState(NodeState.Unread);
+                video.State = State.Unread;
             }
         }
 

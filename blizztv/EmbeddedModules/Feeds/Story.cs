@@ -42,7 +42,6 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
             this.Icon = new NamedImage("story", Assets.Images.Icons.Png._16.feed);
             this.RememberState = true;
-            this.GetState(); /* temp call */
 
             this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
             this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked)));             
@@ -50,7 +49,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         public void CheckForNotifications()
         {
-            //if (EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == NodeState.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Text, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void Open(object sender, EventArgs e)
@@ -66,7 +65,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-            if (this.GetState() != NodeState.Read) this.SetState(NodeState.Read);
+            if (this.State != State.Read) this.State = State.Read;
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
@@ -74,13 +73,13 @@ namespace BlizzTV.EmbeddedModules.Feeds
             this.Menu["markasread"].Enabled = false;
             this.Menu["markasunread"].Enabled = false;
 
-            switch (this.GetState())
+            switch (this.State)
             {
-                case NodeState.Fresh:
-                case NodeState.Unread:
+                case State.Fresh:
+                case State.Unread:
                     this.Menu["markasread"].Enabled = true;
                     break;
-                case NodeState.Read:
+                case State.Read:
                     this.Menu["markasunread"].Enabled = true;
                     break;
             }
@@ -88,12 +87,12 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.SetState(NodeState.Read);
+            this.State = State.Read;
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.SetState(NodeState.Unread);
+            this.State = State.Unread;
         }
     }
 }

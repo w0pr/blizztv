@@ -46,7 +46,6 @@ namespace BlizzTV.EmbeddedModules.Videos
 
             this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
             this.RememberState = true;
-            this.GetState(); /* temp call */
 
             this.Menu.Add("markaswatched", new ToolStripMenuItem(i18n.MarkAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsWatchedClicked)));
             this.Menu.Add("markasunwatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnWatchedClicked)));
@@ -54,7 +53,7 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         public void CheckForNotifications()
         {
-            //if (EmbeddedModules.Videos.Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new video is avaiable over {0}'s channel, click to start watching it.",this.ChannelName), System.Windows.Forms.ToolTipIcon.Info));
+            if (Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Text, string.Format("A new video is avaiable over {0}'s channel, click to start watching it.",this.ChannelName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public virtual void Process() // get the stream data by replacing provider variables. 
@@ -86,10 +85,10 @@ namespace BlizzTV.EmbeddedModules.Videos
                 else this._player.Focus();
             }
             else System.Diagnostics.Process.Start(this.Link, null); // render the video with default web-browser.
-            if (this.GetState() != NodeState.Read) this.SetState(NodeState.Read);
+            if (this.State != State.Read) this.State = State.Read;
         }
 
-        void PlayerClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        void PlayerClosed(object sender, FormClosedEventArgs e)
         {
             this._player = null;
         }
@@ -100,13 +99,13 @@ namespace BlizzTV.EmbeddedModules.Videos
             this.Menu["markaswatched"].Enabled = false;
             this.Menu["markasunwatched"].Enabled = false;
 
-            switch (this.GetState()) // switch on the item state.
+            switch (this.State) // switch on the item state.
             {
-                case NodeState.Fresh:
-                case NodeState.Unread:
+                case State.Fresh:
+                case State.Unread:
                     this.Menu["markaswatched"].Enabled = true; // make mark as watched menu visible.
                     break;
-                case NodeState.Read:
+                case State.Read:
                     this.Menu["markasunwatched"].Enabled = true; // make mark as unwatched menu visible.
                     break;
             }
@@ -114,12 +113,12 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         private void MenuMarkAsWatchedClicked(object sender, EventArgs e)
         {
-            this.SetState(NodeState.Read);        
+            this.State = State.Read;
         }
 
         private void MenuMarkAsUnWatchedClicked(object sender, EventArgs e)
         {
-            this.SetState(NodeState.Unread);
+            this.State = State.Unread;
         }
     }
 }

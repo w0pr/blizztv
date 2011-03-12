@@ -64,21 +64,10 @@ namespace BlizzTV.InfraStructure.Modules
         public virtual void Startup() { }
 
         /// <summary>
-        /// Notifies the module to refresh it's data.
-        /// </summary>
-        public virtual void Refresh() { throw new NotImplementedException(); }
-
-        /// <summary>
         /// Returns the module's request menus.
         /// </summary>
         /// <returns>A dictionary of requested menus.</returns>
         public virtual Dictionary<string, ToolStripMenuItem> GetMenus() { return null; }
-
-        /// <summary>
-        /// Returns the module's root treeview item.
-        /// </summary>
-        /// <returns><see cref="ListItem"/></returns>
-        public virtual ListItem GetRootItem() { return null; }
 
         /// <summary>
         /// Returns the module's root treenode.
@@ -99,42 +88,6 @@ namespace BlizzTV.InfraStructure.Modules
         /// <param name="link">The resource url.</param>
         /// <returns><see cref="bool"/></returns>
         public virtual bool AddSubscriptionFromUrl(string link) { return false; }
-
-        #region Events
-
-        /// <summary>
-        /// Notifies observers about module is refreshing it's data.
-        /// </summary>
-        public event EventHandler<EventArgs> DataRefreshStarting;
-
-        /// <summary>
-        /// Let's modules notify observers about starting of data refresh.
-        /// </summary>
-        /// <param name="e"><see cref="EventArgs"/></param>
-        protected void OnDataRefreshStarting(EventArgs e)
-        {
-            LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("[{0}] Data refresh started.", this.Attributes.Name));
-            EventHandler<EventArgs> handler = DataRefreshStarting;
-            if (handler != null) handler(this, e);
-        }
-
-        /// <summary>
-        /// Notifies observers about module completed it's data refresh.
-        /// </summary>
-        public event EventHandler<DataRefreshCompletedEventArgs> DataRefreshCompleted;
-
-        /// <summary>
-        /// Let's modules notify observers about completion of it's data refresh.
-        /// </summary>
-        /// <param name="e"><see cref="EventArgs"/></param>
-        protected void OnDataRefreshCompleted(DataRefreshCompletedEventArgs e)
-        {
-            LogManager.Instance.Write(LogMessageTypes.Debug, string.Format("[{0}] Data refresh {1}.", this.Attributes.Name, e.Succes ? "completed with success" : "failed"));
-            EventHandler<DataRefreshCompletedEventArgs> handler = DataRefreshCompleted;
-            if (handler != null) handler(this, e);
-        }
-
-        #endregion
 
         #region de-ctor
 

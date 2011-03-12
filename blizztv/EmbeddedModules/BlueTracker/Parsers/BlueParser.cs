@@ -63,7 +63,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
                     WebReader.Result result = WebReader.Read(source.Url);
                     if (result.State != WebReader.States.Success)
                     {
-                        this.SetState(NodeState.Error);
+                        this.State = State.Error;
                         this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                         return;
                     }
@@ -101,18 +101,18 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
 
         private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this.GetState() == ((BlueStory)sender).GetState()) return;
+            if (this.State == ((BlueStory)sender).State) return;
 
-            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
-            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = (from ModuleNode node in this.Nodes select node.State).Count(state => state == State.Fresh || state == State.Unread);
+            this.State=unread > 0 ? State.Unread : State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
             {
-                pair.Value.SetState(NodeState.Read);
-                foreach (BlueStory post in pair.Value.Successors) { post.SetState(NodeState.Read); }
+                pair.Value.State = State.Read;
+                foreach (BlueStory post in pair.Value.Successors) { post.State=State.Read; }
             }
         }
 
@@ -120,8 +120,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
         {
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
             {
-                pair.Value.SetState(NodeState.Unread);
-                foreach (BlueStory post in pair.Value.Successors) { post.SetState(NodeState.Unread); }
+                pair.Value.State = State.Unread;
+                foreach (BlueStory post in pair.Value.Successors) { post.State=State.Unread; }
             }
         }
     }

@@ -62,13 +62,8 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         public override void Startup()
         {
-            this.Refresh();                   
-        }
-
-        public override void Refresh()
-        {
             this.UpdateFeeds();
-            if (this._updateTimer == null) this.SetupUpdateTimer();
+            if (this._updateTimer == null) this.SetupUpdateTimer();                  
         }
 
         public override bool AddSubscriptionFromUrl(string link) // Tries parsing a drag & dropped link to see if it's a feed and parsable.
@@ -179,10 +174,10 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this._moduleNode.GetState() == ((Feed)sender).GetState()) return;
+            if (this._moduleNode.State == ((Feed)sender).State) return;
 
-            int unread = this._moduleNode.Nodes.Cast<Feed>().Count(feed => feed.GetState() == NodeState.Unread);
-            this._moduleNode.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = this._moduleNode.Nodes.Cast<Feed>().Count(feed => feed.State == State.Unread);
+            this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public override Form GetPreferencesForm()
@@ -218,7 +213,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             foreach (Story story in from Feed feed in this._moduleNode.Nodes from Story story in feed.Nodes select story)
             {
-                story.SetState(NodeState.Read);
+                story.State = State.Read;
             }
         }
 
@@ -226,7 +221,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             foreach (Story story in from Feed feed in this._moduleNode.Nodes from Story story in feed.Nodes select story)
             {
-                story.SetState(NodeState.Unread);
+                story.State = State.Unread;
             }
         }
 

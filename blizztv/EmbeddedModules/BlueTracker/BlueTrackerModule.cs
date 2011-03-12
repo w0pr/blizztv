@@ -59,11 +59,6 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
 
         public override void Startup()
         {
-            this.Refresh();
-        }
-
-        public override void Refresh()
-        {
             this.UpdateBlues();
             if (this._updateTimer == null) this.SetupUpdateTimer();
         }
@@ -138,10 +133,10 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
 
         private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this._moduleNode.GetState() == ((BlueParser)sender).GetState()) return;
+            if (this._moduleNode.State == ((BlueParser)sender).State) return;
 
-            int unread = this._parsers.Count(parser => parser.GetState() == NodeState.Unread);
-            this._moduleNode.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = this._parsers.Count(parser => parser.State == State.Unread);
+            this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
@@ -150,8 +145,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             {
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
-                    pair.Value.SetState(NodeState.Read);
-                    foreach (BlueStory post in pair.Value.Successors) { post.SetState(NodeState.Read); }
+                    pair.Value.State = State.Read;
+                    foreach (BlueStory post in pair.Value.Successors) { post.State=State.Read; }
                 }
             }
         }
@@ -162,8 +157,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             {
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
-                    pair.Value.SetState(NodeState.Unread);
-                    foreach (BlueStory post in pair.Value.Successors) { post.SetState(NodeState.Unread); }
+                    pair.Value.State = State.Unread;
+                    foreach (BlueStory post in pair.Value.Successors) { post.State=State.Unread; }
                 }
             }
         }

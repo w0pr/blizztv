@@ -52,7 +52,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
             this.CanRenderTreeNodes = true;
 
-            this._moduleNode.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.podcast);
+            this._moduleNode.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
 
             this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
             this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
@@ -61,11 +61,6 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         }
 
         public override void Startup()
-        {
-            this.Refresh();
-        }
-
-        public override void Refresh()
         {
             this.UpdatePodcasts();
             if (this._updateTimer == null) this.SetupUpdateTimer();
@@ -181,10 +176,10 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
         private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this._moduleNode.GetState() == ((Podcast)sender).GetState()) return;
+            if (this._moduleNode.State == ((Podcast)sender).State) return;
 
-            int unread = this._moduleNode.Nodes.Cast<Podcast>().Count(feed => feed.GetState() == NodeState.Unread);
-            this._moduleNode.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = this._moduleNode.Nodes.Cast<Podcast>().Count(feed => feed.State == State.Unread);
+            this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
         }
 
         public override Form GetPreferencesForm()
@@ -220,7 +215,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         {
             foreach (Episode episode in from Podcast podcast in this._moduleNode.Nodes from Episode episode in podcast.Nodes select episode)
             {
-                episode.SetState(NodeState.Read);
+                episode.State = State.Read;
             }
         }
 
@@ -228,7 +223,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         {
             foreach (Episode episode in from Podcast podcast in this._moduleNode.Nodes from Episode episode in podcast.Nodes select episode)
             {
-                episode.SetState(NodeState.Unread);
+                episode.State = State.Unread;
             }
         }
 

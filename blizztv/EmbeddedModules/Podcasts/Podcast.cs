@@ -60,7 +60,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         {
             if (this.Parse())
             {
-                foreach (Episode episode in this.Nodes) { episode.CheckForNotifications(); }
+                foreach (Episode episode in this.Episodes) { episode.CheckForNotifications(); }
                 return true;
             }
             return false;
@@ -72,7 +72,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
             if (!PodcastParser.Instance.Parse(this.Url, ref items))
             {
-                this.SetState(NodeState.Error);
+                this.State=State.Error;
                 this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
@@ -92,20 +92,20 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
         private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this.GetState() == ((Episode)sender).GetState()) return;
+            if (this.State == ((Episode)sender).State) return;
 
-            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
-            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
+            int unread = (from ModuleNode node in this.Nodes select node.State).Count(state => state == State.Fresh || state == State.Unread);
+            this.State = unread > 0 ? State.Unread : State.Read;
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Episode episode in this.Nodes) { episode.SetState(NodeState.Read); } // marked all episodes as read.
+            foreach (Episode episode in this.Nodes) { episode.State=State.Read; } // marked all episodes as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Episode episode in this.Nodes) { episode.SetState(NodeState.Unread); } // marked all episodes as read.
+            foreach (Episode episode in this.Nodes) { episode.State=State.Unread; } // marked all episodes as read.
         }
 
         #region de-ctor
