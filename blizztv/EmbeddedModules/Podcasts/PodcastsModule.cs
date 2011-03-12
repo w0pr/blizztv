@@ -30,16 +30,17 @@ using BlizzTV.InfraStructure.Modules;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Catalog;
 using BlizzTV.Log;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.UI;
 
 namespace BlizzTV.EmbeddedModules.Podcasts
 {
     [ModuleAttributes("Podcasts", "Podcast aggregator.", "podcast")]
-    public class PodcastsModule : Module,ISubscriptionConsumer
+    public class PodcastsModule : Module , ISubscriptionConsumer
     {
-        private readonly ListItem _rootItem = new ListItem("Podcasts") { Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast) };
-        private Dictionary<string, Podcast> _podcasts = new Dictionary<string, Podcast>(); // list of feeds.
+        private bool _disposed = false;
+        private readonly ModuleNode _moduleNode = new ModuleNode("Podcasts");
         private System.Timers.Timer _updateTimer;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://podcast/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);
 
@@ -51,10 +52,17 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
             this.CanRenderTreeNodes = true;
 
-            this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
-            this._rootItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
-            this._rootItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
-            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this._moduleNode.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.podcast);
+
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this._moduleNode.Menu.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
+            this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+        }
+
+        public override void Startup()
+        {
+            this.Refresh();
         }
 
         public override void Refresh()
@@ -71,13 +79,13 @@ namespace BlizzTV.EmbeddedModules.Podcasts
                 return false;
             }
 
-            PodcastSubscription podcastSubscription = new PodcastSubscription { Name = "test-podcast", Url = link };
+            var podcastSubscription = new PodcastSubscription { Name = "test-podcast", Url = link };
 
-            using (Podcast podcast = new Podcast(podcastSubscription))
+            using (var podcast = new Podcast(podcastSubscription))
             {
                 if (podcast.IsValid())
                 {
-                    PodcastSubscription subscription = new PodcastSubscription();
+                    var subscription = new PodcastSubscription();
                     string podcastName = "";
 
                     if (InputBox.Show(i18n.AddNewPodcastTitle, i18n.AddNewPodcastMessage, ref podcastName) == DialogResult.OK)
@@ -97,45 +105,29 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             return false;
         }
 
-        public override ListItem GetRootItem()
+        public override TreeNode GetModuleNode()
         {
-            return this._rootItem;
+            return this._moduleNode;
         }
 
         private void UpdatePodcasts()
         {
             if (this.RefreshingData) return;
-
             this.RefreshingData = true;
-            this.OnDataRefreshStarting(EventArgs.Empty);
 
-            if (this._podcasts.Count > 0) // clear previous entries before doing an update.
-            {
-                this._podcasts.Clear();
-                this._rootItem.Childs.Clear();
-            }
-
-            this._rootItem.SetTitle("Updating podcasts..");
-
-            foreach (KeyValuePair<string, PodcastSubscription> pair in Subscriptions.Instance.Dictionary)
-            {
-                Podcast podcast = new Podcast(pair.Value);
-                podcast.OnStateChange += OnChildStateChange;
-                this._podcasts.Add(pair.Value.Url, podcast);
-            }
-
-            Workload.WorkloadManager.Instance.Add(this._podcasts.Count);
+            Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);        
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             int i = 0;
-            var tasks = new Task<Podcast>[this._podcasts.Count];
+            var tasks = new Task<Podcast>[Subscriptions.Instance.Dictionary.Count];
 
-            foreach(KeyValuePair<string,Podcast> pair in this._podcasts)
+            foreach (KeyValuePair<string, PodcastSubscription> pair in Subscriptions.Instance.Dictionary)
             {
-                KeyValuePair<string, Podcast> local = pair;
-                tasks[i] = Task.Factory.StartNew(() => TaskProcessPodcast(local.Value));
+                var podcast = new Podcast(pair.Value);
+                podcast.StateChanged += OnChildStateChanged;                
+                tasks[i] = Task.Factory.StartNew(() => TaskProcessPodcast(podcast));
                 i++;
             }
 
@@ -157,30 +149,27 @@ namespace BlizzTV.EmbeddedModules.Podcasts
                 }
             }
 
-            foreach (Task<Podcast> task in tasks)
+            Module.UITreeView.AsyncInvokeHandler(() =>
             {
-                this._rootItem.Childs.Add(task.Result.Url, task.Result);
-                foreach (Episode episode in task.Result.Episodes) { task.Result.Childs.Add(episode.Guid, episode); }
-            }
+                Module.UITreeView.BeginUpdate();
 
-            /*foreach(KeyValuePair<string,Podcast> pair in this._podcasts)
-            {
-                try
+                if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
+                foreach (Task<Podcast> task in tasks)
                 {
-                    pair.Value.Update(); // update the podcast
-                    this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                    foreach (Episode episode in pair.Value.Episodes) { pair.Value.Childs.Add(episode.Guid, episode); } // register the episodes.
+                    this._moduleNode.Nodes.Add(task.Result);
+                    foreach(Episode episode in task.Result.Episodes)
+                    {
+                        task.Result.Nodes.Add(episode);
+                    }
                 }
-                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module podcasts caught an exception while updating podcasts: {0}", e)); }
-                Workload.WorkloadManager.Instance.Step();
-            }*/
+
+                Module.UITreeView.EndUpdate();
+            });
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} podcasts in {1}.", this._podcasts.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} podcasts in {1}.", Subscriptions.Instance.Dictionary.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
-            this._rootItem.SetTitle("Podcasts");
-            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
         }
 
@@ -190,12 +179,12 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             return podcast;
         }
 
-        private void OnChildStateChange(object sender, EventArgs e)
+        private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this._rootItem.State == ((Podcast)sender).State) return;
+            if (this._moduleNode.GetState() == ((Podcast)sender).GetState()) return;
 
-            int unread = this._podcasts.Count(pair => pair.Value.State == State.Unread);
-            this._rootItem.State = unread > 0 ? State.Unread : State.Read;
+            int unread = this._moduleNode.Nodes.Cast<Podcast>().Count(feed => feed.GetState() == NodeState.Unread);
+            this._moduleNode.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
         }
 
         public override Form GetPreferencesForm()
@@ -229,29 +218,29 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Episode episode in this._podcasts.SelectMany(pair => pair.Value.Episodes))
+            foreach (Episode episode in from Podcast podcast in this._moduleNode.Nodes from Episode episode in podcast.Nodes select episode)
             {
-                episode.State = State.Read;
+                episode.SetState(NodeState.Read);
             }
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Episode episode in this._podcasts.SelectMany(pair => pair.Value.Episodes))
+            foreach (Episode episode in from Podcast podcast in this._moduleNode.Nodes from Episode episode in podcast.Nodes select episode)
             {
-                episode.State = State.Unread;
+                episode.SetState(NodeState.Unread);
             }
         }
 
         private void MenuSettingsClicked(object sender, EventArgs e)
         {
-            ModuleSettingsHostForm f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
+            var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread thread = new System.Threading.Thread(this.UpdatePodcasts) { IsBackground = true };
+            var thread = new System.Threading.Thread(this.UpdatePodcasts) { IsBackground = true };
             thread.Start();
         }
 
@@ -271,5 +260,24 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             var subscription = new PodcastSubscription { Name = name, Url = url };
             Subscriptions.Instance.Add(subscription);
         }
+
+
+        #region de-ctor
+
+        protected override void Dispose(bool disposing)
+        {
+            if (this._disposed) return;
+            if (disposing) // managed resources
+            {
+                this._updateTimer.Enabled = false;
+                this._updateTimer.Elapsed -= OnTimerHit;
+                this._updateTimer.Dispose();
+                this._updateTimer = null;
+                foreach (Podcast podcast in this._moduleNode.Nodes) { podcast.Dispose(); }
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

@@ -28,6 +28,7 @@ using BlizzTV.InfraStructure.Modules;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.Log;
 using BlizzTV.Utility.Date;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Utility.Web;
 
@@ -36,15 +37,14 @@ namespace BlizzTV.EmbeddedModules.Events
     [ModuleAttributes("Events", "E-Sports events tracker.", "_event")]
     public class EventsModule : Module
     {
-
-        private ListItem _rootItem = new ListItem("Events") { Icon = new NamedImage("event", Assets.Images.Icons.Png._16._event) };
+        private bool _disposed = false;
+        private readonly ModuleNode _moduleNode = new ModuleNode("Events");
         private List<Event> _events = new List<Event>(); // list of events.
         private System.Timers.Timer _eventTimer = new System.Timers.Timer(60000); // runs every one minute and check events & alarms.
         private static TimeZoneInfo KoreanTimeZone { get { TimeZoneInfo zone = TimeZoneInfo.Local; foreach (TimeZoneInfo z in TimeZoneInfo.GetSystemTimeZones()) { if (z.Id == "Korea Standard Time") zone = z; } return zone; } } // teamliquid calendar flags events in Korean time.
-        private readonly ListItem _eventsToday = new ListItem("Today"); // today's events item.
-        private readonly ListItem _eventsUpcoming = new ListItem("Upcoming"); // upcoming events item.
-        private readonly ListItem _eventsOver = new ListItem("Past"); // past events item.        
-        private bool _disposed = false;
+        private readonly ModuleNode _eventsToday = new ModuleNode("Today"); // today's events item.
+        private readonly ModuleNode _eventsUpcoming = new ModuleNode("Upcoming"); // upcoming events item.
+        private readonly ModuleNode _eventsOver = new ModuleNode("Past"); // past events item.        
         
         public EventsModule() : base()
         {
@@ -52,13 +52,16 @@ namespace BlizzTV.EmbeddedModules.Events
             this.CanRenderTreeNodes = true;
 
             var eventIcon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
-
             this._eventsToday.Icon = eventIcon;
             this._eventsUpcoming.Icon = eventIcon;
             this._eventsOver.Icon = eventIcon;
 
-            this._rootItem.ContextMenus.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
-            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this._moduleNode.Nodes.Add(_eventsToday);
+            this._moduleNode.Nodes.Add( _eventsUpcoming);
+            this._moduleNode.Nodes.Add(_eventsOver);
+
+            this._moduleNode.Menu.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
+            this._moduleNode.Menu.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
         
         /// <summary>
@@ -70,9 +73,14 @@ namespace BlizzTV.EmbeddedModules.Events
             return new Dictionary<string, ToolStripMenuItem> { { "calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked)) } };
         }
 
-        public override ListItem GetRootItem()
+        public override TreeNode GetModuleNode()
         {
-            return this._rootItem;
+            return this._moduleNode;
+        }
+
+        public override void Startup()
+        {
+            this.Refresh();
         }
 
         public override void Refresh()
@@ -93,16 +101,17 @@ namespace BlizzTV.EmbeddedModules.Events
             this.OnDataRefreshStarting(EventArgs.Empty);
 
             Workload.WorkloadManager.Instance.Add(1);
-            this._rootItem.SetTitle("Updating events..");
 
             try
             {
                 WebReader.Result result = WebReader.Read("http://www.teamliquid.net/calendar/xml/calendar.xml"); // read teamliquid calendar xml.
                 if (result.State != WebReader.States.Success)
                 {
-                    this._rootItem.State = State.Error;
-                    this._rootItem.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
-                    this._rootItem.SetTitle("Events");
+                    Module.UITreeView.AsyncInvokeHandler(() =>
+                    {
+                        this._moduleNode.SetState(NodeState.Error);
+                        this._moduleNode.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                    });
                     Workload.WorkloadManager.Instance.Step();
                     return;
                 }
@@ -132,7 +141,7 @@ namespace BlizzTV.EmbeddedModules.Events
                                                               }
                                         };
 
-                foreach (Event e in from monthEntry in months
+                foreach (Event @event in from monthEntry in months
                                     from dayEntry in monthEntry.days
                                     from eventEntry in dayEntry.events
                                     select new Event(
@@ -150,7 +159,7 @@ namespace BlizzTV.EmbeddedModules.Events
                                                 0),
                                             KoreanTimeZone)))
                 {
-                    this._events.Add(e);
+                    this._events.Add(@event);
                 }
             }
 
@@ -159,28 +168,26 @@ namespace BlizzTV.EmbeddedModules.Events
                 LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Events module caught an exception while parsing events: {0}", e));
             }
 
-            this._rootItem.Childs.Add("events-today", _eventsToday);
-            this._rootItem.Childs.Add("events-upcoming", _eventsUpcoming);
-            this._rootItem.Childs.Add("events-over", _eventsOver);
-
-            foreach (Event e in from e in this._events
+            Module.UITreeView.AsyncInvokeHandler(() =>
+            {
+                Module.UITreeView.BeginUpdate();
+                foreach (Event @event in from e in this._events
                                 let filterStart = DateTime.Now.Date.Subtract(new TimeSpan(ModuleSettings.Instance.NumberOfDaysToShowEventsOnMainWindow, 0, 0, 0))
                                 let filterEnd = DateTime.Now.Date.AddDays(ModuleSettings.Instance.NumberOfDaysToShowEventsOnMainWindow)
                                 where (filterStart <= e.Time.LocalTime) && (e.Time.LocalTime <= filterEnd)
                                 select e)
-            {
-                if (e.IsOver) _eventsOver.Childs.Add(e.EventId, e); // if event is over register it in past-events section.
-                else
                 {
-                    if (e.Time.LocalTime.Date == DateTime.Now.Date) _eventsToday.Childs.Add(e.EventId, e); // if event takes place today, register it in todays-events section.
-                    else _eventsUpcoming.Childs.Add(e.EventId, e); // else register it in upcoming-events section.
+                    if (@event.IsOver) _eventsOver.Nodes.Add(@event); // if event is over register it in past-events section.
+                    else
+                    {
+                        if (@event.Time.LocalTime.Date == DateTime.Now.Date) _eventsToday.Nodes.Add(@event); // if event takes place today, register it in todays-events section.
+                        else _eventsUpcoming.Nodes.Add(@event); // else register it in upcoming-events section.
+                    }
                 }
-            }
+                Module.UITreeView.EndUpdate();
+            });
 
-            this._rootItem.SetTitle("Events");  
             Workload.WorkloadManager.Instance.Step();
-
-            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
         }
 
@@ -204,13 +211,13 @@ namespace BlizzTV.EmbeddedModules.Events
 
         private void MenuCalendarClicked(object sender, EventArgs e)
         {
-            CalendarForm c = new CalendarForm(this._events);
+            var c = new CalendarForm(this._events);
             c.Show();
         }
 
         private void MenuSettingsClicked(object sender, EventArgs e)
         {
-            ModuleSettingsHostForm f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
+            var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
 

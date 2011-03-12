@@ -25,7 +25,7 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Videos
 {
-    public class Channel:ListItem
+    public class Channel : ModuleNode
     {
         private bool _disposed = false;
 
@@ -38,14 +38,14 @@ namespace BlizzTV.EmbeddedModules.Videos
         public Channel(VideoSubscription subscription)
             : base(subscription.Name)
         {
-            this.Name = subscription.Name;
+            this.Text = subscription.Name;
             this.Slug = subscription.Slug;
-            this.Provider = subscription.Provider;         
-
-            this.ContextMenus.Add("markaswatched", new ToolStripMenuItem(i18n.MarkAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked))); 
-            this.ContextMenus.Add("markasunwatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked))); 
+            this.Provider = subscription.Provider;
 
             this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
+
+            this.Menu.Add("markaswatched", new ToolStripMenuItem(i18n.MarkAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
+            this.Menu.Add("markasunwatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked))); 
         }
 
         public bool IsValid()
@@ -55,35 +55,33 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         public bool Update()
         {
-            if (!this.Parse())
+            if (this.Parse())
             {
-                this.State = State.Error;
-                this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
-                return false;
+                foreach (Video video in this.Nodes) { video.CheckForNotifications(); }
+                return true;
             }
 
-            foreach (Video v in this.Videos) { v.CheckForNotifications(); }
-            return true;
+            return false;
         }
 
         public virtual bool Parse() { throw new NotImplementedException(); }
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.State = State.Read; } // marked all videos as watched.
+            foreach (Video video in this.Nodes) { video.SetState(NodeState.Read); } // marked all videos as watched.
         }
 
         private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
         {
-            foreach (Video v in this.Videos) { v.State = State.Unread; } // marked all videos as unread.
+            foreach (Video video in this.Nodes) { video.SetState(NodeState.Read); } // marked all videos as un-watched.
         }
 
-        protected void OnChildStateChange(object sender, EventArgs e)
+        protected void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this.State == ((Video) sender).State) return;
+            if (this.GetState() == ((Video)sender).GetState()) return;
 
-            int unread = this.Videos.Count(s => s.State == State.Fresh || s.State == State.Unread);
-            this.State = unread > 0 ? State.Unread : State.Read;
+            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
+            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
         }
 
         #region de-ctor
@@ -93,9 +91,8 @@ namespace BlizzTV.EmbeddedModules.Videos
             if (this._disposed) return;
             if (disposing) // managed resources
             {
-                foreach (Video v in this.Videos) { v.Dispose(); }
-                this.Videos.Clear();
-                this.Videos = null;
+                foreach (Video video in this.Nodes) { video.Dispose(); }
+                this.Nodes.Clear();
             }
             base.Dispose(disposing);
         }

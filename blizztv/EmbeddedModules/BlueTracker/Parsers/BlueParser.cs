@@ -31,7 +31,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
     /// <summary>
     /// Parser for Blizzard forums that can extract Blue-GM posts.
     /// </summary>
-    public class BlueParser:ListItem
+    public class BlueParser : ModuleNode
     {
         private static readonly Regex RegexBlueId = new Regex(@"\.\./topic/(?<TopicID>.*?)(\?page\=.*?)?#(?<PostID>.*)", RegexOptions.Compiled); // The post details regex.
         private readonly BlueType _type;        
@@ -44,8 +44,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
         {
             this._type = type;
            
-            this.ContextMenus.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
-            this.ContextMenus.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
+            this.Menu.Add("markallasread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this.Menu.Add("markallasunread", new System.Windows.Forms.ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
         }
 
         public void Update()
@@ -63,12 +63,12 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
                     WebReader.Result result = WebReader.Read(source.Url);
                     if (result.State != WebReader.States.Success)
                     {
-                        this.State = State.Error;
+                        this.SetState(NodeState.Error);
                         this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                         return;
                     }
 
-                    HtmlDocument doc = new HtmlDocument();
+                    var doc = new HtmlDocument();
                     doc.LoadHtml(result.Response);
 
                     foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//tr[@class='blizzard']"))
@@ -84,11 +84,11 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
                         string topicId = m.Groups["TopicID"].Value;
                         string postId = m.Groups["PostID"].Value;
 
-                        BlueStory b = new BlueStory(this._type, postTitle, source.Region, postLink, topicId, postId);
-                        b.OnStateChange += OnChildStateChange;
+                        var blueStory = new BlueStory(this._type, postTitle, source.Region, postLink, topicId, postId);
+                        blueStory.StateChanged += OnChildStateChanged;
 
-                        if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, b);
-                        else this.Stories[topicId].AddSuccessorPost(b);
+                        if (!this.Stories.ContainsKey(topicId)) this.Stories.Add(topicId, blueStory);
+                        else this.Stories[topicId].AddSuccessorPost(blueStory);
                     }
                 }
                 catch (Exception e)
@@ -99,20 +99,20 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
             }
         }
 
-        private void OnChildStateChange(object sender, EventArgs e)
+        private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this.State == ((BlueStory) sender).State) return;
+            if (this.GetState() == ((BlueStory)sender).GetState()) return;
 
-            int unread = this.Stories.Count(pair => pair.Value.State == State.Fresh || pair.Value.State == State.Unread);
-            this.State = unread > 0 ? State.Unread : State.Read;
+            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
+            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
             {
-                pair.Value.State = State.Read;
-                foreach (KeyValuePair<string, BlueStory> post in pair.Value.Successors) { post.Value.State = State.Read; }
+                pair.Value.SetState(NodeState.Read);
+                foreach (BlueStory post in pair.Value.Successors) { post.SetState(NodeState.Read); }
             }
         }
 
@@ -120,8 +120,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
         {
             foreach (KeyValuePair<string, BlueStory> pair in this.Stories)
             {
-                pair.Value.State = State.Unread;
-                foreach (KeyValuePair<string, BlueStory> post in pair.Value.Successors) { post.Value.State = State.Unread; }
+                pair.Value.SetState(NodeState.Unread);
+                foreach (BlueStory post in pair.Value.Successors) { post.SetState(NodeState.Unread); }
             }
         }
     }

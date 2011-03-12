@@ -18,7 +18,9 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
+using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Log;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Web;
 
 namespace BlizzTV.EmbeddedModules.Videos.Parsers
@@ -44,13 +46,11 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
                                   Link = item.Element("link").Value
                               };
 
-                foreach (EmbeddedModules.Videos.Parsers.Video.Youtube v in
-                    entries.Select(entry => new EmbeddedModules.Videos.Parsers.Video.Youtube(this.Title, entry.Title, entry.GUID, entry.Link, this.Provider)))
+                foreach (Video.Youtube video in entries.Select(entry => new Video.Youtube(this.Text, entry.Title, entry.GUID, entry.Link, this.Provider)))
                 {
-                    v.OnStateChange +=  OnChildStateChange;
-                    this.Videos.Add(v);
+                    video.StateChanged += OnChildStateChanged;
+                    this.Videos.Add(video);
                 }
-
                 return true;
             }
             catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module video's Youtube parser caught an exception: {0}", e)); return false; }

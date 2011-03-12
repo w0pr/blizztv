@@ -159,7 +159,7 @@ namespace BlizzTV.UI
             if (module.CanRenderMenus) this.AttachModuleMenus(module); // register's the module menus.
 
             if (!module.CanRenderTreeNodes) return;
-            TreeNode node = module.GetTreeNode();
+            TreeNode node = module.GetModuleNode();
             if (node == null) return;
             this.TreeView.Nodes.Add(node);
         }
@@ -282,6 +282,8 @@ namespace BlizzTV.UI
 
             TreeView.SelectedNode = selection;
             if (selection.Menu.Count == 0) return; // if the selected item has no attach menu's just return.
+
+            selection.RightClicked(this, e);
 
             TreeviewContextMenu.Items.Clear();
             foreach(KeyValuePair<string,ToolStripMenuItem> pair in selection.Menu) { TreeviewContextMenu.Items.Add(pair.Value); } //add custom-context menu's.
