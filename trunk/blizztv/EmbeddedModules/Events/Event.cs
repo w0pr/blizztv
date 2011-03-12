@@ -23,6 +23,7 @@ using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Storage;
 using BlizzTV.Utility.Date;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Events
@@ -30,8 +31,10 @@ namespace BlizzTV.EmbeddedModules.Events
     /// <summary>
     /// Holds an event.
     /// </summary>
-    public class Event:ListItem
+    public class Event : ModuleNode
     {
+        private bool _disposed = false;
+
         private readonly Regex _teamliquidDescriptionFilter=new Regex(@"\[/?tlpd.*?\]", RegexOptions.Compiled); // filters out teamliquid calendar's [tlpd] tags.
 
         public string FullTitle { get; private set; } /* the full event title */
@@ -92,7 +95,7 @@ namespace BlizzTV.EmbeddedModules.Events
         public Event(string title, string fullTitle, string description, string eventId,bool isOver, ZonedDateTime time)
             : base(title)
         {
-            Notified = false;
+            this.Notified = false;
             this.FullTitle = fullTitle;            
             this.Description = this._teamliquidDescriptionFilter.Replace(description,"");
             this.EventId = eventId;
@@ -114,7 +117,7 @@ namespace BlizzTV.EmbeddedModules.Events
 
         private void ShowEvent()
         {
-            EventViewerForm f = new EventViewerForm(this);
+            var f = new EventViewerForm(this);
             f.Show();
         }
 
@@ -131,12 +134,12 @@ namespace BlizzTV.EmbeddedModules.Events
                 if ((ModuleSettings.Instance.InProgressEventNotificationsEnabled) && (this.Status == EventStatus.InProgress)) // if in-progress event notifications are enabled, check for it the event has started.
                 {
                     this.Notified = true; // don't notify about it more then once
-                    NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, "Event is in progress, click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
+                    //NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, "Event is in progress, click to see event details.", System.Windows.Forms.ToolTipIcon.Info));
                 }
                 else if (this.MinutesLeft > 0 && (this.MinutesLeft <= ModuleSettings.Instance.MinutesToNotifyBeforeEvent)) // start notifying about the upcoming event.
                 {
                     this.Notified = true; // don't notify about it more then once
-                    NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, string.Format("Event starts in {0} minutes, click to see event details.", this.MinutesLeft.ToString("0")), System.Windows.Forms.ToolTipIcon.Info));
+                    //NotificationManager.Instance.Show(this, new NotificationEventArgs(this.FullTitle, string.Format("Event starts in {0} minutes, click to see event details.", this.MinutesLeft.ToString("0")), System.Windows.Forms.ToolTipIcon.Info));
                 }
             }
         }
@@ -149,7 +152,11 @@ namespace BlizzTV.EmbeddedModules.Events
             {
                 if ((int)this.GetAlarmMinutes() == (int)this.MinutesLeft)
                 {
-                    this.ShowForm(new AlarmForm(this));
+                    Module.UITreeView.AsyncInvokeHandler(() =>
+                    {
+                        var form = new AlarmForm(this);
+                        form.Show();
+                    });
                 }
             }
             else this.DeleteAlarm();

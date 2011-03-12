@@ -27,6 +27,7 @@ using BlizzTV.EmbeddedModules.BlueTracker.Settings;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.Log;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 using BlizzTV.Assets.i18n;
 
@@ -35,7 +36,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
     [ModuleAttributes("BlizzBlues", "Blizzard GM-Blue's aggregator.", "blizzblues")]
     class BlueTrackerModule : Module
     {
-        private readonly ListItem _rootItem = new ListItem("BlizzBlues") { Icon = new NamedImage("blizzblues", Assets.Images.Icons.Png._16.blizzblues) };
+        private bool _disposed = false;
+        private readonly ModuleNode _moduleNode = new ModuleNode("BlizzBlues");
         private readonly List<BlueParser> _parsers = new List<BlueParser>(); // list of blue-post parsers
         private System.Timers.Timer _updateTimer;
 
@@ -47,10 +49,17 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
 
             this.CanRenderTreeNodes = true;
 
-            this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate)));
-            this._rootItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
-            this._rootItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
-            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); 
+            this._moduleNode.Icon = new NamedImage("blizzblue", Assets.Images.Icons.Png._16.blizzblues);
+
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate)));
+            this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this._moduleNode.Menu.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
+            this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); 
+        }
+
+        public override void Startup()
+        {
+            this.Refresh();
         }
 
         public override void Refresh()
@@ -59,38 +68,25 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
-        public override ListItem GetRootItem()
-        {
-            return this._rootItem;
-        }
-
         private void UpdateBlues()
         {
             if (this.RefreshingData) return; // if module is already updating, ignore this request.
-
             this.RefreshingData = true;
-            this.OnDataRefreshStarting(EventArgs.Empty);
 
-            if (this._parsers.Count > 0) // reset the current data.
+            if (this._parsers.Count > 0) this._parsers.Clear(); // reset the current data.
+
+            if (ModuleSettings.Instance.TrackWorldofWarcraft)
             {
-                this._parsers.Clear();
-                this._rootItem.Childs.Clear();
-            }
-
-            this._rootItem.SetTitle("Updating BlizzBlues..");
-
-            if (EmbeddedModules.BlueTracker.Settings.ModuleSettings.Instance.TrackWorldofWarcraft)
-            {
-                WorldofWarcraft wow = new WorldofWarcraft();
+                var wow = new WorldofWarcraft();
                 this._parsers.Add(wow);
-                wow.OnStateChange += OnChildStateChange;
+                wow.StateChanged += OnChildStateChanged;
             }
 
-            if (EmbeddedModules.BlueTracker.Settings.ModuleSettings.Instance.TrackStarcraft)
+            if (ModuleSettings.Instance.TrackStarcraft)
             {
-                Starcraft sc = new Starcraft();
+                var sc = new Starcraft();
                 this._parsers.Add(sc);
-                sc.OnStateChange += OnChildStateChange;
+                sc.StateChanged += OnChildStateChanged;
             }
 
             if (this._parsers.Count > 0)
@@ -103,29 +99,36 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
                 foreach (BlueParser parser in this._parsers)
                 {
                     parser.Update();
-                    this._rootItem.Childs.Add(parser.Title, parser);
-                    foreach (KeyValuePair<string, BlueStory> storyPair in parser.Stories)
-                    {
-                        parser.Childs.Add(storyPair.Key, storyPair.Value);
-                        if (storyPair.Value.Successors.Count > 0) // if story have posts more than one..
-                        {
-                            foreach (KeyValuePair<string, BlueStory> postPair in storyPair.Value.Successors)
-                            {
-                                storyPair.Value.Childs.Add(string.Format("{0}-{1}", postPair.Value.TopicId, postPair.Value.PostId), postPair.Value);
-                            }
-                        }
-                    }
-                    Workload.WorkloadManager.Instance.Step();
                 }
+
+                Module.UITreeView.AsyncInvokeHandler(() =>
+                {
+                    Module.UITreeView.BeginUpdate();
+                    foreach (BlueParser parser in this._parsers)
+                    {                    
+                        this._moduleNode.Nodes.Add(parser);
+                        foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
+                        {
+                            parser.Nodes.Add(pair.Value);
+                            if (pair.Value.Successors.Count <= 0) continue;
+                            foreach (BlueStory post in pair.Value.Successors) { pair.Value.Nodes.Add(post); } // if story have posts more than one..
+                        }
+                        Workload.WorkloadManager.Instance.Step();
+                    }
+                    Module.UITreeView.EndUpdate();
+                });
 
                 stopwatch.Stop();
                 TimeSpan ts = stopwatch.Elapsed;
                 LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} blizzblue-parsers in {1}.", this._parsers.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
             }
 
-            this._rootItem.SetTitle("BlizzBlues");
-            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
+        }
+
+        public override TreeNode GetModuleNode()
+        {
+            return this._moduleNode;
         }
 
         public override Form GetPreferencesForm()
@@ -133,12 +136,12 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             return new SettingsForm();
         }
 
-        private void OnChildStateChange(object sender, EventArgs e)
+        private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this._rootItem.State == ((BlueParser)sender).State) return;
+            if (this._moduleNode.GetState() == ((BlueParser)sender).GetState()) return;
 
-            int unread = this._parsers.Count(parser => parser.State == State.Unread);
-            this._rootItem.State = unread > 0 ? State.Unread : State.Read;
+            int unread = this._parsers.Count(parser => parser.GetState() == NodeState.Unread);
+            this._moduleNode.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
@@ -147,8 +150,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             {
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
-                    pair.Value.State = State.Read;
-                    foreach (KeyValuePair<string, BlueStory> post in pair.Value.Successors) { post.Value.State = State.Read; }
+                    pair.Value.SetState(NodeState.Read);
+                    foreach (BlueStory post in pair.Value.Successors) { post.SetState(NodeState.Read); }
                 }
             }
         }
@@ -159,21 +162,21 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             {
                 foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
                 {
-                    pair.Value.State = State.Unread;
-                    foreach (KeyValuePair<string, BlueStory> post in pair.Value.Successors) { post.Value.State = State.Unread; }
+                    pair.Value.SetState(NodeState.Unread);
+                    foreach (BlueStory post in pair.Value.Successors) { post.SetState(NodeState.Unread); }
                 }
             }
         }
 
         private void MenuUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread thread = new System.Threading.Thread(this.UpdateBlues) { IsBackground = true };
+            var thread = new System.Threading.Thread(this.UpdateBlues) { IsBackground = true };
             thread.Start();
         }
 
         private void MenuSettingsClicked(object sender, EventArgs e)
         {
-            ModuleSettingsHostForm f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
+            var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
 

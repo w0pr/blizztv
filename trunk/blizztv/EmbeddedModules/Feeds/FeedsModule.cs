@@ -37,18 +37,12 @@ using BlizzTV.Assets.i18n;
 namespace BlizzTV.EmbeddedModules.Feeds
 {
     [ModuleAttributes("Feeds","Feed aggregator.","feed")]
-    public class FeedsModule : Module ,ISubscriptionConsumer
+    public class FeedsModule : Module , ISubscriptionConsumer
     {
-        private readonly ModuleNode _moduleNode = new ModuleNode("Feeds");
-
-
-
-        private readonly ListItem _rootItem = new ListItem("Feeds") { Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed) };
-        private Dictionary<string,Feed> _feeds = new Dictionary<string,Feed>(); // list of feeds.
-        private System.Timers.Timer _updateTimer = null;
-        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://feed/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);
-        
         private bool _disposed = false;
+        private readonly ModuleNode _moduleNode = new ModuleNode("Feeds");
+        private System.Timers.Timer _updateTimer = null;
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://feed/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);       
 
         public static FeedsModule Instance;
 
@@ -58,10 +52,12 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
             this.CanRenderTreeNodes = true;
 
-            this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
-            this._rootItem.ContextMenus.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
-            this._rootItem.ContextMenus.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
-            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this._moduleNode.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
+
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this._moduleNode.Menu.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
+            this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
         public override void Startup()
@@ -83,13 +79,13 @@ namespace BlizzTV.EmbeddedModules.Feeds
                 return false;
             }
 
-            FeedSubscription feedSubscription = new FeedSubscription {Name = "test-feed", Url = link};
+            var feedSubscription = new FeedSubscription {Name = "test-feed", Url = link};
 
-            /*using (Feed feed = new Feed(feedSubscription))
+            using (var feed = new Feed(feedSubscription))
             {
                 if (feed.IsValid())
                 {
-                    FeedSubscription subscription = new FeedSubscription();
+                    var subscription = new FeedSubscription();
                     string feedName = "";
 
                     if (InputBox.Show(i18n.AddNewFeedTitle, i18n.AddNewFeedMessage, ref feedName) == DialogResult.OK)
@@ -104,17 +100,12 @@ namespace BlizzTV.EmbeddedModules.Feeds
                         return false;
                     }
                 }
-            }*/
+            }
 
             return false;
         }
 
-        public override ListItem GetRootItem()
-        {
-            return this._rootItem;
-        }
-
-        public override TreeNode GetTreeNode()
+        public override TreeNode GetModuleNode()
         {
             return this._moduleNode;
         }
@@ -122,37 +113,21 @@ namespace BlizzTV.EmbeddedModules.Feeds
         private void UpdateFeeds()
         {
             if (this.RefreshingData) return;
-
             this.RefreshingData = true;
-            this.OnDataRefreshStarting(EventArgs.Empty);
 
-            if (this._feeds.Count > 0) // clear previous entries before doing an update.
-            {
-                this._feeds.Clear();
-                this._rootItem.Childs.Clear();
-            }
-
-            this._rootItem.SetTitle("Updating feeds..");
-
-            foreach (KeyValuePair<string, FeedSubscription> pair in Subscriptions.Instance.Dictionary)
-            {
-                Feed feed = new Feed(pair.Value);
-                //feed.OnStateChange += OnChildStateChange;
-                this._feeds.Add(pair.Value.Url, feed);                
-            }
-
-            Workload.WorkloadManager.Instance.Add(this._feeds.Count);
+            Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             int i = 0;
-            var tasks = new Task<Feed>[this._feeds.Count];
+            var tasks = new Task<Feed>[Subscriptions.Instance.Dictionary.Count];
 
-            foreach(KeyValuePair<string,Feed> pair in this._feeds)
+            foreach(KeyValuePair<string,FeedSubscription> pair in Subscriptions.Instance.Dictionary)
             {
-                KeyValuePair<string, Feed> local = pair; 
-                tasks[i] = Task.Factory.StartNew(() => TaskProcessFeed(local.Value));
+                var feed = new Feed(pair.Value);
+                feed.StateChanged += OnChildStateChanged;
+                tasks[i] = Task.Factory.StartNew(() => TaskProcessFeed(feed));
                 i++;
             }
 
@@ -176,24 +151,23 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
             Module.UITreeView.AsyncInvokeHandler(() =>
             {
+                Module.UITreeView.BeginUpdate();
+                if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
                 foreach (Task<Feed> task in tasks)
                 {                
-                    this._moduleNode.Nodes.Add(task.Result);                
+                    this._moduleNode.Nodes.Add(task.Result);      
                     foreach(Story story in task.Result.Stories)
                     {
                         task.Result.Nodes.Add(story);
                     }
-                //this._rootItem.Childs.Add(task.Result.Url, task.Result);
-                //foreach (Story story in task.Result.Stories) { task.Result.Childs.Add(story.Guid, story); }
                 }
+                Module.UITreeView.EndUpdate();
             });
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} feeds in {1}.", this._feeds.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds/10)));
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} feeds in {1}.", Subscriptions.Instance.Dictionary.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
-            this._rootItem.SetTitle("Feeds");
-            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
         }
 
@@ -203,12 +177,12 @@ namespace BlizzTV.EmbeddedModules.Feeds
             return feed;
         }
 
-        private void OnChildStateChange(object sender, EventArgs e)
+        private void OnChildStateChanged(object sender, EventArgs e)
         {
-            /*if (this._rootItem.State == ((Feed)sender).State) return;
+            if (this._moduleNode.GetState() == ((Feed)sender).GetState()) return;
 
-            int unread = this._feeds.Count(pair => pair.Value.State == State.Unread);
-            this._rootItem.State = unread > 0 ? State.Unread : State.Read;*/
+            int unread = this._moduleNode.Nodes.Cast<Feed>().Count(feed => feed.GetState() == NodeState.Unread);
+            this._moduleNode.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
         }
 
         public override Form GetPreferencesForm()
@@ -230,7 +204,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
                 this._updateTimer = null;
             }
 
-            _updateTimer = new System.Timers.Timer(EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.UpdatePeriod * 60000);
+            _updateTimer = new System.Timers.Timer(ModuleSettings.Instance.UpdatePeriod * 60000);
             _updateTimer.Elapsed += OnTimerHit;
             _updateTimer.Enabled = true;
         }
@@ -242,29 +216,29 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this._feeds.SelectMany(pair => pair.Value.Stories))
+            foreach (Story story in from Feed feed in this._moduleNode.Nodes from Story story in feed.Nodes select story)
             {
-                //s.State = State.Read;
+                story.SetState(NodeState.Read);
             }
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Story s in this._feeds.SelectMany(pair => pair.Value.Stories))
+            foreach (Story story in from Feed feed in this._moduleNode.Nodes from Story story in feed.Nodes select story)
             {
-                //s.State = State.Unread;
+                story.SetState(NodeState.Unread);
             }
         }
 
         private void MenuSettingsClicked(object sender, EventArgs e)
         {
-            ModuleSettingsHostForm f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
+            var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
 
         private void RunManualUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread thread = new System.Threading.Thread(this.UpdateFeeds) {IsBackground = true};
+            var thread = new System.Threading.Thread(this.UpdateFeeds) {IsBackground = true};
             thread.Start();                 
         }
 
@@ -296,9 +270,8 @@ namespace BlizzTV.EmbeddedModules.Feeds
                 this._updateTimer.Elapsed -= OnTimerHit;
                 this._updateTimer.Dispose();
                 this._updateTimer = null;
-                //foreach (KeyValuePair<string,Feed> pair in this._feeds) { pair.Value.Dispose(); }
-                this._feeds.Clear();
-                this._feeds = null;
+                foreach (Feed feed in this._moduleNode.Nodes) { feed.Dispose(); }
+                this._moduleNode.Nodes.Clear();
             }
             base.Dispose(disposing);
         }

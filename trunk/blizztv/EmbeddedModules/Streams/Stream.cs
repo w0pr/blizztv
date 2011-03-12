@@ -26,12 +26,12 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Streams
 {
-    public class Stream:ListItem
+    public class Stream : ModuleNode
     {
+        private bool _disposed = false;
         private bool _isLive = false; // is the stream live?
         private PlayerForm _player = null;
 
-        public string Name { get; internal set; }
         public string Slug { get; internal set; }
         public string Provider { get; internal set; }
         public string Link { get; internal set; }
@@ -49,23 +49,26 @@ namespace BlizzTV.EmbeddedModules.Streams
                 bool wasOnline=false;
                 this._isLive = value;
 
-                if (StateStorage.Instance.Exists(string.Format("stream.{0}", this.Name))) wasOnline = Convert.ToBoolean(StateStorage.Instance[string.Format("stream.{0}", this.Name)]);
-                if (EmbeddedModules.Streams.Settings.ModuleSettings.Instance.NotificationsEnabled && !wasOnline && this._isLive) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, i18n.StreamOnlineNotification, System.Windows.Forms.ToolTipIcon.Info));
-                StateStorage.Instance[string.Format("stream.{0}", this.Name)] = Convert.ToByte(this._isLive);
                 // TODO: when the application goes offline the stream should set to offline in status storage.
+                if (StateStorage.Instance.Exists(string.Format("stream.{0}", this.Name))) wasOnline = Convert.ToBoolean(StateStorage.Instance[string.Format("stream.{0}", this.Name)]);
+                //if (Settings.ModuleSettings.Instance.NotificationsEnabled && !wasOnline && this._isLive) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Text, i18n.StreamOnlineNotification, System.Windows.Forms.ToolTipIcon.Info));
+                StateStorage.Instance[string.Format("stream.{0}", this.Name)] = Convert.ToByte(this._isLive);                
             }
         }
 
         public Stream(StreamSubscription subscription)
             : base(subscription.Name)
         {
-            ChatAvailable = false;
-            ViewerCount = 0;
-            this.Name = subscription.Name;
+            this.ChatAvailable = false;
+            this.ViewerCount = 0;
+            
+            this.Text = subscription.Name;
             this.Slug = subscription.Slug;
             this.Provider = subscription.Provider;
 
             this.Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream);
+            this.RememberState = true;
+            this.GetState(); /* temp call */
         }
 
         public virtual void Process() // get the stream data by replacing provider variables. handler's can override this method to run their own routines, though base.Process() should be called also.

@@ -23,37 +23,32 @@ using BlizzTV.Assets.i18n;
 using BlizzTV.EmbeddedModules.Podcasts.Parsers;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Log;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Podcasts
 {
-    public class Podcast : ListItem
+    public class Podcast : ModuleNode
     {
-        /// <summary>
-        /// Feed Name.
-        /// </summary>
-        public string Name { get; private set; }
+        private bool _disposed = false;
 
         /// <summary>
         /// Feed Url.
         /// </summary>
         public string Url { get; private set; }
 
-        /// <summary>
-        /// The feed's stories.
-        /// </summary>
         public List<Episode> Episodes = new List<Episode>();
 
         public Podcast(PodcastSubscription subscription)
             : base(subscription.Name)
         {
-            this.Name = subscription.Name;
+            this.Text = subscription.Name;
             this.Url = subscription.Url;
 
-            this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
-            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
-
             this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
+
+            this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
+            this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));           
         }
 
         public bool IsValid()
@@ -65,7 +60,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         {
             if (this.Parse())
             {
-                foreach (Episode episode in this.Episodes) { episode.CheckForNotifications(); }
+                foreach (Episode episode in this.Nodes) { episode.CheckForNotifications(); }
                 return true;
             }
             return false;
@@ -73,11 +68,11 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
         private bool Parse()
         {
-            List<PodcastItem> items = null;
+            var items = new List<PodcastItem>();            
 
             if (!PodcastParser.Instance.Parse(this.Url, ref items))
             {
-                this.State = State.Error;
+                this.SetState(NodeState.Error);
                 this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
@@ -86,31 +81,48 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             {
                 try
                 {
-                    Episode episode = new Episode(this.Title, item);
-                    episode.OnStateChange += OnChildStateChange;
+                    var episode = new Episode(this.Text, item);
+                    episode.StateChanged += OnChildStateChanged;
                     this.Episodes.Add(episode);
                 }
                 catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Podcast parser caught an exception: {0}", e)); }
-            }
+            } 
             return true;
         }
 
-        private void OnChildStateChange(object sender, EventArgs e)
+        private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this.State == ((Episode)sender).State) return;
+            if (this.GetState() == ((Episode)sender).GetState()) return;
 
-            int unread = this.Episodes.Count(episode => episode.State == State.Fresh || episode.State == State.Unread);
-            this.State = unread > 0 ? State.Unread : State.Read;
+            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
+            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            foreach (Episode episode in this.Episodes) { episode.State = State.Read; } // marked all episodes as read.
+            foreach (Episode episode in this.Nodes) { episode.SetState(NodeState.Read); } // marked all episodes as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            foreach (Episode episode in this.Episodes) { episode.State = State.Unread; } // marked all episodes as unread.
+            foreach (Episode episode in this.Nodes) { episode.SetState(NodeState.Unread); } // marked all episodes as read.
         }
+
+        #region de-ctor
+
+        ~Podcast() { Dispose(false); }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (this._disposed) return;
+            if (disposing) // managed resources
+            {
+                foreach (Episode episode in this.Nodes) { episode.Dispose(); }                
+                this.Nodes.Clear();
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

@@ -76,7 +76,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts.UI
 
         private void PlayerForm_Load(object sender, EventArgs e)
         {
-            this.Text = string.Format("{0} - [{1}]", this._episode.Title, this._episode.PodcastName);         
+            this.Text = string.Format("{0} - [{1}]", this._episode.Text, this._episode.PodcastName);         
             this.MediaPlayer.URL = this._episode.MediaLocation;
         }
 
@@ -313,7 +313,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts.UI
                     this.SetSliderText("End of playback.");
                     break;
                 case PlayState.Paused:
-                    this.SetSliderText(string.Format("     {0} [paused]    ", this._episode.Title));
+                    this.SetSliderText(string.Format("     {0} [paused]    ", this._episode.Text));
                     break;
                 case PlayState.Reconnecting:
                     this.SetSliderText("Reconnecting..");
@@ -325,13 +325,13 @@ namespace BlizzTV.EmbeddedModules.Podcasts.UI
                     this.SetSliderText("Scanning backward..");
                     break;
                 case PlayState.Stopped:
-                    this.SetSliderText(string.Format("     {0} [stopped]    ", this._episode.Title));
+                    this.SetSliderText(string.Format("     {0} [stopped]    ", this._episode.Text));
                     break;
                 case PlayState.Transitioning:
                     this.SetSliderText("Connecting..");
                     break;
                 case PlayState.Playing:
-                    this.SetSliderText(string.Format("     {0}     ", this._episode.Title));
+                    this.SetSliderText(string.Format("     {0}     ", this._episode.Text));
                     break;
                 case PlayState.Waiting:
                     this.SetSliderText("Waiting for data..");

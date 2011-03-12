@@ -48,7 +48,7 @@ namespace BlizzTV.EmbeddedModules.Videos.UI
             try
             {
                 this.LoadingStarted();
-                this.Text = string.Format("[{0}] {1}", this._video.ChannelName, this._video.Title); // set the window title.
+                this.Text = string.Format("[{0}] {1}", this._video.ChannelName, this._video.Text); // set the window title.
                 this.FlashPlayer.LoadMovie(0,this._video.Movie); // load the movie.
             }
             catch (Exception exc)

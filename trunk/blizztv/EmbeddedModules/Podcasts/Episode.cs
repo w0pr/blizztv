@@ -29,30 +29,25 @@ using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Podcasts
 {
-    public class Episode:ListItem
+    public class Episode : ModuleNode
     {
+        private PlayerForm _player = null;
+
         public string PodcastName { get; private set; }
         public string Link { get; private set; }
         private string Enclosure { get; set; }
 
         public bool Downloaded
         {
-            get
-            {
-                return File.Exists(string.Format("{0}\\{1}\\{2}", PodcastsStoragePath, this.PodcastName, Path.GetFileName(this.Enclosure)));
-            }
+            get { return File.Exists(string.Format("{0}\\{1}\\{2}", PodcastsStoragePath, this.PodcastName, Path.GetFileName(this.Enclosure))); }
         }
 
         public string MediaLocation
         {
-            get
-            {
-                return this.Downloaded ? string.Format("{0}\\{1}\\{2}", PodcastsStoragePath, this.PodcastName, Path.GetFileName(this.Enclosure)) : this.Enclosure;
-            }
+            get { return this.Downloaded ? string.Format("{0}\\{1}\\{2}", PodcastsStoragePath, this.PodcastName, Path.GetFileName(this.Enclosure)) : this.Enclosure; }
         }
 
         private static readonly string PodcastsStoragePath;
-        private PlayerForm _player = null;
 
         public Episode(string podcastName, PodcastItem item)
             : base(item.Title)
@@ -62,13 +57,15 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             this.Enclosure = item.Enclosure;
             this.Guid = item.Id;
 
-            this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
-            this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked)));
-            var menuDownloadEpisode = new ToolStripMenuItem(i18n.DownloadEpisode, Assets.Images.Icons.Png._16.download,new EventHandler(MenuDownloadEpisode));
-            this.ContextMenus.Add("download", menuDownloadEpisode);
-            if (this.Downloaded) menuDownloadEpisode.Text = i18n.ReDownloadPodcastEpisode;
-
             this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
+            this.RememberState = true;
+            this.GetState(); /* temp call */
+
+            this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
+            this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked)));
+            var menuDownloadEpisode = new ToolStripMenuItem(i18n.DownloadEpisode, Assets.Images.Icons.Png._16.download,new EventHandler(MenuDownloadEpisode));
+            this.Menu.Add("download", menuDownloadEpisode);
+            if (this.Downloaded) menuDownloadEpisode.Text = i18n.ReDownloadPodcastEpisode;
         }
 
         static Episode()
@@ -79,7 +76,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
         public void CheckForNotifications()
         {
-            if (EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.NotificationsEnabled && this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new podcast episode is available on {0}, click to open it.", this.PodcastName), System.Windows.Forms.ToolTipIcon.Info));
+            //if (EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.NotificationsEnabled && this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new podcast episode is available on {0}, click to open it.", this.PodcastName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void Open(object sender, EventArgs e)
@@ -105,7 +102,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
                 else this._player.Focus();
             }
             else System.Diagnostics.Process.Start(this.MediaLocation, null);
-            if (this.State != State.Read) this.State = State.Read;  
+            if (this.GetState() != NodeState.Read) this.SetState(NodeState.Read);
         }
 
         void PlayerClosed(object sender, FormClosedEventArgs e)
@@ -116,29 +113,29 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
         {
             // make conditional context-menus invisible.
-            this.ContextMenus["markasread"].Visible = false;
-            this.ContextMenus["markasunread"].Visible = false;
+            this.Menu["markasread"].Enabled = false;
+            this.Menu["markasunread"].Enabled = false;
 
-            switch (this.State)
+            switch (this.GetState())
             {
-                case State.Fresh:
-                case State.Unread:
-                    this.ContextMenus["markasread"].Visible = true;
+                case NodeState.Fresh:
+                case NodeState.Unread:
+                    this.Menu["markasread"].Enabled = true;
                     break;
-                case State.Read:
-                    this.ContextMenus["markasunread"].Visible = true;
+                case NodeState.Read:
+                    this.Menu["markasunread"].Enabled = true;
                     break;
             }
         }
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            this.State = State.Read;
+            this.SetState(NodeState.Read);
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            this.State = State.Unread;
+            this.SetState(NodeState.Unread);
         }
 
         private void MenuDownloadEpisode(object sender, EventArgs e)
@@ -146,7 +143,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             var podcastDirectory = string.Format("{0}\\{1}", PodcastsStoragePath, this.PodcastName);
             if (!Directory.Exists(podcastDirectory)) Directory.CreateDirectory(podcastDirectory);
 
-            var downloadForm = new DownloadForm(string.Format(i18n.DownloadingPodcastEpisode, this.Title));
+            var downloadForm = new DownloadForm(string.Format(i18n.DownloadingPodcastEpisode, this.Text));
             downloadForm.StartDownload(new Download(this.Enclosure,string.Format("{0}\\{1}", podcastDirectory,Path.GetFileName(this.Enclosure))));
             downloadForm.Show();
         }

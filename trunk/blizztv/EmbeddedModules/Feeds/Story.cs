@@ -35,20 +35,22 @@ namespace BlizzTV.EmbeddedModules.Feeds
         
         public Story(string feedName, FeedItem item)
             : base(item.Title)
-        {
+        {            
             this.FeedName = feedName;
-            //this.Guid = item.Id;
+            this.Guid = item.Id;
             this.Link = item.Link;
 
-            this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
-            this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked))); 
-
             this.Icon = new NamedImage("story", Assets.Images.Icons.Png._16.feed);
+            this.RememberState = true;
+            this.GetState(); /* temp call */
+
+            this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
+            this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAsUnReadClicked)));             
         }
 
         public void CheckForNotifications()
         {
-            //if (EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
+            //if (EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == NodeState.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Title, string.Format("A new story is available on {0}, click to open it.",this.FeedName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
         public override void Open(object sender, EventArgs e)
@@ -64,37 +66,34 @@ namespace BlizzTV.EmbeddedModules.Feeds
         private void Navigate()
         {
             System.Diagnostics.Process.Start(this.Link, null); // navigate to story with default web-browser.
-            //if (this.State != State.Read) this.State = State.Read;  
+            if (this.GetState() != NodeState.Read) this.SetState(NodeState.Read);
         }
 
         public override void RightClicked(object sender, EventArgs e) // manage the context-menus based on our item state.
         {
-            /*
-            // make conditional context-menus invisible.
-            this.ContextMenus["markasread"].Visible=false;
-            this.ContextMenus["markasunread"].Visible=false;
+            this.Menu["markasread"].Enabled = false;
+            this.Menu["markasunread"].Enabled = false;
 
-            switch (this.State)
+            switch (this.GetState())
             {
-                case State.Fresh:
-                case State.Unread:
-                    this.ContextMenus["markasread"].Visible = true;
+                case NodeState.Fresh:
+                case NodeState.Unread:
+                    this.Menu["markasread"].Enabled = true;
                     break;
-                case State.Read:
-                    this.ContextMenus["markasunread"].Visible = true;
+                case NodeState.Read:
+                    this.Menu["markasunread"].Enabled = true;
                     break;
             }
-             */
         }
 
         private void MenuMarkAsReadClicked(object sender, EventArgs e)
         {
-            //this.State = State.Read;            
+            this.SetState(NodeState.Read);
         }
 
         private void MenuMarkAsUnReadClicked(object sender, EventArgs e)
         {
-            //this.State = State.Unread;
+            this.SetState(NodeState.Unread);
         }
     }
 }

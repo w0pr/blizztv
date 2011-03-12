@@ -18,7 +18,9 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
+using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Log;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Web;
 
 namespace BlizzTV.EmbeddedModules.Videos.Parsers
@@ -50,10 +52,10 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
 
                 foreach (var entry in entries) // create the video items.
                 {
-                    EmbeddedModules.Videos.Parsers.Video.BlipTv v = new EmbeddedModules.Videos.Parsers.Video.BlipTv(this.Title, entry.Title, entry.GUID, entry.Link, this.Provider);
-                    v.OnStateChange += OnChildStateChange;
-                    v.VideoId = entry.VideoID;
-                    this.Videos.Add(v);
+                    var video = new Video.BlipTv(this.Text, entry.Title, entry.GUID, entry.Link, this.Provider);
+                    video.StateChanged += OnChildStateChanged;
+                    video.VideoId = entry.VideoID;
+                    this.Videos.Add(video);
                     i++;
                     if (i >= Settings.ModuleSettings.Instance.NumberOfVideosToQueryChannelFor) break;
                 }

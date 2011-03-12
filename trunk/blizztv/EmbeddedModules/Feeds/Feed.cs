@@ -23,6 +23,7 @@ using BlizzTV.Assets.i18n;
 using BlizzTV.EmbeddedModules.Feeds.Parsers;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Log;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Feeds
@@ -32,30 +33,22 @@ namespace BlizzTV.EmbeddedModules.Feeds
         private bool _disposed = false;
 
         /// <summary>
-        /// Feed Name.
-        /// </summary>
-        //public string Name { get; private set; }
-
-        /// <summary>
         /// Feed Url.
         /// </summary>
         public string Url { get; private set; }
 
-        /// <summary>
-        /// The feed's stories.
-        /// </summary>
-        public List<Story> Stories = new List<Story>(); 
+        public List<Story> Stories = new List<Story>();
 
         public Feed(FeedSubscription subscription)
-            //: base(subscription.Name)
+            : base(subscription.Name)
         {
             this.Text = subscription.Name;
             this.Url = subscription.Url;
 
-            //this.ContextMenus.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
-            //this.ContextMenus.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked))); 
+            this.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
 
-            //this.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
+            this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
+            this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));             
         }
 
         public bool IsValid()
@@ -67,7 +60,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             if (this.Parse())
             {
-                foreach (Story s in this.Stories) { s.CheckForNotifications(); }
+                foreach (Story story in this.Nodes) { story.CheckForNotifications(); }
                 return true;
             }
             return false;
@@ -75,62 +68,64 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         private bool Parse()
         {
-            List<FeedItem> items = null;
+            var items = new List<FeedItem>();
 
             if (!FeedParser.Instance.Parse(this.Url, ref items))
             {
-                //this.State = State.Error;
-                //this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                this.SetState(NodeState.Error);
+                this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
 
-            foreach (FeedItem item in items)
+            foreach(FeedItem item in items)
             {
                 try
                 {
-                    Story story = new Story(this.Text, item);
-                    //Story story = new Story(this.Title, item);
-                    //story.OnStateChange += OnChildStateChange;
+                    var story = new Story(this.Text, item);
+                    story.StateChanged += OnChildStateChanged;
                     this.Stories.Add(story);
                 }
-                catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feed parser caught an exception: {0}", e)); }
+                catch(Exception e)
+                {
+                    LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Feed parser caught an exception: {0}", e));
+                }
             }
+
             return true;
         }
 
-        private void OnChildStateChange(object sender, EventArgs e)
+        private void OnChildStateChanged(object sender, EventArgs e)
         {
-            //if (this.State == ((Story) sender).State) return;
+            if (this.GetState() == ((Story)sender).GetState()) return;
 
-            //int unread = this.Stories.Count(s => s.State == State.Fresh || s.State == State.Unread);
-            //this.State = unread > 0 ? State.Unread : State.Read;
+            int unread = (from ModuleNode node in this.Nodes select node.GetState()).Count(state => state == NodeState.Fresh || state == NodeState.Unread);
+            this.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
         {
-            //foreach (Story s in this.Stories) { s.State = State.Read; } // marked all stories as read.
+            foreach (Story story in this.Nodes) { story.SetState(NodeState.Read); } // marked all stories as read.
         }
 
         private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
         {
-            //foreach (Story s in this.Stories) { s.State = State.Unread; } // marked all stories as unread.
+            foreach (Story story in this.Nodes) { story.SetState(NodeState.Unread); } // marked all stories as read.
         }
 
         #region de-ctor
 
-        /*~Feed() { Dispose(false); }
+        ~Feed() { Dispose(false); }
 
         protected override void Dispose(bool disposing)
         {
             if (this._disposed) return;
             if (disposing) // managed resources
             {
-                foreach (Story s in this.Stories) { s.Dispose(); }
-                this.Stories.Clear();
-                this.Stories = null;
+                foreach (Story story in this.Nodes) { story.Dispose(); }                
+                this.Nodes.Clear();
             }
             base.Dispose(disposing);
-        }*/
+        }
 
         #endregion
     }

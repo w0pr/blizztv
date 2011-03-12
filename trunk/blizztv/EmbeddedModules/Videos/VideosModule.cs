@@ -31,6 +31,7 @@ using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Catalog;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Providers;
 using BlizzTV.Log;
+using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Videos
@@ -38,11 +39,10 @@ namespace BlizzTV.EmbeddedModules.Videos
     [ModuleAttributes("Videos", "Video aggregator.","video")]
     public class VideosModule : Module, ISubscriptionConsumer
     {
-        private readonly ListItem _rootItem = new ListItem("Videos") { Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video) };
-        private Dictionary<string,Channel> _channels = new Dictionary<string,Channel>(); // the channels list.
+        private bool _disposed = false;
+        private readonly ModuleNode _moduleNode = new ModuleNode("Videos");
         private System.Timers.Timer _updateTimer;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://videochannel/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
-        private bool _disposed = false;
 
         public static VideosModule Instance;
 
@@ -52,10 +52,17 @@ namespace BlizzTV.EmbeddedModules.Videos
 
             this.CanRenderTreeNodes = true;
 
-            this._rootItem.ContextMenus.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
-            this._rootItem.ContextMenus.Add("markallaswatched", new ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
-            this._rootItem.ContextMenus.Add("markallasunwatched", new ToolStripMenuItem(i18n.MarkAllAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked)));
-            this._rootItem.ContextMenus.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+            this._moduleNode.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
+
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._moduleNode.Menu.Add("markallaswatched", new ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
+            this._moduleNode.Menu.Add("markallasunwatched", new ToolStripMenuItem(i18n.MarkAllAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked)));
+            this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
+        }
+
+        public override void Startup()
+        {
+            this.Refresh();
         }
 
         public override void Refresh()
@@ -75,16 +82,16 @@ namespace BlizzTV.EmbeddedModules.Videos
             {
                 if (((VideoProvider) pair.Value).LinkValid(link))
                 {
-                    VideoSubscription v = new VideoSubscription();
-                    v.Name = v.Slug = (pair.Value as VideoProvider).GetSlug(link);
-                    v.Provider = pair.Value.Name;
+                    var videoSubscription = new VideoSubscription();
+                    videoSubscription.Name = videoSubscription.Slug = (pair.Value as VideoProvider).GetSlug(link);
+                    videoSubscription.Provider = pair.Value.Name;
 
-                    using (Channel channel = ChannelFactory.CreateChannel(v))
+                    using (Channel channel = ChannelFactory.CreateChannel(videoSubscription))
                     {
                         if (channel.IsValid())
                         {
-                            if (Subscriptions.Instance.Add(v)) this.RunManualUpdate(this, new EventArgs());
-                            else MessageBox.Show(string.Format(i18n.VideoChannelSubscriptionsAlreadyExists, Subscriptions.Instance.Dictionary[v.Slug].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            if (Subscriptions.Instance.Add(videoSubscription)) this.RunManualUpdate(this, new EventArgs());
+                            else MessageBox.Show(string.Format(i18n.VideoChannelSubscriptionsAlreadyExists, Subscriptions.Instance.Dictionary[videoSubscription.Slug].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return true;
                         }
                     }
@@ -94,44 +101,29 @@ namespace BlizzTV.EmbeddedModules.Videos
             return false;
         }
 
-        public override ListItem GetRootItem()
+        public override TreeNode GetModuleNode()
         {
-            return this._rootItem;
+            return this._moduleNode;
         }
 
         private void UpdateChannels()
         {
             if (this.RefreshingData) return;
             this.RefreshingData = true;
-            this.OnDataRefreshStarting(EventArgs.Empty);
 
-            if (this._channels.Count > 0)  // clear previous entries before doing an update.
-            {
-                this._channels.Clear();
-                this._rootItem.Childs.Clear();
-            }
-
-            this._rootItem.SetTitle("Updating videos..");
-
-            foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
-            {
-                Channel c = ChannelFactory.CreateChannel(pair.Value);
-                c.OnStateChange += OnChildStateChange;
-                this._channels.Add(string.Format("{0}@{1}",pair.Value.Slug,pair.Value.Provider), c);
-            }
-
-            Workload.WorkloadManager.Instance.Add(this._channels.Count);
+            Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             int i = 0;
-            var tasks = new Task<Channel>[this._channels.Count];
+            var tasks = new Task<Channel>[Subscriptions.Instance.Dictionary.Count];
 
-            foreach (KeyValuePair<string, Channel> pair in this._channels)
+            foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
             {
-                KeyValuePair<string, Channel> local = pair;
-                tasks[i] = Task.Factory.StartNew(() => TaskProcessChannel(local.Value));
+                var channel = ChannelFactory.CreateChannel(pair.Value);
+                channel.StateChanged += OnChildStateChanged;
+                tasks[i] = Task.Factory.StartNew(() => TaskProcessChannel(channel));
                 i++;
             }
 
@@ -153,26 +145,26 @@ namespace BlizzTV.EmbeddedModules.Videos
                 }
             }
 
-            foreach (Task<Channel> task in tasks)
+            Module.UITreeView.AsyncInvokeHandler(() =>
             {
-                this._rootItem.Childs.Add(string.Format("{0}@{1}", task.Result.Slug, task.Result.Provider), task.Result);
-                foreach (Video video in task.Result.Videos) { task.Result.Childs.Add(video.Guid, video); }
-            }
+                Module.UITreeView.BeginUpdate();
+                if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
+                foreach (Task<Channel> task in tasks)
+                {
+                    this._moduleNode.Nodes.Add(task.Result);
+                    foreach(Video video in task.Result.Videos)
+                    {
+                        task.Result.Nodes.Add(video);
+                    }
+                }
+                    Module.UITreeView.EndUpdate();
+            });
 
-            /*foreach (KeyValuePair<string, Channel> pair in this._channels) // loop through videos.
-            {
-                pair.Value.Update(); // update the channel.
-                this.RootListItem.Childs.Add(pair.Key, pair.Value);
-                foreach (Video v in pair.Value.Videos) { pair.Value.Childs.Add(v.Guid, v); } // register the video items.
-                Workload.WorkloadManager.Instance.Step();                    
-            }*/
-
+        
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", this._channels.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", Subscriptions.Instance.Dictionary.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
-            this._rootItem.SetTitle("Videos");
-            this.OnDataRefreshCompleted(new DataRefreshCompletedEventArgs(true));
             this.RefreshingData = false;
         }
 
@@ -182,12 +174,12 @@ namespace BlizzTV.EmbeddedModules.Videos
             return channel;
         }
         
-        private void OnChildStateChange(object sender, EventArgs e)
+        private void OnChildStateChanged(object sender, EventArgs e)
         {
-            if (this._rootItem.State == ((Channel)sender).State) return;
+            if (this._moduleNode.GetState() == ((Channel)sender).GetState()) return;
 
-            int unread = this._channels.Count(pair => pair.Value.State == State.Unread);
-            this._rootItem.State = unread > 0 ? State.Unread : State.Read;
+            int unread = this._moduleNode.Nodes.Cast<Channel>().Count(feed => feed.GetState() == NodeState.Unread);
+            this._moduleNode.SetState(unread > 0 ? NodeState.Unread : NodeState.Read);
         }
         
         public void OnSaveSettings()
@@ -216,29 +208,29 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         private void RunManualUpdate(object sender, EventArgs e)
         {
-            System.Threading.Thread thread = new System.Threading.Thread(UpdateChannels) {IsBackground = true};
+            var thread = new System.Threading.Thread(UpdateChannels) {IsBackground = true};
             thread.Start();
         }
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, Channel> pair in this._channels)
+            foreach (Video video in from Channel channel in this._moduleNode.Nodes from Video video in channel.Nodes select video)
             {
-                foreach (Video v in pair.Value.Videos) { v.State = State.Read; }
+                video.SetState(NodeState.Read);
             }
         }
 
         private void MenuMarkAllAsUnWatchedClicked(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, Channel> pair in this._channels)
+            foreach (Video video in from Channel channel in this._moduleNode.Nodes from Video video in channel.Nodes select video)
             {
-                foreach (Video v in pair.Value.Videos) { v.State = State.Unread; }
+                video.SetState(NodeState.Unread);
             }
         }
 
         private void MenuSettingsClicked(object sender, EventArgs e)
         {
-            ModuleSettingsHostForm f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
+            var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
 
@@ -274,9 +266,8 @@ namespace BlizzTV.EmbeddedModules.Videos
                     this._updateTimer.Dispose();
                     this._updateTimer = null;
                 }
-                foreach (KeyValuePair<string,Channel> pair in this._channels) { pair.Value.Dispose(); }
-                this._channels.Clear();
-                this._channels = null;
+                foreach (Channel channel in this._moduleNode.Nodes) { channel.Dispose(); }
+                this._moduleNode.Nodes.Clear();
             }
             base.Dispose(disposing);
         }
