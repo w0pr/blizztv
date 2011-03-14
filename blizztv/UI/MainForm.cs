@@ -153,15 +153,17 @@ namespace BlizzTV.UI
         {
             Module module = ModuleManager.Instance.Instantiate(key); // get the module instance.
             ThreadStart threadStart = () => StartupModule(module); // create a new thread for the module.
-            Thread moduleThread = new Thread(threadStart) { IsBackground = true };  // make the thread a background-one.
+            var moduleThread = new Thread(threadStart) { IsBackground = true };  // make the thread a background-one.
             moduleThread.Start();
 
             if (module.CanRenderMenus) this.AttachModuleMenus(module); // register's the module menus.
 
-            if (!module.CanRenderTreeNodes) return;
-            TreeNode node = module.GetModuleNode();
-            if (node == null) return;
-            this.TreeView.Nodes.Add(node);
+            if (!module.CanRenderTreeNodes) return;  // check if module can render tree-node's.
+            ModuleNode moduleNode = module.GetModuleNode();
+            
+            if (moduleNode == null) return; // check if we got a valid module-node returned.
+            this.TreeView.Nodes.Add(moduleNode);
+            this._moduleNodes.Add(key, moduleNode);
         }
 
         private void KillModule(string key) // Kill's an active module.

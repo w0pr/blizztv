@@ -121,7 +121,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             this.RefreshingData = false;
         }
 
-        public override TreeNode GetModuleNode()
+        public override ModuleNode GetModuleNode()
         {
             return this._moduleNode;
         }

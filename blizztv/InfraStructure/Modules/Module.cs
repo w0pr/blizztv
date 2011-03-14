@@ -73,7 +73,7 @@ namespace BlizzTV.InfraStructure.Modules
         /// Returns the module's root treenode.
         /// </summary>
         /// <returns><see cref="TreeNode"/></returns>
-        public virtual TreeNode GetModuleNode() { return null; }
+        public virtual ModuleNode GetModuleNode() { return null; }
 
         /// <summary>
         /// Returns preferences form for the module. 

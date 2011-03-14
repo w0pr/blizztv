@@ -30,6 +30,7 @@ namespace BlizzTV.InfraStructure.Modules
     {
         private bool _disposed = false;
         private State _state = State.Unknown; // the state of the item.
+        private NamedImage _icon;
 
         public ModuleNode(string text) : base(text)
         {
@@ -40,11 +41,6 @@ namespace BlizzTV.InfraStructure.Modules
         /// The unique guid.
         /// </summary>
         public string Guid { get; protected set; }
-
-        /// <summary>
-        /// The icon of the item.
-        /// </summary>
-        public NamedImage Icon { get; set; }
 
         /// <summary>
         /// Bound context-menu's to item.
@@ -80,10 +76,25 @@ namespace BlizzTV.InfraStructure.Modules
             set
             {
                 this._state = value;
-                string key = string.Format("{0}.{1}", this.GetType(), this.Guid);
-                if (this.RememberState) StateStorage.Instance[key] = (byte)this._state; // set the new state.
+                if (this.RememberState) StateStorage.Instance[string.Format("{0}.{1}", this.GetType(), this.Guid)] = (byte)this._state; // set the new state.
                 this.OnStateChanged(); // notify about the state change.
             }
+        }
+
+        /// <summary>
+        /// The icon of the item.
+        /// </summary>
+        public NamedImage Icon {
+            get { return this._icon; }
+            set
+            {
+                this._icon = value;
+                Module.UITreeView.AsyncInvokeHandler(() =>
+                {
+                    if (!Module.UITreeView.ImageList.Images.ContainsKey(this._icon.Name)) Module.UITreeView.ImageList.Images.Add(this._icon.Name, this._icon.Image);
+                    this.ImageIndex = this.SelectedImageIndex = Module.UITreeView.ImageList.Images.IndexOfKey(this._icon.Name);
+                });
+            } 
         }
 
         /// <summary>
@@ -102,17 +113,17 @@ namespace BlizzTV.InfraStructure.Modules
 
             if (this.Icon == null) return;
 
+            string iconKey = this.Icon.Name;
+            Bitmap image = this.Icon.Image;
+
+            if (this._state == State.Read)
+            {
+                iconKey += "GrayScaled";
+                image = image.GrayScale();
+            }
+
             Module.UITreeView.AsyncInvokeHandler(() =>
             {
-                string iconKey = this.Icon.Name;
-                Bitmap image = this.Icon.Image;
-
-                if (this._state == State.Read)
-                {
-                    iconKey += "GrayScaled";
-                    image = image.GrayScale();
-                }
-
                 if (!Module.UITreeView.ImageList.Images.ContainsKey(iconKey)) Module.UITreeView.ImageList.Images.Add(iconKey, image);
                 this.ImageIndex = this.SelectedImageIndex = Module.UITreeView.ImageList.Images.IndexOfKey(iconKey);
             });

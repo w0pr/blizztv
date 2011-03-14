@@ -29,7 +29,6 @@ namespace BlizzTV.EmbeddedModules.Videos
     {
         private bool _disposed = false;
 
-        public string Name { get; internal set; }
         public string Slug { get; internal set; }
         public string Provider { get; internal set; }
 
