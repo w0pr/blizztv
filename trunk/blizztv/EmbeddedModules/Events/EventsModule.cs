@@ -78,7 +78,7 @@ namespace BlizzTV.EmbeddedModules.Events
             return new Dictionary<string, ToolStripMenuItem> { { "calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked)) } };
         }
 
-        public override TreeNode GetModuleNode()
+        public override ModuleNode GetModuleNode()
         {
             return this._moduleNode;
         }

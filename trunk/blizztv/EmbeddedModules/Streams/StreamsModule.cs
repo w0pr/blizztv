@@ -96,7 +96,7 @@ namespace BlizzTV.EmbeddedModules.Streams
             return false;
         }
 
-        public override TreeNode GetModuleNode()
+        public override ModuleNode GetModuleNode()
         {
             return this._moduleNode;
         }

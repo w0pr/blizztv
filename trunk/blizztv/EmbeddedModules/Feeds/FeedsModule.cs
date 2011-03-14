@@ -40,6 +40,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
     public class FeedsModule : Module , ISubscriptionConsumer
     {
         private bool _disposed = false;
+        private readonly List<Feed> _feeds = new List<Feed>(); // holds references to current stored feeds.
         private readonly ModuleNode _moduleNode = new ModuleNode("Feeds");
         private System.Timers.Timer _updateTimer = null;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://feed/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);       
@@ -100,7 +101,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
             return false;
         }
 
-        public override TreeNode GetModuleNode()
+        public override ModuleNode GetModuleNode()
         {
             return this._moduleNode;
         }
@@ -109,6 +110,10 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             if (this.RefreshingData) return;
             this.RefreshingData = true;
+
+            Module.UITreeView.AsyncInvokeHandler(() => { this._moduleNode.Text = @"Updating feeds.."; });
+
+            this._feeds.Clear();
 
             Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
@@ -121,6 +126,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
             foreach(KeyValuePair<string,FeedSubscription> pair in Subscriptions.Instance.Dictionary)
             {
                 var feed = new Feed(pair.Value);
+                this._feeds.Add(feed);
                 feed.StateChanged += OnChildStateChanged;
                 tasks[i] = Task.Factory.StartNew(() => TaskProcessFeed(feed));
                 i++;
@@ -157,11 +163,12 @@ namespace BlizzTV.EmbeddedModules.Feeds
                     }
                 }
                 Module.UITreeView.EndUpdate();
+                this._moduleNode.Text = @"Feeds";
             });
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} feeds in {1}.", Subscriptions.Instance.Dictionary.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} feeds in {1}.", this._feeds.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
             this.RefreshingData = false;
         }
@@ -176,7 +183,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             if (this._moduleNode.State == ((Feed)sender).State) return;
 
-            int unread = this._moduleNode.Nodes.Cast<Feed>().Count(feed => feed.State == State.Unread);
+            int unread = this._feeds.Count(feed => feed.State == State.Unread);
             this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
         }
 
