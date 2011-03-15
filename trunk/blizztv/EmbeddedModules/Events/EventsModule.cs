@@ -98,6 +98,7 @@ namespace BlizzTV.EmbeddedModules.Events
             if (this.RefreshingData) return; 
             this.RefreshingData = true;
 
+            Module.UITreeView.AsyncInvokeHandler(() => { this._moduleNode.Text = @"Updating events.."; });
             Workload.WorkloadManager.Instance.Add(1);
 
             try
@@ -183,6 +184,7 @@ namespace BlizzTV.EmbeddedModules.Events
                     }
                 }
                 Module.UITreeView.EndUpdate();
+                this._moduleNode.Text = @"Events";
             });
 
             Workload.WorkloadManager.Instance.Step();

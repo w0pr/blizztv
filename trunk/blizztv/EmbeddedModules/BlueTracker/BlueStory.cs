@@ -71,7 +71,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
         {
             if (this.State == ((BlueStory)sender).State) return;
 
-            int unread = (from ModuleNode node in this.Nodes select node.State).Count(state => state == State.Fresh || state == State.Unread);
+            int unread = (from ModuleNode node in this.Successors select node.State).Count(state => state == State.Fresh || state == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }
 

@@ -40,6 +40,7 @@ namespace BlizzTV.EmbeddedModules.Videos
     public class VideosModule : Module, ISubscriptionConsumer
     {
         private bool _disposed = false;
+        private readonly List<Channel> _channels = new List<Channel>(); // holds references to current stored feeds.
         private readonly ModuleNode _moduleNode = new ModuleNode("Videos");
         private System.Timers.Timer _updateTimer;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://videochannel/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
@@ -106,6 +107,9 @@ namespace BlizzTV.EmbeddedModules.Videos
             if (this.RefreshingData) return;
             this.RefreshingData = true;
 
+            Module.UITreeView.AsyncInvokeHandler(() => { this._moduleNode.Text = @"Updating channels.."; });
+            this._channels.Clear();
+
             Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
             var stopwatch = new Stopwatch();
@@ -117,6 +121,7 @@ namespace BlizzTV.EmbeddedModules.Videos
             foreach (KeyValuePair<string, VideoSubscription> pair in Subscriptions.Instance.Dictionary)
             {
                 var channel = ChannelFactory.CreateChannel(pair.Value);
+                this._channels.Add(channel);
                 channel.StateChanged += OnChildStateChanged;
                 tasks[i] = Task.Factory.StartNew(() => TaskProcessChannel(channel));
                 i++;
@@ -152,13 +157,14 @@ namespace BlizzTV.EmbeddedModules.Videos
                         task.Result.Nodes.Add(video);
                     }
                 }
-                    Module.UITreeView.EndUpdate();
+                
+                Module.UITreeView.EndUpdate();
+                this._moduleNode.Text = @"Videos";
             });
-
         
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", Subscriptions.Instance.Dictionary.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", this._channels.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
             this.RefreshingData = false;
         }
@@ -173,7 +179,7 @@ namespace BlizzTV.EmbeddedModules.Videos
         {
             if (this._moduleNode.State == ((Channel)sender).State) return;
 
-            int unread = this._moduleNode.Nodes.Cast<Channel>().Count(feed => feed.State == State.Unread);
+            int unread = this._channels.Count(channel => channel.State == State.Unread);
             this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
         }
         

@@ -106,6 +106,8 @@ namespace BlizzTV.EmbeddedModules.Streams
             if (this.RefreshingData) return;
             this.RefreshingData = true;
 
+            Module.UITreeView.AsyncInvokeHandler(() => { this._moduleNode.Text = @"Updating streams.."; });
+
             int availableCount = 0; // available live streams count
             Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
@@ -156,14 +158,16 @@ namespace BlizzTV.EmbeddedModules.Streams
                     }                
                 }
 
-                if (availableCount > 0) this._moduleNode.Text = string.Format("Streams ({0})", availableCount);  // put available streams count on root object's title.
-                else
-                {
-                    this._moduleNode.Text = "Streams";
-                    this._moduleNode.State = State.Read;
-                }
-
                 Module.UITreeView.EndUpdate();
+                Module.UITreeView.AsyncInvokeHandler(() =>
+                {
+                    if (availableCount > 0)  this._moduleNode.Text = string.Format(@"Streams ({0})", availableCount);
+                    else
+                    {
+                        this._moduleNode.Text = @"Streams";
+                        this._moduleNode.State = State.Read;
+                    }
+                });
             });
 
             stopwatch.Stop();

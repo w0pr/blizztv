@@ -103,7 +103,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
         {
             if (this.State == ((BlueStory)sender).State) return;
 
-            int unread = (from ModuleNode node in this.Nodes select node.State).Count(state => state == State.Fresh || state == State.Unread);
+            int unread = this.Stories.Count(pair => pair.Value.State == State.Fresh || pair.Value.State == State.Unread);
             this.State=unread > 0 ? State.Unread : State.Read;
         }
 

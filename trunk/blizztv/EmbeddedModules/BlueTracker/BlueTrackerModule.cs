@@ -68,6 +68,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             if (this.RefreshingData) return; // if module is already updating, ignore this request.
             this.RefreshingData = true;
 
+            Module.UITreeView.AsyncInvokeHandler(() => { this._moduleNode.Text = @"Updating blues.."; });
             if (this._parsers.Count > 0) this._parsers.Clear(); // reset the current data.
 
             if (ModuleSettings.Instance.TrackWorldofWarcraft)
@@ -99,6 +100,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
                 Module.UITreeView.AsyncInvokeHandler(() =>
                 {
                     Module.UITreeView.BeginUpdate();
+                    this._moduleNode.Nodes.Clear();
                     foreach (BlueParser parser in this._parsers)
                     {                    
                         this._moduleNode.Nodes.Add(parser);
@@ -111,6 +113,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
                         Workload.WorkloadManager.Instance.Step();
                     }
                     Module.UITreeView.EndUpdate();
+                    this._moduleNode.Text = @"BlizzBlues";
                 });
 
                 stopwatch.Stop();
@@ -189,7 +192,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
                 this._updateTimer = null;
             }
 
-            _updateTimer = new System.Timers.Timer(EmbeddedModules.BlueTracker.Settings.ModuleSettings.Instance.UpdatePeriod * 60000);
+            _updateTimer = new System.Timers.Timer(ModuleSettings.Instance.UpdatePeriod * 60000);
             _updateTimer.Elapsed += OnTimerHit;
             _updateTimer.Enabled = true;
         }
