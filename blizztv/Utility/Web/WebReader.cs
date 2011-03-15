@@ -28,16 +28,16 @@ namespace BlizzTV.Utility.Web
     {
         public static Result Read(string url, int timeout = 30 * 1000)
         {            
-            Result result=new Result(); // our result object.
+            var result=new Result(); // our result object.
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url); 
+                var request = (HttpWebRequest) WebRequest.Create(url); 
                 request.Timeout = timeout;
 
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                    using (var reader = new StreamReader(response.GetResponseStream()))
                     {
                         result.Response = reader.ReadToEnd();
                         result.State = States.Success;
@@ -47,7 +47,7 @@ namespace BlizzTV.Utility.Web
             catch (WebException e)
             {
                 result.State = e.Status == WebExceptionStatus.Timeout ? States.Timeout : States.Failed; // check the exception type and set our result state according.
-                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("WebReader encountered an exception: {0}", e));
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("WebReader encountered an exception while reading url {0} - {1}",url, e));
             }
 
             return result;

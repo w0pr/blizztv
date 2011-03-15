@@ -79,7 +79,7 @@ namespace BlizzTV.EmbeddedModules.Videos
         {
             if (this.State == ((Video)sender).State) return;
 
-            int unread = (from ModuleNode node in this.Nodes select node.State).Count(state => state == State.Fresh || state == State.Unread);
+            int unread = (from ModuleNode node in this.Videos select node.State).Count(state => state == State.Fresh || state == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }
 

@@ -112,7 +112,6 @@ namespace BlizzTV.EmbeddedModules.Feeds
             this.RefreshingData = true;
 
             Module.UITreeView.AsyncInvokeHandler(() => { this._moduleNode.Text = @"Updating feeds.."; });
-
             this._feeds.Clear();
 
             Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
@@ -153,6 +152,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
             Module.UITreeView.AsyncInvokeHandler(() =>
             {
                 Module.UITreeView.BeginUpdate();
+
                 if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
                 foreach (Task<Feed> task in tasks)
                 {                
@@ -162,6 +162,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
                         task.Result.Nodes.Add(story);
                     }
                 }
+
                 Module.UITreeView.EndUpdate();
                 this._moduleNode.Text = @"Feeds";
             });

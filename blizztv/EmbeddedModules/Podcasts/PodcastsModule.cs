@@ -40,6 +40,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
     public class PodcastsModule : Module , ISubscriptionConsumer
     {
         private bool _disposed = false;
+        private readonly List<Podcast> _podcasts = new List<Podcast>(); // holds references to current stored feeds.
         private readonly ModuleNode _moduleNode = new ModuleNode("Podcasts");
         private System.Timers.Timer _updateTimer;
         private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://podcast/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);
@@ -110,6 +111,9 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             if (this.RefreshingData) return;
             this.RefreshingData = true;
 
+            Module.UITreeView.AsyncInvokeHandler(() => { this._moduleNode.Text = @"Updating podcasts.."; });
+            this._podcasts.Clear();
+
             Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);        
 
             var stopwatch = new Stopwatch();
@@ -121,6 +125,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             foreach (KeyValuePair<string, PodcastSubscription> pair in Subscriptions.Instance.Dictionary)
             {
                 var podcast = new Podcast(pair.Value);
+                this._podcasts.Add(podcast);
                 podcast.StateChanged += OnChildStateChanged;                
                 tasks[i] = Task.Factory.StartNew(() => TaskProcessPodcast(podcast));
                 i++;
@@ -159,11 +164,12 @@ namespace BlizzTV.EmbeddedModules.Podcasts
                 }
 
                 Module.UITreeView.EndUpdate();
+                this._moduleNode.Text = @"Podcasts";
             });
 
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} podcasts in {1}.", Subscriptions.Instance.Dictionary.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
+            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} podcasts in {1}.", this._podcasts.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
 
             this.RefreshingData = false;
         }
@@ -178,7 +184,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         {
             if (this._moduleNode.State == ((Podcast)sender).State) return;
 
-            int unread = this._moduleNode.Nodes.Cast<Podcast>().Count(feed => feed.State == State.Unread);
+            int unread = this._podcasts.Count(podcast => podcast.State == State.Unread);
             this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
         }
 
