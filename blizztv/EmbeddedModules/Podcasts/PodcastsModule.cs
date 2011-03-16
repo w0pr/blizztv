@@ -53,7 +53,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
             this.CanRenderTreeNodes = true;
 
-            this._moduleNode.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
+            this._moduleNode.Icon = new NodeIcon("podcast", Assets.Images.Icons.Png._16.podcast);
 
             this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
             this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));

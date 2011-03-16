@@ -53,7 +53,7 @@ namespace BlizzTV.EmbeddedModules.Streams
 
             this.CanRenderTreeNodes = true;
 
-            this._moduleNode.Icon = new NamedImage("stream", Assets.Images.Icons.Png._16.stream);
+            this._moduleNode.Icon = new NodeIcon("stream", Assets.Images.Icons.Png._16.stream);
 
             this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));

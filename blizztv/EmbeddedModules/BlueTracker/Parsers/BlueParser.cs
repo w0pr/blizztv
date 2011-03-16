@@ -64,7 +64,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
                     if (result.State != WebReader.States.Success)
                     {
                         this.State = State.Error;
-                        this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                        this.Icon = new NodeIcon("error", Assets.Images.Icons.Png._16.error);
                         return;
                     }
 
