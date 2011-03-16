@@ -148,6 +148,7 @@ namespace BlizzTV.EmbeddedModules.Videos
             Module.UITreeView.AsyncInvokeHandler(() =>
             {
                 Module.UITreeView.BeginUpdate();
+
                 if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
                 foreach (Task<Channel> task in tasks)
                 {

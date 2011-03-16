@@ -100,7 +100,8 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
                 Module.UITreeView.AsyncInvokeHandler(() =>
                 {
                     Module.UITreeView.BeginUpdate();
-                    this._moduleNode.Nodes.Clear();
+                    
+                    if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
                     foreach (BlueParser parser in this._parsers)
                     {                    
                         this._moduleNode.Nodes.Add(parser);
@@ -112,6 +113,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
                         }
                         Workload.WorkloadManager.Instance.Step();
                     }
+
                     Module.UITreeView.EndUpdate();
                     this._moduleNode.Text = @"BlizzBlues";
                 });

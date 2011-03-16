@@ -147,7 +147,6 @@ namespace BlizzTV.EmbeddedModules.Streams
                 Module.UITreeView.BeginUpdate();
 
                 if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
-
                 foreach (Task<Stream> task in tasks)
                 {
                     if(task.Result.IsLive)
