@@ -35,7 +35,12 @@ namespace BlizzTV.EmbeddedModules.Events
     {
         private bool _disposed = false;
 
-        private readonly Regex _teamliquidDescriptionFilter=new Regex(@"\[/?tlpd.*?\]", RegexOptions.Compiled); // filters out teamliquid calendar's [tlpd] tags.
+        private readonly Regex[] _teamliquidDescriptionFilters = new Regex[] // filters for teamliquid calendar's [tlpd] and similar tags.
+        {
+            new Regex(@"\[/?tlpd.*?\]", RegexOptions.Compiled),
+            new Regex(@"\[/?b.*?\]", RegexOptions.Compiled),
+            new Regex(@"\[/?i.*?\]", RegexOptions.Compiled)
+        };      
 
         public string FullTitle { get; private set; } /* the full event title */
         public string Description { get; private set; } /* description */
@@ -96,8 +101,9 @@ namespace BlizzTV.EmbeddedModules.Events
             : base(title)
         {
             this.Notified = false;
-            this.FullTitle = fullTitle;            
-            this.Description = this._teamliquidDescriptionFilter.Replace(description,"");
+            this.FullTitle = fullTitle;
+            this.Description = description;
+            foreach(Regex regex in this._teamliquidDescriptionFilters) { this.Description = regex.Replace(this.Description, ""); }            
             this.EventId = eventId;
             this.IsOver = isOver;
             this.Time = time;
