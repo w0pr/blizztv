@@ -53,7 +53,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
             this.CanRenderTreeNodes = true;
 
-            this._moduleNode.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
+            this._moduleNode.Icon = new NodeIcon("feed", Assets.Images.Icons.Png._16.feed);
 
             this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
             this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));

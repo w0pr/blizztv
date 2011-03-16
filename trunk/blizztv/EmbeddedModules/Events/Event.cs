@@ -102,7 +102,7 @@ namespace BlizzTV.EmbeddedModules.Events
             this.IsOver = isOver;
             this.Time = time;
 
-            this.Icon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
+            this.Icon = new NodeIcon("event", Assets.Images.Icons.Png._16._event);
             State state=this.State; /* temp */
         }
 

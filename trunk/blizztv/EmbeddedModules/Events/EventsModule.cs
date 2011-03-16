@@ -51,7 +51,7 @@ namespace BlizzTV.EmbeddedModules.Events
             this.CanRenderMenus = true;
             this.CanRenderTreeNodes = true;
 
-            var eventIcon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
+            var eventIcon = new NodeIcon("event", Assets.Images.Icons.Png._16._event);
             this._moduleNode.Icon = eventIcon;
             this._eventsToday.Icon = eventIcon;
             this._eventsUpcoming.Icon = eventIcon;
@@ -105,7 +105,7 @@ namespace BlizzTV.EmbeddedModules.Events
                     Module.UITreeView.AsyncInvokeHandler(() =>
                     {
                         this._moduleNode.State = State.Error;
-                        this._moduleNode.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                        this._moduleNode.Icon = new NodeIcon("error", Assets.Images.Icons.Png._16.error);
                     });
                     Workload.WorkloadManager.Instance.Step();
                     return;

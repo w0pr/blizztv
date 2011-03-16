@@ -50,10 +50,10 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             switch (this.Region)
             {
                 case Region.Eu:
-                    this.Icon = new NamedImage("eu", Assets.Images.Icons.Png._16.eu);
+                    this.Icon = new NodeIcon("eu", Assets.Images.Icons.Png._16.eu);
                     break;
                 case Region.Us:
-                    this.Icon = new NamedImage("us", Assets.Images.Icons.Png._16.us);
+                    this.Icon = new NodeIcon("us", Assets.Images.Icons.Png._16.us);
                     break;
             }
 

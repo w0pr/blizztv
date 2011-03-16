@@ -41,7 +41,7 @@ namespace BlizzTV.EmbeddedModules.Videos
             this.Slug = subscription.Slug;
             this.Provider = subscription.Provider;
 
-            this.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
+            this.Icon = new NodeIcon("video", Assets.Images.Icons.Png._16.video);
 
             this.Menu.Add("markaswatched", new ToolStripMenuItem(i18n.MarkAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
             this.Menu.Add("markasunwatched", new ToolStripMenuItem(i18n.MarkAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked))); 

@@ -58,8 +58,8 @@ namespace BlizzTV.Notifications
             var item = (ModuleNode)listItem.Notification.Item; 
             if (item.Icon == null) return; // if item doesn't have an assosiciated icon, just ignore.
 
-            if (!this.ImageList.Images.ContainsKey(item.Icon.Name)) this.ImageList.Images.Add(item.Icon.Name, item.Icon.Image); // add the icon to imagelist if doesnt exists yet.
-            listItem.ImageKey = item.Icon.Name;
+            if (!this.ImageList.Images.ContainsKey(item.Icon.Key)) this.ImageList.Images.Add(item.Icon.Key, item.Icon.Image); // add the icon to imagelist if doesnt exists yet.
+            listItem.ImageKey = item.Icon.Key;
         }
 
         private void listViewNotifications_DoubleClick(object sender, EventArgs e)

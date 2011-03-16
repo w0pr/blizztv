@@ -34,7 +34,7 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
             InitializeComponent();
             
             this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.                        
-            this.Size = new Size(EmbeddedModules.Streams.Settings.ModuleSettings.Instance.PlayerWidth, EmbeddedModules.Streams.Settings.ModuleSettings.Instance.PlayerHeight); // set the window size based on last saved values.
+            this.Size = new Size(Settings.ModuleSettings.Instance.PlayerWidth, Settings.ModuleSettings.Instance.PlayerHeight); // set the window size based on last saved values.
 
             this._stream = stream; // set the stream.
             this._stream.Process(); // process the stream so that it's template variables are replaced.
@@ -54,7 +54,7 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
                 if (this._stream.Provider == "JustinTV") this.WebBrowser.Navigate(string.Format("http://service.blizztv.com/stream/embed/{0}/{1}", this._stream.Provider, this._stream.Slug));
                 else this.FlashPlayer.LoadMovie(0, this._stream.Movie); // load the movie.
 
-                if (this._stream.ChatAvailable && EmbeddedModules.Streams.Settings.ModuleSettings.Instance.AutomaticallyOpenChat) this.OpenChatWindow();
+                if (this._stream.ChatAvailable && Settings.ModuleSettings.Instance.AutomaticallyOpenChat) this.OpenChatWindow();
             }
             catch (Exception exc)
             {
@@ -104,9 +104,9 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
             SwitchTopMostMode(!this.MenuAlwaysOnTop.Checked);
         }
 
-        private void SwitchTopMostMode(bool TopMost)
+        private void SwitchTopMostMode(bool topMost)
         {
-            if (TopMost)
+            if (topMost)
             {
                 this.TopMost = true;
                 this.MenuAlwaysOnTop.Checked = true;
@@ -141,11 +141,11 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
 
         private void PlayerForm_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.Size.Width == EmbeddedModules.Streams.Settings.ModuleSettings.Instance.PlayerWidth && this.Size.Height == EmbeddedModules.Streams.Settings.ModuleSettings.Instance.PlayerHeight) return;
+            if (this.Size.Width == Settings.ModuleSettings.Instance.PlayerWidth && this.Size.Height == Settings.ModuleSettings.Instance.PlayerHeight) return;
 
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.PlayerWidth = this.Size.Width;
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.PlayerHeight = this.Size.Height;
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.Save();
+            Settings.ModuleSettings.Instance.PlayerWidth = this.Size.Width;
+            Settings.ModuleSettings.Instance.PlayerHeight = this.Size.Height;
+            Settings.ModuleSettings.Instance.Save();
         }
     }
 }

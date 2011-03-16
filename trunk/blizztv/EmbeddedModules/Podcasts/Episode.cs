@@ -57,7 +57,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             this.Enclosure = item.Enclosure;
             this.Guid = item.Id;
 
-            this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
+            this.Icon = new NodeIcon("podcast", Assets.Images.Icons.Png._16.podcast);
             this.RememberState = true;
 
             this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));

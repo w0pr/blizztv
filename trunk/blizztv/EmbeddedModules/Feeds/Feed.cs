@@ -45,7 +45,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
             this.Text = subscription.Name;
             this.Url = subscription.Url;
 
-            this.Icon = new NamedImage("feed", Assets.Images.Icons.Png._16.feed);
+            this.Icon = new NodeIcon("feed", Assets.Images.Icons.Png._16.feed);
 
             this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked))); 
             this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));             
@@ -73,7 +73,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
             if (!FeedParser.Instance.Parse(this.Url, ref items))
             {
                 this.State = State.Error;
-                this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                this.Icon = new NodeIcon("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
 

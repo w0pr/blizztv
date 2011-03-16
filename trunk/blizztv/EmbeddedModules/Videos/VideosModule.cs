@@ -53,7 +53,7 @@ namespace BlizzTV.EmbeddedModules.Videos
 
             this.CanRenderTreeNodes = true;
 
-            this._moduleNode.Icon = new NamedImage("video", Assets.Images.Icons.Png._16.video);
+            this._moduleNode.Icon = new NodeIcon("video", Assets.Images.Icons.Png._16.video);
 
             this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
             this._moduleNode.Menu.Add("markallaswatched", new ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));

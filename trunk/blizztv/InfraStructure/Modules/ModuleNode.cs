@@ -30,12 +30,7 @@ namespace BlizzTV.InfraStructure.Modules
     {
         private bool _disposed = false;
         private State _state = State.Unknown; // the state of the item.
-        private NamedImage _icon;
-
-        public ModuleNode(string text) : base(text)
-        {
-            this.RememberState = false;
-        }
+        private NodeIcon _icon; // the icon.
 
         /// <summary>
         /// The unique guid.
@@ -43,14 +38,14 @@ namespace BlizzTV.InfraStructure.Modules
         public string Guid { get; protected set; }
 
         /// <summary>
+        /// Tells the node to remember contained item's last known-state.
+        /// </summary>
+        protected bool RememberState { private get; set; }
+
+        /// <summary>
         /// Bound context-menu's to item.
         /// </summary>
         public readonly Dictionary<string, ToolStripMenuItem> Menu = new Dictionary<string, ToolStripMenuItem>();
-
-        /// <summary>
-        /// Tells the node to remember contained item's last known-state.
-        /// </summary>
-        protected bool RememberState { get; set; }
 
         /// <summary>
         /// The item state.
@@ -84,17 +79,23 @@ namespace BlizzTV.InfraStructure.Modules
         /// <summary>
         /// The icon of the item.
         /// </summary>
-        public NamedImage Icon {
+        public NodeIcon Icon {
             get { return this._icon; }
             set
             {
                 this._icon = value;
                 Module.UITreeView.AsyncInvokeHandler(() =>
                 {
-                    if (!Module.UITreeView.ImageList.Images.ContainsKey(this._icon.Name)) Module.UITreeView.ImageList.Images.Add(this._icon.Name, this._icon.Image);
-                    this.ImageIndex = this.SelectedImageIndex = Module.UITreeView.ImageList.Images.IndexOfKey(this._icon.Name);
+                    if (!Module.UITreeView.ImageList.Images.ContainsKey(this._icon.Key)) Module.UITreeView.ImageList.Images.Add(this._icon.Key, this._icon.Image);
+                    this.ImageIndex = this.SelectedImageIndex = Module.UITreeView.ImageList.Images.IndexOfKey(this._icon.Key);
                 });
             } 
+        }
+
+        public ModuleNode(string text)
+            : base(text)
+        {
+            this.RememberState = false; 
         }
 
         /// <summary>
@@ -113,19 +114,12 @@ namespace BlizzTV.InfraStructure.Modules
 
             if (this.Icon == null) return;
 
-            string iconKey = this.Icon.Name;
-            Bitmap image = this.Icon.Image;
-
-            if (this._state == State.Read)
-            {
-                iconKey += "GrayScaled";
-                image = image.GrayScale();
-            }
+            this.Icon.Mode = this._state == State.Read ? NodeIcon.ImageMode.GrayScaled : NodeIcon.ImageMode.Normal;
 
             Module.UITreeView.AsyncInvokeHandler(() =>
             {
-                if (!Module.UITreeView.ImageList.Images.ContainsKey(iconKey)) Module.UITreeView.ImageList.Images.Add(iconKey, image);
-                this.ImageIndex = this.SelectedImageIndex = Module.UITreeView.ImageList.Images.IndexOfKey(iconKey);
+                if (!Module.UITreeView.ImageList.Images.ContainsKey(this.Icon.Key)) Module.UITreeView.ImageList.Images.Add(this.Icon.Key, this.Icon.Image);
+                this.ImageIndex = this.SelectedImageIndex = Module.UITreeView.ImageList.Images.IndexOfKey(this.Icon.Key);
             });
         }
 

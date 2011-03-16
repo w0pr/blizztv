@@ -229,7 +229,7 @@
       <DependentUpon>UpdaterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\Extensions\BitmapExtensions.cs" />
-    <Compile Include="Utility\Imaging\NamedImage.cs" />
+    <Compile Include="Utility\Imaging\NodeIcon.cs" />
     <Compile Include="Utility\Collections\ReadOnlyDictionary.cs" />
     <Compile Include="Utility\Helpers\Registry.cs" />
     <Compile Include="Utility\Helpers\SystemStartup.cs" />

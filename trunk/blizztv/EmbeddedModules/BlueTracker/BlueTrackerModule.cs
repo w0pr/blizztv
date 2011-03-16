@@ -49,7 +49,7 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
 
             this.CanRenderTreeNodes = true;
 
-            this._moduleNode.Icon = new NamedImage("blizzblue", Assets.Images.Icons.Png._16.blizzblues);
+            this._moduleNode.Icon = new NodeIcon("blizzblue", Assets.Images.Icons.Png._16.blizzblues);
 
             this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate)));
             this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));

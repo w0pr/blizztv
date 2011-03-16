@@ -45,7 +45,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             this.Text = subscription.Name;
             this.Url = subscription.Url;
 
-            this.Icon = new NamedImage("podcast", Assets.Images.Icons.Png._16.podcast);
+            this.Icon = new NodeIcon("podcast", Assets.Images.Icons.Png._16.podcast);
 
             this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
             this.Menu.Add("markasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));           
@@ -73,7 +73,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             if (!PodcastParser.Instance.Parse(this.Url, ref items))
             {
                 this.State=State.Error;
-                this.Icon = new NamedImage("error", Assets.Images.Icons.Png._16.error);
+                this.Icon = new NodeIcon("error", Assets.Images.Icons.Png._16.error);
                 return false;
             }
 

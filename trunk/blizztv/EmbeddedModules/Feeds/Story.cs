@@ -40,7 +40,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
             this.Guid = item.Id;
             this.Link = item.Link;
 
-            this.Icon = new NamedImage("story", Assets.Images.Icons.Png._16.feed);
+            this.Icon = new NodeIcon("story", Assets.Images.Icons.Png._16.feed);
             this.RememberState = true;
 
             this.Menu.Add("markasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAsReadClicked)));
