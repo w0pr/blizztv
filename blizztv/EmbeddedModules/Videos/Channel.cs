@@ -82,20 +82,5 @@ namespace BlizzTV.EmbeddedModules.Videos
             int unread = (from ModuleNode node in this.Videos select node.State).Count(state => state == State.Fresh || state == State.Unread);
             this.State = unread > 0 ? State.Unread : State.Read;
         }
-
-        #region de-ctor
-
-        protected override void Dispose(bool disposing)
-        {
-            if (this._disposed) return;
-            if (disposing) // managed resources
-            {
-                foreach (Video video in this.Nodes) { video.Dispose(); }
-                this.Nodes.Clear();
-            }
-            base.Dispose(disposing);
-        }
-
-        #endregion
     }
 }

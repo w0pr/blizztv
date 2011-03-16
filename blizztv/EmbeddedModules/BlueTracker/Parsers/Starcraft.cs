@@ -28,10 +28,11 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
             : base(BlueType.Starcraft)
         {
             this.Sources = new BlueSource[2]
-                               {
-                                   new BlueSource(Region.Us, "http://us.battle.net/sc2/en/forum/blizztracker/"), 
-                                   new BlueSource(Region.Eu, "http://eu.battle.net/sc2/en/forum/blizztracker/")
-                               };
+            {
+                new BlueSource(Region.Us, "http://us.battle.net/sc2/en/forum/blizztracker/"), 
+                new BlueSource(Region.Eu, "http://eu.battle.net/sc2/en/forum/blizztracker/")
+            };
+
             this.Icon = new NodeIcon("sc2", Assets.Images.Icons.Png._16.sc2);
         }
     }

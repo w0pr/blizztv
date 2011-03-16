@@ -29,13 +29,12 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
 {
     public class BlueStory : ModuleNode
     {
+        public readonly List<BlueStory> Successors = new List<BlueStory>(); // successor posts.
         public BlueType Type { get; private set; }
         public Region Region { get; private set; }
         public string Link { get; private set; }
         public string TopicId { get; private set; }
-        public string PostId { get; private set; }
-
-        public readonly List<BlueStory> Successors = new List<BlueStory>(); // successor posts.
+        public string PostId { get; private set; }       
     
         public BlueStory(BlueType type, string title, Region region, string link, string topicId, string postId)
             : base(title)

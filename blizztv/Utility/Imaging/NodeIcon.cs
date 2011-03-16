@@ -15,6 +15,7 @@
  * $Id$
  */
 
+using System;
 using System.Drawing;
 using BlizzTV.Utility.Extensions;
 
@@ -23,13 +24,14 @@ namespace BlizzTV.Utility.Imaging
     /// <summary>
     /// Provides a key-bitmap structure.
     /// </summary>
-    public class NodeIcon
+    public class NodeIcon : IDisposable
     {
-        private readonly Bitmap _normalImage;
+        private Bitmap _normalImage;
         private readonly string _normalKey;
-        private readonly Bitmap _grayscaledImage;
+        private Bitmap _grayscaledImage;
         private readonly string _grayscaledKey;
         private ImageMode _imageMode;
+        private bool _disposed = false;
 
         public Bitmap Image { get { return this._imageMode == ImageMode.Normal ? this._normalImage : this._grayscaledImage; } }
         public string Key { get { return this._imageMode == ImageMode.Normal ? this._normalKey : this._grayscaledKey; } }
@@ -49,5 +51,34 @@ namespace BlizzTV.Utility.Imaging
             Normal,
             GrayScaled
         }
+
+        #region de-ctor
+
+        // IDisposable pattern: http://msdn.microsoft.com/en-us/library/fs2xkftw%28VS.80%29.aspx
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this); // Take object out the finalization queue to prevent finalization code for it from executing a second time.
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this._disposed) return; // if already disposed, just return
+
+            if (disposing) // only dispose managed resources if we're called from directly or in-directly from user code.
+            {
+                this._normalImage.Dispose();
+                this._grayscaledImage.Dispose();
+                this._normalImage = null;
+                this._grayscaledImage = null;
+            }
+
+            _disposed = true;
+        }
+
+        ~NodeIcon() { Dispose(false); } // finalizer called by the runtime. we should only dispose unmanaged objects and should NOT reference managed ones.
+        
+        #endregion
     }
 }

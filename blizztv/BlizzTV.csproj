@@ -81,7 +81,7 @@
     </Reference>
     <Reference Include="irrKlang.NET4">
       <HintPath>..\upstream\irrKlang.NET4.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Nini">
       <HintPath>..\upstream\Nini.dll</HintPath>

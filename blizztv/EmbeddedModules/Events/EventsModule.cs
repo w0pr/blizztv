@@ -229,19 +229,28 @@ namespace BlizzTV.EmbeddedModules.Events
 
         #region de-ctor
 
+        // IDisposable pattern: http://msdn.microsoft.com/en-us/library/fs2xkftw%28VS.80%29.aspx
+
         protected override void Dispose(bool disposing)
         {
-            if (this._disposed) return;
-            if (disposing) // managed resources
+            if (this._disposed) return; // if already disposed, just return
+
+            try
             {
-                this._eventTimer.Enabled = false;
-                this._eventTimer.Elapsed -= OnTimerHit;
-                this._eventTimer.Dispose();
-                this._eventTimer = null;
-                foreach (Event e in this._events) { e.Dispose(); }
-                this._events.Clear();
+                if (disposing) // only dispose managed resources if we're called from directly or in-directly from user code.
+                {
+                    this._eventTimer.Elapsed -= OnTimerHit;
+                    this._eventTimer.Dispose();
+                    this._events.Clear();
+                    this._moduleNode.Nodes.Clear();
+                }
+
+                this._disposed = true;
             }
-            base.Dispose(disposing);
+            finally // let base-class to dispose also.
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

@@ -24,7 +24,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
     /// <summary>
     /// Ustream parser.
     /// </summary>
-    public class UStream:Stream
+    public class UStream : Stream
     {
         private UInt32 _streamId;
 
@@ -40,11 +40,11 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
                 if (result.State != WebReader.States.Success) return;
 
-                Hashtable data = (Hashtable)Json.JsonDecode(result.Response); // start parsing json.
-                ArrayList resultsObject = (ArrayList)data["results"]; // the results object.
+                var data = (Hashtable)Json.JsonDecode(result.Response); // start parsing json.
+                var resultsObject = (ArrayList)data["results"]; // the results object.
                 if (resultsObject.Count > 0)
                 {
-                    Hashtable table = (Hashtable)resultsObject[0];
+                    var table = (Hashtable)resultsObject[0];
                     if ((string)table["status"].ToString() == "live") // if the stream is live.
                     {
                         this.IsLive = true;

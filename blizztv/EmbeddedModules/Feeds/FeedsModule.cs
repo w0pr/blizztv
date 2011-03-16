@@ -278,21 +278,28 @@ namespace BlizzTV.EmbeddedModules.Feeds
 
         #region de-ctor
 
+        // IDisposable pattern: http://msdn.microsoft.com/en-us/library/fs2xkftw%28VS.80%29.aspx
+
         protected override void Dispose(bool disposing)
         {
-            if (this._disposed) return;
-            if (disposing) // managed resources
-            {
-                foreach (Feed feed in this._feeds) { feed.Dispose(); }
-                this._moduleNode.Nodes.Clear();
-                this._feeds.Clear();
+            if (this._disposed) return; // if already disposed, just return
 
-                this._updateTimer.Enabled = false;
-                this._updateTimer.Elapsed -= OnTimerHit;
-                this._updateTimer.Dispose();
-                this._updateTimer = null;
+            try
+            {
+                if (disposing) // only dispose managed resources if we're called from directly or in-directly from user code.
+                {
+                    this._updateTimer.Elapsed -= OnTimerHit;
+                    this._updateTimer.Dispose();
+                    this._feeds.Clear();
+                    this._moduleNode.Nodes.Clear();
+                }
+
+                this._disposed = true;
             }
-            base.Dispose(disposing);
+            finally // let base-class to dispose also.
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

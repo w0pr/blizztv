@@ -28,10 +28,10 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
             : base(BlueType.WorldofWarcraft)
         {
             this.Sources = new BlueSource[2]
-                               {
-                                   new BlueSource(Region.Us, "http://us.battle.net/wow/en/forum/blizztracker/"),
-                                   new BlueSource(Region.Eu, "http://eu.battle.net/wow/en/forum/blizztracker/"),
-                               };
+            {
+                new BlueSource(Region.Us, "http://us.battle.net/wow/en/forum/blizztracker/"),
+                new BlueSource(Region.Eu, "http://eu.battle.net/wow/en/forum/blizztracker/"),
+            };
             this.Icon = new NodeIcon("wow", Assets.Images.Icons.Png._16.wow);
         }
     }

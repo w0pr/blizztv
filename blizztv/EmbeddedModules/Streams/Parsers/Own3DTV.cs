@@ -24,9 +24,9 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
     /// <summary>
     /// Own3D.tv parser
     /// </summary>
-    public class Own3Dtv:Stream
+    public class Own3Dtv : Stream
     {
-        private Regex _regex = new Regex("liveViewers=(.*)&liveStatus=(.*)&liveVerified=.*", RegexOptions.Compiled);
+        private readonly Regex _regex = new Regex("liveViewers=(.*)&liveStatus=(.*)&liveVerified=.*", RegexOptions.Compiled);
 
         public Own3Dtv(StreamSubscription subscription) : base(subscription) { }
 

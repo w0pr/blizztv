@@ -24,7 +24,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
     /// <summary>
     /// Parser for LiveStream.
     /// </summary>
-    public class LiveStream:Stream
+    public class LiveStream : Stream
     {
         public LiveStream(StreamSubscription subscription) : base(subscription) { }
 
@@ -38,7 +38,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response
                 if (result.State != WebReader.States.Success) return;
 
-                Hashtable data = (Hashtable)Json.JsonDecode(result.Response);
+                var data = (Hashtable)Json.JsonDecode(result.Response);
                 data = (Hashtable)data["channel"];
                 this.IsLive = (bool)data["isLive"]; // is the stream live?
                 this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
