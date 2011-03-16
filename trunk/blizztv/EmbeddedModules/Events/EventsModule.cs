@@ -52,6 +52,7 @@ namespace BlizzTV.EmbeddedModules.Events
             this.CanRenderTreeNodes = true;
 
             var eventIcon = new NamedImage("event", Assets.Images.Icons.Png._16._event);
+            this._moduleNode.Icon = eventIcon;
             this._eventsToday.Icon = eventIcon;
             this._eventsUpcoming.Icon = eventIcon;
             this._eventsOver.Icon = eventIcon;
@@ -59,11 +60,6 @@ namespace BlizzTV.EmbeddedModules.Events
             this._moduleNode.Nodes.Add(_eventsToday);
             this._moduleNode.Nodes.Add( _eventsUpcoming);
             this._moduleNode.Nodes.Add(_eventsOver);
-
-            State state = this._moduleNode.State; /* temp */
-            State state2 = this._eventsToday.State; /* temp */
-            State state3 = this._eventsUpcoming.State; /* temp */
-            State state4 = this._eventsOver.State; /* temp */
 
             this._moduleNode.Menu.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
@@ -170,6 +166,7 @@ namespace BlizzTV.EmbeddedModules.Events
             Module.UITreeView.AsyncInvokeHandler(() =>
             {
                 Module.UITreeView.BeginUpdate();
+
                 foreach (Event @event in from e in this._events
                                 let filterStart = DateTime.Now.Date.Subtract(new TimeSpan(ModuleSettings.Instance.NumberOfDaysToShowEventsOnMainWindow, 0, 0, 0))
                                 let filterEnd = DateTime.Now.Date.AddDays(ModuleSettings.Instance.NumberOfDaysToShowEventsOnMainWindow)
@@ -183,6 +180,7 @@ namespace BlizzTV.EmbeddedModules.Events
                         else _eventsUpcoming.Nodes.Add(@event); // else register it in upcoming-events section.
                     }
                 }
+
                 Module.UITreeView.EndUpdate();
                 this._moduleNode.Text = @"Events";
             });
