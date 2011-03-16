@@ -31,7 +31,6 @@ namespace BlizzTV.Audio.Engines
 
         // engine API.
         public virtual void Play(string filename) { throw new NotSupportedException("Audio engine does not support Play()."); }
-        public virtual void PlayInternetStream(string url) { throw new NotSupportedException("Audio engine does not support PlayInternetStream()."); }
         public virtual void PlayFromMemory(string name, byte[] data) { throw new NotSupportedException("Audio engine does not support PlayFromMemory()."); }
         public virtual void Pause() { throw new NotSupportedException("Audio engine does not support Pause()."); }
         public virtual void Resume() { throw new NotSupportedException("Audio engine does not support Resume()."); }

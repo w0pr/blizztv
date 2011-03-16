@@ -58,13 +58,6 @@ namespace BlizzTV.Audio
             new Thread(() => this._engine.Play(filename)) { IsBackground = true }.Start();          
         }
 
-        public void PlayInternetStream(string url)
-        {
-            if (this.EngineStatus != AudioEngineStatus.Ready) return; // make sure underlying engine is functional.
-            if (!this._engine.CanPlayStreams) throw new NotSupportedException(); // make sure it can stream from internet.
-            new Thread(() => this._engine.PlayInternetStream(url)) { IsBackground = true }.Start();
-        }
-
         public void PlayFromMemory(string name, byte[] data)
         {
             if (this.EngineStatus != AudioEngineStatus.Ready) return; // make sure underlying engine is functional.

@@ -39,23 +39,21 @@ namespace BlizzTV.EmbeddedModules.Videos
     [ModuleAttributes("Videos", "Video aggregator.","video")]
     public class VideosModule : Module, ISubscriptionConsumer
     {
-        private bool _disposed = false;
         private readonly List<Channel> _channels = new List<Channel>(); // holds references to current stored feeds.
-        private readonly ModuleNode _moduleNode = new ModuleNode("Videos");
+        private readonly ModuleNode _moduleNode = new ModuleNode("Videos"); // the root module node.
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://videochannel/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled); // regex for consuming subscriptions from catalog.
         private System.Timers.Timer _updateTimer;
-        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://videochannel/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
+        private bool _disposed = false;
 
         public static VideosModule Instance;
 
         public VideosModule() : base()
         {
             VideosModule.Instance = this;
-
             this.CanRenderTreeNodes = true;
-
             this._moduleNode.Icon = new NodeIcon("video", Assets.Images.Icons.Png._16.video);
 
-            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuRefresh)));
             this._moduleNode.Menu.Add("markallaswatched", new ToolStripMenuItem(i18n.MarkAllAsWatched, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsWatchedClicked)));
             this._moduleNode.Menu.Add("markallasunwatched", new ToolStripMenuItem(i18n.MarkAllAsUnwatched, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnWatchedClicked)));
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
@@ -67,40 +65,12 @@ namespace BlizzTV.EmbeddedModules.Videos
             if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
-        public override Form GetPreferencesForm()
-        {
-            return new SettingsForm();
-        }
-
-        public override bool AddSubscriptionFromUrl(string link)
-        {
-            foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
-            {
-                if (((VideoProvider) pair.Value).LinkValid(link))
-                {
-                    var videoSubscription = new VideoSubscription();
-                    videoSubscription.Name = videoSubscription.Slug = (pair.Value as VideoProvider).GetSlug(link);
-                    videoSubscription.Provider = pair.Value.Name;
-
-                    using (Channel channel = ChannelFactory.CreateChannel(videoSubscription))
-                    {
-                        if (channel.IsValid())
-                        {
-                            if (Subscriptions.Instance.Add(videoSubscription)) this.RunManualUpdate(this, new EventArgs());
-                            else MessageBox.Show(string.Format(i18n.VideoChannelSubscriptionsAlreadyExists, Subscriptions.Instance.Dictionary[videoSubscription.Slug].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
         public override ModuleNode GetModuleNode()
         {
             return this._moduleNode;
         }
+
+        #region data handling
 
         private void UpdateChannels()
         {
@@ -153,16 +123,16 @@ namespace BlizzTV.EmbeddedModules.Videos
                 foreach (Task<Channel> task in tasks)
                 {
                     this._moduleNode.Nodes.Add(task.Result);
-                    foreach(Video video in task.Result.Videos)
+                    foreach (Video video in task.Result.Videos)
                     {
                         task.Result.Nodes.Add(video);
                     }
                 }
-                
+
                 Module.UITreeView.EndUpdate();
                 this._moduleNode.Text = @"Videos";
             });
-        
+
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
             LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", this._channels.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
@@ -175,7 +145,7 @@ namespace BlizzTV.EmbeddedModules.Videos
             channel.Update();
             return channel;
         }
-        
+
         private void OnChildStateChanged(object sender, EventArgs e)
         {
             if (this._moduleNode.State == ((Channel)sender).State) return;
@@ -183,18 +153,13 @@ namespace BlizzTV.EmbeddedModules.Videos
             int unread = this._channels.Count(channel => channel.State == State.Unread);
             this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
         }
-        
-        public void OnSaveSettings()
-        {
-            this.SetupUpdateTimer();
-        }
 
         private void SetupUpdateTimer()
         {
             if (this._updateTimer != null)
             {
                 this._updateTimer.Enabled = false;
-                this._updateTimer.Elapsed -= OnTimerHit;                
+                this._updateTimer.Elapsed -= OnTimerHit;
                 this._updateTimer = null;
             }
 
@@ -208,7 +173,11 @@ namespace BlizzTV.EmbeddedModules.Videos
             if (!RuntimeConfiguration.Instance.InSleepMode) UpdateChannels();
         }
 
-        private void RunManualUpdate(object sender, EventArgs e)
+        #endregion
+
+        #region menu handling
+
+        private void MenuRefresh(object sender, EventArgs e)
         {
             var thread = new System.Threading.Thread(UpdateChannels) {IsBackground = true};
             thread.Start();
@@ -236,6 +205,24 @@ namespace BlizzTV.EmbeddedModules.Videos
             f.ShowDialog();
         }
 
+        #endregion
+
+        #region settings handling
+
+        public override Form GetPreferencesForm()
+        {
+            return new SettingsForm();
+        }
+
+        public void OnSaveSettings()
+        {
+            this.SetupUpdateTimer();
+        }
+
+        #endregion
+
+        #region catalog handling
+
         public string GetCatalogUrl()
         {
             return "http://www.blizztv.com/catalog/videochannels";
@@ -253,6 +240,33 @@ namespace BlizzTV.EmbeddedModules.Videos
             var subscription = new VideoSubscription { Name = name, Provider = provider, Slug = slug };
             Subscriptions.Instance.Add(subscription);
         }
+
+        public override bool AddSubscriptionFromUrl(string link)
+        {
+            foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
+            {
+                if (((VideoProvider)pair.Value).LinkValid(link))
+                {
+                    var videoSubscription = new VideoSubscription();
+                    videoSubscription.Name = videoSubscription.Slug = (pair.Value as VideoProvider).GetSlug(link);
+                    videoSubscription.Provider = pair.Value.Name;
+
+                    using (Channel channel = ChannelFactory.CreateChannel(videoSubscription))
+                    {
+                        if (channel.IsValid())
+                        {
+                            if (Subscriptions.Instance.Add(videoSubscription)) this.MenuRefresh(this, new EventArgs());
+                            else MessageBox.Show(string.Format(i18n.VideoChannelSubscriptionsAlreadyExists, Subscriptions.Instance.Dictionary[videoSubscription.Slug].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
 
         #region de-ctor
 

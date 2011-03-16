@@ -37,15 +37,15 @@ namespace BlizzTV.EmbeddedModules.Events
     [ModuleAttributes("Events", "E-Sports events tracker.", "_event")]
     public class EventsModule : Module
     {
-        private bool _disposed = false;
-        private readonly ModuleNode _moduleNode = new ModuleNode("Events");
-        private List<Event> _events = new List<Event>(); // list of events.
-        private System.Timers.Timer _eventTimer = new System.Timers.Timer(60000); // runs every one minute and check events & alarms.
+        private readonly ModuleNode _moduleNode = new ModuleNode("Events"); // holds references to current stored feeds.
+        private readonly List<Event> _events = new List<Event>(); // list of events.
         private static TimeZoneInfo KoreanTimeZone { get { TimeZoneInfo zone = TimeZoneInfo.Local; foreach (TimeZoneInfo z in TimeZoneInfo.GetSystemTimeZones()) { if (z.Id == "Korea Standard Time") zone = z; } return zone; } } // teamliquid calendar flags events in Korean time.
         private readonly ModuleNode _eventsToday = new ModuleNode("Today"); // today's events item.
         private readonly ModuleNode _eventsUpcoming = new ModuleNode("Upcoming"); // upcoming events item.
         private readonly ModuleNode _eventsOver = new ModuleNode("Past"); // past events item.        
-        
+        private System.Timers.Timer _eventTimer = new System.Timers.Timer(60000); // runs every one minute and check events & alarms.
+        private bool _disposed = false;
+   
         public EventsModule() : base()
         {
             this.CanRenderMenus = true;
@@ -64,20 +64,6 @@ namespace BlizzTV.EmbeddedModules.Events
             this._moduleNode.Menu.Add("calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked))); // calendar menu in context-menus.
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem("Settings", Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
-        
-        /// <summary>
-        /// Returns global menu items.
-        /// </summary>
-        /// <returns></returns>
-        public override Dictionary<string, ToolStripMenuItem> GetMenus()
-        {
-            return new Dictionary<string, ToolStripMenuItem> { { "calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked)) } };
-        }
-
-        public override ModuleNode GetModuleNode()
-        {
-            return this._moduleNode;
-        }
 
         public override void Startup()
         {
@@ -88,6 +74,18 @@ namespace BlizzTV.EmbeddedModules.Events
             _eventTimer.Elapsed += OnTimerHit; // setup timer for event status checks.
             _eventTimer.Enabled = true;
         }
+
+        public override Dictionary<string, ToolStripMenuItem> GetMenus()
+        {
+            return new Dictionary<string, ToolStripMenuItem> { { "calendar", new ToolStripMenuItem("Calendar", Assets.Images.Icons.Png._16.calendar, new EventHandler(MenuCalendarClicked)) } };
+        }
+
+        public override ModuleNode GetModuleNode()
+        {
+            return this._moduleNode;
+        }
+
+        #region data handling
 
         private void ParseEvents()
         {
@@ -189,9 +187,12 @@ namespace BlizzTV.EmbeddedModules.Events
             this.RefreshingData = false;
         }
 
-        public override Form GetPreferencesForm()
+        private void CheckEvents()
         {
-            return new SettingsForm();
+            foreach (Event @event in this._events.Where(@event => !@event.IsOver).Where(@event => @event.Time.LocalTime.Date == DateTime.Now.Date)) // only check events that are scheduled for current day and not already over.
+            {
+                @event.Check();
+            }
         }
 
         private void OnTimerHit(object source, ElapsedEventArgs e)
@@ -199,13 +200,9 @@ namespace BlizzTV.EmbeddedModules.Events
             if (!RuntimeConfiguration.Instance.InSleepMode) this.CheckEvents();
         }
 
-        private void CheckEvents()
-        {
-            foreach (Event @event in this._events.Where(@event => !@event.IsOver).Where(@event => @event.Time.LocalTime.Date == DateTime.Now.Date)) // only check events that are scheduled for current day and not already over.
-            {
-                @event.Check(); 
-            }
-        }
+        #endregion
+
+        #region menu handling
 
         private void MenuCalendarClicked(object sender, EventArgs e)
         {
@@ -218,6 +215,17 @@ namespace BlizzTV.EmbeddedModules.Events
             var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
+
+        #endregion
+
+        #region settings handling
+
+        public override Form GetPreferencesForm()
+        {
+            return new SettingsForm();
+        }
+
+        #endregion
 
         #region de-ctor
 
@@ -232,7 +240,6 @@ namespace BlizzTV.EmbeddedModules.Events
                 this._eventTimer = null;
                 foreach (Event e in this._events) { e.Dispose(); }
                 this._events.Clear();
-                this._events = null;
             }
             base.Dispose(disposing);
         }

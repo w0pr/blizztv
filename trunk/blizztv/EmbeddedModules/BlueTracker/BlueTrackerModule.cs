@@ -36,22 +36,20 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
     [ModuleAttributes("BlizzBlues", "Blizzard GM-Blue's aggregator.", "blizzblues")]
     class BlueTrackerModule : Module
     {
-        private bool _disposed = false;
-        private readonly ModuleNode _moduleNode = new ModuleNode("BlizzBlues");
+        private readonly ModuleNode _moduleNode = new ModuleNode("BlizzBlues"); // the root module node.
         private readonly List<BlueParser> _parsers = new List<BlueParser>(); // list of blue-post parsers
         private System.Timers.Timer _updateTimer;
+        private bool _disposed = false;
 
         public static BlueTrackerModule Instance; // the module instance.
 
         public BlueTrackerModule()
         {
-            Instance = this;
-
+            BlueTrackerModule.Instance = this;
             this.CanRenderTreeNodes = true;
-
             this._moduleNode.Icon = new NodeIcon("blizzblue", Assets.Images.Icons.Png._16.blizzblues);
 
-            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuUpdate)));
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuRefresh)));
             this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
             this._moduleNode.Menu.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked))); 
@@ -62,6 +60,13 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             this.UpdateBlues();
             if (this._updateTimer == null) this.SetupUpdateTimer();
         }
+
+        public override ModuleNode GetModuleNode()
+        {
+            return this._moduleNode;
+        }
+
+        #region data handling
 
         private void UpdateBlues()
         {
@@ -126,63 +131,12 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             this.RefreshingData = false;
         }
 
-        public override ModuleNode GetModuleNode()
-        {
-            return this._moduleNode;
-        }
-
-        public override Form GetPreferencesForm()
-        {
-            return new SettingsForm();
-        }
-
         private void OnChildStateChanged(object sender, EventArgs e)
         {
             if (this._moduleNode.State == ((BlueParser)sender).State) return;
 
             int unread = this._parsers.Count(parser => parser.State == State.Unread);
             this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
-        }
-
-        private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
-        {
-            foreach (BlueParser parser in this._parsers)
-            {
-                foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
-                {
-                    pair.Value.State = State.Read;
-                    foreach (BlueStory post in pair.Value.Successors) { post.State=State.Read; }
-                }
-            }
-        }
-
-        private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
-        {
-            foreach (BlueParser parser in this._parsers)
-            {
-                foreach (KeyValuePair<string, BlueStory> pair in parser.Stories)
-                {
-                    pair.Value.State = State.Unread;
-                    foreach (BlueStory post in pair.Value.Successors) { post.State=State.Unread; }
-                }
-            }
-        }
-
-        private void MenuUpdate(object sender, EventArgs e)
-        {
-            var thread = new System.Threading.Thread(this.UpdateBlues) { IsBackground = true };
-            thread.Start();
-        }
-
-        private void MenuSettingsClicked(object sender, EventArgs e)
-        {
-            var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
-            f.ShowDialog();
-        }
-
-        public void OnSaveSettings()
-        {
-            this.SetupUpdateTimer();
         }
 
         private void SetupUpdateTimer()
@@ -203,5 +157,55 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
         {
             if (!RuntimeConfiguration.Instance.InSleepMode) this.UpdateBlues();
         }
+
+        #endregion
+
+        #region menu handling
+
+        private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, BlueStory> pair in this._parsers.SelectMany(parser => parser.Stories))
+            {
+                pair.Value.State = State.Read;
+                foreach (BlueStory post in pair.Value.Successors) { post.State=State.Read; }
+            }
+        }
+
+        private void MenuMarkAllAsUnReadClicked(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, BlueStory> pair in this._parsers.SelectMany(parser => parser.Stories))
+            {
+                pair.Value.State = State.Unread;
+                foreach (BlueStory post in pair.Value.Successors) { post.State=State.Unread; }
+            }
+        }
+
+        private void MenuRefresh(object sender, EventArgs e)
+        {
+            var thread = new System.Threading.Thread(this.UpdateBlues) { IsBackground = true };
+            thread.Start();
+        }
+
+        private void MenuSettingsClicked(object sender, EventArgs e)
+        {
+            var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
+            f.ShowDialog();
+        }
+
+        #endregion
+
+        #region settings handling
+
+        public override Form GetPreferencesForm()
+        {
+            return new SettingsForm();
+        }
+
+        public void OnSaveSettings()
+        {
+            this.SetupUpdateTimer();
+        }
+
+        #endregion
     }
 }
