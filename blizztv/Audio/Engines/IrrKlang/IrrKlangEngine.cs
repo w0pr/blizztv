@@ -37,12 +37,6 @@ namespace BlizzTV.Audio.Engines.IrrKlang
             this.CurrentTrack = new IrrKlangTrack(sound, file);
         }
 
-        public override void PlayInternetStream(string url)
-        {
-            ISound sound = this._engine.Play2D(url); // just call the Play2D function the URL supplied as our custom-implemented FileFactory will be catching the http stream request.
-            this.CurrentTrack = new IrrKlangTrack(sound, url);
-        }
-
         public override void PlayFromMemory(string name, byte[] data)
         {
             ISoundSource source = this._engine.AddSoundSourceFromMemory(data, name); // create the named sound source.

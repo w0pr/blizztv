@@ -81,6 +81,7 @@
     </Reference>
     <Reference Include="irrKlang.NET4">
       <HintPath>..\upstream\irrKlang.NET4.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Nini">
       <HintPath>..\upstream\Nini.dll</HintPath>
@@ -573,8 +574,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <EmbeddedResource Include="Assets\Assemblies\irrKlang.NET4.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Microsoft.mshtml.dll" />
     <None Include="app.config" />
+    <None Include="Resources\DefaultNotification.ogg" />
+    <None Include="Resources\DoorBell.ogg" />
+    <None Include="Resources\FastBells.ogg" />
+    <None Include="Resources\Incomiiing.ogg" />
+    <None Include="Resources\MasterYoda.ogg" />
+    <None Include="Resources\Murloc.ogg" />
+    <None Include="Resources\Notice1.ogg" />
+    <None Include="Resources\Notice2.ogg" />
+    <None Include="Resources\Notice3.ogg" />
+    <None Include="Resources\Notice4.ogg" />
+    <None Include="Resources\Ping.ogg" />
+    <None Include="Resources\Polymorph.ogg" />
+    <None Include="Resources\SuperMario.ogg" />
+    <None Include="Resources\Tetris.ogg" />
+    <None Include="Resources\Tina.ogg" />
+    <None Include="Resources\TinyBells.ogg" />
     <None Include="Resources\update.png" />
     <None Include="Resources\download.png" />
     <None Include="Resources\video.png" />
@@ -597,23 +615,7 @@
     <None Include="Resources\sleep.ico" />
     <None Include="Resources\blizztv.ico" />
     <None Include="Resources\event.png" />
-    <None Include="Resources\Tina.mp3" />
-    <None Include="Resources\Whisper.mp3" />
-    <None Include="Resources\TinyBells.mp3" />
-    <None Include="Resources\Tetris.mp3" />
-    <None Include="Resources\SuperMario.mp3" />
-    <None Include="Resources\Polymorph.mp3" />
-    <None Include="Resources\Ping.mp3" />
-    <None Include="Resources\Notice4.mp3" />
-    <None Include="Resources\Notice3.mp3" />
-    <None Include="Resources\Notice2.mp3" />
-    <None Include="Resources\Notice1.mp3" />
-    <None Include="Resources\Murloc.mp3" />
-    <None Include="Resources\MasterYoda.mp3" />
-    <None Include="Resources\Incomiiing.mp3" />
-    <None Include="Resources\FastBells.mp3" />
-    <None Include="Resources\DoorBell.mp3" />
-    <None Include="Resources\DefaultNotification.mp3" />
+    <None Include="Resources\Whisper.ogg" />
     <None Include="Resources\wow.png" />
     <None Include="Resources\userinterface.png" />
     <None Include="Resources\userguide.png" />
@@ -720,7 +722,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)upstream\ikpMP3.dll" $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

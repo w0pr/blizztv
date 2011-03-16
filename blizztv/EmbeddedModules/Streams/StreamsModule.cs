@@ -40,10 +40,10 @@ namespace BlizzTV.EmbeddedModules.Streams
     [ModuleAttributes("Streams", "Live-stream aggregator.","stream")]
     public class StreamsModule : Module , ISubscriptionConsumer
     {
-        private bool _disposed = false;
-        private readonly ModuleNode _moduleNode = new ModuleNode("Streams");
+        private readonly ModuleNode _moduleNode = new ModuleNode("Streams"); // the root module node.
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://stream/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled); // regex for consuming subscriptions from catalog.
         private System.Timers.Timer _updateTimer;
-        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://stream/(?<Name>.*?)/(?<Provider>.*?)/(?<Slug>.*)", RegexOptions.Compiled);
+        private bool _disposed = false;
 
         public static StreamsModule Instance;
 
@@ -55,7 +55,7 @@ namespace BlizzTV.EmbeddedModules.Streams
 
             this._moduleNode.Icon = new NodeIcon("stream", Assets.Images.Icons.Png._16.stream);
 
-            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuRefresh)));
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
         }
 
@@ -65,41 +65,12 @@ namespace BlizzTV.EmbeddedModules.Streams
             if (this._updateTimer == null) this.SetupUpdateTimer();
         }
 
-        public override Form GetPreferencesForm()
-        {
-            return new SettingsForm();
-        }
-
-        public override bool AddSubscriptionFromUrl(string link)
-        {
-            foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
-            {
-                if (((StreamProvider) pair.Value).LinkValid(link))
-                {
-                    var streamSubscription = new StreamSubscription();
-                    streamSubscription.Slug = (pair.Value as StreamProvider).GetSlug(link);                    
-                    streamSubscription.Provider = pair.Value.Name;
-                    streamSubscription.Name = (pair.Value as StreamProvider).GetSlug(link);
-                    
-                    if(streamSubscription.Provider.ToLower()=="own3dtv")
-                    {
-                        string name = "";
-                        if (InputBox.Show("Add New Stream", "Please enter name for the new stream", ref name) == System.Windows.Forms.DialogResult.OK) streamSubscription.Name = name;
-                        else return false;
-                    }
-
-                    if(Subscriptions.Instance.Add(streamSubscription)) this.RunManualUpdate(this, new EventArgs());
-                    else MessageBox.Show(string.Format("The stream already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[streamSubscription.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public override ModuleNode GetModuleNode()
         {
             return this._moduleNode;
         }
+
+        #region data handling
 
         private void UpdateStreams()
         {
@@ -149,18 +120,18 @@ namespace BlizzTV.EmbeddedModules.Streams
                 if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
                 foreach (Task<Stream> task in tasks)
                 {
-                    if(task.Result.IsLive)
+                    if (task.Result.IsLive)
                     {
                         task.Result.Text = string.Format("{0} ({1})", task.Result.Text, task.Result.ViewerCount); // put stream viewers count on title.
                         availableCount++;
                         this._moduleNode.Nodes.Add(task.Result);
-                    }                
+                    }
                 }
 
                 Module.UITreeView.EndUpdate();
                 Module.UITreeView.AsyncInvokeHandler(() =>
                 {
-                    if (availableCount > 0)  this._moduleNode.Text = string.Format(@"Streams ({0})", availableCount);
+                    if (availableCount > 0) this._moduleNode.Text = string.Format(@"Streams ({0})", availableCount);
                     else
                     {
                         this._moduleNode.Text = @"Streams";
@@ -182,11 +153,6 @@ namespace BlizzTV.EmbeddedModules.Streams
             return stream;
         }
 
-        public void OnSaveSettings()
-        {
-            this.SetupUpdateTimer();
-        }
-
         private void SetupUpdateTimer()
         {
             if (this._updateTimer != null)
@@ -206,9 +172,13 @@ namespace BlizzTV.EmbeddedModules.Streams
             if (!RuntimeConfiguration.Instance.InSleepMode) UpdateStreams();
         }
 
-        private void RunManualUpdate(object sender, EventArgs e)
+        #endregion
+
+        #region menu handling
+
+        private void MenuRefresh(object sender, EventArgs e)
         {
-            var thread = new System.Threading.Thread(UpdateStreams) {IsBackground = true};
+            var thread = new System.Threading.Thread(UpdateStreams) { IsBackground = true };
             thread.Start();
         }
 
@@ -217,6 +187,24 @@ namespace BlizzTV.EmbeddedModules.Streams
             var f = new ModuleSettingsHostForm(this.Attributes, this.GetPreferencesForm());
             f.ShowDialog();
         }
+
+        #endregion
+
+        #region settings handling
+
+        public override Form GetPreferencesForm()
+        {
+            return new SettingsForm();
+        }
+
+        public void OnSaveSettings()
+        {
+            this.SetupUpdateTimer();
+        }
+
+        #endregion
+
+        #region catalog handling
 
         public string GetCatalogUrl()
         {
@@ -235,6 +223,34 @@ namespace BlizzTV.EmbeddedModules.Streams
             var subscription = new StreamSubscription {Name = name, Provider = provider, Slug = slug};
             Subscriptions.Instance.Add(subscription);
         }
+
+        public override bool AddSubscriptionFromUrl(string link)
+        {
+            foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
+            {
+                if (((StreamProvider)pair.Value).LinkValid(link))
+                {
+                    var streamSubscription = new StreamSubscription();
+                    streamSubscription.Slug = (pair.Value as StreamProvider).GetSlug(link);
+                    streamSubscription.Provider = pair.Value.Name;
+                    streamSubscription.Name = (pair.Value as StreamProvider).GetSlug(link);
+
+                    if (streamSubscription.Provider.ToLower() == "own3dtv")
+                    {
+                        string name = "";
+                        if (InputBox.Show("Add New Stream", "Please enter name for the new stream", ref name) == System.Windows.Forms.DialogResult.OK) streamSubscription.Name = name;
+                        else return false;
+                    }
+
+                    if (Subscriptions.Instance.Add(streamSubscription)) this.MenuRefresh(this, new EventArgs());
+                    else MessageBox.Show(string.Format("The stream already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[streamSubscription.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        #endregion
 
         #region de-ctor
 

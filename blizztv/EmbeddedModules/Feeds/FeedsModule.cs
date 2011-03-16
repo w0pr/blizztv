@@ -39,23 +39,21 @@ namespace BlizzTV.EmbeddedModules.Feeds
     [ModuleAttributes("Feeds","Feed aggregator.","feed")]
     public class FeedsModule : Module , ISubscriptionConsumer
     {
-        private bool _disposed = false;
         private readonly List<Feed> _feeds = new List<Feed>(); // holds references to current stored feeds.
-        private readonly ModuleNode _moduleNode = new ModuleNode("Feeds");
+        private readonly ModuleNode _moduleNode = new ModuleNode("Feeds"); // the root module node.
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://feed/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled); // regex for consuming subscriptions from catalog.
         private System.Timers.Timer _updateTimer = null;
-        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://feed/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);       
+        private bool _disposed = false;
 
         public static FeedsModule Instance;
 
         public FeedsModule()
         {
             FeedsModule.Instance = this;
-
             this.CanRenderTreeNodes = true;
-
             this._moduleNode.Icon = new NodeIcon("feed", Assets.Images.Icons.Png._16.feed);
 
-            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuRefresh)));
             this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
             this._moduleNode.Menu.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
@@ -64,41 +62,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         public override void Startup()
         {
             this.UpdateFeeds();
-            if (this._updateTimer == null) this.SetupUpdateTimer();                  
-        }
-
-        public override bool AddSubscriptionFromUrl(string link) // Tries parsing a drag & dropped link to see if it's a feed and parsable.
-        {
-            if (Subscriptions.Instance.Dictionary.ContainsKey(link))
-            {
-                MessageBox.Show(string.Format(i18n.FeedSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[link].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            var feedSubscription = new FeedSubscription {Name = "test-feed", Url = link};
-
-            using (var feed = new Feed(feedSubscription))
-            {
-                if (feed.IsValid())
-                {
-                    var subscription = new FeedSubscription();
-                    string feedName = "";
-
-                    if (InputBox.Show(i18n.AddNewFeedTitle, i18n.AddNewFeedMessage, ref feedName) == DialogResult.OK)
-                    {
-                        subscription.Name = feedName;
-                        subscription.Url = link;
-                        if (Subscriptions.Instance.Add(subscription))
-                        {
-                            this.RunManualUpdate(this, new EventArgs());
-                            return true;
-                        }
-                        return false;
-                    }
-                }
-            }
-
-            return false;
+            this.SetupUpdateTimer();                  
         }
 
         public override ModuleNode GetModuleNode()
@@ -106,7 +70,9 @@ namespace BlizzTV.EmbeddedModules.Feeds
             return this._moduleNode;
         }
 
-        private void UpdateFeeds()
+        #region data handling
+
+        private void UpdateFeeds() 
         {
             if (this.RefreshingData) return;
             this.RefreshingData = true;
@@ -174,28 +140,10 @@ namespace BlizzTV.EmbeddedModules.Feeds
             this.RefreshingData = false;
         }
 
-        private static Feed TaskProcessFeed(Feed feed)
+        private static Feed TaskProcessFeed(Feed feed) // The module updater task.
         {
             feed.Update();
             return feed;
-        }
-
-        private void OnChildStateChanged(object sender, EventArgs e)
-        {
-            if (this._moduleNode.State == ((Feed)sender).State) return;
-
-            int unread = this._feeds.Count(feed => feed.State == State.Unread);
-            this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
-        }
-
-        public override Form GetPreferencesForm()
-        {
-            return new SettingsForm();
-        }
-
-        public void OnSaveSettings()
-        {
-            this.SetupUpdateTimer();
         }
 
         private void SetupUpdateTimer()
@@ -215,6 +163,24 @@ namespace BlizzTV.EmbeddedModules.Feeds
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             if (!RuntimeConfiguration.Instance.InSleepMode) this.UpdateFeeds();
+        }
+
+        private void OnChildStateChanged(object sender, EventArgs e)
+        {
+            if (this._moduleNode.State == ((Feed)sender).State) return;
+
+            int unread = this._feeds.Count(feed => feed.State == State.Unread);
+            this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
+        }
+
+        #endregion
+
+        #region menu handling
+
+        private void MenuRefresh(object sender, EventArgs e)
+        {
+            var thread = new System.Threading.Thread(this.UpdateFeeds) { IsBackground = true };
+            thread.Start();
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
@@ -239,11 +205,23 @@ namespace BlizzTV.EmbeddedModules.Feeds
             f.ShowDialog();
         }
 
-        private void RunManualUpdate(object sender, EventArgs e)
+        #endregion
+
+        #region settings handling
+
+        public override Form GetPreferencesForm()
         {
-            var thread = new System.Threading.Thread(this.UpdateFeeds) {IsBackground = true};
-            thread.Start();                 
+            return new SettingsForm();
         }
+
+        public void OnSaveSettings()
+        {
+            this.SetupUpdateTimer();
+        }
+
+        #endregion
+
+        #region catalog handling
 
         public string GetCatalogUrl()
         {
@@ -262,6 +240,42 @@ namespace BlizzTV.EmbeddedModules.Feeds
             Subscriptions.Instance.Add(subscription);
         }
 
+        public override bool AddSubscriptionFromUrl(string link) // Tries parsing a drag & dropped link to see if it's a feed and parsable.
+        {
+            if (Subscriptions.Instance.Dictionary.ContainsKey(link))
+            {
+                MessageBox.Show(string.Format(i18n.FeedSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[link].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var feedSubscription = new FeedSubscription { Name = "test-feed", Url = link };
+
+            using (var feed = new Feed(feedSubscription))
+            {
+                if (feed.IsValid())
+                {
+                    var subscription = new FeedSubscription();
+                    string feedName = "";
+
+                    if (InputBox.Show(i18n.AddNewFeedTitle, i18n.AddNewFeedMessage, ref feedName) == DialogResult.OK)
+                    {
+                        subscription.Name = feedName;
+                        subscription.Url = link;
+                        if (Subscriptions.Instance.Add(subscription))
+                        {
+                            this.MenuRefresh(this, new EventArgs());
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
+
         #region de-ctor
 
         protected override void Dispose(bool disposing)
@@ -269,12 +283,14 @@ namespace BlizzTV.EmbeddedModules.Feeds
             if (this._disposed) return;
             if (disposing) // managed resources
             {
+                foreach (Feed feed in this._feeds) { feed.Dispose(); }
+                this._moduleNode.Nodes.Clear();
+                this._feeds.Clear();
+
                 this._updateTimer.Enabled = false;
                 this._updateTimer.Elapsed -= OnTimerHit;
                 this._updateTimer.Dispose();
                 this._updateTimer = null;
-                foreach (Feed feed in this._moduleNode.Nodes) { feed.Dispose(); }
-                this._moduleNode.Nodes.Clear();
             }
             base.Dispose(disposing);
         }

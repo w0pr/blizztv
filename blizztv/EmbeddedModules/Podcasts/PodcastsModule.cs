@@ -39,23 +39,21 @@ namespace BlizzTV.EmbeddedModules.Podcasts
     [ModuleAttributes("Podcasts", "Podcast aggregator.", "podcast")]
     public class PodcastsModule : Module , ISubscriptionConsumer
     {
-        private bool _disposed = false;
         private readonly List<Podcast> _podcasts = new List<Podcast>(); // holds references to current stored feeds.
-        private readonly ModuleNode _moduleNode = new ModuleNode("Podcasts");
+        private readonly ModuleNode _moduleNode = new ModuleNode("Podcasts"); // the root module node.
+        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://podcast/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled); // regex for consuming subscriptions from catalog.
         private System.Timers.Timer _updateTimer;
-        private readonly Regex _subscriptionConsumerRegex = new Regex("blizztv\\://podcast/(?<Name>.*?)/(?<Url>.*)", RegexOptions.Compiled);
+        private bool _disposed = false;
 
         public static PodcastsModule Instance;
 
         public PodcastsModule()
         {
             PodcastsModule.Instance = this;
-
             this.CanRenderTreeNodes = true;
-
             this._moduleNode.Icon = new NodeIcon("podcast", Assets.Images.Icons.Png._16.podcast);
 
-            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(RunManualUpdate)));
+            this._moduleNode.Menu.Add("refresh", new ToolStripMenuItem(i18n.Refresh, Assets.Images.Icons.Png._16.update, new EventHandler(MenuRefresh)));
             this._moduleNode.Menu.Add("markallasread", new ToolStripMenuItem(i18n.MarkAllAsRead, Assets.Images.Icons.Png._16.read, new EventHandler(MenuMarkAllAsReadClicked)));
             this._moduleNode.Menu.Add("markallasunread", new ToolStripMenuItem(i18n.MarkAllAsUnread, Assets.Images.Icons.Png._16.unread, new EventHandler(MenuMarkAllAsUnReadClicked)));
             this._moduleNode.Menu.Add("settings", new ToolStripMenuItem(i18n.Settings, Assets.Images.Icons.Png._16.settings, new EventHandler(MenuSettingsClicked)));
@@ -64,47 +62,15 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         public override void Startup()
         {
             this.UpdatePodcasts();
-            if (this._updateTimer == null) this.SetupUpdateTimer();
-        }
-
-        public override bool AddSubscriptionFromUrl(string link) // Tries parsing a drag & dropped link to see if it's a podcast and parsable.
-        {
-            if (Subscriptions.Instance.Dictionary.ContainsKey(link))
-            {
-                MessageBox.Show(string.Format(i18n.PodcastSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[link].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            var podcastSubscription = new PodcastSubscription { Name = "test-podcast", Url = link };
-
-            using (var podcast = new Podcast(podcastSubscription))
-            {
-                if (podcast.IsValid())
-                {
-                    var subscription = new PodcastSubscription();
-                    string podcastName = "";
-
-                    if (InputBox.Show(i18n.AddNewPodcastTitle, i18n.AddNewPodcastMessage, ref podcastName) == DialogResult.OK)
-                    {
-                        subscription.Name = podcastName;
-                        subscription.Url = link;
-                        if (Subscriptions.Instance.Add(subscription))
-                        {
-                            this.RunManualUpdate(this, new EventArgs());
-                            return true;
-                        }
-                        return false;
-                    }
-                }
-            }
-
-            return false;
+            this.SetupUpdateTimer();
         }
 
         public override ModuleNode GetModuleNode()
         {
             return this._moduleNode;
         }
+
+        #region data handling
 
         private void UpdatePodcasts()
         {
@@ -114,7 +80,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             Module.UITreeView.AsyncInvokeHandler(() => { this._moduleNode.Text = @"Updating podcasts.."; });
             this._podcasts.Clear();
 
-            Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);        
+            Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -126,7 +92,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             {
                 var podcast = new Podcast(pair.Value);
                 this._podcasts.Add(podcast);
-                podcast.StateChanged += OnChildStateChanged;                
+                podcast.StateChanged += OnChildStateChanged;
                 tasks[i] = Task.Factory.StartNew(() => TaskProcessPodcast(podcast));
                 i++;
             }
@@ -157,7 +123,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
                 foreach (Task<Podcast> task in tasks)
                 {
                     this._moduleNode.Nodes.Add(task.Result);
-                    foreach(Episode episode in task.Result.Episodes)
+                    foreach (Episode episode in task.Result.Episodes)
                     {
                         task.Result.Nodes.Add(episode);
                     }
@@ -180,24 +146,6 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             return podcast;
         }
 
-        private void OnChildStateChanged(object sender, EventArgs e)
-        {
-            if (this._moduleNode.State == ((Podcast)sender).State) return;
-
-            int unread = this._podcasts.Count(podcast => podcast.State == State.Unread);
-            this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
-        }
-
-        public override Form GetPreferencesForm()
-        {
-            return new SettingsForm();
-        }
-
-        public void OnSaveSettings()
-        {
-            this.SetupUpdateTimer();
-        }
-
         private void SetupUpdateTimer()
         {
             if (this._updateTimer != null)
@@ -215,6 +163,24 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         private void OnTimerHit(object source, ElapsedEventArgs e)
         {
             if (!RuntimeConfiguration.Instance.InSleepMode) this.UpdatePodcasts();
+        }
+
+        private void OnChildStateChanged(object sender, EventArgs e)
+        {
+            if (this._moduleNode.State == ((Podcast)sender).State) return;
+
+            int unread = this._podcasts.Count(podcast => podcast.State == State.Unread);
+            this._moduleNode.State = unread > 0 ? State.Unread : State.Read;
+        }
+
+        #endregion
+
+        #region menu handling
+
+        private void MenuRefresh(object sender, EventArgs e)
+        {
+            var thread = new System.Threading.Thread(this.UpdatePodcasts) { IsBackground = true };
+            thread.Start();
         }
 
         private void MenuMarkAllAsReadClicked(object sender, EventArgs e)
@@ -239,11 +205,23 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             f.ShowDialog();
         }
 
-        private void RunManualUpdate(object sender, EventArgs e)
+        #endregion
+
+        #region settings handling
+
+        public override Form GetPreferencesForm()
         {
-            var thread = new System.Threading.Thread(this.UpdatePodcasts) { IsBackground = true };
-            thread.Start();
+            return new SettingsForm();
         }
+
+        public void OnSaveSettings()
+        {
+            this.SetupUpdateTimer();
+        }
+
+        #endregion
+
+        #region catalog handling
 
         public string GetCatalogUrl()
         {
@@ -262,6 +240,41 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             Subscriptions.Instance.Add(subscription);
         }
 
+        public override bool AddSubscriptionFromUrl(string link) // Tries parsing a drag & dropped link to see if it's a podcast and parsable.
+        {
+            if (Subscriptions.Instance.Dictionary.ContainsKey(link))
+            {
+                MessageBox.Show(string.Format(i18n.PodcastSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[link].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var podcastSubscription = new PodcastSubscription { Name = "test-podcast", Url = link };
+
+            using (var podcast = new Podcast(podcastSubscription))
+            {
+                if (podcast.IsValid())
+                {
+                    var subscription = new PodcastSubscription();
+                    string podcastName = "";
+
+                    if (InputBox.Show(i18n.AddNewPodcastTitle, i18n.AddNewPodcastMessage, ref podcastName) == DialogResult.OK)
+                    {
+                        subscription.Name = podcastName;
+                        subscription.Url = link;
+                        if (Subscriptions.Instance.Add(subscription))
+                        {
+                            this.MenuRefresh(this, new EventArgs());
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
 
         #region de-ctor
 
