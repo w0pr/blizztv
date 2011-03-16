@@ -107,22 +107,5 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         {
             foreach (Episode episode in this.Nodes) { episode.State=State.Unread; } // marked all episodes as read.
         }
-
-        #region de-ctor
-
-        ~Podcast() { Dispose(false); }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (this._disposed) return;
-            if (disposing) // managed resources
-            {
-                foreach (Episode episode in this.Nodes) { episode.Dispose(); }                
-                this.Nodes.Clear();
-            }
-            base.Dispose(disposing);
-        }
-
-        #endregion
     }
 }

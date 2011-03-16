@@ -57,7 +57,7 @@ namespace BlizzTV.EmbeddedModules.Videos
         public string GetSlug(string link)
         {
             if (!this.LinkValid(link)) return null;
-            Regex regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
+            var regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
             Match m = regex.Match(link);
             return m.Groups["Slug"].Value;
         }

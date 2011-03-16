@@ -270,22 +270,28 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         #region de-ctor
 
+        // IDisposable pattern: http://msdn.microsoft.com/en-us/library/fs2xkftw%28VS.80%29.aspx
+
         protected override void Dispose(bool disposing)
         {
-            if (this._disposed) return;
-            if (disposing) // managed resources
+            if (this._disposed) return; // if already disposed, just return
+
+            try
             {
-                if (this._updateTimer != null)
+                if (disposing) // only dispose managed resources if we're called from directly or in-directly from user code.
                 {
-                    this._updateTimer.Enabled = false;
                     this._updateTimer.Elapsed -= OnTimerHit;
                     this._updateTimer.Dispose();
-                    this._updateTimer = null;
+                    this._channels.Clear();
+                    this._moduleNode.Nodes.Clear();
                 }
-                foreach (Channel channel in this._moduleNode.Nodes) { channel.Dispose(); }
-                this._moduleNode.Nodes.Clear();
+
+                this._disposed = true;
             }
-            base.Dispose(disposing);
+            finally // let base-class to dispose also.
+            {
+                base.Dispose(disposing);
+            }
         }
 
         #endregion

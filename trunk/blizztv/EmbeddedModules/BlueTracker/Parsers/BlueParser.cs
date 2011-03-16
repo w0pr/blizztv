@@ -33,9 +33,9 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
     /// </summary>
     public class BlueParser : ModuleNode
     {
-        private static readonly Regex RegexBlueId = new Regex(@"\.\./topic/(?<TopicID>.*?)(\?page\=.*?)?#(?<PostID>.*)", RegexOptions.Compiled); // The post details regex.
-        private readonly BlueType _type;        
         protected BlueSource[] Sources;
+        private readonly BlueType _type;        
+        private static readonly Regex RegexBlueId = new Regex(@"\.\./topic/(?<TopicID>.*?)(\?page\=.*?)?#(?<PostID>.*)", RegexOptions.Compiled); // The post details regex.
         
         public readonly Dictionary<string,BlueStory> Stories = new Dictionary<string,BlueStory>(); // list of stories.
 
@@ -74,7 +74,6 @@ namespace BlizzTV.EmbeddedModules.BlueTracker.Parsers
                     foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//tr[@class='blizzard']"))
                     {
                         HtmlNodeCollection subNodes = node.SelectNodes("td[@class='post-title']//div[@class='desc']//a[@href]");
-                        string postForum = subNodes[0].InnerText;
                         string postTitle = subNodes[1].InnerText;
                         string postLink = string.Format("{0}{1}", source.Url, subNodes[1].Attributes["href"].Value);
 

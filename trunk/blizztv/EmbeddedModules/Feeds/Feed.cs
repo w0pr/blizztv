@@ -23,7 +23,6 @@ using BlizzTV.Assets.i18n;
 using BlizzTV.EmbeddedModules.Feeds.Parsers;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Log;
-using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Imaging;
 
 namespace BlizzTV.EmbeddedModules.Feeds
@@ -111,22 +110,5 @@ namespace BlizzTV.EmbeddedModules.Feeds
         {
             foreach (Story story in this.Nodes) { story.State=State.Unread; } // marked all stories as read.
         }
-
-        #region de-ctor
-
-        ~Feed() { Dispose(false); }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (this._disposed) return;
-            if (disposing) // managed resources
-            {
-                foreach (Story story in this.Nodes) { story.Dispose(); }                
-                this.Nodes.Clear();
-            }
-            base.Dispose(disposing);
-        }
-
-        #endregion
     }
 }

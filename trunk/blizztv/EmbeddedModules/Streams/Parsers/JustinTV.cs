@@ -24,7 +24,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
     /// <summary>
     /// Parser for justin.tv streams.
     /// </summary>
-    public class JustinTv:Stream
+    public class JustinTv : Stream
     {
         public JustinTv(StreamSubscription subscription) : base(subscription) { }
 

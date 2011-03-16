@@ -91,23 +91,28 @@ namespace BlizzTV.InfraStructure.Modules
 
         #region de-ctor
 
-        ~Module() { Dispose(false); }
+        // IDisposable pattern: http://msdn.microsoft.com/en-us/library/fs2xkftw%28VS.80%29.aspx
 
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this); // Take object out the finalization queue to prevent finalization code for it from executing a second time.
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (this._disposed) return;
-            if (disposing) // managed resources
+            if (this._disposed) return; // if already disposed, just return
+
+            if (disposing) // only dispose managed resources if we're called from directly or in-directly from user code.
             {
+                this.Attributes.Dispose();
                 this.Attributes = null;
             }
+
             _disposed = true;
         }
+
+        ~Module() { Dispose(false); } // finalizer called by the runtime. we should only dispose unmanaged objects and should NOT reference managed ones.       
 
         #endregion
     }

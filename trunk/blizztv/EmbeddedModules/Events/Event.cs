@@ -109,7 +109,6 @@ namespace BlizzTV.EmbeddedModules.Events
             this.Time = time;
 
             this.Icon = new NodeIcon("event", Assets.Images.Icons.Png._16._event);
-            State state=this.State; /* temp */
         }
 
         public override void Open(object sender, EventArgs e)
