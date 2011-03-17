@@ -63,7 +63,7 @@ namespace BlizzTV.EmbeddedModules.Videos
             return false;
         }
 
-        public virtual bool Parse() { throw new NotImplementedException(); }
+        protected virtual bool Parse() { throw new NotImplementedException(); }
 
         private void MenuMarkAllAsWatchedClicked(object sender, EventArgs e)
         {

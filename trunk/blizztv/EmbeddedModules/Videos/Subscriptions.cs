@@ -36,19 +36,17 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         public bool Add(VideoSubscription subscription)
         {
-            if (!this.Dictionary.ContainsKey(string.Format("{0}@{1}", subscription.Slug, subscription.Provider)))
-            {
-                base.Add(subscription);
-                return true;
-            }
-            return false;
+            if (this.Dictionary.ContainsKey(string.Format("{0}@{1}", subscription.Slug, subscription.Provider))) return false;
+
+            base.Add(subscription);
+            return true;
         }
 
         public Dictionary<string, VideoSubscription> Dictionary
         {
             get
             {
-                return this.List.ToDictionary(subscription => string.Format("{0}@{1}",((VideoSubscription) subscription).Slug,((VideoSubscription) subscription).Provider), subscription => (subscription as VideoSubscription));
+                return this.List.ToDictionary(subscription => string.Format("{0}@{1}",((VideoSubscription) subscription).Slug,((VideoSubscription) subscription).Provider.ToLower()), subscription => (subscription as VideoSubscription));
             }
         }
     }

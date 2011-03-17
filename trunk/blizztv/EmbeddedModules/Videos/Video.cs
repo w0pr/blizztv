@@ -30,19 +30,21 @@ namespace BlizzTV.EmbeddedModules.Videos
     {
         private PlayerForm _player = null;
 
-        public string ChannelName { get; internal set; }
-        public string VideoId { get; internal set; }
-        public string Link { get; internal set; }
+        public string ChannelName { get; set; }
+        public string VideoId { get; set; }
+        public string Link { get; set; }
         public string Provider { get; set; }
         public string Movie { get; set; }
+        public string Description { get; set; }
        
-        public Video(string channelName, string title, string guid, string link, string provider)
+        public Video(string channelName, string title, string guid, string link, string description, string provider)
             : base(title)
         {
             this.ChannelName = channelName;
             this.Guid = guid;
             this.Link = link;
-            this.Provider = provider;
+            this.Description = description;
+            this.Provider = provider.ToLower();
 
             this.Icon = new NodeIcon("video", Assets.Images.Icons.Png._16.video);
             this.RememberState = true;
@@ -56,7 +58,7 @@ namespace BlizzTV.EmbeddedModules.Videos
             if (Settings.ModuleSettings.Instance.NotificationsEnabled &&  this.State == State.Fresh) NotificationManager.Instance.Show(this, new NotificationEventArgs(this.Text, string.Format("A new video is avaiable over {0}'s channel, click to start watching it.",this.ChannelName), System.Windows.Forms.ToolTipIcon.Info));
         }
 
-        public virtual void Process() // get the stream data by replacing provider variables. 
+        public void Process() // get the stream data by replacing provider variables. 
         {
             this.Movie = ((VideoProvider) Providers.Instance.Dictionary[this.Provider]).Movie; // provider supplied movie source. 
             this.Movie = this.Movie.Replace("%video_id%", this.VideoId); // replace movie source variables
