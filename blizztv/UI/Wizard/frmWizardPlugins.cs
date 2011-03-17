@@ -32,7 +32,7 @@ namespace BlizzTV.UI.Wizard
 
         private void frmWizardPlugins_Load(object sender, EventArgs e) 
         {
-            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailableModules) // load the available plugins list
+            foreach (KeyValuePair<string, ModuleController> pair in ModuleManager.Instance.AvailableModules) // load the available plugins list
             {
                 ListviewModuleItem item = new ListviewModuleItem(pair.Value);
                 this.listviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);

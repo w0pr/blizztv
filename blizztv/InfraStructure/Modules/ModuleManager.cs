@@ -36,11 +36,10 @@ namespace BlizzTV.InfraStructure.Modules
 
         #endregion
 
-        private readonly Dictionary<string, Module> _instantiatedModules = new Dictionary<string, Module>(); // contains a list of instantiated modules.
-        private bool _disposed = false;        
+        public readonly Dictionary<string, ModuleController> AvailableModules = new Dictionary<string, ModuleController>(); // The available valid module's list. TODO: shoud be a readonly collection.
+        public readonly Dictionary<string, Module> LoadedModules = new Dictionary<string, Module>(); // The instantiated modules list.
 
-        public Dictionary<string, ModuleInfo> AvailableModules = new Dictionary<string, ModuleInfo>(); // The available valid module's list. TODO: shoud be a readonly collection.
-        public Dictionary<string, Module> InstantiatedModules { get { return this._instantiatedModules; } } // The instantiated modules list.
+        private bool _disposed = false;        
 
         private ModuleManager()
         {
@@ -58,11 +57,10 @@ namespace BlizzTV.InfraStructure.Modules
                 /* loop through all available modules and add valid ones to available list */
                 foreach (Type t in Assembly.GetEntryAssembly().GetTypes()) 
                 {
-                    if (t.IsSubclassOf(typeof(Module))) 
-                    {
-                        ModuleInfo moduleInfo = new ModuleInfo(t);
-                        if (moduleInfo.Valid) AvailableModules.Add(moduleInfo.Attributes.Name, moduleInfo); 
-                    }
+                    if (!t.IsSubclassOf(typeof (Module))) continue; // check if type is a subclass 'Module'.
+
+                    var moduleInfo = new ModuleController(t);
+                    if (moduleInfo.Valid) AvailableModules.Add(moduleInfo.Attributes.Name, moduleInfo);
                 }
             }
             catch (ReflectionTypeLoadException e)
@@ -74,48 +72,49 @@ namespace BlizzTV.InfraStructure.Modules
             }
         }
 
-        public Module Instantiate(string key) // Instantiates the asked module.
+        public Module Load(string key) // Instantiates the asked module.
         {
-            if (!this.AvailableModules.ContainsKey(key)) return null;
+            if (!this.AvailableModules.ContainsKey(key)) throw new NotSupportedException("No module exists with given name");
 
-            ModuleInfo moduleInfo = this.AvailableModules[key];
-            if (this._instantiatedModules.ContainsKey(key)) return moduleInfo.ModuleInstance; // if the module is already instantiated, just return it.
-            else
-            {
-                Module p = moduleInfo.CreateInstance();
-                this._instantiatedModules.Add(key,p);
-                return p;
-            }
+            ModuleController moduleInfo = this.AvailableModules[key];
+            if (!this.LoadedModules.ContainsKey(key)) this.LoadedModules.Add(key, moduleInfo.Instance); // if module is not loaded yet, load it first.
+            return moduleInfo.Instance;
         }
 
         public void Kill(string key) // Kills the asked module instance.
         {
-            ModuleInfo moduleInfo = this.AvailableModules[key];
-            this.InstantiatedModules.Remove(key);
+            if (!this.AvailableModules.ContainsKey(key)) throw new NotSupportedException("No module exists with given name");
+
+            ModuleController moduleInfo = this.AvailableModules[key];
+            this.LoadedModules.Remove(key);
             moduleInfo.Kill();
         }
 
         #region de-ctor
 
-        ~ModuleManager() { Dispose(false); }
+        // IDisposable pattern: http://msdn.microsoft.com/en-us/library/fs2xkftw%28VS.80%29.aspx
 
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this); // Take object out the finalization queue to prevent finalization code for it from executing a second time.
         }
 
         private void Dispose(bool disposing)
         {
-            if (this._disposed) return;
-            if (disposing) // managed resources
+            if (this._disposed) return; // if already disposed, just return
+
+            if (disposing) // only dispose managed resources if we're called from directly or in-directly from user code.
             {
-                foreach (KeyValuePair<string, ModuleInfo> pair in this.AvailableModules) { pair.Value.Dispose(); }
+                foreach (KeyValuePair<string, ModuleController> pair in this.AvailableModules) { pair.Value.Kill(); }
                 this.AvailableModules.Clear();
-                this.AvailableModules = null;
+                this.LoadedModules.Clear();
             }
+
             _disposed = true;
         }
+
+        ~ModuleManager() { Dispose(false); } // finalizer called by the runtime. we should only dispose unmanaged objects and should NOT reference managed ones.       
 
         #endregion
     }

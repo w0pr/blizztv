@@ -30,7 +30,7 @@ namespace BlizzTV.Utility.UI
         /// </summary>
         public string ModuleName { get { return this.SubItems[1].Text; } }
 
-        public ListviewModuleItem(ModuleInfo p)
+        public ListviewModuleItem(ModuleController p)
         {
             this.ImageKey = p.Attributes.Name;
             this.SubItems.Add(p.Attributes.Name);
