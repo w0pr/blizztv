@@ -81,7 +81,7 @@ namespace BlizzTV.UI
             if (!SystemStartup.IsSupported)
             {
                 checkBoxStartOnSystemStartup.Enabled = false;
-                checkBoxStartOnSystemStartup.Text += " (requires administrative privileges)";
+                checkBoxStartOnSystemStartup.Text += @" (requires administrative privileges)";
             }
             else checkBoxStartOnSystemStartup.Checked = SystemStartup.Enabled;
             checkBoxMinimimizeToSystemTray.Checked = Settings.Instance.MinimizeToSystemTray;

@@ -105,7 +105,6 @@ namespace BlizzTV.InfraStructure.Modules
 
             if (disposing) // only dispose managed resources if we're called from directly or in-directly from user code.
             {
-                this.Attributes.Dispose();
                 this.Attributes = null;
             }
 
