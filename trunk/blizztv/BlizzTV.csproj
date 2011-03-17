@@ -385,7 +385,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="InfraStructure\Modules\Module.cs" />
-    <Compile Include="InfraStructure\Modules\ModuleInfo.cs" />
+    <Compile Include="InfraStructure\Modules\ModuleController.cs" />
     <Compile Include="InfraStructure\Modules\ModuleManager.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />

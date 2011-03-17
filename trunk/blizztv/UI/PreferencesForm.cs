@@ -89,10 +89,10 @@ namespace BlizzTV.UI
             checkBoxEnableDebugConsole.Checked = Settings.Instance.EnableDebugConsole;
 
             // load module enabled-disabled status settings.
-            foreach (KeyValuePair<string, ModuleInfo> pair in ModuleManager.Instance.AvailableModules)
+            foreach (KeyValuePair<string, ModuleController> pair in ModuleManager.Instance.AvailableModules)
             {
-                ListviewModuleItem item = new ListviewModuleItem(pair.Value);
-                this.listviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
+                var item = new ListviewModuleItem(pair.Value);
+                if (!this.listviewModules.SmallImageList.Images.ContainsKey(pair.Value.Attributes.Name)) this.listviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
                 this.listviewModules.Items.Add(item);
                 if (Settings.Instance.Modules.Enabled(pair.Value.Attributes.Name)) item.Checked = true;
             }          
@@ -104,7 +104,7 @@ namespace BlizzTV.UI
             {
                 if (pair.Value) // if module is enabled
                 {
-                    Form moduleForm = ModuleManager.Instance.InstantiatedModules[pair.Key].GetPreferencesForm(); // get module's preferences form.
+                    Form moduleForm = ModuleManager.Instance.LoadedModules[pair.Key].GetPreferencesForm(); // get module's preferences form.
 
                     if (moduleForm != null) // if module supplies a preferenes form.
                     {
@@ -146,9 +146,9 @@ namespace BlizzTV.UI
                 if (item.Checked) Settings.Instance.Modules.Enable(item.ModuleName); // enable the module.
                 else
                 {
-                    if (ModuleManager.Instance.InstantiatedModules.ContainsKey(item.ModuleName))
+                    if (ModuleManager.Instance.LoadedModules.ContainsKey(item.ModuleName))
                     {
-                        if (ModuleManager.Instance.InstantiatedModules[item.ModuleName].RefreshingData) // don't allow disabling modules that are currently updating data.
+                        if (ModuleManager.Instance.LoadedModules[item.ModuleName].RefreshingData) // don't allow disabling modules that are currently updating data.
                         {
                             MessageBox.Show(i18n.CanNotDeactivateUpdatingModules, string.Format(i18n.ModuleUpdating, item.ModuleName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return false;
@@ -191,6 +191,5 @@ namespace BlizzTV.UI
         }
 
         #endregion
-
     }
 }

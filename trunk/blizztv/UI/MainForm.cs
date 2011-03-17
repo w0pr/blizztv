@@ -142,16 +142,15 @@ namespace BlizzTV.UI
 
         private void LoadModules() // Loads enabled plugins
         {
-            ModuleManager pm = ModuleManager.Instance; // Let the module-manager run..
             foreach (KeyValuePair<string, bool> pair in Settings.Instance.Modules.List) // loop through available modules.
             {
-                if (pair.Value && pm.AvailableModules.ContainsKey(pair.Key)) this.InstantiateModule(pair.Key); // if module is enabled, run it.
+                if (pair.Value && ModuleManager.Instance.AvailableModules.ContainsKey(pair.Key)) this.LoadModule(pair.Key); // if module is enabled, run it.
             }          
         }
 
-        private void InstantiateModule(string key) // Instantes & runs a module in a thread.
+        private void LoadModule(string key) // Instantes & runs a module in a thread.
         {
-            Module module = ModuleManager.Instance.Instantiate(key); // get the module instance.
+            Module module = ModuleManager.Instance.Load(key); // get the module instance.
             ThreadStart threadStart = () => StartupModule(module); // create a new thread for the module.
             var moduleThread = new Thread(threadStart) { IsBackground = true };  // make the thread a background-one.
             moduleThread.Start();
@@ -159,8 +158,8 @@ namespace BlizzTV.UI
             if (module.CanRenderMenus) this.AttachModuleMenus(module); // register's the module menus.
 
             if (!module.CanRenderTreeNodes) return;  // check if module can render tree-node's.
-            ModuleNode moduleNode = module.GetModuleNode();
-            
+
+            ModuleNode moduleNode = module.GetModuleNode(); // get the module's root node.
             if (moduleNode == null) return; // check if we got a valid module-node returned.
             this.TreeView.Nodes.Add(moduleNode);
             this._moduleNodes.Add(key, moduleNode);
@@ -170,8 +169,9 @@ namespace BlizzTV.UI
         {
             if (this._moduleNodes.ContainsKey(key)) // clean up the module.
             {
-                this._moduleNodes[key].Nodes.Clear(); // remove the module root's childs.
-                this.TreeView.Nodes.Remove(this._moduleNodes[key]); // remove the module root from treeview.
+                ModuleNode rootNode = this._moduleNodes[key];
+                rootNode.Nodes.Clear(); // remove the module root's childs.
+                this.TreeView.Nodes.Remove(rootNode); // remove the module root from treeview.
                 this._moduleNodes.Remove(key); // remove the module root from dictionary.
             }
             
@@ -181,11 +181,6 @@ namespace BlizzTV.UI
         private void StartupModule(Module module) // Startup's a module.
         {
             module.Startup();            
-
-            //if (!module.CanRenderTreeNodes) return;
-            //module.DataRefreshStarting += ModuleDataRefreshStarting;
-            //module.DataRefreshCompleted += ModuleDataRefreshCompleted;
-            //module.Refresh(); // run the module.
         }
 
         private void AttachModuleMenus(Module p) // Register's modules main-menu item's.
@@ -265,7 +260,7 @@ namespace BlizzTV.UI
         private void TreeView_DragDrop(object sender, DragEventArgs e)
         {
             string link = (string)e.Data.GetData(DataFormats.Text);
-            foreach (KeyValuePair<string, Module> pair in ModuleManager.Instance.InstantiatedModules)
+            foreach (KeyValuePair<string, Module> pair in ModuleManager.Instance.LoadedModules)
             {
                 if (pair.Value.AddSubscriptionFromUrl(link)) break;
             }
@@ -285,8 +280,8 @@ namespace BlizzTV.UI
         {
             foreach (KeyValuePair<string, bool> pair in Settings.Instance.Modules.List)
             {
-                if (pair.Value && !ModuleManager.Instance.InstantiatedModules.ContainsKey(pair.Key)) this.InstantiateModule(pair.Key); // instantiate the plugin.
-                else if (!pair.Value && ModuleManager.Instance.InstantiatedModules.ContainsKey(pair.Key)) this.KillModule(pair.Key); // kill the plugin.
+                if (pair.Value && !ModuleManager.Instance.LoadedModules.ContainsKey(pair.Key)) this.LoadModule(pair.Key); // instantiate the plugin.
+                else if (!pair.Value && ModuleManager.Instance.LoadedModules.ContainsKey(pair.Key)) this.KillModule(pair.Key); // kill the plugin.
             }
         }
 
