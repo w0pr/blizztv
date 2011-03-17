@@ -64,7 +64,7 @@ namespace BlizzTV.EmbeddedModules.Streams
             
             this.Text = subscription.Name;
             this.Slug = subscription.Slug;
-            this.Provider = subscription.Provider;
+            this.Provider = subscription.Provider.ToLower();
 
             this.Icon = new NodeIcon("stream", Assets.Images.Icons.Png._16.stream);
             this.RememberState = true;

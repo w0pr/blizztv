@@ -37,7 +37,6 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
             this.Size = new Size(Settings.ModuleSettings.Instance.PlayerWidth, Settings.ModuleSettings.Instance.PlayerHeight); // set the window size based on last saved values.
 
             this._stream = stream; // set the stream.
-            this._stream.Process(); // process the stream so that it's template variables are replaced.
 
             if (((StreamProvider) Providers.Instance.Dictionary[this._stream.Provider]).Player == "Flash") this.SetupFlashPlayer();
             else if (((StreamProvider) Providers.Instance.Dictionary[this._stream.Provider]).Player == "Browser") this.SetupBrowserPlayer();
@@ -51,7 +50,7 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
             {
                 this.LoadingStarted();
                 this.Text = string.Format("Stream: {0}", this._stream.Name); // set the window title.                
-                if (this._stream.Provider == "JustinTV") this.WebBrowser.Navigate(string.Format("http://service.blizztv.com/stream/embed/{0}/{1}", this._stream.Provider, this._stream.Slug));
+                if (this._stream.Provider == "justintv") this.WebBrowser.Navigate(string.Format("http://service.blizztv.com/stream/embed/{0}/{1}", this._stream.Provider, this._stream.Slug));
                 else this.FlashPlayer.LoadMovie(0, this._stream.Movie); // load the movie.
 
                 if (this._stream.ChatAvailable && Settings.ModuleSettings.Instance.AutomaticallyOpenChat) this.OpenChatWindow();

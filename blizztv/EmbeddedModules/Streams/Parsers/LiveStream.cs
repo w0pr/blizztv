@@ -43,7 +43,8 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                 this.IsLive = (bool)data["isLive"]; // is the stream live?
                 this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
                 this.Description = (string)data["description"].ToString(); // stream description.
-            }
+                this.Process();
+            }            
             catch (Exception e) { throw new Exception("Stream module's livestream parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
         }
     }

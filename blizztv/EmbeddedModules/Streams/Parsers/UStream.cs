@@ -53,6 +53,8 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                         this.Description = (string)table["title"].ToString(); // stream description.
                     }
                 }
+
+                this.Process();
             }
             catch (Exception e) { throw new Exception("Stream module's ustream parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
         }
