@@ -39,8 +39,7 @@ namespace BlizzTV.EmbeddedModules.Videos.UI
 
             this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
             this._video = video; // set the video.
-            this.Size = new Size(EmbeddedModules.Videos.Settings.ModuleSettings.Instance.PlayerWidth, EmbeddedModules.Videos.Settings.ModuleSettings.Instance.PlayerHeight); // set the window size based on last saved values.
-            this._video.Process(); // process the video so that it's template variables are replaced.
+            this.Size = new Size(Settings.ModuleSettings.Instance.PlayerWidth, Settings.ModuleSettings.Instance.PlayerHeight); // set the window size based on last saved values.
         }
 
         private void PlayerForm_Load(object sender, EventArgs e)
@@ -54,7 +53,7 @@ namespace BlizzTV.EmbeddedModules.Videos.UI
             catch (Exception exc)
             {
                 LogManager.Instance.Write(LogMessageTypes.Error, string.Format("VideoChannelsPlugin Player Error: \n {0}", exc.ToString()));
-                MessageBox.Show(string.Format("An error occured in video player. \n\n[Error Details: {0}]", exc.Message), "Video Channels Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("An error occured in video player. \n\n[Error Details: {0}]", exc.Message), @"Video Channels Plugin Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -88,11 +87,11 @@ namespace BlizzTV.EmbeddedModules.Videos.UI
 
         private void PlayerForm_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.Size.Width == EmbeddedModules.Videos.Settings.ModuleSettings.Instance.PlayerWidth && this.Size.Height == EmbeddedModules.Videos.Settings.ModuleSettings.Instance.PlayerHeight) return;
+            if (this.Size.Width == Settings.ModuleSettings.Instance.PlayerWidth && this.Size.Height == Settings.ModuleSettings.Instance.PlayerHeight) return;
 
-            EmbeddedModules.Videos.Settings.ModuleSettings.Instance.PlayerWidth = this.Size.Width;
-            EmbeddedModules.Videos.Settings.ModuleSettings.Instance.PlayerHeight = this.Size.Height;
-            EmbeddedModules.Videos.Settings.ModuleSettings.Instance.Save();
+            Settings.ModuleSettings.Instance.PlayerWidth = this.Size.Width;
+            Settings.ModuleSettings.Instance.PlayerHeight = this.Size.Height;
+            Settings.ModuleSettings.Instance.Save();
         }
     }
 }

@@ -17,9 +17,9 @@
 
 namespace BlizzTV.EmbeddedModules.Videos.Parsers.Video
 {
-    public class BlipTv:Videos.Video
+    public class BlipTv : Videos.Video
     {
         public BlipTv(string channelName, string title, string guid, string link, string provider)
-            : base(channelName, title, guid, link, provider) { }
+            : base(channelName, title, guid, link,string.Empty, provider) { }
     }
 }

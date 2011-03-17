@@ -84,7 +84,7 @@ namespace BlizzTV.InfraStructure.Modules.Subscriptions.Providers
         /// <returns>Dictionary of providers based on provided provider-type.</returns>
         public Dictionary<string,Provider> GetProviders(Type type)
         {
-            return this._providers.Where(provider => provider.GetType() == type).ToDictionary(provider => provider.Name);
+            return this._providers.Where(provider => provider.GetType() == type).ToDictionary(provider => provider.Name.ToLower());
         }
     }
 }

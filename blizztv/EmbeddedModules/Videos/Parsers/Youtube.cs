@@ -29,7 +29,7 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
     {
         public Youtube(VideoSubscription subscription) : base(subscription) { }
 
-        public override bool Parse()
+        protected override bool Parse()
         {
             try
             {
@@ -43,12 +43,14 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
                               {
                                   GUID = item.Element("guid").Value,
                                   Title = item.Element("title").Value,
+                                  Description = item.Element("description").Value,
                                   Link = item.Element("link").Value
                               };
 
-                foreach (Video.Youtube video in entries.Select(entry => new Video.Youtube(this.Text, entry.Title, entry.GUID, entry.Link, this.Provider)))
+                foreach (Video.Youtube video in entries.Select(entry => new Video.Youtube(this.Text, entry.Title, entry.GUID,entry.Description, entry.Link, this.Provider)))
                 {
                     video.StateChanged += OnChildStateChanged;
+                    video.Process();
                     this.Videos.Add(video);
                 }
                 return true;

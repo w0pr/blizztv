@@ -29,7 +29,7 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
     {
         public BlipTv(VideoSubscription subscription) : base(subscription) { }
 
-        public override bool Parse()
+        protected override bool Parse()
         {
             try
             {
@@ -55,6 +55,7 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
                     var video = new Video.BlipTv(this.Text, entry.Title, entry.GUID, entry.Link, this.Provider);
                     video.StateChanged += OnChildStateChanged;
                     video.VideoId = entry.VideoID;
+                    video.Process();
                     this.Videos.Add(video);
                     i++;
                     if (i >= Settings.ModuleSettings.Instance.NumberOfVideosToQueryChannelFor) break;
