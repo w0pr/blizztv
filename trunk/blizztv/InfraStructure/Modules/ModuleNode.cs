@@ -84,6 +84,7 @@ namespace BlizzTV.InfraStructure.Modules
             set
             {
                 this._icon = value;
+                if (value == null) return;
                 Module.UITreeView.AsyncInvokeHandler(() =>
                 {
                     if (!Module.UITreeView.ImageList.Images.ContainsKey(this._icon.Key)) Module.UITreeView.ImageList.Images.Add(this._icon.Key, this._icon.Image);

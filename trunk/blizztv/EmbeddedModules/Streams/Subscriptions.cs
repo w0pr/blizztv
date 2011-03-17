@@ -36,19 +36,17 @@ namespace BlizzTV.EmbeddedModules.Streams
 
         public bool Add(StreamSubscription subscription)
         {
-            if (!this.Dictionary.ContainsKey(string.Format("{0}@{1}",subscription.Slug,subscription.Provider)))
-            {
-                base.Add(subscription);
-                return true;
-            }
-            return false;
+            if (this.Dictionary.ContainsKey(string.Format("{0}@{1}", subscription.Slug, subscription.Provider))) return false;
+
+            base.Add(subscription);
+            return true;
         }
 
         public Dictionary<string, StreamSubscription> Dictionary
         {
             get
             {
-                return this.List.ToDictionary(subscription => string.Format("{0}@{1}",((StreamSubscription) subscription).Slug,((StreamSubscription) subscription).Provider), subscription => (subscription as StreamSubscription));
+                return this.List.ToDictionary(subscription => string.Format("{0}@{1}",((StreamSubscription) subscription).Slug,((StreamSubscription) subscription).Provider.ToLower()), subscription => (subscription as StreamSubscription));
             }
         }
     }

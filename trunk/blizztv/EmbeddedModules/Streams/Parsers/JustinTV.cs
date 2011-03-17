@@ -45,6 +45,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                     this.ViewerCount = Int32.Parse(table["stream_count"].ToString()); // stream viewers count.
                     if(table.Contains("title")) this.Description = (string)table["title"].ToString(); // stream description.
                 }
+                this.Process();
             }
             catch (Exception e) { throw new Exception("Stream module's justin.tv parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
         }

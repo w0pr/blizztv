@@ -47,6 +47,8 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                     this.IsLive = m.Groups[2].ToString().ToLower() == "true";
                     this.ViewerCount = int.Parse(m.Groups[1].ToString());
                 }
+
+                this.Process();
             }
             catch (Exception e) { throw new Exception("Stream module's own3d.tv parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
         }
