@@ -56,7 +56,7 @@ namespace BlizzTV.EmbeddedModules.Streams
             }
         }
 
-        public Stream(StreamSubscription subscription)
+        protected Stream(StreamSubscription subscription)
             : base(subscription.Name)
         {
             this.ChatAvailable = false;

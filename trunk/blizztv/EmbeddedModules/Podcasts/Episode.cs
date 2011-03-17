@@ -37,7 +37,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         public string Link { get; private set; }
         private string Enclosure { get; set; }
 
-        public bool Downloaded
+        private bool Downloaded
         {
             get { return File.Exists(string.Format("{0}\\{1}\\{2}", PodcastsStoragePath, this.PodcastName, Path.GetFileName(this.Enclosure))); }
         }

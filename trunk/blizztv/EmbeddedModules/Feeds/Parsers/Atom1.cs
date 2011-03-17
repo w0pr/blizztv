@@ -25,24 +25,24 @@ namespace BlizzTV.EmbeddedModules.Feeds.Parsers
     /// <summary>
     /// Parses Atom 1.0 feeds.
     /// </summary>
-    public class Atom1:IFeedParser
+    public class Atom1 : IFeedParser
     {
         public bool Parse(string xml, ref List<FeedItem> items, string linkFallback = "")
         {
             try
             {
-                XDocument xdoc = XDocument.Parse(xml);
+                var xdoc = XDocument.Parse(xml);
 
                 if (xdoc.Root == null) return false;
                 XNamespace defaultNS = xdoc.Root.GetDefaultNamespace();
 
                 var entries = from entry in xdoc.Descendants(defaultNS + "entry")
-                              select new
-                                         {
-                                             Id = (string) entry.Element(defaultNS + "id") ?? "",
-                                             Title = (string) entry.Element(defaultNS + "title") ?? "",
-                                             Link = (entry.Element(defaultNS + "link") != null) ? entry.Element(defaultNS + "link").Attribute("href").Value : ""
-                                         };
+                    select new
+                    {
+                        Id = (string) entry.Element(defaultNS + "id") ?? "",
+                        Title = (string) entry.Element(defaultNS + "title") ?? "",
+                        Link = (entry.Element(defaultNS + "link") != null) ? entry.Element(defaultNS + "link").Attribute("href").Value : ""
+                    };
 
                 if (items == null) items = new List<FeedItem>();
                 items.AddRange(entries.Select(entry => new FeedItem(entry.Title, entry.Id, String.IsNullOrEmpty(linkFallback) ? entry.Link : string.Format("{0}{1}", linkFallback, entry.Id)))); /* link fallbacks are needed by blizzard atom feeds, as their stories does not contain a valid story link, so we forge the link by linkFallback + storyId */

@@ -32,19 +32,19 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
 
         public override void Update()
         {
-            Random rnd=new Random();
+            var rnd=new Random();
             this.Link = string.Format("http://www.own3d.tv/live/{0}", this.Slug);
 
             try
             {
-                string apiUrl = string.Format("http://static.ec.own3d.tv/live_tmp/{0}.txt?{1}", this.Slug, rnd.Next(99999));
+                var apiUrl = string.Format("http://static.ec.own3d.tv/live_tmp/{0}.txt?{1}", this.Slug, rnd.Next(99999));
                 WebReader.Result result = WebReader.Read(apiUrl);
                 if (result.State != WebReader.States.Success) return;
 
                 Match m = _regex.Match(result.Response);
                 if (m.Success)
                 {
-                    if (m.Groups[2].ToString().ToLower() == "true") this.IsLive = true; else this.IsLive = false;
+                    this.IsLive = m.Groups[2].ToString().ToLower() == "true";
                     this.ViewerCount = int.Parse(m.Groups[1].ToString());
                 }
             }

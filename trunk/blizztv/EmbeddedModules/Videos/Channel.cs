@@ -29,10 +29,10 @@ namespace BlizzTV.EmbeddedModules.Videos
     {
         private bool _disposed = false;
 
-        public string Slug { get; internal set; }
-        public string Provider { get; internal set; }
+        protected string Slug { get; set; }
+        protected string Provider { get; set; }
 
-        public List<Video> Videos = new List<Video>();
+        public readonly List<Video> Videos = new List<Video>();
 
         public Channel(VideoSubscription subscription)
             : base(subscription.Name)

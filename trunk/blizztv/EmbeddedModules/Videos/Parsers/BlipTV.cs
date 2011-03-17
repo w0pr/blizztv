@@ -33,11 +33,11 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
         {
             try
             {
-                string apiUrl = string.Format("http://{0}.blip.tv/rss", this.Slug); // the api url.
+                var apiUrl = string.Format("http://{0}.blip.tv/rss", this.Slug); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
                 if (result.State != WebReader.States.Success) return false;
 
-                XDocument xdoc = XDocument.Parse(result.Response); // parse the api response.
+                var xdoc = XDocument.Parse(result.Response); // parse the api response.
                 XNamespace xmlns = "http://blip.tv/dtd/blip/1.0";
                 var entries = from item in xdoc.Descendants("item") // get the videos
                               select new

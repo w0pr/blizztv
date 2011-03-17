@@ -43,7 +43,7 @@ namespace BlizzTV.EmbeddedModules.Events
         private readonly ModuleNode _eventsToday = new ModuleNode("Today"); // today's events item.
         private readonly ModuleNode _eventsUpcoming = new ModuleNode("Upcoming"); // upcoming events item.
         private readonly ModuleNode _eventsOver = new ModuleNode("Past"); // past events item.        
-        private System.Timers.Timer _eventTimer = new System.Timers.Timer(60000); // runs every one minute and check events & alarms.
+        private readonly System.Timers.Timer _eventTimer = new System.Timers.Timer(60000); // runs every one minute and check events & alarms.
         private bool _disposed = false;
    
         public EventsModule() : base()
