@@ -31,7 +31,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts.Parsers
         {
             try
             {
-                XDocument xdoc = XDocument.Parse(xml);
+                var xdoc = XDocument.Parse(xml);
 
                 if (xdoc.Root == null) return false;                
                 XNamespace defaultNS = xdoc.Root.GetDefaultNamespace();

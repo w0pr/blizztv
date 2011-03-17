@@ -25,24 +25,24 @@ namespace BlizzTV.EmbeddedModules.Feeds.Parsers
     /// <summary>
     /// Parses RSS 2.0 feeds.
     /// </summary>
-    public class Rss2:IFeedParser
+    public class Rss2 : IFeedParser
     {
         public bool Parse(string xml, ref List<FeedItem> items, string linkFallback = "")
         {
             try
             {
-                XDocument xdoc = XDocument.Parse(xml);
+                var xdoc = XDocument.Parse(xml);
 
                 if (xdoc.Root == null) return false;
                 XNamespace defaultNS = xdoc.Root.GetDefaultNamespace();
 
                 var entries = from item in xdoc.Descendants(defaultNS + "item")
-                              select new
-                                         {
-                                             Id = (string) item.Element(defaultNS + "guid") ?? "",
-                                             Title = (string) item.Element(defaultNS + "title") ?? "",
-                                             Link = (string) item.Element(defaultNS + "link") ?? "",
-                                         };
+                    select new
+                    {
+                        Id = (string) item.Element(defaultNS + "guid") ?? "",
+                        Title = (string) item.Element(defaultNS + "title") ?? "",
+                        Link = (string) item.Element(defaultNS + "link") ?? "",
+                    };
 
                 if (items == null) items = new List<FeedItem>();
                 items.AddRange(entries.Select(entry => new FeedItem(entry.Title, entry.Id, entry.Link)));

@@ -49,7 +49,7 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         public bool LinkValid(string link)
         {
-            Regex regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
+            var regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
             Match m = regex.Match(link);
             return m.Success;
         }

@@ -36,7 +36,7 @@ namespace BlizzTV.EmbeddedModules.Feeds
         /// </summary>
         public string Url { get; private set; }
 
-        public List<Story> Stories = new List<Story>();
+        public readonly List<Story> Stories = new List<Story>();
 
         public Feed(FeedSubscription subscription)
             : base(subscription.Name)

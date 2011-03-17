@@ -42,10 +42,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts.Parsers
             WebReader.Result result = WebReader.Read(url);
             if (result.State != WebReader.States.Success) return false; 
 
-            foreach(IPodcastFeedParser parser in this._parsers)
-            {
-                if (parser.Parse(result.Response, ref items)) return true;
-            }
+            foreach(IPodcastFeedParser parser in this._parsers) { if (parser.Parse(result.Response, ref items)) return true; }
 
             return false;
         }

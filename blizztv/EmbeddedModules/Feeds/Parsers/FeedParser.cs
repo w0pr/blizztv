@@ -48,10 +48,7 @@ namespace BlizzTV.EmbeddedModules.Feeds.Parsers
             Match m=this._blizzardAtomRegex.Match(url); // blizzard's atom feeds does not contain any links, so let's hack it.
             if (m.Success) linkFallback = string.Format("{0}/blog/", m.Groups[0]);
             
-            foreach (IFeedParser parser in this._parsers)
-            {
-                if (parser.Parse(result.Response, ref items, linkFallback)) return true;
-            }
+            foreach (IFeedParser parser in this._parsers) { if (parser.Parse(result.Response, ref items, linkFallback)) return true; }
 
             return false;
         }

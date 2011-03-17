@@ -34,7 +34,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
 
             try
             {
-                string apiUrl = string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json", this.Slug); // the api url.
+                var apiUrl = string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json", this.Slug); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response
                 if (result.State != WebReader.States.Success) return;
 

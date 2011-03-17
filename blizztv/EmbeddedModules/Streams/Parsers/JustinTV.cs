@@ -34,14 +34,14 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
 
             try
             {
-                string apiUrl = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug); // the api url.
+                var apiUrl = string.Format("http://api.justin.tv/api/stream/list.json?channel={0}", this.Slug); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
 
-                ArrayList data = (ArrayList)Json.JsonDecode(result.Response); // start parsing the json.
+                var data = (ArrayList)Json.JsonDecode(result.Response); // start parsing the json.
                 if (data.Count > 0)
                 {
                     this.IsLive = true; // is the stream live?
-                    Hashtable table = (Hashtable)data[0];
+                    var table = (Hashtable)data[0];
                     this.ViewerCount = Int32.Parse(table["stream_count"].ToString()); // stream viewers count.
                     if(table.Contains("title")) this.Description = (string)table["title"].ToString(); // stream description.
                 }

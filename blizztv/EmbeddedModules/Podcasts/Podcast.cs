@@ -37,7 +37,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         /// </summary>
         public string Url { get; private set; }
 
-        public List<Episode> Episodes = new List<Episode>();
+        public readonly List<Episode> Episodes = new List<Episode>();
 
         public Podcast(PodcastSubscription subscription)
             : base(subscription.Name)

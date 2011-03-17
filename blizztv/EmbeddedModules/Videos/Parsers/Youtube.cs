@@ -33,11 +33,11 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
         {
             try
             {
-                string apiUrl = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, Settings.ModuleSettings.Instance.NumberOfVideosToQueryChannelFor); // the api url.
+                var apiUrl = string.Format("http://gdata.youtube.com/feeds/api/users/{0}/uploads?alt=rss&max-results={1}", this.Slug, Settings.ModuleSettings.Instance.NumberOfVideosToQueryChannelFor); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
                 if (result.State != WebReader.States.Success) return false;
 
-                XDocument xdoc = XDocument.Parse(result.Response); // parse the api response.
+                var xdoc = XDocument.Parse(result.Response); // parse the api response.
                 var entries = from item in xdoc.Descendants("item") // get the videos
                               select new
                               {
