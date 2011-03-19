@@ -62,6 +62,7 @@
             this.tabPlayer = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CheckBoxPlayerAlwaysOnTop = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabModules.SuspendLayout();
@@ -123,11 +124,13 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.checkBoxEnableDebugConsole);
             this.groupBox3.Controls.Add(this.checkBoxEnableDebugLogging);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(449, 69);
+            this.groupBox3.Size = new System.Drawing.Size(519, 69);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Debug Support";
@@ -346,6 +349,7 @@
             // 
             // groupBoxNotificationSounds
             // 
+            this.groupBoxNotificationSounds.Controls.Add(this.label1);
             this.groupBoxNotificationSounds.Controls.Add(this.checkBoxNotificationSoundsEnabled);
             this.groupBoxNotificationSounds.Controls.Add(this.comboBoxNotificationSound);
             this.groupBoxNotificationSounds.Location = new System.Drawing.Point(5, 35);
@@ -359,9 +363,9 @@
             // 
             this.checkBoxNotificationSoundsEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxNotificationSoundsEnabled.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxNotificationSoundsEnabled.Location = new System.Drawing.Point(9, 19);
             this.checkBoxNotificationSoundsEnabled.Name = "checkBoxNotificationSoundsEnabled";
-            this.checkBoxNotificationSoundsEnabled.Size = new System.Drawing.Size(508, 17);
+            this.checkBoxNotificationSoundsEnabled.Size = new System.Drawing.Size(505, 17);
             this.checkBoxNotificationSoundsEnabled.TabIndex = 2;
             this.checkBoxNotificationSoundsEnabled.Text = "Enable notification sounds";
             this.checkBoxNotificationSoundsEnabled.UseVisualStyleBackColor = true;
@@ -373,9 +377,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxNotificationSound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxNotificationSound.FormattingEnabled = true;
-            this.comboBoxNotificationSound.Location = new System.Drawing.Point(6, 42);
+            this.comboBoxNotificationSound.Location = new System.Drawing.Point(109, 42);
             this.comboBoxNotificationSound.Name = "comboBoxNotificationSound";
-            this.comboBoxNotificationSound.Size = new System.Drawing.Size(508, 21);
+            this.comboBoxNotificationSound.Size = new System.Drawing.Size(405, 21);
             this.comboBoxNotificationSound.TabIndex = 0;
             this.comboBoxNotificationSound.SelectedIndexChanged += new System.EventHandler(this.comboBoxNotificationSound_SelectedIndexChanged);
             // 
@@ -424,6 +428,15 @@
             this.CheckBoxPlayerAlwaysOnTop.Text = "Always On Top";
             this.CheckBoxPlayerAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 45);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Notification Sound:";
+            // 
             // PreferencesForm
             // 
             this.AcceptButton = this.buttonOK;
@@ -459,6 +472,7 @@
             this.tabNotifications.ResumeLayout(false);
             this.tabNotifications.PerformLayout();
             this.groupBoxNotificationSounds.ResumeLayout(false);
+            this.groupBoxNotificationSounds.PerformLayout();
             this.tabPlayer.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -500,5 +514,6 @@
         private System.Windows.Forms.CheckBox checkBoxNotificationSoundsEnabled;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.CheckBox checkBoxStartOnSystemStartup;
+        private System.Windows.Forms.Label label1;
     }
 }
