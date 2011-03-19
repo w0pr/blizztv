@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="8.0" version="8.0" Modules="professional" RootPath="." Language="en">
+<DOCUMENT Type="Advanced Installer" CreateVersion="8.0" version="8.0.2" Modules="professional" RootPath="." Language="en">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
+    <ROW Property="AI_SLIDESHOW_BACKGROUND_COLOR" Value="0"/>
     <ROW Property="ALLUSERS" Value="2"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPHELPLINK" Value="http://www.blizztv.com"/>
@@ -51,6 +52,11 @@
     <ROW File="BlizzTV.exe" Component_="BlizzTV.exe" FileName="BlizzTV.exe" Attributes="0" SourcePath="blizztv\bin\Release\BlizzTV.exe" SelfReg="false" Sequence="1"/>
     <ROW File="irrKlang.NET4.dll" Component_="irrKlang.NET4.dll" FileName="irrKla~1.dll|irrKlang.NET4.dll" Attributes="0" SourcePath="blizztv\bin\Release\irrKlang.NET4.dll" SelfReg="false" Sequence="2"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BackgroundImagesComponent">
+    <ROW Name="img_blizztv_main.jpg" Data="assets\images\setup-screens\blizztv-main.jpg" Sequence="0" DisplayTime="60"/>
+    <ATTRIBUTE name="StartOption" value="0"/>
+    <ATTRIBUTE name="StopOption" value="1"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="setup" PackageFileName="setup" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\install" ExtUI="true"/>
     <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
@@ -97,6 +103,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
+    <ROW Name="ShowBackgroundImages.dll" SourcePath="&lt;AI_CUSTACTS&gt;ShowBackgroundImages.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
     <ROW Name="banner_image.jpg" SourcePath="&lt;AI_THEMES&gt;classic\resources\banner-image.jpg"/>
     <ROW Name="dialog_image.jpg" SourcePath="&lt;AI_THEMES&gt;classic\resources\dialog-image.jpg"/>
@@ -124,6 +131,9 @@
     <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="101"/>
     <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="101"/>
     <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="301"/>
+    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_StopImageSlideshow" Condition="(VersionNT &gt;= 500)" Ordering="302"/>
+    <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_StopImageSlideshow" Condition="(VersionNT &gt;= 500)" Ordering="102"/>
+    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_StopImageSlideshow" Condition="(VersionNT &gt;= 500)" Ordering="102"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR"/>
@@ -147,6 +157,8 @@
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="AI_StartImageSlideshow" Type="193" Source="ShowBackgroundImages.dll" Target="StartImageSlideshow"/>
+    <ROW Action="AI_StopImageSlideshow" Type="1" Source="ShowBackgroundImages.dll" Target="StopImageSlideshow"/>
     <ROW Action="AI_VerifyPrereq" Type="1" Source="Prereq.dll" Target="VerifyPrereq"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder][ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
@@ -176,9 +188,11 @@
     <ROW Action="AI_ResolveKnownFolders" Sequence="51"/>
     <ROW Action="AI_AppSearchEx" Sequence="101"/>
     <ROW Action="AI_InstallPrerequisite" Sequence="1283"/>
-    <ROW Action="AI_InstallPostPrerequisite" Sequence="1301"/>
+    <ROW Action="AI_InstallPostPrerequisite" Sequence="1302"/>
     <ROW Action="AI_ExtractPrereq" Sequence="1282"/>
     <ROW Action="AI_DownloadPrereq" Sequence="1281"/>
+    <ROW Action="AI_StartImageSlideshow" Condition="(VersionNT &gt;= 500) AND (Not Installed) AND (UILevel = 5)" Sequence="76"/>
+    <ROW Action="AI_StopImageSlideshow" Condition="(VersionNT &gt;= 500)" Sequence="1301"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="( Version9X OR VersionNT64 OR ( VersionNT AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &gt;= 1))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 1))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 2))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 3))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 4))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 5))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 6))) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNTDisplay]" DescriptionLocId="AI.LaunchCondition.NoSpecificNT" IsPredefined="true" Builds="DefaultBuild"/>

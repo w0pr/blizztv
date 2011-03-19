@@ -82,9 +82,6 @@ namespace BlizzTV.EmbeddedModules.Videos
 
             Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             int i = 0;
             var tasks = new Task<Channel>[Subscriptions.Instance.Dictionary.Count];
 
@@ -133,10 +130,6 @@ namespace BlizzTV.EmbeddedModules.Videos
                 this._moduleNode.Text = @"Videos";
             });
 
-            stopwatch.Stop();
-            TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} video channels in {1}.", this._channels.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
-
             this.RefreshingData = false;
         }
 
@@ -144,6 +137,11 @@ namespace BlizzTV.EmbeddedModules.Videos
         {
             channel.Update();
             return channel;
+        }
+
+        public override void Refresh()
+        {
+            this.MenuRefresh(this, EventArgs.Empty);
         }
 
         private void OnChildStateChanged(object sender, EventArgs e)
@@ -163,7 +161,7 @@ namespace BlizzTV.EmbeddedModules.Videos
                 this._updateTimer = null;
             }
 
-            _updateTimer = new System.Timers.Timer(EmbeddedModules.Videos.Settings.ModuleSettings.Instance.UpdatePeriod * 60000);
+            _updateTimer = new System.Timers.Timer(ModuleSettings.Instance.UpdatePeriod * 60000);
             _updateTimer.Elapsed += OnTimerHit;
             _updateTimer.Enabled = true;
         }
