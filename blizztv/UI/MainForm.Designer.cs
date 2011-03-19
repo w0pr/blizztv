@@ -38,6 +38,8 @@ namespace BlizzTV.UI
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.menuModules = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRefresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,10 +65,13 @@ namespace BlizzTV.UI
             this.TrayIconMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeView = new System.Windows.Forms.TreeView();
             this.NodeIcons = new System.Windows.Forms.ImageList(this.components);
+            this.ItemContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TreeviewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuContextRefreshAll = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.TrayContextMenu.SuspendLayout();
+            this.TreeviewContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -118,10 +123,26 @@ namespace BlizzTV.UI
             // 
             // menuModules
             // 
+            this.menuModules.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuRefresh,
+            this.toolStripSeparator6});
             this.menuModules.Image = ((System.Drawing.Image)(resources.GetObject("menuModules.Image")));
             this.menuModules.Name = "menuModules";
             this.menuModules.Size = new System.Drawing.Size(176, 22);
             this.menuModules.Text = "Modules";
+            // 
+            // menuRefresh
+            // 
+            this.menuRefresh.Image = ((System.Drawing.Image)(resources.GetObject("menuRefresh.Image")));
+            this.menuRefresh.Name = "menuRefresh";
+            this.menuRefresh.Size = new System.Drawing.Size(130, 22);
+            this.menuRefresh.Text = "Refresh All";
+            this.menuRefresh.Click += new System.EventHandler(this.menuRefresh_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(127, 6);
             // 
             // toolStripSeparator1
             // 
@@ -349,10 +370,25 @@ namespace BlizzTV.UI
             this.NodeIcons.TransparentColor = System.Drawing.Color.Transparent;
             this.NodeIcons.Images.SetKeyName(0, "current.gif");
             // 
+            // ItemContextMenu
+            // 
+            this.ItemContextMenu.Name = "TreeviewContextMenu";
+            this.ItemContextMenu.Size = new System.Drawing.Size(61, 4);
+            // 
             // TreeviewContextMenu
             // 
+            this.TreeviewContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuContextRefreshAll});
             this.TreeviewContextMenu.Name = "TreeviewContextMenu";
-            this.TreeviewContextMenu.Size = new System.Drawing.Size(61, 4);
+            this.TreeviewContextMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // menuContextRefreshAll
+            // 
+            this.menuContextRefreshAll.Image = ((System.Drawing.Image)(resources.GetObject("menuContextRefreshAll.Image")));
+            this.menuContextRefreshAll.Name = "menuContextRefreshAll";
+            this.menuContextRefreshAll.Size = new System.Drawing.Size(152, 22);
+            this.menuContextRefreshAll.Text = "Refresh All";
+            this.menuContextRefreshAll.Click += new System.EventHandler(this.menuRefresh_Click);
             // 
             // MainForm
             // 
@@ -376,6 +412,7 @@ namespace BlizzTV.UI
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.TrayContextMenu.ResumeLayout(false);
+            this.TreeviewContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -406,7 +443,7 @@ namespace BlizzTV.UI
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem menuCheckUpdates;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ContextMenuStrip TreeviewContextMenu;
+        private System.Windows.Forms.ContextMenuStrip ItemContextMenu;
         private System.Windows.Forms.ToolStripMenuItem menuSleepMode;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem ContextMenuSleepMode;
@@ -415,6 +452,10 @@ namespace BlizzTV.UI
         private System.Windows.Forms.ToolStripStatusLabel toolStripSpacer;
         private System.Windows.Forms.ToolStripStatusLabel SleepIcon;
         private LoadingAnimationToolStripMenuItem LoadingAnimation;
+        private System.Windows.Forms.ContextMenuStrip TreeviewContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem menuContextRefreshAll;
+        private System.Windows.Forms.ToolStripMenuItem menuRefresh;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

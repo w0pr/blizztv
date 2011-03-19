@@ -82,9 +82,6 @@ namespace BlizzTV.EmbeddedModules.Streams
             int availableCount = 0; // available live streams count
             Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             int i = 0;
             var tasks = new Task<Stream>[Subscriptions.Instance.Dictionary.Count];
 
@@ -120,12 +117,11 @@ namespace BlizzTV.EmbeddedModules.Streams
                 if (this._moduleNode.Nodes.Count > 0) this._moduleNode.Nodes.Clear();
                 foreach (Task<Stream> task in tasks)
                 {
-                    if (task.Result.IsLive)
-                    {
-                        task.Result.Text = string.Format("{0} ({1})", task.Result.Text, task.Result.ViewerCount); // put stream viewers count on title.
-                        availableCount++;
-                        this._moduleNode.Nodes.Add(task.Result);
-                    }
+                    if (!task.Result.IsLive) continue;
+
+                    task.Result.Text = string.Format("{0} ({1})", task.Result.Text, task.Result.ViewerCount); // put stream viewers count on title.
+                    availableCount++;
+                    this._moduleNode.Nodes.Add(task.Result);
                 }
 
                 Module.UITreeView.EndUpdate();
@@ -140,10 +136,6 @@ namespace BlizzTV.EmbeddedModules.Streams
                 });
             });
 
-            stopwatch.Stop();
-            TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} streams in {1}.", Subscriptions.Instance.Dictionary.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
-
             this.RefreshingData = false;
         }
 
@@ -151,6 +143,11 @@ namespace BlizzTV.EmbeddedModules.Streams
         {
             stream.Update();
             return stream;
+        }
+
+        public override void Refresh()
+        {
+            this.MenuRefresh(this, EventArgs.Empty);
         }
 
         private void SetupUpdateTimer()

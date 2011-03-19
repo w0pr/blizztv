@@ -76,6 +76,11 @@ namespace BlizzTV.InfraStructure.Modules
         public virtual ModuleNode GetModuleNode() { return null; }
 
         /// <summary>
+        /// Signals modules to refresh their data.
+        /// </summary>
+        public virtual void Refresh() { }
+
+        /// <summary>
         /// Returns preferences form for the module. 
         /// Modules that would like to use configuration options should override this method and return it's preferences form.
         /// </summary>

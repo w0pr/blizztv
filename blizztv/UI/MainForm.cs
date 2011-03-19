@@ -235,21 +235,27 @@ namespace BlizzTV.UI
         {
             if (e.Button != MouseButtons.Right) return;
 
-            var pClick = new Point(e.X, e.Y); // the click-point.
-            var selection = (ModuleNode)TreeView.GetNodeAt(pClick); // the clicked node.
-            if (selection == null) return;
+            var clickPoint = new Point(e.X, e.Y); // the click-point.
+            var selectedNode = (ModuleNode)TreeView.GetNodeAt(clickPoint); // the clicked node.
 
-            TreeView.SelectedNode = selection;
-            if (selection.Menu.Count == 0) return; // if the selected item has no attach menu's just return.
+            Point pointToScreen = this.PointToClient(TreeView.PointToScreen(clickPoint)); // point to screen.
+            var menuPosition = new Point(pointToScreen.X + 5, pointToScreen.Y - 20); // the actual cordinates.
 
-            selection.RightClicked(this, e);
+            if (selectedNode == null) // if no item is selected, just show the common context menu.
+            {
+                TreeviewContextMenu.Show(TreeView, menuPosition);
+                return;
+            }
 
-            TreeviewContextMenu.Items.Clear();
-            foreach(KeyValuePair<string,ToolStripMenuItem> pair in selection.Menu) { TreeviewContextMenu.Items.Add(pair.Value); } //add custom-context menu's.
+            TreeView.SelectedNode = selectedNode;
+            if (selectedNode.Menu.Count == 0) return; // if the selected item has no attach menu's just return.
 
-            Point pClient = this.PointToClient(TreeView.PointToScreen(pClick)); // point to screen.
-            var pShow = new Point(pClient.X + 5, pClient.Y - 20); // the actual cordinates.
-            TreeviewContextMenu.Show(TreeView, pShow);
+            selectedNode.RightClicked(this, e);
+
+            ItemContextMenu.Items.Clear();
+            foreach(KeyValuePair<string,ToolStripMenuItem> pair in selectedNode.Menu) { ItemContextMenu.Items.Add(pair.Value); } //add custom-context menu's.
+
+            ItemContextMenu.Show(TreeView, menuPosition);
         }
 
         private void TreeView_DragEnter(object sender, DragEventArgs e)
@@ -311,7 +317,7 @@ namespace BlizzTV.UI
                 this.ContextMenuSleepMode.Checked = true;
                 this.SleepIcon.Visible = true;
                 this.TrayIcon.Icon = Assets.Images.Icons.Ico.sleep;
-                this.TrayIcon.Text = "BlizzTV is in sleep mode.";
+                this.TrayIcon.Text = @"BlizzTV is in sleep mode.";
                 RuntimeConfiguration.Instance.InSleepMode = true;
             }
             else
@@ -320,8 +326,16 @@ namespace BlizzTV.UI
                 this.ContextMenuSleepMode.Checked = false;
                 this.SleepIcon.Visible = false;
                 this.TrayIcon.Icon = Assets.Images.Icons.Ico.blizztv;
-                this.TrayIcon.Text = "BlizzTV";
+                this.TrayIcon.Text = @"BlizzTV";
                 RuntimeConfiguration.Instance.InSleepMode = false;
+            }
+        }
+
+        private void menuRefresh_Click(object sender, EventArgs e)
+        {
+            foreach(KeyValuePair<string,Module> pair in ModuleManager.Instance.LoadedModules)
+            {
+                pair.Value.Refresh();
             }
         }
 
@@ -332,8 +346,8 @@ namespace BlizzTV.UI
 
         private void MenuAbout_Click(object sender, EventArgs e)
         {
-            AboutForm f = new AboutForm();
-            f.ShowDialog();
+            var aboutForm = new AboutForm();
+            aboutForm.ShowDialog();
         }
 
         private void MenuExit_Click(object sender, EventArgs e) { this.ExitApplication(); }

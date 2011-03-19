@@ -94,9 +94,6 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
             {
                 Workload.WorkloadManager.Instance.Add(this._parsers.Count);
 
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-
                 foreach (BlueParser parser in this._parsers)
                 {
                     parser.Update();
@@ -122,13 +119,14 @@ namespace BlizzTV.EmbeddedModules.BlueTracker
                     Module.UITreeView.EndUpdate();
                     this._moduleNode.Text = @"BlizzBlues";
                 });
-
-                stopwatch.Stop();
-                TimeSpan ts = stopwatch.Elapsed;
-                LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} blizzblue-parsers in {1}.", this._parsers.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
             }
 
             this.RefreshingData = false;
+        }
+
+        public override void Refresh()
+        {
+            this.MenuRefresh(this, EventArgs.Empty);
         }
 
         private void OnChildStateChanged(object sender, EventArgs e)

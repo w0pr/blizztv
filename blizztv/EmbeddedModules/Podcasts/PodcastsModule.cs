@@ -82,9 +82,6 @@ namespace BlizzTV.EmbeddedModules.Podcasts
 
             Workload.WorkloadManager.Instance.Add(Subscriptions.Instance.Dictionary.Count);
 
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             int i = 0;
             var tasks = new Task<Podcast>[Subscriptions.Instance.Dictionary.Count];
 
@@ -133,10 +130,6 @@ namespace BlizzTV.EmbeddedModules.Podcasts
                 this._moduleNode.Text = @"Podcasts";
             });
 
-            stopwatch.Stop();
-            TimeSpan ts = stopwatch.Elapsed;
-            LogManager.Instance.Write(LogMessageTypes.Trace, string.Format("Updated {0} podcasts in {1}.", this._podcasts.Count, String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10)));
-
             this.RefreshingData = false;
         }
 
@@ -144,6 +137,11 @@ namespace BlizzTV.EmbeddedModules.Podcasts
         {
             podcast.Update();
             return podcast;
+        }
+
+        public override void Refresh()
+        {
+            this.MenuRefresh(this, EventArgs.Empty);
         }
 
         private void SetupUpdateTimer()
