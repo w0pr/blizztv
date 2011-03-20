@@ -28,7 +28,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
     {
         public LiveStream(StreamSubscription subscription) : base(subscription) { }
 
-        public override void Update()
+        public override bool Parse()
         {
             this.Link = string.Format("http://www.livestream.com/{0}", this.Slug); // the stream link.
 
@@ -36,7 +36,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
             {
                 var apiUrl = string.Format("http://x{0}x.api.channel.livestream.com/2.0/info.json", this.Slug); // the api url.
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response
-                if (result.State != WebReader.States.Success) return;
+                if (result.State != WebReader.States.Success) return false;
 
                 var data = (Hashtable)Json.JsonDecode(result.Response);
                 data = (Hashtable)data["channel"];
@@ -44,8 +44,10 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                 this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
                 this.Description = (string)data["description"].ToString(); // stream description.
                 this.Process();
-            }            
-            catch (Exception e) { throw new Exception("Stream module's livestream parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
+            }
+            catch (Exception) { return false; }
+
+            return true;
         }
     }
 }

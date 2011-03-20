@@ -110,6 +110,11 @@ namespace BlizzTV.EmbeddedModules.Streams
             this._player = null;
         }
 
-        public virtual void Update() { throw new NotImplementedException(); } // the stream updater. 
+        public virtual bool Parse() { throw new NotImplementedException(); } // the stream updater. 
+
+        public bool IsValid()
+        {
+            return this.Parse();
+        }
     }
 }

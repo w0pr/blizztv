@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.InfraStructure.Modules.Subscriptions;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Catalog;
+using BlizzTV.InfraStructure.Modules.Subscriptions.UI;
 
 namespace BlizzTV.EmbeddedModules.Streams.Settings
 {
@@ -45,32 +46,31 @@ namespace BlizzTV.EmbeddedModules.Streams.Settings
 
         private void LoadSettings()
         {
-            checkBoxEnableNotifications.Checked = EmbeddedModules.Streams.Settings.ModuleSettings.Instance.NotificationsEnabled;
-            numericUpDownUpdatePeriod.Value = (decimal)EmbeddedModules.Streams.Settings.ModuleSettings.Instance.UpdatePeriod;
-            checkBoxAutomaticallyOpenChat.Checked = EmbeddedModules.Streams.Settings.ModuleSettings.Instance.AutomaticallyOpenChat;
-            numericUpDownChatWindowWidth.Value = (decimal)EmbeddedModules.Streams.Settings.ModuleSettings.Instance.ChatWindowWidth;
-            numericUpDownChatWindowHeight.Value = (decimal)EmbeddedModules.Streams.Settings.ModuleSettings.Instance.ChatWindowHeight;
+            checkBoxEnableNotifications.Checked = ModuleSettings.Instance.NotificationsEnabled;
+            numericUpDownUpdatePeriod.Value = (decimal)ModuleSettings.Instance.UpdatePeriod;
+            checkBoxAutomaticallyOpenChat.Checked = ModuleSettings.Instance.AutomaticallyOpenChat;
+            numericUpDownChatWindowWidth.Value = (decimal)ModuleSettings.Instance.ChatWindowWidth;
+            numericUpDownChatWindowHeight.Value = (decimal)ModuleSettings.Instance.ChatWindowHeight;
         }
 
         public void SaveSettings()
         {
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.AutomaticallyOpenChat = checkBoxAutomaticallyOpenChat.Checked;
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.ChatWindowWidth = (int)numericUpDownChatWindowWidth.Value;
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.ChatWindowHeight = (int)numericUpDownChatWindowHeight.Value;
-            EmbeddedModules.Streams.Settings.ModuleSettings.Instance.Save();
+            ModuleSettings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
+            ModuleSettings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
+            ModuleSettings.Instance.AutomaticallyOpenChat = checkBoxAutomaticallyOpenChat.Checked;
+            ModuleSettings.Instance.ChatWindowWidth = (int)numericUpDownChatWindowWidth.Value;
+            ModuleSettings.Instance.ChatWindowHeight = (int)numericUpDownChatWindowHeight.Value;
+            ModuleSettings.Instance.Save();
             StreamsModule.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            AddStreamForm f = new AddStreamForm();
-            if (f.ShowDialog() == DialogResult.OK)
-            {
-                Subscriptions.Instance.Add(f.Subscription);
-                this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription(f.Subscription));
-            }
+            var form = new AddSubscriptionHost(new AddStream());
+            if (form.ShowDialog() != DialogResult.OK) return;
+
+            Subscriptions.Instance.Add((StreamSubscription)form.Subscription);
+            this.ListviewSubscriptions.Items.Add(new ListviewStreamSubscription((StreamSubscription)form.Subscription));
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)

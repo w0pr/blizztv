@@ -18,52 +18,59 @@
 using System;
 using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
+using BlizzTV.InfraStructure.Modules.Subscriptions.UI;
 
 namespace BlizzTV.EmbeddedModules.Podcasts.Settings
 {
-    public partial class AddPodcastForm : Form
+    public partial class AddPodcast : AddSubscriptionContainer
     {
-        public readonly PodcastSubscription Subscription = new PodcastSubscription();
-
-        public AddPodcastForm()
+        public AddPodcast()
         {
             InitializeComponent();
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
+        private void AddPodcast_Load(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.txtName, "Input the name of podcast.");
+            toolTip.SetToolTip(this.txtURL, "Input the URL for the podcast source - for example; http://www.myextralife.com/ftp/radio/instance_rss.xml.");
+        }
+
+        protected override void ParseSubscription()
         {
             if (txtName.Text.Trim() == "" || txtURL.Text.Trim() == "")
             {
                 MessageBox.Show(i18n.FillPodcastNameAndUrlFieldsMessage, i18n.AllFieldsRequiredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.OnSubscriptionParsed(new SubscriptionParsedEventArgs(false));
                 return;
             }
 
             if (Subscriptions.Instance.Dictionary.ContainsKey(txtURL.Text))
             {
                 MessageBox.Show(string.Format(i18n.PodcastSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[txtURL.Text].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.OnSubscriptionParsed(new SubscriptionParsedEventArgs(false));
                 return;
             }
 
-            this.Subscription.Name = txtName.Text;
-            this.Subscription.Url = txtURL.Text;
-
-            using (Podcast podcast = new Podcast(this.Subscription))
+            try
             {
-                if (!podcast.IsValid())
+                var subscription = new PodcastSubscription {Name = txtName.Text, Url = txtURL.Text};
+                using (var podcast = new Podcast(subscription))
                 {
-                    MessageBox.Show(i18n.ErrorParsingPodcastMessage, i18n.ErrorParsingPodcastTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    if (!podcast.IsValid())
+                    {
+                        MessageBox.Show(i18n.ErrorParsingPodcastMessage, i18n.ErrorParsingPodcastTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.OnSubscriptionParsed(new SubscriptionParsedEventArgs(false));
+                        return;
+                    }
                 }
+
+                this.OnSubscriptionParsed(new SubscriptionParsedEventArgs(true, subscription));
             }
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();  
-        }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            catch(Exception)
+            {
+                MessageBox.Show(i18n.ErrorParsingPodcastMessage, i18n.ErrorParsingPodcastTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.OnSubscriptionParsed(new SubscriptionParsedEventArgs(false));   
+            }            
         }
     }
 }

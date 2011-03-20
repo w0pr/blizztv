@@ -294,9 +294,6 @@
   <data name="FillStreamNameAndUrlFieldsMessage" xml:space="preserve">
     <value>Please fill the stream name and url fields!</value>
   </data>
-  <data name="InvalidStreamUrlMessage" xml:space="preserve">
-    <value>{0} is an invalid {1} url. Please correct the url and retry.</value>
-  </data>
   <data name="InvalidUrl" xml:space="preserve">
     <value>Invalid URL</value>
   </data>
@@ -362,5 +359,11 @@
   </data>
   <data name="ReDownloadPodcastEpisode" xml:space="preserve">
     <value>Re-download episode</value>
+  </data>
+  <data name="ErrorParsingStreamMessage" xml:space="preserve">
+    <value>There was an error parsing the stream. Please check the stream provider, slug and retry.</value>
+  </data>
+  <data name="ErrorParsingStreamTitle" xml:space="preserve">
+    <value>Error parsing stream</value>
   </data>
 </root>

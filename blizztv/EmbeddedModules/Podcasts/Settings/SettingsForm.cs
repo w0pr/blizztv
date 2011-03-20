@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.InfraStructure.Modules.Subscriptions;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Catalog;
+using BlizzTV.InfraStructure.Modules.Subscriptions.UI;
 
 namespace BlizzTV.EmbeddedModules.Podcasts.Settings
 {
@@ -45,32 +46,32 @@ namespace BlizzTV.EmbeddedModules.Podcasts.Settings
 
         private void LoadSettings()
         {
-            checkBoxEnableNotifications.Checked = EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.NotificationsEnabled;
-            numericUpDownUpdatePeriod.Value = (decimal)EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.UpdatePeriod;
+            checkBoxEnableNotifications.Checked = ModuleSettings.Instance.NotificationsEnabled;
+            numericUpDownUpdatePeriod.Value = (decimal)ModuleSettings.Instance.UpdatePeriod;
         }
 
         public void SaveSettings()
         {
-            EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
-            EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
-            EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.Save();
+            ModuleSettings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
+            ModuleSettings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
+            ModuleSettings.Instance.Save();
             PodcastsModule.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            AddPodcastForm f = new AddPodcastForm();
-            if (f.ShowDialog() != DialogResult.OK) return;
+            var form = new AddSubscriptionHost(new AddPodcast());
+            if (form.ShowDialog() != DialogResult.OK) return;
 
-            Subscriptions.Instance.Add(f.Subscription);
-            this.ListviewSubscriptions.Items.Add(new ListviewPodcastSubscription(f.Subscription));
+            Subscriptions.Instance.Add((PodcastSubscription)form.Subscription);
+            this.ListviewSubscriptions.Items.Add(new ListviewPodcastSubscription((PodcastSubscription)form.Subscription));
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
             if (ListviewSubscriptions.SelectedItems.Count <= 0) return;
 
-            ListviewPodcastSubscription selection = (ListviewPodcastSubscription)ListviewSubscriptions.SelectedItems[0];
+            var selection = (ListviewPodcastSubscription)ListviewSubscriptions.SelectedItems[0];
             Subscriptions.Instance.Remove(selection.Subscription);
             selection.Remove();
         }

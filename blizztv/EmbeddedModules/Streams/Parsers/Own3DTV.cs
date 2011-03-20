@@ -30,7 +30,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
 
         public Own3Dtv(StreamSubscription subscription) : base(subscription) { }
 
-        public override void Update()
+        public override bool Parse()
         {
             var rnd=new Random();
             this.Link = string.Format("http://www.own3d.tv/live/{0}", this.Slug);
@@ -39,7 +39,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
             {
                 var apiUrl = string.Format("http://static.ec.own3d.tv/live_tmp/{0}.txt?{1}", this.Slug, rnd.Next(99999));
                 WebReader.Result result = WebReader.Read(apiUrl);
-                if (result.State != WebReader.States.Success) return;
+                if (result.State != WebReader.States.Success) return false;
 
                 Match m = _regex.Match(result.Response);
                 if (m.Success)
@@ -50,7 +50,9 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
 
                 this.Process();
             }
-            catch (Exception e) { throw new Exception("Stream module's own3d.tv parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
+            catch (Exception) { return false; }
+
+            return true;
         }
     }
 }

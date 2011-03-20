@@ -28,7 +28,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
     {
         public JustinTv(StreamSubscription subscription) : base(subscription) { }
 
-        public override void Update()
+        public override bool Parse()
         {
             this.Link = string.Format("http://www.justin.tv/{0}", this.Slug); // the stream link.
 
@@ -38,16 +38,20 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
 
                 var data = (ArrayList)Json.JsonDecode(result.Response); // start parsing the json.
+
                 if (data.Count > 0)
                 {
                     this.IsLive = true; // is the stream live?
                     var table = (Hashtable)data[0];
                     this.ViewerCount = Int32.Parse(table["stream_count"].ToString()); // stream viewers count.
-                    if(table.Contains("title")) this.Description = (string)table["title"].ToString(); // stream description.
+                    if (table.Contains("title")) this.Description = (string)table["title"].ToString(); // stream description.
+                    this.Process();
                 }
-                this.Process();
+                else return false;
             }
-            catch (Exception e) { throw new Exception("Stream module's justin.tv parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
+            catch (Exception) { return false; }
+
+            return true;
         }
     }
 }

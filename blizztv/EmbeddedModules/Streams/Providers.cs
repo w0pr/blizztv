@@ -57,16 +57,16 @@ namespace BlizzTV.EmbeddedModules.Streams
         public bool ChatAvailable { get { return ChatMovie != null; }
         }
 
-        public bool LinkValid(string link)
+        public bool IsUrlValid(string link)
         {
             var regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
             Match m = regex.Match(link);
             return m.Success;
         }
 
-        public string GetSlug(string link)
+        public string GetslugFromUrl(string link)
         {
-            if (!this.LinkValid(link)) return null;
+            if (!this.IsUrlValid(link)) return null;
             var regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
             Match m = regex.Match(link);
             return m.Groups["Slug"].Value;

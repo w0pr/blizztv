@@ -30,7 +30,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
 
         public UStream(StreamSubscription subscription) : base(subscription) { }
 
-        public override void Update()
+        public override bool Parse()
         {
             this.Link = string.Format("http://www.ustream.com/channel/{0}", this.Slug); // the stream link.
 
@@ -38,7 +38,7 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
             {
                 var apiUrl = string.Format("http://api.ustream.tv/json/channel/{0}/listAllChannels?key={1}", this.Slug, "0FB451E8E15DCEBECE707004AA0166E8"); // the api url
                 WebReader.Result result = WebReader.Read(apiUrl); // read the api response.
-                if (result.State != WebReader.States.Success) return;
+                if (result.State != WebReader.States.Success) return false;
 
                 var data = (Hashtable)Json.JsonDecode(result.Response); // start parsing json.
                 var resultsObject = (ArrayList)data["results"]; // the results object.
@@ -56,7 +56,9 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
 
                 this.Process();
             }
-            catch (Exception e) { throw new Exception("Stream module's ustream parser caught an exception: ", e); } // throw exception to upper layer embedding details in the inner exception.
+            catch (Exception) { return false; } // throw exception to upper layer embedding details in the inner exception.
+
+            return true;
         }
 
         public override void Process() // for ustream we also need to replace stream_id variable in movie and flash vars templates.
