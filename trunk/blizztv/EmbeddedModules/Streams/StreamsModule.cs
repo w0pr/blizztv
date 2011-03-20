@@ -141,7 +141,7 @@ namespace BlizzTV.EmbeddedModules.Streams
 
         private static Stream TaskProcessStream(Stream stream)
         {
-            stream.Update();
+            stream.Parse();
             return stream;
         }
 
@@ -225,12 +225,12 @@ namespace BlizzTV.EmbeddedModules.Streams
         {
             foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
             {
-                if (((StreamProvider)pair.Value).LinkValid(link))
+                if (((StreamProvider)pair.Value).IsUrlValid(link))
                 {
                     var streamSubscription = new StreamSubscription();
-                    streamSubscription.Slug = (pair.Value as StreamProvider).GetSlug(link);
+                    streamSubscription.Slug = (pair.Value as StreamProvider).GetslugFromUrl(link);
                     streamSubscription.Provider = pair.Value.Name;
-                    streamSubscription.Name = (pair.Value as StreamProvider).GetSlug(link);
+                    streamSubscription.Name = (pair.Value as StreamProvider).GetslugFromUrl(link);
 
                     if (streamSubscription.Provider.ToLower() == "own3dtv")
                     {

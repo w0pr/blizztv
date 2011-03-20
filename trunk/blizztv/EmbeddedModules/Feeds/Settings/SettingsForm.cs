@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.InfraStructure.Modules.Subscriptions;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Catalog;
+using BlizzTV.InfraStructure.Modules.Subscriptions.UI;
 
 namespace BlizzTV.EmbeddedModules.Feeds.Settings
 {
@@ -45,32 +46,32 @@ namespace BlizzTV.EmbeddedModules.Feeds.Settings
 
         private void LoadSettings()
         {
-            checkBoxEnableNotifications.Checked = EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.NotificationsEnabled;
-            numericUpDownUpdatePeriod.Value = (decimal)EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.UpdatePeriod;
+            checkBoxEnableNotifications.Checked = ModuleSettings.Instance.NotificationsEnabled;
+            numericUpDownUpdatePeriod.Value = (decimal)ModuleSettings.Instance.UpdatePeriod;
         }
 
         public void SaveSettings()
         {
-            EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
-            EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
-            EmbeddedModules.Feeds.Settings.ModuleSettings.Instance.Save();
+            ModuleSettings.Instance.UpdatePeriod = (int)numericUpDownUpdatePeriod.Value;
+            ModuleSettings.Instance.NotificationsEnabled = checkBoxEnableNotifications.Checked;
+            ModuleSettings.Instance.Save();
             FeedsModule.Instance.OnSaveSettings();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            AddFeedForm f = new AddFeedForm();
-            if (f.ShowDialog() != DialogResult.OK) return;
+            var form = new AddSubscriptionHost(new AddFeed());
+            if (form.ShowDialog() != DialogResult.OK) return;
 
-            Subscriptions.Instance.Add(f.Subscription);
-            this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription(f.Subscription));
+            Subscriptions.Instance.Add((FeedSubscription)form.Subscription);
+            this.ListviewSubscriptions.Items.Add(new ListviewFeedSubscription((FeedSubscription)form.Subscription));
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
             if (ListviewSubscriptions.SelectedItems.Count <= 0) return;
 
-            ListviewFeedSubscription selection = (ListviewFeedSubscription)ListviewSubscriptions.SelectedItems[0];
+            var selection = (ListviewFeedSubscription)ListviewSubscriptions.SelectedItems[0];
             Subscriptions.Instance.Remove(selection.Subscription);        
             selection.Remove();
         }

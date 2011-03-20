@@ -144,12 +144,36 @@
     <Compile Include="Controls\Panels\GradientPanel.Designer.cs">
       <DependentUpon>GradientPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="InfraStructure\Modules\ModuleNode.cs" />
-    <Compile Include="InfraStructure\Modules\Subscriptions\AddSubscriptionForm.cs">
+    <Compile Include="EmbeddedModules\Feeds\Settings\AddFeed.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InfraStructure\Modules\Subscriptions\AddSubscriptionForm.Designer.cs">
-      <DependentUpon>AddSubscriptionForm.cs</DependentUpon>
+    <Compile Include="EmbeddedModules\Feeds\Settings\AddFeed.Designer.cs">
+      <DependentUpon>AddFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmbeddedModules\Podcasts\Settings\AddPodcast.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmbeddedModules\Podcasts\Settings\AddPodcast.Designer.cs">
+      <DependentUpon>AddPodcast.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmbeddedModules\Streams\Settings\AddStream.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmbeddedModules\Streams\Settings\AddStream.Designer.cs">
+      <DependentUpon>AddStream.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InfraStructure\Modules\ModuleNode.cs" />
+    <Compile Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionContainer.Designer.cs">
+      <DependentUpon>AddSubscriptionContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionHost.Designer.cs">
+      <DependentUpon>AddSubscriptionHost.cs</DependentUpon>
     </Compile>
     <Compile Include="Media\Controls\WMP\WMPPlayer.cs">
       <SubType>Component</SubType>
@@ -172,12 +196,6 @@
     <Compile Include="InfraStructure\Modules\Subscriptions\Catalog\ISubscriptionConsumer.cs" />
     <Compile Include="InfraStructure\Modules\Subscriptions\Providers\Provider.cs" />
     <Compile Include="InfraStructure\Modules\Subscriptions\Subscription.cs" />
-    <Compile Include="EmbeddedModules\Podcasts\Settings\AddPodcastForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmbeddedModules\Podcasts\Settings\AddPodcastForm.Designer.cs">
-      <DependentUpon>AddPodcastForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="EmbeddedModules\Podcasts\Episode.cs" />
     <Compile Include="EmbeddedModules\Podcasts\PodcastsModule.cs" />
     <Compile Include="EmbeddedModules\Podcasts\Parsers\IPodcastFeedParser.cs" />
@@ -311,12 +329,6 @@
     <Compile Include="EmbeddedModules\Events\Settings\ModuleSettings.cs" />
     <Compile Include="EmbeddedModules\Feeds\Feed.cs" />
     <Compile Include="EmbeddedModules\Feeds\FeedsModule.cs" />
-    <Compile Include="EmbeddedModules\Feeds\Settings\AddFeedForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmbeddedModules\Feeds\Settings\AddFeedForm.Designer.cs">
-      <DependentUpon>AddFeedForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="EmbeddedModules\Feeds\Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -325,12 +337,6 @@
     </Compile>
     <Compile Include="EmbeddedModules\Feeds\Settings\ModuleSettings.cs" />
     <Compile Include="EmbeddedModules\Feeds\Story.cs" />
-    <Compile Include="EmbeddedModules\Streams\Settings\AddStreamForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmbeddedModules\Streams\Settings\AddStreamForm.Designer.cs">
-      <DependentUpon>AddStreamForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="EmbeddedModules\Streams\UI\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -476,8 +482,20 @@
     <EmbeddedResource Include="Downloads\DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InfraStructure\Modules\Subscriptions\AddSubscriptionForm.resx">
-      <DependentUpon>AddSubscriptionForm.cs</DependentUpon>
+    <EmbeddedResource Include="EmbeddedModules\Feeds\Settings\AddFeed.resx">
+      <DependentUpon>AddFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedModules\Podcasts\Settings\AddPodcast.resx">
+      <DependentUpon>AddPodcast.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedModules\Streams\Settings\AddStream.resx">
+      <DependentUpon>AddStream.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionContainer.resx">
+      <DependentUpon>AddSubscriptionContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionHost.resx">
+      <DependentUpon>AddSubscriptionHost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InfraStructure\Modules\Subscriptions\Catalog\CatalogBrowser.resx">
       <DependentUpon>CatalogBrowser.cs</DependentUpon>
@@ -487,9 +505,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Media\Player\BasePlayer.resx">
       <DependentUpon>BasePlayer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EmbeddedModules\Podcasts\Settings\AddPodcastForm.resx">
-      <DependentUpon>AddPodcastForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmbeddedModules\Podcasts\UI\PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
@@ -531,14 +546,8 @@
     <EmbeddedResource Include="EmbeddedModules\Events\UI\SetupAlarmForm.resx">
       <DependentUpon>SetupAlarmForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmbeddedModules\Feeds\Settings\AddFeedForm.resx">
-      <DependentUpon>AddFeedForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="EmbeddedModules\Feeds\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EmbeddedModules\Streams\Settings\AddStreamForm.resx">
-      <DependentUpon>AddStreamForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmbeddedModules\Streams\UI\ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
