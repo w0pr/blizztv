@@ -205,14 +205,22 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
-    <ROW PrereqKey="AF6A8838_0269_46AF_B128_A460BD2C6136" DisplayName="Adobe Flash Player 10" SetupFileUrl="http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="21" Operator="0" Type="1" Feature="Adobe_Flash_Player_10"/>
-    <ROW PrereqKey="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" DisplayName=".NET Framework 4.0" SetupFileUrl="http://download.microsoft.com/download/1/B/E/1BE39E79-7E39-46A3-96FF-047F95396215/dotNetFx40_Full_setup.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="25" Operator="1" Options="m" Type="1" Feature="NET_Framework_4.0"/>
-    <ROW PrereqKey="Visual_C_2010_Runt" DisplayName="Visual C++ 2010 Runtime Libraries (x86)" SetupFileUrl="C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bootstrapper\Packages\vcredist_x86\vcredist_x86.exe" Location="0" ExactSize="0" MinWin9xVer="47" MinWinNTVer="17" Operator="0" ComLine="/q:a" Options="m" TargetName="vcredist_x86.exe" Type="1" Feature="Visual_C_2010_Runtime_Libraries_x86"/>
+    <ROW PrereqKey="AF6A8838_0269_46AF_B128_A460BD2C6136" DisplayName="Adobe Flash Player 10" SetupFileUrl="http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="21" Operator="1" Type="1" Feature="Adobe_Flash_Player_10"/>
+    <ROW PrereqKey="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" DisplayName=".NET Framework 4.0" SetupFileUrl="http://download.microsoft.com/download/1/B/E/1BE39E79-7E39-46A3-96FF-047F95396215/dotNetFx40_Full_setup.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="22" Operator="1" Options="m" Type="1" Feature="NET_Framework_4.0"/>
+    <ROW PrereqKey="Visual_C_2010_Runt" DisplayName="Visual C++ 2010 Runtime Libraries (x86)" SetupFileUrl="http://www.microsoft.com/downloads/info.aspx?na=41&amp;SrcFamilyId=A7B7A05E-6DE6-4D3A-A423-37BF0912DB84&amp;SrcDisplayLang=en&amp;u=http%3a%2f%2fdownload.microsoft.com%2fdownload%2f5%2fB%2fC%2f5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E%2fvcredist_x86.exe" Location="1" ExactSize="5073240" MinWin9xVer="47" MinWinNTVer="17" Operator="0" ComLine="/q:a" Options="m" MD5="b88228d5fef4b6dc019d69d4471f23ec" Type="1" Feature="Visual_C_2010_Runtime_Libraries_x86"/>
     <ATTRIBUTE name="PrereqsOrder" value="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD Visual_C_2010_Runt AF6A8838_0269_46AF_B128_A460BD2C6136"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
-    <ROW SearchKey="AF6A8838_0269_46AF_B128_A460BD2C6136_ADOBE_FLASH_10_SEARCH" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\NPSWF32.dll" VerMin="10.0" Order="1" Property="AI_ADOBE_FLASH_10_PREREQSEARCH_PROP"/>
+    <ROW SearchKey="AF6A8838_0269_46AF_B128_A460BD2C6136_ADOBE_FLASH_10_SEARCH" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10o.ocx" VerMin="10.0" Order="1" Property="AI_ADOBE_FLASH_10_PREREQSEARCH_PROP"/>
     <ROW SearchKey="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD_NET_40_SEARCH" Prereq="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" SearchType="9" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Install" RefContent="M1" Order="1" Property="AI_NET_40_ORIGINAL_PREREQSEARCH_PROP"/>
+    <ROW SearchKey="Flash10p.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10p.ocx" VerMin="10.0" Order="2" Property="PreReqSearch_3"/>
+    <ROW SearchKey="Flash10r.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10r.ocx" VerMin="10.0" Order="3" Property="PreReqSearch_4"/>
+    <ROW SearchKey="Flash10s.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10s.ocx" VerMin="10.0" Order="4" Property="PreReqSearch_5"/>
+    <ROW SearchKey="Flash10t.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10t.ocx" VerMin="10.0" Order="5" Property="PreReqSearch_6"/>
+    <ROW SearchKey="Flash10u.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10u.ocx" VerMin="10.0" Order="6" Property="PreReqSearch_7"/>
+    <ROW SearchKey="Flash10v.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10v.ocx" VerMin="10.0" Order="7" Property="PreReqSearch_8"/>
+    <ROW SearchKey="Flash10y.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10y.ocx" VerMin="10.0" Order="8" Property="PreReqSearch_9"/>
+    <ROW SearchKey="Flash10z.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10z.ocx" VerMin="10.0" Order="9" Property="PreReqSearch_10"/>
     <ROW SearchKey="ProdCode" Prereq="Visual_C_2010_Runt" SearchType="3" SearchString="{196BB40D-1578-3D01-B289-BEFC77A11A1E}" Order="1" Property="PreReqSearch"/>
   </COMPONENT>
 </DOCUMENT>
