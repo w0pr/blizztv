@@ -131,7 +131,7 @@ namespace BlizzTV.Updates
 
                 cmd.Start(); // run the update.bat file.
             }
-            Application.ExitThread(); // exit the process so update.batch can move & delete files.
+            Application.Exit(); // exit the process so update.batch can move & delete files.
         }
     }
 
