@@ -3,8 +3,9 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
     <ROW Property="ALLUSERS" Value="2"/>
-    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCOMMENTS" Value="[|ProductName] installer." ValueLocId="*"/>
     <ROW Property="ARPHELPLINK" Value="http://www.blizztv.com/forum/21-general/"/>
+    <ROW Property="ARPPRODUCTICON" Value="app.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="http://get.blizztv.com"/>
     <ROW Property="ARPURLUPDATEINFO" Value="http://get.blizztv.com"/>
     <ROW Property="BannerBitmap" MultiBuildValue="DefaultBuild:banner_image.jpg" Type="1"/>
@@ -38,11 +39,11 @@
     <ROW Component="irrKlang.NET4.dll" ComponentId="{48F83C8F-F3CF-4DD9-B657-0B483FCA2514}" Directory_="APPDIR" Attributes="0" KeyPath="irrKlang.NET4.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="Adobe_Flash_Player_10" Title="Adobe Flash Player 10" Description="Adobe Flash Player 10" Display="7" Level="1" Attributes="0" Components="AF6A8838_0269_46AF_B128_A460BD2C6136"/>
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath BlizzTV.exe irrKlang.NET4.dll SHORTCUTDIR"/>
-    <ROW Feature="NET_Framework_4.0" Title=".NET Framework 4.0" Description=".NET Framework 4.0" Display="3" Level="1" Attributes="16" Components="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD"/>
-    <ROW Feature="Visual_C_2010_Runtime_Libraries_x86" Title="Visual C++ 2010 Runtime Libraries (x86)" Description="Visual C++ 2010 Runtime Libraries (x86)" Display="5" Level="1" Attributes="16" Components="Visual_C_2010_Runt"/>
-    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+    <ROW Feature="Adobe_Flash_Player_10" Title="Adobe Flash Player 10" Description="Adobe Flash Player 10" Display="9" Level="1" Attributes="0" Components="AF6A8838_0269_46AF_B128_A460BD2C6136"/>
+    <ROW Feature="BlizzTV" Title="BlizzTV" Description="BlizzTV installer" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath BlizzTV.exe irrKlang.NET4.dll SHORTCUTDIR"/>
+    <ROW Feature="NET_Framework_4.0" Title=".NET Framework 4.0" Description=".NET Framework 4.0" Display="5" Level="1" Attributes="16" Components="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD"/>
+    <ROW Feature="Visual_C_2010_Runtime_Libraries_x86" Title="Visual C++ 2010 Runtime Libraries (x86)" Description="Visual C++ 2010 Runtime Libraries (x86)" Display="7" Level="1" Attributes="16" Components="Visual_C_2010_Runt"/>
+    <ATTRIBUTE name="CurrentFeature" value="BlizzTV"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="BlizzTV.exe" Component_="BlizzTV.exe" FileName="BlizzTV.exe" Attributes="0" SourcePath="blizztv\bin\Release\BlizzTV.exe" SelfReg="false" Sequence="1"/>
@@ -83,7 +84,7 @@
     <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_LM" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiAssemblyComponent">
-    <ROW Component_="irrKlang.NET4.dll" Feature_="MainFeature" File_Application="irrKlang.NET4.dll" Attributes="0"/>
+    <ROW Component_="irrKlang.NET4.dll" Feature_="BlizzTV" File_Application="irrKlang.NET4.dll" Attributes="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiAssemblyNameComponent">
     <ROW Component_="irrKlang.NET4.dll" Name="Name" Value="irrKlang.NET4" Sync="false"/>
@@ -150,6 +151,9 @@
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder][ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="app.exe" SourcePath="assets\icons\ico\app.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
