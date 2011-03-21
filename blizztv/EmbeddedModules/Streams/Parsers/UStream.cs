@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections;
+using BlizzTV.Log;
 using BlizzTV.Utility.Web;
 
 namespace BlizzTV.EmbeddedModules.Streams.Parsers
@@ -55,10 +56,13 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                 }
 
                 this.Process();
+                return true;
             }
-            catch (Exception) { return false; } // throw exception to upper layer embedding details in the inner exception.
-
-            return true;
+            catch (Exception e)
+            {
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Stream module - UStream parser caught an exception: {0}", e)); 
+                return false;
+            } 
         }
 
         public override void Process() // for ustream we also need to replace stream_id variable in movie and flash vars templates.

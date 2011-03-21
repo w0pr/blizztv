@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections;
+using BlizzTV.Log;
 using BlizzTV.Utility.Web;
 
 namespace BlizzTV.EmbeddedModules.Streams.Parsers
@@ -44,10 +45,13 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                 this.ViewerCount = Int32.Parse(data["currentViewerCount"].ToString()); // stream viewers count.
                 this.Description = (string)data["description"].ToString(); // stream description.
                 this.Process();
+                return true;
             }
-            catch (Exception) { return false; }
-
-            return true;
+            catch (Exception e) 
+            {
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Stream module - LiveStream parser caught an exception: {0}", e)); 
+                return false; 
+            }
         }
     }
 }
