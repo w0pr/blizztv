@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="8.0" version="8.0.2" Modules="professional" RootPath="." Language="en">
+<DOCUMENT Type="Advanced Installer" CreateVersion="8.0.2" version="8.0.2" Modules="professional" RootPath="." Language="en">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
-    <ROW Property="AI_SLIDESHOW_BACKGROUND_COLOR" Value="0"/>
     <ROW Property="ALLUSERS" Value="2"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
-    <ROW Property="ARPHELPLINK" Value="http://www.blizztv.com"/>
-    <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
-    <ROW Property="ARPNOREPAIR" Value="1"/>
-    <ROW Property="ARPPRODUCTICON" Value="app.exe" Type="8"/>
+    <ROW Property="ARPHELPLINK" Value="http://www.blizztv.com/forum/21-general/"/>
     <ROW Property="ARPURLINFOABOUT" Value="http://get.blizztv.com"/>
     <ROW Property="ARPURLUPDATEINFO" Value="http://get.blizztv.com"/>
     <ROW Property="BannerBitmap" MultiBuildValue="DefaultBuild:banner_image.jpg" Type="1"/>
+    <ROW Property="CTRLS" Value="2"/>
     <ROW Property="DialogBitmap" MultiBuildValue="DefaultBuild:dialog_image.jpg" Type="1"/>
-    <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:7"/>
+    <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:3"/>
     <ROW Property="Manufacturer" Value="BlizzTV" ValueLocId="*"/>
-    <ROW Property="ProductCode" Value="1033:{43487A2D-6D09-4666-9653-B7C4A613C195} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{B05EFD61-8C8F-4D56-B3F0-24A738695C0F} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="BlizzTV" ValueLocId="*"/>
     <ROW Property="ProductVersion" Value="0.22"/>
+    <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
-    <ROW Property="UpgradeCode" Value="{8CCED605-3482-4955-AB7B-0BDD05E91D28}"/>
+    <ROW Property="UpgradeCode" Value="{7B0355E5-E0BB-43CB-BDD0-4C2D4D99A2B8}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
-    <ROW Property="WindowsTypeNT" MultiBuildValue="DefaultBuild:Windows NT 4.0, Windows NT 4.0 Service Pack 1, Windows NT 4.0 Service Pack 2, Windows NT 4.0 Service Pack 3, Windows NT 4.0 Service Pack 4, Windows NT 4.0 Service Pack 5, Windows NT 4.0 Service Pack 6" ValueLocId="-"/>
-    <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
@@ -33,16 +29,16 @@
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="AF6A8838_0269_46AF_B128_A460BD2C6136" ComponentId="{A1D8D97D-405D-4E67-AEE8-E5D24043E9A6}" Directory_="APPDIR" Attributes="4" KeyPath="AF6A8838_0269_46AF_B128_A460BD2C6136" Options="2"/>
-    <ROW Component="AI_ExePath" ComponentId="{A8FC561C-181B-40E7-9220-F46B27898CD3}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
-    <ROW Component="BlizzTV.exe" ComponentId="{57AE17C3-6829-4A9B-A6D0-CEBFB94D9973}" Directory_="APPDIR" Attributes="0" KeyPath="BlizzTV.exe"/>
-    <ROW Component="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" ComponentId="{35F3E502-8C2A-4085-BB38-C1FC0F3B0A29}" Directory_="APPDIR" Attributes="4" KeyPath="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" Options="2"/>
-    <ROW Component="SHORTCUTDIR" ComponentId="{3049AC80-2449-414C-9ED1-31DC6FDCC095}" Directory_="SHORTCUTDIR" Attributes="0"/>
-    <ROW Component="Visual_C_2010_Runt" ComponentId="{98182F02-CF97-403B-94D5-A88102609F80}" Directory_="APPDIR" Attributes="4" KeyPath="Visual_C_2010_Runt" Options="2"/>
-    <ROW Component="irrKlang.NET4.dll" ComponentId="{F5C4B767-98DE-45FD-81F0-3BDE0D2A7957}" Directory_="APPDIR" Attributes="0" KeyPath="irrKlang.NET4.dll"/>
+    <ROW Component="AF6A8838_0269_46AF_B128_A460BD2C6136" ComponentId="{F8BF5827-5920-473D-A1EA-288EBC6EEB7A}" Directory_="APPDIR" Attributes="4" KeyPath="AF6A8838_0269_46AF_B128_A460BD2C6136" Options="2"/>
+    <ROW Component="AI_ExePath" ComponentId="{C22F5BCF-FB59-4B32-BAEE-F1F27E77C28E}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
+    <ROW Component="BlizzTV.exe" ComponentId="{61A41A44-2A9F-47BC-8810-08AD20DBA4BD}" Directory_="APPDIR" Attributes="0" KeyPath="BlizzTV.exe"/>
+    <ROW Component="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" ComponentId="{774BF2A6-1B45-4648-8C1D-12FEF9C0D360}" Directory_="APPDIR" Attributes="4" KeyPath="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" Options="2"/>
+    <ROW Component="SHORTCUTDIR" ComponentId="{0FCE352B-413F-451A-8756-E9F3532E530B}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="Visual_C_2010_Runt" ComponentId="{CD4478CF-8504-4C9E-A6F6-B49A4438B51A}" Directory_="APPDIR" Attributes="4" KeyPath="Visual_C_2010_Runt" Options="2"/>
+    <ROW Component="irrKlang.NET4.dll" ComponentId="{48F83C8F-F3CF-4DD9-B657-0B483FCA2514}" Directory_="APPDIR" Attributes="0" KeyPath="irrKlang.NET4.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="Adobe_Flash_Player_10" Title="Adobe Flash Player 10" Description="Adobe Flash Player 10" Display="7" Level="1" Attributes="16" Components="AF6A8838_0269_46AF_B128_A460BD2C6136"/>
+    <ROW Feature="Adobe_Flash_Player_10" Title="Adobe Flash Player 10" Description="Adobe Flash Player 10" Display="7" Level="1" Attributes="0" Components="AF6A8838_0269_46AF_B128_A460BD2C6136"/>
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath BlizzTV.exe irrKlang.NET4.dll SHORTCUTDIR"/>
     <ROW Feature="NET_Framework_4.0" Title=".NET Framework 4.0" Description=".NET Framework 4.0" Display="3" Level="1" Attributes="16" Components="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD"/>
     <ROW Feature="Visual_C_2010_Runtime_Libraries_x86" Title="Visual C++ 2010 Runtime Libraries (x86)" Description="Visual C++ 2010 Runtime Libraries (x86)" Display="5" Level="1" Attributes="16" Components="Visual_C_2010_Runt"/>
@@ -52,13 +48,8 @@
     <ROW File="BlizzTV.exe" Component_="BlizzTV.exe" FileName="BlizzTV.exe" Attributes="0" SourcePath="blizztv\bin\Release\BlizzTV.exe" SelfReg="false" Sequence="1"/>
     <ROW File="irrKlang.NET4.dll" Component_="irrKlang.NET4.dll" FileName="irrKla~1.dll|irrKlang.NET4.dll" Attributes="0" SourcePath="blizztv\bin\Release\irrKlang.NET4.dll" SelfReg="false" Sequence="2"/>
   </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.BackgroundImagesComponent">
-    <ROW Name="img_blizztv_main.jpg" Data="assets\images\setup-screens\blizztv-main.jpg" Sequence="0" DisplayTime="60"/>
-    <ATTRIBUTE name="StartOption" value="0"/>
-    <ATTRIBUTE name="StopOption" value="1"/>
-  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="setup" PackageFileName="setup" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\install" ExtUI="true"/>
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="setup" PackageFileName="setup" Languages="en" InstallationType="2" CabsLocation="1" CompressCabs="false" UseLzma="true" LzmaCompressionLevel="4" PackageType="1" FilesInsideExe="true" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\install"/>
     <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.CacheComponent">
@@ -103,7 +94,6 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
-    <ROW Name="ShowBackgroundImages.dll" SourcePath="&lt;AI_CUSTACTS&gt;ShowBackgroundImages.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
     <ROW Name="banner_image.jpg" SourcePath="&lt;AI_THEMES&gt;classic\resources\banner-image.jpg"/>
     <ROW Name="dialog_image.jpg" SourcePath="&lt;AI_THEMES&gt;classic\resources\dialog-image.jpg"/>
@@ -128,12 +118,10 @@
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
     <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="301"/>
     <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="101"/>
     <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="101"/>
-    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="301"/>
-    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_StopImageSlideshow" Condition="(VersionNT &gt;= 500)" Ordering="302"/>
-    <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_StopImageSlideshow" Condition="(VersionNT &gt;= 500)" Ordering="102"/>
-    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_StopImageSlideshow" Condition="(VersionNT &gt;= 500)" Ordering="102"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR"/>
@@ -153,19 +141,15 @@
     <ROW Action="AI_FindExeLzma" Type="1" Source="lzmaextractor.dll" Target="FindEXE"/>
     <ROW Action="AI_InstallPostPrerequisite" Type="1" Source="Prereq.dll" Target="InstallPostPrereq"/>
     <ROW Action="AI_InstallPrerequisite" Type="65" Source="Prereq.dll" Target="InstallPrereq"/>
+    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#BlizzTV.exe]"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
-    <ROW Action="AI_StartImageSlideshow" Type="193" Source="ShowBackgroundImages.dll" Target="StartImageSlideshow"/>
-    <ROW Action="AI_StopImageSlideshow" Type="1" Source="ShowBackgroundImages.dll" Target="StopImageSlideshow"/>
     <ROW Action="AI_VerifyPrereq" Type="1" Source="Prereq.dll" Target="VerifyPrereq"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder][ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
-    <ROW Name="app.exe" SourcePath="assets\icons\ico\app.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
@@ -188,14 +172,11 @@
     <ROW Action="AI_ResolveKnownFolders" Sequence="51"/>
     <ROW Action="AI_AppSearchEx" Sequence="101"/>
     <ROW Action="AI_InstallPrerequisite" Sequence="1283"/>
-    <ROW Action="AI_InstallPostPrerequisite" Sequence="1302"/>
+    <ROW Action="AI_InstallPostPrerequisite" Sequence="1301"/>
     <ROW Action="AI_ExtractPrereq" Sequence="1282"/>
     <ROW Action="AI_DownloadPrereq" Sequence="1281"/>
-    <ROW Action="AI_StartImageSlideshow" Condition="(VersionNT &gt;= 500) AND (Not Installed) AND (UILevel = 5)" Sequence="76"/>
-    <ROW Action="AI_StopImageSlideshow" Condition="(VersionNT &gt;= 500)" Sequence="1301"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
-    <ROW Condition="( Version9X OR VersionNT64 OR ( VersionNT AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &gt;= 1))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 1))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 2))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 3))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 4))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 5))) AND ((VersionNT &lt;&gt; 400) OR ((VersionNT = 400) AND (ServicePackLevel &lt;&gt; 6))) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNTDisplay]" DescriptionLocId="AI.LaunchCondition.NoSpecificNT" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]" DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
@@ -209,8 +190,8 @@
     <ROW Registry="Visual_C_2010_Runt" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="Visual_C_2010_Runt" Value="1" Component_="Visual_C_2010_Runt"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="BlizzTV.exe" Directory_="SHORTCUTDIR" Name="BlizzTV.exe" Component_="BlizzTV.exe" Target="[#BlizzTV.exe]" Description="BlizzTV.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="BlizzTV.exe_1" Directory_="DesktopFolder" Name="BlizzTV.exe" Component_="BlizzTV.exe" Target="[#BlizzTV.exe]" Description="BlizzTV.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="BlizzTV" Directory_="SHORTCUTDIR" Name="BlizzTV" Component_="BlizzTV.exe" Target="[#BlizzTV.exe]" Description="BlizzTV" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="BlizzTV_1" Directory_="DesktopFolder" Name="BlizzTV" Component_="BlizzTV.exe" Target="[#BlizzTV.exe]" Description="BlizzTV" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
@@ -220,10 +201,10 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
-    <ROW PrereqKey="AF6A8838_0269_46AF_B128_A460BD2C6136" DisplayName="Adobe Flash Player 10" SetupFileUrl="http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="22" Operator="0" Options="m" Type="1" Feature="Adobe_Flash_Player_10"/>
-    <ROW PrereqKey="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" DisplayName=".NET Framework 4.0" SetupFileUrl="http://download.microsoft.com/download/1/B/E/1BE39E79-7E39-46A3-96FF-047F95396215/dotNetFx40_Full_setup.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="22" Operator="1" Options="m" Type="1" Feature="NET_Framework_4.0"/>
-    <ROW PrereqKey="Visual_C_2010_Runt" DisplayName="Visual C++ 2010 Runtime Libraries (x86)" SetupFileUrl="C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bootstrapper\Packages\vcredist_x86\vcredist_x86.exe" Location="0" ExactSize="0" MinWin9xVer="47" MinWinNTVer="22" Operator="0" ComLine="/q:a" Options="m" TargetName="vcredist_x86.exe" Type="1" Feature="Visual_C_2010_Runtime_Libraries_x86"/>
-    <ATTRIBUTE name="PrereqsOrder" value="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD AF6A8838_0269_46AF_B128_A460BD2C6136 Visual_C_2010_Runt"/>
+    <ROW PrereqKey="AF6A8838_0269_46AF_B128_A460BD2C6136" DisplayName="Adobe Flash Player 10" SetupFileUrl="http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="21" Operator="0" Type="1" Feature="Adobe_Flash_Player_10"/>
+    <ROW PrereqKey="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" DisplayName=".NET Framework 4.0" SetupFileUrl="http://download.microsoft.com/download/1/B/E/1BE39E79-7E39-46A3-96FF-047F95396215/dotNetFx40_Full_setup.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="25" Operator="1" Options="m" Type="1" Feature="NET_Framework_4.0"/>
+    <ROW PrereqKey="Visual_C_2010_Runt" DisplayName="Visual C++ 2010 Runtime Libraries (x86)" SetupFileUrl="C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bootstrapper\Packages\vcredist_x86\vcredist_x86.exe" Location="0" ExactSize="0" MinWin9xVer="47" MinWinNTVer="17" Operator="0" ComLine="/q:a" Options="m" TargetName="vcredist_x86.exe" Type="1" Feature="Visual_C_2010_Runtime_Libraries_x86"/>
+    <ATTRIBUTE name="PrereqsOrder" value="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD Visual_C_2010_Runt AF6A8838_0269_46AF_B128_A460BD2C6136"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
     <ROW SearchKey="AF6A8838_0269_46AF_B128_A460BD2C6136_ADOBE_FLASH_10_SEARCH" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\NPSWF32.dll" VerMin="10.0" Order="1" Property="AI_ADOBE_FLASH_10_PREREQSEARCH_PROP"/>
