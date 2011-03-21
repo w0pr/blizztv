@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections;
+using BlizzTV.Log;
 using BlizzTV.Utility.Web;
 
 namespace BlizzTV.EmbeddedModules.Streams.Parsers
@@ -46,12 +47,15 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                     this.ViewerCount = Int32.Parse(table["stream_count"].ToString()); // stream viewers count.
                     if (table.Contains("title")) this.Description = (string)table["title"].ToString(); // stream description.
                     this.Process();
+                    return true;
                 }
                 else return false;
             }
-            catch (Exception) { return false; }
-
-            return true;
+            catch (Exception e)
+            {
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Stream module - JustinTV parser caught an exception: {0}", e)); 
+                return false;
+            }
         }
     }
 }

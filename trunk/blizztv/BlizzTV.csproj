@@ -162,6 +162,12 @@
     <Compile Include="EmbeddedModules\Streams\Settings\AddStream.Designer.cs">
       <DependentUpon>AddStream.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmbeddedModules\Videos\Settings\AddChannel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmbeddedModules\Videos\Settings\AddChannel.Designer.cs">
+      <DependentUpon>AddChannel.cs</DependentUpon>
+    </Compile>
     <Compile Include="InfraStructure\Modules\ModuleNode.cs" />
     <Compile Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionContainer.cs">
       <SubType>Form</SubType>
@@ -366,12 +372,6 @@
     <Compile Include="EmbeddedModules\Streams\StreamsModule.cs" />
     <Compile Include="EmbeddedModules\Videos\Channel.cs" />
     <Compile Include="EmbeddedModules\Videos\ChannelFactory.cs" />
-    <Compile Include="EmbeddedModules\Videos\Settings\AddChannelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmbeddedModules\Videos\Settings\AddChannelForm.Designer.cs">
-      <DependentUpon>AddChannelForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="EmbeddedModules\Videos\UI\PlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -491,6 +491,9 @@
     <EmbeddedResource Include="EmbeddedModules\Streams\Settings\AddStream.resx">
       <DependentUpon>AddStream.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedModules\Videos\Settings\AddChannel.resx">
+      <DependentUpon>AddChannel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionContainer.resx">
       <DependentUpon>AddSubscriptionContainer.cs</DependentUpon>
     </EmbeddedResource>
@@ -557,9 +560,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EmbeddedModules\Streams\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EmbeddedModules\Videos\Settings\AddChannelForm.resx">
-      <DependentUpon>AddChannelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmbeddedModules\Videos\UI\PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>

@@ -18,9 +18,7 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
-using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Log;
-using BlizzTV.Utility.Extensions;
 using BlizzTV.Utility.Web;
 
 namespace BlizzTV.EmbeddedModules.Videos.Parsers
@@ -60,9 +58,13 @@ namespace BlizzTV.EmbeddedModules.Videos.Parsers
                     i++;
                     if (i >= Settings.ModuleSettings.Instance.NumberOfVideosToQueryChannelFor) break;
                 }
-                return true;
+                return this.Videos.Count > 0;
             }
-            catch (Exception e) { LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Module video's BlipTV parser caught an exception: {0}", e)); return false; }
+            catch (Exception e)
+            {
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Video module - BlipTV parser caught an exception: {0}", e)); 
+                return false;
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.InfraStructure.Modules.Subscriptions;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Catalog;
+using BlizzTV.InfraStructure.Modules.Subscriptions.UI;
 
 namespace BlizzTV.EmbeddedModules.Videos.Settings
 {
@@ -68,12 +69,11 @@ namespace BlizzTV.EmbeddedModules.Videos.Settings
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            AddChannelForm f = new AddChannelForm();
-            if (f.ShowDialog() == DialogResult.OK)
-            {
-                Subscriptions.Instance.Add(f.Subscription);
-                this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription(f.Subscription));
-            }
+            var form = new AddSubscriptionHost(new AddChannel());
+            if (form.ShowDialog() != DialogResult.OK) return;
+
+            Subscriptions.Instance.Add((VideoSubscription)form.Subscription);
+            this.ListviewSubscriptions.Items.Add(new ListviewVideoSubscription((VideoSubscription)form.Subscription));
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)

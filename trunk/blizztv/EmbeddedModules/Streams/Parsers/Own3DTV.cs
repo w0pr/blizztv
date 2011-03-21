@@ -17,6 +17,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using BlizzTV.Log;
 using BlizzTV.Utility.Web;
 
 namespace BlizzTV.EmbeddedModules.Streams.Parsers
@@ -49,10 +50,13 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
                 }
 
                 this.Process();
+                return true;
             }
-            catch (Exception) { return false; }
-
-            return true;
+            catch (Exception e)
+            {
+                LogManager.Instance.Write(LogMessageTypes.Error, string.Format("Stream module - Own3DTV parser caught an exception: {0}", e)); 
+                return false;
+            }
         }
     }
 }
