@@ -227,20 +227,22 @@ namespace BlizzTV.EmbeddedModules.Streams
             {
                 if (((StreamProvider)pair.Value).IsUrlValid(link))
                 {
-                    var streamSubscription = new StreamSubscription();
-                    streamSubscription.Slug = (pair.Value as StreamProvider).GetslugFromUrl(link);
-                    streamSubscription.Provider = pair.Value.Name;
-                    streamSubscription.Name = (pair.Value as StreamProvider).GetslugFromUrl(link);
-
-                    if (streamSubscription.Provider.ToLower() == "own3dtv")
+                    var streamSubscription = new StreamSubscription
                     {
-                        string name = "";
-                        if (InputBox.Show("Add New Stream", "Please enter name for the new stream", ref name) == System.Windows.Forms.DialogResult.OK) streamSubscription.Name = name;
-                        else return false;
+                        Slug = (pair.Value as StreamProvider).GetSlugFromUrl(link),
+                        Provider = pair.Value.Name,
+                        Name = pair.Value.Name.ToLower() == "own3dtv" ? (pair.Value as StreamProvider).GetNameFromUrl(link).Replace('_', ' ') : (pair.Value as StreamProvider).GetSlugFromUrl(link)
+                    };
+
+                    string streamKey = string.Format("{0}@{1}", streamSubscription.Slug, streamSubscription.Provider.ToLower());
+
+                    if (Subscriptions.Instance.Dictionary.ContainsKey(streamKey))
+                    {
+                        MessageBox.Show(string.Format(i18n.StreamSubscriptionAlreadyExistsMessage, Subscriptions.Instance.Dictionary[streamKey].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return true; 
                     }
 
                     if (Subscriptions.Instance.Add(streamSubscription)) this.MenuRefresh(this, new EventArgs());
-                    else MessageBox.Show(string.Format("The stream already exists in your subscriptions named as '{0}'.", Subscriptions.Instance.Dictionary[streamSubscription.Slug].Name), "Subscription Exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                     return true;
                 }
             }
