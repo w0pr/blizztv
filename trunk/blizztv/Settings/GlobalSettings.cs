@@ -44,6 +44,11 @@ namespace BlizzTV.Settings
         // Holds the selected notification sound.
         public string NotificationSound { get { return this.GetString("NotificationSound", "DefaultNotification"); } set { this.Set("NotificationSound", value); } }
 
+        /// <summary>
+        /// Holds the volume for notification sounds.
+        /// </summary>
+        public float NotificationSoundVolume { get { return this.GetFloat("NotificationSoundVolume", 1f); } set { this.Set("NotificationSoundVolume", value); } }
+
         // Allow automatic update checks?
         public bool AllowAutomaticUpdateChecks { get { return this.GetBoolean("AllowAutomaticUpdateChecks", true); } set { this.Set("AllowAutomaticUpdateChecks", value); } }
 

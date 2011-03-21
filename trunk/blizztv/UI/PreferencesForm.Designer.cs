@@ -56,13 +56,15 @@
             this.checkBoxMinimimizeToSystemTray = new System.Windows.Forms.CheckBox();
             this.tabNotifications = new System.Windows.Forms.TabPage();
             this.groupBoxNotificationSounds = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.checkBoxNotificationSoundsEnabled = new System.Windows.Forms.CheckBox();
             this.comboBoxNotificationSound = new System.Windows.Forms.ComboBox();
             this.checkBoxNotificationsEnabled = new System.Windows.Forms.CheckBox();
             this.tabPlayer = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CheckBoxPlayerAlwaysOnTop = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.volumeBar = new System.Windows.Forms.TrackBar();
             this.tabDebug.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabModules.SuspendLayout();
@@ -76,6 +78,7 @@
             this.groupBoxNotificationSounds.SuspendLayout();
             this.tabPlayer.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             this.SuspendLayout();
             // 
             // ImageList
@@ -349,15 +352,26 @@
             // 
             // groupBoxNotificationSounds
             // 
+            this.groupBoxNotificationSounds.Controls.Add(this.volumeBar);
+            this.groupBoxNotificationSounds.Controls.Add(this.label2);
             this.groupBoxNotificationSounds.Controls.Add(this.label1);
             this.groupBoxNotificationSounds.Controls.Add(this.checkBoxNotificationSoundsEnabled);
             this.groupBoxNotificationSounds.Controls.Add(this.comboBoxNotificationSound);
             this.groupBoxNotificationSounds.Location = new System.Drawing.Point(5, 35);
             this.groupBoxNotificationSounds.Name = "groupBoxNotificationSounds";
-            this.groupBoxNotificationSounds.Size = new System.Drawing.Size(520, 72);
-            this.groupBoxNotificationSounds.TabIndex = 2;
+            this.groupBoxNotificationSounds.Size = new System.Drawing.Size(520, 98);
+            this.groupBoxNotificationSounds.TabIndex = 1;
             this.groupBoxNotificationSounds.TabStop = false;
             this.groupBoxNotificationSounds.Text = "Notification Sounds";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 45);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Notification Sound:";
             // 
             // checkBoxNotificationSoundsEnabled
             // 
@@ -366,7 +380,7 @@
             this.checkBoxNotificationSoundsEnabled.Location = new System.Drawing.Point(9, 19);
             this.checkBoxNotificationSoundsEnabled.Name = "checkBoxNotificationSoundsEnabled";
             this.checkBoxNotificationSoundsEnabled.Size = new System.Drawing.Size(505, 17);
-            this.checkBoxNotificationSoundsEnabled.TabIndex = 2;
+            this.checkBoxNotificationSoundsEnabled.TabIndex = 0;
             this.checkBoxNotificationSoundsEnabled.Text = "Enable notification sounds";
             this.checkBoxNotificationSoundsEnabled.UseVisualStyleBackColor = true;
             this.checkBoxNotificationSoundsEnabled.CheckedChanged += new System.EventHandler(this.checkBoxNotificationSoundsEnabled_CheckedChanged);
@@ -379,8 +393,8 @@
             this.comboBoxNotificationSound.FormattingEnabled = true;
             this.comboBoxNotificationSound.Location = new System.Drawing.Point(109, 42);
             this.comboBoxNotificationSound.Name = "comboBoxNotificationSound";
-            this.comboBoxNotificationSound.Size = new System.Drawing.Size(405, 21);
-            this.comboBoxNotificationSound.TabIndex = 0;
+            this.comboBoxNotificationSound.Size = new System.Drawing.Size(142, 21);
+            this.comboBoxNotificationSound.TabIndex = 1;
             this.comboBoxNotificationSound.SelectedIndexChanged += new System.EventHandler(this.comboBoxNotificationSound_SelectedIndexChanged);
             // 
             // checkBoxNotificationsEnabled
@@ -428,14 +442,24 @@
             this.CheckBoxPlayerAlwaysOnTop.Text = "Always On Top";
             this.CheckBoxPlayerAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 45);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Notification Sound:";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(58, 67);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Volume:";
+            // 
+            // volumeBar
+            // 
+            this.volumeBar.AutoSize = false;
+            this.volumeBar.BackColor = System.Drawing.Color.White;
+            this.volumeBar.Location = new System.Drawing.Point(109, 69);
+            this.volumeBar.Name = "volumeBar";
+            this.volumeBar.Size = new System.Drawing.Size(142, 23);
+            this.volumeBar.TabIndex = 2;
+            this.volumeBar.ValueChanged += new System.EventHandler(this.volumeBar_ValueChanged);
             // 
             // PreferencesForm
             // 
@@ -476,6 +500,7 @@
             this.tabPlayer.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -515,5 +540,7 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.CheckBox checkBoxStartOnSystemStartup;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TrackBar volumeBar;
     }
 }

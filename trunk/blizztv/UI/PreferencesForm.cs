@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using BlizzTV.Assets.i18n;
+using BlizzTV.Audio;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.Notifications;
@@ -74,6 +75,7 @@ namespace BlizzTV.UI
             checkBoxNotificationSoundsEnabled.Checked = GlobalSettings.Instance.NotificationSoundsEnabled;
             checkBoxAllowAutomaticUpdateChecks.Checked = GlobalSettings.Instance.AllowAutomaticUpdateChecks;
             checkBoxAllowBetaVersionNotifications.Checked = GlobalSettings.Instance.AllowBetaVersionNotifications;
+            volumeBar.Value = (int) (GlobalSettings.Instance.NotificationSoundVolume*10);
             foreach (string sound in NotificationSound.Instance.Names) this.comboBoxNotificationSound.Items.Add(sound);
             this.comboBoxNotificationSound.SelectedIndex = this.NotificationSoundGetSelectedIndex();
 
@@ -108,7 +110,7 @@ namespace BlizzTV.UI
 
                     if (moduleForm != null) // if module supplies a preferenes form.
                     {
-                        TabPage tab = new TabPage(pair.Key); // create up a new tabpage for it.
+                        var tab = new TabPage(pair.Key); // create up a new tabpage for it.
                         moduleForm.TopLevel = false; // module form should not behave as top most.
                         moduleForm.Dock = DockStyle.Fill; // let it fill it's parent.
                         moduleForm.FormBorderStyle = FormBorderStyle.None; // it should not have borders too.
@@ -131,6 +133,7 @@ namespace BlizzTV.UI
             GlobalSettings.Instance.NotificationsEnabled = checkBoxNotificationsEnabled.Checked;
             GlobalSettings.Instance.NotificationSoundsEnabled = checkBoxNotificationSoundsEnabled.Checked;
             GlobalSettings.Instance.NotificationSound = comboBoxNotificationSound.SelectedItem.ToString();
+            GlobalSettings.Instance.NotificationSoundVolume = (float)volumeBar.Value / 10;
             GlobalSettings.Instance.AllowAutomaticUpdateChecks = checkBoxAllowAutomaticUpdateChecks.Checked;
             GlobalSettings.Instance.AllowBetaVersionNotifications = checkBoxAllowBetaVersionNotifications.Checked;
 
@@ -188,6 +191,15 @@ namespace BlizzTV.UI
                 string selection = this.comboBoxNotificationSound.SelectedItem.ToString();
                 NotificationSound.Instance.Play(selection);
             }
+        }
+
+        #endregion
+
+        #region misc code
+
+        private void volumeBar_ValueChanged(object sender, EventArgs e)
+        {
+            AudioManager.Instance.SetVolume(this.volumeBar.Value);
         }
 
         #endregion
