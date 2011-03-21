@@ -72,7 +72,7 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
             this._dragging = false;
             if (this._borderless) { this.FormBorderStyle = FormBorderStyle.Sizable; this._borderless = false; }
             else { this.FormBorderStyle = FormBorderStyle.None; this._borderless = true; }
-            if (this._snapParent) this.SnapToParent();
+            if (!this._borderless && this._snapParent) this.SnapToParent();
         }
 
         private void ChatMouseDown(object sender, MouseEventArgs e)
@@ -103,12 +103,12 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
 
         void OnParentResize(object sender, EventArgs e)
         {
-            if(this._snapParent) this.SnapToParent();
+            if (!this._borderless && this._snapParent) this.SnapToParent();
         }
 
         private void OnParentMove(object sender, EventArgs e)
         {
-            if (this._snapParent)  this.SnapToParent();
+            if (!this._borderless && this._snapParent) this.SnapToParent();
         }
 
         private void SnapToParent()
@@ -123,8 +123,11 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
             int margin = Math.Abs(this.Left - (this._parent.Left + this._parent.Width));
             if (margin <= 15)
             {
-                this._snapParent = true;
-                this.SnapToParent();
+                if(!this._borderless)
+                {
+                    this._snapParent = true;
+                    this.SnapToParent();
+                }                
             }
             else this._snapParent = false;
         }
