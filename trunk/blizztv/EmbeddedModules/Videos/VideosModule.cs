@@ -243,21 +243,28 @@ namespace BlizzTV.EmbeddedModules.Videos
         {
             foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
             {
-                if (((VideoProvider)pair.Value).LinkValid(link))
-                {
-                    var videoSubscription = new VideoSubscription();
-                    videoSubscription.Name = videoSubscription.Slug = (pair.Value as VideoProvider).GetSlug(link);
-                    videoSubscription.Provider = pair.Value.Name;
+                if (!((VideoProvider) pair.Value).LinkValid(link)) continue;
 
-                    using (Channel channel = ChannelFactory.CreateChannel(videoSubscription))
-                    {
-                        if (channel.IsValid())
-                        {
-                            if (Subscriptions.Instance.Add(videoSubscription)) this.MenuRefresh(this, new EventArgs());
-                            else MessageBox.Show(string.Format(i18n.VideoChannelSubscriptionsAlreadyExists, Subscriptions.Instance.Dictionary[videoSubscription.Slug].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return true;
-                        }
-                    }
+                string slug = (pair.Value as VideoProvider).GetSlug(link);
+                var videoSubscription = new VideoSubscription
+                                            {
+                                                Name = slug,
+                                                Slug = slug,
+                                                Provider = pair.Value.Name
+                                            };
+
+                string channelKey = string.Format("{0}@{1}", videoSubscription.Slug, videoSubscription.Provider.ToLower());
+                if (Subscriptions.Instance.Dictionary.ContainsKey(channelKey))
+                {
+                    MessageBox.Show(string.Format(i18n.VideoChannelSubscriptionsAlreadyExists, Subscriptions.Instance.Dictionary[channelKey].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true;
+                }
+
+                using (Channel channel = ChannelFactory.CreateChannel(videoSubscription))
+                {
+                    if (!channel.IsValid()) continue;
+                    if (Subscriptions.Instance.Add(videoSubscription)) this.MenuRefresh(this, new EventArgs());
+                    return true;
                 }
             }
 

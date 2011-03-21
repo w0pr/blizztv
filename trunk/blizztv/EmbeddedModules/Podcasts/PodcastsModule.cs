@@ -243,33 +243,23 @@ namespace BlizzTV.EmbeddedModules.Podcasts
             if (Subscriptions.Instance.Dictionary.ContainsKey(link))
             {
                 MessageBox.Show(string.Format(i18n.PodcastSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[link].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return true;
             }
 
             var podcastSubscription = new PodcastSubscription { Name = "test-podcast", Url = link };
 
             using (var podcast = new Podcast(podcastSubscription))
             {
-                if (podcast.IsValid())
-                {
-                    var subscription = new PodcastSubscription();
-                    string podcastName = "";
+                if (!podcast.IsValid()) return false;
 
-                    if (InputBox.Show(i18n.AddNewPodcastTitle, i18n.AddNewPodcastMessage, ref podcastName) == DialogResult.OK)
-                    {
-                        subscription.Name = podcastName;
-                        subscription.Url = link;
-                        if (Subscriptions.Instance.Add(subscription))
-                        {
-                            this.MenuRefresh(this, new EventArgs());
-                            return true;
-                        }
-                        return false;
-                    }
-                }
+                string podcastName = "";
+                if (InputBox.Show(i18n.AddNewPodcastTitle, i18n.AddNewPodcastMessage, ref podcastName) != DialogResult.OK) return true;
+                podcastSubscription.Name = podcastName;
+
+                if (Subscriptions.Instance.Add(podcastSubscription)) this.MenuRefresh(this, new EventArgs());                 
             }
 
-            return false;
+            return true;
         }
 
         #endregion

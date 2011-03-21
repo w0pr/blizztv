@@ -200,15 +200,6 @@ namespace BlizzTV.UI
 
         #endregion
 
-        #region automatic update check
-
-        private void AutomaticUpdateCheck() // Checks for if an update is available
-        {
-            if (GlobalSettings.Instance.AllowAutomaticUpdateChecks) { UpdateManager.Check(); }
-        }        
-
-        #endregion
-
         #region treeview handlers
 
         private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) // Treeview node double-click handler.
@@ -265,11 +256,15 @@ namespace BlizzTV.UI
 
         private void TreeView_DragDrop(object sender, DragEventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+
             string link = (string)e.Data.GetData(DataFormats.Text);
             foreach (KeyValuePair<string, Module> pair in ModuleManager.Instance.LoadedModules)
             {
                 if (pair.Value.AddSubscriptionFromUrl(link)) break;
             }
+
+            this.Cursor = Cursors.Default;
         }
 
         #endregion
@@ -359,5 +354,14 @@ namespace BlizzTV.UI
         private void MenuDonate_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null); }
 
         #endregion       
+
+        #region automatic update check
+
+        private void AutomaticUpdateCheck() // Checks for if an update is available
+        {
+            if (GlobalSettings.Instance.AllowAutomaticUpdateChecks) { UpdateManager.Check(); }
+        }
+
+        #endregion
     }    
 }
