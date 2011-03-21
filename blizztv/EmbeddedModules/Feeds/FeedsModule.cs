@@ -243,33 +243,23 @@ namespace BlizzTV.EmbeddedModules.Feeds
             if (Subscriptions.Instance.Dictionary.ContainsKey(link))
             {
                 MessageBox.Show(string.Format(i18n.FeedSubscriptionAlreadyExists, Subscriptions.Instance.Dictionary[link].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return true;
             }
 
             var feedSubscription = new FeedSubscription { Name = "test-feed", Url = link };
 
             using (var feed = new Feed(feedSubscription))
             {
-                if (feed.IsValid())
-                {
-                    var subscription = new FeedSubscription();
-                    string feedName = "";
+                if (!feed.IsValid()) return false;
 
-                    if (InputBox.Show(i18n.AddNewFeedTitle, i18n.AddNewFeedMessage, ref feedName) == DialogResult.OK)
-                    {
-                        subscription.Name = feedName;
-                        subscription.Url = link;
-                        if (Subscriptions.Instance.Add(subscription))
-                        {
-                            this.MenuRefresh(this, new EventArgs());
-                            return true;
-                        }
-                        return false;
-                    }
-                }
+                string feedName = "";
+                if (InputBox.Show(i18n.AddNewFeedTitle, i18n.AddNewFeedMessage, ref feedName) != DialogResult.OK) return true;
+                feedSubscription.Name = feedName;
+
+                if (Subscriptions.Instance.Add(feedSubscription)) this.MenuRefresh(this, new EventArgs());                                    
             }
 
-            return false;
+            return true;
         }
 
         #endregion

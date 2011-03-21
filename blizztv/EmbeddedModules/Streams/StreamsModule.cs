@@ -225,27 +225,31 @@ namespace BlizzTV.EmbeddedModules.Streams
         {
             foreach (KeyValuePair<string, Provider> pair in Providers.Instance.Dictionary)
             {
-                if (((StreamProvider)pair.Value).IsUrlValid(link))
+                if (!((StreamProvider) pair.Value).IsUrlValid(link)) continue;
+
+                string slug = (pair.Value as StreamProvider).GetSlugFromUrl(link);
+                var streamSubscription = new StreamSubscription
                 {
-                    var streamSubscription = new StreamSubscription
-                    {
-                        Slug = (pair.Value as StreamProvider).GetSlugFromUrl(link),
-                        Provider = pair.Value.Name,
-                        Name = pair.Value.Name.ToLower() == "own3dtv" ? (pair.Value as StreamProvider).GetNameFromUrl(link).Replace('_', ' ') : (pair.Value as StreamProvider).GetSlugFromUrl(link)
-                    };
+                    Slug = slug,
+                    Provider = pair.Value.Name,
+                    Name = pair.Value.Name.ToLower() == "own3dtv" ? (pair.Value as StreamProvider).GetNameFromUrl(link).Replace('_', ' ') : slug
+                };
 
-                    string streamKey = string.Format("{0}@{1}", streamSubscription.Slug, streamSubscription.Provider.ToLower());
+                string streamKey = string.Format("{0}@{1}", streamSubscription.Slug, streamSubscription.Provider.ToLower());
+                if (Subscriptions.Instance.Dictionary.ContainsKey(streamKey))
+                {
+                    MessageBox.Show(string.Format(i18n.StreamSubscriptionAlreadyExistsMessage, Subscriptions.Instance.Dictionary[streamKey].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return true; 
+                }
 
-                    if (Subscriptions.Instance.Dictionary.ContainsKey(streamKey))
-                    {
-                        MessageBox.Show(string.Format(i18n.StreamSubscriptionAlreadyExistsMessage, Subscriptions.Instance.Dictionary[streamKey].Name), i18n.SubscriptionExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return true; 
-                    }
-
+                using(var stream=StreamFactory.CreateStream(streamSubscription))
+                {
+                    if (!stream.IsValid()) continue;
                     if (Subscriptions.Instance.Add(streamSubscription)) this.MenuRefresh(this, new EventArgs());
                     return true;
                 }
             }
+
             return false;
         }
 

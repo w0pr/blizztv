@@ -36,7 +36,7 @@ namespace BlizzTV.EmbeddedModules.Videos
 
         public bool Add(VideoSubscription subscription)
         {
-            if (this.Dictionary.ContainsKey(string.Format("{0}@{1}", subscription.Slug, subscription.Provider))) return false;
+            if (this.Dictionary.ContainsKey(string.Format("{0}@{1}", subscription.Slug, subscription.Provider.ToLower()))) return false;
 
             base.Add(subscription);
             return true;
