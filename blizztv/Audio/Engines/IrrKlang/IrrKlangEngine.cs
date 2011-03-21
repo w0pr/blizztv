@@ -15,6 +15,7 @@
  * $Id$
  */
 
+using BlizzTV.Settings;
 using IrrKlang;
 
 namespace BlizzTV.Audio.Engines.IrrKlang
@@ -25,7 +26,10 @@ namespace BlizzTV.Audio.Engines.IrrKlang
 
         public IrrKlangEngine()
         {
-            this._engine = new ISoundEngine(); // startup IrrKlang's internal sound engine.
+            this._engine = new ISoundEngine // startup IrrKlang's internal sound engine.
+            {
+                SoundVolume = GlobalSettings.Instance.NotificationSoundVolume // set the master volume.
+            };             
         }
 
         public override bool CanPlayStreams { get { return true; } }
@@ -38,8 +42,8 @@ namespace BlizzTV.Audio.Engines.IrrKlang
         }
 
         public override void PlayFromMemory(string name, byte[] data)
-        {
-            ISoundSource source = this._engine.AddSoundSourceFromMemory(data, name); // create the named sound source.
+        {            
+            ISoundSource source = this._engine.AddSoundSourceFromMemory(data, name) ?? this._engine.GetSoundSource(name); // create or get the named sound source.
             ISound sound = this._engine.Play2D(name); // start playing the track with using the name of sound source.
             this.CurrentTrack = new IrrKlangTrack(sound, name);
         }
@@ -74,9 +78,10 @@ namespace BlizzTV.Audio.Engines.IrrKlang
             if (this.CurrentTrack != null) ((IrrKlangTrack) this.CurrentTrack).Sound.PlayPosition = (uint)position;
         }
 
-        public override void SetVolume(double volume)
+        public override void SetVolume(float volume)
         {
-            if (this.CurrentTrack != null) ((IrrKlangTrack) this.CurrentTrack).Sound.Volume = (float)volume;
+            this._engine.SoundVolume = volume;
+            if (this.CurrentTrack != null) ((IrrKlangTrack)this.CurrentTrack).Sound.Volume = volume;
         }
     }
 }

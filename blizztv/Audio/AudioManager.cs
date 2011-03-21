@@ -65,6 +65,12 @@ namespace BlizzTV.Audio
             new Thread(() => this._engine.PlayFromMemory(name, data)) { IsBackground = true }.Start();
         }
 
+        public void SetVolume(float volume)
+        {
+            if (this.EngineStatus != AudioEngineStatus.Ready) return; // make sure underlying engine is functional.
+            this._engine.SetVolume(volume);
+        }
+
         public enum AudioEngineStatus
         {
             Unknown, // not initialized yet.

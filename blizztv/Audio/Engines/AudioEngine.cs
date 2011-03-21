@@ -37,6 +37,6 @@ namespace BlizzTV.Audio.Engines
         public virtual void Stop() { throw new NotSupportedException("Audio engine does not support Stop()."); }
         public virtual void StopAll() { throw new NotSupportedException("Audio engine does not support StopAll()."); }
         public virtual void SetPosition(int position) { throw new NotSupportedException("Audio engine does not support SetPosition()."); }
-        public virtual void SetVolume(double volume) { throw new NotSupportedException("Audio engine does not support SetVolume()."); }
+        public virtual void SetVolume(float volume) { throw new NotSupportedException("Audio engine does not support SetVolume()."); }
     }
 }
