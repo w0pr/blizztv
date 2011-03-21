@@ -64,12 +64,20 @@ namespace BlizzTV.EmbeddedModules.Streams
             return m.Success;
         }
 
-        public string GetslugFromUrl(string link)
+        public string GetSlugFromUrl(string link)
         {
             if (!this.IsUrlValid(link)) return null;
             var regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
             Match m = regex.Match(link);
             return m.Groups["Slug"].Value;
+        }
+
+        public string GetNameFromUrl(string link)
+        {
+            if (!this.IsUrlValid(link)) return null;
+            var regex = new Regex(this.URLRegEx, RegexOptions.Compiled);
+            Match m = regex.Match(link);
+            return m.Groups["Name"].Value;
         }
     }
 }
