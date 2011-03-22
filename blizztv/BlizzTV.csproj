@@ -594,7 +594,6 @@
     <Content Include="app.ico" />
     <EmbeddedResource Include="Assets\Assemblies\irrKlang.NET4.dll" />
     <EmbeddedResource Include="Assets\Assemblies\Microsoft.mshtml.dll" />
-    <None Include="app.config" />
     <None Include="Resources\DefaultNotification.ogg" />
     <None Include="Resources\DoorBell.ogg" />
     <None Include="Resources\FastBells.ogg" />
