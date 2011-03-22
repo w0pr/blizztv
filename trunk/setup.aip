@@ -9,17 +9,18 @@
     <ROW Property="ARPURLINFOABOUT" Value="http://get.blizztv.com"/>
     <ROW Property="ARPURLUPDATEINFO" Value="http://get.blizztv.com"/>
     <ROW Property="BannerBitmap" MultiBuildValue="DefaultBuild:banner_image.jpg" Type="1"/>
-    <ROW Property="CTRLS" Value="2"/>
+    <ROW Property="CTRLS" Value="3"/>
     <ROW Property="DialogBitmap" MultiBuildValue="DefaultBuild:dialog_image.jpg" Type="1"/>
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:3"/>
     <ROW Property="Manufacturer" Value="BlizzTV" ValueLocId="*"/>
-    <ROW Property="ProductCode" Value="1033:{4148005A-55CB-4CF2-959F-34C0054DB43A} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{7F914CF9-01A4-4F76-B863-6627AE9E2D4B} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="BlizzTV" ValueLocId="*"/>
-    <ROW Property="ProductVersion" Value="0.23"/>
+    <ROW Property="ProductVersion" Value="0.22.4098.35659"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{7B0355E5-E0BB-43CB-BDD0-4C2D4D99A2B8}"/>
+    <ROW Property="VIEWREADME" Value="1" Type="4"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
   </COMPONENT>
@@ -35,6 +36,7 @@
     <ROW Component="BlizzTV.exe" ComponentId="{61A41A44-2A9F-47BC-8810-08AD20DBA4BD}" Directory_="APPDIR" Attributes="0" KeyPath="BlizzTV.exe"/>
     <ROW Component="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" ComponentId="{774BF2A6-1B45-4648-8C1D-12FEF9C0D360}" Directory_="APPDIR" Attributes="4" KeyPath="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" Options="2"/>
     <ROW Component="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D" ComponentId="{6912FE54-547F-408F-A037-31ED025F479F}" Directory_="APPDIR" Attributes="4" KeyPath="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D" Options="2"/>
+    <ROW Component="ReadMe.txt" ComponentId="{65755F30-02F1-4CC0-9608-6B399E0BF3B8}" Directory_="APPDIR" Attributes="0" KeyPath="ReadMe.txt" Type="0"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{0FCE352B-413F-451A-8756-E9F3532E530B}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="Visual_C_2010_Runt" ComponentId="{CD4478CF-8504-4C9E-A6F6-B49A4438B51A}" Directory_="APPDIR" Attributes="4" KeyPath="Visual_C_2010_Runt" Options="2"/>
     <ROW Component="Windows_Imaging_Comp" ComponentId="{94F30A66-C43F-423E-B1BD-F3B07A1CDE7C}" Directory_="APPDIR" Attributes="4" KeyPath="Windows_Imaging_Comp" Options="2"/>
@@ -43,7 +45,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="Adobe_Flash_Player_10" Title="Adobe Flash Player 10" Description="Adobe Flash Player 10" Display="9" Level="1" Attributes="0" Components="AF6A8838_0269_46AF_B128_A460BD2C6136"/>
-    <ROW Feature="BlizzTV" Title="BlizzTV" Description="BlizzTV installer" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath BlizzTV.exe irrKlang.NET4.dll SHORTCUTDIR"/>
+    <ROW Feature="BlizzTV" Title="BlizzTV" Description="BlizzTV installer" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath BlizzTV.exe irrKlang.NET4.dll SHORTCUTDIR ReadMe.txt"/>
     <ROW Feature="NET_Framework_4.0" Title=".NET Framework 4.0" Description=".NET Framework 4.0" Display="5" Level="1" Attributes="16" Components="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD"/>
     <ROW Feature="Visual_C_2010_Runtime_Libraries_x86" Title="Visual C++ 2010 Runtime Libraries (x86)" Description="Visual C++ 2010 Runtime Libraries (x86)" Display="7" Level="1" Attributes="16" Components="Visual_C_2010_Runt"/>
     <ROW Feature="Windows_Imaging_Components" Title="Windows Imaging Components 32-bit" Description="Windows Imaging Components 32-bit" Display="11" Level="1" Attributes="16" Components="Windows_Imaging_Comp"/>
@@ -53,6 +55,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="BlizzTV.exe" Component_="BlizzTV.exe" FileName="BlizzTV.exe" Attributes="0" SourcePath="blizztv\bin\Release\BlizzTV.exe" SelfReg="false" Sequence="1"/>
+    <ROW File="ReadMe.txt" Component_="ReadMe.txt" FileName="ReadMe.txt" Attributes="0" SourcePath="assets\ReadMe.txt" SelfReg="false" Sequence="3"/>
     <ROW File="irrKlang.NET4.dll" Component_="irrKlang.NET4.dll" FileName="irrKla~1.dll|irrKlang.NET4.dll" Attributes="0" SourcePath="blizztv\bin\Release\irrKlang.NET4.dll" SelfReg="false" Sequence="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
@@ -154,6 +157,7 @@
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_VerifyPrereq" Type="1" Source="Prereq.dll" Target="VerifyPrereq"/>
+    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="[#ReadMe.txt]"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder][ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
