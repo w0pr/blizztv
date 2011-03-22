@@ -70,6 +70,9 @@ namespace BlizzTV.UI.Wizard
             {
                 Settings.Instance.Modules.Enable(pair.Value.Attributes.Name);
             }
+
+            Settings.Instance.NeedInitialConfig = false; // no more run the initial configuration wizard.
+            Settings.Instance.Save();
         }
     }
 }
