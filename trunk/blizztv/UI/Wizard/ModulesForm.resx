@@ -755,6 +755,10 @@
         YUpKSuTSpUs9NSzcOpBNtnXMFdYElSMbLwP1/wPITOIAf5SJ8QAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>BlizzTV provides a bunch of modules that can aggregate content &amp; accomplish tasks. Please select the modules you would like to use with BlizzTV. You can enable or disable them anytime using Preferences window.
+</value>
+  </data>
   <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

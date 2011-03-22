@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.UI.Wizard
 {
-    partial class frmComplete
+    partial class WelcomeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmComplete));
-            this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label2
+            // label1
             // 
-            this.label2.Location = new System.Drawing.Point(49, 42);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(401, 31);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Please click Finish to close the window and start using BlizzTV. Also don\'t forge" +
-                "t to check the user-guide.";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.Location = new System.Drawing.Point(49, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(401, 32);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Thanks for installing BlizzTV! We\'ll be guiding you through a few simple steps to" +
+    " let you started with the application.\r\n";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox1
             // 
@@ -52,20 +52,19 @@
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
+            // label2
             // 
-            this.label1.Location = new System.Drawing.Point(49, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(401, 32);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Great, you\'re done with the inital setup! Your favorite content will now be aggre" +
-                "gated on your desktop.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label2.Location = new System.Drawing.Point(49, 42);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(401, 19);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Click Next when you\'re ready to start configuration.";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // frmComplete
+            // WelcomeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -74,8 +73,8 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmComplete";
-            this.Text = "frmComplete";
+            this.Name = "WelcomeForm";
+            this.Text = "Configuration Wizard";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -83,8 +82,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label2;
+
     }
 }

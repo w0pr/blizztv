@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.UI.Wizard
 {
-    partial class frmWizardPlugins
+    partial class ModulesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmWizardPlugins));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModulesForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listviewModules = new System.Windows.Forms.ListView();
@@ -54,11 +54,9 @@
             // 
             this.label1.Location = new System.Drawing.Point(49, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(401, 32);
+            this.label1.Size = new System.Drawing.Size(401, 50);
             this.label1.TabIndex = 9;
-            this.label1.Text = "BlizzTV comes with a bunch of modules. Please select the modules you want to enab" +
-                "le and use.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.Text = resources.GetString("label1.Text");
             // 
             // listviewModules
             // 
@@ -98,7 +96,7 @@
             this.imageList.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // frmWizardPlugins
+            // ModulesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -107,8 +105,8 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmWizardPlugins";
-            this.Text = "Select Plugins";
+            this.Name = "ModulesForm";
+            this.Text = "Modules";
             this.Load += new System.EventHandler(this.frmWizardPlugins_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

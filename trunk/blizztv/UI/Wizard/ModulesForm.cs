@@ -23,9 +23,9 @@ using BlizzTV.Utility.UI;
 
 namespace BlizzTV.UI.Wizard
 {
-    public partial class frmWizardPlugins : Form , IWizardForm
+    public partial class ModulesForm : Form , IWizardHostable
     {
-        public frmWizardPlugins()
+        public ModulesForm()
         {
             InitializeComponent();
         }
@@ -34,7 +34,7 @@ namespace BlizzTV.UI.Wizard
         {
             foreach (KeyValuePair<string, ModuleController> pair in ModuleManager.Instance.AvailableModules) // load the available plugins list
             {
-                ListviewModuleItem item = new ListviewModuleItem(pair.Value);
+                var item = new ListviewModuleItem(pair.Value) {Checked = true};
                 this.listviewModules.SmallImageList.Images.Add(pair.Value.Attributes.Name, pair.Value.Attributes.Icon);
                 this.listviewModules.Items.Add(item);
             }   

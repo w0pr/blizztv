@@ -16,28 +16,29 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using BlizzTV.InfraStructure.Modules;
 
 namespace BlizzTV.UI.Wizard
 {
-    public partial class frmWizardHost : Form
+    public partial class HostForm : Form
     {
-        private readonly IWizardForm[] _steps = { new frmWizardWelcome(), new frmWizardPlugins(), new frmComplete() }; // the wizard steps.
+        private readonly IWizardHostable[] _steps = { new WelcomeForm(), new ModulesForm(), new CompleteForm() }; // the wizard steps.
         private int _currentStep = -1; // current step.
 
-        public frmWizardHost() { InitializeComponent(); }
+        public HostForm() { InitializeComponent(); }
 
         private void frmWizardHost_Load(object sender, EventArgs e) { this.Step(); } // load the first form. 
-
-        private void ButtonNext_Click(object sender, EventArgs e) { this.Step(); }
-        private void ButtonBack_Click(object sender, EventArgs e) { this.Step(false); }
-        private void ButtonCancel_Click(object sender, EventArgs e) { this.Close(); }   
+        private void ButtonNext_Click(object sender, EventArgs e) { this.Step(); } // move on to next wizard-form.
+        private void ButtonBack_Click(object sender, EventArgs e) { this.Step(false); } // move back to previous wizard-form.
+        private void ButtonCancel_Click(object sender, EventArgs e) { this.Cancel(); }   // cancel button.
 
         private void Step(bool forward=true) // steps through forms, forward or backwards.
         {            
             if (this.Panel.Controls.Count > 0) // if we have an active form.
             {
-                IWizardForm onStage = (IWizardForm)this.Panel.Controls[0]; // the active form.
+                var onStage = (IWizardHostable)this.Panel.Controls[0]; // the active form.
                 onStage.Finish(); // notify about it that we're stepping.
                 this.Panel.Controls.Clear(); // remove it from stage.
             }
@@ -46,7 +47,7 @@ namespace BlizzTV.UI.Wizard
 
             if (_currentStep < this._steps.Length) // if we're not finished yet.
             {
-                IWizardForm f = this._steps[_currentStep]; // load the new step.
+                IWizardHostable f = this._steps[_currentStep]; // load the new step.
                 ((Form) f).TopLevel = false; // set the steps settings.
                 ((Form)f).FormBorderStyle = FormBorderStyle.None;
                 ((Form)f).Dock = DockStyle.Fill;
@@ -59,6 +60,16 @@ namespace BlizzTV.UI.Wizard
                 this.ButtonBack.Enabled = _currentStep - 1 != -1; // enable the back-button only if it's valid.
             }
             else this.Close();
-        }        
+        }      
+  
+        private void Cancel() 
+        {
+            // If user cancels the module configuration, do just enable all available modules.
+
+            foreach(KeyValuePair<string,ModuleController> pair in ModuleManager.Instance.AvailableModules)
+            {
+                Settings.Instance.Modules.Enable(pair.Value.Attributes.Name);
+            }
+        }
     }
 }

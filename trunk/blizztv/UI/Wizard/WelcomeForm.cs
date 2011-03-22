@@ -15,16 +15,17 @@
  * $Id$
  */
 
+using System.Windows.Forms;
+
 namespace BlizzTV.UI.Wizard
 {
-    /// <summary>
-    /// Wizard form interface.
-    /// </summary>
-    public interface IWizardForm
+    public partial class WelcomeForm : Form , IWizardHostable
     {
-        /// <summary>
-        /// Fires when wizard steps through form.
-        /// </summary>
-        void Finish();
+        public WelcomeForm()
+        {
+            InitializeComponent();
+        }
+
+        public void Finish() { }
     }
 }

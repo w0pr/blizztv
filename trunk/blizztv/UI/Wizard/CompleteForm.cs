@@ -19,9 +19,9 @@ using System.Windows.Forms;
 
 namespace BlizzTV.UI.Wizard
 {
-    public partial class frmComplete : Form , IWizardForm
+    public partial class CompleteForm : Form , IWizardHostable
     {
-        public frmComplete()
+        public CompleteForm()
         {
             InitializeComponent();
         }
