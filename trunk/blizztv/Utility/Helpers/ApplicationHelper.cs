@@ -15,6 +15,7 @@
  * $Id$
  */
 
+using System;
 using System.IO;
 using System.Windows.Forms;
 
@@ -32,7 +33,9 @@ namespace BlizzTV.Utility.Helpers
         /// <returns>Returns full path of asked file or folder that resides in application directory</returns>
         public static string GetResourcePath(string resourceName)
         {
-            return string.Format("{0}\\{1}", Path.GetDirectoryName(Application.ExecutablePath), resourceName);
+            string appFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"BlizzTV");
+            if (!Directory.Exists(appFolder)) Directory.CreateDirectory(appFolder);
+            return string.Format("{0}\\{1}", appFolder, resourceName);
         }
     }
 }
