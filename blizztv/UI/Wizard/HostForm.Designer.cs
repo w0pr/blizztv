@@ -1,6 +1,6 @@
 ﻿namespace BlizzTV.UI.Wizard
 {
-    partial class frmWizardHost
+    partial class HostForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmWizardHost));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HostForm));
             this.ButtonCancel = new System.Windows.Forms.Button();
             this.ButtonNext = new System.Windows.Forms.Button();
             this.ButtonBack = new System.Windows.Forms.Button();
@@ -38,7 +38,7 @@
             // ButtonCancel
             // 
             this.ButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ButtonCancel.Location = new System.Drawing.Point(210, 271);
+            this.ButtonCancel.Location = new System.Drawing.Point(384, 271);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(75, 25);
             this.ButtonCancel.TabIndex = 0;
@@ -48,7 +48,7 @@
             // 
             // ButtonNext
             // 
-            this.ButtonNext.Location = new System.Drawing.Point(384, 271);
+            this.ButtonNext.Location = new System.Drawing.Point(294, 271);
             this.ButtonNext.Name = "ButtonNext";
             this.ButtonNext.Size = new System.Drawing.Size(75, 25);
             this.ButtonNext.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             // ButtonBack
             // 
-            this.ButtonBack.Location = new System.Drawing.Point(303, 271);
+            this.ButtonBack.Location = new System.Drawing.Point(218, 271);
             this.ButtonBack.Name = "ButtonBack";
             this.ButtonBack.Size = new System.Drawing.Size(75, 25);
             this.ButtonBack.TabIndex = 2;

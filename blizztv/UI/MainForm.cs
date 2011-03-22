@@ -53,7 +53,7 @@ namespace BlizzTV.UI
             this.Size = new Size(Settings.Instance.MainWindowWidth, Settings.Instance.MainWindowHeight);
             this.DesktopLocation = new Point(Settings.Instance.MainWindowLocationX, Settings.Instance.MainWindowLocationY);
 
-            if (Settings.Instance.NeedInitialConfig) { Wizard.frmWizardHost f = new Wizard.frmWizardHost(); f.ShowDialog(); } // if required run the configuration wizard.
+            if (Settings.Instance.NeedInitialConfig) { Wizard.HostForm f = new Wizard.HostForm(); f.ShowDialog(); } // if required run the configuration wizard.
             if (RuntimeConfiguration.Instance.StartedOnSystemStartup) this.MinimizeToSystemTray(); // if the app started on system startup, don't show the main form.
             Application.DoEvents(); // Process the UI-events before loading the plugins -- trying to not have any UI-blocking "as much as" possible.                     
             this.LoadModules(); // Load the enabled plugins.     

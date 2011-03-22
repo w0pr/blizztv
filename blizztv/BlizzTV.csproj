@@ -225,6 +225,7 @@
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
     <Compile Include="Utility\Helpers\ApplicationHelper.cs" />
     <Compile Include="Utility\Helpers\AssemblyManager.cs" />
+    <Compile Include="Utility\UI\ListviewModuleItem.cs" />
     <Compile Include="Win32API\WindowMessaging.cs" />
     <Compile Include="Utility\Helpers\Zip.cs" />
     <Compile Include="Notifications\NotificationsForm.cs">
@@ -429,34 +430,33 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\UI\ListviewModuleItem.cs" />
     <Compile Include="Updates\Update.cs" />
     <Compile Include="Updates\UpdateManager.cs" />
-    <Compile Include="UI\Wizard\frmComplete.cs">
+    <Compile Include="UI\Wizard\CompleteForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Wizard\frmComplete.Designer.cs">
-      <DependentUpon>frmComplete.cs</DependentUpon>
+    <Compile Include="UI\Wizard\CompleteForm.Designer.cs">
+      <DependentUpon>CompleteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Wizard\frmWizardPlugins.cs">
+    <Compile Include="UI\Wizard\ModulesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Wizard\frmWizardPlugins.Designer.cs">
-      <DependentUpon>frmWizardPlugins.cs</DependentUpon>
+    <Compile Include="UI\Wizard\ModulesForm.Designer.cs">
+      <DependentUpon>ModulesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Wizard\frmWizardWelcome.cs">
+    <Compile Include="UI\Wizard\WelcomeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Wizard\frmWizardWelcome.Designer.cs">
-      <DependentUpon>frmWizardWelcome.cs</DependentUpon>
+    <Compile Include="UI\Wizard\WelcomeForm.Designer.cs">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Wizard\frmWizardHost.cs">
+    <Compile Include="UI\Wizard\HostForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Wizard\frmWizardHost.Designer.cs">
-      <DependentUpon>frmWizardHost.cs</DependentUpon>
+    <Compile Include="UI\Wizard\HostForm.Designer.cs">
+      <DependentUpon>HostForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Wizard\IWizardForm.cs" />
+    <Compile Include="UI\Wizard\IWizardHostable.cs" />
     <EmbeddedResource Include="Assets\i18n\i18n.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>i18n.Designer.cs</LastGenOutput>
@@ -577,17 +577,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI\Wizard\frmComplete.resx">
-      <DependentUpon>frmComplete.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Wizard\CompleteForm.resx">
+      <DependentUpon>CompleteForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Wizard\frmWizardPlugins.resx">
-      <DependentUpon>frmWizardPlugins.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Wizard\ModulesForm.resx">
+      <DependentUpon>ModulesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Wizard\frmWizardWelcome.resx">
-      <DependentUpon>frmWizardWelcome.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Wizard\WelcomeForm.resx">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Wizard\frmWizardHost.resx">
-      <DependentUpon>frmWizardHost.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Wizard\HostForm.resx">
+      <DependentUpon>HostForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

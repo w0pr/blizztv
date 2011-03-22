@@ -55,12 +55,12 @@ namespace BlizzTV.UI
         public int MainWindowLocationY { get { return this.GetInt("MainWindowLocationY", (Screen.PrimaryScreen.WorkingArea.Height - 350) / 2); } set { this.Set("MainWindowLocationY", value); } }
 
         // the plugin settings wrapper.
-        public Plugins Modules = new Plugins(); 
+        public readonly Modules Modules = new Modules(); 
 
         private Settings() : base("UI") { }              
     }
 
-    public class Plugins : BlizzTV.Settings.Settings // The plugin settings wrapper.
+    public class Modules : BlizzTV.Settings.Settings // The module settings wrapper.
     {
         // the plugin settings list. TODO: convert to readonly-dictionary.
         public Dictionary<string, bool> List 
@@ -81,6 +81,6 @@ namespace BlizzTV.UI
         // Disables a plugin.
         public void Disable(string name) { this.Set(name, "Off"); } 
         
-        public Plugins() : base("Modules") { }
+        public Modules() : base("Modules") { }
     }
 }
