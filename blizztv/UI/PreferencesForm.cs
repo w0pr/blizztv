@@ -199,7 +199,7 @@ namespace BlizzTV.UI
 
         private void volumeBar_ValueChanged(object sender, EventArgs e)
         {
-            AudioManager.Instance.SetVolume(this.volumeBar.Value);
+            AudioManager.Instance.SetVolume((float)this.volumeBar.Value/10);
         }
 
         #endregion
