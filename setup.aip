@@ -13,10 +13,10 @@
     <ROW Property="DialogBitmap" MultiBuildValue="DefaultBuild:dialog_image.jpg" Type="1"/>
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:3"/>
     <ROW Property="Manufacturer" Value="BlizzTV" ValueLocId="*"/>
-    <ROW Property="ProductCode" Value="1033:{B05EFD61-8C8F-4D56-B3F0-24A738695C0F} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{4148005A-55CB-4CF2-959F-34C0054DB43A} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="BlizzTV" ValueLocId="*"/>
-    <ROW Property="ProductVersion" Value="0.22"/>
+    <ROW Property="ProductVersion" Value="0.23"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{7B0355E5-E0BB-43CB-BDD0-4C2D4D99A2B8}"/>
@@ -34,8 +34,11 @@
     <ROW Component="AI_ExePath" ComponentId="{C22F5BCF-FB59-4B32-BAEE-F1F27E77C28E}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
     <ROW Component="BlizzTV.exe" ComponentId="{61A41A44-2A9F-47BC-8810-08AD20DBA4BD}" Directory_="APPDIR" Attributes="0" KeyPath="BlizzTV.exe"/>
     <ROW Component="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" ComponentId="{774BF2A6-1B45-4648-8C1D-12FEF9C0D360}" Directory_="APPDIR" Attributes="4" KeyPath="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" Options="2"/>
+    <ROW Component="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D" ComponentId="{6912FE54-547F-408F-A037-31ED025F479F}" Directory_="APPDIR" Attributes="4" KeyPath="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D" Options="2"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{0FCE352B-413F-451A-8756-E9F3532E530B}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="Visual_C_2010_Runt" ComponentId="{CD4478CF-8504-4C9E-A6F6-B49A4438B51A}" Directory_="APPDIR" Attributes="4" KeyPath="Visual_C_2010_Runt" Options="2"/>
+    <ROW Component="Windows_Imaging_Comp" ComponentId="{94F30A66-C43F-423E-B1BD-F3B07A1CDE7C}" Directory_="APPDIR" Attributes="4" KeyPath="Windows_Imaging_Comp" Options="2"/>
+    <ROW Component="Windows_Imaging_Comp_1" ComponentId="{5082F83E-A36D-493E-9BE0-8C049CC93F3F}" Directory_="APPDIR" Attributes="4" KeyPath="Windows_Imaging_Comp_1" Options="2"/>
     <ROW Component="irrKlang.NET4.dll" ComponentId="{48F83C8F-F3CF-4DD9-B657-0B483FCA2514}" Directory_="APPDIR" Attributes="0" KeyPath="irrKlang.NET4.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
@@ -43,6 +46,9 @@
     <ROW Feature="BlizzTV" Title="BlizzTV" Description="BlizzTV installer" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath BlizzTV.exe irrKlang.NET4.dll SHORTCUTDIR"/>
     <ROW Feature="NET_Framework_4.0" Title=".NET Framework 4.0" Description=".NET Framework 4.0" Display="5" Level="1" Attributes="16" Components="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD"/>
     <ROW Feature="Visual_C_2010_Runtime_Libraries_x86" Title="Visual C++ 2010 Runtime Libraries (x86)" Description="Visual C++ 2010 Runtime Libraries (x86)" Display="7" Level="1" Attributes="16" Components="Visual_C_2010_Runt"/>
+    <ROW Feature="Windows_Imaging_Components" Title="Windows Imaging Components 32-bit" Description="Windows Imaging Components 32-bit" Display="11" Level="1" Attributes="16" Components="Windows_Imaging_Comp"/>
+    <ROW Feature="Windows_Imaging_Components_64_bit" Title="Windows Imaging Components 64-bit" Description="Windows Imaging Components 64-bit" Display="15" Level="1" Attributes="16" Components="Windows_Imaging_Comp_1"/>
+    <ROW Feature="Windows_Installer_3.1" Title="Windows Installer 3.1" Description="Windows Installer 3.1" Display="13" Level="1" Attributes="16" Components="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D"/>
     <ATTRIBUTE name="CurrentFeature" value="BlizzTV"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
@@ -191,7 +197,10 @@
     <ROW Registry="AF6A8838_0269_46AF_B128_A460BD2C6136" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="AF6A8838_0269_46AF_B128_A460BD2C6136" Value="1" Component_="AF6A8838_0269_46AF_B128_A460BD2C6136"/>
     <ROW Registry="AI_ExePath" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Value="[AI_SETUPEXEPATH]" Component_="AI_ExePath"/>
     <ROW Registry="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" Value="1" Component_="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD"/>
+    <ROW Registry="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D" Value="1" Component_="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D"/>
     <ROW Registry="Visual_C_2010_Runt" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="Visual_C_2010_Runt" Value="1" Component_="Visual_C_2010_Runt"/>
+    <ROW Registry="Windows_Imaging_Comp" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="Windows_Imaging_Comp" Value="1" Component_="Windows_Imaging_Comp"/>
+    <ROW Registry="Windows_Imaging_Comp_1" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="Windows_Imaging_Comp_1" Value="1" Component_="Windows_Imaging_Comp_1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="BlizzTV" Directory_="SHORTCUTDIR" Name="BlizzTV" Component_="BlizzTV.exe" Target="[#BlizzTV.exe]" Description="BlizzTV" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
@@ -207,12 +216,16 @@
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
     <ROW PrereqKey="AF6A8838_0269_46AF_B128_A460BD2C6136" DisplayName="Adobe Flash Player 10" SetupFileUrl="http://fpdownload.adobe.com/get/flashplayer/current/install_flash_player_ax.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="21" Operator="1" Type="1" Feature="Adobe_Flash_Player_10"/>
     <ROW PrereqKey="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" DisplayName=".NET Framework 4.0" SetupFileUrl="http://download.microsoft.com/download/1/B/E/1BE39E79-7E39-46A3-96FF-047F95396215/dotNetFx40_Full_setup.exe" Location="1" ExactSize="0" MinWin9xVer="47" MinWinNTVer="22" Operator="1" Options="m" Type="1" Feature="NET_Framework_4.0"/>
+    <ROW PrereqKey="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D" DisplayName="Windows Installer 3.1" SetupFileUrl="http://download.microsoft.com/download/1/4/7/147ded26-931c-4daf-9095-ec7baf996f46/WindowsInstaller-KB893803-v2-x86.exe" Location="1" ExactSize="2585872" MinWin9xVer="47" MinWinNTVer="22" MinWinNT64Ver="47" Operator="1" Options="m" MD5="342f79337765760ad4e392eb67d5ed2c" Type="1" Feature="Windows_Installer_3.1"/>
     <ROW PrereqKey="Visual_C_2010_Runt" DisplayName="Visual C++ 2010 Runtime Libraries (x86)" SetupFileUrl="http://www.microsoft.com/downloads/info.aspx?na=41&amp;SrcFamilyId=A7B7A05E-6DE6-4D3A-A423-37BF0912DB84&amp;SrcDisplayLang=en&amp;u=http%3a%2f%2fdownload.microsoft.com%2fdownload%2f5%2fB%2fC%2f5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E%2fvcredist_x86.exe" Location="1" ExactSize="5073240" MinWin9xVer="47" MinWinNTVer="17" Operator="0" ComLine="/q:a" Options="m" MD5="b88228d5fef4b6dc019d69d4471f23ec" Type="1" Feature="Visual_C_2010_Runtime_Libraries_x86"/>
-    <ATTRIBUTE name="PrereqsOrder" value="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD Visual_C_2010_Runt AF6A8838_0269_46AF_B128_A460BD2C6136"/>
+    <ROW PrereqKey="Windows_Imaging_Comp" DisplayName="Windows Imaging Components 32-bit" SetupFileUrl="http://download.microsoft.com/download/f/f/1/ff178bb1-da91-48ed-89e5-478a99387d4f/wic_x86_enu.exe" Location="1" ExactSize="1227048" MinWin9xVer="47" MinWinNTVer="22" MinWinNT64Ver="47" Operator="1" Options="m" MD5="53f5ccbe5fe06c3b40cc9e34ac909df7" Type="1" Feature="Windows_Imaging_Components"/>
+    <ROW PrereqKey="Windows_Imaging_Comp_1" DisplayName="Windows Imaging Components 64-bit" SetupFileUrl="http://download.microsoft.com/download/6/4/5/645fed5f-a6e7-44d9-9d10-fe83348796b0/wic_x64_enu.exe" Location="1" ExactSize="1911592" MinWin9xVer="47" MinWinNTVer="47" Operator="1" Options="m" MD5="2eb787be1deb373efc259d1f42146419" Type="1" Feature="Windows_Imaging_Components_64_bit"/>
+    <ATTRIBUTE name="PrereqsOrder" value="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D Windows_Imaging_Comp Windows_Imaging_Comp_1 D62CCA_449F_4EB4_AA2F_C4376D7FBDAD Visual_C_2010_Runt AF6A8838_0269_46AF_B128_A460BD2C6136"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
     <ROW SearchKey="AF6A8838_0269_46AF_B128_A460BD2C6136_ADOBE_FLASH_10_SEARCH" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10o.ocx" VerMin="10.0" Order="1" Property="AI_ADOBE_FLASH_10_PREREQSEARCH_PROP"/>
     <ROW SearchKey="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD_NET_40_SEARCH" Prereq="D62CCA_449F_4EB4_AA2F_C4376D7FBDAD" SearchType="9" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Install" RefContent="M1" Order="1" Property="AI_NET_40_ORIGINAL_PREREQSEARCH_PROP"/>
+    <ROW SearchKey="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D_WI_31_SEARCH" Prereq="FA9A6D1_0DAE_4C5A_9F14_296212B5EF1D" SearchType="0" SearchString="[SystemFolder]msi.dll" VerMin="3.1" Order="1" Property="AI_WI_31_PREREQSEARCH_PROP"/>
     <ROW SearchKey="Flash10p.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10p.ocx" VerMin="10.0" Order="2" Property="PreReqSearch_3"/>
     <ROW SearchKey="Flash10r.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10r.ocx" VerMin="10.0" Order="3" Property="PreReqSearch_4"/>
     <ROW SearchKey="Flash10s.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10s.ocx" VerMin="10.0" Order="4" Property="PreReqSearch_5"/>
@@ -222,5 +235,7 @@
     <ROW SearchKey="Flash10y.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10y.ocx" VerMin="10.0" Order="8" Property="PreReqSearch_9"/>
     <ROW SearchKey="Flash10z.ocx" Prereq="AF6A8838_0269_46AF_B128_A460BD2C6136" SearchType="0" SearchString="[SystemFolder]Macromed\Flash\Flash10z.ocx" VerMin="10.0" Order="9" Property="PreReqSearch_10"/>
     <ROW SearchKey="ProdCode" Prereq="Visual_C_2010_Runt" SearchType="3" SearchString="{196BB40D-1578-3D01-B289-BEFC77A11A1E}" Order="1" Property="PreReqSearch"/>
+    <ROW SearchKey="SystemFolder_WindowsCodecs.dll" Prereq="Windows_Imaging_Comp" SearchType="0" SearchString="[SystemFolder]WindowsCodecs.dll" Order="1" Property="PreReqSearch_1"/>
+    <ROW SearchKey="SystemFolder_file.dll" Prereq="Windows_Imaging_Comp_1" SearchType="0" SearchString="[SystemFolder]WindowsCodecs.dll" Order="1" Property="PreReqSearch_2"/>
   </COMPONENT>
 </DOCUMENT>
