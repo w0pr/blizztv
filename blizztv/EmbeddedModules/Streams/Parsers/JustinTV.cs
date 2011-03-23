@@ -40,16 +40,14 @@ namespace BlizzTV.EmbeddedModules.Streams.Parsers
 
                 var data = (ArrayList)Json.JsonDecode(result.Response); // start parsing the json.
 
-                if (data.Count > 0)
-                {
-                    this.IsLive = true; // is the stream live?
-                    var table = (Hashtable)data[0];
-                    this.ViewerCount = Int32.Parse(table["stream_count"].ToString()); // stream viewers count.
-                    if (table.Contains("title")) this.Description = (string)table["title"].ToString(); // stream description.
-                    this.Process();
-                    return true;
-                }
-                else return false;
+                if (data.Count == 0) return true;
+                    
+                this.IsLive = true; // is the stream live?                    
+                var table = (Hashtable)data[0];
+                this.ViewerCount = Int32.Parse(table["stream_count"].ToString()); // stream viewers count.
+                if (table.Contains("title")) this.Description = (string)table["title"].ToString(); // stream description.
+                this.Process();
+                return true;
             }
             catch (Exception e)
             {
