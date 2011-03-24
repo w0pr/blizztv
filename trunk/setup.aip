@@ -13,10 +13,10 @@
     <ROW Property="DialogBitmap" MultiBuildValue="DefaultBuild:dialog_image.jpg" Type="1"/>
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:3"/>
     <ROW Property="Manufacturer" Value="BlizzTV" ValueLocId="*"/>
-    <ROW Property="ProductCode" Value="1033:{7F914CF9-01A4-4F76-B863-6627AE9E2D4B} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{12880473-1424-480C-B002-6752BA6B24ED} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="BlizzTV" ValueLocId="*"/>
-    <ROW Property="ProductVersion" Value="0.22.4098.35659"/>
+    <ROW Property="ProductVersion" Value="0.22.4100.40332"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{7B0355E5-E0BB-43CB-BDD0-4C2D4D99A2B8}"/>
