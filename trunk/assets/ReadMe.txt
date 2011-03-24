@@ -6,7 +6,7 @@
 
  ___________________________________________________________________________
 
- v0.22.4098.35659-beta                                http://get.blizztv.com
+ v0.22.4100.40332-beta                                http://get.blizztv.com
 
  BlizzTV is an open source all-in-one e-Sports aggregator that can track feeds, 
  podcasts, streams, videos, blue-posts and events.
@@ -27,10 +27,17 @@
 
  * Faster modules & architecture code.
  * Improved 'add new subscription' functionality.
+ * Video guides explaining adding new subscriptions.
 
  Changelog:
  ----------
 
+ * Fixed justin.tv parser which was preventing adding new subscriptions when the stream
+   was offline.
+ * Added video-guides explaining adding new subscriptions.
+ * Fixed stream, video and podcast players window titles.
+ * Fixed a few glitches on catalog browser.
+ * Catalog browser window will also remember it's last-known size.
  * Module architecture got an overhaul and re-factored it. It should be faster & more 
    stable now.
  * Improved modules data process & refresh routines - they're 2x to 4x faster now.
