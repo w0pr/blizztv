@@ -47,7 +47,7 @@ namespace BlizzTV.EmbeddedModules.Podcasts.UI
             InitializeComponent();
 
             this.MouseCoordinateSystem = CoordinateSystem.Relative;
-            this.Size = new Size(EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.PlayerWidth, EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.PlayerHeight); // set the window size based on last saved values.
+            this.Size = new Size(Settings.ModuleSettings.Instance.PlayerWidth, Settings.ModuleSettings.Instance.PlayerHeight); // set the window size based on last saved values.
             this.SwitchTopMostMode(GlobalSettings.Instance.PlayerWindowsAlwaysOnTop); // set the form's top-most mode.            
 
             this._episode = episode;
@@ -76,17 +76,17 @@ namespace BlizzTV.EmbeddedModules.Podcasts.UI
 
         private void PlayerForm_Load(object sender, EventArgs e)
         {
-            this.Text = string.Format("{0} - [{1}]", this._episode.Text, this._episode.PodcastName);         
+            this.Text = this._episode.Text;
             this.MediaPlayer.URL = this._episode.MediaLocation;
         }
 
         private void PlayerForm_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.Size.Width == EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.PlayerWidth && this.Size.Height == EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.PlayerHeight) return;
+            if (this.Size.Width == Settings.ModuleSettings.Instance.PlayerWidth && this.Size.Height == EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.PlayerHeight) return;
 
-            EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.PlayerWidth = this.Size.Width;
-            EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.PlayerHeight = this.Size.Height;
-            EmbeddedModules.Podcasts.Settings.ModuleSettings.Instance.Save();
+            Settings.ModuleSettings.Instance.PlayerWidth = this.Size.Width;
+            Settings.ModuleSettings.Instance.PlayerHeight = this.Size.Height;
+            Settings.ModuleSettings.Instance.Save();
 
         }
 
