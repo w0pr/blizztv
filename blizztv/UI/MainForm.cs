@@ -24,6 +24,7 @@ using BlizzTV.Configuration;
 using BlizzTV.InfraStructure.Modules;
 using BlizzTV.Notifications;
 using BlizzTV.Settings;
+using BlizzTV.UI.Guide;
 using BlizzTV.Updates;
 using BlizzTV.Utility.Extensions;
 using BlizzTV.Win32API;
@@ -352,6 +353,10 @@ namespace BlizzTV.UI
         private void MenuUserGuide_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com/topic/96-user-guide/", null); }
         private void MenuFAQ_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("http://www.blizztv.com/topic/95-frequently-asked-questions/", null); }
         private void MenuDonate_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PQ3D5PMB85L34", null); }
+        private void menuVideoGuideVideoSubscription_Click(object sender, EventArgs e) { new VideoGuide("http://www.youtube.com/v/TS4l9U5q6Wo?fs=1&autoplay=1&hl=en_US", "[Guide] How to add video channel subscriptions?").Show(); }
+        private void menuVideoGuideStreamSubscription_Click(object sender, EventArgs e) { new VideoGuide("http://www.youtube.com/v/SXirg43JTlA?fs=1&autoplay=1&hl=en_US", "[Guide] How to add stream subscriptions?").Show(); }
+        private void menuVideoGuidePodcastSubscription_Click(object sender, EventArgs e) { new VideoGuide("http://www.youtube.com/v/nXzG9MSeoW0?fs=1&autoplay=1&hl=en_US", "[Guide] How to add podcast subscriptions?").Show(); }
+        private void menuVideoGuideFeedSubscription_Click(object sender, EventArgs e) { new VideoGuide("http://www.youtube.com/v/3qyxJ7X8NO0?fs=1&autoplay=1&hl=en_US", "[Guide] How to add feed subscriptions?").Show(); }
 
         #endregion       
 
@@ -362,6 +367,6 @@ namespace BlizzTV.UI
             if (GlobalSettings.Instance.AllowAutomaticUpdateChecks) { UpdateManager.Check(); }
         }
 
-        #endregion
+        #endregion        
     }    
 }

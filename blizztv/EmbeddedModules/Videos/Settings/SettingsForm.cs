@@ -21,6 +21,7 @@ using BlizzTV.InfraStructure.Modules.Settings;
 using BlizzTV.InfraStructure.Modules.Subscriptions;
 using BlizzTV.InfraStructure.Modules.Subscriptions.Catalog;
 using BlizzTV.InfraStructure.Modules.Subscriptions.UI;
+using BlizzTV.UI.Guide;
 
 namespace BlizzTV.EmbeddedModules.Videos.Settings
 {
@@ -99,6 +100,11 @@ namespace BlizzTV.EmbeddedModules.Videos.Settings
         void OnItemEdit(object sender, LabelEditEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.Label)) Subscriptions.Instance.Rename((ListviewSubscriptions.Items[e.Item] as ListviewVideoSubscription).Subscription, e.Label);
+        }
+
+        private void buttonHelp_Click(object sender, EventArgs e)
+        {
+            new VideoGuide("http://www.youtube.com/v/TS4l9U5q6Wo?fs=1&autoplay=1&hl=en_US", "[Guide] How to add video channel subscriptions?").Show();
         }
     }
 

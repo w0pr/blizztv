@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.buttonEdit = new System.Windows.Forms.Button();
@@ -38,17 +39,18 @@
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBoxEnableNotifications = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDownUpdatePeriod = new System.Windows.Forms.NumericUpDown();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxEnableNotifications = new System.Windows.Forms.CheckBox();
+            this.buttonHelp = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdatePeriod)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -64,6 +66,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.buttonHelp);
             this.tabPage2.Controls.Add(this.buttonEdit);
             this.tabPage2.Controls.Add(this.buttonCatalog);
             this.tabPage2.Controls.Add(this.buttonRemove);
@@ -91,7 +94,7 @@
             // buttonCatalog
             // 
             this.buttonCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonCatalog.Location = new System.Drawing.Point(8, 205);
+            this.buttonCatalog.Location = new System.Drawing.Point(35, 205);
             this.buttonCatalog.Name = "buttonCatalog";
             this.buttonCatalog.Size = new System.Drawing.Size(75, 23);
             this.buttonCatalog.TabIndex = 7;
@@ -123,9 +126,9 @@
             // 
             // ListviewSubscriptions
             // 
-            this.ListviewSubscriptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ListviewSubscriptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ListviewSubscriptions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colName,
             this.colURL});
@@ -161,32 +164,10 @@
             this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.checkBoxEnableNotifications);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(423, 41);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Notifications";
-            // 
-            // checkBoxEnableNotifications
-            // 
-            this.checkBoxEnableNotifications.AutoSize = true;
-            this.checkBoxEnableNotifications.Location = new System.Drawing.Point(11, 18);
-            this.checkBoxEnableNotifications.Name = "checkBoxEnableNotifications";
-            this.checkBoxEnableNotifications.Size = new System.Drawing.Size(237, 17);
-            this.checkBoxEnableNotifications.TabIndex = 0;
-            this.checkBoxEnableNotifications.Text = "Enable notification of new podcast episodes.";
-            this.checkBoxEnableNotifications.UseVisualStyleBackColor = true;
-            // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.numericUpDownUpdatePeriod);
             this.groupBox1.Location = new System.Drawing.Point(6, 53);
@@ -227,6 +208,39 @@
             0,
             0});
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.checkBoxEnableNotifications);
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(423, 41);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Notifications";
+            // 
+            // checkBoxEnableNotifications
+            // 
+            this.checkBoxEnableNotifications.AutoSize = true;
+            this.checkBoxEnableNotifications.Location = new System.Drawing.Point(11, 18);
+            this.checkBoxEnableNotifications.Name = "checkBoxEnableNotifications";
+            this.checkBoxEnableNotifications.Size = new System.Drawing.Size(237, 17);
+            this.checkBoxEnableNotifications.TabIndex = 0;
+            this.checkBoxEnableNotifications.Text = "Enable notification of new podcast episodes.";
+            this.checkBoxEnableNotifications.UseVisualStyleBackColor = true;
+            // 
+            // buttonHelp
+            // 
+            this.buttonHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonHelp.Image = ((System.Drawing.Image)(resources.GetObject("buttonHelp.Image")));
+            this.buttonHelp.Location = new System.Drawing.Point(3, 205);
+            this.buttonHelp.Name = "buttonHelp";
+            this.buttonHelp.Size = new System.Drawing.Size(26, 23);
+            this.buttonHelp.TabIndex = 11;
+            this.buttonHelp.UseVisualStyleBackColor = true;
+            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,11 +253,11 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownUpdatePeriod)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -265,5 +279,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDownUpdatePeriod;
+        private System.Windows.Forms.Button buttonHelp;
     }
 }

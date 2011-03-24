@@ -45,6 +45,11 @@ namespace BlizzTV.UI
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBlizztvcom = new System.Windows.Forms.ToolStripMenuItem();
             this.menuUserGuide = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoGuidesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuVideoGuideStreamSubscription = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuVideoGuideVideoSubscription = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuVideoGuidePodcastSubscription = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuVideoGuideFeedSubscription = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFAQ = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuBugReports = new System.Windows.Forms.ToolStripMenuItem();
@@ -162,6 +167,7 @@ namespace BlizzTV.UI
             this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBlizztvcom,
             this.menuUserGuide,
+            this.videoGuidesToolStripMenuItem,
             this.menuFAQ,
             this.toolStripSeparator2,
             this.menuBugReports,
@@ -188,6 +194,50 @@ namespace BlizzTV.UI
             this.menuUserGuide.Size = new System.Drawing.Size(153, 22);
             this.menuUserGuide.Text = "User Guide";
             this.menuUserGuide.Click += new System.EventHandler(this.MenuUserGuide_Click);
+            // 
+            // videoGuidesToolStripMenuItem
+            // 
+            this.videoGuidesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuVideoGuideStreamSubscription,
+            this.menuVideoGuideVideoSubscription,
+            this.menuVideoGuidePodcastSubscription,
+            this.menuVideoGuideFeedSubscription});
+            this.videoGuidesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("videoGuidesToolStripMenuItem.Image")));
+            this.videoGuidesToolStripMenuItem.Name = "videoGuidesToolStripMenuItem";
+            this.videoGuidesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.videoGuidesToolStripMenuItem.Text = "Video Guides";
+            // 
+            // menuVideoGuideStreamSubscription
+            // 
+            this.menuVideoGuideStreamSubscription.Image = ((System.Drawing.Image)(resources.GetObject("menuVideoGuideStreamSubscription.Image")));
+            this.menuVideoGuideStreamSubscription.Name = "menuVideoGuideStreamSubscription";
+            this.menuVideoGuideStreamSubscription.Size = new System.Drawing.Size(291, 22);
+            this.menuVideoGuideStreamSubscription.Text = "How to add stream subscriptions?";
+            this.menuVideoGuideStreamSubscription.Click += new System.EventHandler(this.menuVideoGuideStreamSubscription_Click);
+            // 
+            // menuVideoGuideVideoSubscription
+            // 
+            this.menuVideoGuideVideoSubscription.Image = ((System.Drawing.Image)(resources.GetObject("menuVideoGuideVideoSubscription.Image")));
+            this.menuVideoGuideVideoSubscription.Name = "menuVideoGuideVideoSubscription";
+            this.menuVideoGuideVideoSubscription.Size = new System.Drawing.Size(291, 22);
+            this.menuVideoGuideVideoSubscription.Text = "How to add video channel subscriptions?";
+            this.menuVideoGuideVideoSubscription.Click += new System.EventHandler(this.menuVideoGuideVideoSubscription_Click);
+            // 
+            // menuVideoGuidePodcastSubscription
+            // 
+            this.menuVideoGuidePodcastSubscription.Image = ((System.Drawing.Image)(resources.GetObject("menuVideoGuidePodcastSubscription.Image")));
+            this.menuVideoGuidePodcastSubscription.Name = "menuVideoGuidePodcastSubscription";
+            this.menuVideoGuidePodcastSubscription.Size = new System.Drawing.Size(291, 22);
+            this.menuVideoGuidePodcastSubscription.Text = "How to add podcast subscriptions?";
+            this.menuVideoGuidePodcastSubscription.Click += new System.EventHandler(this.menuVideoGuidePodcastSubscription_Click);
+            // 
+            // menuVideoGuideFeedSubscription
+            // 
+            this.menuVideoGuideFeedSubscription.Image = ((System.Drawing.Image)(resources.GetObject("menuVideoGuideFeedSubscription.Image")));
+            this.menuVideoGuideFeedSubscription.Name = "menuVideoGuideFeedSubscription";
+            this.menuVideoGuideFeedSubscription.Size = new System.Drawing.Size(291, 22);
+            this.menuVideoGuideFeedSubscription.Text = "How to add feed subscriptions?";
+            this.menuVideoGuideFeedSubscription.Click += new System.EventHandler(this.menuVideoGuideFeedSubscription_Click);
             // 
             // menuFAQ
             // 
@@ -456,6 +506,11 @@ namespace BlizzTV.UI
         private System.Windows.Forms.ToolStripMenuItem menuContextRefreshAll;
         private System.Windows.Forms.ToolStripMenuItem menuRefresh;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem videoGuidesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuVideoGuideStreamSubscription;
+        private System.Windows.Forms.ToolStripMenuItem menuVideoGuideVideoSubscription;
+        private System.Windows.Forms.ToolStripMenuItem menuVideoGuidePodcastSubscription;
+        private System.Windows.Forms.ToolStripMenuItem menuVideoGuideFeedSubscription;
     }
 }
 
