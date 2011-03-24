@@ -60,7 +60,7 @@
             this.buttonBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(23, 22);
-            this.buttonBack.Text = "toolStripButton1";
+            this.buttonBack.Text = "Back";
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
             // buttonForward
@@ -71,7 +71,7 @@
             this.buttonForward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonForward.Name = "buttonForward";
             this.buttonForward.Size = new System.Drawing.Size(23, 22);
-            this.buttonForward.Text = "toolStripButton2";
+            this.buttonForward.Text = "Forward";
             this.buttonForward.Click += new System.EventHandler(this.buttonForward_Click);
             // 
             // loadingAnimation
@@ -127,7 +127,7 @@
             this.notificationBar.SmallImageList = this.imageList;
             this.notificationBar.TabIndex = 2;
             this.notificationBar.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non ipsum magna, nec" +
-                " pharetra eros.";
+    " pharetra eros.";
             // 
             // CatalogBrowser
             // 

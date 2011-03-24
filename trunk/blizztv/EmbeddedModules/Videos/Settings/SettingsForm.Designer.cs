@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.buttonEdit = new System.Windows.Forms.Button();
@@ -46,6 +47,7 @@
             this.numericUpDownUpdatePeriod = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownNumberOfVideosToQueryChannelFor = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonHelp = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -68,6 +70,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.buttonHelp);
             this.tabPage2.Controls.Add(this.buttonEdit);
             this.tabPage2.Controls.Add(this.buttonCatalog);
             this.tabPage2.Controls.Add(this.buttonRemove);
@@ -95,7 +98,7 @@
             // buttonCatalog
             // 
             this.buttonCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonCatalog.Location = new System.Drawing.Point(8, 205);
+            this.buttonCatalog.Location = new System.Drawing.Point(35, 205);
             this.buttonCatalog.Name = "buttonCatalog";
             this.buttonCatalog.Size = new System.Drawing.Size(75, 23);
             this.buttonCatalog.TabIndex = 6;
@@ -127,9 +130,9 @@
             // 
             // ListviewSubscriptions
             // 
-            this.ListviewSubscriptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ListviewSubscriptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ListviewSubscriptions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colName,
             this.colProvider,
@@ -174,8 +177,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.checkBoxEnableNotifications);
             this.groupBox3.Location = new System.Drawing.Point(8, 6);
             this.groupBox3.Name = "groupBox3";
@@ -196,8 +199,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.numericUpDownUpdatePeriod);
             this.groupBox2.Controls.Add(this.numericUpDownNumberOfVideosToQueryChannelFor);
@@ -256,13 +259,24 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Number of videos to query channel for:";
             // 
-            // frmSettings
+            // buttonHelp
+            // 
+            this.buttonHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonHelp.Image = ((System.Drawing.Image)(resources.GetObject("buttonHelp.Image")));
+            this.buttonHelp.Location = new System.Drawing.Point(3, 205);
+            this.buttonHelp.Name = "buttonHelp";
+            this.buttonHelp.Size = new System.Drawing.Size(26, 23);
+            this.buttonHelp.TabIndex = 11;
+            this.buttonHelp.UseVisualStyleBackColor = true;
+            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            // 
+            // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(447, 262);
             this.Controls.Add(this.tabControl1);
-            this.Name = "frmSettings";
+            this.Name = "SettingsForm";
             this.Text = "frmSettings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.tabControl1.ResumeLayout(false);
@@ -298,5 +312,6 @@
         private System.Windows.Forms.CheckBox checkBoxEnableNotifications;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.Button buttonHelp;
     }
 }

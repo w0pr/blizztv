@@ -222,6 +222,12 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EmbeddedModules\Podcasts\Subscriptions.cs" />
+    <Compile Include="UI\Guide\VideoGuide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Guide\VideoGuide.Designer.cs">
+      <DependentUpon>VideoGuide.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Extensions\StringExtensions.cs" />
     <Compile Include="Utility\Helpers\ApplicationHelper.cs" />
     <Compile Include="Utility\Helpers\AssemblyManager.cs" />
@@ -514,6 +520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EmbeddedModules\Podcasts\Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Guide\VideoGuide.resx">
+      <DependentUpon>VideoGuide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\UpdaterForm.resx">
       <DependentUpon>UpdaterForm.cs</DependentUpon>
