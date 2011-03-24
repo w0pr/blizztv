@@ -169,6 +169,7 @@
       <DependentUpon>AddChannel.cs</DependentUpon>
     </Compile>
     <Compile Include="InfraStructure\Modules\ModuleNode.cs" />
+    <Compile Include="InfraStructure\Modules\Subscriptions\Catalog\CatalogSettings.cs" />
     <Compile Include="InfraStructure\Modules\Subscriptions\UI\AddSubscriptionContainer.cs">
       <SubType>Form</SubType>
     </Compile>

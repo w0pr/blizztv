@@ -49,7 +49,7 @@ namespace BlizzTV.EmbeddedModules.Streams.UI
             try
             {
                 this.LoadingStarted();
-                this.Text = string.Format("Stream: {0}", this._stream.Name); // set the window title.                
+                this.Text = this._stream.Text; // set the window title.                
                 if (this._stream.Provider == "justintv") this.WebBrowser.Navigate(string.Format("http://service.blizztv.com/stream/embed/{0}/{1}", this._stream.Provider, this._stream.Slug));
                 else this.FlashPlayer.LoadMovie(0, this._stream.Movie); // load the movie.
 

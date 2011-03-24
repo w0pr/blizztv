@@ -48,7 +48,7 @@
             this.loadingAnimation});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(632, 25);
+            this.toolStrip.Size = new System.Drawing.Size(624, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -84,7 +84,7 @@
             this.loadingAnimation.LoadingAnimationControl.Active = false;
             this.loadingAnimation.LoadingAnimationControl.Color = System.Drawing.Color.DarkGray;
             this.loadingAnimation.LoadingAnimationControl.InnerCircleRadius = 6;
-            this.loadingAnimation.LoadingAnimationControl.Location = new System.Drawing.Point(611, 1);
+            this.loadingAnimation.LoadingAnimationControl.Location = new System.Drawing.Point(603, 1);
             this.loadingAnimation.LoadingAnimationControl.Name = "loadingAnimation";
             this.loadingAnimation.LoadingAnimationControl.NumberSpoke = 24;
             this.loadingAnimation.LoadingAnimationControl.OuterCircleRadius = 7;
@@ -112,7 +112,7 @@
             this.browser.MinimumSize = new System.Drawing.Size(20, 20);
             this.browser.Name = "browser";
             this.browser.ScriptErrorsSuppressed = true;
-            this.browser.Size = new System.Drawing.Size(632, 282);
+            this.browser.Size = new System.Drawing.Size(624, 297);
             this.browser.TabIndex = 3;
             this.browser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.browser_DocumentCompleted);
             this.browser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.browser_Navigating);
@@ -121,9 +121,9 @@
             // 
             this.notificationBar.BackColor = System.Drawing.SystemColors.Info;
             this.notificationBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.notificationBar.Location = new System.Drawing.Point(0, 307);
+            this.notificationBar.Location = new System.Drawing.Point(0, 322);
             this.notificationBar.Name = "notificationBar";
-            this.notificationBar.Size = new System.Drawing.Size(632, 25);
+            this.notificationBar.Size = new System.Drawing.Size(624, 25);
             this.notificationBar.SmallImageList = this.imageList;
             this.notificationBar.TabIndex = 2;
             this.notificationBar.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non ipsum magna, nec" +
@@ -133,7 +133,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 332);
+            this.ClientSize = new System.Drawing.Size(624, 347);
             this.Controls.Add(this.browser);
             this.Controls.Add(this.notificationBar);
             this.Controls.Add(this.toolStrip);
@@ -142,6 +142,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Catalog Browser";
             this.Load += new System.EventHandler(this.Catalog_Load);
+            this.ResizeEnd += new System.EventHandler(this.CatalogBrowser_ResizeEnd);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.ResumeLayout(false);

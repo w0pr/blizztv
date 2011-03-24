@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -30,11 +31,13 @@ namespace BlizzTV.InfraStructure.Modules.Subscriptions.Catalog
         public CatalogBrowser(ISubscriptionConsumer consumer)
         {
             InitializeComponent();
-            this._consumer = consumer;
 
+            this._consumer = consumer;
             this._notificationTimer.Interval = 2000;
             this._notificationTimer.Tick+=NotificationTimer_Tick;
             this.notificationBar.Hide();
+
+            this.Size = new Size(CatalogSettings.Instance.BrowserWidth, CatalogSettings.Instance.BrowserHeight); // set the window size based on last saved values.
         }
 
         private void Catalog_Load(object sender, EventArgs e)
@@ -85,6 +88,15 @@ namespace BlizzTV.InfraStructure.Modules.Subscriptions.Catalog
         private void buttonForward_Click(object sender, EventArgs e)
         {
             if (this.browser.CanGoForward) this.browser.GoForward();
+        }
+
+        private void CatalogBrowser_ResizeEnd(object sender, EventArgs e)
+        {
+            if (this.Size.Width == CatalogSettings.Instance.BrowserWidth && this.Size.Height == CatalogSettings.Instance.BrowserHeight) return;
+
+            CatalogSettings.Instance.BrowserWidth = this.Size.Width;
+            CatalogSettings.Instance.BrowserHeight = this.Size.Height;
+            CatalogSettings.Instance.Save();
         }
     }
 }
