@@ -32,7 +32,8 @@ namespace BlizzTV.Utility.Web
 
             try
             {
-                var request = (HttpWebRequest) WebRequest.Create(url); 
+                var request = (HttpWebRequest) WebRequest.Create(url);
+                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; rv:2.0) Gecko/20110319 Firefox/4.0";
                 request.Timeout = timeout;
 
                 using (var response = (HttpWebResponse)request.GetResponse())
