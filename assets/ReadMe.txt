@@ -6,7 +6,7 @@
 
  ___________________________________________________________________________
 
- v0.22.4100.40332-beta                                http://get.blizztv.com
+ v0.22.4123.17389-beta                                http://get.blizztv.com
 
  BlizzTV is an open source all-in-one e-Sports aggregator that can track feeds, 
  podcasts, streams, videos, blue-posts and events.
@@ -32,6 +32,7 @@
  Changelog:
  ----------
 
+ * Hotfixed events module which was not able to access TeamLiquid.net calendar.
  * Fixed justin.tv parser which was preventing adding new subscriptions when the stream
    was offline.
  * Added video-guides explaining adding new subscriptions.
