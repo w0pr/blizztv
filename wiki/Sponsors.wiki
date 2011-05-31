@@ -1,4 +1,0 @@
-#summary BlizzTV Sponsors
-#labels Sponsors
-
-Sponsor info can be found over http://get.blizztv.com/sponsors/.
