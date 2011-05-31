@@ -1,5 +1,0 @@
-#summary Frequently Asked Questions
-#labels Featured,Documentation
-= Introduction =
-
-You can find FAQ over http://www.blizztv.com/topic/95-frequently-asked-questions/.
