@@ -1,4 +1,0 @@
-#summary BlizzTV changelog
-#labels Featured,Documentation,Development
-
-You can find the changelog here: http://www.blizztv.com/topic/99-changelog/
