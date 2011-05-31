@@ -1,4 +1,0 @@
-#summary Scan results for of BlizzTV releases.
-#labels Featured,Documentation
-
-You can find scan results over http://www.blizztv.com/topic/100-scan-results/.
