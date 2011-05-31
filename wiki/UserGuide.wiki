@@ -1,2 +1,0 @@
-#labels Featured,Documentation
-You can find user-guide over http://www.blizztv.com/topic/96-user-guide/.
